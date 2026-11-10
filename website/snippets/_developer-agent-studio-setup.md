@@ -1,11 +1,11 @@
-To use the <Constant name="wizard" />, follow these steps:
-1. Open your dbt project in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), then click **<Constant name="wizard" />** in the command palette. 
-2. Start a prompt in several ways in the [<Constant name="wizard" /> panel](/docs/dbt-ai/wizard-ide):
-   - **Quick actions**: Use [quick-action resource generation](/docs/dbt-ai/wizard-ide#using-dbt-wizard) at the top of the panel to generate documentation, tests, semantic models, and metrics.
-   - **Plain text**: Type directly into the text field to describe what you want to build or change.
-   - **Model context**: Type `@` to select a model as context. This scopes the agent's changes to that resource.
-3. Select the [**Agent mode** button](/docs/dbt-ai/wizard-ide) to specify the mode for the <Constant name="wizard" />. Available modes are **Ask for approval** (default) and **Edit files automatically**.
-4. [Review the agent's suggestions](/docs/dbt-ai/wizard-ide) and approve or reject the changes. You can also use the **Start new dbt Wizard chat** button to start a new chat session.
-5. [Approve dbt commands](/docs/dbt-ai/wizard-ide) when the <Constant name="wizard" /> requests to run commands like `dbt compile` or `dbt build`.
-6. Repeat the process to build or change more models.
-7. Commit the changes to your dbt project and open a pull request.
+Чтобы использовать <Constant name="wizard" />, выполните следующие действия:
+1. Откройте свой проект dbt в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), затем нажмите **<Constant name="wizard" />** в палитре команд.
+2. Начните ввод запроса одним из способов на [панели <Constant name="wizard" />](/docs/dbt-ai/wizard-ide):
+   - **Быстрые действия**: Используйте [генерацию ресурсов с помощью быстрых действий](/docs/dbt-ai/wizard-ide#panel-controls) в верхней части панели, чтобы создавать документацию, тесты, семантические модели и метрики.
+   - **Обычный текст**: Введите текст непосредственно в текстовое поле, чтобы описать, что вы хотите создать или изменить.
+   - **Контекст модели**: Введите `@`, чтобы выбрать модель в качестве контекста. Это ограничивает изменения агента выбранным ресурсом.
+3. Нажмите [кнопку **Agent mode**](/docs/dbt-ai/wizard-ide), чтобы задать режим работы <Constant name="wizard" />. Доступны режимы **Ask for approval** (запрашивать подтверждение, по умолчанию) и **Edit files automatically** (редактировать файлы автоматически).
+4. [Просмотрите предложения агента](/docs/dbt-ai/wizard-ide) и одобрите или отклоните изменения. Вы также можете нажать кнопку **Start new dbt Wizard chat**, чтобы начать новый сеанс чата.
+5. [Подтвердите выполнение команд dbt](/docs/dbt-ai/wizard-ide), когда <Constant name="wizard" /> запрашивает разрешение на запуск таких команд, как `dbt compile` или `dbt build`.
+6. Повторите процесс, чтобы создать или изменить другие модели.
+7. Создайте коммит с изменениями в своём проекте dbt и откройте pull request.

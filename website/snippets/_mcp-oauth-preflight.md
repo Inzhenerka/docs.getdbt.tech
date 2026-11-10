@@ -1,7 +1,7 @@
-**Before you connect**
+**Перед подключением**
 
-- Your MCP client must support OAuth for HTTP-based MCP servers. If it doesn't, use [token-based authentication](/docs/dbt-ai/setup-remote-mcp#token-based-authentication) instead.
-- On first connect, your client opens a browser for sign-in. dbt then shows a consent screen with the scopes (the specific permissions the client is allowed to use) it's requesting &mdash; see [Scopes and consent](/docs/platform/manage-access/connect-apps-oauth#scopes-and-consent) for what each scope means.
-- Most modern MCP clients self-register on first connect via [dynamic registration (RFC 7591)](/docs/platform/manage-access/connect-apps-oauth#dynamic-registration). Clients that don't support it need an admin to register them in **Account settings → Integrations → App integrations**. See [Manual registration](/docs/platform/manage-access/connect-apps-oauth#manual-registration).
+- Ваш MCP-клиент должен поддерживать OAuth для MCP-серверов, работающих по HTTP. Если такой поддержки нет, используйте [аутентификацию на основе токенов](/docs/dbt-ai/setup-remote-mcp#token-based-authentication).
+- При первом подключении клиент открывает браузер для входа в систему. Затем dbt показывает экран согласия с запрашиваемыми областями доступа (конкретными разрешениями, которые клиенту будет позволено использовать) &mdash; описание каждой области доступа см. в разделе [Области доступа и согласие](/docs/platform/manage-access/connect-apps-oauth#scopes-and-consent).
+- Большинство современных MCP-клиентов регистрируются самостоятельно при первом подключении с помощью [динамической регистрации (RFC 7591)](/docs/platform/manage-access/connect-apps-oauth#dynamic-registration). Клиенты, которые её не поддерживают, администратор должен зарегистрировать в разделе **Account settings → Integrations → App integrations**. См. раздел [Ручная регистрация](/docs/platform/manage-access/connect-apps-oauth#manual-registration).
 
-For the full flow, sessions, and limitations, refer to [OAuth (remote MCP)](/docs/dbt-ai/setup-remote-mcp#oauth-remote-mcp).
+Полное описание процесса, сеансов и ограничений см. в разделе [OAuth (удалённый MCP)](/docs/dbt-ai/setup-remote-mcp#oauth-remote-mcp).

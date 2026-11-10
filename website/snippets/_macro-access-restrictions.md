@@ -1,4 +1,4 @@
 <VersionBlock firstVersion="1.12">
 
-When a macro is invoked with `dbt run-operation`, dbt doesn't enforce model access or group controls, so you can use `ref()` to reference all models (including `private` and `protected` ones).
+При вызове макроса с помощью `dbt run-operation` dbt не применяет ограничения доступа к моделям и ограничения групп, поэтому с помощью `ref()` можно ссылаться на любые модели (включая модели с доступом `private` и `protected`).
 </VersionBlock>

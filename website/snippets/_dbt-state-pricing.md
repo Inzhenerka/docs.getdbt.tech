@@ -1,21 +1,21 @@
-### Daily active target tables
+### Ежедневно активные целевые таблицы {#daily-active-target-tables}
 
-For purposes of pricing, daily active target tables (DATT) are measured as the number of distinct target tables (as defined below) for which dbt State performs at least one of the following unique operations on a given day (based on UTC time): a skip, clone, or test reuse.
+Для расчета стоимости количество ежедневно активных целевых таблиц (DATT) определяется как число различных целевых таблиц (определение приведено ниже), для которых dbt State выполняет хотя бы одну из следующих уникальных операций в течение определенного дня (по времени UTC): пропуск, клонирование или повторное использование результата теста.
 
-A target table is a database object managed by your dbt project for a given database and schema name. It includes seeds, snapshots, dbt models (including incremental models). It also includes each distinct test (even if the tests are not built into the database because `store_failures` is disabled). For example, if `stg_customers` has `not_null` and `unique` tests on its `id` column, that's three target tables: the model and its two tests.
+Целевая таблица — это объект базы данных, которым управляет ваш проект dbt, для определенной базы данных и схемы. К целевым таблицам относятся seeds, snapshots и модели dbt (включая инкрементальные модели). К ним также относится каждый отдельный тест (даже если тесты не создаются в базе данных, поскольку параметр `store_failures` отключен). Например, если для столбца `id` модели `stg_customers` заданы тесты `not_null` и `unique`, это считается тремя целевыми таблицами: модель и два ее теста.
 
-When you run `dbt build` or a similar command, a target table is selected for execution. It counts as an active target table if dbt State can reuse it based on your configuration rules. All reuses of the same active target table in a single day (based on UTC time) count as a single daily active target table (DATT).
+При запуске `dbt build` или аналогичной команды целевая таблица выбирается для выполнения. Она считается активной целевой таблицей, если dbt State может повторно использовать ее в соответствии с правилами вашей конфигурации. Все повторные использования одной и той же активной целевой таблицы в течение одного дня (по времени UTC) учитываются как одна ежедневно активная целевая таблица (DATT).
 
-### Monthly cost calculation
+### Расчет ежемесячной стоимости {#monthly-cost-calculation}
 
-dbt State calculates cost per billing period using the unit price (USD $0.094) x sum of daily active target tables (DATT) for all account users and all days in that billing period. For example, if you have 100 DATT in a billing period, you'll be billed for 100 * $0.094 = $9.40.
+dbt State рассчитывает стоимость за расчетный период по формуле: цена за единицу (0,094 долл. США) × сумма ежедневно активных целевых таблиц (DATT) для всех пользователей аккаунта за все дни этого расчетного периода. Например, если за расчетный период у вас насчитывается 100 DATT, сумма к оплате составит 100 × 0,094 долл. США = 9,40 долл. США.
 
-For current unit price and more information, refer to the [dbt Labs Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table).
+Актуальную цену за единицу и дополнительную информацию см. в [таблице потребления сервисов dbt Labs](https://www.getdbt.com/legal/service-consumption-table).
 
-### DATT chart
+### Диаграмма DATT {#datt-chart}
 
-You can view your DATT count in **Account settings** > **Billing & Usage** > **Usage-based features**. Under the **State** tab, the DATT chart shows DATTs split into **Billable** and **Free**. During a trial, all DATTs are counted as free. DATTs within your [monthly allowance](#free-monthly-datt-allowance) are also counted as free and do _not_ appear on your invoice.
+Количество DATT можно посмотреть в разделе **Account settings** > **Billing & Usage** > **Usage-based features**. На вкладке **State** диаграмма DATT показывает DATT с разбивкой на **Billable** (платные) и **Free** (бесплатные). В течение пробного периода все DATT учитываются как бесплатные. DATT в пределах вашего [ежемесячного бесплатного лимита](#free-monthly-datt-allowance) также учитываются как бесплатные и _не_ включаются в счет.
 
-### Cancellation
+### Отмена подписки {#cancellation}
 
-Usage is tracked through your cancellation date. You're billed at month end for usage incurred before cancellation and not charged for usage after.
+Использование отслеживается до даты отмены подписки. В конце месяца вам выставляется счет за использование до отмены подписки; за использование после отмены плата не взимается.

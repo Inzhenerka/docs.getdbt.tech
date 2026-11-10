@@ -1,10 +1,10 @@
-:::info important
+:::info Важно
 
-<Constant name="fusion_engine" /> is available for installation in: 
-- [Local command line interface (CLI) tools](/docs/local/install-dbt?version=2)
-- [VS Code and Cursor with the dbt extension](/docs/install-dbt-extension)
-- [<Constant name="dbt_platform" /> environments](/docs/dbt-versions/upgrade-dbt-platform-version#dbt-v2)
+<Constant name="fusion_engine" /> доступен для установки в следующих средах: 
+- [Локальные инструменты командной строки (CLI)](/docs/local/install-dbt?version=2)
+- [VS Code и Cursor с расширением dbt](/docs/install-dbt-extension)
+- [Среды <Constant name="dbt_platform" />](/docs/dbt-versions/upgrade-dbt-platform-version#dbt-v2)
 
-Join the conversation in our dbt Community Slack channel [`#dbt-v2`](https://getdbt.slack.com/archives/C088YCAB6GH). 
+Присоединяйтесь к обсуждению в канале [`#dbt-v2`](https://getdbt.slack.com/archives/C088YCAB6GH) в Slack сообщества dbt. 
 
 :::

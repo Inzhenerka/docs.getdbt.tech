@@ -1,49 +1,49 @@
-The Redshift database user that <Constant name="fusion_engine" /> uses must be able to run dbt workloads and read catalog metadata used for introspection.
+Пользователь базы данных Redshift, которого использует <Constant name="fusion_engine" />, должен иметь возможность выполнять рабочие нагрузки dbt и читать метаданные каталога, используемые для интроспекции.
 
-### Required Redshift objects
+### Необходимые объекты Redshift {#required-redshift-objects}
 
-Before connecting, these objects must exist or be accessible:
+Перед подключением следующие объекты должны существовать или быть доступны:
 
-| Object | Purpose |
+| Объект | Назначение |
 | --- | --- |
-| **Cluster** (provisioned) or **workgroup** (serverless) | Compute resource |
-| **Database** | Target database |
-| **Schema** | Target schema within the database |
-| **User** | Database user for authentication |
-| **IAM role or profile** (optional) | For IAM-based authentication |
+| **Кластер** (provisioned) или **рабочая группа** (serverless) | Вычислительный ресурс |
+| **База данных** | Целевая база данных |
+| **Схема** | Целевая схема в базе данных |
+| **Пользователь** | Пользователь базы данных для аутентификации |
+| **Роль или профиль IAM** (необязательно) | Для аутентификации на основе IAM |
 
-### Core permissions
+### Основные разрешения {#core-permissions}
 
-The following permissions are required for fundamental dbt features:
+Для базовых функций dbt необходимы следующие разрешения:
 
-| Permission | Object | Purpose |
+| Разрешение | Объект | Назначение |
 | --- | --- | --- |
-| `USAGE` | Schema | Access the schema |
-| `CREATE` | Schema | Create tables and views in the schema |
-| `SELECT` | Tables or views | Read data |
-| `INSERT` | Tables | Insert data |
-| `UPDATE` | Tables | Update data |
-| `DELETE` | Tables | Delete data |
-| `DROP` | Tables or views | Drop or replace objects |
-| `TRUNCATE` | Tables | Truncate tables |
+| `USAGE` | Схема | Доступ к схеме |
+| `CREATE` | Схема | Создание таблиц и представлений в схеме |
+| `SELECT` | Таблицы или представления | Чтение данных |
+| `INSERT` | Таблицы | Вставка данных |
+| `UPDATE` | Таблицы | Обновление данных |
+| `DELETE` | Таблицы | Удаление данных |
+| `DROP` | Таблицы или представления | Удаление или замена объектов |
+| `TRUNCATE` | Таблицы | Очистка таблиц |
 
-### Metadata operations 
+### Операции с метаданными {#metadata-operations}
 
-<Constant name="fusion" /> queries these Redshift system relations:
+<Constant name="fusion" /> запрашивает следующие системные отношения Redshift:
 
-| System relation | Purpose | Permission required |
+| Системное отношение | Назначение | Необходимое разрешение |
 | --- | --- | --- |
-| `SVV_ALL_COLUMNS` | Column metadata | SELECT on the system view |
-| `pg_class` | List relations | Access to system catalog |
-| `pg_namespace` | Schema information | Access to system catalog |
-| `sys_query_detail` | Source freshness (last insert time) | SELECT on the system view |
-| `svv_table_info` | List materialized views when the project includes them | SELECT on the system view |
-| `svv_mv_info` | List materialized views when the project includes them | SELECT on the system view |
+| `SVV_ALL_COLUMNS` | Метаданные столбцов | SELECT для системного представления |
+| `pg_class` | Получение списка отношений | Доступ к системному каталогу |
+| `pg_namespace` | Информация о схемах | Доступ к системному каталогу |
+| `sys_query_detail` | Проверка актуальности источников (время последней вставки) | SELECT для системного представления |
+| `svv_table_info` | Получение списка материализованных представлений, если они есть в проекте | SELECT для системного представления |
+| `svv_mv_info` | Получение списка материализованных представлений, если они есть в проекте | SELECT для системного представления |
 
-### Schema management 
+### Управление схемами {#schema-management}
 
-Conditional permissions for schema management
+Разрешения для управления схемами, необходимые при определённых условиях
 
-| Permission | Object | When required |
+| Разрешение | Объект | Когда требуется |
 | --- | --- | --- |
-| `CREATE SCHEMA` | Database | Auto-create schemas |
+| `CREATE SCHEMA` | База данных | Автоматическое создание схем |

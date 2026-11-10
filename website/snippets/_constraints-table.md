@@ -1,15 +1,14 @@
+Выберите вкладку нужного адаптера, чтобы узнать больше о поддержке [ограничений](/reference/resource-properties/constraints) на разных платформах. Ограничения делятся на три категории в зависимости от возможности их определения и обеспечения их соблюдения платформой:
 
-Select the adapter-specific tab for more information on [constraint](/reference/resource-properties/constraints) support across platforms. Constraints fall into three categories based on definability and platform enforcement:
-
-- **Definable and enforced** &mdash; The model won't build if it violates the constraint.
-- **Definable and not enforced** &mdash; The platform supports specifying the type of constraint, but a model can still build even if building the model violates the constraint. This constraint exists for metadata purposes only. This approach is more typical in cloud data warehouses than in transactional databases, where strict rule enforcement is more common.
-- **Not definable and not enforced** &mdash; You can't specify the type of constraint for the platform.
+- **Можно определить, соблюдение обеспечивается** &mdash; Модель не будет построена, если она нарушает ограничение.
+- **Можно определить, соблюдение не обеспечивается** &mdash; Платформа позволяет указать тип ограничения, но модель всё равно может быть построена, даже если её построение нарушает это ограничение. Такое ограничение существует только в качестве метаданных. Этот подход более характерен для облачных хранилищ данных, чем для транзакционных баз данных, где чаще обеспечивается строгое соблюдение правил.
+- **Нельзя определить, соблюдение не обеспечивается** &mdash; Указать этот тип ограничения для платформы невозможно.
 
 <Tabs>
 
 <TabItem value="Redshift" label="Redshift">
 
-| Constraint type | Definable       | Enforced         |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:----------------|:-------------:|:------------------:|
 | not_null        | ✅ | ✅ |
 | primary_key     | ✅ | ❌ |
@@ -20,7 +19,7 @@ Select the adapter-specific tab for more information on [constraint](/reference/
 </TabItem>
 <TabItem value="Snowflake" label="Snowflake">
 
-| Constraint type | Definable     | Enforced |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:----------------|:-------------:|:---------------------:|
 | not_null        | ✅  | ✅ |
 | primary_key     | ✅  | ❌ |
@@ -31,7 +30,7 @@ Select the adapter-specific tab for more information on [constraint](/reference/
 </TabItem>
 <TabItem value="BigQuery" label="BigQuery">
 
-| Constraint type | Definable     | Enforced |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:-----------------|:-------------:|:---------------------:|
 | not_null        | ✅ | ✅  |
 | primary_key     | ✅ | ❌  |
@@ -42,7 +41,7 @@ Select the adapter-specific tab for more information on [constraint](/reference/
 </TabItem>
 <TabItem value="Postgres" label="Postgres">
 
-| Constraint type | Definable     | Enforced |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:----------------|:-------------:|:--------------------:|
 | not_null        | ✅  |	✅  |
 | primary_key     | ✅  |	✅  |
@@ -53,9 +52,9 @@ Select the adapter-specific tab for more information on [constraint](/reference/
 </TabItem>
 <TabItem value="Spark" label="Spark">
 
-Currently, `not_null` and `check` constraints are enforced only after a model is built. Because of this platform limitation, dbt considers these constraints definable but not enforced, which means they're not part of the _model contract_ since they can't be enforced at build time. This table will change as the features evolve.
+В настоящее время соблюдение ограничений `not_null` и `check` обеспечивается только после построения модели. Из-за этого ограничения платформы dbt считает, что эти ограничения можно определить, но их соблюдение не обеспечивается. Это означает, что они не входят в _контракт модели_, поскольку их соблюдение невозможно обеспечить во время построения. Эта таблица будет меняться по мере развития функциональности.
 
-| Constraint type | Definable    | Enforced |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:----------------|:------------:|:---------------------:|
 | not_null        |	✅  | ❌ |
 | primary_key     |	✅  | ❌ |
@@ -66,9 +65,9 @@ Currently, `not_null` and `check` constraints are enforced only after a model is
 </TabItem>
 <TabItem value="Databricks" label="Databricks">
 
-Currently, `not_null` and `check` constraints are enforced only after a model is built. Because of this platform limitation, dbt considers these constraints definable but not enforced, which means they're not part of the _model contract_ since they can't be enforced at build time. This table will change as the features evolve.
+В настоящее время соблюдение ограничений `not_null` и `check` обеспечивается только после построения модели. Из-за этого ограничения платформы dbt считает, что эти ограничения можно определить, но их соблюдение не обеспечивается. Это означает, что они не входят в _контракт модели_, поскольку их соблюдение невозможно обеспечить во время построения. Эта таблица будет меняться по мере развития функциональности.
 
-| Constraint type | Definable     | Enforced |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:----------------|:-------------:|:---------------------:|
 | not_null        |	✅  | ✅ |
 | primary_key     | ✅  | ❌ |
@@ -79,9 +78,9 @@ Currently, `not_null` and `check` constraints are enforced only after a model is
 </TabItem>
 <TabItem value="Fabric" label="Fabric">
 
-Microsoft Fabric creates the table first, then adds some constraints in separate steps. Only `not_null` is checked when the model builds. Primary key, foreign key, and unique constraints are recorded on the table for reference, but Fabric does not check them when new data is added. Define `primary_key`, `foreign_key`, and `unique` at the model level. The adapter ignores those constraint types at the column level.
+Microsoft Fabric сначала создаёт таблицу, а затем добавляет некоторые ограничения отдельными шагами. При построении модели проверяется только `not_null`. Ограничения первичного ключа, внешнего ключа и уникальности сохраняются в определении таблицы для справки, но Fabric не проверяет их при добавлении новых данных. Определяйте `primary_key`, `foreign_key` и `unique` на уровне модели. Адаптер игнорирует эти типы ограничений на уровне столбцов.
 
-| Constraint type | Definable     | Enforced |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:----------------|:-------------:|:---------------------:|
 | not_null        | ✅  | ✅ |
 | primary_key     | ✅  | ❌ |
@@ -92,7 +91,7 @@ Microsoft Fabric creates the table first, then adds some constraints in separate
 </TabItem>
 <TabItem value="Athena" label="Athena">
 
-| Constraint type | Definable     | Enforced |
+| Тип ограничения | Можно определить | Соблюдение обеспечивается |
 |:----------------|:-------------:|:---------------------:|
 | not_null        |	❌  | ❌ |
 | primary_key     | ❌  | ❌ |

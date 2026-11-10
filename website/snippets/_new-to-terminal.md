@@ -1,3 +1,3 @@
-:::tip New to the terminal?
-If you've never used the terminal before, check out the [terminal guide](/guides/terminal-guide) for some helpful tips to help you get started!
+:::tip Впервые работаете с терминалом?
+Если вы никогда раньше не пользовались терминалом, ознакомьтесь с [руководством по работе с терминалом](/guides/terminal-guide) — в нём вы найдёте полезные советы, которые помогут вам начать работу!
 :::

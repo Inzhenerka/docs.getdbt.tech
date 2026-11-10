@@ -1,11 +1,11 @@
-## Assign permission sets to SCIM groups
+## Назначение наборов разрешений группам SCIM {#assign-permission-sets-to-scim-groups}
 
-SCIM syncs groups and memberships into <Constant name="dbt_platform" />, but it does not assign [permission sets](/docs/platform/manage-access/enterprise-permissions). Without a permission set, group members will not have access to features beyond their user profile.
+SCIM синхронизирует группы и состав их участников с <Constant name="dbt_platform" />, но не назначает [наборы разрешений](/docs/platform/manage-access/enterprise-permissions). Без набора разрешений участники группы не получат доступа к функциям за пределами своего профиля пользователя.
 
-1. After the sync, go to **Account settings** &rarr; **Groups & Licenses**, where the SCIM group appears automatically.
-2. Open the SCIM-synced group. Don't create another group for the same IdP group, as this creates a duplicate.
-3. Under **Access & permissions**, click **Add permission**.
-4. Select a [permission set](/docs/platform/manage-access/enterprise-permissions), the projects it should apply to, and [environment-level access](/docs/platform/manage-access/environment-permissions) if applicable.
-5. Click **Save**.
+1. После синхронизации перейдите в **Account settings** &rarr; **Groups & Licenses**, где автоматически появится группа SCIM.
+2. Откройте группу, синхронизированную через SCIM. Не создавайте ещё одну группу для той же группы IdP, поскольку это приведёт к появлению дубликата.
+3. В разделе **Access & permissions** нажмите **Add permission**.
+4. Выберите [набор разрешений](/docs/platform/manage-access/enterprise-permissions), проекты, к которым он должен применяться, и, если применимо, [доступ на уровне окружения](/docs/platform/manage-access/environment-permissions).
+5. Нажмите **Save**.
 
-Repeat for each SCIM-synced group that needs access.
+Повторите эти действия для каждой группы, синхронизированной через SCIM, которой требуется доступ.

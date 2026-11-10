@@ -1,5 +1,5 @@
-dbt State setup depends on your account access and local settings. After you run `dbt login`, follow the CLI prompt to complete the next step:
+Настройка dbt State зависит от прав доступа вашей учётной записи и локальных настроек. После выполнения `dbt login` следуйте подсказке CLI, чтобы перейти к следующему шагу:
 
-- If dbt State is available for your account but not enabled locally, dbt can enable it in `~/.dbt/user_settings.yml`.
-- If dbt State is not available for your account, dbt prompts you to set up access before you can use dbt State locally.
-- If dbt State is already enabled for your account and on your machine, no additional setup is required.
+- Если dbt State доступен для вашей учётной записи, но не включён локально, dbt может включить его в `~/.dbt/user_settings.yml`.
+- Если dbt State недоступен для вашей учётной записи, dbt предложит настроить доступ, прежде чем вы сможете использовать dbt State локально.
+- Если dbt State уже включён для вашей учётной записи и на вашем компьютере, дополнительная настройка не требуется.

@@ -1,20 +1,19 @@
-#### Upgrade considerations
+#### Что следует учитывать при обновлении {#upgrade-considerations}
 
-Keep in mind the following considerations during the upgrade process:
+В процессе обновления учитывайте следующее:
 
-- **Manifest compatibility** &mdash; <Constant name="fusion" /> produces a `v12` [manifest](/reference/artifacts/manifest-json) that's compatible with <Constant name="core" />. The only differences are optional <Constant name="fusion" />-specific fields that only <Constant name="fusion" /> writes, which <Constant name="core" /> safely ignores.
+- **Совместимость манифеста** &mdash; <Constant name="fusion" /> создает [манифест](/reference/artifacts/manifest-json) версии `v12`, совместимый с <Constant name="core" />. Единственное отличие — необязательные поля, специфичные для <Constant name="fusion" />: их записывает только <Constant name="fusion" />, а <Constant name="core" /> корректно их игнорирует.
 
-  As a result, you can run <Constant name="fusion" /> and <Constant name="core" /> side by side. State-dependent features such as `state:modified`, `--defer`, and cross-environment `dbt docs generate` work across mixed <Constant name="fusion" /> and <Constant name="core" /> environments, so you can migrate to <Constant name="fusion" /> incrementally without breaking existing <Constant name="core" /> jobs.
+  Поэтому вы можете использовать <Constant name="fusion" /> и <Constant name="core" /> параллельно. Функции, зависящие от состояния, такие как `state:modified`, `--defer` и выполнение `dbt docs generate` с использованием состояния из другого окружения, работают в смешанных окружениях <Constant name="fusion" /> и <Constant name="core" />. Это позволяет переходить на <Constant name="fusion" /> постепенно, не нарушая работу существующих заданий <Constant name="core" />.
 
 <!--
-- **dbtState-aware orchestration** &mdash; If using [state-aware orchestration](/docs/deploy/state-aware-about), dbt doesn't detect a change if a table or view is dropped outside of dbt, as the cache is unique to each <Constant name="dbt_platform" /> environment. This means state-aware orchestration will not rebuild that model until either there is new data or a change in the code that the model uses.
-  - **Workarounds:**
-    - Use the **Clear cache** button on the target Environment page to force a full rebuild (acts like a reset), or
-    - Temporarily disable state-aware orchestration for the job and rerun it.
+- **Оркестрация dbt с учетом состояния** &mdash; При использовании [оркестрации с учетом состояния](/docs/deploy/state-aware-about) dbt не обнаруживает изменение, если таблица или представление удалены вне dbt, поскольку у каждого окружения <Constant name="dbt_platform" /> собственный кеш. Это означает, что оркестрация с учетом состояния не пересоздаст эту модель, пока не появятся новые данные или не изменится код, используемый моделью.
+  - **Способы обхода:**
+    - Нажмите кнопку **Clear cache** на странице целевого окружения, чтобы принудительно выполнить полное пересоздание (аналог сброса), или
+    - Временно отключите оркестрацию с учетом состояния для задания и запустите его повторно.
 -->
-  :::caution State-aware orchestration is now dbt State
-  [dbt State](/docs/deploy/dbt-state-about) works with all engines and environments: <Constant name="core" />, the <Constant name="dbt_platform" />, and <Constant name="fusion_engine" />.
+  :::caution Оркестрация с учетом состояния теперь называется dbt State
+  [dbt State](/docs/deploy/dbt-state-about) работает со всеми движками и окружениями: <Constant name="core" />, <Constant name="dbt_platform" /> и <Constant name="fusion_engine" />.
 
-  If you were using state-aware orchestration prior to June 1, 2026, you can continue using it. Once you start your free dbt State trial, it will be extended beyond the standard 30-day period. If the extension isn't applied to your account, contact your account team. To get started, refer to [Migrate from state-aware orchestration](/docs/deploy/dbt-state-migration).
+  Если вы использовали оркестрацию с учетом состояния до 1 июня 2026 года, вы можете продолжать ею пользоваться. Когда вы начнете бесплатный пробный период dbt State, он будет продлен сверх стандартных 30 дней. Если для вашей учетной записи продление не применено, обратитесь к команде по работе с вашим клиентским аккаунтом. Чтобы начать, ознакомьтесь с разделом [Переход с оркестрации с учетом состояния](/docs/deploy/dbt-state-migration).
   :::
-

@@ -1,54 +1,54 @@
-## AWS private connectivity matrix
+## Матрица приватных подключений в AWS {#aws-private-connectivity-matrix}
 
-The following charts outline private connectivity options for AWS deployments of <Constant name="dbt" /> ([multi-tenant and single-tenant](/docs/platform/about-platform/tenancy)).
+В следующих таблицах представлены варианты приватного подключения для развертываний <Constant name="dbt" /> в AWS ([мультитенантных и однотенантных](/docs/platform/about-platform/tenancy)).
 
-**Legend:**
-- ✅ = Available
-- ❌ = Not currently available
+**Условные обозначения:**
+- ✅ = Доступно
+- ❌ = В настоящее время недоступно
 
-_Tenancy:_ MT (multi-tenant) and ST (single-tenant) — [learn more about tenancy](/docs/platform/about-platform/tenancy).
+_Модель тенантности:_ MT (мультитенантная) и ST (однотенантная) — [подробнее о тенантности](/docs/platform/about-platform/tenancy).
 
-:::note About the following matrix tables
-These tables indicate whether private connectivity can be established to specific services, considering major factors such as the network and basic auth layers. dbt has validated these configurations using common deployment patterns and typical use cases. However, individual configurations may vary. If you encounter issues or have questions about your environment, [contact dbt Support](/community/resources/getting-help#dbt-support) for guidance.
+:::note О приведенных ниже таблицах
+В этих таблицах указано, можно ли установить приватное подключение к определенным сервисам с учетом основных факторов, таких как сетевой уровень и уровень базовой аутентификации. dbt проверила эти конфигурации с использованием распространенных схем развертывания и типичных сценариев использования. Однако отдельные конфигурации могут отличаться. Если у вас возникли проблемы или вопросы о вашей среде, [обратитесь в службу поддержки dbt](/community/resources/getting-help#dbt-support) за рекомендациями.
 :::
 
 ---
 
-### Connecting to the dbt platform (Ingress) <Lifecycle status="beta"/>
+### Подключение к платформе dbt (входящий трафик) <Lifecycle status="beta"/> {#connecting-to-the-dbt-platform-ingress}
 
-Your services can connect to <Constant name="dbt" /> over private connectivity using the <Term id="dbt-provisioned">dbt-provisioned</Term> model. In this case, dbt is the <Term id="service-producer">service producer</Term> and you are the <Term id="consumer">consumer</Term>.
+Ваши сервисы могут подключаться к <Constant name="dbt" /> по приватному соединению, используя модель <Term id="dbt-provisioned">с настройкой на стороне dbt</Term>. В этом случае dbt выступает в роли <Term id="service-producer">поставщика сервиса</Term>, а вы — в роли <Term id="consumer">потребителя</Term>.
 
-| Connectivity type | MT | ST | Setup guide |
+| Тип подключения | MT | ST | Руководство по настройке |
 |-------------------|-----|-----|-------------|
-| Private <Constant name="dbt" /> access | ❌ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-ingress) |
-| Dual access (public + private) | ❌ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-ingress) |
+| Приватный доступ к <Constant name="dbt" /> | ❌ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-ingress) |
+| Двойной доступ (публичный + приватный) | ❌ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-ingress) |
 
 ---
 
-### Connecting the dbt platform to managed services (Egress)
+### Подключение платформы dbt к управляемым сервисам (исходящий трафик) {#connecting-the-dbt-platform-to-managed-services-egress}
 
-<Constant name="dbt" /> can establish private connections to managed data platforms and cloud-native services.
+<Constant name="dbt" /> может устанавливать приватные подключения к управляемым платформам данных и облачным сервисам.
 
-| Service | MT | ST | Setup guide |
+| Сервис | MT | ST | Руководство по настройке |
 |---------|-----|-----|-------------|
-| Snowflake | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-snowflake) |
-| &nbsp;&nbsp;Snowflake Internal Stage | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-snowflake) |
-| Databricks | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-databricks) |
-| Redshift | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-redshift) |
-| Redshift Serverless | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-redshift) |
-| Amazon Athena w/ AWS Glue | ❌ | ✅ | |
+| Snowflake | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-snowflake) |
+| &nbsp;&nbsp;Snowflake Internal Stage | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-snowflake) |
+| Databricks | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-databricks) |
+| Redshift | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-redshift) |
+| Redshift Serverless | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-redshift) |
+| Amazon Athena с AWS Glue | ❌ | ✅ | |
 | AWS CodeCommit | ❌ | ✅ | |
-| Teradata VantageCloud | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/aws/aws-teradata) |
+| Teradata VantageCloud | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/aws/aws-teradata) |
 
 ---
 
-### Connecting the dbt platform to self-hosted services (Egress)
+### Подключение платформы dbt к самостоятельно размещенным сервисам (исходящий трафик) {#connecting-the-dbt-platform-to-self-hosted-services-egress}
 
-All of the services below share a common PrivateLink setup guide — backend configuration varies by service. Self-hosted connections use the <Term id="customer-provisioned">customer-provisioned</Term> model — you are the <Term id="service-producer">service producer</Term> and dbt is the <Term id="consumer">consumer</Term>.
+Для всех перечисленных ниже сервисов используется общее руководство по настройке PrivateLink — конфигурация серверной части зависит от сервиса. Подключения к самостоятельно размещенным сервисам используют модель <Term id="customer-provisioned">с настройкой на стороне клиента</Term>: вы выступаете в роли <Term id="service-producer">поставщика сервиса</Term>, а dbt — в роли <Term id="consumer">потребителя</Term>.
 
-**Setup guide:** [Configuring AWS PrivateLink for self-hosted services](/docs/platform/secure/private-connectivity/aws/aws-self-hosted)
+**Руководство по настройке:** [Настройка AWS PrivateLink для самостоятельно размещенных сервисов](/docs/platform/secure/private-connectivity/aws/aws-self-hosted)
 
-| Service | MT | ST |
+| Сервис | MT | ST |
 |---------|-----|-----|
 | GitHub Enterprise Server | ✅ | ✅ |
 | GitLab Self-Managed | ✅ | ✅ |
@@ -57,6 +57,6 @@ All of the services below share a common PrivateLink setup guide — backend con
 | Postgres | ✅ | ✅ |
 | Spark | ✅ | ✅ |
 | Starburst / Trino | ✅ | ✅ |
-| Teradata (self-hosted) | ✅ | ✅ |
+| Teradata (самостоятельное размещение) | ✅ | ✅ |
 
-If you have questions about whether your specific architecture is supported, [contact dbt Support](/community/resources/getting-help#dbt-support).
+Если у вас есть вопросы о поддержке вашей конкретной архитектуры, [обратитесь в службу поддержки dbt](/community/resources/getting-help#dbt-support).

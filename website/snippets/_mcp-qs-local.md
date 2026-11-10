@@ -1,28 +1,27 @@
+Это краткое руководство поможет вам подключить сервер dbt MCP к локальному проекту dbt. Такая настройка позволит вашему ИИ-ассистенту использовать инструменты команд dbt (`run`, `build`, `test`, `compile` и другие). 
 
-This quickstart walks you through connecting dbt MCP server to your local dbt project. This setup gives you dbt command tools (`run`, `build`, `test`, `compile`, and more) inside your AI assistant. 
+Если вы хотите подключиться к <Constant name="dbt_platform"/> с помощью CLI, см. [краткое руководство по OAuth](/docs/dbt-ai/mcp-quickstart-oauth).
 
-If you'd like to connect to <Constant name="dbt_platform"/> with the CLI, see the [OAuth quickstart](/docs/dbt-ai/mcp-quickstart-oauth).
+Чтобы подключиться к <Constant name="wizard" />, см. [обзор dbt Wizard](/docs/platform/wizard-overview#get-started).
 
-To connect to <Constant name="wizard" />, see the [dbt Wizard overview](/docs/platform/wizard-overview#get-started).
-
-:::tip No clone required
-You don't need to clone the dbt-mcp repository. Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and run `uvx dbt-mcp` — it fetches and runs dbt-mcp for you.
+:::tip Клонировать репозиторий не нужно
+Вам не нужно клонировать репозиторий dbt-mcp. Установите [uv](https://docs.astral.sh/uv/getting-started/installation/) и выполните `uvx dbt-mcp` — эта команда загрузит и запустит dbt-mcp.
 :::
 
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-- [Install uv](https://docs.astral.sh/uv/getting-started/installation/)
-- A local dbt project (the folder containing your `dbt_project.yml` file)
-- dbt installed and available locally
+- [Установите uv](https://docs.astral.sh/uv/getting-started/installation/)
+- Локальный проект dbt (папка, содержащая файл `dbt_project.yml`)
+- Установленный и доступный локально dbt
 
-For the full list of environment variables and how to enable or disable toolsets, see the [Environment variables reference](/docs/dbt-ai/mcp-environment-variables).
+Полный список переменных окружения и инструкции по включению и отключению наборов инструментов см. в [справочнике переменных окружения](/docs/dbt-ai/mcp-environment-variables).
 
-## Step 1: Find your paths
+## Шаг 1. Определите пути {#step-1-find-your-paths}
 
-You need two values before configuring your MCP client:
+Перед настройкой MCP-клиента вам понадобятся два значения:
 
- - `DBT_PROJECT_DIR` — the full path to your dbt project folder (where `dbt_project.yml` lives). For example, if your project name is `jaffle_shop`, the path should be `/Users/yourname/dbt-projects/jaffle_shop`.
- - `DBT_PATH` — the full path to your dbt executable.
+ - `DBT_PROJECT_DIR` — полный путь к папке вашего проекта dbt (где находится `dbt_project.yml`). Например, если ваш проект называется `jaffle_shop`, путь должен быть `/Users/yourname/dbt-projects/jaffle_shop`.
+ - `DBT_PATH` — полный путь к исполняемому файлу dbt.
 
 <Tabs>
 <TabItem value="mac-linux" label="macOS/Linux">
@@ -51,22 +50,22 @@ cd
 # Example output: C:\Users\yourname\projects\my_dbt_project
 ```
 
-Note: Use forward slashes in your configuration: `C:/Python39/Scripts/dbt.exe`
+Примечание: используйте прямые косые черты в конфигурации: `C:/Python39/Scripts/dbt.exe`
 
 </TabItem>
 
 </Tabs>
 
-## Step 2: Add to your MCP client
+## Шаг 2. Добавьте сервер в MCP-клиент {#step-2-add-to-your-mcp-client}
 
-Replace the paths below with the values from Step 1:
+Замените пути ниже значениями из шага 1:
 
 <Tabs>
 
 <TabItem value="claude-desktop" label="Claude Desktop">
 
-1. In Claude Desktop, go to **Settings** → **Developer** tab → **Edit Config**.
-2. Paste the following configuration, replacing the paths with your actual values:
+1. В Claude Desktop перейдите в **Settings** → вкладка **Developer** → **Edit Config**.
+2. Вставьте следующую конфигурацию, заменив пути фактическими значениями:
 
 ```json
 {
@@ -83,9 +82,9 @@ Replace the paths below with the values from Step 1:
 }
 ```
 
-3. Save and restart Claude Desktop.
+3. Сохраните изменения и перезапустите Claude Desktop.
 
-Config file location:
+Расположение файла конфигурации:
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
 
@@ -93,7 +92,7 @@ Config file location:
 
 <TabItem value="claude-code" label="Claude Code">
 
-Run this command, replacing the paths with your actual values:
+Выполните эту команду, заменив пути фактическими значениями:
 
 ```shell
 claude mcp add dbt \
@@ -106,24 +105,24 @@ claude mcp add dbt \
 
 <TabItem value="cursor" label="Cursor">
 
-Click the link below with Cursor open to auto-configure:
+Откройте Cursor и нажмите ссылку ниже для автоматической настройки:
 
-[Add <Constant name="core"/> or <Constant name="fusion"/> to Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX1BST0pFQ1RfRElSIjoiL3BhdGgvdG8veW91ci9kYnQvcHJvamVjdCIsIkRCVF9QQVRIIjoiL3BhdGgvdG8veW91ci9kYnQvZXhlY3V0YWJsZSJ9LCJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl19)
+[Добавить <Constant name="core"/> или <Constant name="fusion"/> в Cursor](cursor://anysphere.cursor-deeplink/mcp/install?name=dbt&config=eyJlbnYiOnsiREJUX1BST0pFQ1RfRElSIjoiL3BhdGgvdG8veW91ci9kYnQvcHJvamVjdCIsIkRCVF9QQVRIIjoiL3BhdGgvdG8veW91ci9kYnQvZXhlY3V0YWJsZSJ9LCJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJkYnQtbWNwIl19)
 
-After clicking:
-1. Update `DBT_PROJECT_DIR` with the full path to your dbt project.
-2. Update `DBT_PATH` with the full path to your dbt executable (from Step 1).
-3. Save the configuration.
+После нажатия:
+1. Укажите в `DBT_PROJECT_DIR` полный путь к вашему проекту dbt.
+2. Укажите в `DBT_PATH` полный путь к исполняемому файлу dbt (из шага 1).
+3. Сохраните конфигурацию.
 
 </TabItem>
 
 <TabItem value="vscode" label="VS Code">
 
-1. Open **Settings** → **Features** → **Chat** and ensure **MCP** is enabled.
-2. Open the Command Palette (`Ctrl/Cmd + Shift + P`) and select **MCP: Open User Configuration**.
-3. Add the following configuration to `mcp.json`, replacing the paths with your actual values:
+1. Откройте **Settings** → **Features** → **Chat** и убедитесь, что **MCP** включён.
+2. Откройте палитру команд (`Ctrl/Cmd + Shift + P`) и выберите **MCP: Open User Configuration**.
+3. Добавьте следующую конфигурацию в `mcp.json`, заменив пути фактическими значениями:
 
-:::note VS Code uses `"servers"`, not `"mcpServers"`
+:::note VS Code использует `"servers"`, а не `"mcpServers"`
 :::
 
 ```json
@@ -141,44 +140,44 @@ After clicking:
 }
 ```
 
-4. Save the file.
+4. Сохраните файл.
 
 </TabItem>
 
 </Tabs>
 
-## Step 3: Test your setup
+## Шаг 3. Проверьте настройку {#step-3-test-your-setup}
 
-Ask your AI assistant to run a dbt command (for example, _"Run `dbt compile` on my project"_ or _"List all models in my project"_). If dbt MCP is working, the assistant will execute the command against your local project.
+Попросите ИИ-ассистента выполнить команду dbt (например, _«Выполни `dbt compile` для моего проекта»_ или _«Выведи список всех моделей в моём проекте»_). Если dbt MCP работает, ассистент выполнит команду для вашего локального проекта.
 
-<Expandable alt_header="Optional: verify from the command line">
+<Expandable alt_header="Необязательно: проверка из командной строки">
 
 ```bash
 uvx dbt-mcp
 ```
 
-If there are no errors, your configuration is correct. Press `Ctrl+C` to stop the server.
+Если ошибок нет, конфигурация верна. Нажмите `Ctrl+C`, чтобы остановить сервер.
 
 </Expandable>
 
-## What's available
+## Доступные возможности {#whats-available}
 
-With CLI-only setup, your AI assistant can use:
+При настройке только через CLI ваш ИИ-ассистент может использовать:
 - `dbt run`, `dbt build`, `dbt test`, `dbt compile`, `dbt list`, `dbt parse`, `dbt show`
-- Model lineage and node details from your local project
-- Codegen tools (when enabled — see [Environment variables reference](/docs/dbt-ai/mcp-environment-variables))
+- Информацию о происхождении и зависимостях моделей и сведения об узлах вашего локального проекта
+- Инструменты Codegen (если включены — см. [справочник переменных окружения](/docs/dbt-ai/mcp-environment-variables))
 
-Platform features like <Constant name="semantic_layer" />, Discovery API, and metadata queries require a <Constant name="dbt_platform" /> account. To add them, see [Connect to <Constant name="dbt_platform"/>](/docs/dbt-ai/mcp-quickstart-oauth).
+Для таких возможностей платформы, как <Constant name="semantic_layer" />, Discovery API и запросы к метаданным, требуется учётная запись <Constant name="dbt_platform" />. Чтобы добавить их, см. [Подключение к <Constant name="dbt_platform"/>](/docs/dbt-ai/mcp-quickstart-oauth).
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
 <FAQ path="dbt-mcp/troubleshooting/uvx" />
 
 <FAQ path="dbt-mcp/troubleshooting/server-not-starting" />
 
-For all troubleshooting topics, see [dbt MCP FAQs and troubleshooting](/docs/dbt-ai/mcp-troubleshooting).
+Все темы по устранению неполадок см. в разделе [Часто задаваемые вопросы о dbt MCP и устранение неполадок](/docs/dbt-ai/mcp-troubleshooting).
 
-## Next steps
+## Дальнейшие шаги {#next-steps}
 
-- Add <Constant name="dbt_platform" /> features: see [Connect to <Constant name="dbt_platform"/>](/docs/dbt-ai/mcp-quickstart-oauth)
-- Configure toolsets or disable specific tools: see the [Environment variables reference](/docs/dbt-ai/mcp-environment-variables)
+- Добавьте возможности <Constant name="dbt_platform" />: см. [Подключение к <Constant name="dbt_platform"/>](/docs/dbt-ai/mcp-quickstart-oauth)
+- Настройте наборы инструментов или отключите отдельные инструменты: см. [справочник переменных окружения](/docs/dbt-ai/mcp-environment-variables)

@@ -1,6 +1,6 @@
 :::info
-`login.dbt.com` is currently available for multi-tenant accounts with an account-specific domain (for example, `abc123.us1.dbt.com`). Support for single-tenant accounts is coming soon. In the meantime, single-tenant users can sign in directly using their account **Access URL** (like `MY_COMPANY.us1.dbt.com`).
+`login.dbt.com` в настоящее время доступен для мультитенантных аккаунтов с собственным доменом аккаунта (например, `abc123.us1.dbt.com`). Поддержка однотенантных аккаунтов появится в ближайшее время. Пока пользователи однотенантных аккаунтов могут входить напрямую через **Access URL** своего аккаунта (например, `MY_COMPANY.us1.dbt.com`).
 
-OAuth clients such as [<Constant name="platform_cli"/>](/docs/platform/dbt-cli-installation), the [dbt VS Code extension](/docs/about-dbt-extension?version=2.0), and [dbt MCP](/docs/dbt-ai/about-mcp) have not yet been updated to use `login.dbt.com` and continue to authenticate through their account [**Access URL**](/docs/platform/about-platform/access-regions-ip-addresses).
+Клиенты OAuth, такие как [<Constant name="platform_cli"/>](/docs/platform/dbt-cli-installation), [расширение dbt для VS Code](/docs/about-dbt-extension?version=2.0) и [dbt MCP](/docs/dbt-ai/about-mcp), пока не обновлены для использования `login.dbt.com` и продолжают проходить аутентификацию через [**Access URL**](/docs/platform/about-platform/access-regions-ip-addresses) своего аккаунта.
 
 :::

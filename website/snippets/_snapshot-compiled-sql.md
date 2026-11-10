@@ -1,5 +1,5 @@
-:::tip Compiled SQL for snapshots
-Starting dbt v1.12, you can inspect the SQL generated for this snapshot by running [`dbt compile`](/reference/commands/compile) or `dbt compile --select orders_snapshot`. 
+:::tip Скомпилированный SQL для снимков
+Начиная с dbt v1.12, вы можете просмотреть SQL, сгенерированный для этого снимка, выполнив [`dbt compile`](/reference/commands/compile) или `dbt compile --select orders_snapshot`. 
 
-Open the compiled SQL in `target/compiled/` to inspect or debug the generated queries. Each snapshot is compiled into its own SQL file, even if multiple snapshots are defined in the same source file.
+Откройте скомпилированный SQL в `target/compiled/`, чтобы изучить сгенерированные запросы или выполнить их отладку. Каждый снимок компилируется в отдельный SQL-файл, даже если в одном исходном файле определено несколько снимков.
 :::

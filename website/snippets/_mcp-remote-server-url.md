@@ -1,8 +1,8 @@
-You can copy your full **MCP URL** from **Account settings** → **Access URLs** → **MCP Endpoint URL** in <Constant name="dbt_platform"/>, and paste it directly into your AI tool.
+Вы можете скопировать полный **MCP URL** в разделе **Account settings** → **Access URLs** → **MCP Endpoint URL** в <Constant name="dbt_platform"/> и вставить его непосредственно в свой ИИ-инструмент.
 
-<Expandable alt_header="Build your own MCP URL">
+<Expandable alt_header="Составьте собственный MCP URL">
 
-We recommend using the MCP URL from **Account settings** → **Access URLs** → **MCP Endpoint URL** in <Constant name="dbt_platform"/>. However, if you want to build your own MCP URL, use your **Access URL** from **Account settings** in <Constant name="dbt_platform"/>. The remote MCP endpoint is `https://YOUR_DBT_HOST_URL/api/ai/v1/mcp`. Replace `YOUR_DBT_HOST_URL` with your hostname only (no `https://`). 
+Рекомендуем использовать MCP URL из раздела **Account settings** → **Access URLs** → **MCP Endpoint URL** в <Constant name="dbt_platform"/>. Однако, если вы хотите составить собственный MCP URL, используйте свой **Access URL** из раздела **Account settings** в <Constant name="dbt_platform"/>. Удаленная конечная точка MCP — `https://YOUR_DBT_HOST_URL/api/ai/v1/mcp`. Замените `YOUR_DBT_HOST_URL` только именем хоста (без `https://`). 
 
-For default hosts, multi-cell accounts, and regions, see [Access, Regions, & IP addresses](/docs/platform/about-platform/access-regions-ip-addresses).
+Информацию о хостах по умолчанию, аккаунтах multi-cell и регионах см. в разделе [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses).
 </Expandable>

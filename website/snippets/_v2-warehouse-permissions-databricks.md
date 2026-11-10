@@ -1,61 +1,61 @@
-The Databricks user or service principal that <Constant name="fusion_engine" /> uses must have privileges on the catalog and schemas where models run, plus access required for metadata queries. Requirements depend on whether you use Unity Catalog or the legacy Hive Metastore.
+Пользователь или субъект-служба Databricks, от имени которого работает <Constant name="fusion_engine" />, должен иметь привилегии для каталога и схем, в которых выполняются модели, а также права доступа, необходимые для запросов метаданных. Требования зависят от того, используете ли вы Unity Catalog или устаревший Hive Metastore.
 
-### Required Databricks objects
+### Необходимые объекты Databricks {#required-databricks-objects}
 
-Before connecting, these objects must exist or be accessible:
+Перед подключением следующие объекты должны существовать или быть доступны:
 
-| Object | Purpose |
+| Объект | Назначение |
 | --- | --- |
-| **Workspace** | Your Databricks workspace URL (host) |
-| **SQL warehouse or cluster** | Compute resource (using `http_path`) |
-| **Catalog** | Unity Catalog or Hive Metastore catalog |
-| **Schema** | Target schema within the catalog |
-| **User or service principal** | Identity for authentication |
+| **Рабочая область** | URL вашей рабочей области Databricks (host) |
+| **SQL warehouse или кластер** | Вычислительный ресурс (с использованием `http_path`) |
+| **Каталог** | Каталог Unity Catalog или Hive Metastore |
+| **Схема** | Целевая схема в каталоге |
+| **Пользователь или субъект-служба** | Учетная запись для аутентификации |
 
 ### Unity Catalog
 
-Required access for the Unity Catalog:
+Необходимые права доступа для Unity Catalog:
 
-| Permission | Object | Purpose |
+| Разрешение | Объект | Назначение |
 | --- | --- | --- |
-| `USE CATALOG` | Catalog | Access the catalog |
-| `USE SCHEMA` | Schema | Access schemas |
-| `SELECT` | Tables or views | Read existing data and sources |
-| `CREATE TABLE` | Schema | Create models materialized as tables |
-| `CREATE VIEW` | Schema | Create models materialized as views |
-| `MODIFY` | Tables | Insert, update, and delete data |
-| `CREATE SCHEMA` | Catalog | Auto-create schemas (if needed) |
+| `USE CATALOG` | Каталог | Доступ к каталогу |
+| `USE SCHEMA` | Схема | Доступ к схемам |
+| `SELECT` | Таблицы или представления | Чтение существующих данных и источников |
+| `CREATE TABLE` | Схема | Создание моделей, материализованных в виде таблиц |
+| `CREATE VIEW` | Схема | Создание моделей, материализованных в виде представлений |
+| `MODIFY` | Таблицы | Вставка, обновление и удаление данных |
+| `CREATE SCHEMA` | Каталог | Автоматическое создание схем (при необходимости) |
 
 ### Hive Metastore
 
-Required access for the legacy Hive Metastore:
+Необходимые права доступа для устаревшего Hive Metastore:
 
-| Permission | Object | Purpose |
+| Разрешение | Объект | Назначение |
 | --- | --- | --- |
-| `USAGE` | Database | Access the database |
-| `SELECT` | Tables | Read data |
-| `CREATE` | Database | Create tables and views |
-| `MODIFY` | Tables | Modify data |
+| `USAGE` | База данных | Доступ к базе данных |
+| `SELECT` | Таблицы | Чтение данных |
+| `CREATE` | База данных | Создание таблиц и представлений |
+| `MODIFY` | Таблицы | Изменение данных |
 
-### Metadata operations
+### Операции с метаданными {#metadata-operations}
 
-The following are required for fundamental dbt features:
+Для основных функций dbt необходимы следующие права:
 
-| Query type | SQL used | Required permission |
+| Тип запроса | Используемый SQL | Необходимое разрешение |
 | --- | --- | --- |
-| Get table schema | `DESCRIBE TABLE` or `DESCRIBE TABLE EXTENDED` | SELECT on table |
-| Get table schema (DBR 16.2+) | `DESCRIBE TABLE EXTENDED ... AS JSON` | SELECT on table |
-| List relations | Query `INFORMATION_SCHEMA.TABLES` | USE CATALOG and USE SCHEMA |
-| Source freshness | Query `INFORMATION_SCHEMA.TABLES` for `last_altered` | USE CATALOG |
-| Get view definition | Query `SYSTEM.INFORMATION_SCHEMA.VIEWS` | Access to system catalog |
-| Create schemas | `CREATE SCHEMA IF NOT EXISTS` | CREATE SCHEMA on catalog |
+| Получение схемы таблицы | `DESCRIBE TABLE` или `DESCRIBE TABLE EXTENDED` | SELECT для таблицы |
+| Получение схемы таблицы (DBR 16.2+) | `DESCRIBE TABLE EXTENDED ... AS JSON` | SELECT для таблицы |
+| Получение списка отношений | Запрос к `INFORMATION_SCHEMA.TABLES` | USE CATALOG и USE SCHEMA |
+| Проверка актуальности источника | Запрос к `INFORMATION_SCHEMA.TABLES` для получения `last_altered` | USE CATALOG |
+| Получение определения представления | Запрос к `SYSTEM.INFORMATION_SCHEMA.VIEWS` | Доступ к системному каталогу |
+| Создание схем | `CREATE SCHEMA IF NOT EXISTS` | CREATE SCHEMA для каталога |
 
-### Python models
+### Модели Python {#python-models}
 
-Optional permissions for environments using Python models
+Дополнительные разрешения для сред, использующих модели Python
 
-| Permission | Object | Purpose |
+| Разрешение | Объект | Назначение |
 | --- | --- | --- |
-| Workspace API access | `/api/2.0/workspace/*` | Create notebook directories |
-| Notebook import | Workspace | Import Python notebooks |
-| Job execution | Cluster or warehouse | Run Python models |
+| Доступ к API рабочей области | `/api/2.0/workspace/*` | Создание каталогов для блокнотов |
+| Импорт блокнотов | Рабочая область | Импорт блокнотов Python |
+| Выполнение заданий | Кластер или SQL warehouse | Запуск моделей Python |

@@ -1,7 +1,7 @@
-If you're receiving a `Session occupied` error in the <Constant name="platform_cli" /> or if you're experiencing a long-running session, you can use the `dbt invocation list` command in a separate terminal window to view the status of your active session. This helps debug the issue and identify the arguments that are causing the long-running session.
+Если вы получаете ошибку `Session occupied` в <Constant name="platform_cli" /> или сеанс выполняется слишком долго, вы можете использовать команду `dbt invocation list` в отдельном окне терминала, чтобы просмотреть состояние активного сеанса. Это поможет разобраться в проблеме и определить аргументы, из-за которых сеанс выполняется слишком долго.
 
-To cancel an active session, use the `Ctrl + Z` shortcut.
+Чтобы отменить активный сеанс, используйте сочетание клавиш `Ctrl + Z`.
 
-To learn more about the `dbt invocation` command, see the [dbt invocation command reference](/reference/commands/invocation?version=2.0).
+Подробнее о команде `dbt invocation` см. в [справочнике по команде dbt invocation](/reference/commands/invocation?version=2.0).
 
-Alternatively, you can reattach to your existing session with <code>dbt reattach</code> and then press <code>Control-C</code> and choose to cancel the invocation.
+Вы также можете повторно подключиться к существующему сеансу с помощью <code>dbt reattach</code>, затем нажать <code>Control-C</code> и выбрать отмену вызова.

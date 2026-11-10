@@ -1,15 +1,15 @@
-To determine if a package is compatible with dbt v2, visit the [dbt package hub](https://hub.getdbt.com/) and look for the <Constant name="fusion" />-compatible badge, or review the package's [`require-dbt-version` configuration](/reference/project-configs/require-dbt-version#pin-to-a-range).
+Чтобы определить, совместим ли пакет с dbt v2, посетите [каталог пакетов dbt](https://hub.getdbt.com/) и найдите значок совместимости с <Constant name="fusion" /> или проверьте [настройку `require-dbt-version`](/reference/project-configs/require-dbt-version#pin-to-a-range) пакета.
 
-- Packages with a `require-dbt-version` that equals or contains `2.0.0` are compatible with dbt v2. For example, `require-dbt-version: ">=1.10.0,<3.0.0"`.
+- Пакеты, у которых значение `require-dbt-version` равно `2.0.0` или задаёт диапазон, включающий эту версию, совместимы с dbt v2. Например, `require-dbt-version: ">=1.10.0,<3.0.0"`.
 
-    Even if a package doesn't reflect compatibility in the package hub, it may still work with v2. Work with package maintainers to track updates, and [thoroughly test packages](https://docs.getdbt.com/guides/dbt-package-compat?step=5) that aren't clearly compatible before deploying.
+    Даже если в каталоге пакетов не указана совместимость пакета, он всё равно может работать с v2. Взаимодействуйте с сопровождающими пакетов, чтобы отслеживать обновления, и перед развёртыванием [тщательно тестируйте пакеты](https://docs.getdbt.com/guides/dbt-package-compat?step=5), совместимость которых явно не подтверждена.
 
-- Package maintainers who would like to make their package compatible with v2 can refer to the [dbt v2 package upgrade guide](/guides/dbt-package-compat) for instructions.
+- Сопровождающие пакетов, которые хотят обеспечить совместимость своих пакетов с v2, могут найти инструкции в [руководстве по обновлению пакетов для dbt v2](/guides/dbt-package-compat).
 
-Fivetran package considerations:
+Особенности пакетов Fivetran:
 
-- The Fivetran `source` and `transformation` packages have been combined into a single package.
-- If you manually installed source packages like `fivetran/github_source`, you need to ensure `fivetran/github` is installed and deactivate the transformation models.
+- Пакеты Fivetran `source` и `transformation` объединены в один пакет.
+- Если вы вручную установили пакеты источников, такие как `fivetran/github_source`, необходимо убедиться, что установлен пакет `fivetran/github`, и деактивировать модели преобразования.
 
 import FusionPackageCompatibility from '/snippets/_v2-package-compatibility.md';
 

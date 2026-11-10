@@ -4,7 +4,7 @@
 - Чтобы увидеть скрытые файлы и папки, нажмите Command + Shift + G на macOS или Ctrl + Shift + G на Windows. Это откроет диалог «Go to Folder», в котором можно перейти к директории `.dbt`.
 
 <Tabs>
-<TabItem value="Create a .dbt directory">
+<TabItem value="Create a .dbt directory" label="Создать каталог .dbt">
 
 1. Клонируйте репозиторий вашего проекта dbt на локальный компьютер.
 2. Используйте команду `mkdir`, указав после неё имя папки, которую хотите создать. 
@@ -14,7 +14,7 @@
 
 </TabItem>
 
-<TabItem value="Move the dbt_cloud.yml file">
+<TabItem value="Move the dbt_cloud.yml file" label="Переместить файл dbt_cloud.yml">
 
 Вы можете переместить файл `dbt_cloud.yml` в директорию `.dbt`, используя команду `mv`, либо просто перетащить файл мышью в папку `.dbt`, открыв папку Downloads через диалог «Go to Folder» и воспользовавшись drag-and-drop в интерфейсе.
 

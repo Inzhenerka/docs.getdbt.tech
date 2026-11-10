@@ -1,3 +1,3 @@
-:::tip Connect your AI to this project
-Now that your project is up and running, connect to your AI tool (like Claude or ChatGPT) through the [dbt MCP server](/docs/dbt-ai/about-mcp?section=qs-connect-ai), so you can ask questions about your models in plain language. Descriptions, tests, and semantic models make its answers even better.
+:::tip Подключите свой ИИ-инструмент к этому проекту
+Теперь, когда ваш проект настроен и работает, подключите к нему свой ИИ-инструмент (например, Claude или ChatGPT) через [dbt MCP server](/docs/dbt-ai/about-mcp?section=qs-connect-ai), чтобы задавать вопросы о моделях на естественном языке. Описания, тесты и семантические модели помогут сделать его ответы ещё лучше.
 :::

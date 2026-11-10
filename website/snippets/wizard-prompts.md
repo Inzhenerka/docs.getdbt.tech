@@ -1,19 +1,19 @@
-        **Understand your project:**
+**Разберитесь в своём проекте:**
         ```
         summarize what this project does
         ```
 
-        **Find coverage gaps:**
+        **Найдите пробелы в покрытии тестами:**
         ```
         which models in this project have no tests?
         ```
 
-        **Enhance coverage:**
+        **Улучшите покрытие тестами:**
         ```
         add not_null and unique tests to the primary key of stg_customers
         ```
 
-        **Ship changes:**
+        **Отправьте изменения:**
         ```
         commit the changes to the branch and create a pull request
         ```

@@ -15,12 +15,12 @@ function slugify(text) {
     .replace(/-+$/, ''); // Trim - from end
 }
 
-function Expandable({ children, alt_header = null, lifecycle, lifecycle_size, is_open = false }) {
+function Expandable({ children, alt_header = null, lifecycle, lifecycle_size, is_open = false, anchor_id }) {
   if (!alt_header) return null;
 
   const [isOpen, setIsOpen] = useState(is_open);
   const detailsRef = useRef(null);
-  const anchorId = slugify(alt_header);
+  const anchorId = anchor_id ?? slugify(alt_header);
 
   // Handles clicking on the header to expand/collapse
   const handleToggleClick = (event) => {

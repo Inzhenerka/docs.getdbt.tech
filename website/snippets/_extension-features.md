@@ -1,28 +1,28 @@
-## Feature availability
+## Доступность возможностей {#feature-availability}
 
-The dbt VS Code extension is free to install, and its editor features are available to all users. What's available depends on your project's [static analysis](/docs/build/about-static-analysis) mode rather than your account:
+Расширение dbt для VS Code можно установить бесплатно, а его функции редактирования доступны всем пользователям. Доступность возможностей зависит от режима [статического анализа](/docs/build/about-static-analysis) вашего проекта, а не от вашей учётной записи:
 
-| Feature | Availability |
+| Возможность | Доступность |
 |---------|--------------|
-| Error diagnostics for Jinja, YAML, and SQL syntax | All users |
-| Jinja <Term id="lsp" /> go-to ref, source, and macro | All users |
-| Linter warning diagnostics | All users |
-| Table-level lineage | All users |
-| Basic dbt command UI (run, build, test, and query results) | All users |
-| Ref autocomplete | All users |
-| Refactor ref names | All users |
-| Dialect-aware function autocomplete | All users |
-| Query cache for faster incremental compiles | All users |
-| Preview CTE | `baseline` (the default) or `strict` |
-| SQL type and schema error diagnostics | `static_analysis: strict` |
-| Refactor column names | `static_analysis: strict` |
-| Column-level lineage | `static_analysis: strict` |
-| SQL <Term id="lsp" /> go-to column and CTE | `static_analysis: strict` |
-| SQL <Term id="lsp" /> hover to see the schema for `select *` | `static_analysis: strict` |
+| Диагностика синтаксических ошибок Jinja, YAML и SQL | Все пользователи |
+| Переход к ref, source и макросам Jinja через <Term id="lsp" /> | Все пользователи |
+| Диагностика предупреждений линтера | Все пользователи |
+| Граф зависимостей на уровне таблиц | Все пользователи |
+| Базовый интерфейс команд dbt (run, build, test и результаты запросов) | Все пользователи |
+| Автодополнение ref | Все пользователи |
+| Рефакторинг имён ref | Все пользователи |
+| Автодополнение функций с учётом диалекта | Все пользователи |
+| Кеш запросов для ускорения инкрементальной компиляции | Все пользователи |
+| Предварительный просмотр CTE | `baseline` (по умолчанию) или `strict` |
+| Диагностика ошибок типов и схемы SQL | `static_analysis: strict` |
+| Рефакторинг имён столбцов | `static_analysis: strict` |
+| Граф зависимостей на уровне столбцов | `static_analysis: strict` |
+| Переход к столбцам и CTE в SQL через <Term id="lsp" /> | `static_analysis: strict` |
+| Просмотр схемы для `select *` при наведении курсора в SQL через <Term id="lsp" /> | `static_analysis: strict` |
 
-These features need you to [sign in](/docs/sign-in-dbt-extension) so the extension can read data from your <Constant name="dbt_platform" /> account:
+Для следующих возможностей необходимо [войти в систему](/docs/sign-in-dbt-extension), чтобы расширение могло читать данные из вашей учётной записи <Constant name="dbt_platform" />:
 
-| Feature | Why it needs a <Constant name="dbt_platform" /> account |
+| Возможность | Зачем нужна учётная запись <Constant name="dbt_platform" /> |
 |---------|--------------------------------------------------------|
-| Model docs tab with platform metadata | Reads build status, descriptions, and test results from your <Constant name="dbt_platform" /> account. |
-| [Compare changes](/docs/dbt/vs-compare-changes) with <Constant name="dbt_platform" /> deferral | Fetches the deferred manifest from your <Constant name="dbt_platform" /> environment. You can also point it at a local `manifest.json` instead, with no account. |
+| Вкладка документации модели с метаданными платформы | Читает статус сборки, описания и результаты тестов из вашей учётной записи <Constant name="dbt_platform" />. |
+| [Сравнение изменений](/docs/dbt/vs-compare-changes) с использованием deferral в <Constant name="dbt_platform" /> | Получает манифест для deferral из вашей среды <Constant name="dbt_platform" />. Вместо этого можно указать локальный файл `manifest.json` — учётная запись в таком случае не нужна. |

@@ -1,3 +1,3 @@
-<Lightbox src="/img/docs/dbt-platform/wizard-architecture-platform.png" width="100%" title="How data flows when dbt Wizard runs in the dbt platform, and what is and isn't shared with the AI provider." />
+<Lightbox src="/img/docs/dbt-platform/wizard-architecture-platform.png" width="100%" title="Как передаются данные при работе dbt Wizard на платформе dbt и какие данные передаются и не передаются провайдеру ИИ." />
 
-Your prompt, project metadata, and any query results you approve are sent to the AI provider over TLS. Warehouse credentials are not shared, queries run only after you approve them, and dbt Labs-managed providers can't persistently retain your data or train on it.
+Ваш запрос, метаданные проекта и результаты запросов, передачу которых вы одобрили, отправляются провайдеру ИИ по протоколу TLS. Учетные данные хранилища данных не передаются, запросы выполняются только после вашего одобрения, а провайдеры, управляемые dbt Labs, не могут хранить ваши данные на постоянной основе или использовать их для обучения моделей.

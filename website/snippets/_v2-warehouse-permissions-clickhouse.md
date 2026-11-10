@@ -1,47 +1,47 @@
-The ClickHouse user that the <Constant name="fusion_engine" /> connects as must be able to run dbt workloads in the target database and read the system tables used for introspection.
+Пользователь ClickHouse, от имени которого подключается <Constant name="fusion_engine" />, должен иметь возможность выполнять рабочие нагрузки dbt в целевой базе данных и читать системные таблицы, используемые для интроспекции.
 
-### Required ClickHouse objects
+### Необходимые объекты ClickHouse {#required-clickhouse-objects}
 
-Before connecting, these objects must exist or be accessible:
+Перед подключением следующие объекты должны существовать или быть доступны:
 
-| Object | Purpose |
+| Объект | Назначение |
 | --- | --- |
-| Service (ClickHouse Cloud) or server (self-managed, single node) | Compute resource |
-| Database | Target database. ClickHouse has no separate schema level, so the dbt `schema` maps to a database |
-| User | Database user for authentication |
+| Сервис (ClickHouse Cloud) или сервер (самостоятельно управляемый, с одним узлом) | Вычислительный ресурс |
+| База данных | Целевая база данных. В ClickHouse нет отдельного уровня схем, поэтому `schema` в dbt соответствует базе данных |
+| Пользователь | Пользователь базы данных для аутентификации |
 
-### Core permissions
+### Основные права доступа {#core-permissions}
 
-The following permissions are required for fundamental dbt features:
+Для основных возможностей dbt требуются следующие права доступа:
 
-| Permission | Object | Purpose |
+| Право доступа | Объект | Назначение |
 | --- | --- | --- |
-| `SELECT` | Tables and views | Read data |
-| `INSERT` | Tables | Load models, seeds, and snapshots |
-| `ALTER` | Tables | Schema changes (`on_schema_change`), indexes and projections, comments (`persist_docs`), `REPLACE PARTITION` (`insert_overwrite`), and lightweight deletes (`delete+insert`) |
-| `TRUNCATE` | Tables | Full-refresh seeds |
-| `CREATE TABLE`, `CREATE VIEW`, `CREATE DICTIONARY` | Database | Create materializations, including the intermediate and backup relations used for atomic rebuilds (`EXCHANGE TABLES`, `RENAME TABLE`) |
-| `DROP TABLE`, `DROP VIEW`, `DROP DICTIONARY` | Database | Drop or replace objects |
+| `SELECT` | Таблицы и представления | Чтение данных |
+| `INSERT` | Таблицы | Загрузка моделей, seed-файлов и снимков |
+| `ALTER` | Таблицы | Изменение схемы (`on_schema_change`), индексы и проекции, комментарии (`persist_docs`), `REPLACE PARTITION` (`insert_overwrite`) и легковесные удаления (`delete+insert`) |
+| `TRUNCATE` | Таблицы | Полное обновление данных из seed-файлов |
+| `CREATE TABLE`, `CREATE VIEW`, `CREATE DICTIONARY` | База данных | Создание материализаций, включая промежуточные и резервные объекты, используемые для атомарного пересоздания (`EXCHANGE TABLES`, `RENAME TABLE`) |
+| `DROP TABLE`, `DROP VIEW`, `DROP DICTIONARY` | База данных | Удаление или замена объектов |
 
 
-### Metadata operations
+### Операции с метаданными {#metadata-operations}
 
-<Constant name="fusion" /> reads these ClickHouse system tables:
+<Constant name="fusion" /> читает следующие системные таблицы ClickHouse:
 
-| System table | Purpose |
+| Системная таблица | Назначение |
 | --- | --- |
-| `system.tables` | List relations, build the catalog, detect materialized views pointing at a table |
-| `system.columns` | Column metadata for the catalog and for schema-change detection |
-| `system.databases` | Check whether the target database exists |
-| `system.settings` | Capability probes (lightweight deletes, `insert_distributed_sync`) |
-| `system.view_refreshes` | Validate refreshable materialized view dependencies |
+| `system.tables` | Получение списка объектов, построение каталога, обнаружение материализованных представлений, ссылающихся на таблицу |
+| `system.columns` | Метаданные столбцов для каталога и обнаружения изменений схемы |
+| `system.databases` | Проверка существования целевой базы данных |
+| `system.settings` | Проверка доступности возможностей (легковесные удаления, `insert_distributed_sync`) |
+| `system.view_refreshes` | Проверка зависимостей обновляемых материализованных представлений |
 
-ClickHouse filters system tables to the objects the user can access, so no separate grant is needed for them.
+ClickHouse фильтрует системные таблицы, оставляя только объекты, к которым у пользователя есть доступ, поэтому отдельно предоставлять права на эти таблицы не требуется.
 
-### Database management
+### Управление базами данных {#database-management}
 
-Conditional permissions for database management:
+Права доступа для управления базами данных, необходимые при определённых условиях:
 
-| Permission | Object | When required |
+| Право доступа | Объект | Когда требуется |
 | --- | --- | --- |
-| `CREATE DATABASE` | Server | Auto-create the target database when it doesn't exist yet |
+| `CREATE DATABASE` | Сервер | Автоматическое создание целевой базы данных, если она ещё не существует |

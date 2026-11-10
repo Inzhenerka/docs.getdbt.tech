@@ -1,1 +1,1 @@
-For request quotas and throttling behavior, refer to [API rate limits](/docs/dbt-apis/rate-limits).
+Информацию о квотах запросов и механизме ограничения их частоты см. в разделе [Ограничения частоты запросов API](/docs/dbt-apis/rate-limits).

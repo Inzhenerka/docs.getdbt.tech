@@ -1,89 +1,89 @@
 import OpenAiProjectRegion from '/snippets/_open-ai-project-region.md';
 
-A <Constant name="dbt_platform"/> account on any plan can use a dbt <Term id="managed"/> provider to get started right away. Accounts on Starter, Enterprise, and Enterprise+ plans can also configure a custom AI provider by BYOK. If you use BYOK, you will incur API calls and associated charges from that provider.
+Аккаунт <Constant name="dbt_platform"/> на любом тарифном плане может использовать провайдера dbt с <Term id="managed">управлением со стороны dbt Labs</Term>, чтобы сразу приступить к работе. Аккаунты на тарифных планах Starter, Enterprise и Enterprise+ также могут настроить собственного ИИ-провайдера с использованием своего ключа (BYOK). При использовании BYOK вызовы API и связанные с ними расходы оплачиваются вами в соответствии с тарифами этого провайдера.
 
-The following instructions explain how to configure a dbt Labs managed or BYOK AI provider for <Constant name="wizard" />. dbt managed AI providers are administered by dbt Labs and don’t require a user-provided API key. The AI providers shown in **Account settings** may change as dbt Labs adds <Term id="managed" /> models. For the current list of models and providers, refer to the [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model).
+Следующие инструкции описывают настройку ИИ-провайдера под управлением dbt Labs или с использованием BYOK для <Constant name="wizard" />. ИИ-провайдеры под управлением dbt администрируются dbt Labs и не требуют предоставления пользователем ключа API. Список ИИ-провайдеров в разделе **Account settings** может меняться по мере добавления dbt Labs <Term id="managed">управляемых</Term> моделей. Актуальный список моделей и провайдеров приведён в [таблице тарифов провайдеров моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model).
 
-**To configure a provider:**
+**Чтобы настроить провайдера:**
 
-1. Click your account name and select **Account settings** in the side menu.
-2. Under **Settings**, click **AI features**.
-3. Under **AI providers**, click **Edit** to configure the AI integration.
-4. For each provider, select your **Key management** option from the dropdown, then follow these steps for your provider below.
+1. Нажмите на название своего аккаунта и выберите **Account settings** в боковом меню.
+2. В разделе **Settings** нажмите **AI features**.
+3. В разделе **AI providers** нажмите **Edit**, чтобы настроить интеграцию с ИИ.
+4. Для каждого провайдера выберите вариант **Key management** в раскрывающемся списке, затем выполните приведённые ниже действия для выбранного провайдера.
 
 <Tabs queryString="wizard-ai-integration">
   
   <TabItem value="anthropic" label="Anthropic">
 
-  **Managed by dbt Labs**  
+  **Под управлением dbt Labs**  
 
-  Use this option as a managed alternative to the default OpenAI model.
+  Используйте этот вариант как управляемую альтернативу модели OpenAI, используемой по умолчанию.
 
-  1. Unless not selected, select **dbt Labs** from the list to use dbt Labs' managed Anthropic key.
-  2. Click **Save**.
+  1. Если вариант **dbt Labs** ещё не выбран, выберите его в списке, чтобы использовать ключ Anthropic под управлением dbt Labs.
+  2. Нажмите **Save**.
 
-  **Managed by you (BYOK)**
-  1. Select **Anthropic** from the options.
-  2. Enter your Anthropic API key.
-  3. Click **Save**.
+  **Под вашим управлением (BYOK)**
+  1. Выберите **Anthropic** из доступных вариантов.
+  2. Введите свой ключ API Anthropic.
+  3. Нажмите **Save**.
 
-  :::note Embedding limitations
-  When using an Anthropic API key, <Constant name="dbt" /> continues to use the <Constant name="dbt" /> Labs-managed OpenAI key for embeddings in `text_to_sql` MCP tools, since Anthropic doesn't natively provide embeddings.
+  :::note Ограничения для эмбеддингов
+  При использовании ключа API Anthropic <Constant name="dbt" /> продолжает использовать ключ OpenAI под управлением <Constant name="dbt" /> Labs для создания эмбеддингов в инструментах MCP `text_to_sql`, поскольку Anthropic не предоставляет собственных средств создания эмбеддингов.
   :::
 
   </TabItem>
 
   <TabItem value="openai" label="OpenAI">
 
-  **Managed by dbt Labs**  
+  **Под управлением dbt Labs**  
 
-  This is the default option and use it if you want to use dbt managed AI provider keys. Refer to [Models and pricing](/docs/dbt-ai/pricing-billing/overview?version=2.0) for more information.
+  Этот вариант выбран по умолчанию. Используйте его, если хотите работать с ключами ИИ-провайдеров под управлением dbt. Подробнее см. в разделе [Модели и цены](/docs/dbt-ai/pricing-billing/overview?version=2.0).
 
-  1. Unless not selected, select the toggle for **dbt Labs** to use a dbt Labs' managed key.
-  2. Click **Save**.
+  1. Если переключатель **dbt Labs** ещё не включён, включите его, чтобы использовать ключ под управлением dbt Labs.
+  2. Нажмите **Save**.
 
-  <Lightbox src="/img/docs/dbt-platform/account-integration-dbtlabs.png" width="85%" title="Example of the dbt Labs integration page" />
+  <Lightbox src="/img/docs/dbt-platform/account-integration-dbtlabs.png" width="85%" title="Пример страницы интеграции с dbt Labs" />
 
-  **Managed by you (BYOK)** 
+  **Под вашим управлением (BYOK)**
 
-  1. Select **OpenAI** from the options.
-  2. Enter your OpenAI API key.
-  3. Click **Save**.
+  1. Выберите **OpenAI** из доступных вариантов.
+  2. Введите свой ключ API OpenAI.
+  3. Нажмите **Save**.
 
-  <Lightbox src="/img/docs/dbt-platform/account-integration-openai.png" width="85%" title="Example of the OpenAI integration page" />
+  <Lightbox src="/img/docs/dbt-platform/account-integration-openai.png" width="85%" title="Пример страницы интеграции с OpenAI" />
 
-  :::info Data residency limitation
+  :::info Ограничение, связанное с размещением данных
   <OpenAiProjectRegion />
   :::
 
-  - For BYOK, enable the latest text generation models as well as the `text-embedding-3-small` model.
-  - Ensure your project doesn't have data residency controls enabled. Projects without project region settings use the standard OpenAI endpoint (`https://api.openai.com`) and support BYOK.
+  - Для BYOK включите новейшие модели генерации текста, а также модель `text-embedding-3-small`.
+  - Убедитесь, что в вашем проекте не включены ограничения на размещение данных. Проекты без настроек региона используют стандартную конечную точку OpenAI (`https://api.openai.com`) и поддерживают BYOK.
 
   </TabItem>
 
   <TabItem value="azure" label="Azure AI Foundry">
 
-  **Managed by you only (BYOK)**  
+  **Только под вашим управлением (BYOK)**  
 
-  To learn about deploying models on Azure, refer to [Deploy models on Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-models-openai) and [Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/).
+  Подробнее о развёртывании моделей в Azure см. в документации [Развёртывание моделей в Azure OpenAI](https://learn.microsoft.com/en-us/azure/ai-studio/how-to/deploy-models-openai) и [Azure AI Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/).
 
-  Configure credentials for your Azure AI Foundry deployment in dbt as follows:
+  Настройте учётные данные для своего развёртывания Azure AI Foundry в dbt следующим образом:
 
-  1. Locate your deployment details in the Azure portal, either in Azure AI Foundry or Azure OpenAI.
-  2. Enter your Azure API key.
-  3. Enter the **Endpoint**, **API Version**, and **Deployment / AI model name**.
-  4. Click **Save**.
+  1. Найдите сведения о своём развёртывании на портале Azure — в Azure AI Foundry или Azure OpenAI.
+  2. Введите свой ключ API Azure.
+  3. Заполните поля **Endpoint**, **API Version** и **Deployment / AI model name**.
+  4. Нажмите **Save**.
 
-  :::info Use the full Azure Target URI
-  For the **Endpoint** field, enter the full Azure Target URI from Azure &mdash; not just the base endpoint. Entering only the base endpoint, for example `https://<resource>.openai.azure.com`, prevents credential validation and blocks setup.
+  :::info Используйте полный целевой URI Azure
+  В поле **Endpoint** введите полный целевой URI (Target URI) из Azure &mdash; не только базовый адрес конечной точки. Если указать только базовый адрес конечной точки, например `https://<resource>.openai.azure.com`, проверка учётных данных не пройдёт и настройка будет заблокирована.
 
-  Supported formats include:
+  Поддерживаются следующие форматы:
 
   - `https://<resource>.openai.azure.com/openai/deployments/<deployment>/chat/completions?api-version=<version>`
   - `https://<resource>.openai.azure.com/openai/responses?api-version=<version>`
   :::
 
-  <Lightbox src="/img/docs/dbt-platform/account-integration-azure-manual.png" width="85%" title="Example of the Azure AI Foundry integration section" />
+  <Lightbox src="/img/docs/dbt-platform/account-integration-azure-manual.png" width="85%" title="Пример раздела интеграции с Azure AI Foundry" />
 
   </TabItem>
 

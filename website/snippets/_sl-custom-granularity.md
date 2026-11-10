@@ -1,5 +1,5 @@
-<p>When you select time dimensions in the <strong>Group By</strong> menu, you'll see a list of available time granularities. The lowest granularity is selected by default. Metric time is the default time dimension for grouping your metrics.</p>
+<p>При выборе временных измерений в меню <strong>Group By</strong> отображается список доступных уровней детализации времени. По умолчанию выбран самый низкий уровень детализации. Metric time — временное измерение по умолчанию для группировки метрик.</p>
 
-:::info 
-Note: [Custom time granularities](/docs/build/metricflow-time-spine#add-custom-granularities) (like fiscal year) aren't currently supported or accessible in this integration. Only [standard granularities](/docs/build/dimensions?dimension=time_gran#time) (like day, week, month, and so on) are available. If you'd like to access custom granularities, consider using the [Semantic Layer APIs](/docs/dbt-apis/sl-api-overview).
+:::info
+Примечание: [Пользовательские уровни детализации времени](/docs/build/metricflow-time-spine#add-custom-granularities) (например, финансовый год) в настоящее время не поддерживаются и недоступны в этой интеграции. Доступны только [стандартные уровни детализации](/docs/build/dimensions?dimension=time_gran#time) (например, день, неделя, месяц и так далее). Если вам нужен доступ к пользовательским уровням детализации, рассмотрите возможность использования [API семантического слоя](/docs/dbt-apis/sl-api-overview).
 :::

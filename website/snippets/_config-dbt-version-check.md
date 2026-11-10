@@ -1,5 +1,3 @@
-Начиная с 2024 года, когда вы выбираете [release track в <Constant name="cloud" />](/docs/dbt-versions/dbt-release-tracks), чтобы получать регулярные обновления версии dbt, dbt будет игнорировать конфигурацию `require-dbt-version`.
-
 Если вы выбираете [канал релизов в <Constant name="dbt" />](/docs/dbt-versions/dbt-release-tracks), чтобы регулярно получать обновления версии dbt, dbt будет игнорировать настройку `require-dbt-version`.
 
 dbt Labs стремится не допускать изменений, нарушающих совместимость кода в проектах dbt, при регулярном выпуске новых версий <Constant name="dbt" />. Мы также рекомендуем следующие практики:

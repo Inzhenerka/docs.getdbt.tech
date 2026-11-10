@@ -85,7 +85,7 @@ models:
 
 ## Устранение распространённых ошибок {#troubleshooting-common-errors}
 
-<Expandable alt_header="Invalid test config given in [model name]">
+<Expandable anchor_id="invalid-test-config-given-in-model-name" alt_header="Некорректная конфигурация теста в модели">
 
 Эта ошибка возникает, когда ваш файл `.yml` не соответствует структуре, ожидаемой dbt. Полное сообщение об ошибке может выглядеть так:
 ```
@@ -97,7 +97,7 @@ models:
 
 </Expandable>
 
-<Expandable alt_header="Invalid syntax in your schema.yml file" >
+<Expandable anchor_id="invalid-syntax-in-your-schemayml-file" alt_header="Некорректный синтаксис файла schema.yml" >
 
 Если ваш файл `.yml` не является корректным YAML, dbt покажет ошибку вида:
 

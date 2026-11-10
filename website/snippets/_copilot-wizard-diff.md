@@ -1,7 +1,6 @@
+:::info dbt Wizard — рекомендуемый агент для работы с dbt
 
-:::info dbt Wizard is the recommended agent for dbt work
+<Constant name="wizard" /> — рекомендуемый ИИ-агент для разработки данных с соблюдением правил управления в dbt. Он охватывает полный цикл разработки &mdash; исследование, создание, проверку и выпуск &mdash; с опорой на граф зависимостей, тесты, контракты и определения метрик вашего проекта dbt.
 
-<Constant name="wizard" /> is the recommended AI agent for governed data development in dbt. It handles the full development lifecycle &mdash; investigation, building, validation, and shipping &mdash; grounded in your dbt project's lineage, tests, contracts, and metric definitions.
-
-Refer to [dbt AI FAQs](/docs/dbt-ai/dbt-ai-faqs#is-dbt-wizard-the-same-as-dbt-copilot), [Billing](/docs/dbt-ai/wizard-billing-faqs), and [dbt's Terms of Use](https://www.getdbt.com/terms-of-use) for more information.
+Дополнительную информацию см. в разделах [Часто задаваемые вопросы об ИИ в dbt](/docs/dbt-ai/dbt-ai-faqs#is-dbt-wizard-the-same-as-dbt-copilot), [Оплата](/docs/dbt-ai/wizard-billing-faqs) и [Условия использования dbt](https://www.getdbt.com/terms-of-use).
 :::

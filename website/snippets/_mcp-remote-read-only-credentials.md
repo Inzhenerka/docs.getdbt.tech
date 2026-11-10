@@ -1,1 +1,1 @@
-Once an admin sets up a shared [analytics credential](/docs/platform/wizard-read-only-users#set-up-analytics-credentials), read-only users can use it instead of their own developer credentials.
+После того как администратор настроит общие [учетные данные для аналитики](/docs/platform/wizard-read-only-users#set-up-analytics-credentials), пользователи с доступом только для чтения смогут использовать их вместо собственных учетных данных разработчика.

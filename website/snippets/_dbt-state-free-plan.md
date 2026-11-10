@@ -1,51 +1,51 @@
-Every account gets a monthly allowance of free daily active target tables (DATT). Usage within your allowance doesn’t appear on your invoice.
+Каждому аккаунту ежемесячно предоставляется бесплатный лимит ежедневно активных целевых таблиц (DATT). Использование в пределах этого лимита не отображается в счете.
 
-When your trial ends, you move to your plan's monthly allowance:
+После окончания пробного периода вы переходите на ежемесячный лимит вашего тарифного плана:
 
-- Self-hosted dbt users move to the free plan, which includes 1,000 DATT each month indefinitely.
-- Developer plan users also get 1,000 DATT each month indefinitely.
-- Paid dbt platform plans get a temporary monthly allowance. Check out [paid plans with a temporary allowance](#paid-plans-with-a-temporary-allowance) for more details.
+- Пользователи самостоятельно размещенного dbt переходят на бесплатный план, который включает 1 000 DATT в месяц без ограничения срока действия.
+- Пользователи плана Developer также получают 1 000 DATT в месяц без ограничения срока действия.
+- Платные планы платформы dbt включают временный ежемесячный лимит. Подробнее см. в разделе [Платные планы с временным лимитом](#paid-plans-with-a-temporary-allowance).
 
-The allowance works the same way on every plan:
+На всех планах лимит действует одинаково:
 
-- It resets on the 1st of each month.
-- Unused DATT don't carry over.
-- Your first month gets the full allowance for your plan. Usage during your trial doesn't count against it.
+- Он обновляется 1-го числа каждого месяца.
+- Неиспользованные DATT не переносятся на следующий месяц.
+- В первый месяц вам предоставляется полный лимит вашего плана. Использование в течение пробного периода не учитывается при его расчете.
 
 
-#### Plans with a permanent allowance
+#### Планы с постоянным лимитом {#plans-with-a-permanent-allowance}
 
 <SimpleTable>
 
-| Plan | Monthly allowance | When you reach the limit |
+| План | Ежемесячный лимит | При достижении лимита |
 |------|-------------------|--------------------------|
-| Self-hosted dbt (free plan) | 1,000 DATT | dbt State stops reusing nodes until the next reset. [Set up usage-based billing](/docs/deploy/dbt-state-trial#setting-up-usage-based-billing) to resume. |
-| Developer | 1,000 DATT | dbt State stops reusing nodes until the next reset. [Set up usage-based billing](/docs/deploy/dbt-state-trial#setting-up-usage-based-billing) to resume, which moves your account to the Developer (Usage) plan. |
+| Самостоятельно размещенный dbt (бесплатный план) | 1 000 DATT | dbt State прекращает повторное использование узлов до следующего обновления лимита. [Настройте оплату по факту использования](/docs/deploy/dbt-state-trial#setting-up-usage-based-billing), чтобы возобновить работу. |
+| Developer | 1 000 DATT | dbt State прекращает повторное использование узлов до следующего обновления лимита. [Настройте оплату по факту использования](/docs/deploy/dbt-state-trial#setting-up-usage-based-billing), чтобы возобновить работу. При этом ваш аккаунт перейдет на план Developer (Usage). |
 
 </SimpleTable>
 
-#### Paid plans with a temporary allowance
+#### Платные планы с временным лимитом {#paid-plans-with-a-temporary-allowance}
 
-Paid <Constant name="dbt_platform"/> plans also get a monthly allowance for a limited time.
+Платные планы <Constant name="dbt_platform"/> также включают ежемесячный лимит на ограниченный срок.
 
 <SimpleTable>
 
-| Plan | Monthly allowance | Available until | When you reach the limit |
+| План | Ежемесячный лимит | Доступен до | При достижении лимита |
 |------|-------------------|-----------------|--------------------------|
-| Starter | 1,000 DATT | March 31, 2027 | **Card on file:** dbt State keeps running and bills your card for usage past the limit. <br />**No card on file:** dbt State stops reusing nodes until the next reset. |
-| Enterprise, Enterprise+, legacy Enterprise | 2,000 DATT | March 31, 2027 | **Prepaid State contract:** dbt State keeps running and draws from your contract. <br />**No prepaid contract:** dbt State stops reusing nodes until the next reset. |
-| Legacy Teams | 1,000 DATT | December 31, 2026 | dbt State stops reusing nodes until the next reset. To continue past the limit, migrate to Starter. |
+| Starter | 1 000 DATT | 31 марта 2027 г. | **Карта привязана:** dbt State продолжает работу и списывает с вашей карты плату за использование сверх лимита. <br />**Карта не привязана:** dbt State прекращает повторное использование узлов до следующего обновления лимита. |
+| Enterprise, Enterprise+, устаревший план Enterprise | 2 000 DATT | 31 марта 2027 г. | **Есть предоплаченный контракт на State:** dbt State продолжает работу и расходует предоплаченный объем по вашему контракту. <br />**Нет предоплаченного контракта:** dbt State прекращает повторное использование узлов до следующего обновления лимита. |
+| Устаревший план Teams | 1 000 DATT | 31 декабря 2026 г. | dbt State прекращает повторное использование узлов до следующего обновления лимита. Чтобы продолжить работу сверх лимита, перейдите на Starter. |
 
 </SimpleTable>
 
 :::tip
-On Starter, you can pause dbt State at the limit by turning off card billing for State on the **Usage-based features** page.
+На плане Starter можно настроить приостановку dbt State при достижении лимита, отключив оплату State с карты на странице **Usage-based features**.
 :::
 
-If you cancel paid access, dbt State keeps running on your plan's monthly allowance.
+Если вы отмените платный доступ, dbt State продолжит работать в пределах ежемесячного лимита вашего плана.
 
-### Viewing your allowance
+### Просмотр лимита {#viewing-your-allowance}
 
-Go to **Account settings** > **Billing & Usage** > **Usage-based features** > **State** tab to see your current consumption, remaining allowance, and reset date.
+Перейдите в **Account settings** > **Billing & Usage** > **Usage-based features** > вкладка **State**, чтобы увидеть текущее потребление, остаток лимита и дату его обновления.
 
-dbt sends an email to your admin when you've used up 80% of your DATT allowance, and again if dbt State pauses at the limit.
+dbt отправляет вашему администратору электронное письмо, когда израсходовано 80 % лимита DATT, и еще одно — если работа dbt State приостанавливается при достижении лимита.

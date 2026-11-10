@@ -1,80 +1,80 @@
-The Google Cloud identity (service account or user) that <Constant name="fusion_engine" /> uses must have IAM permissions to run jobs, read and write table data, and read metadata <Constant name="fusion" /> uses for introspection and source freshness.
+Удостоверение Google Cloud (сервисный аккаунт или пользователь), которое использует <Constant name="fusion_engine" />, должно иметь разрешения IAM для запуска заданий, чтения и записи данных таблиц, а также чтения метаданных, которые <Constant name="fusion" /> использует для интроспекции и проверки актуальности источников.
 
-### Required Google Cloud objects
+### Необходимые объекты Google Cloud {#required-google-cloud-objects}
 
-Before connecting, these objects must exist or be accessible:
+Перед подключением следующие объекты должны существовать или быть доступны:
 
-| Object | BigQuery term | Purpose |
+| Объект | Термин BigQuery | Назначение |
 | --- | --- | --- |
-| **Project** | GCP project | Your Google Cloud project ID |
-| **Dataset** | Dataset | Target dataset (equivalent to a schema) |
-| **Service account or user** | IAM identity | Identity for authentication |
-| **Location or region** | Location | Data location (for example, `US`, `EU`, `us-east1`) |
+| **Проект** | Проект GCP | Идентификатор вашего проекта Google Cloud |
+| **Набор данных** | Набор данных | Целевой набор данных (эквивалент схемы) |
+| **Сервисный аккаунт или пользователь** | Удостоверение IAM | Удостоверение для аутентификации |
+| **Местоположение или регион** | Местоположение | Местоположение данных (например, `US`, `EU`, `us-east1`) |
 
-### IAM permissions
+### Разрешения IAM {#iam-permissions}
 
-The following permissions are required for fundamental dbt features::
+Для основных функций dbt необходимы следующие разрешения:
 
-| Permission | Purpose |
+| Разрешение | Назначение |
 | --- | --- |
-| `bigquery.datasets.get` | Access dataset metadata |
-| `bigquery.tables.create` | Create tables |
-| `bigquery.tables.delete` | Drop or replace tables |
-| `bigquery.tables.get` | Read table metadata |
-| `bigquery.tables.getData` | Read table data |
-| `bigquery.tables.list` | List tables in dataset |
-| `bigquery.tables.update` | Update table schema |
-| `bigquery.tables.updateData` | Insert, update, or delete rows |
-| `bigquery.routines.get` | Read routine metadata |
-| `bigquery.routines.list` | List routines in a dataset |
-| `bigquery.jobs.create` | Run queries |
+| `bigquery.datasets.get` | Доступ к метаданным набора данных |
+| `bigquery.tables.create` | Создание таблиц |
+| `bigquery.tables.delete` | Удаление или замена таблиц |
+| `bigquery.tables.get` | Чтение метаданных таблиц |
+| `bigquery.tables.getData` | Чтение данных таблиц |
+| `bigquery.tables.list` | Получение списка таблиц в наборе данных |
+| `bigquery.tables.update` | Обновление схемы таблицы |
+| `bigquery.tables.updateData` | Вставка, обновление или удаление строк |
+| `bigquery.routines.get` | Чтение метаданных подпрограмм |
+| `bigquery.routines.list` | Получение списка подпрограмм в наборе данных |
+| `bigquery.jobs.create` | Выполнение запросов |
 
-The following are optional permissions for additional dbt features:
+Следующие разрешения необязательны и нужны для дополнительных функций dbt:
 
-| Permission | When required |
+| Разрешение | Когда требуется |
 | --- | --- |
-| `bigquery.datasets.create` | Auto-create datasets |
-| `bigquery.routines.create` | Create UDFs or stored procedures |
-| `bigquery.jobs.get` | Monitor job status |
-| `storage.objects.create` | Python models (GCS staging) |
-| `dataproc.*` | Python models on Dataproc |
+| `bigquery.datasets.create` | Автоматическое создание наборов данных |
+| `bigquery.routines.create` | Создание UDF или хранимых процедур |
+| `bigquery.jobs.get` | Отслеживание статуса заданий |
+| `storage.objects.create` | Модели Python (промежуточное хранение в GCS) |
+| `dataproc.*` | Модели Python в Dataproc |
 
-#### Predefined IAM roles
+#### Предопределённые роли IAM {#predefined-iam-roles}
 
-The following roles represent the typical starting point for dbt access:
+Следующие роли обычно служат отправной точкой при настройке доступа для dbt:
 
-| Role | Description | Use case |
+| Роль | Описание | Сценарий использования |
 | --- | --- | --- |
-| `roles/bigquery.dataEditor` | Read and write tables in datasets | Standard dbt operations |
-| `roles/bigquery.user` | Run jobs, create datasets | Job execution |
-| `roles/bigquery.jobUser` | Run jobs only | Minimal query execution |
+| `roles/bigquery.dataEditor` | Чтение и запись таблиц в наборах данных | Стандартные операции dbt |
+| `roles/bigquery.user` | Запуск заданий, создание наборов данных | Выполнение заданий |
+| `roles/bigquery.jobUser` | Только запуск заданий | Минимальные права для выполнения запросов |
 
-For Storage Read API access with <Constant name="fusion" />, also grant **BigQuery Read Session User** (`roles/bigquery.readSessionUser`) on the project, as noted in [Connect BigQuery](/docs/platform/connect-data-platform/connect-bigquery#required-permissions).
+Для доступа к Storage Read API с помощью <Constant name="fusion" /> также предоставьте роль **BigQuery Read Session User** (`roles/bigquery.readSessionUser`) на уровне проекта, как указано в разделе [Подключение BigQuery](/docs/platform/connect-data-platform/connect-bigquery#required-permissions).
 
-### Metadata operations
+### Операции с метаданными {#metadata-operations}
 
-The following are required for fundamental dbt features:
+Для основных функций dbt необходимы следующие операции:
 
-| Query type | SQL or API used | Required permission |
+| Тип запроса | Используемый SQL или API | Необходимое разрешение |
 | --- | --- | --- |
-| Get table schema | `get_table_schema` API | `bigquery.tables.get` |
-| List relations | Query against dataset | `bigquery.tables.list`, `bigquery.routines.list` |
-| Source freshness | Query `__TABLES__` metadata | `bigquery.tables.get` |
-| Get table stats | Query `INFORMATION_SCHEMA` | `bigquery.tables.get` |
-| Create dataset | `CREATE SCHEMA` | `bigquery.datasets.create` |
+| Получение схемы таблицы | API `get_table_schema` | `bigquery.tables.get` |
+| Получение списка отношений | Запрос к набору данных | `bigquery.tables.list`, `bigquery.routines.list` |
+| Проверка актуальности источников | Запрос к метаданным `__TABLES__` | `bigquery.tables.get` |
+| Получение статистики таблицы | Запрос к `INFORMATION_SCHEMA` | `bigquery.tables.get` |
+| Создание набора данных | `CREATE SCHEMA` | `bigquery.datasets.create` |
 
-### INFORMATION_SCHEMA and metadata views
+### INFORMATION_SCHEMA и представления метаданных {#information_schema-and-metadata-views}
 
-dbt v2 queries these BigQuery system views:
+dbt v2 выполняет запросы к следующим системным представлениям BigQuery:
 
-| View | Purpose | Scope |
+| Представление | Назначение | Область действия |
 | --- | --- | --- |
-| `INFORMATION_SCHEMA.TABLES` | List tables | Dataset or region |
-| `INFORMATION_SCHEMA.COLUMNS` | Column metadata | Dataset or region |
-| `INFORMATION_SCHEMA.VIEWS` | View definitions | Dataset or region |
-| `INFORMATION_SCHEMA.PARTITIONS` | Partition information | Dataset only |
-| `__TABLES__` (deprecated) | Table modification times | Dataset |
+| `INFORMATION_SCHEMA.TABLES` | Получение списка таблиц | Набор данных или регион |
+| `INFORMATION_SCHEMA.COLUMNS` | Метаданные столбцов | Набор данных или регион |
+| `INFORMATION_SCHEMA.VIEWS` | Определения представлений | Набор данных или регион |
+| `INFORMATION_SCHEMA.PARTITIONS` | Информация о секциях | Только набор данных |
+| `__TABLES__` (устарело) | Время изменения таблиц | Набор данных |
 
-### BigQuery DataFrames (optional) {#bigquery-dataframes}
+### BigQuery DataFrames (необязательно) {#bigquery-dataframes}
 
-For BigQuery DataFrames workflows, users typically need additional roles such as `BigQuery Job User`, `BigQuery Read Session User`, `Notebook Runtime User`, `Code Creator`, and `colabEnterpriseUser`. See your Google Cloud admin for exact role names in your organization.
+Для рабочих процессов BigQuery DataFrames пользователям обычно требуются дополнительные роли, такие как `BigQuery Job User`, `BigQuery Read Session User`, `Notebook Runtime User`, `Code Creator` и `colabEnterpriseUser`. Точные названия ролей в вашей организации уточните у администратора Google Cloud.

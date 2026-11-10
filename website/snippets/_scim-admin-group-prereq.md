@@ -1,4 +1,4 @@
-**Account Admin group required:** Before enabling SCIM on your dbt account, you must create a dbt Account Admin group in your IdP, and a group with a matching name in your dbt account. Assign the dbt group the [Account Admin](/docs/platform/manage-access/enterprise-permissions#account-admin) permission set. 
+**Требуется группа Account Admin:** Перед включением SCIM для вашей учетной записи dbt необходимо создать группу администраторов учетной записи dbt в вашем IdP и группу с таким же именем в вашей учетной записи dbt. Назначьте группе dbt набор разрешений [Account Admin](/docs/platform/manage-access/enterprise-permissions#account-admin). 
 
-Without this group, your users could be removed from the default dbt 'Owner' group once SCIM provisioning is enabled and would lose admin access to your dbt account. 
-The names of these two groups can match your IdP group naming scheme, but the names for both the dbt and IdP group must be the same value.
+Без этой группы после включения выделения ресурсов через SCIM ваши пользователи могут быть удалены из группы dbt 'Owner', созданной по умолчанию, и потерять административный доступ к вашей учетной записи dbt. 
+Имена этих двух групп могут соответствовать принятой в вашем IdP схеме именования групп, но имя группы в dbt должно полностью совпадать с именем группы в IdP.

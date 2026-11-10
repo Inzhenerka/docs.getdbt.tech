@@ -1,1 +1,1 @@
-You can run the <Constant name="wizard" /> CLI locally from any project on any dbt engine. Be warned, the wizard has been known to <WizardPopcorn>cast spells</WizardPopcorn>.
+Вы можете запускать CLI <Constant name="wizard" /> локально из любого проекта на любом движке dbt. Но будьте осторожны: известно, что волшебник умеет <WizardPopcorn>накладывать заклинания</WizardPopcorn>.

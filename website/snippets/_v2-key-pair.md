@@ -1,15 +1,15 @@
-We recommend using PKCS#8 format with AES-256 encryption for key pair authentication with <Constant name="fusion" />. <Constant name="fusion" /> doesn't support legacy 3DES encryption or headerless key formats. Using older key formats may cause authentication failures.
+Мы рекомендуем использовать формат PKCS#8 с шифрованием AES-256 для аутентификации с помощью пары ключей в <Constant name="fusion" />. <Constant name="fusion" /> не поддерживает устаревшее шифрование 3DES и форматы ключей без заголовка. Использование устаревших форматов ключей может привести к сбоям аутентификации.
 
-If you encounter the `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8` error, then your private key is in the wrong format. You have two options:
+Если вы столкнулись с ошибкой `Key is PKCS#1 (RSA private key). Snowflake requires PKCS#8`, ваш закрытый ключ имеет неверный формат. У вас есть два варианта:
 
-- (Recommended fix) Re-export your key with modern encryption:
+- (Рекомендуемое решение) Повторно экспортируйте ключ с использованием современного шифрования:
 
   ```bash
   # Convert to PKCS#8 with AES-256 encryption
   openssl genrsa 2048 | openssl pkcs8 -topk8 -v2 aes-256-cbc -inform PEM -out rsa_key.p8
   ```
 
-- (Temporary workaround) Add the `BEGIN` header and `END` footer to your PEM body:
+- (Временное решение) Добавьте заголовок `BEGIN` и завершающую строку `END` к телу PEM:
 
   ```
   -----BEGIN ENCRYPTED PRIVATE KEY-----

@@ -1,7 +1,7 @@
-With dbt <Term id="managed" /> inference, you can switch between the supported managed models at any using the model picker dropdown next to the **Agent mode** control (where you choose **Ask for approval** or **Edit files automatically**). 
+При использовании <Term id="managed" /> инференса dbt вы можете в любой момент переключаться между поддерживаемыми управляемыми моделями с помощью раскрывающегося списка выбора модели рядом с элементом управления **Agent mode** (где вы выбираете **Ask for approval** или **Edit files automatically**). 
 
-- In [<Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide) and the [<Constant name="wizard" /> home tab](/docs/platform/wizard-home), open the model picker dropdown next to the **Agent mode** control in the <Constant name="wizard" /> panel, then select a model.
-- The picker lists the managed models available to you. Refer to the [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) for the available models and their token rates.
-- If you [bring your own key (BYOK)](/docs/dbt-ai/wizard-byok), <Constant name="wizard" /> uses the provider and model you configured with your key rather than the managed model picker.
+- В [<Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide) и на [главной вкладке <Constant name="wizard" />](/docs/platform/wizard-home) откройте раскрывающийся список выбора модели рядом с элементом управления **Agent mode** на панели <Constant name="wizard" />, затем выберите модель.
+- В списке отображаются доступные вам управляемые модели. Сведения о доступных моделях и тарифах на их токены приведены в [таблице тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model).
+- Если вы [используете собственный ключ (BYOK)](/docs/dbt-ai/wizard-byok), <Constant name="wizard" /> использует поставщика и модель, настроенные для вашего ключа, а не модель из списка управляемых моделей.
 
-<Lightbox src="/img/docs/dbt-platform/wizard-model-picker.png" width="95%" title="The model picker dropdown next to the Agent mode control in the Wizard panel." />
+<Lightbox src="/img/docs/dbt-platform/wizard-model-picker.png" width="95%" title="Раскрывающийся список выбора модели рядом с элементом управления Agent mode на панели Wizard." />

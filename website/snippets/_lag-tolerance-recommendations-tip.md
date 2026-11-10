@@ -1,3 +1,3 @@
 :::tip
-To help you tune `lag_tolerance` values, the **dbt State** page on the <Constant name="dbt_platform" /> provides [lag tolerance recommendations](/docs/deploy/dbt-state-interface#lag-tolerance-recommendations) based on your models' 30-day build history, so you can see which models would benefit from a higher tolerance.
+Чтобы помочь вам настроить значения `lag_tolerance`, страница **dbt State** на <Constant name="dbt_platform" /> предоставляет [рекомендации по допустимому отставанию](/docs/deploy/dbt-state-interface#lag-tolerance-recommendations) на основе истории сборок ваших моделей за последние 30 дней, позволяя определить, для каких моделей будет полезно увеличить допустимое отставание.
 :::

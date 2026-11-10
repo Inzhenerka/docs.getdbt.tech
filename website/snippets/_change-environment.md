@@ -1,9 +1,9 @@
-To change an environment's settings (such as its name, credentials, or dbt version):
+Чтобы изменить настройки среды (например, её имя, учётные данные или версию dbt):
 
-1. Navigate to **Orchestration** > **Environments**.
-2. Click the **environment name** you want to change.
-3. Click **Settings** and then **Edit**.
-4. Update the fields you want to change. For example, you can edit the environment name, dbt version (for eligible account tiers and supported adapters, **v2 Stable** is the default for new deployment environments).
-5. Click **Save** to apply your changes.
+1. Перейдите в **Orchestration** > **Environments**.
+2. Нажмите **имя среды**, настройки которой хотите изменить.
+3. Нажмите **Settings**, затем **Edit**.
+4. Измените нужные поля. Например, можно изменить имя среды или версию dbt (для подходящих тарифных планов и поддерживаемых адаптеров **v2 Stable** используется по умолчанию для новых сред развёртывания).
+5. Нажмите **Save**, чтобы применить изменения.
 
-For details on available settings, see [Common environment settings](/docs/dbt-platform-environments#common-environment-settings) in the environment info above.
+Подробную информацию о доступных настройках см. в разделе [Общие настройки среды](/docs/dbt-platform-environments#common-environment-settings) в приведённом выше описании сред.

@@ -6,36 +6,28 @@ import SLEnvVars from '/snippets/_sl-env-vars.md';
   - Роль Owner с лицензией Developer и назначенными правами Project Creator, Database Admin или Admin.
 - Тарифный план Starter: роль Owner с лицензией Developer.
 - Бесплатный пробный период: вы используете бесплатную пробную версию тарифного плана Starter в роли Owner, а значит, у вас есть доступ к dbt Semantic Layer.
-
-- **Тарифы Enterprise+ и Enterprise**:
-  - лицензия Developer с правами Account Admin, или
-  - роль Owner с лицензией Developer и назначенными правами Project Creator, Database Admin или Admin.
-- **Тариф Starter**: роль Owner с лицензией Developer.
-- **Free trial**: вы находитесь на бесплатном пробном периоде тарифа Starter в роли Owner, что означает, что у вас есть доступ к dbt Semantic Layer.
-
 ### 1. Выберите окружение {#1-select-environment}
 
 Выберите окружение, в котором вы хотите включить Семантический слой:
 
+1. Откройте **Account settings** в меню навигации.
+2. В разделе **Settings** нажмите **Projects** и выберите проект.
+3. На странице **Project details** найдите раздел **Semantic Layer** и нажмите **Configure Semantic Layer**.
+
 <Lightbox src="/img/docs/dbt-platform/semantic-layer/new-sl-configure.png" width="70%" title="Раздел Semantic Layer на странице «Сведения о проекте»"/>
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/new-sl-configure.png" width="70%" title="Раздел Semantic Layer на странице «Project details»"/>
+4. На странице **Set Up Semantic Layer Configuration** выберите окружение развёртывания для Semantic Layer и нажмите **Save**.
 
 <Lightbox src="/img/docs/dbt-platform/semantic-layer/sl-select-env.png" width="75%" title="Выберите среду развертывания, в которой будет работать ваш семантический слой."/>
 
-<Lightbox src="/img/docs/dbt-cloud/semantic-layer/sl-select-env.png" width="75%" title="Выберите окружение развертывания, относительно которого будет выполняться ваш Semantic Layer."/>
-
 ### 2. Настройка учетных данных и создание токенов {#2-configure-credentials-and-create-tokens}
 
-- [Добавление учетных данных и создание сервисных токенов](#add-a-credential-and-create-service-tokens)
-- [Настройка учетных данных пользователя и создание персональных токенов](#configure-development-credentials-and-create-a-personal-token)
+Для настройки <Constant name="semantic_layer" /> с токенами API есть два варианта:
 
 - [Добавить учетные данные и создать сервисные токены](#add-a-credential-and-create-service-tokens)
 - [Настроить учетные данные для разработки и создать персональные токены](#configure-development-credentials-and-create-a-personal-token)
 
 #### Добавление учётных данных и создание сервисных токенов {#add-a-credential-and-create-service-tokens}
-
-Первый вариант — использовать для аутентификации [сервисные токены](/docs/dbt-apis/service-tokens), привязанные к учётным данным базовой платформы данных, которые вы настраиваете. Настроенные учётные данные используются для выполнения запросов, которые Semantic Layer отправляет к вашей платформе данных.
 
 Первый вариант — использовать [сервисные токены](/docs/dbt-apis/service-tokens) для аутентификации. Эти токены связаны с учетными данными платформы данных, которые вы предварительно настраиваете. Настроенные учетные данные используются для выполнения запросов, которые Semantic Layer отправляет к вашей платформе данных.
 
@@ -45,7 +37,7 @@ import SLEnvVars from '/snippets/_sl-env-vars.md';
 | --- | --- | --- |
 | Service tokens | Можно создать несколько service token, связанных с одними учётными данными (credential). | Можно использовать несколько credential и привязывать к каждому из них несколько service token. Обратите внимание, что один service token нельзя привязать более чем к одному credential. |
 | Credentials per project | Один credential на проект. | Можно [добавить несколько](#4-add-more-credentials) credential на проект. |
-| Link multiple service tokens to a single credential | ✅ | ✅ |
+| Привязка нескольких сервисных токенов к одним учётным данным | ✅ | ✅ |
 
 *Если вы используете тариф Starter и вам нужно добавить больше credential, рассмотрите возможность перехода на [Enterprise+ или Enterprise plan](https://www.getdbt.com/contact). Все пользователи Enterprise могут обратиться к разделу [Add more credentials](#4-add-more-credentials) для получения подробных инструкций по добавлению нескольких credential.*
 

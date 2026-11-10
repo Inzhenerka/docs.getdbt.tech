@@ -1,20 +1,20 @@
-If you have access to [<Constant name="wizard"/>](/docs/dbt-ai/wizard-ide) with [AI features](/docs/platform/manage-dbt-ai) enabled, you can use the [<Constant name="fusion"/> migration workflow](/docs/dbt-ai/wizard-ide#fusion-migration-workflow) skill. This skill can help you fix compatibility errors directly from the <Constant name="studio_ide" /> using <Constant name="wizard" /> &mdash; no manual log investigation needed. It classifies every error, applies validated fixes automatically, and surfaces what's blocked.
+Если у вас есть доступ к [<Constant name="wizard"/>](/docs/dbt-ai/wizard-ide) с включёнными [функциями ИИ](/docs/platform/manage-dbt-ai), вы можете воспользоваться навыком [миграции на <Constant name="fusion"/>](/docs/dbt-ai/wizard-ide#fusion-migration-workflow). Этот навык помогает исправлять ошибки совместимости прямо в <Constant name="studio_ide" /> с помощью <Constant name="wizard" /> &mdash; без ручного анализа логов. Он классифицирует каждую ошибку, автоматически применяет проверенные исправления и показывает, что препятствует дальнейшей миграции.
 
 :::info
-The <Constant name="fusion" /> migration workflow is accessible through the <Constant name="wizard" /> in the <Constant name="studio_ide" />. If you're using VS Code or the <Constant name="platform_cli" />, use the [autofix tool](https://docs.getdbt.com/guides/dbt-package-compat?step=4) instead.
+Процесс миграции на <Constant name="fusion" /> доступен через <Constant name="wizard" /> в <Constant name="studio_ide" />. Если вы используете VS Code или <Constant name="platform_cli" />, воспользуйтесь вместо этого [инструментом autofix](https://docs.getdbt.com/guides/dbt-package-compat?step=4).
 :::
 
-1. From the job list, click the **Review job** button for a job with a successful run.
-   - If you don't see the **Review job** button, enable the **Show dbt v2 eligibility** toggle in the job list.
-2. In the **<Constant name="fusion"/> eligibility unknown for this job** pop-up, click **Debug in Studio with dbt Wizard**.
-3. dbt redirects you to the <Constant name="studio_ide" /> and sets your personal development environment to <Constant name="fusion" />.
-4. <Constant name="wizard" /> opens and automatically triggers the <Constant name="fusion" /> migration skill with this prompt:
+1. В списке заданий нажмите кнопку **Review job** для задания с успешным запуском.
+   - Если кнопка **Review job** не отображается, включите переключатель **Show dbt v2 eligibility** в списке заданий.
+2. Во всплывающем окне **<Constant name="fusion"/> eligibility unknown for this job** нажмите **Debug in Studio with dbt Wizard**.
+3. dbt перенаправит вас в <Constant name="studio_ide" /> и переключит вашу персональную среду разработки на <Constant name="fusion" />.
+4. Откроется <Constant name="wizard" /> и автоматически запустит навык миграции на <Constant name="fusion" /> со следующим запросом:
     ```
     I need help fixing dbt v2 compatibility issues in this project. Please investigate and resolve any deprecation warnings or incompatibilities. Please use the migrating-dbt-core-to-fusion skill to guide this.
     ```
-5. Review and approve <Constant name="wizard" />'s permission requests so it can run the commands it needs.
-6. The <Constant name="wizard" /> iteratively runs `dbt compile`, reads the results, and applies fixes until it reaches a successful compile or encounters an error it can't resolve. If it gets blocked, it exits cleanly, explains what it could not fix, and creates and links to a markdown file summarizing all changes made. 
-7. When the project compiles with no warnings or errors, commit and publish your changes.
-8. After you merge the changes, wait for the job to run again or run it manually on <Constant name="fusion"/>.
+5. Рассмотрите и одобрите запросы разрешений от <Constant name="wizard" />, чтобы он мог выполнять необходимые команды.
+6. <Constant name="wizard" /> последовательно выполняет `dbt compile`, анализирует результаты и применяет исправления, пока компиляция не завершится успешно или не возникнет ошибка, которую он не сможет устранить. Если дальнейшая работа невозможна, он корректно завершает процесс, объясняет, что не удалось исправить, создаёт markdown-файл со сводкой всех внесённых изменений и предоставляет ссылку на него. 
+7. Когда проект будет компилироваться без предупреждений и ошибок, создайте коммит и опубликуйте изменения.
+8. После слияния изменений дождитесь повторного запуска задания или запустите его вручную на <Constant name="fusion"/>.
 
-<Lightbox src="/img/docs/dbt-platform/v2-migration-workflow.gif" width="95%" title="The Developer Agent's v2 migration workflow triaging and fixing v2 compatibility errors in the Studio IDE." />
+<Lightbox src="/img/docs/dbt-platform/v2-migration-workflow.gif" width="95%" title="Процесс миграции на v2 с помощью Developer Agent: анализ и исправление ошибок совместимости с v2 в Studio IDE." />

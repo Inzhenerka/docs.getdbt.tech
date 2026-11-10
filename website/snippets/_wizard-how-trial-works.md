@@ -1,20 +1,20 @@
-Every new account gets free {props.product} usage credits to start. What you get, and how you keep going, depends on your plan.
+Каждый новый аккаунт получает бесплатные кредиты на использование {props.product}. Доступные возможности и условия дальнейшего использования зависят от вашего тарифного плана.
 
 <SimpleTable>
-| Plan | What you get | How it renews | When it runs out |
+| Тарифный план | Что вы получаете | Как обновляются кредиты | Что делать, когда кредиты закончатся |
 |---|---|---|---|
-| Developer and Starter, or self-hosted dbt with a free dbt account | 30-day trial with $100 in usage credits per account | One-time | Add a credit card and set a monthly spend limit or contact your account team. |
-| Enterprise, including [legacy Enterprise](/docs/platform/billing/plans-and-billing#legacy-plans) | $100/month in usage credits per account | Resets each billing month | [Contact your account team](https://www.getdbt.com/contact) to add committed spend |
-| Enterprise+ | $200/month in usage credits per account | Resets each billing month | [Contact your account team](https://www.getdbt.com/contact) to add committed spend |
-| [Legacy Team](/docs/platform/billing/plans-and-billing#legacy-plans) | No access to {props.product} | &mdash; | Move to a [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing) |
+| Developer и Starter или dbt в собственной инфраструктуре с бесплатным аккаунтом dbt | 30-дневный пробный период с кредитами на использование на сумму $100 на аккаунт | Однократно | Добавьте банковскую карту и установите ежемесячный лимит расходов или свяжитесь с командой по работе с вашим аккаунтом. |
+| Enterprise, включая [прежние тарифы Enterprise](/docs/platform/billing/plans-and-billing#legacy-plans) | Кредиты на использование на сумму $100 в месяц на аккаунт | Обновляются каждый расчётный месяц | [Свяжитесь с командой по работе с вашим аккаунтом](https://www.getdbt.com/contact), чтобы добавить обязательство по расходам |
+| Enterprise+ | Кредиты на использование на сумму $200 в месяц на аккаунт | Обновляются каждый расчётный месяц | [Свяжитесь с командой по работе с вашим аккаунтом](https://www.getdbt.com/contact), чтобы добавить обязательство по расходам |
+| [Прежний тариф Team](/docs/platform/billing/plans-and-billing#legacy-plans) | Нет доступа к {props.product} | &mdash; | Перейдите на [тариф Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing) |
 </SimpleTable>
 
-- On Developer and Starter plans, the trial is opt-in, so it won't start automatically. It ends when you use up the $100 in credits or after 30 days, whichever comes first, and unused credits don't carry over.
-- Legacy Enterprise plans get the same {props.product} access and monthly usage credits as current Enterprise. Only legacy Team has no access.
-- Enterprise and Enterprise+ usage credits are granted automatically &mdash; there's no trial to start and no credit card required. Credits don't roll over or get prorated, and if you downgrade out of Enterprise or Enterprise+, any unused credits are removed at the plan change.
-- Enterprise and Enterprise+ accounts should add a committed spend amount to their contract to keep using <Constant name="wizard" />. You may lose access to <Constant name="wizard" /> without this commit in place. If you've set an optional monthly <Constant name="wizard" /> spend limit, that still applies and pauses usage once reached.
-- If you [bring your own key (BYOK)](/docs/dbt-ai/wizard-byok), you don't need a dbt account or a trial. Your AI provider bills you directly.
+- На тарифах Developer и Starter пробный период нужно активировать самостоятельно: он не начинается автоматически. Он заканчивается, когда вы израсходуете кредиты на сумму $100 или через 30 дней — в зависимости от того, что наступит раньше. Неиспользованные кредиты не переносятся.
+- Прежние тарифы Enterprise предоставляют такой же доступ к {props.product} и такие же ежемесячные кредиты на использование, как и текущий тариф Enterprise. Доступа нет только у прежнего тарифа Team.
+- На тарифах Enterprise и Enterprise+ кредиты на использование начисляются автоматически &mdash; активировать пробный период и добавлять банковскую карту не требуется. Кредиты не переносятся на следующий месяц, а их сумма не пересчитывается пропорционально длительности использования. При переходе с Enterprise или Enterprise+ на более низкий тариф все неиспользованные кредиты аннулируются в момент смены тарифа.
+- Для аккаунтов Enterprise и Enterprise+ необходимо добавить в договор обязательство по расходам на определённую сумму, чтобы продолжать пользоваться <Constant name="wizard" />. Без такого обязательства вы можете потерять доступ к <Constant name="wizard" />. Если вы установили необязательный ежемесячный лимит расходов на <Constant name="wizard" />, он продолжает действовать: при его достижении использование приостанавливается.
+- Если вы [используете собственный ключ (BYOK)](/docs/dbt-ai/wizard-byok), аккаунт dbt и пробный период не нужны. Ваш поставщик ИИ выставляет вам счета напрямую.
 
-:::info Using {props.product} with a self-hosted dbt project?
-The trial is opt-in here too. In the CLI, running `dbt login` (or `wizard login`) is how you opt in. In Wizard Desktop, signing in to a dbt acount during onboarding does the same. Either way, you get a free dbt account and the same 30-day trial, and that account is where you manage usage and spend limits.
+:::info Используете {props.product} с проектом dbt в собственной инфраструктуре?
+В этом случае пробный период тоже нужно активировать самостоятельно. В CLI для этого выполните `dbt login` (или `wizard login`). В Wizard Desktop тот же результат даёт вход в аккаунт dbt во время первоначальной настройки. В обоих случаях вы получаете бесплатный аккаунт dbt и такой же 30-дневный пробный период. В этом аккаунте вы можете управлять использованием и лимитами расходов.
 :::

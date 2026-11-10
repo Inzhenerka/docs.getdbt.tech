@@ -1,154 +1,154 @@
 import WizardAgentModes from '/snippets/_wizard-agent-modes.md';
 
-<Expandable alt_header="Availability and considerations">
+<Expandable anchor_id="availability-and-considerations" alt_header="Доступность и особенности использования">
 
-- **Where it runs:** Supported in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) only, all [deployment types](/docs/platform/about-platform/tenancy?version=2.0). Not supported in VS Code or the <Constant name="platform_cli" />.
-- **Engines:** Works with <Constant name="fusion_engine" /> and <Constant name="core" />.
-- **Conversations:** In the conversation list, open **More actions** menu (three dots) of the conversation you want to delete, then click **Delete** to remove one thread. Deleting the open thread clears the panel.
-- **Sessions:** Refreshing the same browser tab keeps your active session. A new tab, or returning after closing the tab, starts empty. 
-- **Chat history:** Retained for 90 days only. Chat history isn't supported yet on single-tenant deployments, so save anything important before closing.
-- **Plan mode:** Not supported yet. The agent doesn't show a separate plan before applying changes, however you can use the **Ask for approval** mode to approve each file.
-- **New chat:** Click **Start new dbt Wizard chat** (top right of the dbt Wizard panel) to begin a new session.
+- **Где работает:** Поддерживается только в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), во всех [типах развертывания](/docs/platform/about-platform/tenancy?version=2.0). Не поддерживается в VS Code и <Constant name="platform_cli" />.
+- **Движки:** Работает с <Constant name="fusion_engine" /> и <Constant name="core" />.
+- **Диалоги:** В списке диалогов откройте меню **More actions** (три точки) нужного диалога, затем нажмите **Delete**, чтобы удалить его. При удалении открытого диалога панель очищается.
+- **Сеансы:** Обновление текущей вкладки браузера сохраняет активный сеанс. В новой вкладке или при повторном открытии закрытой вкладки сеанс начинается с пустой историей. 
+- **История чата:** Хранится только в течение 90 дней. В развертываниях с одним арендатором история чата пока не поддерживается, поэтому сохраняйте все важное перед закрытием.
+- **Режим планирования:** Пока не поддерживается. Агент не показывает отдельный план перед применением изменений, однако вы можете использовать режим **Ask for approval**, чтобы подтверждать изменения в каждом файле.
+- **Новый чат:** Нажмите **Start new dbt Wizard chat** (в правом верхнем углу панели dbt Wizard), чтобы начать новый сеанс.
 </Expandable>
 
-### Using dbt Wizard
+### Использование dbt Wizard {#using-dbt-wizard}
 
-Use the <Constant name="wizard" /> panel to generate resources with quick actions, or use the agent to build and refactor models end-to-end with natural language prompts.
+Используйте панель <Constant name="wizard" /> для генерации ресурсов с помощью быстрых действий или поручите агенту полный цикл создания и рефакторинга моделей с помощью запросов на естественном языке.
 
-To use the <Constant name="wizard" />, follow these steps:
+Чтобы использовать <Constant name="wizard" />, выполните следующие действия:
 
-1. Open your dbt project in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), then click **<Constant name="wizard" />** in the command palette.
-2. Start a prompt in several ways in the [<Constant name="wizard" /> panel](/docs/dbt-ai/wizard-ide?version=2#panel-controls):
-   - **Quick actions**: Use [quick-action resource generation](/docs/dbt-ai/wizard-ide#using-dbt-wizard) at the top of the panel for quick action prompts.
-   - **Plain text**: Type directly into the text field to describe what you want to build or change.
-   - **Model context**: Type `@` to select a model as context. This scopes the agent's changes to that resource.
-3. Select the [**Agent mode** button](/docs/dbt-ai/wizard-ide#agent-modes) to specify the mode for the <Constant name="wizard" />. Available modes are **Explore only**, **Ask for approval** (default), and **Edit files automatically**.
-4. Select the dbt <Term id="managed" /> model you'd like to work with from the [model picker](/docs/dbt-ai/pricing-billing/overview#choose-a-model) next to the **Agent mode** button.
-5. [Review the agent's suggestions](/docs/dbt-ai/wizard-ide#reviewing-agent-suggestions) and approve or reject the changes. You can also use the **Start new dbt Wizard chat** button to start a new chat session.
-6. [Approve dbt commands](/docs/dbt-ai/wizard-ide#granting-command-permissions) when the <Constant name="wizard" /> requests to run commands like `dbt compile` or `dbt build`.
-7. Repeat the process to build or change more models.
-8. Commit the changes to your dbt project and open a pull request. Be warned, the wizard has been known to <WizardPopcorn>cast spells</WizardPopcorn>.
+1. Откройте свой проект dbt в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), затем выберите **<Constant name="wizard" />** в палитре команд.
+2. Начните ввод запроса одним из нескольких способов на [панели <Constant name="wizard" />](/docs/dbt-ai/wizard-ide?version=2#panel-controls):
+   - **Быстрые действия**: Используйте [генерацию ресурсов с помощью быстрых действий](/docs/dbt-ai/wizard-ide#panel-controls) в верхней части панели для создания соответствующих запросов.
+   - **Обычный текст**: Введите в текстовое поле описание того, что вы хотите создать или изменить.
+   - **Контекст модели**: Введите `@`, чтобы выбрать модель в качестве контекста. Это ограничит изменения агента выбранным ресурсом.
+3. Нажмите [кнопку **Agent mode**](/docs/dbt-ai/wizard-ide#agent-modes), чтобы задать режим работы <Constant name="wizard" />. Доступны режимы **Explore only**, **Ask for approval** (по умолчанию) и **Edit files automatically**.
+4. Выберите модель dbt <Term id="managed" />, с которой хотите работать, в [списке выбора модели](/docs/dbt-ai/pricing-billing/overview#choose-a-model) рядом с кнопкой **Agent mode**.
+5. [Просмотрите предложения агента](/docs/dbt-ai/wizard-ide#reviewing-agent-suggestions) и примите или отклоните изменения. Вы также можете нажать кнопку **Start new dbt Wizard chat**, чтобы начать новый сеанс чата.
+6. [Разрешайте выполнение команд dbt](/docs/dbt-ai/wizard-ide#granting-command-permissions), когда <Constant name="wizard" /> запрашивает запуск таких команд, как `dbt compile` или `dbt build`.
+7. Повторите эти действия, чтобы создать или изменить другие модели.
+8. Зафиксируйте изменения в своем проекте dbt и откройте pull request. Но будьте осторожны: этот волшебник умеет <WizardPopcorn>творить заклинания</WizardPopcorn>.
 
-The following images show how <Constant name="wizard"/> displays its work and outcome:
+На следующих изображениях показано, как <Constant name="wizard"/> отображает ход работы и результат:
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-lineage.png" width="85%" title="dbt Wizard refactoring a model and displaying the lineage inside the chat interface."/>
+<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-lineage.png" width="85%" title="dbt Wizard выполняет рефакторинг модели и отображает граф зависимостей в интерфейсе чата."/>
 
-<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-diff.png" width="85%" title="Wizard final refactor result displayed as a diff"/>
+<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-diff.png" width="85%" title="Итоговый результат рефакторинга Wizard в виде сравнения изменений"/>
 
 </DocCarousel>
 
-For more details on the <Constant name="wizard" /> and how it works, expand the following sections to open additional information.
+Чтобы узнать больше о <Constant name="wizard" /> и его работе, разверните следующие разделы с дополнительной информацией.
 
-<Expandable alt_header="Panel controls">
+<Expandable anchor_id="panel-controls" alt_header="Элементы управления панелью">
 
-The <Constant name="wizard" /> panel contains:
+Панель <Constant name="wizard" /> содержит:
 
-1. **Quick actions** (center): Buttons at the top of the panel for common tasks like generating documentation, tests, semantic models, and metrics. When selected, the text field is pre-filled with a prompt.
-2. **Agent mode button** (bottom left): Switch between **Explore only**, **Ask for approval**, and **Edit files automatically** mode. Click the button to change modes.
-3. **Model picker** (bottom left): Select the dbt <Term id="managed" /> model to use for the session. Refer to [Choose a model](/docs/dbt-ai/wizard-ide#choose-a-model) for the available models.
-4. **dbt model context** (bottom left): Shows the currently open file. Use `@` in the text field to reference a different dbt model. Click **x** to remove the dbt model context.
-5. **Text input field** (bottom left): Type your prompt in the text field to describe what you want to build or change. Type `@` to select a dbt model as context. This scopes the agent's changes to that resource.
-6. **Start new dbt Wizard chat** (top right): Starts a new chat session.
-7. **Stop** or **Enter** (bottom right): Press **Enter** to submit your prompt. Press **Stop** to stop the current session and agent processing. You cannot undo this action. 
+1. **Быстрые действия** (в центре): Кнопки в верхней части панели для типовых задач, таких как генерация документации, тестов, семантических моделей и метрик. При выборе действия текстовое поле автоматически заполняется запросом.
+2. **Кнопка Agent mode** (внизу слева): Переключение между режимами **Explore only**, **Ask for approval** и **Edit files automatically**. Нажмите кнопку, чтобы сменить режим.
+3. **Список выбора модели** (внизу слева): Выберите модель dbt <Term id="managed" /> для текущего сеанса. Сведения о доступных моделях см. в разделе [Выбор модели](/docs/dbt-ai/pricing-billing/overview#choose-a-model).
+4. **Контекст модели dbt** (внизу слева): Показывает текущий открытый файл. Используйте `@` в текстовом поле, чтобы сослаться на другую модель dbt. Нажмите **x**, чтобы убрать контекст модели dbt.
+5. **Поле ввода текста** (внизу слева): Введите запрос в текстовое поле, чтобы описать, что вы хотите создать или изменить. Введите `@`, чтобы выбрать модель dbt в качестве контекста. Это ограничит изменения агента выбранным ресурсом.
+6. **Start new dbt Wizard chat** (вверху справа): Начинает новый сеанс чата.
+7. **Stop** или **Enter** (внизу справа): Нажмите **Enter**, чтобы отправить запрос. Нажмите **Stop**, чтобы остановить текущий сеанс и работу агента. Это действие нельзя отменить. 
 
-<Lightbox src="/img/docs/dbt-platform/wizard-panel.png" width="95%" title="The Wizard panel in the Studio IDE showing quick-action buttons, the agent mode button, the model picker, and the text input field." />
+<Lightbox src="/img/docs/dbt-platform/wizard-panel.png" width="95%" title="Панель Wizard в Studio IDE с кнопками быстрых действий, кнопкой режима агента, списком выбора модели и полем ввода текста." />
 
-<Constant name="wizard"/> also has a simplified wayfinder bar above the text input field. The wayfinder bar shows your current project and branch and guides you through Git tasks, such as committing files or creating a branch.
+В <Constant name="wizard"/> также есть упрощенная навигационная панель над полем ввода текста. Она показывает текущий проект и ветку и помогает выполнять операции Git, например фиксировать изменения в файлах или создавать ветку.
 
 </Expandable>
 
 <a id="agent-modes"></a>
 
-<Expandable alt_header="Agent modes">
+<Expandable alt_header="Режимы агента">
 
 <WizardAgentModes />
 
-<Lightbox src="/img/docs/dbt-platform/wizard-modes.png" width="95%" title="dbt Wizard in Explore only, Ask for approval, and Edit files automatically modes." />
+<Lightbox src="/img/docs/dbt-platform/wizard-modes.png" width="95%" title="dbt Wizard в режимах Explore only, Ask for approval и Edit files automatically." />
 
 </Expandable>
 
-<Expandable alt_header="Reviewing agent suggestions">
+<Expandable anchor_id="reviewing-agent-suggestions" alt_header="Просмотр предложений агента">
 
-When the <Constant name="wizard" /> proposes code changes, you can review them before they are saved to your project:
+Когда <Constant name="wizard" /> предлагает изменения кода, вы можете просмотреть их до сохранения в проекте:
 
-- **View the diff**: The agent displays a diff of the proposed changes. Click **Show all X lines** to expand and view the full suggestion.
-- **Line indicators**: Added and removed lines are highlighted with line number indicators so you can see exactly what changed.
-- **Copy or open in editor**: Use the options in the top-right corner of the diff view to copy the suggestion or open it directly in the editor.
+- **Просмотр различий**: Агент показывает сравнение предлагаемых изменений. Нажмите **Show all X lines**, чтобы развернуть и просмотреть предложение целиком.
+- **Индикаторы строк**: Добавленные и удаленные строки выделены и снабжены номерами, чтобы вы могли точно увидеть, что изменилось.
+- **Копирование или открытие в редакторе**: Используйте элементы в правом верхнем углу области сравнения, чтобы скопировать предложение или открыть его непосредственно в редакторе.
 
 
 </Expandable>
 
-<Expandable alt_header="Granting command permissions">
+<Expandable anchor_id="granting-command-permissions" alt_header="Предоставление разрешений на выполнение команд">
 
-To validate or run models during a session, the agent may request to run dbt commands such as `dbt compile` or `dbt build`. You'll be prompted to approve each request before it executes. For example, the agent might request to run:
+Для проверки или запуска моделей во время сеанса агент может запросить выполнение команд dbt, таких как `dbt compile` или `dbt build`. Перед выполнением каждого запроса вам будет предложено подтвердить его. Например, агент может запросить запуск:
 
 ```bash
 dbt compile --select model_name
 ```
 
-You can select one of the following options:
+Вы можете выбрать один из следующих вариантов:
 
 <SimpleTable>
 
-| Option | Behavior |
+| Вариант | Поведение |
 |--------|----------|
-| **Yes, run once** | Grants permission to run this specific command one time. |
-| **Yes, and allow `dbt_command_name` for the session** | Grants permission to run dbt commands for the remainder of your session without prompting again. |
-| **No** | Denies the request. The agent will not run the command. |
+| **Yes, run once** | Разрешает однократное выполнение этой конкретной команды. |
+| **Yes, and allow `dbt_command_name` for the session** | Разрешает выполнять команды dbt до конца сеанса без повторных запросов подтверждения. |
+| **No** | Отклоняет запрос. Агент не выполнит команду. |
 
 </SimpleTable>
 
-After you run a command, <Constant name="wizard" /> adds an icon and a tooltip to the <Constant name="studio_ide" /> [**Commands** tab](/docs/platform/studio-ide/ide-user-interface#console-section) results. This helps you distinguish agent-run commands from manually run commands in the run results and logs. 
+После выполнения команды <Constant name="wizard" /> добавляет значок и всплывающую подсказку к результатам на [вкладке **Commands**](/docs/platform/studio-ide/ide-user-interface#console-section) в <Constant name="studio_ide" />. Это помогает отличать команды, запущенные агентом, от команд, запущенных вручную, в результатах выполнения и журналах. 
 
 </Expandable>
 
-### Bringing your own skills
+### Добавление собственных навыков {#bringing-your-own-skills}
 
-You can extend <Constant name="wizard" /> with custom skills to encode your team's SQL conventions, naming rules, and modeling workflows — so you don't repeat them in every prompt. See [Skills](/docs/dbt-ai/wizard-platform-skills) for the full reference, including how to create, structure, and invoke skills.
+Вы можете расширить возможности <Constant name="wizard" /> с помощью собственных навыков, закрепив в них принятые в команде соглашения по SQL, правила именования и рабочие процессы моделирования, чтобы не повторять их в каждом запросе. Полный справочник, включая инструкции по созданию, структурированию и вызову навыков, см. в разделе [Навыки](/docs/dbt-ai/wizard-platform-skills).
 
-### Debug job failures
+### Диагностика сбоев заданий {#debug-job-failures}
 
-The <Constant name="wizard" /> can investigate and troubleshoot dbt job and run failures directly from the <Constant name="studio_ide" />. This capability is powered by the `troubleshooting-dbt-job-errors` [dbt Agent Skill](https://github.com/dbt-labs/dbt-agent-skills), which comes pre-configured with the agent — no setup required.
+<Constant name="wizard" /> может исследовать и устранять сбои заданий и запусков dbt непосредственно из <Constant name="studio_ide" />. Эта возможность основана на навыке `troubleshooting-dbt-job-errors` из набора [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills), который уже настроен в агенте — дополнительная настройка не требуется.
 
-You can ask the agent questions and issue commands like:
+Вы можете задавать агенту вопросы и давать команды, например:
 
-- "What jobs have failed recently?"
-- "What is the root cause of the job failure?"
-- "How can I fix the recent job failure?"
-- "Fix the job failure."
+- «Какие задания завершились с ошибкой за последнее время?»
+- «Какова первопричина сбоя задания?»
+- «Как исправить недавний сбой задания?»
+- «Исправь сбой задания».
 
-The agent notes when your local project state may differ from the job — for example, if you're on a different branch or have uncommitted changes — so you have full context before acting on any suggested fixes.
+Агент сообщает, когда локальное состояние проекта может отличаться от состояния, в котором выполнялось задание, — например, если вы работаете в другой ветке или у вас есть незафиксированные изменения. Так вы получите полный контекст, прежде чем применять предложенные исправления.
 
-### Timeout handling
+### Обработка тайм-аутов {#timeout-handling}
 
-When a dbt command run by <Constant name="wizard" /> runs for more than 5 minutes, the agent automatically attempts to stop the command on the server before returning control to you.
+Если команда dbt, запущенная <Constant name="wizard" />, выполняется более 5 минут, агент автоматически пытается остановить ее на сервере, прежде чем вернуть вам управление.
 
-Instead of hanging or showing a generic error, the agent returns a clear message that explains the command timed out and was aborted. The message also tells you whether the cancellation request succeeded. If cancellation fails, it's possible the command may still be running on the server.
+Вместо зависания или общей ошибки агент выводит понятное сообщение о том, что время ожидания команды истекло и ее выполнение было прервано. В сообщении также указано, удалось ли выполнить запрос на отмену. Если отмена не удалась, команда может продолжать выполняться на сервере.
 
-You can then choose whether to retry the command, narrow the request, or take another action.
+После этого вы можете повторить команду, сузить запрос или выполнить другое действие.
 
-### dbt v2 migration workflow {#fusion-migration-workflow}
+### Процесс миграции на dbt v2 {#fusion-migration-workflow}
 
 import FusionMigrationWorkflow from '/snippets/_v2-migration-workflow.md';
 
 <FusionMigrationWorkflow />
 
-For more on how to prepare your project for <Constant name="fusion" /> and what to do when you hit compatibility errors, see the [dbt v2 readiness checklist](/docs/dbt/dbt-readiness) and the [Upgrade to dbt v2 guides](/guides/prepare-v2-upgrade).
+Подробнее о подготовке проекта к <Constant name="fusion" /> и действиях при возникновении ошибок совместимости см. в [контрольном списке готовности к dbt v2](/docs/dbt/dbt-readiness) и [руководствах по переходу на dbt v2](/guides/prepare-v2-upgrade).
 
-### Writing effective prompts
+### Составление эффективных запросов {#writing-effective-prompts}
 
-Good prompts include the _scope_ (which models or area of the project), the _intent_ (the transformation or business logic you want), and any _constraints_ (naming conventions, materialization, tests). Here are a few examples:
+Хорошие запросы включают _область применения_ (какие модели или часть проекта затрагиваются), _цель_ (нужное преобразование или бизнес-логику) и любые _ограничения_ (соглашения об именовании, материализацию, тесты). Вот несколько примеров:
 
 <SimpleTable>
 
-| Task | Example prompt |
+| Задача | Пример запроса |
 |------|---------------|
-| Build a new model | "Create a model called `fct_daily_revenue` that joins `stg_orders` and `stg_payments`, aggregates revenue by day, and materializes as a table." |
-| Refactor an existing model | "Refactor `fct_orders` to use incremental materialization. Keep existing tests and follow our naming conventions." |
-| Generate tests and docs | "Add `not_null` and `unique` tests to the primary key of `dim_customers`, and generate documentation for all columns." |
+| Создать новую модель | «Создай модель с именем `fct_daily_revenue`, которая объединяет `stg_orders` и `stg_payments`, агрегирует выручку по дням и материализуется в виде таблицы». |
+| Выполнить рефакторинг существующей модели | «Выполни рефакторинг `fct_orders`, чтобы использовать инкрементальную материализацию. Сохрани существующие тесты и соблюдай наши соглашения об именовании». |
+| Сгенерировать тесты и документацию | «Добавь тесты `not_null` и `unique` для первичного ключа `dim_customers` и сгенерируй документацию для всех столбцов». |
 
 </SimpleTable>
 
-For detailed guidance, patterns, and more examples across SQL, documentation, tests, and semantic models, see the [Prompt cookbook](/guides/prompt-cookbook).
+Подробные рекомендации, шаблоны и дополнительные примеры для SQL, документации, тестов и семантических моделей см. в [сборнике рецептов запросов](/guides/prompt-cookbook).

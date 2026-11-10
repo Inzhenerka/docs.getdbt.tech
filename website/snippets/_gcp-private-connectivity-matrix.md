@@ -1,41 +1,41 @@
-## GCP private connectivity matrix
+## Матрица приватных подключений в GCP {#gcp-private-connectivity-matrix}
 
-The following charts outline private connectivity options for GCP deployments of <Constant name="dbt" /> ([multi-tenant](/docs/platform/about-platform/tenancy)).
+В следующих таблицах представлены варианты приватного подключения для развертываний <Constant name="dbt" /> в GCP ([мультиарендная архитектура](/docs/platform/about-platform/tenancy)).
 
-**Legend:**
-- ✅ = Available
-- ❌ = Not currently available
-- \* = <Term id="shared-endpoint">Shared endpoint</Term> (all others are <Term id="dedicated-endpoint">dedicated</Term>)
+**Условные обозначения:**
+- ✅ = Доступно
+- ❌ = Пока недоступно
+- \* = <Term id="shared-endpoint">Общая конечная точка</Term> (все остальные — <Term id="dedicated-endpoint">выделенные</Term>)
 
-_Tenancy:_ MT (multi-tenant) — [learn more about tenancy](/docs/platform/about-platform/tenancy).
+_Архитектура аренды:_ MT (мультиарендная) — [подробнее об архитектуре аренды](/docs/platform/about-platform/tenancy).
 
-:::note About the following matrix tables
-These tables indicate whether private connectivity can be established to specific services, considering major factors such as the network and basic auth layers. dbt has validated these configurations using common deployment patterns and typical use cases. However, individual configurations may vary. If you encounter issues or have questions about your environment, [contact dbt Support](/community/resources/getting-help#dbt-support) for guidance.
+:::note О следующих матричных таблицах
+Эти таблицы показывают, можно ли установить приватное подключение к конкретным сервисам, с учетом основных факторов, таких как сетевой уровень и уровень базовой аутентификации. dbt проверила эти конфигурации с использованием распространенных схем развертывания и типичных сценариев использования. Однако отдельные конфигурации могут отличаться. Если вы столкнулись с проблемами или у вас есть вопросы о вашей среде, [обратитесь в службу поддержки dbt](/community/resources/getting-help#dbt-support) за рекомендациями.
 
-**GCP regional considerations:** Some GCP services, such as BigQuery, may have regional restrictions for Private Service Connect endpoints. Refer to [Google's Private Service Connect documentation](https://cloud.google.com/vpc/docs/private-service-connect) for service-specific regional availability.
+**Региональные особенности GCP:** Некоторые сервисы GCP, например BigQuery, могут иметь региональные ограничения для конечных точек Private Service Connect. Сведения о доступности в регионах для конкретных сервисов см. в [документации Google по Private Service Connect](https://cloud.google.com/vpc/docs/private-service-connect).
 :::
 
 ---
 
-### Connecting the dbt platform to managed services (Egress)
+### Подключение платформы dbt к управляемым сервисам (исходящий трафик) {#connecting-the-dbt-platform-to-managed-services-egress}
 
-<Constant name="dbt" /> can establish private connections to managed data platforms and cloud-native services.
+<Constant name="dbt" /> может устанавливать приватные подключения к управляемым платформам данных и облачным сервисам.
 
-| Service | MT | Setup guide |
+| Сервис | MT | Руководство по настройке |
 |---------|-----|-------------|
-| Snowflake | ✅ | [View](/docs/platform/secure/private-connectivity/gcp/gcp-snowflake) |
-| Google BigQuery | ✅* | [View](/docs/platform/secure/private-connectivity/gcp/gcp-bigquery) |
+| Snowflake | ✅ | [Открыть](/docs/platform/secure/private-connectivity/gcp/gcp-snowflake) |
+| Google BigQuery | ✅* | [Открыть](/docs/platform/secure/private-connectivity/gcp/gcp-bigquery) |
 | Teradata VantageCloud | ✅ | |
 
 ---
 
-### Connecting the dbt platform to self-hosted services (Egress)
+### Подключение платформы dbt к самостоятельно размещенным сервисам (исходящий трафик) {#connecting-the-dbt-platform-to-self-hosted-services-egress}
 
-All of the services below share a common Private Service Connect setup guide — backend configuration varies by service. Self-hosted connections use the <Term id="customer-provisioned">customer-provisioned</Term> model — you are the <Term id="service-producer">service producer</Term> and dbt is the <Term id="consumer">consumer</Term>.
+Для всех перечисленных ниже сервисов используется общее руководство по настройке Private Service Connect — конфигурация серверной части зависит от сервиса. Подключения к самостоятельно размещенным сервисам используют модель <Term id="customer-provisioned">предоставления ресурсов клиентом</Term> — вы выступаете в роли <Term id="service-producer">поставщика сервиса</Term>, а dbt — в роли <Term id="consumer">потребителя</Term>.
 
-**Setup guide:** [Configuring GCP Private Service Connect for self-hosted services](/docs/platform/secure/private-connectivity/gcp/gcp-self-hosted)
+**Руководство по настройке:** [Настройка GCP Private Service Connect для самостоятельно размещенных сервисов](/docs/platform/secure/private-connectivity/gcp/gcp-self-hosted)
 
-| Service | MT |
+| Сервис | MT |
 |---------|-----|
 | GitHub Enterprise Server | ✅ |
 | GitLab Self-Managed | ✅ |
@@ -43,6 +43,6 @@ All of the services below share a common Private Service Connect setup guide —
 | Azure DevOps Server | ✅ |
 | Postgres | ✅ |
 | Starburst / Trino | ✅ |
-| Teradata (self-hosted) | ✅ |
+| Teradata (самостоятельное размещение) | ✅ |
 
-If you have questions about whether your specific architecture is supported, [contact dbt Support](/community/resources/getting-help#dbt-support).
+Если у вас есть вопросы о поддержке вашей конкретной архитектуры, [обратитесь в службу поддержки dbt](/community/resources/getting-help#dbt-support).

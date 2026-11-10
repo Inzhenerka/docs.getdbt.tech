@@ -1,29 +1,29 @@
-   <Expandable alt_header="BigQuery">  
-    - Service Account / User Token
-    - Native OAuth
-    - External OAuth 
-      - [Workload Identity Federation](/docs/platform/manage-access/set-up-bigquery-oauth#set-up-bigquery-workload-identity-federation-) (Microsoft Entra)
-    - [Required permissions](/docs/local/connect-data-platform/bigquery-setup#разрешения-для-хранилища-данных)
+<Expandable alt_header="BigQuery">  
+    - Сервисный аккаунт / Токен пользователя
+    - Встроенный OAuth
+    - Внешний OAuth 
+      - [Федерация удостоверений рабочих нагрузок](/docs/platform/manage-access/set-up-bigquery-oauth#set-up-bigquery-workload-identity-federation) (Microsoft Entra)
+    - [Необходимые разрешения](/docs/platform/connect-data-platform/connect-bigquery#required-permissions)
   </Expandable>
 
   <Expandable alt_header="Databricks">  
-    - Service Account / User Token
-    - Native OAuth
+    - Сервисный аккаунт / Токен пользователя
+    - Встроенный OAuth
   </Expandable>
 
   <Expandable alt_header="Redshift">  
-    - Username / Password
-    - IAM profile
+    - Имя пользователя / Пароль
+    - Профиль IAM
   </Expandable>
   
   <Expandable alt_header="Snowflake">
-    - Username / Password
-    - Native OAuth
-    - External OAuth
-    - Key pair using a modern PKCS#8 method
+    - Имя пользователя / Пароль
+    - Встроенный OAuth
+    - Внешний OAuth
+    - Пара ключей с использованием современного формата PKCS#8
     - MFA
   </Expandable>
 
   <Expandable alt_header="ClickHouse" lifecycle="private_beta">
-    - Username / Password
+    - Имя пользователя / Пароль
   </Expandable>

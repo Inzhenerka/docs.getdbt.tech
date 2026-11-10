@@ -1,10 +1,10 @@
-## Creation precedence
+## Приоритет создания {#creation-precedence}
 
-Materializations are implemented following this "drop through" life cycle:
+Материализации реализуются в соответствии со следующим жизненным циклом с последовательной проверкой условий:
 
-1. If a model does not exist with the provided path, create the new model.
-2. If a model exists, but has a different type, drop the existing model and create the new model.
-3. If [`--full-refresh`](/reference/resource-configs/full_refresh) is supplied, replace the existing model regardless of configuration changes and the [`on_configuration_change`](/reference/resource-configs/on_configuration_change) setting.
-    - BigQuery users may need to run `dbt run --full-refresh` (instead of `dbt run`) after changing a model’s materialization (for example, from `table` to `view`) to ensure dbt fully replaces the existing relation and the change is fully applied.
-4. If there are no configuration changes, perform the default action for that type (e.g. apply refresh for a materialized view).
-5. Determine whether to apply the configuration changes according to the `on_configuration_change` setting.
+1. Если модель не существует по указанному пути, создать новую модель.
+2. Если модель существует, но имеет другой тип, удалить существующую модель и создать новую.
+3. Если указан [`--full-refresh`](/reference/resource-configs/full_refresh), заменить существующую модель независимо от изменений конфигурации и значения настройки [`on_configuration_change`](/reference/resource-configs/on_configuration_change).
+    - Пользователям BigQuery после изменения материализации модели (например, с `table` на `view`) может потребоваться выполнить `dbt run --full-refresh` (вместо `dbt run`), чтобы dbt полностью заменил существующий объект базы данных и изменение было применено в полном объёме.
+4. Если изменений конфигурации нет, выполнить действие по умолчанию для данного типа (например, обновить материализованное представление).
+5. Определить, следует ли применять изменения конфигурации, в соответствии со значением настройки `on_configuration_change`.

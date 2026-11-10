@@ -45,8 +45,8 @@ import FusionManualInstall from '/snippets/_v2-manual-install.md';
 
     <Lightbox src="/img/docs/extension/install-dbt-v2-engine.png" width="60%" title="Следуйте инструкциям, чтобы установить v2"/>
 
-7. Run the VS Code extension [upgrade tool](/docs/upgrade-to-dbt-extension) to check whether your project is ready for v2 and fix any errors or deprecations.
-8. Optional: [Configure your local environment](/docs/configure-dbt-extension) to mirror your <Constant name="dbt_platform" /> environment and [set environment variables](/docs/configure-dbt-extension#set-environment-variables-locally) required by your project.
+7. Запустите [инструмент обновления](/docs/upgrade-to-dbt-extension) в расширении VS Code, чтобы проверить готовность проекта к dbt v2 и устранить ошибки или заменить устаревшие настройки.
+8. Необязательно. [Настройте локальное окружение](/docs/configure-dbt-extension) по образцу окружения <Constant name="dbt_platform" /> и [задайте переменные окружения](/docs/configure-dbt-extension#set-environment-variables-locally), необходимые проекту.
 
 :::note Языковой сервер входит в состав dbt v2
 
@@ -65,7 +65,7 @@ import FusionManualInstall from '/snippets/_v2-manual-install.md';
 
 <FusionManualInstall />
 
-After installation, follow the [getting started](/docs/install-dbt-extension#начало-работы) workflow. You can get started by:
+После установки выполните шаги из раздела [Начало работы](/docs/install-dbt-extension#начало-работы).
 
 - Запуск `dbt init --fusion-upgrade` для начала настройки в терминале.
 - Запуск команды **dbt: Register dbt extension** из палитры команд.

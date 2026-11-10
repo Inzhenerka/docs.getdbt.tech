@@ -1,47 +1,47 @@
-The `dbt_project.yml` file is a great place to define variables that rarely change. 
+Файл `dbt_project.yml` отлично подходит для определения переменных, которые редко меняются. 
 
-When you need to override a variable for a specific run, use the `--vars` command line option. For example, when you want to test with a different date range, run models with environment-specific settings, or adjust behavior dynamically.
+Когда нужно переопределить переменную для конкретного запуска, используйте параметр командной строки `--vars`. Например, если вы хотите выполнить тестирование с другим диапазоном дат, запустить модели с настройками для определённой среды или динамически изменить поведение.
 
-Use `--vars` to pass one or more variables to a dbt command. Provide the argument as a YAML dictionary string.
+Используйте `--vars`, чтобы передать одну или несколько переменных команде dbt. Укажите аргумент в виде строки, содержащей словарь YAML.
 
-For example:
+Например:
 
 ```shell
 $ dbt run --vars '{"event_type": "signup"}'
 ```
 
-You can use the same `--vars` syntax with other dbt commands, such as `dbt snapshot`:
+Такой же синтаксис `--vars` можно использовать с другими командами dbt, например с `dbt snapshot`:
 
 ```shell
 $ dbt snapshot --select my_snapshot --vars '{"cutoff_date": "2026-01-01"}'
 ```
 
-Inside a model, snapshot, or macro, access the value using the `var()` function:
+Внутри модели, снимка или макроса получить значение можно с помощью функции `var()`:
 
 ```shell
 select '{{ var("event_type") }}' as event_type
 ```
 
-When you pass variables using `--vars`, you can access them anywhere you use the `var()` function in your project.
+Переменные, переданные с помощью `--vars`, доступны везде в проекте, где используется функция `var()`.
 
-You can pass multiple variables at once:
+Можно передать сразу несколько переменных:
 ```shell
 $ dbt run --vars '{event_type: signup, region: us}'
 ```
 
-If only one variable is being set, the brackets are optional:
+Если задаётся только одна переменная, фигурные скобки необязательны:
 ```shell
 $ dbt run --vars 'event_type: signup'
 ```
 
-The `--vars` argument accepts a YAML dictionary as a string on the command line.
-YAML is convenient because it does not require strict quoting as with <Term id="json" />.
+Аргумент `--vars` принимает словарь YAML в виде строки в командной строке.
+YAML удобен тем, что не требует строгого использования кавычек, в отличие от <Term id="json" />.
 
-Both of the following are valid and equivalent:
+Оба следующих варианта допустимы и эквивалентны:
 
 ```shell
 $ dbt run --vars '{"key": "value", "date": 20180101}'
 $ dbt run --vars '{key: value, date: 20180101}'
 ```
 
-Variables defined using `--var`, override values defined in `dbt_project.yml`. This makes `--vars` useful for temporarily overriding configuration without changing your committed project files. For the complete order of precedence (including package-scoped variables and default values defined in `var()`), see [Variable precedence](/docs/build/project-variables#variable-precedence).
+Переменные, определённые с помощью `--var`, переопределяют значения, заданные в `dbt_project.yml`. Это позволяет использовать `--vars` для временного переопределения конфигурации без изменения файлов проекта, сохранённых в системе контроля версий. Полный порядок приоритетов (включая переменные, заданные для отдельных пакетов, и значения по умолчанию, определённые в `var()`) см. в разделе [Приоритет переменных](/docs/build/project-variables#variable-precedence).

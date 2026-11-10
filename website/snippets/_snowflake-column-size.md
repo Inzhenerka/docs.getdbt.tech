@@ -1,26 +1,26 @@
-:::warning Snowflake column size change
-[Snowflake plans to increase](https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2118) the default column size for string and binary data types in September 2026. `dbt-snowflake` versions below v1.10.6 may fail to build certain incremental models when this change is deployed.
+:::warning Изменение размера столбцов в Snowflake
+[Snowflake планирует увеличить](https://docs.snowflake.com/en/release-notes/bcr-bundles/un-bundled/bcr-2118) размер столбцов по умолчанию для строковых и двоичных типов данных в сентябре 2026 года. После внедрения этого изменения в версиях `dbt-snowflake` ниже v1.10.6 могут возникать ошибки при построении некоторых инкрементальных моделей.
 
-<Expandable alt_header="Assess impact and required actions">
+<Expandable anchor_id="assess-impact-and-required-actions" alt_header="Оценка влияния и необходимые действия">
 
-If you're using a `dbt-snowflake` version below v1.10.6 or have not yet migrated to a [release track](/docs/dbt-versions/dbt-release-tracks) in the <Constant name="dbt_platform" />, your adapter version is incompatible with this change and may fail to build incremental models that meet _both_ of the following conditions:
+Если вы используете версию `dbt-snowflake` ниже v1.10.6 или ещё не перешли на [канал выпуска](/docs/dbt-versions/dbt-release-tracks) в <Constant name="dbt_platform" />, ваша версия адаптера несовместима с этим изменением. Это может приводить к ошибкам при построении инкрементальных моделей, которые соответствуют _обоим_ следующим условиям:
 
-- Contain string columns with collation defined
-- Use the `on_schema_change='sync_all_columns'` config
+- Содержат строковые столбцы с заданными правилами сортировки (collation)
+- Используют настройку `on_schema_change='sync_all_columns'`
 
-To check whether this change affects your project, run the following [list](/reference/commands/list) command:
+Чтобы проверить, затрагивает ли это изменение ваш проект, выполните следующую команду [list](/reference/commands/list):
 
 ```bash
 dbt ls -s config.materialized:incremental,config.on_schema_change:sync_all_columns --resource-type model
 ```
 
-- If the command returns `No nodes selected!`, no action is required.
-- If the command returns one or more models (for example, `Found 1000 models, 644 macros`), you may be impacted if those models have string columns that don't specify a width. In that case, upgrade to a version that includes the fix:
+- Если команда возвращает `No nodes selected!`, никаких действий не требуется.
+- Если команда возвращает одну или несколько моделей (например, `Found 1000 models, 644 macros`), изменение может затронуть вас, если в этих моделях есть строковые столбцы без явно указанной длины. В этом случае обновитесь до версии, содержащей исправление:
 
-    - **<Constant name="core" />**: `dbt-snowflake` v1.10.6 or later. For upgrade instructions, refer to [Upgrade adapters](/docs/local/install-dbt) in the <Constant name="core" /> installation instructions.
-    - **<Constant name="dbt_platform" />**: Any release track (**v1 Latest**, **v1 Compatible**, **v1 Extended**, or **v1 Fallback**).
+    - **<Constant name="core" />**: `dbt-snowflake` v1.10.6 или более поздняя версия. Указания по обновлению приведены в разделе [Обновление адаптеров](/docs/local/install-dbt) инструкции по установке <Constant name="core" />.
+    - **<Constant name="dbt_platform" />**: любой канал выпуска (**v1 Latest**, **v1 Compatible**, **v1 Extended** или **v1 Fallback**).
     - **<Constant name="fusion_engine" />**: v2.0.0.
 
-    This ensures your incremental models can safely handle schema changes while maintaining required collation settings.
+    Это позволит вашим инкрементальным моделям корректно обрабатывать изменения схемы, сохраняя необходимые настройки правил сортировки.
 </Expandable>
 :::

@@ -1,13 +1,13 @@
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-- We currently only support unit testing SQL models.
-- We currently only support adding unit tests to models in your _current_ project.
-- We currently _don't_ support unit testing models that use the [`materialized view`](/docs/build/materializations#materialized-view) materialization.
-- We currently _don't_ support unit testing models that use recursive SQL.
-- We currently _don't_ support unit testing models that use introspective queries.
-- If your model has multiple versions, by default the unit test will run on *all* versions of your model. Read [unit testing versioned models](/reference/resource-properties/unit-testing-versions) for more information.
-- Unit tests must be defined in a YML file in your [`models/` directory](/reference/project-configs/model-paths).
-- Table names must be aliased in order to unit test `join` logic.
-- Include all [`ref`](/reference/dbt-jinja-functions/ref) or [`source`](/reference/dbt-jinja-functions/source) model references in the unit test configuration as `input`s to avoid "node not found" errors during compilation.
+- В настоящее время поддерживается модульное тестирование только SQL-моделей.
+- В настоящее время добавлять модульные тесты можно только для моделей в вашем _текущем_ проекте.
+- В настоящее время модульное тестирование моделей, использующих материализацию [`materialized view`](/docs/build/materializations#materialized-view), _не поддерживается_.
+- В настоящее время модульное тестирование моделей, использующих рекурсивный SQL, _не поддерживается_.
+- В настоящее время модульное тестирование моделей, использующих интроспективные запросы, _не поддерживается_.
+- Если у вашей модели несколько версий, по умолчанию модульный тест будет выполняться для *всех* версий модели. Подробнее см. в разделе [Модульное тестирование версионируемых моделей](/reference/resource-properties/unit-testing-versions).
+- Модульные тесты должны быть определены в YML-файле в вашем [каталоге `models/`](/reference/project-configs/model-paths).
+- Для модульного тестирования логики `join` именам таблиц необходимо назначить псевдонимы.
+- Включите все ссылки на модели через [`ref`](/reference/dbt-jinja-functions/ref) или [`source`](/reference/dbt-jinja-functions/source) в конфигурацию модульного теста в качестве `input`, чтобы избежать ошибок "node not found" при компиляции.
 
-Unit tests are discovered from `model-paths` (by default, the `models/` directory), so define them alongside your models in a `.yml` file under your `model-paths`. Don't define unit test YAML in the `tests/` directory, which is reserved for [data tests](/docs/build/data-tests).
+Модульные тесты обнаруживаются в каталогах, указанных в `model-paths` (по умолчанию — каталог `models/`), поэтому определяйте их рядом с моделями в файле `.yml` в одном из каталогов `model-paths`. Не размещайте YAML-определения модульных тестов в каталоге `tests/`, который предназначен для [тестов данных](/docs/build/data-tests).

@@ -1,3 +1,3 @@
-The **Model performance** section in <Constant name="catalog" /> displays historical trends to help you identify optimization opportunities and understand model resource consumption. 
+Раздел **Производительность модели** в <Constant name="catalog" /> отображает исторические тенденции, которые помогают выявлять возможности для оптимизации и анализировать потребление ресурсов моделью. 
 
-<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-model.png" title="Cost Insights in Catalog"/>
+<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-model.png" title="Анализ затрат в Catalog"/>

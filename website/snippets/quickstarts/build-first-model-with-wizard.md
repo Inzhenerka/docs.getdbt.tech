@@ -1,13 +1,13 @@
-### Build it with AI using dbt Wizard
+### Создайте модель с помощью ИИ в dbt Wizard {#build-it-with-ai-using-dbt-wizard}
 
-Prefer not to write the SQL by hand? <Constant name="wizard" /> can build the same model for you, right in the <Constant name="studio_ide" /> or [home tab](/docs/platform/wizard-home?version=2&section=qs-build-with-ai), grounded in your project's actual schema and lineage. Be warned, the wizard has been known to <WizardPopcorn>cast spells</WizardPopcorn>.
+Не хотите писать SQL вручную? <Constant name="wizard" /> может создать для вас ту же модель прямо в <Constant name="studio_ide" /> или на [главной вкладке](/docs/platform/wizard-home?version=2&section=qs-build-with-ai), опираясь на фактическую схему и граф зависимостей вашего проекта. Но будьте осторожны: говорят, волшебник умеет <WizardPopcorn>творить заклинания</WizardPopcorn>.
 
-1. Open <Constant name="wizard" /> from the <Constant name="studio_ide" />.
+1. Откройте <Constant name="wizard" /> в <Constant name="studio_ide" />.
 
-<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-lineage.png" width="95%" title="dbt Wizard refactoring a model and displaying the lineage inside the chat interface."/>
+<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-lineage.png" width="95%" title="dbt Wizard выполняет рефакторинг модели и показывает граф зависимостей в интерфейсе чата."/>
 
-2. Prompt it: "Create a customers model that joins orders and customers, and includes each customer's most recent order date and total number of orders."
-3. Review the SQL <Constant name="wizard" /> generates, then accept it to save the model.
-4. Type `dbt run` to build it.
+2. Введите запрос: «Создай модель customers, которая объединяет orders и customers и включает дату последнего заказа и общее количество заказов для каждого клиента».
+3. Проверьте SQL, сгенерированный <Constant name="wizard" />, затем примите его, чтобы сохранить модель.
+4. Введите `dbt run`, чтобы построить модель.
 
-Either way, you end up with the same working model. Learn more about [dbt Wizard in dbt platform](/docs/dbt-ai/wizard-ide?section=qs-build-with-ai).
+В любом случае вы получите одну и ту же работающую модель. Узнайте больше о [dbt Wizard на платформе dbt](/docs/dbt-ai/wizard-ide?section=qs-build-with-ai).

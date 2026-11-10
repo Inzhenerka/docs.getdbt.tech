@@ -1,40 +1,42 @@
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-Before you can connect dbt to Salesforce Data 360, you need the following:
+Для подключения dbt к Salesforce Data 360 вам потребуется следующее:
 
-- A Data 360 instance.
-- The `server.key` private key file. For more information, refer to [Generating a private key and certificate](#generating-a-private-key-and-certificate).
-- An external client app configured for JSON Web Token (JWT) Bearer token flow. For more information, refer to [Setting up the external client app](#creating-the-external-client-app).
-- `Data Cloud Architect` and `Data Cloud User`  permissions.
+- Экземпляр Data 360.
+- Файл закрытого ключа `server.key`. Дополнительные сведения см. в разделе [Создание закрытого ключа и сертификата](#generating-a-private-key-and-certificate).
+- Внешнее клиентское приложение, настроенное для потока аутентификации JSON Web Token (JWT) Bearer. Дополнительные сведения см. в разделе [Настройка внешнего клиентского приложения](#setting-up-the-external-client-app).
+- Разрешения `Data Cloud Architect` и `Data Cloud User`.
 
-### Generating a private key and certificate
+### Создание закрытого ключа и сертификата {#generating-a-private-key-and-certificate}
 
-Before creating the external client app, generate a private key (`server.key`) and a self-signed certificate (`server.crt`) in Salesforce. Salesforce uses the certificate to verify the JWT Bearer token that dbt sends. Refer to [Create a Private Key and Self-Signed Digital Certificate](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm) for instructions.
+Прежде чем создавать внешнее клиентское приложение, создайте закрытый ключ (`server.key`) и самоподписанный сертификат (`server.crt`) в Salesforce. Salesforce использует сертификат для проверки токена JWT Bearer, отправляемого dbt. Инструкции см. в разделе [Создание закрытого ключа и самоподписанного цифрового сертификата](https://developer.salesforce.com/docs/atlas.en-us.252.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm).
 
 :::note
-It is recommended to generate these credentials under a **service user account** rather than an individual user account to simplify credential management.
+Рекомендуется создавать эти учётные данные под **служебной учётной записью**, а не под личной учётной записью пользователя, чтобы упростить управление учётными данными.
 :::
 
-### Creating the external client app
+<a id="setting-up-the-external-client-app"></a>
 
-To authenticate dbt using JWT Bearer token flow, you must create and configure an external client app in Salesforce Data 360.
+### Создание внешнего клиентского приложения {#creating-the-external-client-app}
 
-Follow the steps in [Create a Local External Client App](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&type=5) to create an external client app. For Step 6, make sure to select **Packaged**.
+Для аутентификации dbt с использованием потока JWT Bearer необходимо создать и настроить внешнее клиентское приложение в Salesforce Data 360.
 
-Then, configure the OAuth settings for the app:
+Следуйте инструкциям в разделе [Создание локального внешнего клиентского приложения](https://help.salesforce.com/s/articleView?id=xcloud.create_a_local_external_client_app.htm&type=5), чтобы создать внешнее клиентское приложение. На шаге 6 обязательно выберите **Packaged**.
 
-1. Under **API (Enable OAuth Settings)**, select **Enable OAuth**.
-2. Set the **Callback URL** to `https://login.salesforce.com/services/oauth2/callback`.
-3. Under **OAuth Scopes**, add the following to the **Selected OAuth Scopes** list:
-   - `api` - To manage user data via APIs
-   - `refresh_token`, `offline_access` - To perform requests at any time, even when the user is offline or tokens have expired
-   - `cdp_query_api` - To perform SQL queries on Data 360 data
-4. Under **Flow Enablement**, select **Enable JWT Bearer Flow**.
-5. Click **Upload Files** and upload the `server.crt` file created in [Generating a private key and certificate](#generating-a-private-key-and-certificate).
-6. Click **Create**.
-7. On the **Policies** tab, select **Edit**.
-8. Under **OAuth Policies** > **Plugin Policies** > **Permitted Users**, select **Admin approved users are pre-authorized**.
-   A list of **Select Profiles and Select Permission Sets** appears.
-9. Selct the profiles and permission sets that should have access to the external client app.
-10. Under **App Authorization**, set **IP Relaxation** to **Relax IP Restrictions**.
-11. Click **Save**.
+Затем настройте параметры OAuth для приложения:
+
+1. В разделе **API (Enable OAuth Settings)** выберите **Enable OAuth**.
+2. Установите для **Callback URL** значение `https://login.salesforce.com/services/oauth2/callback`.
+3. В разделе **OAuth Scopes** добавьте в список **Selected OAuth Scopes** следующие области доступа:
+   - `api` — для управления пользовательскими данными через API
+   - `refresh_token`, `offline_access` — для выполнения запросов в любое время, даже когда пользователь не в сети или срок действия токенов истёк
+   - `cdp_query_api` — для выполнения SQL-запросов к данным Data 360
+4. В разделе **Flow Enablement** выберите **Enable JWT Bearer Flow**.
+5. Нажмите **Upload Files** и загрузите файл `server.crt`, созданный в разделе [Создание закрытого ключа и сертификата](#generating-a-private-key-and-certificate).
+6. Нажмите **Create**.
+7. На вкладке **Policies** выберите **Edit**.
+8. В разделе **OAuth Policies** > **Plugin Policies** > **Permitted Users** выберите **Admin approved users are pre-authorized**.
+   Появится список **Select Profiles and Select Permission Sets**.
+9. Выберите профили и наборы разрешений, которым следует предоставить доступ к внешнему клиентскому приложению.
+10. В разделе **App Authorization** установите для **IP Relaxation** значение **Relax IP Restrictions**.
+11. Нажмите **Save**.

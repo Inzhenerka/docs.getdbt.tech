@@ -1,3 +1,3 @@
-:::caution The dbt State app is deprecated
-The standalone dbt State app (`app.state.dbt.com`) is no longer accepting new users. If you have an existing dbt State app account, [create a free <Constant name="dbt_platform" /> account](http://us1.dbt.com/register?_dbtsrc=dbt-state) to continue using dbt State &mdash; your free trial will be extended upon account creation.
+:::caution Приложение dbt State больше не поддерживается
+Отдельное приложение dbt State (`app.state.dbt.com`) больше не принимает новых пользователей. Если у вас уже есть учетная запись в приложении dbt State, [создайте бесплатную учетную запись <Constant name="dbt_platform" />](http://us1.dbt.com/register?_dbtsrc=dbt-state), чтобы продолжить использовать dbt State &mdash; ваш бесплатный пробный период будет продлен при создании учетной записи.
 :::

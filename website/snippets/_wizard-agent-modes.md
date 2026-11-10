@@ -1,12 +1,12 @@
-The <Constant name="wizard" /> operates in three modes:
+<Constant name="wizard" /> работает в трёх режимах:
 
 <SimpleTable>
 
-| Mode | Behavior |
+| Режим | Поведение |
 |------|----------|
-| **Explore only** | The agent queries and explains data but can't edit files or run builds. Best when you want to analyze data or validate a model's output without the agent proposing changes. Every answer comes with the SQL or metric definition behind it. Available for read-only users in the home tab. |
-| **Ask for approval** (default) | The agent drafts edits to files. You approve each file change before it is persisted. Best when you want tight control over what gets saved to your branch. |
-| **Edit files automatically** | The agent drafts and automatically saves file edits without per-file approval. Best for faster iteration when you're confident in the prompt. |
+| **Только исследование** | Агент выполняет запросы к данным и объясняет их, но не может редактировать файлы или запускать сборки. Лучше всего подходит для анализа данных или проверки результатов модели, когда вы не хотите, чтобы агент предлагал изменения. Каждый ответ сопровождается SQL-запросом или определением метрики, на котором он основан. Доступен на главной вкладке пользователям с правами только на чтение. |
+| **Запрашивать подтверждение** (по умолчанию) | Агент подготавливает изменения в файлах. Вы подтверждаете каждое изменение файла перед его сохранением. Лучше всего подходит, если вам нужен строгий контроль над тем, что сохраняется в вашей ветке. |
+| **Редактировать файлы автоматически** | Агент подготавливает и автоматически сохраняет изменения в файлах без подтверждения для каждого файла. Лучше всего подходит для ускоренной итеративной работы, когда вы уверены в своём запросе. |
 </SimpleTable>
 
-Switch between modes anytime with the **Agent mode** button (bottom-left). The authoring modes keep the analytical tools available, so switching out of **Explore only** doesn't cost you anything.
+Переключаться между режимами можно в любой момент с помощью кнопки **Режим агента** (внизу слева). В режимах редактирования аналитические инструменты остаются доступными, поэтому при выходе из режима **Только исследование** вы ничего не теряете.

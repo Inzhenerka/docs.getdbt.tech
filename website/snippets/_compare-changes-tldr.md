@@ -1,11 +1,11 @@
 import RequiresRegistration from '/snippets/_extension-requires-registration.md';
 
-## Compare changes in development <Lifecycle status="beta,managed,managed_plus" size="85%" />
+## Сравнение изменений при разработке <Lifecycle status="beta,managed,managed_plus" size="85%" /> {#compare-changes-in-development}
 
 <RequiresRegistration />
 
-You can use compare changes, powered by <Constant name="fusion_engine"/>,  in your local development environment to compare your current working copy against your `manifest.json` (for example, your last production state) directly in your editor.
+Вы можете использовать функцию сравнения изменений на базе <Constant name="fusion_engine"/> в локальной среде разработки, чтобы сравнивать текущую рабочую копию с вашим `manifest.json` (например, с последним состоянием в продакшене) прямо в редакторе.
 
-For more details on how to use this feature, refer to [Compare changes in local development](/docs/dbt/vs-compare-changes).
+Подробнее об использовании этой функции см. в разделе [Сравнение изменений при локальной разработке](/docs/dbt/vs-compare-changes).
 
-<Lightbox src="/img/docs/extension/vs-compare-changes.png" width="100%" title="Example of the Compare tab" />
+<Lightbox src="/img/docs/extension/vs-compare-changes.png" width="100%" title="Пример вкладки Compare" />

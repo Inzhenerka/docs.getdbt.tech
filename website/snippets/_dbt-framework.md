@@ -1,8 +1,7 @@
-Use the dbt framework to quickly and collaboratively transform data and deploy analytics code following software engineering best practices like version control, modularity, portability, CI/CD, and documentation. This means anyone on the data team familiar with SQL can safely contribute to production-grade data pipelines.
+Используйте фреймворк dbt, чтобы быстро и совместно преобразовывать данные и развертывать аналитический код, следуя лучшим практикам разработки программного обеспечения: контролю версий, модульности, переносимости, CI/CD и документированию. Это означает, что любой участник команды по работе с данными, знакомый с SQL, может безопасно вносить изменения в конвейеры данных промышленного уровня.
 
-The dbt framework is composed of a _language_ and an _engine_:
+Фреймворк dbt состоит из _языка_ и _движка_:
 
-- The _dbt language_ is the code you write in your dbt project &mdash; SQL select statements, Jinja templating, YAML configs, tests, and more. It's the standard for the data industry and the foundation of the dbt framework.
+- _Язык dbt_ — это код, который вы пишете в своем проекте dbt: SQL-запросы select, шаблоны Jinja, конфигурации YAML, тесты и многое другое. Это стандарт в индустрии данных и основа фреймворка dbt.
 
-- The _dbt engine_ compiles your project, executes your transformation graph, and produces metadata. Today, the current Rust-based version generation is v2. By default, installing dbt gives you SQL comprehension, editor features, and richer development workflows.
-
+- _Движок dbt_ компилирует ваш проект, выполняет граф преобразований и создает метаданные. На сегодняшний день актуальное поколение версий на базе Rust — v2. По умолчанию установка dbt предоставляет возможности анализа SQL, функции редактора и расширенные рабочие процессы разработки.

@@ -1,17 +1,17 @@
 import MCPExample from '/snippets/_mcp-config-files.md';
 
-<Expandable alt_header="Self-hosted MCP with OAuth" lifecycle="self_service,managed,managed_plus">
+<Expandable alt_header="Самостоятельно размещённый MCP с OAuth" lifecycle="self_service,managed,managed_plus">
 
-Configuration for users who want seamless OAuth authentication with the <Constant name="dbt_platform" />. 
+Конфигурация для пользователей, которым нужна удобная аутентификация OAuth в <Constant name="dbt_platform" />. 
 
 
 <MCPExample />
 
 </Expandable>
 
-<Expandable alt_header="Self-hosted MCP (CLI only)">
+<Expandable alt_header="Самостоятельно размещённый MCP (только CLI)">
 
-Self-hosted configuration for users who only want to use dbt commands with <Constant name="core" /> or <Constant name="fusion" />
+Конфигурация для самостоятельного размещения для пользователей, которым нужно только выполнять команды dbt с <Constant name="core" /> или <Constant name="fusion" />
 
 ```json
 {
@@ -28,24 +28,24 @@ Self-hosted configuration for users who only want to use dbt commands with <Cons
 }
 ```
 
-Finding your paths:
+Как определить пути:
 
-- **DBT_PROJECT_DIR**: Full path to the folder containing your `dbt_project.yml` file
-- **DBT_PATH**: Find by running `which dbt` in Terminal (macOS/Linux) or `where dbt` (Windows) in Powershell
+- **DBT_PROJECT_DIR**: полный путь к папке, содержащей файл `dbt_project.yml`
+- **DBT_PATH**: чтобы определить путь, выполните `which dbt` в терминале (macOS/Linux) или `where dbt` (Windows) в PowerShell
 
 </Expandable>
 
-<Expandable alt_header="Self-hosted MCP with .env">
+<Expandable alt_header="Самостоятельно размещённый MCP с .env">
 
-Advanced configuration for users who need custom [environment variables](/docs/dbt-ai/mcp-environment-variables). Put your `.env` file in your _dbt project root_ (same folder as `dbt_project.yml`) and use an absolute path with `--env-file`.
+Расширенная конфигурация для пользователей, которым нужны собственные [переменные окружения](/docs/dbt-ai/mcp-environment-variables). Поместите файл `.env` в _корневую папку проекта dbt_ (ту же папку, где находится `dbt_project.yml`) и укажите абсолютный путь с помощью `--env-file`.
 
-Using the `env` field (single-file configuration):
+Использование поля `env` (конфигурация в одном файле):
 
-:::tip IDs are integers, not URLs
-`DBT_PROD_ENV_ID`, `DBT_DEV_ENV_ID`, and `DBT_USER_ID` must be numeric IDs (for example, `54321`), not full URLs copied from your browser. `DBT_HOST` accepts both `cloud.getdbt.com` and `https://cloud.getdbt.com`.
+:::tip Идентификаторы — это целые числа, а не URL-адреса
+`DBT_PROD_ENV_ID`, `DBT_DEV_ENV_ID` и `DBT_USER_ID` должны быть числовыми идентификаторами (например, `54321`), а не полными URL-адресами, скопированными из браузера. `DBT_HOST` принимает как `cloud.getdbt.com`, так и `https://cloud.getdbt.com`.
 :::
 
-Using an `.env` file (use an absolute path to `.env` in your dbt project root):
+Использование файла `.env` (укажите абсолютный путь к `.env` в корневой папке проекта dbt):
 
 ```json
 {
@@ -65,7 +65,7 @@ Using an `.env` file (use an absolute path to `.env` in your dbt project root):
 }
 ```
 
-Using an .env file (alternative):
+Использование файла .env (альтернативный вариант):
 
 ```json
 {

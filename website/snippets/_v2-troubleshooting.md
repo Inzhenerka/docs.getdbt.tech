@@ -1,6 +1,6 @@
-If you run into any issues, check out the troubleshooting section below.
+Если у вас возникнут проблемы, ознакомьтесь с разделом устранения неполадок ниже.
 
-<Expandable alt_header="How to create a .dbt directory in root and move dbt_cloud.yml file">
+<Expandable alt_header="Как создать каталог .dbt в корневом каталоге и переместить файл dbt_cloud.yml">
 
 import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
@@ -8,133 +8,133 @@ import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
 </Expandable>
 
-<Expandable alt_header="I can't see the lineage tab in Cursor">
+<Expandable alt_header="В Cursor не отображается вкладка lineage">
 
-If you're using the dbt VS Code extension in Cursor, the lineage tab works best in Editor mode and doesn't render in Agent mode. If you're in Agent mode and the lineage tab isn't rendering, just switch to Editor mode to view your project's table and column lineage.
+Если вы используете расширение dbt для VS Code в Cursor, вкладка lineage лучше всего работает в режиме Editor и не отображается в режиме Agent. Если вы находитесь в режиме Agent и вкладка lineage не отображается, просто переключитесь в режим Editor, чтобы просмотреть происхождение данных на уровне таблиц и столбцов вашего проекта.
 </Expandable>
 
-<Expandable alt_header="The extension gets stuck in a loading state">
+<Expandable alt_header="Расширение зависает в состоянии загрузки">
 
-If the extension is attempting to activate during startup and locks into a permanent loading state, check that:
-- Your dbt VS Code extension is on the latest version.
-- Your IDE is on the latest version.
-- You have a valid `dbt_cloud.yml` file configured and in the [correct location](/docs/sign-in-dbt-extension?registration-path=dbt-cloud-yml#choose-a-sign-in-path).
+Если расширение пытается активироваться при запуске и остается в состоянии бесконечной загрузки, убедитесь, что:
+- У вас установлена последняя версия расширения dbt для VS Code.
+- У вас установлена последняя версия IDE.
+- У вас настроен корректный файл `dbt_cloud.yml`, который находится в [правильном расположении](/docs/sign-in-dbt-extension#register-with-dbt_cloudyml).
 
-If you're still experiencing issues, try these steps before contacting dbt Support:
-- Delete and download a new copy of your `dbt_cloud.yml` file.
-- Delete and reinstall the dbt VS Code extension.
+Если проблема сохраняется, попробуйте выполнить следующие действия, прежде чем обращаться в службу поддержки dbt:
+- Удалите файл `dbt_cloud.yml` и скачайте его заново.
+- Удалите и переустановите расширение dbt для VS Code.
 
 
 </Expandable>
 
-<Expandable  alt_header="dbt platform configurations">
+<Expandable  alt_header="Настройки платформы dbt">
 
-If you're a cloud-based dbt platform user who has the `dbt-cloud:` config in the `dbt_project.yml` file and are also using dbt Mesh, you must have the project ID configured:
+Если вы используете облачную платформу dbt, у вас есть настройка `dbt-cloud:` в файле `dbt_project.yml` и вы также используете dbt Mesh, необходимо указать идентификатор проекта:
     ```yaml
     dbt-cloud:
     project-id: 12345 # Required
     ```
-If you don’t configure this correctly, cross-platform references will not resolve properly, and you will encounter errors executing dbt commands.
+Если эта настройка задана некорректно, межплатформенные ссылки не будут разрешаться должным образом, и при выполнении команд dbt будут возникать ошибки.
 
 </Expandable>
 
-<Expandable alt_header="dbt extension not activating">
+<Expandable alt_header="Расширение dbt не активируется">
 
-If the dbt extension has activated successfully, you will see the **dbt Extension** label in the status bar at the bottom left of your editor. You can view diagnostic information about the dbt extension by clicking the **dbt Extension** button.
+Если расширение dbt успешно активировано, в строке состояния в левом нижнем углу редактора появится надпись **dbt Extension**. Чтобы просмотреть диагностическую информацию о расширении dbt, нажмите кнопку **dbt Extension**.
 
-If the **dbt Extension** label is not present, then it is likely that the dbt extension was not installed successfully. If this happens, try uninstalling the extension, restarting your editor, and then reinstalling the extension.
+Если надпись **dbt Extension** отсутствует, скорее всего, расширение dbt не было установлено успешно. В этом случае попробуйте удалить расширение, перезапустить редактор, а затем установить расширение заново.
 
-**Note:** It is possible to "hide" status bar items in VS Code. Double-check if the dbt Extension status bar label is hidden by right-clicking on the status bar in your editor. If you see dbt Extension in the right-click menu, then the extension has installed successfully.
+**Примечание:** В VS Code можно скрывать элементы строки состояния. Проверьте, не скрыта ли надпись dbt Extension: для этого щелкните правой кнопкой мыши по строке состояния в редакторе. Если в контекстном меню есть пункт dbt Extension, значит, расширение установлено успешно.
 </Expandable>
 
-<Expandable alt_header="Missing dbt LSP features">
+<Expandable alt_header="Недоступны функции dbt LSP">
 
-If you receive a `no active LSP for this workspace` error message or aren't seeing dbt Language Server (LSP) features in your editor (like autocomplete, go-to-definition, or hover text), start by first following the general troubleshooting steps mentioned earlier.
+Если вы получаете сообщение об ошибке `no active LSP for this workspace` или в редакторе недоступны функции языкового сервера dbt (LSP), такие как автодополнение, переход к определению или подсказки при наведении, сначала выполните общие действия по устранению неполадок, описанные выше.
 
-If you've confirmed the dbt extension is installed correctly but don't see LSP features, try the following:
+Если вы убедились, что расширение dbt установлено корректно, но функции LSP по-прежнему недоступны, попробуйте следующее:
 
-1. Check extension version — Ensure that you're using the latest available version of the dbt extension by:
-   - Opening the **Extensions** page in your editor, or
-   - Going to the **Output** tab and looking for the version number, or
-   - Running `dbtf --version` in the terminal.
-2. Reinstall the LSP — If the version is correct, reinstall the LSP:
-   1. Open the Command Palette: Command + Shift + P (macOS) or Ctrl + Shift + P (Windows/Linux).
-   2. Paste `dbt: Reinstall dbt LSP` and enter.
+1. Проверьте версию расширения — убедитесь, что вы используете последнюю доступную версию расширения dbt, одним из следующих способов:
+   - Откройте страницу **Extensions** в редакторе, или
+   - Перейдите на вкладку **Output** и найдите номер версии, или
+   - Выполните `dbtf --version` в терминале.
+2. Переустановите LSP — если версия актуальна, переустановите LSP:
+   1. Откройте палитру команд: Command + Shift + P (macOS) или Ctrl + Shift + P (Windows/Linux).
+   2. Вставьте `dbt: Reinstall dbt LSP` и нажмите Enter.
 
-This command downloads the LSP and re-activates the extension to resolve the error.
-
-</Expandable>
-
-<Expandable alt_header="Unsupported dbt version">
-
-If you see an error message indicating that your version of dbt is unsupported, then there is likely a problem with your environment.
-
-Check the dbt Path setting in your VS Code settings. If this path is set, ensure that it is pointing to a valid <Constant name="fusion_engine" /> executable.
-If necessary, you can also install <Constant name="fusion_engine" /> directly using these instructions: [Install the <Constant name="fusion" /> CLI](/docs/local/install-dbt?version=2)
+Эта команда скачает LSP и повторно активирует расширение, чтобы устранить ошибку.
 
 </Expandable>
 
-<Expandable alt_header="dbt v2 binary not found at the configured path">
+<Expandable alt_header="Неподдерживаемая версия dbt">
 
-If the extension reports that the <Constant name="fusion_engine" /> binary can't be found at the configured path (for example, `dbt-fusion binary not found at [path]`), the `dbt.fusionPath` setting is pointing to a location that doesn't contain a valid binary.
+Если вы видите сообщение об ошибке, указывающее, что ваша версия dbt не поддерживается, вероятно, проблема связана с вашим окружением.
 
-- Verify that [`dbt.fusionPath`](/docs/configure-dbt-extension#dbt-extension-settings) points to a valid <Constant name="fusion" /> binary.
-- If you haven't installed <Constant name="fusion" /> manually, clear the setting and let the extension download and manage it for you.
-- To install manually, follow [Install the <Constant name="fusion" /> CLI](/docs/local/install-dbt?version=2).
-</Expandable>
-
-<Expandable alt_header="dbt v2 version is not compatible with this extension">
-
-If the extension reports that the installed <Constant name="fusion" /> version isn't compatible with your dbt VS Code extension version, the two are outside the supported range.
-
-1. Run `dbt --version` to check your installed <Constant name="fusion" /> version.
-2. Compare it against the [version compatibility matrix](/docs/dbt-versions/dbt-version-compatibility#compatibility-matrix) for your extension version.
-3. Update <Constant name="fusion" /> or the extension so both fall within the supported range. Use the **Download compatible version** action in the notification if it appears.
+Проверьте параметр dbt Path в настройках VS Code. Если этот путь задан, убедитесь, что он указывает на корректный исполняемый файл <Constant name="fusion_engine" />.
+При необходимости вы также можете установить <Constant name="fusion_engine" /> напрямую, следуя этим инструкциям: [Установка CLI <Constant name="fusion" />](/docs/local/install-dbt?version=2)
 
 </Expandable>
 
-<Expandable alt_header="dbt v2 crashes on startup">
+<Expandable alt_header="Исполняемый файл dbt v2 не найден по указанному пути">
 
-If the extension reports that <Constant name="fusion" /> crashed on startup, confirm the binary runs on its own:
+Если расширение сообщает, что исполняемый файл <Constant name="fusion_engine" /> не найден по указанному пути (например, `dbt-fusion binary not found at [path]`), параметр `dbt.fusionPath` указывает на расположение, в котором нет корректного исполняемого файла.
 
-1. Run `dbt --version` in your terminal. If this fails, reinstall <Constant name="fusion" /> using [Install the <Constant name="fusion" /> CLI](/docs/local/install-dbt?version=2).
-2. Use the **Show Logs** action in the notification (or open the **Output** tab) to review the startup error.
+- Убедитесь, что [`dbt.fusionPath`](/docs/configure-dbt-extension#dbt-extension-settings) указывает на корректный исполняемый файл <Constant name="fusion" />.
+- Если вы не устанавливали <Constant name="fusion" /> вручную, очистите значение этого параметра, чтобы расширение само скачало исполняемый файл и управляло им.
+- Для установки вручную следуйте инструкциям в разделе [Установка CLI <Constant name="fusion" />](/docs/local/install-dbt?version=2).
 </Expandable>
 
-<Expandable alt_header="A known-bad dbt v2 version is installed">
+<Expandable alt_header="Версия dbt v2 несовместима с этим расширением">
 
-If the extension warns that your installed <Constant name="fusion" /> version has a known regression, dbt Labs has flagged that release as [known-bad](/docs/dbt-versions/dbt-version-compatibility#known-bad-releases). Update to the version named in the notification.
+Если расширение сообщает, что установленная версия <Constant name="fusion" /> несовместима с вашей версией расширения dbt для VS Code, сочетание этих версий выходит за пределы поддерживаемого диапазона.
 
-For standalone installations:
+1. Выполните `dbt --version`, чтобы проверить установленную версию <Constant name="fusion" />.
+2. Сравните ее с [матрицей совместимости версий](/docs/dbt-versions/dbt-version-compatibility#compatibility-matrix) для вашей версии расширения.
+3. Обновите <Constant name="fusion" /> или расширение так, чтобы обе версии входили в поддерживаемый диапазон. Воспользуйтесь действием **Download compatible version** в уведомлении, если оно отображается.
+
+</Expandable>
+
+<Expandable alt_header="dbt v2 аварийно завершается при запуске">
+
+Если расширение сообщает, что <Constant name="fusion" /> аварийно завершился при запуске, убедитесь, что исполняемый файл запускается самостоятельно:
+
+1. Выполните `dbt --version` в терминале. Если команда завершается с ошибкой, переустановите <Constant name="fusion" />, следуя инструкциям в разделе [Установка CLI <Constant name="fusion" />](/docs/local/install-dbt?version=2).
+2. Воспользуйтесь действием **Show Logs** в уведомлении (или откройте вкладку **Output**), чтобы изучить ошибку запуска.
+</Expandable>
+
+<Expandable alt_header="Установлена версия dbt v2 с известными проблемами">
+
+Если расширение предупреждает, что в установленной версии <Constant name="fusion" /> есть известная регрессия, значит, dbt Labs пометила этот выпуск как [выпуск с известными проблемами](/docs/dbt-versions/dbt-version-compatibility#known-bad-releases). Обновитесь до версии, указанной в уведомлении.
+
+Для автономных установок:
 ```shell
 dbt system update
 ```
 
-The warning persists across restarts until you update. If you work in an air-gapped environment, refer to [known-bad releases](/docs/dbt-versions/dbt-version-compatibility#known-bad-releases) for how to distribute the manifest locally.
+Предупреждение будет появляться и после перезапусков, пока вы не выполните обновление. Если вы работаете в изолированном окружении, обратитесь к разделу [Выпуски с известными проблемами](/docs/dbt-versions/dbt-version-compatibility#known-bad-releases), чтобы узнать, как распространять манифест локально.
 
 </Expandable>
 
-<Expandable alt_header="Addressing the 'dbt language server is not running in this workspace' error">
+<Expandable alt_header="Устранение ошибки 'dbt language server is not running in this workspace'">
 
-To resolve the `dbt language server is not running in this workspace` error, you need to add your dbt project folder to a workspace: 
+Чтобы устранить ошибку `dbt language server is not running in this workspace`, необходимо добавить папку проекта dbt в рабочую область: 
 
-1. In VS Code, click **File** in the toolbar then select **Add Folder to Workspace**.
-2. Select the dbt project file you want to add to a workspace.
-3. To save your workspace, click **File** then select **Save Workspace As**.  
-4. Navigate to the location you want to save your workspace.
+1. В VS Code нажмите **File** на панели инструментов, затем выберите **Add Folder to Workspace**.
+2. Выберите файл проекта dbt, который хотите добавить в рабочую область.
+3. Чтобы сохранить рабочую область, нажмите **File**, затем выберите **Save Workspace As**.  
+4. Перейдите в расположение, где хотите сохранить рабочую область.
 
-This should resolve the error and open your dbt project by opening the workspace it belongs to. For more information on workspaces, refer to [What is a VS Code workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces).
+Это должно устранить ошибку и позволить открыть проект dbt, открыв рабочую область, к которой он относится. Дополнительные сведения о рабочих областях см. в разделе [Что такое рабочая область VS Code?](https://code.visualstudio.com/docs/editing/workspaces/workspaces).
 </Expandable>
 
-<Expandable alt_header="Manifest cannot be downloaded from the dbt platform">
+<Expandable alt_header="Не удается скачать манифест с платформы dbt">
 
-If the dbt VS Code extension cannot download the manifest from the <Constant name="dbt_platform" /> or you get `warning: dbt1200: Failed to download manifest` using <Constant name="fusion" /> locally, you are probably having DNS-related issues.
+Если расширение dbt для VS Code не может скачать манифест с <Constant name="dbt_platform" /> или при локальном использовании <Constant name="fusion" /> вы получаете сообщение `warning: dbt1200: Failed to download manifest`, вероятно, у вас возникли проблемы с DNS.
 
-To confirm this, do a DNS lookup for the host <Constant name="fusion" /> is trying to download from (for example, prodeu2.blob.core.windows.net) by using `dig` on Linux/Mac or `nslookup` on Windows.
+Чтобы проверить это, выполните DNS-запрос для хоста, с которого <Constant name="fusion" /> пытается скачать манифест (например, prodeu2.blob.core.windows.net), с помощью `dig` в Linux/Mac или `nslookup` в Windows.
 
-If this doesn't return an IP address, the likely reason is that your company uses the same cloud provider with private endpoints for cloud resources, and DNS requests for these are forwarded to private DNS zones.
+Если запрос не возвращает IP-адрес, вероятная причина заключается в том, что ваша компания использует того же облачного провайдера с частными конечными точками для облачных ресурсов, а DNS-запросы к ним перенаправляются в частные зоны DNS.
 
-This situation can be remedied by setting up an internet fallback, which will then return a public IP to any cloud storage that does not have a private IP registered with the private DNS zone.
+Эту ситуацию можно исправить, настроив резервное разрешение через интернет: тогда для любого облачного хранилища, у которого в частной зоне DNS не зарегистрирован частный IP-адрес, будет возвращаться общедоступный IP-адрес.
 
-For Azure refer to [Fallback to internet for Azure Private DNS zones](https://learn.microsoft.com/en-us/azure/dns/private-dns-fallback).
+Для Azure см. [Резервное разрешение через интернет для частных зон DNS Azure](https://learn.microsoft.com/en-us/azure/dns/private-dns-fallback).
 </Expandable>

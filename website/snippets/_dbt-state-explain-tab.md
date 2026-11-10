@@ -1,22 +1,21 @@
-The **Explain** tab appears on job runs that used [dbt State](/docs/deploy/dbt-state-about). It shows why dbt State rebuilt, reused, or cloned each resource, so you can investigate unexpected behavior or verify that State is working as expected. The tab is available while a run is in progress and updates as resources finish.
+Вкладка **Explain** отображается для запусков заданий, в которых использовался [dbt State](/docs/deploy/dbt-state-about). Она показывает, почему dbt State пересобрал, повторно использовал или клонировал каждый ресурс, позволяя исследовать неожиданное поведение или убедиться, что State работает как ожидается. Вкладка доступна во время выполнения запуска и обновляется по мере завершения обработки ресурсов.
 
-The tab displays an **Explain results** table with one row per resource. You can search by resource name and download the full results as a text file.
+На вкладке отображается таблица **Explain results**, в которой каждому ресурсу соответствует одна строка. Вы можете искать ресурсы по имени и скачивать полные результаты в виде текстового файла.
 
-Expand a row to see the full decision details. Not all analyses apply to every resource type:
+Разверните строку, чтобы просмотреть все подробности принятого решения. Не все виды анализа применимы к каждому типу ресурсов:
 
 <SimpleTable>
 
-| Field | Description |
+| Поле | Описание |
 |---|---|
-| **Resource name** | The name of the resource. |
-| **Resource type** | The resource type: model, seed, snapshot, test, and so on. |
-| **Decision** | The reason dbt State rebuilt, reused, or cloned this resource. |
-| **Run step** | The job command that ran this resource (for example, `dbt build --exclude tag:ml_pipeline`). |
-| **Table analysis** | Whether the target table already exists in the schema. |
-| **Query analysis** | Whether the resource query or its upstream queries have changed. |
-| **Data freshness analysis** | Whether upstream data is fresh or within the configured [`lag_tolerance`](/reference/resource-configs/lag-tolerance). |
+| **Resource name** | Имя ресурса. |
+| **Resource type** | Тип ресурса: model, seed, snapshot, test и так далее. |
+| **Decision** | Причина, по которой dbt State пересобрал, повторно использовал или клонировал этот ресурс. |
+| **Run step** | Команда задания, при выполнении которой был обработан этот ресурс (например, `dbt build --exclude tag:ml_pipeline`). |
+| **Table analysis** | Существует ли целевая таблица в схеме. |
+| **Query analysis** | Изменился ли запрос ресурса или запросы ресурсов, от которых он зависит. |
+| **Data freshness analysis** | Являются ли данные вышестоящих ресурсов актуальными или укладываются ли они в настроенный допуск [`lag_tolerance`](/reference/resource-configs/lag-tolerance). |
 
 </SimpleTable>
 
-<Lightbox src="/img/docs/dbt-platform/deployment/explain-tab.png" title="Explain tab showing the decision breakdown" />
-
+<Lightbox src="/img/docs/dbt-platform/deployment/explain-tab.png" title="Вкладка Explain с подробным разбором решений" />

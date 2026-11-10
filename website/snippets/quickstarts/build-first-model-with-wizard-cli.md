@@ -1,8 +1,8 @@
-### Build it with AI using dbt Wizard
+### Создайте модель с помощью ИИ в dbt Wizard {#build-it-with-ai-using-dbt-wizard}
 
-Prefer not to write the SQL by hand? The [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli?section=qs-build-with-ai-cli) can build the same model for you from your terminal, grounded in your project's actual schema and lineage. Be warned, the wizard has been known to <WizardPopcorn>cast spells</WizardPopcorn>.
+Не хотите писать SQL вручную? [CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-cli?section=qs-build-with-ai-cli) может создать ту же модель прямо из терминала, опираясь на фактическую схему и граф зависимостей вашего проекта. Но будьте осторожны: говорят, что этот волшебник умеет <WizardPopcorn>творить заклинания</WizardPopcorn>.
 
-1. Install the <Constant name="wizard" /> CLI:
+1. Установите CLI <Constant name="wizard" />:
 
 <Tabs groupId="operating-systems" queryString>
 
@@ -24,12 +24,12 @@ irm https://public.cdn.getdbt.com/dbt-wizard/install/install-wizard.ps1 | iex
 
 </Tabs>
 
-2. Run `wizard` in your project directory to start a session and then go through the onboarding (if you haven't already).
+2. Запустите `wizard` в каталоге проекта, чтобы начать сеанс, а затем пройдите первоначальную настройку (если вы ещё этого не сделали).
 
-<Lightbox src="/img/docs/wizard-cli-intro.png" title="A dbt Wizard session running in the terminal" />
+<Lightbox src="/img/docs/wizard-cli-intro.png" title="Сеанс dbt Wizard в терминале" />
 
-3. Prompt it: "Create a customers model that joins orders and customers, and includes each customer's most recent order date and total number of orders."
-4. Review the SQL <Constant name="wizard" /> generates, then accept it to save the model.
-5. Type `dbt run` to build it.
+3. Введите запрос: «Создай модель customers, которая объединяет orders и customers и включает дату последнего заказа и общее количество заказов для каждого клиента».
+4. Проверьте SQL, сгенерированный <Constant name="wizard" />, а затем примите его, чтобы сохранить модель.
+5. Введите `dbt run`, чтобы построить её.
 
-Either way, you end up with the same working model. For full setup details, refer to [Use dbt Wizard locally](/docs/dbt-ai/wizard-cli).
+В любом случае вы получите одну и ту же работающую модель. Подробные инструкции по настройке см. в разделе [Локальное использование dbt Wizard](/docs/dbt-ai/wizard-cli).

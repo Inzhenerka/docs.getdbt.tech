@@ -1,6 +1,6 @@
-<Constant name="wizard" /> supports [<Term id="managed" /> models](/docs/dbt-ai/pricing-billing/overview#dbt-managed-providers) (billed by dbt Labs, no key to manage) and [bring-your-own-key (BYOK)](/docs/dbt-ai/wizard-byok) models (billed directly by your provider).
+<Constant name="wizard" /> поддерживает [модели <Term id="managed" />](/docs/dbt-ai/pricing-billing/overview#dbt-managed-providers) (оплата через dbt Labs, управлять ключом не требуется) и [модели с собственным ключом (BYOK)](/docs/dbt-ai/wizard-byok) (оплата напрямую провайдеру).
 
-Here are the following AI providers supported depending on where you work. Refer to [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) for the full list of available models. 
+Ниже перечислены поддерживаемые провайдеры ИИ в зависимости от того, где вы работаете. Полный список доступных моделей см. в [таблице тарифов провайдеров моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model). 
 
 <Tabs defaultValue={props.defaultSurface || "platform"}>
 
@@ -8,26 +8,26 @@ Here are the following AI providers supported depending on where you work. Refer
 
 <SimpleTable>
 
-| Provider | Access |
+| Провайдер | Доступ |
 |---|---|
-| [OpenAI](https://openai.com/policies/row-terms-of-use/) (default) | dbt <Term id="managed" /> or BYOK |
-| [Anthropic](https://www.anthropic.com/legal/consumer-terms)† | dbt <Term id="managed" /> or BYOK |
-| Open weight models (like DeepSeek, Kimi, and so on). | dbt <Term id="managed" /> |
+| [OpenAI](https://openai.com/policies/row-terms-of-use/) (по умолчанию) | dbt <Term id="managed" /> или BYOK |
+| [Anthropic](https://www.anthropic.com/legal/consumer-terms)† | dbt <Term id="managed" /> или BYOK |
+| Модели с открытыми весами (например, DeepSeek, Kimi и другие). | dbt <Term id="managed" /> |
 | [Azure AI Foundry](https://www.microsoft.com/licensing/terms) / Azure OpenAI | BYOK |
 
 </SimpleTable>
 
 </TabItem>
 
-<TabItem value="local" label="Locally (CLI)">
+<TabItem value="local" label="Локально (CLI)">
 
 <SimpleTable>
 
-| Provider | Access |
+| Провайдер | Доступ |
 |---|---|
-| [OpenAI](https://openai.com/policies/row-terms-of-use/) | dbt <Term id="managed" /> or BYOK |
-| [Anthropic](https://www.anthropic.com/legal/consumer-terms)† | dbt <Term id="managed" /> or BYOK |
-| Open weight models (like DeepSeek, Kimi, and so on).  | dbt <Term id="managed" /> |
+| [OpenAI](https://openai.com/policies/row-terms-of-use/) | dbt <Term id="managed" /> или BYOK |
+| [Anthropic](https://www.anthropic.com/legal/consumer-terms)† | dbt <Term id="managed" /> или BYOK |
+| Модели с открытыми весами (например, DeepSeek, Kimi и другие).  | dbt <Term id="managed" /> |
 | [Azure AI Foundry](https://www.microsoft.com/licensing/terms) / Azure OpenAI | BYOK |
 | [AWS Bedrock](https://aws.amazon.com/service-terms/) | BYOK |
 | [Google Gemini](https://ai.google.dev/gemini-api/terms) | BYOK |
@@ -36,10 +36,10 @@ Here are the following AI providers supported depending on where you work. Refer
 
 </SimpleTable>
 
-You can also connect a personal OpenAI ChatGPT subscription instead of a key.
+Вы также можете подключить личную подписку OpenAI ChatGPT вместо ключа.
 
 </TabItem>
 
 </Tabs>
 
-†Anthropic enterprise and subscription licenses (such as Claude Enterprise) aren't supported per Anthropic's [terms of service](https://www.anthropic.com/legal/consumer-terms).
+†Корпоративные лицензии и лицензии по подписке Anthropic (например, Claude Enterprise) не поддерживаются согласно [условиям использования](https://www.anthropic.com/legal/consumer-terms) Anthropic.

@@ -168,7 +168,9 @@ The **IT** license can't be set as the default.
 
 <Lightbox src="/img/docs/dbt-platform/access-control/default-license.png" width="90%" title="Set the default license for new users"/>
 
-### Mapped configuration <Lifecycle status="managed,managed_plus" /> 
+<a id="mapped-configuration-"></a>
+
+### Mapped configuration <Lifecycle status="managed,managed_plus" /> {#mapped-configuration}
 
 If your account is connected to an Identity Provider (IdP) for [Single Sign On](/docs/platform/manage-access/sso-overview), you can automatically map IdP user groups to specific license types in <Constant name="dbt" />. For SCIM-based license mapping with Okta, see [Automated license mapping](/docs/platform/manage-access/scim-manage-user-licenses#automated-license-mapping).
 

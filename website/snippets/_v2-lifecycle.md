@@ -1,18 +1,17 @@
-## Adapter lifecycle
+## Жизненный цикл адаптеров {#adapter-lifecycle}
 
-dbt v2 is available across adapters (data warehouse connectors). Track status by adapter using the following table:
+dbt v2 доступен для различных адаптеров (коннекторов к хранилищам данных). Статус каждого адаптера приведён в следующей таблице:
 
 <SimpleTable>
-| Adapter | Lifecycle |
+| Адаптер | Стадия жизненного цикла |
 |---------|:---------:|
-| Snowflake | Generally available |
-| BigQuery | Generally available |
-| Databricks | Generally available |
-| Redshift | Generally available |
-| Apache Spark (CLI only)| Beta |
-| DuckDB (CLI only) | Generally available |
-| ClickHouse | Private beta |
+| Snowflake | Общедоступен |
+| BigQuery | Общедоступен |
+| Databricks | Общедоступен |
+| Redshift | Общедоступен |
+| Apache Spark (только CLI)| Бета-версия |
+| DuckDB (только CLI) | Общедоступен |
+| ClickHouse | Закрытая бета-версия |
 </SimpleTable>
 
-<small> _Note that adapter lifecycle may differ between the <Constant name="dbt_platform"/> and local development. An adapter can reach GA in the dbt platform before it reaches GA for local use._ </small>
-
+<small> _Обратите внимание: стадии жизненного цикла адаптера могут различаться для <Constant name="dbt_platform"/> и локальной разработки. Адаптер может стать общедоступным (GA) на платформе dbt раньше, чем для локального использования._ </small>

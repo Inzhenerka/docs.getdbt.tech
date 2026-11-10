@@ -1,3 +1,3 @@
-1. Log in to your [trial Snowflake account](https://app.snowflake.com).
-2. In the Snowflake UI, click the Create icon **+** in the upper left (under the Snowflake logo) to open a dropdown.
-3. Select the first option, **SQL File**.
+1. Войдите в свою [пробную учетную запись Snowflake](https://app.snowflake.com).
+2. В интерфейсе Snowflake нажмите значок создания **+** в левом верхнем углу (под логотипом Snowflake), чтобы открыть раскрывающееся меню.
+3. Выберите первый пункт — **SQL File**.

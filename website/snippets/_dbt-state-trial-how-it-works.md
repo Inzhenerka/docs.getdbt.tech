@@ -1,6 +1,6 @@
-- Eligible new organizations receive 30 days of free use with no usage limit.
-- To start a dbt State trial, you need a dbt account so you can manage dbt State usage, billing, and spend limits from one dashboard. A paid <Constant name="dbt_platform" /> plan is _not_ required to use dbt State locally. To start your trial, refer to the instructions in [Setting up dbt State](/docs/deploy/dbt-state-setup).
-- Once started, you cannot pause the trial.
-- Seven days before your trial ends, your admin gets an email with what's coming: the trial end date, the monthly DATT allowance your account will receive, and how to upgrade if needed.
-- The [free monthly DATT allowance](#free-monthly-datt-allowance) includes a set amount of daily active target tables for your account. The allowance amount and what happens when you reach the limit depend on your plan.
-- If you were using state-aware orchestration prior to June 1, 2026, your dbt State trial will be extended beyond the standard 30-day period. If the extension isn't applied to your account, contact your account team.
+- Новые организации, соответствующие условиям, получают 30 дней бесплатного использования без ограничений по объёму использования.
+- Чтобы начать пробный период dbt State, вам нужна учётная запись dbt: она позволит управлять использованием dbt State, оплатой и лимитами расходов на одной панели. Платный тариф <Constant name="dbt_platform" /> _не_ требуется для локального использования dbt State. Чтобы начать пробный период, следуйте инструкциям в разделе [Настройка dbt State](/docs/deploy/dbt-state-setup).
+- После начала пробного периода приостановить его нельзя.
+- За семь дней до окончания пробного периода ваш администратор получит электронное письмо с информацией о том, что будет дальше: датой окончания пробного периода, ежемесячной квотой DATT, которую получит ваша учётная запись, и инструкциями по переходу на более высокий тариф при необходимости.
+- [Бесплатная ежемесячная квота DATT](#free-monthly-datt-allowance) включает определённое количество ежедневно активных целевых таблиц для вашей учётной записи. Размер квоты и последствия достижения лимита зависят от вашего тарифа.
+- Если вы использовали оркестрацию с учётом состояния до 1 июня 2026 года, ваш пробный период dbt State будет продлён сверх стандартных 30 дней. Если продление не применено к вашей учётной записи, свяжитесь с командой по работе с вашей организацией.

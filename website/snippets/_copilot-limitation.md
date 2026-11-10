@@ -1,3 +1,3 @@
 :::note
-dbt Copilot doesn't yet support generating semantic models with the latest YAML spec. 
+dbt Copilot пока не поддерживает генерацию семантических моделей с использованием последней версии спецификации YAML.
 :::

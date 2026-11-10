@@ -2,17 +2,17 @@ import WizardPrompts from '/snippets/wizard-prompts.md';
 
 <VersionBlock lastVersion="1.99">
 
-:::tip Upgrade for automatic updates
-Upgrade to [v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) to run <Constant name="wizard"/> as `wizard` and get automatic updates.
+:::tip Обновитесь для автоматического получения обновлений
+Обновитесь до [v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2), чтобы запускать <Constant name="wizard"/> командой `wizard` и автоматически получать обновления.
 :::
 
 </VersionBlock>
 
 <Steps>
 
-<Step title="Install the dbt Wizard CLI">
+<Step title="Установите dbt Wizard CLI">
 
-Run the install script for your operating system:
+Запустите скрипт установки для вашей операционной системы:
 
 macOS/Linux:
 
@@ -26,59 +26,59 @@ Windows (PowerShell):
 irm https://public.cdn.getdbt.com/dbt-wizard/install/install-wizard.ps1 | iex
 ```
 
-This installs <Constant name="wizard"/> to `/usr/local/bin/wizard`, along with the [dbt Information Schema](/docs/build/dbt-information-schema) that powers <Constant name="wizard"/>'s project-aware answers. For install and update details, refer to [Install <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli); to remove them, refer to [Uninstall](/docs/dbt-ai/wizard-cli#uninstall).
+Эта команда устанавливает <Constant name="wizard"/> в `/usr/local/bin/wizard`, а также [dbt Information Schema](/docs/build/dbt-information-schema), благодаря которой <Constant name="wizard"/> учитывает контекст проекта при ответах. Подробности об установке и обновлении см. в разделе [Установка CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-cli); инструкции по удалению — в разделе [Удаление](/docs/dbt-ai/wizard-cli#uninstall).
 
 </Step>
 
-<Step title="Start a session">
+<Step title="Начните сеанс">
 
-Verify the install and start an interactive session in your project:
+Проверьте установку и начните интерактивный сеанс в вашем проекте:
 
 ```bash
 wizard --version   # confirm the install
 wizard             # start a session
 ```
 
-The first time you run `wizard` in a project, it walks you through a short setup and saves your answers to `wizard_config.toml`, `providers.json`, and `provider-auth.json`, so you only do this once per project.
+При первом запуске `wizard` в проекте вы пройдёте короткую процедуру настройки, а ваши ответы будут сохранены в `wizard_config.toml`, `providers.json` и `provider-auth.json`, поэтому для каждого проекта это нужно сделать лишь один раз.
 
 </Step>
 
-<Step title="Choose how AI usage is billed">
+<Step title="Выберите способ оплаты использования ИИ">
 
-Choose one of the following options:
+Выберите один из следующих вариантов:
 
-- **dbt-managed:** Run `dbt login` (or `wizard login`) to start a 30-day trial that includes $100 in usage credits. That one command creates your free <Constant name="dbt" /> account if you don't have one and provisions the trial &mdash; no <Constant name="dbt_platform" /> plan and no AI provider key required.
-    - The first time you run `dbt login`, a browser window opens where you can sign in to or create a <Constant name="dbt_platform" /> account to manage billing.
-    - You can't pause the trial once it starts. After 30 days, or when your usage credits run out (whichever comes first), add a credit card or an enterprise contract to continue, and set a spend limit. For details, refer to [Trial and billing](/docs/dbt-ai/pricing-billing/trial-and-billing) and the [dbt Wizard billing and AI access FAQs](/docs/dbt-ai/wizard-billing-faqs).
-- **Bring your own key (BYOK):** Use an API key from a supported provider. Your AI provider bills you directly. Refer to [Configure BYOK](/docs/dbt-ai/wizard-byok).
+- **Под управлением dbt:** выполните `dbt login` (или `wizard login`), чтобы начать 30-дневный пробный период, включающий кредиты на использование на сумму 100 долларов США. Эта единственная команда создаст бесплатную учётную запись <Constant name="dbt" />, если у вас её ещё нет, и активирует пробный период &mdash; тарифный план <Constant name="dbt_platform" /> и ключ провайдера ИИ не требуются.
+    - При первом запуске `dbt login` откроется окно браузера, где вы сможете войти в учётную запись <Constant name="dbt_platform" /> или создать её для управления оплатой.
+    - После начала пробного периода приостановить его нельзя. Через 30 дней или после исчерпания кредитов на использование (в зависимости от того, что наступит раньше) для продолжения работы добавьте банковскую карту или корпоративный договор и задайте лимит расходов. Подробности см. в разделах [Пробный период и оплата](/docs/dbt-ai/pricing-billing/trial-and-billing) и [Часто задаваемые вопросы об оплате dbt Wizard и доступе к ИИ](/docs/dbt-ai/wizard-billing-faqs).
+- **Собственный ключ (BYOK):** используйте API-ключ поддерживаемого провайдера. Оплату за использование ИИ вы вносите непосредственно провайдеру. См. раздел [Настройка BYOK](/docs/dbt-ai/wizard-byok).
 
 </Step>
 
-<Step title="Complete the setup prompts">
+<Step title="Ответьте на вопросы настройки">
 
-During setup, you'll also be asked to:
+Во время настройки вам также будет предложено:
 
-- Review and accept the Terms of Use.
-- Trust the directory so <Constant name="wizard" /> can read your project.
-- Confirm your dbt executable, virtual environment, profile, and target.
-- Choose how to handle [deferral](/docs/dbt-ai/wizard-config#deferral).
-- Configure the AI access option you chose.
+- Ознакомиться с Условиями использования и принять их.
+- Подтвердить доверие к каталогу, чтобы <Constant name="wizard" /> мог читать ваш проект.
+- Подтвердить исполняемый файл dbt, виртуальное окружение, профиль и целевое окружение.
+- Выбрать способ обработки [отложенного разрешения зависимостей (deferral)](/docs/dbt-ai/wizard-config#deferral).
+- Настроить выбранный вариант доступа к ИИ.
 
-To re-run any of these steps later, refer to [Re-trigger onboarding flows](/docs/dbt-ai/wizard-config#re-trigger-onboarding-flows).
+Чтобы позднее повторить любой из этих шагов, см. раздел [Повторный запуск процедур первоначальной настройки](/docs/dbt-ai/wizard-config#re-trigger-onboarding-flows).
 
-:::tip Set your API key without the prompt
-During onboarding, <Constant name="wizard" /> prompts you to configure a provider interactively.
+:::tip Задайте API-ключ без интерактивного запроса
+Во время первоначальной настройки <Constant name="wizard" /> предлагает настроить провайдера в интерактивном режиме.
 
-<Expandable alt_header="Set key as environment variable for headless runs or to reuse key">
+<Expandable alt_header="Задайте ключ через переменную окружения для запусков без интерактивного ввода или повторного использования ключа">
 
-To skip the API key prompt &mdash; for headless runs like `wizard exec` or to reuse your key across sessions &mdash; set it as an environment variable before starting `wizard` instead. For example:
+Чтобы пропустить запрос API-ключа &mdash; при запуске без интерактивного ввода, например `wizard exec`, или для повторного использования ключа в разных сеансах &mdash; задайте его через переменную окружения перед запуском `wizard`. Например:
 
 ```bash
 export OPENAI_API_KEY="sk-..."                  # or ANTHROPIC_API_KEY
 export AWS_BEARER_TOKEN_BEDROCK="ABSK..."       # for Amazon Bedrock
 ```
 
-Refer to [Configure BYOK](/docs/dbt-ai/wizard-byok) for more examples.
+Дополнительные примеры см. в разделе [Настройка BYOK](/docs/dbt-ai/wizard-byok).
 
 </Expandable>
 
@@ -86,11 +86,11 @@ Refer to [Configure BYOK](/docs/dbt-ai/wizard-byok) for more examples.
 
 </Step>
 
-<Step title="Review and ask your first question">
+<Step title="Ознакомьтесь с информацией и задайте первый вопрос">
 
-After onboarding, <Constant name="wizard" /> shows a welcome screen with **STATUS** (version, active model &mdash; change it with `/model` &mdash; and project directory) and **OVERVIEW** (a snapshot of your project's build status and passing, warning, and failing checks from the [dbt Information Schema](/docs/build/dbt-information-schema)).
+После первоначальной настройки <Constant name="wizard" /> отображает экран приветствия с разделами **STATUS** (версия, активная модель &mdash; её можно изменить командой `/model` &mdash; и каталог проекта) и **OVERVIEW** (сводка о состоянии сборки проекта и проверках из [dbt Information Schema](/docs/build/dbt-information-schema), которые прошли успешно, выдали предупреждения или завершились ошибкой).
 
-Enter `/` to see the available [slash commands](/docs/dbt-ai/wizard-slash-commands), then ask your first question:
+Введите `/`, чтобы увидеть доступные [слеш-команды](/docs/dbt-ai/wizard-slash-commands), а затем задайте первый вопрос:
 
 <WizardPrompts />
 

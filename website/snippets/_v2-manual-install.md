@@ -1,12 +1,12 @@
-Choose your preferred installation method:
+Выберите предпочтительный способ установки:
 
-<Expandable alt_header="Pip installation for Windows, macOS, and Linux">
+<Expandable alt_header="Установка через pip для Windows, macOS и Linux">
 
 ```shell
 python -m pip install dbt
 ```
 
-To upgrade to a newer version:
+Для обновления до более новой версии:
 
 ```shell
 python -m pip install --upgrade dbt
@@ -14,43 +14,43 @@ python -m pip install --upgrade dbt
 
 </Expandable>
 
-<Expandable alt_header="Standalone installation for macOS and Linux">
+<Expandable alt_header="Автономная установка для macOS и Linux">
 
 ```shell
 curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- --update
 ```
 
-To use `dbt` immediately after installation, close and reopen your terminal or reload your shell so that the new `$PATH` is recognized:
+Чтобы использовать `dbt` сразу после установки, закройте и снова откройте терминал или перезапустите командную оболочку, чтобы новое значение `$PATH` вступило в силу:
 
 ```shell
 exec $SHELL
 ```
 
-To upgrade to a newer version:
+Для обновления до более новой версии:
 
 ```shell
 dbt system update
 ```
 
 :::note
-`dbtf system update` installs <Constant name="fusion" /> globally &mdash; it updates your `PATH` in `~/.zshrc` and creates a `dbtf` alias. To manage multiple versions or isolate your install, use separate shell profiles or virtual environments.
+Команда `dbtf system update` устанавливает <Constant name="fusion" /> глобально &mdash; обновляет `PATH` в `~/.zshrc` и создаёт псевдоним `dbtf`. Для управления несколькими версиями или изоляции установки используйте отдельные профили командной оболочки или виртуальные окружения.
 :::
 
 </Expandable>
 
-<Expandable alt_header="Standalone installation for Windows">
+<Expandable alt_header="Автономная установка для Windows">
 
 ```powershell
 irm https://public.cdn.getdbt.com/fs/install/install.ps1 | iex
 ```
 
-To use `dbt` immediately after installation, close and reopen or reload your shell so that the new `Path` is recognized:
+Чтобы использовать `dbt` сразу после установки, закройте и снова откройте командную оболочку или перезапустите её, чтобы новое значение `Path` вступило в силу:
 
 ```powershell
 Start-Process powershell
 ```
 
-To upgrade to a newer version:
+Для обновления до более новой версии:
 
 ```shell
 dbt system update
@@ -58,14 +58,14 @@ dbt system update
 
 </Expandable>
 
-<Expandable alt_header="Homebrew installation for macOS">
+<Expandable alt_header="Установка через Homebrew для macOS">
 
 ```shell
 brew tap dbt-labs/dbt
 brew install dbt-labs/dbt/dbt
 ```
 
-To upgrade to a newer version:
+Для обновления до более новой версии:
 
 ```shell
 brew tap dbt-labs/dbt
@@ -74,13 +74,13 @@ brew upgrade dbt
 
 </Expandable>
 
-<Expandable alt_header="Winget installation for Windows">
+<Expandable alt_header="Установка через Winget для Windows">
 
 ```shell
 winget install --id dbtLabs.dbt --exact
 ```
 
-To upgrade to a specific version:
+Для обновления до определённой версии:
 
 ```shell
 winget install --id dbtLabs.dbt --exact --version <version>
@@ -89,15 +89,15 @@ winget install --id dbtLabs.dbt --exact --version <version>
 </Expandable>
 
 
-Run the following command to verify your installation:
+Выполните следующую команду, чтобы проверить установку:
 
 ```bash
 dbt --version
 ```
 
-You can use `dbt` or its <Constant name="fusion" /> alias `dbtf` (handy if you already have another dbt CLI installed). Default install path:
+Вы можете использовать `dbt` или его псевдоним `dbtf` для <Constant name="fusion" /> (это удобно, если у вас уже установлен другой dbt CLI). Путь установки по умолчанию:
 
 - macOS/Linux: `$HOME/.local/bin/dbt`
 - Windows: `C:\Users\<username>\.local\bin\dbt.exe`
 
-The installer adds this path automatically, but you may need to reload your shell for the `dbtf` command to work.
+Установщик добавляет этот путь автоматически, но для работы команды `dbtf` может потребоваться перезапуск командной оболочки.

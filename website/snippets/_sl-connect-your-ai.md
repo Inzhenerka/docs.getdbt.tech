@@ -1,3 +1,3 @@
-:::tip Connect your AI to your metrics
-AI tools like Claude and ChatGPT can connect to the <Constant name="semantic_layer" /> through the [dbt MCP server](/docs/dbt-ai/about-mcp?section=sl-connect-ai), so their answers use your governed metrics instead of guessing at raw tables.
+:::tip Подключите ИИ к своим метрикам
+Инструменты ИИ, такие как Claude и ChatGPT, могут подключаться к <Constant name="semantic_layer" /> через [сервер dbt MCP](/docs/dbt-ai/about-mcp?section=sl-connect-ai), чтобы использовать в ответах ваши централизованно управляемые метрики, а не строить догадки на основе необработанных таблиц.
 :::

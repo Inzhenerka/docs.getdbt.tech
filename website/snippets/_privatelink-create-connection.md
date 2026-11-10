@@ -1,7 +1,7 @@
-1. Navigate to **Account Settings** → **Projects** → **Create new project**.
-2. Under the **Configure your development environment step** section, select **Add new connection**.
-3. You'll be directed to the **Add new connection** page, select <strong>{props.platform}</strong>.
-4. Under the **Settings** section, select **PrivateLink Endpoint**.
-5. Select the private endpoint from the dropdown (this automatically populates the hostname/account field).
-6. Configure the remaining data platform details.
-7. Test your connection and save it.
+1. Перейдите в **Account Settings** → **Projects** → **Create new project**.
+2. В разделе **Configure your development environment step** выберите **Add new connection**.
+3. Вы перейдёте на страницу **Add new connection**. Выберите <strong>{props.platform}</strong>.
+4. В разделе **Settings** выберите **PrivateLink Endpoint**.
+5. Выберите частную конечную точку из раскрывающегося списка (поле имени хоста/учётной записи заполнится автоматически).
+6. Настройте остальные параметры платформы данных.
+7. Проверьте подключение и сохраните его.

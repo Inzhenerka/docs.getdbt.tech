@@ -1,8 +1,8 @@
-Previously, the Redshift adapter used PostgreSQL-compatible catalog tables (for example, `pg_*`, `information_schema`) for metadata operations such as listing relations, schemas, and columns. These tables only surface objects within the currently connected database, which prevents cross-database operations needed for [Redshift Datasharing](https://docs.aws.amazon.com/redshift/latest/dg/datashare-overview.html).
+Ранее адаптер Redshift использовал таблицы системного каталога, совместимые с PostgreSQL (например, `pg_*`, `information_schema`), для операций с метаданными, таких как получение списков отношений, схем и столбцов. Эти таблицы предоставляют сведения только об объектах в базе данных, к которой установлено текущее подключение, что не позволяет выполнять операции между базами данных, необходимые для [Redshift Datasharing](https://docs.aws.amazon.com/redshift/latest/dg/datashare-overview.html).
 
-Starting `dbt-redshift` v1.11.0rc1, you can set `datasharing: true` in your `profiles.yml` to enable cross-database and cross-cluster access. When enabled, `dbt-redshift` switches metadata queries to Redshift's native `SHOW` system commands. You can then materialize models into a database or cluster other than the one specified in your profile using `{{ config(database='other_db') }}`.
+Начиная с `dbt-redshift` v1.11.0rc1, вы можете задать `datasharing: true` в файле `profiles.yml`, чтобы включить доступ между базами данных и кластерами. При включении этого параметра `dbt-redshift` переключает запросы метаданных на собственные системные команды Redshift `SHOW`. После этого вы можете материализовывать модели в базе данных или кластере, отличных от указанных в профиле, используя `{{ config(database='other_db') }}`.
 
-Example configuration:
+Пример конфигурации:
 
 <File name='profiles.yml'>
 
@@ -14,12 +14,12 @@ company-name:
       type: redshift
       host: hostname.region.redshift.amazonaws.com
       ...
-      datasharing: true  # default: false
+      datasharing: true  # по умолчанию: false
 ```
 
 </File>
 
-Once enabled, you can materialize a model into a different database by setting `database` in the model config. For example:
+После включения этого параметра вы можете материализовать модель в другой базе данных, задав `database` в конфигурации модели. Например:
 
 ```sql
 {{ config(database='other_db') }}
@@ -27,28 +27,28 @@ Once enabled, you can materialize a model into a different database by setting `
 select * from {{ ref('my_model') }}
 ```
 
-The following macros switch to `SHOW` commands when `datasharing: true`:
+Следующие макросы переключаются на команды `SHOW` при `datasharing: true`:
 
-| Macro | Without `datasharing` | With `datasharing` |
+| Макрос | Без `datasharing` | С `datasharing` |
 |---|---|---|
 | `list_relations_without_caching` | `information_schema.tables` | `SHOW TABLES FROM SCHEMA` |
 | `list_schemas`, `check_schema_exists` | `pg_namespace` | `SHOW SCHEMAS FROM DATABASE` |
 | `get_columns_in_relation` | `information_schema.columns` | `SHOW COLUMNS FROM TABLE` |
-| Catalog queries | `pg_class`, `pg_tables`, `pg_views` | `SHOW TABLES FROM SCHEMA` + `SVV_REDSHIFT_COLUMNS` |
+| Запросы к системному каталогу | `pg_class`, `pg_tables`, `pg_views` | `SHOW TABLES FROM SCHEMA` + `SVV_REDSHIFT_COLUMNS` |
 | `get_relation_last_modified` | `information_schema.tables` | `SHOW TABLES FROM SCHEMA` |
-| Grants | `pg_user`, `has_table_privilege()` | `SHOW GRANTS ON TABLE` |
+| Предоставление прав доступа | `pg_user`, `has_table_privilege()` | `SHOW GRANTS ON TABLE` |
 
-`ra3_node: true` also enables this behavior and is supported for backward compatibility. For new projects, use `datasharing: true` instead.
+Параметр `ra3_node: true` также включает это поведение и поддерживается для обратной совместимости. В новых проектах используйте вместо него `datasharing: true`.
 
 :::note
-If you see `pg_*` queries running with `datasharing` enabled, this is not necessarily a bug. Only the macros listed above are migrated &mdash; some macros remain on `pg_*` by design (for example, `get_relations` for dependency tracking and `list_function_relations_without_caching` for function discovery). Custom macro overrides in your project are not affected. To confirm whether a `pg_*` query is expected, check which macro is being overridden and which metadata operation is running.
+Если при включённом `datasharing` вы видите выполняющиеся запросы к `pg_*`, это не обязательно ошибка. На новые команды переведены только перечисленные выше макросы &mdash; некоторые макросы намеренно продолжают использовать `pg_*` (например, `get_relations` для отслеживания зависимостей и `list_function_relations_without_caching` для обнаружения функций). Пользовательские переопределения макросов в вашем проекте не затрагиваются. Чтобы определить, является ли запрос к `pg_*` ожидаемым, проверьте, какой макрос переопределяется и какая операция с метаданными выполняется.
 :::
 
-The following limitations apply when using `datasharing`:
+При использовании `datasharing` действуют следующие ограничения:
 
-- Creating views (including materialized views) in another database is not supported.
-- Cross-database grants on objects are not supported.
-- Source freshness checks can have a lag of up to 5 minutes.
-- Metadata queries are limited to 10,000 rows. If a database has more than 10,000 schemas, or a schema has more than 10,000 tables, dbt runs can result in unexpected scenarios.
-- Cross-database writes require the `SNAPSHOT` transaction isolation level.
-- For views that reference tables in another database, define them as [late-binding views](/reference/resource-configs/redshift-configs#late-binding-views).
+- Создание представлений (включая материализованные представления) в другой базе данных не поддерживается.
+- Предоставление прав доступа к объектам в другой базе данных не поддерживается.
+- Проверки актуальности источников могут выполняться с задержкой до 5 минут.
+- Запросы метаданных ограничены 10 000 строками. Если база данных содержит более 10 000 схем или схема содержит более 10 000 таблиц, запуски dbt могут приводить к непредвиденным ситуациям.
+- Для записи в другую базу данных требуется уровень изоляции транзакций `SNAPSHOT`.
+- Представления, которые ссылаются на таблицы в другой базе данных, определяйте как [представления с поздним связыванием](/reference/resource-configs/redshift-configs#late-binding-views).

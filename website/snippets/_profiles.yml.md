@@ -14,87 +14,87 @@
 - **Параметры выполнения** &mdash; Количество потоков, тайм-ауты и настройки повторных попыток.
 - **Отдельное хранение учетных данных** &mdash; Позволяет хранить конфиденциальную информацию вне системы контроля версий.
 
-The `profile` field in [`dbt_project.yml`](/reference/dbt_project.yml) references a profile name defined in `profiles.yml`.
+Поле `profile` в [`dbt_project.yml`](/reference/dbt_project.yml) указывает имя профиля, заданное в `profiles.yml`.
 
-## Location of profiles.yml
+## Расположение profiles.yml {#location-of-profilesyml}
 
-Only one `profiles.yml` file is required and it can manage multiple projects and connections. 
+Одного файла `profiles.yml` достаточно для работы с несколькими проектами и подключениями.
 
 <Tabs>
 <TabItem value="fusion" label="dbt v2">
 
-<Constant name="fusion"/> searches for the parent directory of `profiles.yml` in the following order and uses the first location it finds:
+<Constant name="fusion"/> ищет каталог с файлом `profiles.yml` в следующем порядке и использует первый найденный:
 
-1. `--profiles-dir` flag &mdash; Override for CI/CD or testing.
-2. Project root directory &mdash; Project-specific credentials.
-3. `~/.dbt/` directory (Recommended location) &mdash; Shared across all projects.
+1. Флаг `--profiles-dir` &mdash; явно задаёт каталог, например для CI/CD или тестирования.
+2. Корневой каталог проекта &mdash; для учётных данных конкретного проекта.
+3. Каталог `~/.dbt/` (рекомендуемое расположение) &mdash; общий для всех проектов.
 
 </TabItem>
 <TabItem value="core" label="dbt v1">
 
-<Constant name="core"/> searches for the parent directory of `profiles.yml` in the following order and uses the first location it finds:
+<Constant name="core"/> ищет каталог с файлом `profiles.yml` в следующем порядке и использует первый найденный:
 
 <VersionBlock lastVersion="1.10">
 
-1. `--profiles-dir` flag
-2. `DBT_PROFILES_DIR` environment variable
-3. Current working directory
-4. `~/.dbt/` directory (Recommended location)
+1. Флаг `--profiles-dir`
+2. Переменная окружения `DBT_PROFILES_DIR`
+3. Текущий рабочий каталог
+4. Каталог `~/.dbt/` (рекомендуемое расположение)
 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.11">
 
-1. `--profiles-dir` flag
-2. `DBT_ENGINE_PROFILES_DIR` environment variable
-3. `DBT_PROFILES_DIR` environment variable (legacy variable but supported for backward compatibility)
-4. Current working directory
-5. `~/.dbt/` directory (Recommended location)
+1. Флаг `--profiles-dir`
+2. Переменная окружения `DBT_ENGINE_PROFILES_DIR`
+3. Переменная окружения `DBT_PROFILES_DIR` (устарела, но поддерживается для обратной совместимости)
+4. Текущий рабочий каталог
+5. Каталог `~/.dbt/` (рекомендуемое расположение)
 
-**Note:** <Constant name="core"/> prefers `DBT_ENGINE_PROFILES_DIR` for the profiles directory, which aligns with the `DBT_ENGINE_*` env var naming in v1.11. Use `DBT_ENGINE_PROFILES_DIR` going forward; `DBT_PROFILES_DIR` remains supported for compatibility.
+**Примечание.** <Constant name="core"/> отдаёт приоритет переменной `DBT_ENGINE_PROFILES_DIR` для каталога профилей. В v1.11 она соответствует схеме именования `DBT_ENGINE_*`. Используйте её в новых настройках. Переменная `DBT_PROFILES_DIR` по-прежнему поддерживается для совместимости.
 
 </VersionBlock>
 
-Note: <Constant name="core"/> supports using the <VersionBlock lastVersion="1.10">`DBT_PROFILES_DIR`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_PROFILES_DIR`</VersionBlock> environment variable or a `profiles.yml` file in the current working directory. These options aren't currently supported in <Constant name="fusion"/>.
+<Constant name="core"/> поддерживает переменную окружения <VersionBlock lastVersion="1.10">`DBT_PROFILES_DIR`</VersionBlock><VersionBlock firstVersion="1.11">`DBT_ENGINE_PROFILES_DIR`</VersionBlock> и поиск файла `profiles.yml` в текущем рабочем каталоге. В <Constant name="fusion"/> эти варианты пока недоступны.
 
 </TabItem>
 </Tabs>
 
-`~/.dbt/profiles.yml` is the recommended location for the following reasons:
+Файл рекомендуется хранить в `~/.dbt/profiles.yml` по следующим причинам:
 
-- **Security** &mdash; Keeps credentials out of project directories and version control.
-- **Reusability** &mdash; A single file for all dbt projects on the machine.
-- **Separation** &mdash; Connection details don't travel with project code.
+- **Безопасность** &mdash; учётные данные хранятся за пределами каталогов проектов и системы контроля версий.
+- **Повторное использование** &mdash; один файл подходит для всех проектов dbt на компьютере.
+- **Раздельное хранение** &mdash; параметры подключения хранятся отдельно от кода проекта.
 
-#### When should I use project root?
+#### Когда использовать корневой каталог проекта? {#when-should-i-use-project-root}
 
-Place your `profiles.yml` file in the project root directory for:
+Храните файл `profiles.yml` в корневом каталоге проекта в следующих случаях:
 
-- Self-contained demo or tutorial projects.
-- Docker containers with baked-in credentials.
-- CI/CD pipelines with environment-specific configs.
+- Самодостаточные демонстрационные или учебные проекты.
+- Контейнеры Docker со встроенными учётными данными.
+- Конвейеры CI/CD с конфигурацией для конкретного окружения.
 
-## Create and configure the `profiles.yml` file
+## Создание и настройка файла `profiles.yml` {#create-and-configure-the-profilesyml-file}
 
-The easiest way to create and configure a `profiles.yml` file is to execute `dbt init` after you've installed dbt on your machine. This takes you through the process of configuring an adapter and places the file into the recommended `~/.dbt/` location. 
+После установки dbt проще всего создать и настроить файл `profiles.yml` командой `dbt init`. Она проведёт вас через настройку адаптера и сохранит файл в рекомендуемом каталоге `~/.dbt/`.
 
-If your project has an existing `profiles.yml` file, running `dbt init` will prompt you to amend or overwrite it. If you select the existing adapter for configuration, dbt will automatically populate the existing values.
+Если в проекте уже есть файл `profiles.yml`, команда `dbt init` предложит изменить или перезаписать его. При выборе уже настроенного адаптера dbt автоматически подставит текущие значения.
 
-You can also manually create the file and add it to the proper location. To configure an adapter manually, copy and paste the fields from the adapter setup instructions for [<Constant name="core" />](/docs/local/connect-data-platform/about-dbt-connections) or [<Constant name="fusion" />](/docs/local/profiles.yml) along with the appropriate values for each. 
+Файл также можно создать вручную. Скопируйте поля из инструкции по настройке адаптера для [<Constant name="core" />](/docs/local/connect-data-platform/about-dbt-connections) или [<Constant name="fusion" />](/docs/local/profiles.yml), заполните их и сохраните файл в нужном каталоге.
 
-### Example configuration
+### Пример конфигурации {#example-configuration}
 
-To set up your profile, copy the correct sample profile for your warehouse into your `profiles.yml` file and update the details as follows:
+Скопируйте в `profiles.yml` пример профиля для своего хранилища и настройте его следующим образом:
 
-- Profile name: Replace the name of the profile with a sensible name – it’s often a good idea to use the name of your organization. Make sure that this is the same name as the `profile` indicated in your `dbt_project.yml` file.
-- `target`: This is the default target your dbt project will use. It must be one of the targets you define in your profile. Commonly it is set to `dev`.
-- Populating your `outputs`:
-  - `type`: The type of data warehouse you are connecting to
-  - Warehouse credentials: Get these from your database administrator if you don’t already have them. Remember that user credentials are very sensitive information that should not be shared. May include fields like `account`, `username`, and `password`.
-  - `schema`: The default schema that dbt will build objects in.
-  - `threads`: The number of threads the dbt project will run on.
+- Имя профиля. Задайте понятное имя, например название организации. Оно должно совпадать со значением `profile` в файле `dbt_project.yml`.
+- `target`. Целевое окружение, которое проект использует по умолчанию. Оно должно быть задано в профиле. Обычно это `dev`.
+- Поля в разделе `outputs`:
+  - `type`. Тип хранилища данных, к которому подключается dbt.
+  - Учётные данные хранилища. При необходимости запросите их у администратора базы данных. Храните их конфиденциально. К ним могут относиться поля `account`, `username` и `password`.
+  - `schema`. Схема, в которой dbt по умолчанию создаёт объекты.
+  - `threads`. Число потоков для выполнения проекта dbt.
 
-The following example highlights the format of the `profiles.yml` file. Note that many of the configs are adapter-specific and their syntax varies. 
+В примере ниже показана структура файла `profiles.yml`. Многие параметры и их синтаксис зависят от адаптера.
 
 <File name='~/.dbt/profiles.yml'>
 

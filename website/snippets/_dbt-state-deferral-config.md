@@ -1,6 +1,6 @@
-By default, dbt State defers to your production environment. To control which environment dbt State defers to, configure it based on your setup:
+По умолчанию dbt State использует ваше окружение production для отложенного разрешения ссылок (deferral). Чтобы выбрать окружение для deferral в dbt State, настройте его в соответствии с вашим вариантом развертывания:
 
-- **<Constant name="dbt_platform" />**: Add `project-id` (and optionally `defer-env-id`) to the `dbt-cloud` config block in `dbt_project.yml`. Refer to [Configure the dbt platform CLI](/docs/platform/dbt-cli-installation) for more information.
+- **<Constant name="dbt_platform" />**: Добавьте `project-id` (и при необходимости `defer-env-id`) в блок конфигурации `dbt-cloud` в `dbt_project.yml`. Подробнее см. в разделе [Настройка CLI платформы dbt](/docs/platform/dbt-cli-installation).
 
   <File name="dbt_project.yml">
 
@@ -12,7 +12,7 @@ By default, dbt State defers to your production environment. To control which en
 
   </File>
 
-- **Self-managed deployment**: Add `state-org-id` to the `dbt-cloud` config block in `dbt_project.yml`. dbt State defaults to a target named `prod`.
+- **Самостоятельное развертывание**: Добавьте `state-org-id` в блок конфигурации `dbt-cloud` в `dbt_project.yml`. По умолчанию dbt State использует целевую конфигурацию с именем `prod`.
 
   <File name="dbt_project.yml">
 
@@ -23,7 +23,7 @@ By default, dbt State defers to your production environment. To control which en
 
   </File>
 
-  To defer to a different target or environment (for example, staging), update [`defer_to_target`](/reference/resource-configs/defer-to-target) in `profiles.yml`.
+  Чтобы использовать другую целевую конфигурацию или окружение (например, staging) для deferral, измените [`defer_to_target`](/reference/resource-configs/defer-to-target) в `profiles.yml`.
 
   <File name="profiles.yml">
 
@@ -38,8 +38,8 @@ By default, dbt State defers to your production environment. To control which en
 
   </File>
 
-You can also pass `--state` or `--defer-state` to explicitly point dbt State to a specific `manifest.json` as the source of truth for cloning objects.
+Вы также можете передать `--state` или `--defer-state`, чтобы явно указать dbt State конкретный файл `manifest.json` в качестве источника достоверных данных для клонирования объектов.
 
 :::note
-If you've overridden `generate_*_name()` macros with runtime values (such as environment variables, file paths, or dates), provide a `manifest.json` file so dbt State can locate objects correctly. Without one, it infers object locations from your macros and profile target, which may be incorrect in these cases. Refer to [Caveats to dbt State without a manifest](/reference/resource-configs/defer-to-target#caveats-to-dbt-state-without-a-manifest).
+Если вы переопределили макросы `generate_*_name()`, используя значения, определяемые во время выполнения (например, переменные окружения, пути к файлам или даты), предоставьте файл `manifest.json`, чтобы dbt State мог корректно определить расположение объектов. Без этого файла расположение объектов определяется на основе ваших макросов и целевой конфигурации профиля, что в таких случаях может привести к неверному результату. См. раздел [Оговорки при использовании dbt State без манифеста](/reference/resource-configs/defer-to-target#caveats-to-dbt-state-without-a-manifest).
 :::

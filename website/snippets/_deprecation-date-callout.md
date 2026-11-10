@@ -1,6 +1,6 @@
 :::info
-If your model has an [enforced contract](/docs/mesh/govern/model-contracts), you cannot delete the model until after the `deprecation_date` has passed. dbt doesn't allow deleting models with enforced contracts before their `deprecation_date` to protect downstream consumers.
+Если для вашей модели [принудительно применяется контракт](/docs/mesh/govern/model-contracts), вы не сможете удалить её до наступления `deprecation_date`. dbt не позволяет удалять модели с принудительно применяемыми контрактами до наступления их `deprecation_date`, чтобы защитить потребителей, зависящих от этих моделей.
 
-If you try to delete a versioned model before its `deprecation_date`, dbt will raise an error during development runs and cause jobs to fail.
+Если вы попытаетесь удалить версионируемую модель до наступления её `deprecation_date`, dbt выдаст ошибку при запусках в среде разработки, а задания завершатся с ошибкой.
 
 :::

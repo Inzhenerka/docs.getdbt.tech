@@ -1,5 +1,5 @@
-:::info Wizard usage and billing
-From September 1st, 2026, <Constant name="wizard" /> usage is metered per token against your account's usage credits. All credit amounts are per account, not per user. Enterprise and Enterprise+ accounts get monthly credits. Developer and Starter plans start with a 30-day trial and $100 in credits, as do CLI users via a free <Constant name="dbt" /> account.
+:::info Использование Wizard и оплата
+С 1 сентября 2026 года использование <Constant name="wizard" /> тарифицируется по количеству токенов и оплачивается из кредитов вашего аккаунта. Все суммы кредитов предоставляются на аккаунт, а не на пользователя. Аккаунты Enterprise и Enterprise+ получают кредиты ежемесячно. Тарифные планы Developer и Starter включают 30-дневный пробный период и кредиты на сумму $100; те же условия доступны пользователям CLI с бесплатным аккаунтом <Constant name="dbt" />.
 
-Refer to [Trial and billing](/docs/dbt-ai/pricing-billing/trial-and-billing) for what each plan gets, spend limits, and paid access.
+Подробнее о том, что входит в каждый тарифный план, лимитах расходов и платном доступе, см. в разделе [Пробный период и оплата](/docs/dbt-ai/pricing-billing/trial-and-billing).
 :::

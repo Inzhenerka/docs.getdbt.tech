@@ -1,232 +1,232 @@
-### Wizard usage overview
+### Обзор использования Wizard {#wizard-usage-overview}
 
-<Expandable alt_header="How is Wizard usage measured and priced?">
+<Expandable alt_header="Как измеряется и оплачивается использование Wizard?">
 
-Wizard usage with the dbt-<Term id="managed"/> <Term id="inference"/> will be measured per token. Every token is processed as input or output counts. Each model has its own unique per-token pricing.
+Использование Wizard с dbt-<Term id="managed"/> <Term id="inference"/> измеряется в токенах. Учитываются все обработанные токены: как входные, так и выходные. У каждой модели своя стоимость за токен.
 
-Cost will depend on the model used, prompt length and complexity, and response size.
+Стоимость зависит от используемой модели, длины и сложности запроса, а также размера ответа.
 
-Refer to [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table) for the currently available models.
-
-</Expandable>
-
-<Expandable alt_header="What is the dbt Wizard usage consumption pool?">
-
-The <Constant name="wizard"/> consumption pool is the usage balance available when using dbt-<Term id="managed"/> <Term id="inference"/> for <Constant name="wizard"/> &mdash; this includes Developer and Starter plan trial Wizard usage credits and the monthly Enterprise/Enterprise+ included usage credits.
-
-As you use <Constant name="wizard" />, your token usage will automatically convert into a dollar amount and is deducted from your active usage credit. Once your usage credit is used up, additional usage draws from a purchased consumption pool, if one exists.
-
-What happens next depends on your plan:
-
-- **Developer, Starter, and self-hosted:** <Constant name="wizard" /> usage pauses until you add paid usage or your pool refreshes.
-- **Enterprise and Enterprise+**: Accounts should add a committed spend amount to their contract to keep using <Constant name="wizard" />. You may lose access to <Constant name="wizard" /> without this commit in place. If you've set an optional monthly <Constant name="wizard" /> spend limit, that still applies and pauses usage once reached.
+Список доступных на данный момент моделей приведён в [таблице тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблице потребления сервисов](https://www.getdbt.com/legal/service-consumption-table).
 
 </Expandable>
 
-<Expandable alt_header="Is the Wizard consumption pool shared between dbt Wizard in the dbt platform and Wizard CLI?">
+<Expandable alt_header="Что такое пул потребления dbt Wizard?">
 
-Yes. The consumption pool and usage credits will be shared across all users within an account and across Wizard in <Constant name="dbt_platform" /> and local Wizard CLI. Usage from either surface draws from the same account-level consumption pool.
+Пул потребления <Constant name="wizard"/> — это баланс средств, доступных для использования dbt-<Term id="managed"/> <Term id="inference"/> в <Constant name="wizard"/> &mdash; он включает пробные средства на использование Wizard в тарифных планах Developer и Starter, а также ежемесячные средства на использование, включённые в тарифные планы Enterprise/Enterprise+.
 
-</Expandable>
+По мере использования <Constant name="wizard" /> количество использованных токенов автоматически пересчитывается в доллары, и эта сумма вычитается из вашего текущего остатка средств на использование. Когда эти средства заканчиваются, дальнейшее использование оплачивается из приобретённого пула потребления, если он есть.
 
-<Expandable alt_header="Which AI models are available for use through dbt managed inference?">
+Дальнейшие действия зависят от вашего тарифного плана:
 
-Refer to the [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table) for the models available as of September 1, 2026. dbt Labs bills usage of these models through your <Constant name="dbt" /> account.
-
-</Expandable>
-
-### Developer and Starter plan (self-serve free trial)
-
-<Expandable alt_header="What does the dbt Wizard Developer and Starter plan free trial include?">
-
-Developer and Starter plans get $100 in usage credits for dbt-<Term id="managed"/> Wizard inference, free for 30 days. The $100 is _per account, not per user_, which means everyone on the account shares the same credits. On Developer, that's a single user, since it's a single-user plan.
-
-The credit covers Wizard usage across both the <Constant name="dbt_platform"/> and the CLI, and the trial ends when your account hits $100 in usage or 30 days, whichever comes first.
-
-The trial credits can only be spent on <Constant name="wizard" />, not on dbt State or other consumption-based features.
+- **Developer, Starter и самостоятельное размещение:** использование <Constant name="wizard" /> приостанавливается, пока вы не подключите платное использование или ваш пул не пополнится.
+- **Enterprise и Enterprise+**: чтобы продолжать использовать <Constant name="wizard" />, необходимо добавить в договор обязательство по расходам на определённую сумму. Без такого обязательства вы можете потерять доступ к <Constant name="wizard" />. Если вы установили необязательный месячный лимит расходов на <Constant name="wizard" />, он по-прежнему действует: при его достижении использование приостанавливается.
 
 </Expandable>
 
-<Expandable alt_header="Who is eligible to start a dbt Wizard 30-day free trial?">
+<Expandable alt_header="Является ли пул потребления общим для dbt Wizard на платформе dbt и Wizard CLI?">
 
-Developer or Starter plan accounts are eligible for the 30-day, $100/account free trial. Trials require a business email address, so personal email domains such as Gmail aren't eligible. An account admin or billing admin must start the trial.
-
-</Expandable>
-
-<Expandable alt_header="Do unused trial consumption pools roll over or expire?">
-
-Unused trial usage credits don't roll over. Your trial ends when you use up the entire $100 usage credit or 30 days pass, whichever happens first.
+Да. Пул потребления и средства на использование являются общими для всех пользователей одного аккаунта, а также для Wizard в <Constant name="dbt_platform" /> и локального Wizard CLI. Использование через любой из этих интерфейсов расходует один и тот же пул потребления на уровне аккаунта.
 
 </Expandable>
 
-<Expandable alt_header="What happens if I deplete my trial usage credit before the 30-day trial ends?">
+<Expandable alt_header="Какие модели ИИ доступны через управляемый dbt инференс?">
 
-Your trial ends when you reach 30 days or use up the full $100 credits, whichever comes first. Because the credit is shared across the account, usage from any user on it counts toward the same $100. To continue using dbt <Term id="managed"/> providers, you will need to add a payment method and set a monthly spend limit.
-
-You can also continue with your own AI provider ("Bring Your Own Key (BYOK)") if you configure credentials for a supported AI provider.
+Список моделей, доступных по состоянию на 1 сентября 2026 года, приведён в [таблице тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблице потребления сервисов](https://www.getdbt.com/legal/service-consumption-table). dbt Labs выставляет счета за использование этих моделей через ваш аккаунт <Constant name="dbt" />.
 
 </Expandable>
 
-<Expandable alt_header="What happens when my dbt Wizard trial ends?">
+### Тарифные планы Developer и Starter (бесплатный пробный период с самостоятельным подключением) {#developer-and-starter-plan-self-serve-free-trial}
 
-dbt-managed Wizard usage pauses unless paid access is configured by purchasing additional consumption pools.
+<Expandable alt_header="Что включает бесплатный пробный период dbt Wizard в тарифных планах Developer и Starter?">
 
-Self-serve accounts will be able to add a payment method and choose a monthly spend limit.
+Тарифные планы Developer и Starter предоставляют $100 на использование dbt-<Term id="managed"/> инференса Wizard бесплатно в течение 30 дней. Эти $100 выделяются _на аккаунт, а не на пользователя_, то есть все пользователи аккаунта расходуют общие средства. В тарифном плане Developer это один пользователь, поскольку план рассчитан на одного пользователя.
 
-Enterprise and Enterprise+ accounts should contact their dbt Labs account team. BYOK usage remains separate and is billed by your provider.
+Эти средства покрывают использование Wizard как в <Constant name="dbt_platform"/>, так и в CLI. Пробный период заканчивается, когда расходы аккаунта достигают $100 или проходит 30 дней, в зависимости от того, что наступит раньше.
 
-</Expandable>
-
-<Expandable alt_header="Will dbt automatically charge me when my trial ends?">
-
-No. Starting a trial doesn't automatically create paid usage. For self-serve access, you must add a payment method and choose a spend limit. If you set up payment while the trial is active, paid usage begins only after the trial ends or its credit is exhausted.
+Пробные средства можно потратить только на <Constant name="wizard" />, но не на dbt State или другие функции с оплатой по потреблению.
 
 </Expandable>
 
-### Enterprise & Enterprise+ plans
+<Expandable alt_header="Кто может начать 30-дневный бесплатный пробный период dbt Wizard?">
 
-<Expandable alt_header="What does the dbt Wizard Enterprise plan monthly usage credits include?">
-
-Enterprise plans automatically include $100/month in usage credits at no cost, and Enterprise+ includes $200/month.
-
-These amounts are _per account, not per user_, which means a 5-person account and a 500-person account both get the same monthly credit, and everyone on the account draws from the same shared balance. No billing setup or opt-in is required to receive the monthly included consumption usage credits as it renews each billing period and doesn't roll over.
-
-These included monthly credits can only be spent on <Constant name="wizard" />. They can't be used for dbt State or any other consumption-based feature.
+Аккаунтам на тарифных планах Developer и Starter доступен бесплатный пробный период на 30 дней со средствами в размере $100 на аккаунт. Для пробного периода требуется корпоративный адрес электронной почты, поэтому адреса на личных почтовых доменах, например Gmail, не подходят. Запустить пробный период должен администратор аккаунта или администратор по оплате.
 
 </Expandable>
 
-<Expandable alt_header="What happens when your account uses up its monthly usage credits?">
+<Expandable alt_header="Переносятся ли неиспользованные пробные пулы потребления или срок их действия истекает?">
 
-Enterprise and Enterprise+ account should add a committed spend amount to their contract to keep using <Constant name="wizard" />. You may lose access to <Constant name="wizard" /> without this commit in place. If you've set an optional monthly <Constant name="wizard" /> spend limit, that still applies and pauses usage once reached.
-
-If you have a committed spend amount, usage beyond your included credits draws from that commitment and appears on your invoice.
-
-BYOK usage is unaffected because your AI provider bills it separately.
+Неиспользованные пробные средства на использование не переносятся. Пробный период заканчивается, когда вы израсходуете все $100 или пройдёт 30 дней, в зависимости от того, что наступит раньше.
 
 </Expandable>
 
-### Consumption pool add-on
+<Expandable alt_header="Что произойдёт, если я израсходую пробные средства до окончания 30-дневного пробного периода?">
 
-<Expandable alt_header="How does the consumption pool work?">
+Пробный период заканчивается через 30 дней или после полного расходования $100, в зависимости от того, что наступит раньше. Поскольку средства являются общими для аккаунта, использование любым его пользователем учитывается в рамках тех же $100. Чтобы продолжить использовать поставщиков dbt <Term id="managed"/>, необходимо добавить способ оплаты и установить месячный лимит расходов.
 
-It's the balance that covers dbt-<Term id="managed"/> <Term id="inference"/> usage (which must be purchased once you've used up any freely available monthly or trial usage credits that may be available), metered per token at cost. Pool dollars don't roll over at the end of a committed term.
-
-Unlike free Wizard usage credits, purchased committed spend isn't limited to <Constant name="wizard" /> &mdash; it covers both <Constant name="wizard" /> and dbt State.
-</Expandable>
-
-<Expandable alt_header="Do I pay the full consumption pool or only for what I use?">
-
-It depends on how you purchase <Constant name="wizard" />:
-
-- **Pay-as-you-go (self-service):** You pay only for actual dbt-managed Wizard usage, up to your selected spend limit. The spend limit is a cap, not a prepaid charge. Typically for Developer, Starter, and self-hosted plans. 
-- **Pre-committed spend:** You commit to a specific amount upfront through your account team and are billed for that amount. Your usage is deducted from the committed amount as you use <Constant name="wizard" />. Typically for Enterprise-tiered plans.
-
-Talk to your account team to set up a pre-committed spend.
+Вы также можете продолжить работу со своим поставщиком ИИ («Bring Your Own Key (BYOK)»), настроив учётные данные для поддерживаемого поставщика ИИ.
 
 </Expandable>
 
-<Expandable alt_header="Who can set or change the dbt Wizard consumption pool limit?">
+<Expandable alt_header="Что произойдёт после окончания пробного периода dbt Wizard?">
 
-An account admin or billing admin can manage Wizard billing and spend controls.
+Использование управляемого dbt Wizard приостанавливается, если платный доступ не настроен путём приобретения дополнительных пулов потребления.
 
-In the <Constant name="dbt_platform" />, go to **Billing & Usage** > **Usage-based features** > **Wizard** to view or update the limit.
+Для аккаунтов с самостоятельным обслуживанием можно будет добавить способ оплаты и выбрать месячный лимит расходов.
 
-</Expandable>
-
-<Expandable alt_header="Is the consumption pool for dbt Wizard also shared with dbt State or dbt Copilot?">
-
-It depends on which credits you're using:
-- Free <Constant name="wizard" /> usage credits (The Developer and Starter trial pool, and the Enterprise and Enterprise+ monthly included usage credits) are scoped to <Constant name="wizard"/> only.
-- Consumption pool add-on that you purchase covers both <Constant name="wizard"/> and dbt State, so usage from either feature draws down the same account-level pool.
-
-Either way, Copilot Actions are metered separately on an actions-based model and never touch your dbt Wizard consumption pool. dbt Wizard also has its own feature-level spend limit, configured separately from dbt State.
+Владельцам аккаунтов Enterprise и Enterprise+ следует обратиться к своей команде по работе с клиентами в dbt Labs. Использование BYOK учитывается отдельно и оплачивается вашему поставщику.
 
 </Expandable>
 
-### Tracking usage & spend limits
+<Expandable alt_header="Будет ли dbt автоматически списывать деньги после окончания пробного периода?">
 
-<Expandable alt_header="Do I need a paid dbt plan or credit card to try dbt Wizard?">
-
-No. You need a free <Constant name="dbt" /> account to manage usage, billing, and spend limits, but you don't need a paid <Constant name="dbt_platform" /> plan or credit card to start the trial. If you don't have an account, you can [create one](https://www.getdbt.com/signup) during setup.
+Нет. Запуск пробного периода не подключает платное использование автоматически. Для доступа с самостоятельным обслуживанием необходимо добавить способ оплаты и выбрать лимит расходов. Если вы настроите оплату во время пробного периода, платное использование начнётся только после его окончания или исчерпания пробных средств.
 
 </Expandable>
 
-<Expandable alt_header="How can I track my dbt Wizard usage and remaining trial credit?">
+### Тарифные планы Enterprise и Enterprise+ {#enterprise-enterprise-plans}
 
-From September 1st, 2026, you'll be able to track in <Constant name="dbt_platform" /> by going to **Account settings** > **Billing & Usage**.
+<Expandable anchor_id="what-does-the-dbt-wizard-enterprise-plan-monthly-usage-credits-include" alt_header="Какие ежемесячные средства на использование включает тарифный план dbt Wizard Enterprise?">
 
-The overview and Wizard usage-based feature pages will show your current consumption pool/usage, trial balance, and spend controls across the platform and CLI.
+Тарифные планы Enterprise автоматически включают $100 в месяц на использование без дополнительной платы, а Enterprise+ — $200 в месяц.
 
-</Expandable>
+Эти суммы выделяются _на аккаунт, а не на пользователя_: аккаунт с 5 пользователями и аккаунт с 500 пользователями получают одинаковую сумму в месяц, и все пользователи аккаунта расходуют общий баланс. Для получения ежемесячных включённых средств на использование не нужно настраивать оплату или отдельно подключать эту возможность: средства начисляются заново каждый расчётный период, а неиспользованный остаток не переносится.
 
-<Expandable alt_header="Where can I find the current token rates for each supported model?">
-
-Refer to the [Model Provider Rate Table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table), which includes the current input, cache-write, cached-read, and output token rates. Rates vary by model and can change over time.
+Эти ежемесячные включённые средства можно потратить только на <Constant name="wizard" />. Их нельзя использовать для dbt State или любой другой функции с оплатой по потреблению.
 
 </Expandable>
 
-<Expandable alt_header="How does the spend limit work?">
+<Expandable alt_header="Что произойдёт, когда аккаунт израсходует ежемесячные средства на использование?">
 
-You'll be able to set a monthly spend limit for <Constant name="wizard" /> in <Constant name="dbt_platform"/>. You'll be alerted as you approach it, and usage pauses if you reach it until the limit is raised or the next billing period begins.
+Чтобы продолжать использовать <Constant name="wizard" />, владельцам аккаунтов Enterprise и Enterprise+ необходимо добавить в договор обязательство по расходам на определённую сумму. Без такого обязательства вы можете потерять доступ к <Constant name="wizard" />. Если вы установили необязательный месячный лимит расходов на <Constant name="wizard" />, он по-прежнему действует: при его достижении использование приостанавливается.
 
-</Expandable>
+Если у вас есть обязательство по расходам, использование сверх включённых средств вычитается из суммы этого обязательства и отражается в счёте.
 
-
-### Bring Your Own Key (BYOK)
-
-<Expandable alt_header="Does bring your own key (BYOK) usage consume dbt Wizard consumption pools?">
-
-No. With BYOK, your AI provider bills you directly. BYOK usage doesn't draw from your dbt-managed consumption pools.
+Это не влияет на использование BYOK, поскольку ваш поставщик ИИ выставляет счета за него отдельно.
 
 </Expandable>
 
-<Expandable alt_header="How does BYOK work?">
+### Дополнительный пул потребления {#consumption-pool-add-on}
 
-With BYOK, you connect your own AI provider credentials and pay the provider directly. BYOK usage doesn't consume your dbt Wizard consumption pool. Refer to the [BYOK setup guide](/docs/platform/wizard-byok-platform) for configuration details.
+<Expandable alt_header="Как работает пул потребления?">
 
-Refer to [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table) for more information.
+Это баланс средств для оплаты использования dbt-<Term id="managed"/> <Term id="inference"/> (его необходимо приобрести после исчерпания всех доступных бесплатных ежемесячных или пробных средств на использование), которое тарифицируется за каждый токен по себестоимости. Средства пула не переносятся по окончании срока договорных обязательств.
+
+В отличие от бесплатных средств на использование Wizard, приобретённая сумма обязательства по расходам не ограничивается <Constant name="wizard" /> &mdash; она покрывает как <Constant name="wizard" />, так и dbt State.
+</Expandable>
+
+<Expandable alt_header="Нужно ли оплачивать весь пул потребления или только фактическое использование?">
+
+Это зависит от способа приобретения <Constant name="wizard" />:
+
+- **Оплата по мере использования (самостоятельное обслуживание):** вы платите только за фактическое использование управляемого dbt Wizard в пределах выбранного лимита расходов. Лимит расходов — это верхняя граница, а не предоплата. Обычно этот вариант используется для тарифных планов Developer, Starter и самостоятельного размещения. 
+- **Предварительное обязательство по расходам:** вы заранее согласовываете определённую сумму со своей командой по работе с клиентами и получаете счёт на эту сумму. По мере использования <Constant name="wizard" /> расходы вычитаются из согласованной суммы. Обычно этот вариант используется для тарифных планов уровня Enterprise.
+
+Чтобы оформить предварительное обязательство по расходам, обратитесь к своей команде по работе с клиентами.
 
 </Expandable>
 
-## dbt-managed inference
+<Expandable alt_header="Кто может устанавливать или изменять лимит пула потребления dbt Wizard?">
 
-<Expandable alt_header="Why use dbt-managed inference instead of bringing my own key?">
+Администратор аккаунта или администратор по оплате может управлять оплатой Wizard и настройками ограничения расходов.
 
-With dbt-<Term id="managed"/> <Term id="inference"/>, there's nothing to configure or maintain. dbt Labs selects and maintains the underlying models for cost, speed, and accuracy, so your team focuses on data work, not agent upkeep.
-
-Usage is billed through your existing dbt account and covered by your consumption pool, so there's one bill instead of a second vendor relationship to manage.
+В <Constant name="dbt_platform" /> перейдите в **Billing & Usage** > **Usage-based features** > **Wizard**, чтобы просмотреть или изменить лимит.
 
 </Expandable>
 
-<Expandable alt_header="Which models are available with dbt-managed inference, and who picks them?">
+<Expandable alt_header="Является ли пул потребления dbt Wizard общим с dbt State или dbt Copilot?">
 
-dbt-<Term id="managed"/> <Term id="inference"/> includes several frontier models, including models from OpenAI and Anthropic, plus a set of open weight models. dbt Labs maintains and updates this list, so new models become available without you having to evaluate or configure a new provider yourself.
+Это зависит от того, какие средства вы используете:
+- Бесплатные средства на использование <Constant name="wizard" /> (пробный пул Developer и Starter, а также ежемесячные включённые средства Enterprise и Enterprise+) предназначены только для <Constant name="wizard"/>.
+- Приобретённый дополнительный пул потребления покрывает как <Constant name="wizard"/>, так и dbt State, поэтому использование любой из этих функций уменьшает один и тот же пул на уровне аккаунта.
 
-Refer to [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table) for more information.
+В любом случае действия Copilot учитываются отдельно по модели оплаты за действия и никогда не расходуют пул потребления dbt Wizard. У dbt Wizard также есть собственный лимит расходов на уровне функции, который настраивается отдельно от dbt State.
 
 </Expandable>
 
-<Expandable alt_header="Do I need to worry about rate limits or provider outages with dbt-managed inference?">
+### Отслеживание использования и лимиты расходов {#tracking-usage-spend-limits}
 
-No &mdash; dbt manages the underlying provider relationships and infrastructure for dbt-<Term id="managed"/> <Term id="inference"/>. You interact with a single consumption pool and spend limit in <Constant name="dbt_platform"/>, regardless of which model is handling a given request.
+<Expandable alt_header="Нужен ли платный тарифный план dbt или банковская карта, чтобы попробовать dbt Wizard?">
+
+Нет. Для управления использованием, оплатой и лимитами расходов нужен бесплатный аккаунт <Constant name="dbt" />, но для запуска пробного периода не требуется платный тарифный план <Constant name="dbt_platform" /> или банковская карта. Если у вас нет аккаунта, вы можете [создать его](https://www.getdbt.com/signup) во время настройки.
+
+</Expandable>
+
+<Expandable alt_header="Как отслеживать использование dbt Wizard и остаток пробных средств?">
+
+С 1 сентября 2026 года вы сможете отслеживать их в <Constant name="dbt_platform" />, перейдя в **Account settings** > **Billing & Usage**.
+
+На обзорной странице и страницах функции Wizard с оплатой по потреблению будут отображаться текущий пул потребления и его расходование, остаток пробных средств и настройки ограничения расходов для платформы и CLI.
+
+</Expandable>
+
+<Expandable alt_header="Где найти текущие тарифы за токены для каждой поддерживаемой модели?">
+
+См. [таблицу тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблицу потребления сервисов](https://www.getdbt.com/legal/service-consumption-table), где указаны текущие тарифы за входные токены, токены записи в кеш, чтения из кеша и выходные токены. Тарифы зависят от модели и могут меняться со временем.
+
+</Expandable>
+
+<Expandable alt_header="Как работает лимит расходов?">
+
+Вы сможете установить месячный лимит расходов на <Constant name="wizard" /> в <Constant name="dbt_platform"/>. При приближении к лимиту вы получите уведомление, а при его достижении использование приостановится, пока вы не увеличите лимит или не начнётся следующий расчётный период.
 
 </Expandable>
 
 
-<Expandable alt_header="Can I mix dbt-managed inference and BYOK?">
+### Использование собственного ключа (BYOK) {#bring-your-own-key-byok}
 
-Yes. BYOK usage is billed by your provider and never draws from your dbt-<Term id="managed"/> consumption pool, so you can use dbt-<Term id="managed"/> <Term id="inference"/> for some work and BYOK for other work without either affecting the other's usage or billing.
+<Expandable alt_header="Расходует ли использование собственного ключа (BYOK) пулы потребления dbt Wizard?">
+
+Нет. При использовании BYOK ваш поставщик ИИ выставляет счета напрямую вам. Использование BYOK не расходует ваши пулы потребления, управляемые dbt.
+
 </Expandable>
 
-<Expandable alt_header="Is dbt-managed inference more expensive than using my own provider key?">
+<Expandable alt_header="Как работает BYOK?">
 
-Cost depends on the model and your usage pattern. dbt-<Term id="managed"/> <Term id="inference"/> is metered per token at the model's rate, while BYOK usage is billed directly by your provider at their own rates. Compare the two based on which models and volume you expect to use.
+При использовании BYOK вы подключаете собственные учётные данные поставщика ИИ и платите ему напрямую. Использование BYOK не расходует пул потребления dbt Wizard. Подробности настройки см. в [руководстве по настройке BYOK](/docs/platform/wizard-byok-platform).
 
-Refer to [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table) for more information.
+Дополнительные сведения приведены в [таблице тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблице потребления сервисов](https://www.getdbt.com/legal/service-consumption-table).
+
 </Expandable>
 
-<Expandable alt_header="Does read-only user usage in Explore mode count against my consumption pool?">
+## Управляемый dbt инференс {#dbt-managed-inference}
 
-Yes. Questions asked in [Explore mode](/docs/dbt-ai/wizard-ide#agent-modes) &mdash; including by [read-only users](/docs/platform/wizard-read-only-users) &mdash; use dbt-<Term id="managed"/> <Term id="inference"/> and draw from your account's <Constant name="wizard" /> consumption pool, the same as any other <Constant name="wizard" /> usage.
+<Expandable alt_header="Зачем использовать управляемый dbt инференс вместо собственного ключа?">
+
+С dbt-<Term id="managed"/> <Term id="inference"/> вам не нужно ничего настраивать или обслуживать. dbt Labs выбирает и поддерживает базовые модели с учётом стоимости, скорости и точности, чтобы ваша команда могла сосредоточиться на работе с данными, а не на обслуживании агента.
+
+Использование оплачивается через существующий аккаунт dbt и покрывается вашим пулом потребления, поэтому вы получаете один счёт и вам не нужно выстраивать отношения с ещё одним поставщиком.
+
+</Expandable>
+
+<Expandable alt_header="Какие модели доступны при использовании управляемого dbt инференса и кто их выбирает?">
+
+dbt-<Term id="managed"/> <Term id="inference"/> включает несколько передовых моделей, в том числе модели OpenAI и Anthropic, а также набор моделей с открытыми весами. dbt Labs поддерживает и обновляет этот список, поэтому новые модели становятся доступны без необходимости самостоятельно оценивать или настраивать нового поставщика.
+
+Дополнительные сведения приведены в [таблице тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблице потребления сервисов](https://www.getdbt.com/legal/service-consumption-table).
+
+</Expandable>
+
+<Expandable alt_header="Нужно ли беспокоиться об ограничениях частоты запросов или сбоях у поставщиков при использовании управляемого dbt инференса?">
+
+Нет &mdash; dbt управляет взаимодействием с поставщиками и инфраструктурой для dbt-<Term id="managed"/> <Term id="inference"/>. Вы работаете с единым пулом потребления и лимитом расходов в <Constant name="dbt_platform"/>, независимо от того, какая модель обрабатывает конкретный запрос.
+
+</Expandable>
+
+
+<Expandable alt_header="Можно ли сочетать управляемый dbt инференс и BYOK?">
+
+Да. Счета за использование BYOK выставляет ваш поставщик, и такое использование никогда не расходует ваш пул потребления dbt-<Term id="managed"/>, поэтому вы можете использовать dbt-<Term id="managed"/> <Term id="inference"/> для одних задач, а BYOK — для других, без взаимного влияния на учёт использования или оплату.
+</Expandable>
+
+<Expandable alt_header="Обходится ли управляемый dbt инференс дороже, чем использование собственного ключа поставщика?">
+
+Стоимость зависит от модели и характера использования. dbt-<Term id="managed"/> <Term id="inference"/> тарифицируется за каждый токен по тарифу модели, а счета за использование BYOK выставляет напрямую ваш поставщик по собственным тарифам. Сравните оба варианта с учётом моделей и объёма использования, которые вы планируете.
+
+Дополнительные сведения приведены в [таблице тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблице потребления сервисов](https://www.getdbt.com/legal/service-consumption-table).
+</Expandable>
+
+<Expandable alt_header="Расходует ли мой пул потребления работа пользователей с доступом только для чтения в режиме Explore?">
+
+Да. Вопросы, задаваемые в [режиме Explore](/docs/dbt-ai/wizard-ide#agent-modes), &mdash; в том числе [пользователями с доступом только для чтения](/docs/platform/wizard-read-only-users) &mdash; обрабатываются с помощью dbt-<Term id="managed"/> <Term id="inference"/> и расходуют пул потребления <Constant name="wizard" /> вашего аккаунта, как и любое другое использование <Constant name="wizard" />.
 
 </Expandable>

@@ -1,5 +1,5 @@
 :::info
 
-Remote MCP OAuth is available in public beta for Starter, Enterprise, and Enterprise+ accounts. 
+OAuth для удалённого MCP доступен в публичной бета-версии для учётных записей Starter, Enterprise и Enterprise+. 
 
 :::

@@ -1,7 +1,7 @@
-:::note Enable the dbt v2 readiness panel
+:::note Включите панель готовности к dbt v2
 
-The <Constant name="fusion" /> readiness panel shows each project's eligibility status and blockers in the <Constant name="dbt_platform" />. It's rolling out in phases &mdash; if it's not enabled for your account yet, an [account admin](/docs/platform/manage-access/enterprise-permissions#account-admin) can turn it on in **Account settings** → **Account**. Refer to [Enable dbt v2 readiness features](/guides/prepare-v2-upgrade?step=2) for setup steps.
+Панель готовности к <Constant name="fusion" /> показывает статус готовности каждого проекта к переходу и блокирующие проблемы в <Constant name="dbt_platform" />. Она внедряется поэтапно &mdash; если она ещё не включена для вашей учётной записи, [администратор учётной записи](/docs/platform/manage-access/enterprise-permissions#account-admin) может включить её в разделе **Account settings** → **Account**. Инструкции по настройке см. в разделе [Включение функций проверки готовности к dbt v2](/guides/prepare-v2-upgrade?step=2).
 
-If you have access to <Constant name="wizard"/>, use the [<Constant name="wizard" />'s <Constant name="fusion" /> migration workflow](/docs/dbt-ai/wizard-ide#fusion-migration-workflow) to help you fix compatibility errors directly from the <Constant name="studio_ide"/> using <Constant name="wizard"/> &mdash; no manual log investigation needed!
+Если у вас есть доступ к <Constant name="wizard"/>, используйте [процесс миграции на <Constant name="fusion" /> с помощью <Constant name="wizard" />](/docs/dbt-ai/wizard-ide#fusion-migration-workflow), чтобы исправлять ошибки совместимости непосредственно в <Constant name="studio_ide"/> с помощью <Constant name="wizard"/> &mdash; без необходимости вручную анализировать журналы!
 
 :::

@@ -1,3 +1,3 @@
 :::note
-`dbt source freshness` is a legacy command that checks freshness for sources _only_. It's still supported for backward compatibility and continues to produce `sources.json`, but we recommend using `dbt freshness` going forward.
+`dbt source freshness` — это устаревшая команда, которая проверяет актуальность данных _только_ в источниках. Она по-прежнему поддерживается для обратной совместимости и продолжает создавать `sources.json`, но в дальнейшем мы рекомендуем использовать `dbt freshness`.
 :::

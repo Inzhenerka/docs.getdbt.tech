@@ -1,53 +1,53 @@
-## Azure private connectivity matrix
+## Матрица частных подключений в Azure {#azure-private-connectivity-matrix}
 
-The following charts outline private connectivity options for Azure deployments of <Constant name="dbt" /> ([multi-tenant and single-tenant](/docs/platform/about-platform/tenancy)).
+В следующих таблицах представлены варианты частного подключения для развертываний <Constant name="dbt" /> в Azure ([мультитенантных и однотенантных](/docs/platform/about-platform/tenancy)).
 
-**Legend:**
-- ✅ = Available
-- ❌ = Not currently available
+**Условные обозначения:**
+- ✅ = Доступно
+- ❌ = В настоящее время недоступно
 
-_Tenancy:_ MT (multi-tenant) and ST (single-tenant) — [learn more about tenancy](/docs/platform/about-platform/tenancy).
+_Модель тенантности:_ MT (мультитенантная) и ST (однотенантная) — [подробнее о моделях тенантности](/docs/platform/about-platform/tenancy).
 
-:::note About the following matrix tables
-These tables indicate whether private connectivity can be established to specific services, considering major factors such as the network and basic auth layers. dbt has validated these configurations using common deployment patterns and typical use cases. However, individual configurations may vary. If you encounter issues or have questions about your environment, [contact dbt Support](/community/resources/getting-help#dbt-support) for guidance.
+:::note О приведенных ниже таблицах
+Эти таблицы показывают, можно ли установить частное подключение к определенным сервисам, с учетом основных факторов, таких как сетевой уровень и базовые механизмы аутентификации. dbt проверила эти конфигурации на распространенных схемах развертывания и типичных сценариях использования. Однако конкретные конфигурации могут отличаться. Если вы столкнетесь с проблемами или у вас возникнут вопросы о вашей среде, [обратитесь в службу поддержки dbt](/community/resources/getting-help#dbt-support) за рекомендациями.
 :::
 
 ---
 
-### Connecting to the dbt platform (Ingress)
+### Подключение к платформе dbt (входящий трафик) {#connecting-to-the-dbt-platform-ingress}
 
-Your services can connect to <Constant name="dbt" /> over private connectivity using the <Term id="dbt-provisioned">dbt-provisioned</Term> model. In this case, dbt is the <Term id="service-producer">service producer</Term> and you are the <Term id="consumer">consumer</Term>.
+Ваши сервисы могут подключаться к <Constant name="dbt" /> по частному соединению с использованием модели <Term id="dbt-provisioned">подготовки ресурсов на стороне dbt</Term>. В этом случае dbt выступает в роли <Term id="service-producer">поставщика сервиса</Term>, а вы — в роли <Term id="consumer">потребителя</Term>.
 
-| Connectivity type | MT | ST |
+| Тип подключения | MT | ST |
 |-------------------|-----|-----|
-| Private <Constant name="dbt" /> access | ❌ | ✅ |
-| Dual access (public + private) | ❌ | ✅ |
+| Частный доступ к <Constant name="dbt" /> | ❌ | ✅ |
+| Двойной доступ (публичный + частный) | ❌ | ✅ |
 
 ---
 
-### Connecting the dbt platform to managed services (Egress)
+### Подключение платформы dbt к управляемым сервисам (исходящий трафик) {#connecting-the-dbt-platform-to-managed-services-egress}
 
-<Constant name="dbt" /> can establish private connections to managed data platforms and cloud-native services.
+<Constant name="dbt" /> может устанавливать частные подключения к управляемым платформам данных и облачным сервисам.
 
-| Service | MT | ST | Setup guide |
+| Сервис | MT | ST | Руководство по настройке |
 |---------|-----|-----|-------------|
-| Snowflake | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/azure/azure-snowflake) |
-| &nbsp;&nbsp;Snowflake Internal Stage | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/azure/azure-snowflake) |
-| Databricks | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/azure/azure-databricks) |
-| Azure Database for PostgreSQL Flexible Server | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/azure/azure-postgres) |
-| Azure Synapse | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/azure/azure-synapse) |
-| Azure Fabric  <Lifecycle status="beta"/> | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/azure/azure-fabric) |
-| Teradata VantageCloud | ✅ | ✅ | [View](/docs/platform/secure/private-connectivity/azure/azure-teradata) |
+| Snowflake | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/azure/azure-snowflake) |
+| &nbsp;&nbsp;Внутренняя область промежуточного хранения Snowflake (Internal Stage) | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/azure/azure-snowflake) |
+| Databricks | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/azure/azure-databricks) |
+| Azure Database for PostgreSQL Flexible Server | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/azure/azure-postgres) |
+| Azure Synapse | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/azure/azure-synapse) |
+| Azure Fabric  <Lifecycle status="beta"/> | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/azure/azure-fabric) |
+| Teradata VantageCloud | ✅ | ✅ | [Открыть](/docs/platform/secure/private-connectivity/azure/azure-teradata) |
 
 ---
 
-### Connecting the dbt platform to self-hosted services (Egress)
+### Подключение платформы dbt к самостоятельно размещенным сервисам (исходящий трафик) {#connecting-the-dbt-platform-to-self-hosted-services-egress}
 
-All of the services below share a common Private Link setup guide — backend configuration varies by service. Self-hosted connections use the <Term id="customer-provisioned">customer-provisioned</Term> model — you are the <Term id="service-producer">service producer</Term> and dbt is the <Term id="consumer">consumer</Term>.
+Для всех перечисленных ниже сервисов используется общее руководство по настройке Private Link — конфигурация серверной части зависит от сервиса. Подключения к самостоятельно размещенным сервисам используют модель <Term id="customer-provisioned">подготовки ресурсов на стороне клиента</Term>: вы выступаете в роли <Term id="service-producer">поставщика сервиса</Term>, а dbt — в роли <Term id="consumer">потребителя</Term>.
 
-**Setup guide:** [Configuring Azure Private Link for self-hosted services](/docs/platform/secure/private-connectivity/azure/azure-self-hosted)
+**Руководство по настройке:** [Настройка Azure Private Link для самостоятельно размещенных сервисов](/docs/platform/secure/private-connectivity/azure/azure-self-hosted)
 
-| Service | MT | ST |
+| Сервис | MT | ST |
 |---------|-----|-----|
 | GitHub Enterprise Server | ✅ | ✅ |
 | GitLab Self-Managed | ✅ | ✅ |
@@ -55,6 +55,6 @@ All of the services below share a common Private Link setup guide — backend co
 | Azure DevOps Server | ✅ | ✅ |
 | Postgres | ✅ | ✅ |
 | Starburst / Trino | ✅ | ✅ |
-| Teradata (self-hosted) | ✅ | ✅ |
+| Teradata (самостоятельное размещение) | ✅ | ✅ |
 
-If you have questions about whether your specific architecture is supported, [contact dbt Support](/community/resources/getting-help#dbt-support).
+Если у вас есть вопросы о поддержке вашей конкретной архитектуры, [обратитесь в службу поддержки dbt](/community/resources/getting-help#dbt-support).

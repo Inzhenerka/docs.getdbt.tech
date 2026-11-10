@@ -12,11 +12,6 @@
 - [Зависимости от пакетов](/docs/build/packages#how-do-i-add-a-package-to-my-project) позволяют добавлять в ваш проект исходный код из dbt-проекта другого автора — как библиотеку.
 - Зависимости от проектов (project dependencies) предоставляют другой способ строить решения поверх чужой работы в dbt.
 
-#### О файлах packages.yml и dependencies.yml
-Файл `dependencies.yml` может содержать оба типа зависимостей: зависимости от пакетов и зависимости от проектов.
-- [Зависимости от пакетов](/docs/build/packages#how-do-i-add-a-package-to-my-project) позволяют добавлять исходный код из чужого проекта dbt в свой, как библиотеку.
-- Зависимости от проектов предоставляют другой способ использовать результаты чужой работы в dbt.
-- Для приватных Git-пакетов, которым требуется Jinja (например, при использовании [метода с Git-токеном](/docs/build/packages#git-token-method)), используйте `packages.yml` в <Constant name="core" />: этот файл поддерживает Jinja в спецификациях пакетов. <Constant name="fusion_engine" /> также поддерживает Jinja в `dependencies.yml`, но если проект должен работать и в <Constant name="core" />, используйте `packages.yml`. Подробнее см. в разделе [Поддержка Jinja по типам файлов](/reference/jinja-file-support). 
 
 Для приватных пакетов без токенов Jinja можно использовать [встроенную поддержку приватных пакетов](/docs/build/packages#native-private-packages) в `packages.yml` или `dependencies.yml`.
 

@@ -32,7 +32,7 @@ link="/docs/platform-integrations/semantic-layer/excel"
     <Card
       title="Omni"
       link="https://docs.omni.co/integrations/dbt/semantic-layer"
-      body="Connect Omni to the dbt Semantic Layer to query trusted metrics directly within your Omni data model."
+      body="Подключите Omni к семантическому слою dbt, чтобы запрашивать проверенные метрики прямо из модели данных Omni."
       icon="omni"/>
       <a href="https://docs.omni.co/integrations/dbt/semantic-layer"
       className="external-link"

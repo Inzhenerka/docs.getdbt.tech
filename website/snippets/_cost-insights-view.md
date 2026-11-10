@@ -1,7 +1,7 @@
-To view cost data, ensure you have:
+Чтобы просматривать данные о затратах, убедитесь, что у вас есть:
 
-- One of the roles listed in [Assign required permissions](/docs/explore/set-up-cost-insights#assign-required-permissions).
-- A supported data warehouse: 
+- Одна из ролей, перечисленных в разделе [Назначение необходимых разрешений](/docs/explore/set-up-cost-insights#assign-required-permissions).
+- Поддерживаемое хранилище данных: 
     - Snowflake
     - BigQuery
     - Databricks

@@ -1,5 +1,5 @@
 :::tip
-Note that this best practices guide doesn't yet use the [new YAML specification](/docs/build/latest-metrics-spec). We're working on updating this guide to use the new spec and file structure soon! 
+Обратите внимание: в этом руководстве по лучшим практикам пока не используется [новая спецификация YAML](/docs/build/latest-metrics-spec). Мы работаем над обновлением руководства, чтобы вскоре оно соответствовало новой спецификации и структуре файлов! 
 
-To read more about the new spec, see [Creating metrics](/docs/build/metrics-overview).
+Подробнее о новой спецификации см. в разделе [Создание метрик](/docs/build/metrics-overview).
 :::

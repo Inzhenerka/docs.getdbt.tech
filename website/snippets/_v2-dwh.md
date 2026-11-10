@@ -5,5 +5,5 @@ import FusionDWHLocal from '/snippets/_v2-dwh-local.md';
 
 <FusionDWHLocal />
 
-<small> _Note that adapter lifecycle may differ between the <Constant name="dbt_platform"/> and local development. An adapter can reach GA in the dbt platform before it reaches GA for local use._ </small>
-<!-- <Expandable alt_header="Supported data platforms"> -->
+<small> _Обратите внимание, что жизненный цикл адаптера может различаться для <Constant name="dbt_platform"/> и локальной разработки. Адаптер может стать общедоступным (GA) в платформе dbt раньше, чем для локального использования._ </small>
+<!-- <Expandable alt_header="Поддерживаемые платформы данных"> -->

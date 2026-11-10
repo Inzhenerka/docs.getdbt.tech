@@ -1,11 +1,10 @@
-dbt has two major versions: v1 and v2.
+У dbt две основные версии: v1 и v2.
 
-**v2** is the current generation of dbt and the default when you [install it](/docs/local/install-dbt). Installing dbt comes with richer developer tooling, linting, and more. Refer to the [Upgrade v2 guide](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) for more info.
+**v2** — текущее поколение dbt, которое используется по умолчанию при [установке](/docs/local/install-dbt). При установке dbt вы получаете расширенные инструменты разработки, линтинг и многое другое. Подробнее см. в [руководстве по переходу на v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2).
 
 <SimpleTable>
-| Version | What it is |
+| Версия | Описание |
 |---|---|
-| **v2** <br /> <small>_Recommended_</small> | The current Rust-based generation of dbt, built for the full modern development experience and powered by an open-source runtime.<br /><br />Many features work right away. Some dbt platform-based capabilities are available with a free sign-in &mdash; see [v2 feature availability](/docs/dbt/dbt-availability) for the full breakdown or [upgrade to v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2). |
-| **v1** | The original Python-based generation of dbt, still maintained as dbt v1. |
+| **v2** <br /> <small>_Рекомендуется_</small> | Текущее поколение dbt на базе Rust, созданное для полноценной современной разработки и использующее среду выполнения с открытым исходным кодом.<br /><br />Многие функции работают сразу после установки. Некоторые возможности платформы dbt доступны после бесплатного входа в систему &mdash; полный обзор см. в разделе [Доступность функций v2](/docs/dbt/dbt-availability) или [перейдите на v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2). |
+| **v1** | Первое поколение dbt на базе Python, которое по-прежнему поддерживается как dbt v1. |
 </SimpleTable>
-

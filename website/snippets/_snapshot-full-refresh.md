@@ -1,5 +1,5 @@
-:::info Snapshots ignore full refresh
+:::info Снапшоты игнорируют полное обновление
 
-Snapshots ignore both the `full_refresh` config and the `--full-refresh` flag. A command such as `dbt build --full-refresh` or `dbt snapshot --full-refresh` that includes a snapshot node runs the snapshot as normal — it won't drop or recreate the snapshot table, so existing snapshot history is preserved.
+Снапшоты игнорируют как параметр конфигурации `full_refresh`, так и флаг `--full-refresh`. Команда, например `dbt build --full-refresh` или `dbt snapshot --full-refresh`, включающая узел снапшота, выполняет его в обычном режиме — таблица снапшота не удаляется и не создаётся заново, поэтому существующая история снапшота сохраняется.
 
 :::

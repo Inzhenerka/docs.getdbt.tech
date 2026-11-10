@@ -1,16 +1,16 @@
 <VersionBlock lastVersion="1.99">
 
-:::tip Upgrade for automatic updates
-Upgrade to [v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) to run <Constant name="wizard"/> as `wizard` and get automatic updates.
+:::tip Обновитесь для автоматического получения обновлений
+Обновитесь до [v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2), чтобы запускать <Constant name="wizard"/> командой `wizard` и автоматически получать обновления.
 :::
 
 </VersionBlock>
 
 <Steps>
 
-<Step title="Install the dbt Wizard CLI">
+<Step title="Установите dbt Wizard CLI">
 
-Run the install script for your operating system:
+Запустите установочный скрипт для вашей операционной системы:
 
 macOS/Linux:
 
@@ -24,13 +24,13 @@ Windows (PowerShell):
 irm https://public.cdn.getdbt.com/dbt-wizard/install/install-wizard.ps1 | iex
 ```
 
-This installs <Constant name="wizard"/> to `/usr/local/bin/wizard`, along with the [dbt Information Schema](/docs/build/dbt-information-schema) that powers <Constant name="wizard"/>'s project-aware answers.
+Этот скрипт устанавливает <Constant name="wizard"/> в `/usr/local/bin/wizard` вместе с [dbt Information Schema](/docs/build/dbt-information-schema), благодаря которой <Constant name="wizard"/> отвечает с учётом контекста проекта.
 
 </Step>
 
-<Step title="Start a session">
+<Step title="Начните сеанс">
 
-Verify the install and start an interactive session:
+Проверьте установку и начните интерактивный сеанс:
 
 ```bash
 wizard --version   # confirm the install
@@ -41,4 +41,4 @@ wizard             # start a session
 
 </Steps>
 
-For first-run setup and billing, refer to [Install <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).
+Информацию о настройке при первом запуске и оплате см. в разделе [Установка <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).

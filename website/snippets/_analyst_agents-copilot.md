@@ -1,18 +1,18 @@
-Use dbt Copilot to analyze your data and get contextualized results in real time by asking natural language questions to the [<Constant name="insights" />](/docs/explore/dbt-insights) dbt Wizard in Insights agent. 
+Используйте dbt Copilot для анализа данных и получения результатов с учётом контекста в реальном времени, задавая вопросы на естественном языке агенту dbt Wizard в [<Constant name="insights" />](/docs/explore/dbt-insights).
 
-1. Click the **dbt Copilot** icon in the Query console sidebar menu.
-2. In the dropdown menu above the dbt Copilot prompt box, select **Agent**.
-3. In the dbt Copilot prompt box, enter your question.
-4. Click **↑** to submit your question.
+1. Нажмите значок **dbt Copilot** в боковом меню консоли запросов.
+2. В раскрывающемся меню над полем ввода dbt Copilot выберите **Agent**.
+3. В поле ввода dbt Copilot введите свой вопрос.
+4. Нажмите **↑**, чтобы отправить вопрос.
 
-   The agent then translates natural language questions into structured queries, executes queries against governed dbt models and metrics, and returns results with references, assumptions, and possible next steps.
+   Затем агент преобразует вопросы на естественном языке в структурированные запросы, выполняет их на основе управляемых моделей и метрик dbt и возвращает результаты со ссылками, допущениями и возможными дальнейшими шагами.
 
-   The agent can loop through these steps multiple times if it hasn't reached a complete answer, allowing for complex, multi-step analysis.⁠
+   Если агент ещё не получил полный ответ, он может повторить эти шаги несколько раз, что позволяет проводить сложный многоэтапный анализ.⁠
 
-   dbt <Constant name="insights" /> automatically executes the SQL query suggested by dbt Copilot in Insights, and you can preview the SQL results in the **Data** tab.
+   dbt <Constant name="insights" /> автоматически выполняет SQL-запрос, предложенный dbt Copilot в Insights, а результаты запроса можно просмотреть на вкладке **Data**.
 
-5. Confirm the results or continue asking the agent for more insights about your data. 
+5. Подтвердите результаты или продолжайте задавать агенту вопросы, чтобы получить больше информации о своих данных.
 
-Your conversation with the agent remains even if you switch tabs within dbt <Constant name="insights" />. However, they disappear when you navigate out of <Constant name="insights" /> or when you close your browser.
+Ваша переписка с агентом сохраняется даже при переключении вкладок внутри dbt <Constant name="insights" />. Однако она исчезает, когда вы покидаете <Constant name="insights" /> или закрываете браузер.
 
-<Lightbox src="/img/docs/dbt-insights/insights-copilot-agent.png" width="90%" title="Using dbt Copilot in Insights" />
+<Lightbox src="/img/docs/dbt-insights/insights-copilot-agent.png" width="90%" title="Использование dbt Copilot в Insights" />

@@ -1,45 +1,44 @@
+### Ключевые метрики {#key-metrics}
 
-### Key metrics
+В разделе **Производительность моделей** отображаются следующие метрики, которые обобщают общие затраты и эффект от оптимизации для вашего проекта:
 
-The **Model performance** section displays the following metrics that summarize the overall cost and optimization impact for your project:
+- **Общее снижение затрат**
+- **Общее снижение в %**
+- **Общее сокращение времени выполнения запросов**
+- **Повторно использованные ресурсы** (когда включены dbt State или оркестрация с учетом состояния)
 
-- **Total cost reduction**
-- **Total % reduction**
-- **Total query run time deduction**
-- **Reused assets** (when dbt State or state-aware orchestration is enabled)
+### Фильтры {#filters}
 
-### Filters
+Используйте фильтр периода времени, чтобы настроить отображаемые данные: от последних 3 месяцев до последней 1 недели.
 
-Use the time period filter to customize the data you want to view: from the last 3 months up to the last 1 week.
+На вкладках **Анализ затрат**, **Использование ресурсов** и **Время выполнения запросов** можно задать детализацию отображения: **По дням**, **По неделям** или **По месяцам**.
 
-For **Cost insights**, **Usage**, and **Query run time** tabs, you can set the view granularity by **Daily**, **Weekly**, or **Monthly**.
+### Вкладки визуализации {#visualization-tabs}
 
-### Visualization tabs
+- **Анализ затрат**: показывает оценочные затраты на ресурсы хранилища данных для этой модели и снижение затрат благодаря dbt State или оркестрации с учетом состояния.
+- **Использование ресурсов**: показывает оценочное потребление ресурсов хранилища данных этой моделью с течением времени. На вкладке **Использование ресурсов** отображается обобщенный показатель использования ресурсов хранилища данных. Конкретная единица измерения зависит от вашего хранилища данных:
+    - Snowflake: кредиты
+    - BigQuery: слот-часы или объем просканированных данных в байтах (в настоящее время объединены в один обобщенный показатель использования ресурсов)
+    - Databricks: Databricks Units (DBU)
+    - Amazon Redshift Serverless: часы использования вычислительных единиц Redshift (RPU-часы)
+    - Amazon Redshift Provisioned: узло-часы
+- **Время выполнения запросов**: показывает оценочное время выполнения запросов и сокращение продолжительности выполнения благодаря dbt State или оркестрации с учетом состояния.
+- **Время сборки**: показывает среднее время выполнения модели и его изменение за выбранный период.
+- **Количество сборок**: отслеживает, сколько раз модель была собрана или повторно использована, включая случаи сбоев или ошибок.
+- **Результаты тестов**: отображает результаты выполнения тестов для этой модели и доли успешных и неуспешных тестов.
+- **Запросы к модели**: показывает запросы, выполняемые к этой модели, и помогает понять, как она используется далее.
 
-- **Cost insights**: Shows the estimated warehouse costs incurred by this model and cost reduction from dbt State or state-aware orchestration.
-- **Usage**: Shows the estimated warehouse usage consumed by this model over time. The **Usage** tab represents generic usage for your warehouse. The specific unit depends on your data warehouse:
-    - Snowflake: Credits
-    - BigQuery: Slot hours or bytes scanned (currently combined into one generic usage number)
-    - Databricks: Databricks Units (DBUs)
-    - Amazon Redshift Serverless: Redshift Processing Unit hours (RPU-hours)
-    - Amazon Redshift Provisioned: Node-hours
-- **Query run time**: Shows the estimated query execution time and the reduction in run duration from dbt State or state-aware orchestration.
-- **Build time**: Shows average execution time for the model and how it trends over the selected period.
-- **Build count**: Tracks how many times the model was built or reused, including any failures or errors.
-- **Test results**: Displays test execution outcomes and pass/fail rates for tests on this model.
-- **Consumption queries**: Shows queries running against this model, helping you understand downstream usage patterns.
+### Табличное представление {#table-view}
 
-### Table view
-
-For **Cost insights**, **Usage**, and **Query run time** tabs, you can access the table view by clicking **Show table**, which provides detailed optimization data such as models reused, usage reduction, and cost reduction.
+На вкладках **Анализ затрат**, **Использование ресурсов** и **Время выполнения запросов** можно открыть табличное представление, нажав **Показать таблицу**. Оно содержит подробные данные об оптимизации, такие как повторно использованные модели, снижение использования ресурсов и снижение затрат.
 
 import TableView from '/snippets/_table-view.md';
 
 <TableView />
 
-### Chart interactions
+### Взаимодействие с графиками {#chart-interactions}
 
-For **Build time** and **Build count** tabs:
+На вкладках **Время сборки** и **Количество сборок**:
 
-- Click on any data point in the charts to see a detailed table listing all job runs for that day.
-- Each row in the table provides a direct link to the run details if you want to investigate further.
+- Нажмите на любую точку данных на графиках, чтобы открыть подробную таблицу со списком всех запусков заданий за этот день.
+- Каждая строка таблицы содержит прямую ссылку на сведения о запуске для дальнейшего изучения.

@@ -1,63 +1,63 @@
-The Snowflake user or service account that <Constant name="fusion_engine" /> connects as must be able to run dbt workloads (queries, metadata, and typical materializations). Grant privileges through a Snowflake role assigned to that user.
+Пользователь или служебная учётная запись Snowflake, от имени которых подключается <Constant name="fusion_engine" />, должны иметь возможность выполнять рабочие нагрузки dbt (запросы, операции с метаданными и стандартные материализации). Предоставьте привилегии через роль Snowflake, назначенную этому пользователю.
 
-### Required Snowflake objects
+### Необходимые объекты Snowflake {#required-snowflake-objects}
 
-Before connecting, these objects must exist:
+Перед подключением должны существовать следующие объекты:
 
-| Object | Purpose |
+| Объект | Назначение |
 | --- | --- |
-| **Account** | Your Snowflake account identifier |
-| **User** | Service account or user for <Constant name="fusion" /> |
-| **Role** | Role assigned to the user with required privileges |
-| **Warehouse** | Virtual warehouse for compute |
-| **Database** | Target database or databases for dbt models |
-| **Schema** | Target schema or schemas within the database |
+| **Аккаунт** | Идентификатор вашего аккаунта Snowflake |
+| **Пользователь** | Служебная учётная запись или пользователь для <Constant name="fusion" /> |
+| **Роль** | Роль с необходимыми привилегиями, назначенная пользователю |
+| **Виртуальный склад** | Виртуальный склад для выполнения вычислений |
+| **База данных** | Целевая база данных или базы данных для моделей dbt |
+| **Схема** | Целевая схема или схемы в базе данных |
 
-### Core operations 
+### Основные операции {#core-operations}
 
-The following are required permissions for fundamental dbt operations:
+Для основных операций dbt необходимы следующие разрешения:
 
-| Permission | Object | Purpose |
+| Разрешение | Объект | Назначение |
 | --- | --- | --- |
-| `USAGE` | Warehouse | Execute queries |
-| `USAGE` | Database | Access the database |
-| `USAGE` | Schema | Access schemas |
-| `SELECT` | Tables or views | Read existing data and sources |
-| `CREATE TABLE` | Schema | Create models materialized as tables |
-| `CREATE VIEW` | Schema | Create models materialized as views |
-| `INSERT` | Tables | Load data into tables |
-| `UPDATE` | Tables | Incremental model updates |
-| `DELETE` | Tables | Incremental models using delete and insert |
-| `TRUNCATE` | Tables | Full refresh of incremental models |
-| `DROP` | Tables or views | Replace existing objects |
+| `USAGE` | Виртуальный склад | Выполнение запросов |
+| `USAGE` | База данных | Доступ к базе данных |
+| `USAGE` | Схема | Доступ к схемам |
+| `SELECT` | Таблицы или представления | Чтение существующих данных и источников |
+| `CREATE TABLE` | Схема | Создание моделей, материализованных в виде таблиц |
+| `CREATE VIEW` | Схема | Создание моделей, материализованных в виде представлений |
+| `INSERT` | Таблицы | Загрузка данных в таблицы |
+| `UPDATE` | Таблицы | Обновление инкрементальных моделей |
+| `DELETE` | Таблицы | Инкрементальные модели с удалением и вставкой данных |
+| `TRUNCATE` | Таблицы | Полное обновление инкрементальных моделей |
+| `DROP` | Таблицы или представления | Замена существующих объектов |
 
-### Metadata operations
+### Операции с метаданными {#metadata-operations}
 
-The following are required permissions for dbt metadata operations:
+Для операций dbt с метаданными необходимы следующие разрешения:
 
-| Permission | Object | Purpose |
+| Разрешение | Объект | Назначение |
 | --- | --- | --- |
-| `USAGE` | INFORMATION_SCHEMA | Query table and column metadata |
-| `DESCRIBE TABLE` | Tables | Get schema information |
-| `SHOW OBJECTS` | Schema | List relations in schema |
-| `SHOW USER FUNCTIONS` | Schema | Discover UDFs (if used) |
+| `USAGE` | INFORMATION_SCHEMA | Запрос метаданных таблиц и столбцов |
+| `DESCRIBE TABLE` | Таблицы | Получение информации о структуре таблиц |
+| `SHOW OBJECTS` | Схема | Получение списка отношений в схеме |
+| `SHOW USER FUNCTIONS` | Схема | Обнаружение UDF (если используются) |
 
-### Schema and database management
+### Управление схемами и базами данных {#schema-and-database-management}
 
-The following are conditional permissions for schema and database management:
+Следующие разрешения для управления схемами и базами данных необходимы при определённых условиях:
 
-| Permission | Object | When required |
+| Разрешение | Объект | Когда требуется |
 | --- | --- | --- |
-| `CREATE SCHEMA` | Database | <Constant name="dbt" /> should auto-create schemas |
-| `CREATE DATABASE` | Account | <Constant name="dbt" /> should auto-create databases |
+| `CREATE SCHEMA` | База данных | Если <Constant name="dbt" /> должен автоматически создавать схемы |
+| `CREATE DATABASE` | Аккаунт | Если <Constant name="dbt" /> должен автоматически создавать базы данных |
 
-### Advanced features
+### Расширенные возможности {#advanced-features}
 
-The following are optional permissions for advanced features:
+Для расширенных возможностей доступны следующие необязательные разрешения:
 
-| Permission | Object | Feature |
+| Разрешение | Объект | Возможность |
 | --- | --- | --- |
-| `CREATE STAGE` | Schema | File staging for seeds or snapshots |
-| `CREATE FILE FORMAT` | Schema | Custom file formats |
-| `CREATE SEQUENCE` | Schema | Sequences |
-| `EXECUTE TASK` | Schema | Snowflake tasks |
+| `CREATE STAGE` | Схема | Промежуточное размещение файлов для seeds или снимков |
+| `CREATE FILE FORMAT` | Схема | Пользовательские форматы файлов |
+| `CREATE SEQUENCE` | Схема | Последовательности |
+| `EXECUTE TASK` | Схема | Задачи Snowflake |

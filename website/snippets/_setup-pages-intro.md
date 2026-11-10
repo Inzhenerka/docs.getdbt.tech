@@ -15,7 +15,7 @@
 
 {!props.children && (
   <>
-    Use `pip` to install the adapter. Use the following command for installation:
+    Установите адаптер с помощью `pip`:
   </>
 )}
 

@@ -1,3 +1,3 @@
-The free two-week trial is only available to new accounts at signup &mdash; but if you're already on the Developer plan, you can upgrade to Starter and immediately access all Starter features without needing to go through the trial.
+Бесплатный двухнедельный пробный период доступен только для новых аккаунтов при регистрации &mdash; но если вы уже используете тарифный план Developer, вы можете перейти на Starter и сразу получить доступ ко всем возможностям Starter без пробного периода.
 
-When you upgrade from Developer to Starter, you move directly to paid billing &mdash; you'll enter your payment information and select your developer license seats to complete the upgrade. Your existing projects and settings carry over.
+При переходе с Developer на Starter вы сразу начинаете пользоваться платным тарифом &mdash; для завершения перехода вам потребуется указать платёжные данные и выбрать количество лицензий разработчика. Ваши существующие проекты и настройки сохранятся.

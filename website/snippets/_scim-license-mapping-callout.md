@@ -1,14 +1,14 @@
-:::info License mapping with SCIM
+:::info Сопоставление лицензий с помощью SCIM
 
-<Constant name="dbt_platform"/> supports automatic license assignment with SCIM, with these different identity provider options:
+<Constant name="dbt_platform"/> поддерживает автоматическое назначение лицензий с помощью SCIM со следующими вариантами для разных поставщиков удостоверений:
 
 
-<Expandable alt_header="Toggle options per identity provider">
+<Expandable alt_header="Показать варианты для каждого поставщика удостоверений">
 
-- **Okta:** Enable the **Ignore dbt license mapping** toggle in **Account settings > SSO & SCIM** and follow the [Okta license management doc](/docs/platform/manage-access/scim-manage-user-licenses).
-- **Entra ID:** Use [SSO-based Active Directory group → license mapping](/docs/platform/manage-access/seats-and-users#mapped-configuration-). It works alongside an active Entra ID SCIM setup. Keep the **Ignore dbt license mapping** toggle _disabled_ as enabling it removes license mapping for Entra ID users. SCIM license mapping with [custom attributes](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-overview) may be possible depending on your Entra ID configuration, but it's not a supported setup &mdash; **do it at your own risk**.
+- **Okta:** Включите переключатель **Ignore dbt license mapping** в разделе **Account settings > SSO & SCIM** и следуйте [документации по управлению лицензиями через Okta](/docs/platform/manage-access/scim-manage-user-licenses).
+- **Entra ID:** Используйте [сопоставление групп Active Directory с лицензиями на основе SSO](/docs/platform/manage-access/seats-and-users#mapped-configuration). Оно работает совместно с активной конфигурацией SCIM для Entra ID. Оставьте переключатель **Ignore dbt license mapping** _выключенным_, поскольку его включение удаляет сопоставление лицензий для пользователей Entra ID. Сопоставление лицензий через SCIM с использованием [пользовательских атрибутов](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-overview) может быть возможно в зависимости от вашей конфигурации Entra ID, но такая настройка не поддерживается &mdash; **используйте её на свой страх и риск**.
 
 </Expandable>
 
-For more details, refer to the [Does SCIM support automatic license assignment?](/docs/platform/manage-access/scim-faq#does-scim-support-automatic-license-assignment) FAQ.
+Дополнительные сведения см. в ответе на вопрос [Поддерживает ли SCIM автоматическое назначение лицензий?](/docs/platform/manage-access/scim-faq#does-scim-support-automatic-license-assignment) в разделе часто задаваемых вопросов.
 :::

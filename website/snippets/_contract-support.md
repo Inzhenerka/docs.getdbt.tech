@@ -1,18 +1,18 @@
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-**These places support model contracts:**
-- `dbt_project.yml` file
-- `properties.yml` file
-- SQL models
-- Models materialized as one of the following:
+**Контракты моделей поддерживаются в следующих файлах и моделях, а также на следующих платформах:**
+- Файл `dbt_project.yml`
+- Файл `properties.yml`
+- SQL-модели
+- Модели с одной из следующих материализаций:
     - `table`
-    - `view` &mdash; views offer support for column names and data types, but not `constraints`
-    - `incremental` &mdash; with `on_schema_change: append_new_columns` or `on_schema_change: fail`
-- Certain data platforms, but the supported and [enforced `constraints`](/reference/resource-properties/constraints) vary by platform
+    - `view` &mdash; представления поддерживают имена столбцов и типы данных, но не `constraints`
+    - `incremental` &mdash; с `on_schema_change: append_new_columns` или `on_schema_change: fail`
+- Некоторые платформы данных, однако поддерживаемые и [принудительно применяемые `constraints`](/reference/resource-properties/constraints) различаются в зависимости от платформы
 
-**These places do _NOT_ support model contracts:**
-- Python models
-- `materialized view` or `ephemeral` &mdash; materialized SQL models
-- Custom materializations (unless added by the author)
-- Models with recursive <Term id="cte" />'s in BigQuery
-- Other resource types, such as `sources`, `seeds`, `snapshots`, and so on
+**Контракты моделей _НЕ_ поддерживаются в следующих случаях:**
+- Python-модели
+- SQL-модели с материализацией `materialized view` или `ephemeral`
+- Пользовательские материализации (если их автор не добавил поддержку)
+- Модели с рекурсивными <Term id="cte" /> в BigQuery
+- Другие типы ресурсов, такие как `sources`, `seeds`, `snapshots` и так далее
