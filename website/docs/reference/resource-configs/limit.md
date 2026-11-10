@@ -1,5 +1,5 @@
 ---
-description: "Limit the number of failing records returned by a data test query, which is useful when storing failures for large datasets."
+description: "Ограничьте число записей с ошибками, которые возвращает запрос теста данных. Это удобно при сохранении ошибок на больших наборах данных."
 resource_types: [tests]
 datatype: integer
 ---

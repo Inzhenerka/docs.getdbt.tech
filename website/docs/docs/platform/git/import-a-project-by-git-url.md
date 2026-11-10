@@ -1,34 +1,34 @@
 ---
-title: "Connect with Git clone"
-description: "Learn how to connect to a git repository using a git URL."
+title: "Подключение с помощью Git clone"
+description: "Узнайте, как подключиться к репозиторию git с помощью git URL."
 availability:
   surface: platform
   access: login_required
 ---
 
-In <Constant name="dbt" />, you can import a git repository from any valid git URL that points to a dbt project. There are some important considerations to keep in mind when doing this.
+В <Constant name="dbt" /> можно импортировать репозиторий git по любому корректному git URL, который указывает на проект dbt. При этом следует учитывать несколько важных моментов.
 
-## Git protocols
+## Протоколы Git
 
-Use an SSH clone URL for your repo. dbt supports both common SSH formats:
+Используйте SSH URL для клонирования репозитория. dbt поддерживает оба распространённых формата SSH:
 
 - `git@github.com:organization/repo-name.git`
 - `ssh://git@github.com/organization/repo-name.git`
 
-Don't use `https://...` or other HTTP URLs. dbt clones repos over SSH and can't clone repos that use the HTTP protocol.
+Не используйте `https://...` и другие HTTP URL. dbt клонирует репозитории по SSH и не может клонировать репозитории, использующие протокол HTTP.
 
-### Converting SSH URLs to ssh://
+### Преобразование SSH URL в ssh:// {#converting-ssh-urls-to-ssh}
 
-Git providers often show SSH clone URLs in SCP-style format, with a colon between the host and repo path (usually found under **Code** -> **Clone** -> **SSH**).
+Git-провайдеры часто показывают SSH URL для клонирования в формате SCP — с двоеточием между хостом и путём к репозиторию (обычно в разделе **Code** -> **Clone** -> **SSH**).
 
-Example of SCP-style with a colon:
+Пример формата SCP с двоеточием:
 
 ```
 git@github.com:organization/repo-name.git
 user@custom-host.example.com:organization/repo-name.git
 ```
 
-If you prefer a `ssh://` URL instead, you can rewrite it as follows. The equivalent ssh:// format uses a slash after the host:
+Если вы предпочитаете URL вида `ssh://`, его можно преобразовать следующим образом. В эквивалентном формате ssh:// после хоста используется косая черта:
 
 ```
 ssh://git@github.com/organization/repo-name.git
@@ -39,161 +39,161 @@ import GitProvidersCI from '/snippets/_git-providers-supporting-ci.md';
 
 <GitProvidersCI />
 
-## Managing deploy keys
+## Управление ключами развёртывания
 
-After importing a project by <Constant name="git" /> URL, <Constant name="dbt" /> will generate a Deploy Key for your repository. To find the deploy key in <Constant name="dbt" />:
+После импорта проекта по URL <Constant name="git" /> платформа <Constant name="dbt" /> создаст ключ развёртывания (Deploy Key) для вашего репозитория. Чтобы найти ключ развёртывания в <Constant name="dbt" />:
 
-1. From <Constant name="dbt" />, click on your account name in the left side menu and select **Account settings**.
-2. Go to **Projects** and select a project.
-3. Click the **Repository** link to the repository details page.
-4. Copy the key under the **Deploy Key** section.
+1. В <Constant name="dbt" /> нажмите на название своей учётной записи в левом боковом меню и выберите **Account settings**.
+2. Перейдите в раздел **Projects** и выберите проект.
+3. Нажмите ссылку **Repository**, чтобы открыть страницу сведений о репозитории.
+4. Скопируйте ключ из раздела **Deploy Key**.
 
-You must provide this Deploy Key in the Repository configuration of your <Constant name="git" /> host. Configure this Deploy Key to allow _read and write access_ to the specified repositories.
+Этот ключ развёртывания необходимо добавить в настройки репозитория у вашего <Constant name="git" />-провайдера. Настройте для этого ключа _доступ на чтение и запись_ к указанным репозиториям.
 
-**Note**: Each <Constant name="dbt" /> project will generate a different deploy key when connected to a repo, even if two projects are connected to the same repo. You will need to supply both deploy keys to your <Constant name="git" /> provider.
+**Примечание**: Для каждого проекта <Constant name="dbt" /> при подключении к репозиторию создаётся отдельный ключ развёртывания, даже если два проекта подключены к одному репозиторию. Вам потребуется добавить оба ключа развёртывания у вашего <Constant name="git" />-провайдера.
 
-## Troubleshooting clone errors
-If <Constant name="dbt" /> can't clone your repository after you connect it using a git URL, the issue is usually one of the following:
+## Устранение ошибок клонирования {#troubleshooting-clone-errors}
+Если <Constant name="dbt" /> не может клонировать репозиторий после его подключения по git URL, обычно причина в одном из следующих обстоятельств:
 
-- **The URL is invalid**: Confirm the repo path is correct, the repo exists, and you are using an SSH clone URL (`git@...` or `ssh://...`). Do not use `https://...` or other HTTP URLs.
-- **Your git provider is unavailable**: Check your provider's status page (for example, GitHub, GitLab, Bitbucket, Azure DevOps) and retry after service is restored.
-- **SSH access isn't configured correctly**: Make sure the deploy key generated by <Constant name="dbt" /> is added to your repository with the required access (including write access where applicable). If your organization restricts SSH keys, coordinate with your admins to allow deploy keys for the repository.
+- **Некорректный URL**: Убедитесь, что путь к репозиторию указан верно, репозиторий существует и вы используете SSH URL для клонирования (`git@...` или `ssh://...`). Не используйте `https://...` и другие HTTP URL.
+- **Ваш git-провайдер недоступен**: Проверьте страницу состояния вашего провайдера (например, GitHub, GitLab, Bitbucket, Azure DevOps) и повторите попытку после восстановления работы сервиса.
+- **Неверно настроен доступ по SSH**: Убедитесь, что ключ развёртывания, созданный <Constant name="dbt" />, добавлен в репозиторий с необходимыми правами доступа (включая доступ на запись, если он требуется). Если ваша организация ограничивает использование SSH-ключей, согласуйте с администраторами разрешение на использование ключей развёртывания для репозитория.
 
-If you still can't connect, [contact dbt Support](mailto:support@getdbt.com) and include the repository URL you're using and the time the error occurred.
+Если подключиться по-прежнему не удаётся, [обратитесь в службу поддержки dbt](mailto:support@getdbt.com) и укажите URL репозитория, который вы используете, а также время возникновения ошибки.
 
 ## GitHub
 
-:::info Use GitHub?
+:::info Используете GitHub?
 
-If you use GitHub, you can import your repo directly using [<Constant name="dbt" />'s GitHub Application](/docs/platform/git/connect-github). Connecting your repo via the GitHub Application [enables Continuous Integration](/docs/deploy/continuous-integration).
+Если вы используете GitHub, можно импортировать репозиторий напрямую с помощью [приложения GitHub для <Constant name="dbt" />](/docs/platform/git/connect-github). Подключение репозитория через приложение GitHub [позволяет использовать непрерывную интеграцию](/docs/deploy/continuous-integration).
 
 :::
 
-### Locate your SSH URL
+### Найдите свой SSH URL
 
-1. Navigate to your repository on GitHub.
-2. Click the **Code** button.
-3. Select the **SSH** tab to view the SSH clone URL.
-4. Copy the URL from the **SSH** tab. SCP-style (`git@...`) and `ssh://...` URLs are both supported. If you want the `ssh://` form, refer to [Converting SSH URLs to ssh://](#converting-ssh-urls-to-ssh).
+1. Перейдите в свой репозиторий на GitHub.
+2. Нажмите кнопку **Code**.
+3. Выберите вкладку **SSH**, чтобы увидеть SSH URL для клонирования.
+4. Скопируйте URL со вкладки **SSH**. Поддерживаются URL как в формате SCP (`git@...`), так и в формате `ssh://...`. Если вам нужен формат `ssh://`, см. раздел [Преобразование SSH URL в ssh://](#converting-ssh-urls-to-ssh).
 
-### Add a deploy key
+### Добавьте ключ развёртывания
 
-To add a deploy key to a GitHub account, navigate to the Deploy keys tab of the settings page in your GitHub repository.
-- After supplying a name for the deploy key and pasting in your deploy key (generated by <Constant name="dbt" />), be sure to check the **Allow write access** checkbox.
-- After adding this key, <Constant name="dbt" /> will be able to read and write files in your dbt project.
-- Refer to [Adding a deploy key in GitHub](https://github.blog/2015-06-16-read-only-deploy-keys/)
+Чтобы добавить ключ развёртывания в учётную запись GitHub, перейдите на вкладку Deploy keys на странице настроек вашего репозитория GitHub.
+- Укажите имя ключа развёртывания и вставьте ключ, созданный <Constant name="dbt" />, затем обязательно установите флажок **Allow write access**.
+- После добавления этого ключа <Constant name="dbt" /> сможет читать и записывать файлы в вашем проекте dbt.
+- См. [Добавление ключа развёртывания в GitHub](https://github.blog/2015-06-16-read-only-deploy-keys/)
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/cd7351c-Screen_Shot_2019-10-16_at_1.09.41_PM.png" title="Configuring a GitHub Deploy Key"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/cd7351c-Screen_Shot_2019-10-16_at_1.09.41_PM.png" title="Настройка ключа развёртывания GitHub"/>
 
 ## GitLab
 
-:::info Use GitLab?
+:::info Используете GitLab?
 
-If you use GitLab, you can import your repo directly using [<Constant name="dbt" />'s GitLab Application](/docs/platform/git/connect-gitlab). Connecting your repo via the GitLab Application [enables Continuous Integration](/docs/deploy/continuous-integration).
+Если вы используете GitLab, можно импортировать репозиторий напрямую с помощью [приложения GitLab для <Constant name="dbt" />](/docs/platform/git/connect-gitlab). Подключение репозитория через приложение GitLab [позволяет использовать непрерывную интеграцию](/docs/deploy/continuous-integration).
 
 :::
 
-- To add a deploy key to a GitLab account, navigate to the [SSH keys](https://gitlab.com/profile/keys) tab in the User Settings page of your GitLab account.
-- Next, paste in the deploy key generated by <Constant name="dbt" /> for your repository.
-- After saving this SSH key, <Constant name="dbt" /> will be able to read and write files in your GitLab repository.
-- Refer to [Adding a read only deploy key in GitLab](https://docs.gitlab.com/ee/user/project/deploy_keys/)
+- Чтобы добавить ключ развёртывания в учётную запись GitLab, перейдите на вкладку [SSH keys](https://gitlab.com/profile/keys) на странице User Settings вашей учётной записи GitLab.
+- Затем вставьте ключ развёртывания, созданный <Constant name="dbt" /> для вашего репозитория.
+- После сохранения этого SSH-ключа <Constant name="dbt" /> сможет читать и записывать файлы в вашем репозитории GitLab.
+- См. [Добавление ключа развёртывания только для чтения в GitLab](https://docs.gitlab.com/ee/user/project/deploy_keys/)
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/f3ea88d-Screen_Shot_2019-10-16_at_4.45.50_PM.png" title="Configuring a GitLab SSH Key"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/f3ea88d-Screen_Shot_2019-10-16_at_4.45.50_PM.png" title="Настройка SSH-ключа GitLab"/>
 
 ## BitBucket
 
-Use a deploy key to import your BitBucket repository into <Constant name="dbt" />. To preserve account security, use a service account to add the BitBucket deploy key and maintain the connection between your BitBucket repository and <Constant name="dbt" />.
+Используйте ключ развёртывания для импорта репозитория BitBucket в <Constant name="dbt" />. Для обеспечения безопасности учётной записи используйте служебную учётную запись, чтобы добавить ключ развёртывания BitBucket и поддерживать соединение между вашим репозиторием BitBucket и <Constant name="dbt" />.
 
-BitBucket links every repository commit and other <Constant name="git" /> actions (such as opening a pull request) to the email associated with the user's BitBucket account.
+BitBucket связывает каждый коммит в репозитории и другие действия <Constant name="git" /> (например, создание пул-реквеста) с адресом электронной почты, указанным в учётной записи пользователя BitBucket.
 
-To add a deploy key to a BitBucket account:
+Чтобы добавить ключ развёртывания в учётную запись BitBucket:
 
-- Navigate to **SSH keys** tab in the Personal Settings page of your BitBucket account.
-- Next, click the **Add key** button and paste in the deploy key generated by <Constant name="dbt" /> for your repository.
-- After saving this SSH key, <Constant name="dbt" /> will be able to read and write files in your BitBucket repository.
+- Перейдите на вкладку **SSH keys** на странице Personal Settings вашей учётной записи BitBucket.
+- Затем нажмите кнопку **Add key** и вставьте ключ развёртывания, созданный <Constant name="dbt" /> для вашего репозитория.
+- После сохранения этого SSH-ключа <Constant name="dbt" /> сможет читать и записывать файлы в вашем репозитории BitBucket.
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/bitbucket-ssh-key.png" title="Configuring a BitBucket SSH Key"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/bitbucket-ssh-key.png" title="Настройка SSH-ключа BitBucket"/>
 
 ## AWS CodeCommit
 
-<Constant name="dbt" /> can work with dbt projects hosted on AWS CodeCommit, but there are some extra steps needed compared to GitHub or other git providers. This guide will help you connect your CodeCommit-hosted dbt project to <Constant name="dbt" />.
+<Constant name="dbt" /> может работать с проектами dbt, размещёнными в AWS CodeCommit, но по сравнению с GitHub или другими git-провайдерами потребуется выполнить несколько дополнительных шагов. Это руководство поможет подключить ваш проект dbt, размещённый в CodeCommit, к <Constant name="dbt" />.
 
-#### Step 1: Create an AWS User for dbt
-- To give <Constant name="dbt" /> access to your repository, first you'll need to create an AWS IAM user for <Constant name="dbt" />.
-- Log into the AWS Console and navigate to the IAM section.
-- Click **Add User**, and create a new user by entering a unique and meaningful user name.
-- The user will need clone access to your repository. You can do this by adding the **AWSCodeCommitPowerUser** permission during setup.
+#### Шаг 1: Создайте пользователя AWS для dbt
+- Чтобы предоставить <Constant name="dbt" /> доступ к вашему репозиторию, сначала необходимо создать пользователя AWS IAM для <Constant name="dbt" />.
+- Войдите в консоль AWS и перейдите в раздел IAM.
+- Нажмите **Add User** и создайте нового пользователя, указав уникальное и понятное имя.
+- Пользователю потребуется право клонировать ваш репозиторий. Для этого во время настройки можно добавить разрешение **AWSCodeCommitPowerUser**.
 
-#### Step 2: Import your repository by name
-- Open the AWS CodeCommit console and choose your repository.
-- Copy the SSH URL from that page.
-- Next, navigate to the **New Repository** page in <Constant name="dbt" />.
-- Choose the **<Constant name="git" /> Clone** tab, and paste in the SSH URL you copied from the console.
-- In the newly created Repository details page, you'll see a **Deploy Key** field.
-- Copy the contents of this field as you'll need it for [Step 3](#step-3-grant-dbt-aws-user-access).
+#### Шаг 2: Импортируйте репозиторий по имени
+- Откройте консоль AWS CodeCommit и выберите свой репозиторий.
+- Скопируйте SSH URL с этой страницы.
+- Затем перейдите на страницу **New Repository** в <Constant name="dbt" />.
+- Выберите вкладку **<Constant name="git" /> Clone** и вставьте SSH URL, скопированный из консоли.
+- На открывшейся странице сведений о созданном репозитории вы увидите поле **Deploy Key**.
+- Скопируйте содержимое этого поля: оно понадобится на [шаге 3](#step-3-grant-dbt-cloud-aws-user-access).
 
-**Note:** The <Constant name="dbt" />-generated public key is the only key that will work in the next step. Any other key that has been generated outside of <Constant name="dbt" /> will not work.
+**Примечание:** На следующем шаге можно использовать только открытый ключ, созданный <Constant name="dbt" />. Любой другой ключ, созданный вне <Constant name="dbt" />, не подойдёт.
 
-#### Step 3: Grant dbt AWS User access
-- Open up the newly created <Constant name="dbt" /> user in the AWS IAM Console.
-- Choose the **Security Credentials** tab and then click **Upload SSH public key**.
-- Paste in the contents of the **Public Key** field from the <Constant name="dbt" /> Repository page.
-- Once you've created the key, you'll see an **SSH key ID** for it.
-- **[Contact dbt Support](mailto:support@getdbt.com)** and share that field so that dbt Support team can complete the setup process for you.
+#### Шаг 3: Предоставьте доступ пользователю AWS для dbt {#step-3-grant-dbt-cloud-aws-user-access}
+- Откройте только что созданного пользователя <Constant name="dbt" /> в консоли AWS IAM.
+- Выберите вкладку **Security Credentials**, затем нажмите **Upload SSH public key**.
+- Вставьте содержимое поля **Public Key** со страницы Repository в <Constant name="dbt" />.
+- После создания ключа вы увидите его **SSH key ID**.
+- **[Обратитесь в службу поддержки dbt](mailto:support@getdbt.com)** и передайте значение этого поля, чтобы специалисты службы поддержки dbt могли завершить настройку.
 
-#### Step 4: Specify a custom branch in dbt
+#### Шаг 4: Укажите пользовательскую ветку в dbt
 
-CodeCommit uses `master` as its default branch, and to initialize your project, you'll need to specify the `master` branch as a [custom branch](/faqs/Environments/custom-branch-settings#development) in <Constant name="dbt" />.
+CodeCommit использует `master` в качестве ветки по умолчанию. Для инициализации проекта необходимо указать ветку `master` как [пользовательскую ветку](/faqs/Environments/custom-branch-settings#development) в <Constant name="dbt" />.
 
-- Go to **Deploy** -> **Environments** -> **Development**.
-- Select **Settings** -> **Edit** and under **General Settings**, check the **Default to a custom branch** checkbox.
-- Specify the custom branch as `master` and click **Save**.
+- Перейдите в **Deploy** -> **Environments** -> **Development**.
+- Выберите **Settings** -> **Edit** и в разделе **General Settings** установите флажок **Default to a custom branch**.
+- Укажите `master` в качестве пользовательской ветки и нажмите **Save**.
 
-#### Step 5: Configure pull request template URLs (Optional)
+#### Шаг 5: Настройте URL шаблона пул-реквеста (необязательно) {#step-5-configure-pull-request-template-urls-optional}
 
-To prevent users from directly merging code changes into the default branch, configure the [PR Template URL](/docs/platform/git/pr-template) in the **Repository details** page for your project. Once configured, <Constant name="dbt" /> will prompt users to open a new PR after committing and syncing code changes on the branch in the <Constant name="studio_ide" />, before merging any changes into the default branch.
+Чтобы пользователи не могли напрямую сливать изменения кода в ветку по умолчанию, настройте [PR Template URL](/docs/platform/git/pr-template) на странице **Repository details** вашего проекта. После настройки <Constant name="dbt" /> будет предлагать пользователям открыть новый пул-реквест после коммита и синхронизации изменений кода в ветке в <Constant name="studio_ide" />, прежде чем сливать какие-либо изменения в ветку по умолчанию.
 
-- Go to **Account Settings** -> **Projects** -> Select the project.
-- Click the repository link under **Repository**.
-- In the **Repository details** page, click **Edit** in the lower right.
-  <Lightbox src="/img/docs/collaborate/repo-details.jpg" width="80%" title="Configure PR template in the 'Repository details' page." />
-- In the **Pull request URL** field, set the URL based on the suggested [PR template format](/docs/platform/git/pr-template#aws-codecommit).
-- Replace `<repo>` with the name of your repository (Note that it is case sensitive). In the following example, the repository name is `New_Repo`.
-  <Lightbox src="/img/docs/collaborate/pr-template-example.jpg" width="60%" title="In the Pull request URL field example, the repository name is 'New_Repo'." />
-- After filling the **Pull request URL** field, click **Save**.
+- Перейдите в **Account Settings** -> **Projects** -> выберите проект.
+- Нажмите ссылку на репозиторий в разделе **Repository**.
+- На странице **Repository details** нажмите **Edit** в правом нижнем углу.
+  <Lightbox src="/img/docs/collaborate/repo-details.jpg" width="80%" title="Настройка шаблона пул-реквеста на странице 'Repository details'." />
+- В поле **Pull request URL** укажите URL в соответствии с предложенным [форматом шаблона пул-реквеста](/docs/platform/git/pr-template#aws-codecommit).
+- Замените `<repo>` именем вашего репозитория (обратите внимание, что регистр имеет значение). В следующем примере репозиторий называется `New_Repo`.
+  <Lightbox src="/img/docs/collaborate/pr-template-example.jpg" width="60%" title="В примере поля Pull request URL имя репозитория — 'New_Repo'." />
+- Заполнив поле **Pull request URL**, нажмите **Save**.
 
-🎉 **You're all set!** Once dbt Support handles your request and you've set your custom branch, your project is ready to execute dbt runs on <Constant name="dbt" />.
+🎉 **Всё готово!** Когда служба поддержки dbt обработает ваш запрос и вы зададите пользовательскую ветку, ваш проект будет готов к выполнению запусков dbt в <Constant name="dbt" />.
 
 ## Azure DevOps
-:::info Use Azure DevOps?
+:::info Используете Azure DevOps?
 
-If you use Azure DevOps and you are on the <Constant name="dbt" /> Enterprise or Enterprise+ plan, you can import your repo directly using [<Constant name="dbt" />'s Azure DevOps Integration](/docs/platform/git/connect-azure-devops). Connecting your repo via the Azure DevOps Application [enables Continuous Integration](/docs/deploy/continuous-integration).
+Если вы используете Azure DevOps и тариф <Constant name="dbt" /> Enterprise или Enterprise+, можно импортировать репозиторий напрямую с помощью [интеграции Azure DevOps для <Constant name="dbt" />](/docs/platform/git/connect-azure-devops). Подключение репозитория через приложение Azure DevOps [позволяет использовать непрерывную интеграцию](/docs/deploy/continuous-integration).
 
 :::
 
-1. To add a deploy key to an Azure DevOps account, navigate to the **SSH public keys** page in the User Settings of your user's Azure DevOps account or a service user's account.
+1. Чтобы добавить ключ развёртывания в учётную запись Azure DevOps, перейдите на страницу **SSH public keys** в разделе User Settings вашей пользовательской или служебной учётной записи Azure DevOps.
 
-2. We recommend using a dedicated service user for the integration to ensure that <Constant name="dbt" />'s connection to Azure DevOps is not interrupted by changes to user permissions.
+2. Рекомендуем использовать для интеграции отдельную служебную учётную запись, чтобы изменения прав пользователей не прерывали соединение <Constant name="dbt" /> с Azure DevOps.
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/52bfdaa-Screen_Shot_2020-03-09_at_4.13.20_PM.png" title="Navigate to the 'SSH public keys' settings page" />
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/52bfdaa-Screen_Shot_2020-03-09_at_4.13.20_PM.png" title="Перейдите на страницу настроек 'SSH public keys'" />
 
-3. Next, click the **+ New Key** button to create a new SSH key for the repository.
+3. Затем нажмите кнопку **+ New Key**, чтобы создать новый SSH-ключ для репозитория.
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/6d8e980-Screen_Shot_2020-03-09_at_4.13.27_PM.png" title="Click the '+ New Key' button to create a new SSH key for the repository." />
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/6d8e980-Screen_Shot_2020-03-09_at_4.13.27_PM.png" title="Нажмите кнопку '+ New Key', чтобы создать новый SSH-ключ для репозитория." />
 
-4. Select a descriptive name for the key and then paste in the deploy key generated by <Constant name="dbt" /> for your repository.
+4. Выберите понятное имя для ключа, затем вставьте ключ развёртывания, созданный <Constant name="dbt" /> для вашего репозитория.
 
-5. After saving this SSH key, <Constant name="dbt" /> will be able to read and write files in your Azure DevOps repository.
+5. После сохранения этого SSH-ключа <Constant name="dbt" /> сможет читать и записывать файлы в вашем репозитории Azure DevOps.
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/d19f199-Screen_Shot_2020-03-09_at_4.13.50_PM.png" title="Enter and save the public key generated for your repository by dbt" />
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/d19f199-Screen_Shot_2020-03-09_at_4.13.50_PM.png" title="Введите и сохраните открытый ключ, созданный dbt для вашего репозитория" />
 
-## Other git providers
+## Другие git-провайдеры
 
-Don't see your git provider here? Please [contact dbt Support](mailto:support@getdbt.com). We're happy to help you set up <Constant name="dbt" /> with any supported git provider.
+Не нашли здесь своего git-провайдера? [Обратитесь в службу поддержки dbt](mailto:support@getdbt.com). Мы будем рады помочь вам настроить <Constant name="dbt" /> для работы с любым поддерживаемым git-провайдером.
 
-## Limited integration
-Some features of <Constant name="dbt" /> require a tight integration with your git host, for example, updating GitHub pull requests with <Constant name="dbt" /> run statuses. Importing your project by a URL prevents you from using these features. Once you give <Constant name="dbt" /> access to your repository, you can continue to set up your project by adding a connection and creating and running your first <Constant name="dbt" /> job.
+## Ограниченная интеграция {#limited-integration}
+Для некоторых функций <Constant name="dbt" /> требуется тесная интеграция с вашим git-хостингом, например для обновления пул-реквестов GitHub статусами запусков <Constant name="dbt" />. При импорте проекта по URL эти функции недоступны. После предоставления <Constant name="dbt" /> доступа к репозиторию можно продолжить настройку проекта: добавить подключение, создать и запустить своё первое задание <Constant name="dbt" />.
 
-## FAQs
+## Часто задаваемые вопросы
 <FAQ path="Git/gitignore"/>
 <FAQ path="Git/git-migration"/>

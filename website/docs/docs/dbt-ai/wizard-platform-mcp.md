@@ -1,29 +1,29 @@
 ---
-title: "Use MCP servers with dbt Wizard in dbt platform"
+title: "Использование MCP-серверов с dbt Wizard в dbt platform"
 id: "wizard-platform-mcp"
-description: "Understand MCP server support for dbt Wizard in dbt platform."
-sidebar_label: "Use MCP servers"
+description: "Узнайте о поддержке MCP-серверов для dbt Wizard в dbt platform."
+sidebar_label: "Использование MCP-серверов"
 tags: [AI, Wizard, MCP]
 pagination_prev: "docs/dbt-ai/wizard-platform-skills"
 pagination_next: "docs/dbt-ai/dbt-ai-faqs"
 availability: platform_usage
 ---
 
-# Use MCP servers with <Constant name="wizard" /> in <Constant name="dbt_platform" />
+# Использование MCP-серверов с <Constant name="wizard" /> в <Constant name="dbt_platform" />
 
 <IntroText>
-<Constant name="wizard" /> in <Constant name="dbt_platform" /> includes built-in dbt context. Custom MCP server connections are not yet supported in the platform experience.
+<Constant name="wizard" /> в <Constant name="dbt_platform" /> имеет встроенный доступ к контексту dbt. Подключение пользовательских MCP-серверов в платформе пока не поддерживается.
 </IntroText>
 
-In <Constant name="dbt_platform" />, <Constant name="wizard" /> can use dbt project context, dbt metadata, and built-in dbt documentation tooling without requiring you to configure an MCP server.  Refer to [Available MCP tools](/docs/dbt-ai/mcp-available-tools?version=2.0) for more info. 
+В <Constant name="dbt_platform" /> <Constant name="wizard" /> может использовать контекст проекта dbt, метаданные dbt и встроенные инструменты для работы с документацией dbt без необходимости настраивать MCP-сервер.  Подробнее см. в разделе [Доступные инструменты MCP](/docs/dbt-ai/mcp-available-tools?version=2.0). 
 
-Although custom MCP server connections aren't supported yet for <Constant name="wizard" /> in <Constant name="dbt_platform" />, you can use the [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp) if you need custom MCP servers for development workflows.
+Хотя подключение пользовательских MCP-серверов пока не поддерживается для <Constant name="wizard" /> в <Constant name="dbt_platform" />, вы можете использовать [CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-mcp), если вам нужны пользовательские MCP-серверы для рабочих процессов разработки.
 
-To discuss <Constant name="dbt_platform" /> MCP support, contact your dbt Labs account representative.
+Чтобы обсудить поддержку MCP в <Constant name="dbt_platform" />, свяжитесь с вашим представителем dbt Labs.
 
-## Related docs
+## Связанная документация
 
-- [<Constant name="wizard" /> in Studio IDE](/docs/dbt-ai/wizard-ide)
-- [<Constant name="wizard" /> home tab](/docs/platform/wizard-home)
-- [Use MCP servers with <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp)
-- [About dbt MCP server](/docs/dbt-ai/about-mcp)
+- [<Constant name="wizard" /> в Studio IDE](/docs/dbt-ai/wizard-ide)
+- [Главная вкладка <Constant name="wizard" />](/docs/platform/wizard-home)
+- [Использование MCP-серверов с CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-mcp)
+- [О MCP-сервере dbt](/docs/dbt-ai/about-mcp)

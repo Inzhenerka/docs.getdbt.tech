@@ -1,11 +1,11 @@
 ---
-title: What if I work on multiple projects that each use their own dbt State?
-description: "Learn how to configure dbt State when working across multiple projects."
-sidebar_label: 'What if I work on multiple projects that use their own State?'
+title: Что делать, если я работаю над несколькими проектами, каждый из которых использует собственный dbt State?
+description: "Узнайте, как настроить dbt State при работе с несколькими проектами."
+sidebar_label: 'Что делать, если я работаю над несколькими проектами, использующими собственный State?'
 id: multiple-projects
 ---
 
-You can specify your org ID in `dbt_project.yml`:
+Вы можете указать идентификатор своей организации в `dbt_project.yml`:
 
 ```yaml
 dbt-cloud:

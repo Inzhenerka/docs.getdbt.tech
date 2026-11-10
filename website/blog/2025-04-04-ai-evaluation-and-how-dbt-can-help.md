@@ -52,19 +52,19 @@ is_featured: true
 В качестве отправной точки мы используем тестовый датасет, который содержит входные данные для AI‑workflow, а также эталонное значение, заданное человеком. В нашем примере входными данными является текст отзыва о фильме, а поле `actual_sentiment` содержит значение -1 для негативных отзывов и 1 для позитивных.
 Также мы добавляем временную метку, указывающую, когда AI выдал свой ответ. Эта метка позволяет отслеживать точность AI с течением времени.
 
-<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_one.png" title="our input data set, including actual sentiment"width="85%" />
+<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_one.png" title="Исходные данные с эталонной оценкой тональности" width="85%" />
 
 Следующий шаг — создание выходной таблицы, содержащей как эталонное значение из датасета, так и значение, возвращённое AI.
 Поскольку вызов Snowflake Cortex можно напрямую встроить в SQL‑модель, мы легко реализуем это в dbt, используя простую reference‑функцию.
 
-<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_two.png" title="results of our agentic workflow"width="85%" />
+<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_two.png" title="Результаты работы ИИ-агента" width="85%" />
 
 Мы также включаем входные данные для AI‑workflow вместе со значениями, рассчитанными AI и определёнными человеком.
 Хотя включение всех этих данных не является строго обязательным, оно позволяет чётко понимать, что именно было подано на вход AI‑workflow, и обеспечивает удобную трассируемость конкретных ответов.
 Мы повторяем этот же паттерн, используя reference‑функцию dbt, чтобы создать ещё одну модель dbt, в которой формируем evaluation‑prompt и используем Cortex Complete для передачи этого prompt в Cortex с сохранением результатов.
 Основная часть работы при создании этой модели заключалась в prompt engineering для evaluation‑prompt. Изначально мы создавали prompt напрямую в Snowflake Cortex, чтобы убедиться, что он возвращает нужный тип ответа, прежде чем переносить его в dbt.
 
-<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_three.png" title="AI generated results automatically evaluated by one or more models"width="85%" />
+<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_three.png" title="Автоматическая оценка ответов ИИ одной или несколькими моделями" width="85%" />
 
 Мы решили определить prompt как Jinja‑переменную, а не прописывать его напрямую в каждой модели dbt.
 Это повышает читаемость модели, но при этом скрывает текст prompt от тех, кто просто читает модель.
@@ -73,7 +73,7 @@ is_featured: true
 Ещё одно важное преимущество этого подхода и гибкости dbt и Snowflake Cortex заключается в том, что вы можете легко переключать модель, используемую для оценки. В этом примере мы используем Snowflake Llama, но переход на любую другую [поддерживаемую модель](https://docs.snowflake.com/en/sql-reference/functions/complete-snowflake-cortex) сводится к изменению одного параметра функции.
 Вы также можете запускать несколько оценок с использованием разных моделей, просто добавив дополнительные колонки в модель dbt.
 
-<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_four.png" title="dbt Testing evaluates AI accuracry along side data quality"width="85%" />
+<Lightbox src="/img/blog/2025-04-04-ai-evaluation-and-how-dbt-can-help/ai_eval_blog_image_four.png" title="Тесты dbt проверяют точность ответов ИИ и качество данных" width="85%" />
 
 Финальный шаг — написание dbt [custom test](/best-practices/writing-custom-generic-tests), который находит ответы, не соответствующие заданному порогу точности. Создав такой dbt‑тест, мы можем гарантировать, что проблемы с точностью AI будут обнаружены и помечены в рамках стандартных запусков dbt и проверок качества.
 Мы также можем легко использовать возможность dbt [store test failures](/reference/resource-configs/store_failures), чтобы сохранять найденные проблемы качества в AI‑процессах для дальнейшего анализа и обработки.

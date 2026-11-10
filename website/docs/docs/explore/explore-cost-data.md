@@ -1,7 +1,7 @@
 ---
-title: "Explore cost data"
-sidebar_label: "Explore cost data"
-description: "View warehouse costs, optimization impact, and model performance data across your project dashboard, model pages, and job details." 
+title: "Изучение данных о затратах"
+sidebar_label: "Изучение данных о затратах"
+description: "Просматривайте затраты на хранилище данных, результаты оптимизации и данные о производительности моделей на панели проекта, страницах моделей и в сведениях о заданиях." 
 id: "explore-cost-data"
 tags: ['scheduler','SAO', 'cost savings', 'models built', 'cost insights']
 availability:
@@ -10,135 +10,135 @@ availability:
   minPlan: enterprise
 ---
 
-# Explore cost data
+# Изучение данных о затратах
 
 
-You can access Cost Insights in these different <Constant name="dbt_platform" /> areas:
+Доступ к Cost Insights можно получить в следующих разделах <Constant name="dbt_platform" />:
 
-- [Project dashboard](#project-dashboard)
-- [Catalog on Model page](#model-performance-in-catalog)
-- [Job details page](#job-details) 
+- [Панель проекта](#project-dashboard)
+- [Страница модели в Catalog](#model-performance-in-catalog)
+- [Страница сведений о задании](#job-details) 
 
-Each view provides different levels of detail to help you understand your warehouse spending and optimization impact. Cost and cost reduction estimates are based on historical runs and reflect actual usage, _not_ forecasts of future costs.
+Каждое представление предоставляет свой уровень детализации, помогая оценить расходы на хранилище данных и результаты оптимизации. Оценки затрат и их сокращения основаны на предыдущих запусках и отражают фактическое использование ресурсов, а _не_ прогноз будущих затрат.
 
-## Prerequisites
+## Предварительные требования
 
 import ViewCostData from '/snippets/_cost-insights-view.md';
 
 <ViewCostData />
 
-For more information, see [Set up Cost Insights](/docs/explore/set-up-cost-insights).
+Дополнительную информацию см. в разделе [Настройка Cost Insights](/docs/explore/set-up-cost-insights).
 
 import CostInsights from '/snippets/_cost-insights-sao.md';
 
 <CostInsights />
 
-## Project dashboard
+## Панель проекта {#project-dashboard}
 
-The Cost Insights section in your project dashboard gives you a high-level view of warehouse costs and the impact of optimization through dbt State or state-aware orchestration.
+Раздел Cost Insights на панели проекта позволяет получить общее представление о затратах на хранилище данных и результатах оптимизации с помощью dbt State или оркестрации с учетом состояния.
 
-<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-project.png" title="Cost Insights in the project dashboard"/>
+<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-project.png" title="Cost Insights на панели проекта"/>
 
-### Access
+### Доступ
 
-To go to your project dashboard, select your project in the main menu and click **Dashboard**.
+Чтобы перейти на панель проекта, выберите проект в главном меню и нажмите **Dashboard**.
 
-### Key metrics
+### Ключевые показатели
 
-The project dashboard displays the following metrics that summarize the overall cost and optimization impact for your project:
+На панели проекта отображаются следующие показатели, обобщающие затраты и результаты оптимизации для проекта:
 
-- **Total cost reduction**: The amount you saved by reusing assets instead of rebuilding them in the selected environment. dbt multiplies each asset's reuse count by its average cost per build, then adds up the results.
-- **Total % reduction**: The percentage you saved compared to what you would have paid without reuse. dbt calculates this as `(cost without reuse − actual cost) / cost without reuse = total % reduction`.
-- **Total query run time reduction**: The overall query time you saved by reusing assets instead of rebuilding them. dbt multiplies each asset's reuse count by its average query time per build, then totals the results.
-- **Reused assets**: The total number of times dbt reused the selected asset types in the selected environment and time frame. By default, this includes models and tests.
+- **Total cost reduction**: сумма, сэкономленная за счет повторного использования ресурсов вместо их повторной сборки в выбранной среде. dbt умножает количество повторных использований каждого ресурса на среднюю стоимость его сборки, а затем суммирует результаты.
+- **Total % reduction**: процент экономии относительно суммы, которую вы заплатили бы без повторного использования ресурсов. dbt рассчитывает этот показатель по формуле `(cost without reuse − actual cost) / cost without reuse = total % reduction`.
+- **Total query run time reduction**: общее время выполнения запросов, сэкономленное за счет повторного использования ресурсов вместо их повторной сборки. dbt умножает количество повторных использований каждого ресурса на среднее время выполнения запросов при его сборке, а затем суммирует результаты.
+- **Reused assets**: общее количество повторных использований ресурсов выбранных типов средствами dbt в выбранной среде за указанный период. По умолчанию учитываются модели и тесты.
 
-### Filters
+### Фильтры
 
-You can customize the cost data you want to view by:
+Вы можете настроить отображаемые данные о затратах с помощью следующих фильтров:
     
-- **Deployment type**: Production or Staging
-- **Last**: 30 days, 60 days, 90 days, 6 months, or 1 year
-- **View**: Daily, Weekly, or Monthly
-- **Assets**: All, Models, Tests
+- **Deployment type**: Production (производственная среда) или Staging (предпроизводственная среда)
+- **Last**: 30, 60, 90 дней, 6 месяцев или 1 год
+- **View**: Daily (по дням), Weekly (по неделям) или Monthly (по месяцам)
+- **Assets**: All (все), Models (модели), Tests (тесты)
 
-### Visualization tabs
+### Вкладки визуализации
 
-The project dashboard includes the following tabs that help you analyze cost and optimization trends over time.
+На панели проекта доступны следующие вкладки, которые помогают анализировать динамику затрат и результатов оптимизации.
 
-- **Cost**: Shows the estimated build cost reduction when using dbt State or state-aware orchestration.
-- **Usage**: Shows the estimated warehouse usage consumed and the reduction in usage from dbt State or state-aware orchestration over the selected timeframe. The **Usage** tab represents generic usage for your warehouse. The specific unit depends on your data warehouse:
-    - Snowflake: Credits
-    - BigQuery: Slot hours or bytes scanned (currently combined into one generic usage number)
-    - Databricks: Databricks Units (DBUs)
-    - Amazon Redshift Serverless: Redshift Processing Unit hours (RPU-hours)
-    - Amazon Redshift Provisioned: Node-hours
-- **Query run time**: Shows the estimated reduction in build time when using dbt State or state-aware orchestration.
-- **Builds**: Shows total builds split into number of assets rebuilt and assets reused by dbt State or state-aware orchestration.
+- **Cost**: показывает оценку сокращения затрат на сборку при использовании dbt State или оркестрации с учетом состояния.
+- **Usage**: показывает оценку потребления ресурсов хранилища данных и его сокращения благодаря dbt State или оркестрации с учетом состояния за выбранный период. На вкладке **Usage** потребление ресурсов хранилища данных представлено обобщенным показателем. Конкретная единица измерения зависит от хранилища данных:
+    - Snowflake: кредиты
+    - BigQuery: слот-часы или количество просканированных байтов (в настоящее время объединены в один обобщенный показатель потребления)
+    - Databricks: единицы Databricks (DBU)
+    - Amazon Redshift Serverless: часы использования вычислительных единиц Redshift (RPU-часы)
+    - Amazon Redshift Provisioned: узло-часы
+- **Query run time**: показывает оценку сокращения времени сборки при использовании dbt State или оркестрации с учетом состояния.
+- **Builds**: показывает общее количество сборок с разбивкой на ресурсы, собранные заново, и ресурсы, повторно использованные благодаря dbt State или оркестрации с учетом состояния.
 
-### Table view
+### Табличное представление
 
-Access the table view by clicking **Show table**, which provides detailed optimization data such as models reused, usage reduction, and cost reduction.
+Нажмите **Show table**, чтобы открыть табличное представление с подробными данными об оптимизации, такими как повторно использованные модели, сокращение потребления ресурсов и снижение затрат.
 
 
 import TableView from '/snippets/_table-view.md';
 
 <TableView />
 
-## Model performance in Catalog
+## Производительность модели в Catalog {#model-performance-in-catalog}
 
 import ModelPerfIntro from '/snippets/_model-perf-intro.md';
 
 <ModelPerfIntro />
 
-### Access
+### Доступ
 
-To access model performance data:
+Чтобы просмотреть данные о производительности модели:
 
-1. From the main menu, go to **Catalog**.
-2. Click your project from the file tree.
-3. Navigate to the model whose cost data you want to view. You can search for it or click **Models** under **Project assets** in the sidebar to view all available models in the project.
-4. Go to the **Performance** tab on the model's details page.
+1. В главном меню перейдите в **Catalog**.
+2. Выберите свой проект в дереве файлов.
+3. Перейдите к модели, данные о затратах которой хотите просмотреть. Вы можете найти ее с помощью поиска или нажать **Models** в разделе **Project assets** на боковой панели, чтобы просмотреть все доступные модели проекта.
+4. Перейдите на вкладку **Performance** на странице сведений о модели.
 
 import ModelPerformance from '/snippets/_model-performance.md';
 
 <ModelPerformance />
 
-## Job details
+## Сведения о задании {#job-details}
 
-The **Insights** section on the Job details page provides cost and performance data for individual jobs.
+Раздел **Insights** на странице сведений о задании содержит данные о затратах и производительности для отдельных заданий.
 
-<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-job.png" title="Cost Insights in job details"/>
+<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-job.png" title="Cost Insights в сведениях о задании"/>
 
-### Access
+### Доступ
 
-To access job details, select your project in the main menu and go to **Orchestration** > **Jobs**. Select the job whose cost data you want to view.
+Чтобы открыть сведения о задании, выберите проект в главном меню и перейдите в **Orchestration** > **Jobs**. Выберите задание, данные о затратах которого хотите просмотреть.
 
-### Filters
+### Фильтры
 
-For the **Runs** tab, you can use the **Last** filter to view data from the past week, 14 days, or 30 days.
+На вкладке **Runs** можно использовать фильтр **Last** для просмотра данных за последнюю неделю, 14 или 30 дней.
 
-For **Cost**, **Usage**, **Query run time**, and **Builds** tabs, you can customize the cost data you want to view by:
+На вкладках **Cost**, **Usage**, **Query run time** и **Builds** можно настроить отображаемые данные о затратах с помощью следующих фильтров:
 
-- **Last**: 30 days, 60 days, 90 days, 6 months, or 1 year
-- **View**: Daily, Weekly, Monthly
-- **Assets**: All, Models, Tests
+- **Last**: 30, 60, 90 дней, 6 месяцев или 1 год
+- **View**: Daily (по дням), Weekly (по неделям), Monthly (по месяцам)
+- **Assets**: All (все), Models (модели), Tests (тесты)
 
-### Visualization tabs
+### Вкладки визуализации
 
-- **Runs**: Displays the success rate and run duration in minutes for recent runs. You can select a time period with options for **Last week**, **Last 14 days**, and **Last 30 days**.
-- **Cost**: Shows the estimated build cost reduction when using dbt State or state-aware orchestration.
-- **Usage**: Shows the estimated warehouse usage consumed and the reduction in usage from dbt State or state-aware orchestration over the selected timeframe. The **Usage** tab represents generic usage for your warehouse. The specific unit depends on your data warehouse:
-    - Snowflake: Credits
-    - BigQuery: Slot hours or bytes scanned (currently combined into one generic usage number)
-    - Databricks: Databricks Units (DBUs)
-    - Amazon Redshift Serverless: Redshift Processing Unit hours (RPU-hours)
-    - Amazon Redshift Provisioned: Node-hours
-- **Query run time**: Shows the estimated query execution time and the reduction in run duration from dbt State or state-aware orchestration.
-- **Builds**: Shows the number of assets built versus reused by dbt State or state-aware orchestration.
+- **Runs**: отображает долю успешных запусков и длительность выполнения в минутах для последних запусков. Можно выбрать период: **Last week** (последняя неделя), **Last 14 days** (последние 14 дней) или **Last 30 days** (последние 30 дней).
+- **Cost**: показывает оценку сокращения затрат на сборку при использовании dbt State или оркестрации с учетом состояния.
+- **Usage**: показывает оценку потребления ресурсов хранилища данных и его сокращения благодаря dbt State или оркестрации с учетом состояния за выбранный период. На вкладке **Usage** потребление ресурсов хранилища данных представлено обобщенным показателем. Конкретная единица измерения зависит от хранилища данных:
+    - Snowflake: кредиты
+    - BigQuery: слот-часы или количество просканированных байтов (в настоящее время объединены в один обобщенный показатель потребления)
+    - Databricks: единицы Databricks (DBU)
+    - Amazon Redshift Serverless: часы использования вычислительных единиц Redshift (RPU-часы)
+    - Amazon Redshift Provisioned: узло-часы
+- **Query run time**: показывает оценку времени выполнения запросов и сокращения длительности выполнения благодаря dbt State или оркестрации с учетом состояния.
+- **Builds**: показывает количество собранных ресурсов в сравнении с количеством ресурсов, повторно использованных благодаря dbt State или оркестрации с учетом состояния.
 
-### Table view 
+### Табличное представление 
 
-For **Cost**, **Usage**, **Query run time**, and **Builds** tabs, you can access the table view by clicking **Show table**, which provides detailed optimization data such as models reused, usage reduction, and cost reduction.
+На вкладках **Cost**, **Usage**, **Query run time** и **Builds** можно нажать **Show table**, чтобы открыть табличное представление с подробными данными об оптимизации, такими как повторно использованные модели, сокращение потребления ресурсов и снижение затрат.
 
 import TableView2 from '/snippets/_table-view.md';
 

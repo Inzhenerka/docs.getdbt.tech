@@ -1,37 +1,37 @@
 ---
-title: "Adding data-informed tests with dbt Wizard"
+title: "Добавление тестов на основе данных с помощью dbt Wizard"
 id: "wizard-4-data-informed-tests"
-description: "Use dbt Wizard CLI to find test coverage gaps, check assumptions against warehouse data, and add focused dbt data tests."
-sidebar_label: "Add data-informed tests"
+description: "Используйте dbt Wizard CLI, чтобы находить пробелы в покрытии тестами, проверять предположения на данных хранилища и добавлять целевые тесты данных dbt."
+sidebar_label: "Добавление тестов на основе данных"
 tags: [AI, Wizard]
 ---
 
 
 <IntroText>
-Use <Constant name="wizard" /> CLI to identify meaningful test gaps, validate assumptions against current warehouse data, and write focused dbt data tests.
+Используйте <Constant name="wizard" /> CLI, чтобы выявлять значимые пробелы в покрытии тестами, проверять предположения на текущих данных хранилища и создавать целевые тесты данных dbt.
 </IntroText>
 
-This workflow uses the built-in `test_writer` agent. Unlike a request that names tests in advance, `test_writer` starts with project metadata and model importance, forms candidate assertions, and checks those assertions against available data before proposing YAML changes.
+В этом рабочем процессе используется встроенный агент `test_writer`. В отличие от запроса, в котором тесты указаны заранее, `test_writer` начинает с метаданных проекта и оценки значимости моделей, формулирует возможные проверяемые утверждения и проверяет их на доступных данных, прежде чем предлагать изменения YAML.
 
-:::info CLI workflow
-The built-in `test_writer` agent is available in <Constant name="wizard" /> CLI. Refer to [Use subagents with <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-subagents) for availability and agent behavior.
+:::info Рабочий процесс в CLI
+Встроенный агент `test_writer` доступен в <Constant name="wizard" /> CLI. Сведения о доступности и поведении агента см. в разделе [Использование субагентов с <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-subagents).
 :::
 
-## Prerequisites
+## Предварительные требования
 
-Before you begin:
+Прежде чем начать:
 
-- [Install and configure <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).
-- Start <Constant name="wizard" /> from a dbt project with a current `target/manifest.json`.
-- Configure a development connection that can query the models you want to inspect.
-- Build the relevant models if their development relations don't exist.
-- Decide whether sensitive columns or expensive relations should be excluded from profiling.
+- [Установите и настройте <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).
+- Запустите <Constant name="wizard" /> из проекта dbt с актуальным файлом `target/manifest.json`.
+- Настройте подключение для разработки, позволяющее запрашивать данные моделей, которые вы хотите проверить.
+- Выполните сборку соответствующих моделей, если их объекты в среде разработки ещё не существуют.
+- Решите, следует ли исключить из профилирования столбцы с конфиденциальными данными или объекты, запросы к которым требуют значительных ресурсов.
 
-Warehouse queries can consume compute and can expose data values in your terminal session. Review proposed queries and apply your organization's data-access policies.
+Запросы к хранилищу могут расходовать вычислительные ресурсы и выводить значения данных в сеансе терминала. Проверяйте предлагаемые запросы и соблюдайте политики доступа к данным вашей организации.
 
-## Choose a focused scope
+## Выберите ограниченную область работы
 
-Start with a model or a small project area. This keeps the proposed tests reviewable and the warehouse queries bounded:
+Начните с одной модели или небольшой части проекта. Так предлагаемые тесты будет проще проверить, а объём запросов к хранилищу останется ограниченным:
 
 ```text
 Use test_writer to improve test coverage for stg_customers. Inspect its existing
@@ -39,7 +39,7 @@ tests and downstream importance, validate candidate assumptions against current
 data, and propose only high-signal tests. Do not change model SQL.
 ```
 
-You can also ask <Constant name="wizard" /> to find a starting point:
+Вы также можете попросить <Constant name="wizard" /> найти отправную точку:
 
 ```text
 Use test_writer to find three important models with weak test coverage. Prioritize
@@ -47,65 +47,65 @@ high fan-out models and models that define a business grain. Explain the ranking
 before writing tests.
 ```
 
-State constraints in the prompt. For example, name columns that must not be queried, limit the number of models, or ask <Constant name="wizard" /> to avoid custom generic tests.
+Укажите ограничения в запросе. Например, перечислите столбцы, которые нельзя запрашивать, ограничьте количество моделей или попросите <Constant name="wizard" /> не создавать собственные универсальные тесты.
 
-## Review the coverage analysis
+## Проверьте анализ покрытия тестами
 
-Before it writes YAML, ask `test_writer` to explain:
+Прежде чем агент `test_writer` начнёт записывать YAML, попросите его объяснить:
 
-- Which models and columns already have tests.
-- Why the selected model is important to downstream resources.
-- What grain or business rule each candidate test represents.
-- Which candidates are based on code or metadata and which are inferred from data.
-- What warehouse query would validate each assumption.
+- Для каких моделей и столбцов уже есть тесты.
+- Почему выбранная модель важна для зависимых ресурсов.
+- Какой уровень детализации или какое бизнес-правило отражает каждый предлагаемый тест.
+- Какие варианты основаны на коде или метаданных, а какие выведены из данных.
+- Какой запрос к хранилищу позволит проверить каждое предположение.
 
-The strongest candidates protect model contracts and business behavior, not just the shape of today's sample.
+Наиболее ценные варианты тестов защищают контракты моделей и бизнес-логику, а не просто проверяют структуру текущей выборки.
 
 <SimpleTable>
 
-| Candidate test | Evidence to review |
+| Предлагаемый тест | Что следует проверить |
 | --- | --- |
-| `not_null` | The column is required by the model grain, contract, or downstream logic, and current nulls have been investigated. |
-| `unique` | The column or column combination represents the intended grain, and duplicate checks support that assumption. |
-| `relationships` | The parent resource and key are authoritative, and orphaned values have been investigated. |
-| `accepted_values` | The field is a governed enumeration, not merely a list of values observed in one query. |
+| `not_null` | Столбец обязателен с точки зрения уровня детализации модели, контракта или зависимой логики, а имеющиеся значения null были исследованы. |
+| `unique` | Столбец или сочетание столбцов соответствует предполагаемому уровню детализации, и проверки на дубликаты подтверждают это предположение. |
+| `relationships` | Родительский ресурс и ключ являются эталонными, а значения без соответствия в родительском ресурсе были исследованы. |
+| `accepted_values` | Поле представляет собой перечисление с регламентированным набором значений, а не просто список значений, полученных одним запросом. |
 
 </SimpleTable>
 
-If the data disproves a candidate assertion, investigate the discrepancy. Don't automatically add a filter or weaken the test to make it pass.
+Если данные опровергают предлагаемое утверждение, исследуйте расхождение. Не добавляйте фильтр автоматически и не ослабляйте тест лишь для того, чтобы он прошёл.
 
-## Approve the warehouse checks
+## Одобрите проверки в хранилище
 
-`test_writer` can use warehouse previews to check assumptions such as uniqueness, nullability, relationships, and observed values. Before approving a query, confirm that:
+`test_writer` может использовать предварительные запросы к хранилищу для проверки предположений об уникальности, допустимости значений null, связях и наблюдаемых значениях. Прежде чем одобрить запрос, убедитесь, что:
 
-- It uses the expected target and relation.
-- Its selected columns comply with data-access policies.
-- Its filters and limits won't hide the condition the test is meant to protect.
-- Its expected scan and run time are reasonable.
+- Он использует ожидаемые целевую среду и объект данных.
+- Выбранные столбцы соответствуют политикам доступа к данным.
+- Его фильтры и ограничения не скроют нарушение условия, которое должен контролировать тест.
+- Ожидаемые объём сканирования и время выполнения приемлемы.
 
-You can ask for a smaller or more targeted query before approving it:
+Перед одобрением можно попросить сократить объём запроса или сделать его более целевым:
 
 ```text
 Validate the proposed grain without selecting customer attributes. Query only
 customer_id and aggregate counts, and explain any sampling or date filter.
 ```
 
-## Review the proposed tests
+## Проверьте предлагаемые тесты
 
-For each proposed YAML change, confirm that:
+Для каждого предлагаемого изменения YAML убедитесь, что:
 
-- The test expresses an intended rule, not an accidental property of current data.
-- The test is attached to the correct model and column.
-- The YAML syntax matches the dbt version used by the project.
-- Existing tests aren't duplicated.
-- Test names, arguments, configuration, and severity follow project conventions.
-- The diff doesn't include unrelated documentation or model changes.
+- Тест выражает предусмотренное правило, а не случайное свойство текущих данных.
+- Тест привязан к нужной модели и нужному столбцу.
+- Синтаксис YAML соответствует версии dbt, используемой в проекте.
+- Существующие тесты не дублируются.
+- Имена тестов, аргументы, конфигурация и уровень серьёзности соответствуют соглашениям проекта.
+- Набор изменений не содержит посторонних изменений документации или моделей.
 
-The `test_writer` agent writes the tests. The normal <Constant name="wizard" /> validation flow is responsible for running them. Select an appropriate [validation level](/best-practices/how-to-use-wizard/wizard-3-validate-changes#choose-a-validation-level) and review any failing rows before accepting the final change.
+Агент `test_writer` создаёт тесты. За их запуск отвечает стандартный процесс валидации <Constant name="wizard" />. Выберите подходящий [уровень валидации](/best-practices/how-to-use-wizard/wizard-3-validate-changes#choose-a-validation-level) и изучите все строки, не прошедшие проверку, прежде чем принять окончательное изменение.
 
-## Investigate a failed candidate
+## Исследуйте предлагаемый тест, завершившийся ошибкой
 
-When a new test fails, keep the original assumption visible while you determine what the data means:
+Если новый тест не проходит, сохраняйте исходное предположение в фокусе, пока выясняете, о чём говорят данные:
 
 ```text
 The proposed unique test on customer_id fails. Show the duplicate pattern,
@@ -114,22 +114,22 @@ is a model defect, a source-data issue, or a bad test assumption. Do not modify
 the test until you explain the evidence.
 ```
 
-Possible outcomes include fixing a model defect, documenting a source limitation, selecting the correct compound grain, or rejecting the candidate test.
+Возможные результаты: исправление дефекта модели, документирование ограничения источника, выбор правильного составного ключа, определяющего уровень детализации, или отказ от предлагаемого теста.
 
-## Understand the limits
+## Учитывайте ограничения
 
-Data-informed test generation still requires engineering judgment:
+Генерация тестов на основе данных по-прежнему требует инженерной оценки:
 
-- Current data can support or disprove an assumption, but it doesn't define the business rule.
-- A passing test can miss future values, late-arriving data, and unqueried partitions.
-- `accepted_values` tests need a governed list when new legitimate values can appear.
-- Warehouse access, permissions, stale relations, and sampling can limit the evidence available.
-- High test counts can increase build time without improving meaningful coverage.
-- Tests don't replace model contracts, source freshness checks, monitoring, or review by a model owner.
+- Текущие данные могут подтверждать или опровергать предположение, но не определяют бизнес-правило.
+- Успешно пройденный тест может не учитывать будущие значения, данные, поступающие с задержкой, и разделы данных, к которым не выполнялись запросы.
+- Тестам `accepted_values` нужен регламентированный список значений, если могут появляться новые допустимые значения.
+- Доступ к хранилищу, разрешения, неактуальные объекты данных и использование выборок могут ограничивать доступные свидетельства.
+- Большое количество тестов может увеличивать время сборки, не улучшая значимое покрытие.
+- Тесты не заменяют контракты моделей, проверки актуальности источников, мониторинг или проверку владельцем модели.
 
-## Related docs
+## Связанная документация
 
-- [Validate dbt changes with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes)
-- [Use subagents with <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-subagents)
-- [Data tests](/docs/build/data-tests)
-- [Test best practices](/best-practices/writing-custom-generic-tests)
+- [Валидация изменений dbt с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes)
+- [Использование субагентов с <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-subagents)
+- [Тесты данных](/docs/build/data-tests)
+- [Рекомендации по тестированию](/best-practices/writing-custom-generic-tests)

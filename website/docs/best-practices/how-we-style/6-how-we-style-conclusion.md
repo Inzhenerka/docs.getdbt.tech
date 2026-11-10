@@ -22,7 +22,7 @@ id: 6-how-we-style-conclusion
 - Производительность  
 - Управление  
 
-Подробнее см. [Introducing the dbt_project_evaluator: Automatically evaluate your dbt project for alignment with best practices](/blog/align-with-dbt-project-evaluator).
+Подробнее см. в статье [dbt_project_evaluator: автоматическая проверка проекта dbt на соответствие рекомендациям](/blog/align-with-dbt-project-evaluator).
 
 ## Шаблон руководства по стилю {#style-guide-template}
 
@@ -111,7 +111,7 @@ id: 6-how-we-style-conclusion
 
 ## CTEs
 
-Для получения дополнительной информации о том, почему мы используем так много CTE, прочтите [этот глоссарий](https://docs.getdbt.tech/terms/cte).
+Для получения дополнительной информации о том, почему мы используем так много CTE, прочтите [этот глоссарий](https://www.getdbt.com/blog/guide-to-cte).
 
 - Если производительность позволяет, каждое CTE должно выполнять одну логически завершённую задачу.
 - Имена CTE должны быть настолько подробными, насколько это необходимо для понимания их назначения.

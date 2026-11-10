@@ -5,15 +5,15 @@ id: "doc"
 description: "Используйте `doc()` в полях описания для ссылки на блоки документации."
 ---
  
-You can specify documentation text in a docs block, then use the `doc()` Jinja function in description fields as a way to reuse the same text in multiple places. You can only use the `doc()` Jinja function in properties YAML files for resources with description properties. For example, models, model columns, sources, source tables, source columns, and so on.
+Текст документации можно определить в блоке docs и переиспользовать в полях описаний через функцию Jinja `doc()`. Она доступна только в YAML-файлах свойств ресурсов с полем описания, например моделей, столбцов моделей, источников, таблиц и столбцов источников.
  
-The `doc()` Jinja function, which is analogous to `ref()`, looks up the named docs block (for example, `{% docs orders %} ... {% enddocs %}` in a `docs.md` file) and returns its rendered content. For more information, refer to the [Documentation guide](/docs/explore/build-and-view-your-docs).
+Как и `ref()`, функция Jinja `doc()` ищет объект по имени. В данном случае она находит блок docs, например `{% docs orders %} ... {% enddocs %}` в файле `docs.md`, и возвращает его обработанное содержимое. См. [Руководство по документации](/docs/explore/build-and-view-your-docs).
  
-## Usage
+## Использование {#usage}
  
-In dbt, column descriptions can be defined directly in a model's properties YAML file. These descriptions are written as plain text and are associated with a specific column.
+В dbt описания столбцов можно задать прямо в YAML-файле свойств модели. Описание задаётся обычным текстом и относится к конкретному столбцу.
  
-### Manually adding descriptions
+### Добавление описаний вручную {#manually-adding-descriptions}
  
 <File name="models/orders.yml">
  

@@ -38,7 +38,7 @@ body="IDE — самый простой и эффективный способ �
     icon="wizard"/>
 
 <Card
-    title="Manage environments"
+    title="Управление средами"
     body="Настраивайте и управляйте отдельными production‑ и development‑окружениями в dbt, чтобы инженеры могли эффективнее разрабатывать и тестировать код, не влияя на пользователей и данные."
     link="/docs/environments-in-dbt"
     icon="dbt-bit"/>
@@ -117,7 +117,7 @@ body="Улучшите свой рабочий процесс: выполняй�
 
   <Card
     title="Cost Insights*"
-    body="Track warehouse compute costs and understand the impact of optimizations across your dbt projects and models."
+    body="Отслеживайте расходы на вычисления в хранилище и оценивайте влияние оптимизаций на проекты и модели dbt."
     link="/docs/explore/cost-insights"
     icon="dbt-bit"
     lifecycle="beta"/>

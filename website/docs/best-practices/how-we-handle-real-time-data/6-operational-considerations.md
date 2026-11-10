@@ -1,93 +1,93 @@
 ---
-title: "Operational considerations for near real-time data"
+title: "Эксплуатационные аспекты работы с данными в режиме, близком к реальному времени"
 id: "6-operational-considerations"
-description: Understand the challenges, risks, and costs of implementing near real-time data pipelines with dbt
-hoverSnippet: Learn about operational challenges and risks for near real-time data patterns
+description: Узнайте о сложностях, рисках и затратах при реализации конвейеров обработки данных в режиме, близком к реальному времени, с помощью dbt
+hoverSnippet: Узнайте об эксплуатационных сложностях и рисках подходов к обработке данных в режиме, близком к реальному времени
 ---
 
-Teams that implement very high-frequency dbt jobs tend to run into a consistent set of challenges, both at the dbt scheduler layer and in the warehouse itself.
+Команды, которые запускают задания dbt с очень высокой частотой, обычно сталкиваются с одним и тем же набором сложностей — как на уровне планировщика dbt, так и в самом хранилище данных.
 
-:::info Treat near real-time as a premium service
-Near real-time service level agreements (SLAs) require premium resources and add significant operational overhead. Pressure-test whether the business really needs minute-level freshness before committing.
+:::info Рассматривайте режим, близкий к реальному времени, как услугу премиум-класса
+Соглашения об уровне обслуживания (SLA), предусматривающие режим, близкий к реальному времени, требуют дополнительных ресурсов и существенно увеличивают эксплуатационную нагрузку. Прежде чем брать на себя такие обязательства, тщательно проверьте, действительно ли бизнесу нужна актуальность данных с точностью до минуты.
 :::
 
-## Over-scheduled jobs and queue management
+## Слишком частое расписание заданий и управление очередью
 
-If a job's run duration is longer than its schedule frequency, the job becomes over-scheduled. The queue grows faster than the scheduler can process runs, and <Constant name="dbt_platform" /> will start cancelling queued runs to avoid an ever-expanding backlog.
+Если продолжительность выполнения задания превышает интервал между запусками по расписанию, задание оказывается запланировано слишком часто. Очередь растет быстрее, чем планировщик успевает обрабатывать запуски, и <Constant name="dbt_platform" /> начинает отменять запуски в очереди, чтобы избежать бесконечного накопления невыполненных запусков.
 
-This is easy to hit with near real-time patterns if your incremental build time creeps up (more models, more tests, more data) but the cron schedule stays aggressive (for example, every 2–5 minutes).
+С этим легко столкнуться при работе в режиме, близком к реальному времени, если время инкрементальной сборки постепенно увеличивается (больше моделей, тестов, данных), а расписание cron остается столь же частым (например, каждые 2–5 минут).
 
-**Example scenario:**
-- Your job is scheduled to run every 5 minutes.
-- The job typically takes 6-7 minutes to complete.
-- New runs queue up while previous runs are still executing.
-- <Constant name="dbt_platform" /> starts cancelling queued runs to prevent infinite backlog.
+**Пример сценария:**
+- Задание настроено на запуск каждые 5 минут.
+- Обычно выполнение задания занимает 6–7 минут.
+- Новые запуски встают в очередь, пока предыдущие еще выполняются.
+- <Constant name="dbt_platform" /> начинает отменять запуски в очереди, чтобы предотвратить бесконечное накопление невыполненных запусков.
 
-When this happens, remediation is non-trivial. You need to either refactor the job to run faster (prune model selection, adjust threads, optimize SQL) or relax the schedule and accept a looser freshness SLA.
+Устранить такую ситуацию непросто. Необходимо либо переработать задание, чтобы оно выполнялось быстрее (сократить набор выбираемых моделей, настроить количество потоков, оптимизировать SQL), либо увеличить интервал между запусками и согласиться на менее строгие требования SLA к актуальности данных.
 
-#### Related scheduler constraints
+#### Связанные ограничения планировщика
 
-- Run slots limit how many jobs can run concurrently. Frequent near real-time jobs can starve other deployment jobs if slot usage isn't planned.
-- The scheduler runs distinct executions of the same job serially. If one run is still in progress when the next cron fires, the second run must wait (or be cancelled in an over-scheduled scenario).
+- Слоты выполнения ограничивают количество заданий, которые могут выполняться одновременно. Частые задания для режима, близкого к реальному времени, могут лишить другие задания развертывания возможности запускаться, если использование слотов не спланировано.
+- Планировщик выполняет отдельные запуски одного и того же задания последовательно. Если предыдущий запуск еще выполняется, когда наступает время следующего запуска по cron, второй запуск должен ждать (либо будет отменен, если задание запланировано слишком часто).
 
-## Warehouse cost and utilization
+## Стоимость и загрузка хранилища данных
 
-As the gap between job runtime and schedule interval shrinks, your warehouse is effectively running continuously to keep up with back-to-back transformation windows.
+По мере сокращения разницы между временем выполнения задания и интервалом между запусками хранилище фактически начинает работать непрерывно, чтобы успевать выполнять преобразования одно за другим.
 
-**Cost scaling example:**
-- Daily job: Warehouse runs 30 min/day = ~2% utilization
-- Hourly job: Warehouse runs 30 min × 24 = 12 hours/day = 50% utilization
-- 5-minute job: Warehouse runs nearly 24/7 = ~100% utilization
+**Пример роста затрат:**
+- Ежедневное задание: хранилище работает 30 мин/день = ~2% загрузки
+- Ежечасное задание: хранилище работает 30 мин × 24 = 12 часов/день = 50% загрузки
+- Задание каждые 5 минут: хранилище работает почти круглосуточно = ~100% загрузки
 
-On platforms like Snowflake, ingestion options like Snowpipe for high-volume real-time feeds can be very expensive (cost per 1,000 files plus compute).
+На таких платформах, как Snowflake, способы загрузки больших потоков данных в реальном времени, например Snowpipe, могут быть очень дорогими (плата за каждую 1 000 файлов плюс вычислительные ресурсы).
 
-Warehouse-managed options for freshness (for example, dynamic tables and materialized views) can also be harder to predict and monitor from a cost perspective, especially when underlying data is changing frequently.
+Затраты на механизмы поддержания актуальности, управляемые самим хранилищем (например, динамические таблицы и материализованные представления), также бывает сложнее прогнозировать и отслеживать, особенно если исходные данные часто меняются.
 
-The net effect: you should treat near real-time SLAs as a premium service and pressure-test whether the business really needs minute-level freshness on each workload.
+Итог: следует рассматривать SLA для режима, близкого к реальному времени, как услугу премиум-класса и тщательно проверять, действительно ли бизнесу нужна актуальность с точностью до минуты для каждой рабочей нагрузки.
 
-## Lambda view DAG complexity and correctness
+## Сложность DAG и корректность лямбда-представлений
 
-If you're using the [lambda views pattern](/best-practices/how-we-handle-real-time-data/4-lambda-views), you face additional complexity:
+Если вы используете [подход с лямбда-представлениями](/best-practices/how-we-handle-real-time-data/4-lambda-views), возникают дополнительные сложности:
 
-- **Duplicated logic**: You either centralize SQL in macros (more DRY, less readable) or duplicate the same transformations in both history (HIST) and NRT flows (more readable, more to maintain).
-- **Complex DAGs**: Every "product" model now has at least three artifacts (HIST table, NRT view, lambda union), plus supporting upstream layers.
-- **Materialization brittleness**: The pattern depends on specific materializations (views vs incrementals). A seemingly harmless materialization change can break freshness or correctness.
+- **Дублирование логики**: нужно либо централизовать SQL в макросах (меньше повторений благодаря принципу DRY, но ниже читаемость), либо дублировать одни и те же преобразования в потоке исторических данных (HIST) и потоке данных, близком к реальному времени (NRT) (выше читаемость, но больше кода для сопровождения).
+- **Сложные DAG**: у каждой «продуктовой» модели теперь есть как минимум три артефакта (таблица HIST, представление NRT, объединение lambda), а также вспомогательные вышестоящие слои.
+- **Хрупкость материализаций**: этот подход зависит от конкретных материализаций (представления или инкрементальные модели). На первый взгляд безобидное изменение материализации может нарушить актуальность или корректность данных.
 
-On top of that, community experience has surfaced timing gaps between HIST and NRT flows:
+Кроме того, опыт сообщества выявил временные рассогласования между потоками HIST и NRT:
 
-- Views (NRT) often update much faster than incremental tables. During a run, the NRT side may start filtering on the new `max(event_ts)` before the incremental table has finished loading, producing temporary holes in the unioned lambda view where recent data disappears briefly.
-- One way to mitigate is to introduce an explicit dependency from NRT to the incremental model (for example, a manual dependency on `{{ ref('fct_events') }}` comment), but this is somewhat brittle and increases coupling.
+- Представления (NRT) часто обновляются гораздо быстрее инкрементальных таблиц. Во время выполнения задания часть NRT может начать фильтрацию по новому значению `max(event_ts)` до завершения загрузки инкрементальной таблицы, создавая временные пробелы в объединенном лямбда-представлении, из-за которых свежие данные ненадолго исчезают.
+- Один из способов снизить риск — добавить явную зависимость NRT от инкрементальной модели (например, вручную указать зависимость в комментарии с `{{ ref('fct_events') }}`), но это решение довольно хрупкое и усиливает связанность.
 
 
-## Job reliability and resource limits
+## Надежность заданий и ограничения ресурсов
 
-High-frequency jobs are more likely to surface job-level failures:
+При высокой частоте запусков чаще проявляются сбои на уровне заданий:
 
-- **Memory limits**
-  - Memory-heavy macros (for example, large `run_query()` results) or big doc-generation steps can hit account-level memory limits.
-  - This causes runs to terminate with "memory limit" errors.
+- **Ограничения памяти**
+  - Макросы, потребляющие много памяти (например, с большими результатами `run_query()`), или объемные этапы генерации документации могут привести к достижению ограничений памяти на уровне учетной записи.
+  - В результате запуски завершаются с ошибками "memory limit".
 
-- **Auto-deactivation**
-  - A job that fails repeatedly can be auto-deactivated after 100 consecutive failures.
-  - When this happens, scheduled triggers stop until someone manually intervenes.
+- **Автоматическая деактивация**
+  - Задание, которое постоянно завершается с ошибкой, может быть автоматически деактивировано после 100 последовательных сбоев.
+  - В этом случае запуски по расписанию прекращаются до ручного вмешательства.
 
-- **Smaller margin for error**
-  - A flaky model, test, or small regression can quickly generate many failed runs.
-  - This creates noisy alerts and can hit the auto-deactivation threshold faster.
+- **Меньший запас на случай ошибок**
+  - Нестабильная модель, тест или небольшая регрессия могут быстро привести к большому количеству неудачных запусков.
+  - Это создает поток избыточных оповещений и может ускорить достижение порога автоматической деактивации.
 
-## Ingestion architecture dependencies
+## Зависимости от архитектуры загрузки данных
 
-Lambda views and NRT dbt jobs sit on top of your ingestion architecture:
+Лямбда-представления и задания dbt для NRT работают поверх вашей архитектуры загрузки данных:
 
-- **The dependency**
-  - If ingestion latency or throughput degrades (issues in a task/stream pipeline, backlogs in storage, intermittent Snowpipe delays), the lambda view can only union what has already arrived.
-  - You can't make data fresher than your ingestion layer allows.
+- **В чем состоит зависимость**
+  - Если задержка загрузки увеличивается или пропускная способность снижается (проблемы в конвейере задач и потоков, накопление необработанных данных в хранилище, периодические задержки Snowpipe), лямбда-представление может объединять только уже поступившие данные.
+  - Невозможно сделать данные актуальнее, чем позволяет слой загрузки.
 
-- **What you end up tuning**
-  - Task cadences and partition strategies in the landing zone
-  - Lambda overlap windows and incremental look-backs
-  - Which sources really need to participate in the NRT path
+- **Что в итоге приходится настраивать**
+  - Периодичность задач и стратегии партиционирования в зоне первичной загрузки
+  - Окна перекрытия lambda и периоды повторной обработки прошлых данных при инкрементальной загрузке
+  - Набор источников, которые действительно должны участвовать в обработке NRT
 
-## Conclusion
+## Заключение
 
-These challenges are why we position lambda views and ultra-frequent dbt schedules as special-case patterns. They're powerful when you truly need them, but they require deliberate design around scheduler behavior, cost, DAG structure, and ingestion architecture. In many cases, they're better replaced by [dynamic tables](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#dynamic-tables), [materialized views](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#materialized-views), or a dedicated streaming stack.
+Именно из-за этих сложностей мы рассматриваем лямбда-представления и сверхчастые запуски dbt как подходы для особых случаев. Они эффективны, когда действительно необходимы, но требуют продуманного проектирования с учетом поведения планировщика, затрат, структуры DAG и архитектуры загрузки данных. Во многих случаях их лучше заменить [динамическими таблицами](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#dynamic-tables), [материализованными представлениями](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#materialized-views) или специализированным стеком потоковой обработки.

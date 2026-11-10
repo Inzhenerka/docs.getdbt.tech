@@ -1,38 +1,38 @@
 ---
-title: "Failures in on-run-start hooks"
+title: "Сбои в хуках on-run-start"
 id: "skip_nodes_if_on_run_start_fails"
-sidebar_label: "skip nodes if on run start fails"
+sidebar_label: "пропуск узлов при сбое on-run-start"
 ---
 
-:::caution Removed in v2
+:::caution Удалён в v2
 
-This flag was removed in v2. The new behavior is always enabled. If you're upgrading, remove this flag from your `dbt_project.yml`.
+Этот флаг удалён в v2. Новое поведение теперь включено всегда. При обновлении удалите этот флаг из файла `dbt_project.yml`.
 
 :::
 
 
 
-| skip_nodes_if_on_run_start_fails | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
+| skip_nodes_if_on_run_start_fails | <Constant name="dbt" /> **Последняя версия v1** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2024.10 | 1.9.0 |
-| Matured (default → `true`) | 2026.09 | 1.12.0 |
-| Removed | — | v2.0 |
+| Добавлен | 2024.10 | 1.9.0 |
+| Стабилизирован (значение по умолчанию → `true`) | 2026.09 | 1.12.0 |
+| Удалён | — | v2.0 |
 
 <br />
 
-Starting in <Constant name="dbt" /> v1.12, `skip_nodes_if_on_run_start_fails` defaults to `true`, skipping all selected resources if there is a failure on an `on-run-start` hook.
+Начиная с <Constant name="dbt" /> v1.12, флаг `skip_nodes_if_on_run_start_fails` по умолчанию имеет значение `true`: при сбое в хуке `on-run-start` все выбранные ресурсы пропускаются.
 
-For more information, refer to [`on-run-start` / `on-run-end`](/reference/project-configs/on-run-start-on-run-end).
+Подробнее см. в разделе [`on-run-start` / `on-run-end`](/reference/project-configs/on-run-start-on-run-end).
 
-## Impact
+## Влияние
 
-If your project uses `on-run-start` hooks for non-critical work (for example, telemetry, notifications, audit inserts, attaching session settings), your build stops producing output whenever a hook fails. Tables and views that previously refreshed daily will stop updating the next time the hook fails.
+Если ваш проект использует хуки `on-run-start` для некритичных задач (например, сбора телеметрии, отправки уведомлений, добавления записей аудита, применения настроек сеанса), при любом сбое хука сборка перестаёт создавать или обновлять ресурсы. Таблицы и представления, которые ранее обновлялись ежедневно, перестанут обновляться при следующем сбое хука.
 
-<Expandable alt_header="Recommended actions">
+<Expandable alt_header="Рекомендуемые действия">
 
-If every model is skipped after an `on-run-start` hook fails, find which `on-run-start` hook failed in the run log — it appears as an `ERROR` immediately before all the nodes marked `SKIP`. From there, either remove the hook if it's not required, or fix the root cause of the failure by reviewing the hook's SQL statements.
+Если после сбоя хука `on-run-start` пропускаются все модели, найдите в журнале выполнения хук `on-run-start`, в котором произошёл сбой: он отображается со статусом `ERROR` непосредственно перед всеми узлами со статусом `SKIP`. Затем либо удалите хук, если он не обязателен, либо устраните причину сбоя, проверив SQL-инструкции хука.
 
-To opt out of this behavior, set the flag to `false`:
+Чтобы отключить это поведение, установите флаг в значение `false`:
 
 <File name='dbt_project.yml'>
 

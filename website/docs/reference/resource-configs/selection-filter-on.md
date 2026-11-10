@@ -1,29 +1,29 @@
 ---
 title: selection_filter_on
 id: "selection-filter-on"
-description: "Configure which output columns dbt uses to match check result rows against a selector."
+description: "Настройте, какие выходные столбцы dbt использует для сопоставления строк результатов проверки с селектором."
 resource_types: [checks]
 datatype: string | [string] | none
 availability:
   engine: v2
 ---
 
-When you pass a selector (`--select`, `--exclude`, `--selector`) to `dbt check` or `dbt build`, dbt uses it to scope which project resources each check evaluates. `selection_filter_on` tells dbt which column in the check's output contains the resource IDs to match against the selection.
+Когда вы передаёте селектор (`--select`, `--exclude`, `--selector`) в `dbt check` или `dbt build`, dbt использует его, чтобы определить, какие ресурсы проекта оценивает каждая проверка. `selection_filter_on` указывает dbt, какой столбец в результатах проверки содержит идентификаторы ресурсов для сопоставления с выборкой.
 
 
-## Values
+## Значения
 
 import SelectionFilterOnValues from '/snippets/_selection-filter-on-values.md';
 
 <SelectionFilterOnValues />
 
-## When to set this config
+## Когда задавать эту настройку
 
-If your check returns a `unique_id` column, you don't need to set this config.
+Если ваша проверка возвращает столбец `unique_id`, задавать эту настройку не нужно.
 
-Use `selection_filter_on` when your check returns rows with ID columns other than `unique_id`. Set it to the columns that contain resource IDs so selectors can scope rows by those columns.
+Используйте `selection_filter_on`, если ваша проверка возвращает строки со столбцами идентификаторов, отличными от `unique_id`. Укажите в этой настройке столбцы, содержащие идентификаторы ресурсов, чтобы селекторы могли ограничивать набор строк по этим столбцам.
 
-The following check queries the `edges` table and returns `child_unique_id` instead of `unique_id`, so you must set `selection_filter_on`:
+Следующая проверка запрашивает таблицу `edges` и возвращает `child_unique_id` вместо `unique_id`, поэтому необходимо задать `selection_filter_on`:
 
 <File name='checks/multiple_sources_joined.sql'>
 
@@ -36,15 +36,15 @@ having count(*) > 1
 ```
 </File>
 
-Configure `selection_filter_on` for this check using one of the following methods:
+Настройте `selection_filter_on` для этой проверки одним из следующих способов:
 
 <Tabs
   groupId="config-languages"
   defaultValue="property-yaml"
   values={[
-    { label: 'Project YAML file', value: 'project-yaml', },
-    { label: 'Properties YAML file', value: 'property-yaml', },
-    { label: 'SQL file config', value: 'config', },
+    { label: 'YAML-файл проекта', value: 'project-yaml', },
+    { label: 'YAML-файл свойств', value: 'property-yaml', },
+    { label: 'Настройка в SQL-файле', value: 'config', },
   ]
 }>
 
@@ -69,7 +69,7 @@ checks:
 version: 2
 checks:
   - name: multiple_sources_joined
-    description: "Fails if any model reads directly from more than one source."
+    description: "Проверка завершается неудачей, если какая-либо модель читает данные напрямую более чем из одного источника."
     config:
       selection_filter_on: child_unique_id
 ```
@@ -94,8 +94,8 @@ checks:
 
 </Tabs>
 
-## Related docs
+## Связанная документация
 
-- [Checks](/docs/build/checks)
-- [Check configurations](/reference/check-configs)
-- [Using selectors with checks](/docs/build/checks#using-selectors-with-checks)
+- [Проверки](/docs/build/checks)
+- [Настройки проверок](/reference/check-configs)
+- [Использование селекторов с проверками](/docs/build/checks#using-selectors-with-checks)

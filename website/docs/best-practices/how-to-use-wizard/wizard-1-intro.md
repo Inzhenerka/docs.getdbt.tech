@@ -1,32 +1,32 @@
 ---
-title: "How to use Wizard in your dbt project"
+title: "Как использовать Wizard в вашем проекте dbt"
 id: "wizard-1-intro"
-description: "Recommended workflows for using dbt Wizard CLI on a real dbt project, from understanding a codebase to shipping and validating changes."
-hoverSnippet: Learn recommended workflows for using dbt Wizard CLI on your dbt project
+description: "Рекомендуемые рабочие процессы для использования dbt Wizard CLI в реальном проекте dbt: от изучения кодовой базы до внедрения и проверки изменений."
+hoverSnippet: Узнайте о рекомендуемых рабочих процессах для использования dbt Wizard CLI в вашем проекте dbt
 ---
 
-<Constant name="wizard" /> is an AI agent that works from your project's dbt metadata &mdash; models, lineage, tests, and metrics &mdash; instead of guessing from code alone. You can run it locally from your CLI or <Constant name="dbt_platform" />. Refer to [dbt Wizard overview](/docs/platform/wizard-overview) for what it is and how to [Get started](/docs/platform/wizard-overview#get-started) to set it up.
+<Constant name="wizard" /> — это ИИ-агент, который опирается на метаданные вашего проекта dbt &mdash; модели, граф зависимостей, тесты и метрики &mdash; вместо того чтобы делать предположения только на основе кода. Вы можете запускать его локально из CLI или в <Constant name="dbt_platform" />. Подробнее о нём читайте в разделе [Обзор dbt Wizard](/docs/platform/wizard-overview), а инструкции по настройке — в разделе [Начало работы](/docs/platform/wizard-overview#get-started).
 
-This guide collects the workflows we recommend once Wizard is running on a real project: mapping an unfamiliar codebase, validating a change before you ship it, adding tests, debugging a failed job, developing against production state, building Semantic Layer definitions, and extending Wizard with plugins and hooks.
+В этом руководстве собраны рабочие процессы, которые мы рекомендуем использовать после запуска Wizard в реальном проекте: изучение незнакомой кодовой базы, проверка изменений перед внедрением, добавление тестов, отладка задания, завершившегося с ошибкой, разработка с учётом состояния продакшен-среды, создание определений Semantic Layer и расширение возможностей Wizard с помощью плагинов и хуков.
 
-## Learning goals
+## Цели обучения
 
-- Understand the prompts and context that get reliable results from <Constant name="wizard" /> on real project tasks.
-- Develop an intuition for when to reach for <Constant name="wizard" /> versus doing a task by hand.
-- Establish repeatable workflows you and your team can reuse across projects.
+- Разобраться, какие запросы и контекст помогают получать надёжные результаты от <Constant name="wizard" /> при решении реальных задач проекта.
+- Научиться определять, когда стоит использовать <Constant name="wizard" />, а когда — выполнить задачу вручную.
+- Выстроить воспроизводимые рабочие процессы, которые вы и ваша команда сможете повторно использовать в разных проектах.
 
-## Before you begin
+## Перед началом работы
 
-These workflows apply to the <Constant name="wizard" /> CLI and <Constant name="dbt_platform"/>. Each page will reference whether it applies to the CLI or <Constant name="dbt_platform"/>. 
+Эти рабочие процессы применимы к CLI <Constant name="wizard" /> и <Constant name="dbt_platform"/>. На каждой странице указано, относится ли она к CLI или к <Constant name="dbt_platform"/>. 
 
-For local workflows, make sure the <Constant name="wizard" /> CLI is installed, configured, and connected to a dbt project with an up-to-date `target/manifest.json`. 
+Для локальных рабочих процессов убедитесь, что CLI <Constant name="wizard" /> установлен, настроен и подключён к проекту dbt с актуальным файлом `target/manifest.json`. 
 
-- Check out [Install dbt Wizard CLI](/docs/dbt-ai/wizard-cli) for setup instructions
-- For options such as deferral and approval policies, check out the [Wizard CLI config reference](/docs/dbt-ai/wizard-config) 
-- To use Wizard in the <Constant name="dbt_platform" />, check out [Use Wizard in dbt platform](/docs/platform/wizard-platform)
+- Инструкции по установке и настройке приведены в разделе [Установка dbt Wizard CLI](/docs/dbt-ai/wizard-cli)
+- Сведения о таких параметрах, как deferral и политики подтверждения, см. в [справочнике по конфигурации Wizard CLI](/docs/dbt-ai/wizard-config) 
+- Чтобы использовать Wizard в <Constant name="dbt_platform" />, ознакомьтесь с разделом [Использование Wizard в dbt platform](/docs/platform/wizard-platform)
 
-## Use one chat per task
+## Используйте отдельный чат для каждой задачи {#use-one-chat-per-task}
 
-Start a new <Constant name="wizard" /> chat for each discrete unit of work, such as building one model, debugging one job failure, or validating a change. A focused conversation keeps the context relevant to the task so <Constant name="wizard" /> doesn't carry over assumptions from unrelated work. Go back to an existing chat only when you're continuing that same task.
+Начинайте новый чат с <Constant name="wizard" /> для каждой отдельной задачи, например для создания одной модели, отладки одного сбоя задания или проверки изменения. Разговор, сосредоточенный на одной задаче, помогает сохранять релевантный контекст, чтобы <Constant name="wizard" /> не переносил предположения из несвязанной работы. Возвращайтесь к существующему чату, только если продолжаете ту же задачу.
 
-The workflows in this guide follow that pattern: each one is a self-contained task you can run in its own chat. For how to start, resume, and manage sessions on each surface, refer to [Sessions and conversations](/docs/dbt-ai/wizard-how-it-works#sessions-and-conversations) for the <Constant name="dbt_platform" /> and [Sessions](/docs/dbt-ai/wizard-how-it-works#sessions) for the CLI and Wizard Desktop.
+Рабочие процессы в этом руководстве следуют этому принципу: каждый из них представляет собой самостоятельную задачу, которую можно выполнить в отдельном чате. О том, как начинать, возобновлять и управлять сеансами в каждом интерфейсе, читайте в разделе [Сеансы и разговоры](/docs/dbt-ai/wizard-how-it-works#sessions-and-conversations) для <Constant name="dbt_platform" /> и в разделе [Сеансы](/docs/dbt-ai/wizard-how-it-works#sessions) для CLI и Wizard Desktop.

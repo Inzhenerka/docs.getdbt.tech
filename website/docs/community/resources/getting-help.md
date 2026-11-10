@@ -71,6 +71,8 @@ dbt развивается как open source и source-available програм
 
 Если вы хотите пройти обучение по dbt, ознакомьтесь с нашей программой [dbt Learn](https://learn.getdbt.com/).
 
+<a id="dbt-cloud-support" />
+
 ## Поддержка dbt {#dbt-support}
 
 **Примечание:** Если вы являетесь пользователем **<Constant name="cloud" />** и вам нужна помощь по одному из следующих вопросов, пожалуйста, свяжитесь с нами, нажав [**Create a support ticket**](/docs/dbt-support#create-a-support-ticket) через навигацию <Constant name="cloud" /> или написав на [support@getdbt.com](mailto:support@getdbt.com):

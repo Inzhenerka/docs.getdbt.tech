@@ -36,11 +36,6 @@ dbt создает файл [артефакта](/reference/artifacts/dbt-artifa
 - `saved_queries` &mdash; Сохраняет часто используемые запросы в MetricFlow
 </VersionBlock>
 
-- `semantic_models` &mdash; Начальные точки данных с сущностями, измерениями и мерами; соответствуют моделям в вашем dbt‑проекте.
-- `metrics` &mdash; Функции, объединяющие меры, ограничения и другие элементы для определения количественных показателей.
-- `project_configuration` &mdash; Содержит информацию о конфигурации вашего проекта.
-- `saved_queries` &mdash; Сохраняет часто используемые запросы в MetricFlow.
-
 ### Пример {#example}
 
 <File name="target/semantic_manifest.json"> 
@@ -132,6 +127,8 @@ dbt создает файл [артефакта](/reference/artifacts/dbt-artifa
 </File>
 
 <VersionBlock firstVersion="1.12">
+
+<a id="osi-document" />
 
 ## Документ Apache Ossie {#apache-ossie-document}
 

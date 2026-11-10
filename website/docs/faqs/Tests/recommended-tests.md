@@ -1,7 +1,7 @@
 ---
-title: What data tests should I add to my project?
-description: "Recommended data tests for project"
-sidebar_label: 'Recommended data tests for project'
+title: "Какие тесты данных стоит добавить в проект?"
+description: "Рекомендуемые тесты данных для проекта dbt."
+sidebar_label: "Рекомендуемые тесты данных"
 id: recommended-tests
 
 ---

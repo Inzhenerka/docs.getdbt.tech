@@ -1,8 +1,8 @@
 ---
-title: "Configure BYOK for dbt Wizard"
+title: "Настройка BYOK для dbt Wizard"
 id: "wizard-byok"
-description: "Bring your own API key to use dbt Wizard CLI. Supports OpenAI, Anthropic, AWS Bedrock, Google Gemini, Snowflake Cortex (preview), and Databricks."
-sidebar_label: "BYOK configuration"
+description: "Используйте собственный API-ключ для работы с dbt Wizard CLI. Поддерживаются OpenAI, Anthropic, AWS Bedrock, Google Gemini, Snowflake Cortex (предварительная версия) и Databricks."
+sidebar_label: "Настройка BYOK"
 tags: [AI, Wizard, Configuration]
 availability: local_all
 ---
@@ -10,36 +10,36 @@ availability: local_all
 import WizardSupportedProviders from '/snippets/_wizard-supported-providers.md';
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# Configure BYOK for <Constant name="wizard" /> <Lifecycle status="beta"/>
+# Настройка BYOK для <Constant name="wizard" /> <Lifecycle status="beta"/>
 
 <IntroText>
-You can use the <Constant name="wizard" /> CLI with bring-your-own-key (BYOK), which means you supply your own credentials from a supported AI provider instead of using dbt Labs' infrastructure.
+Вы можете использовать CLI <Constant name="wizard" /> с собственными учетными данными (bring-your-own-key, BYOK): в этом случае вы предоставляете учетные данные поддерживаемого провайдера ИИ вместо использования инфраструктуры dbt Labs.
 </IntroText>
 
-The following BYOK instructions on this page apply to the CLI only. For <Constant name="dbt_platform" /> BYOK setup, refer to [Configure BYOK for dbt Wizard in dbt platform](/docs/platform/wizard-byok-platform). 
+Приведенные на этой странице инструкции по настройке BYOK относятся только к CLI. О настройке BYOK для <Constant name="dbt_platform" /> см. [Настройка BYOK для dbt Wizard в dbt platform](/docs/platform/wizard-byok-platform). 
 
-If you'd rather skip that upkeep, the [dbt Labs-<Term id="managed" /> option](/docs/platform/manage-dbt-ai#configure-ai-provider) is ready to use with no setup, and comes with [trial and monthly usage credits](/docs/dbt-ai/pricing-billing/trial-and-billing).
+Если вы не хотите самостоятельно заниматься настройкой и обслуживанием, [вариант под управлением dbt Labs (<Term id="managed" />)](/docs/platform/manage-dbt-ai#configure-ai-provider) готов к использованию без настройки и включает [пробные и ежемесячные кредиты на использование](/docs/dbt-ai/pricing-billing/trial-and-billing).
 
-The "key" in BYOK is whatever credential your chosen provider uses to authenticate API requests &mdash; an API key for OpenAI or Anthropic, a bearer token for AWS Bedrock, or a token/PAT for Snowflake Cortex. When you configure a provider with that credential, <Constant name="wizard" /> calls the provider's API directly using it, so:
+Под «ключом» в BYOK понимаются любые учетные данные, которые выбранный провайдер использует для аутентификации API-запросов: API-ключ для OpenAI или Anthropic, токен Bearer для AWS Bedrock или токен/PAT для Snowflake Cortex. После настройки провайдера с этими учетными данными <Constant name="wizard" /> использует их для прямого обращения к API провайдера, поэтому:
 
-- Usage costs appear on your provider account, not your dbt Labs account.
-- Token costs are billed by whichever provider you choose.
+- Расходы на использование отражаются в вашем аккаунте провайдера, а не в аккаунте dbt Labs.
+- Плату за токены взимает выбранный вами провайдер.
 
 <WizardSupportedProviders defaultSurface="local" />
 
 <WizardFeedbackCallout />
 
-## Configure a provider
+## Настройка провайдера
 
-You can configure a provider in one of the following ways:
+Вы можете настроить провайдера одним из следующих способов:
 
-- [**Terminal commands**:](#configure-in-the-terminal) Best for users who want to configure providers from the shell.
-- [**Interactive session**:](#configure-in-the-tui) Best for most users working in the <Constant name="wizard" /> text based user interface (TUI). Use the `/providers` slash command.
-- [**Environment variables**:](#set-your-api-key) Best for headless runs, such as `wizard exec`, automation, or temporary local sessions.
+- [**Команды терминала**:](#configure-in-the-terminal) лучше всего подходят пользователям, которые хотят настраивать провайдеров из командной оболочки.
+- [**Интерактивный сеанс**:](#configure-in-the-tui) лучше всего подходит большинству пользователей, работающих в текстовом пользовательском интерфейсе (TUI) <Constant name="wizard" />. Используйте слеш-команду `/providers`.
+- [**Переменные окружения**:](#set-your-api-key) лучше всего подходят для запусков без пользовательского интерфейса, например `wizard exec`, автоматизации или временных локальных сеансов.
 
-### Configure in the terminal
+### Настройка в терминале {#configure-in-the-terminal}
 
-In the terminal, use the `providers` subcommand to list, configure, and enable providers:
+В терминале используйте подкоманду `providers` для просмотра списка, настройки и включения провайдеров:
 
 ```bash
 wizard providers list
@@ -47,9 +47,9 @@ wizard providers configure PROVIDER_NAME
 wizard providers enable PROVIDER_NAME
 ```
 
-Replace `PROVIDER_NAME` with the name of a supported provider, such as `openai`, `anthropic`, `bedrock`, `azure`, `gemini`, `snowflake`, or `databricks`. Then, follow the prompts to enter your credentials.
+Замените `PROVIDER_NAME` именем поддерживаемого провайдера, например `openai`, `anthropic`, `bedrock`, `azure`, `gemini`, `snowflake` или `databricks`. Затем следуйте подсказкам, чтобы ввести учетные данные.
 
-The `wizard providers list` command shows you the currently configured providers and their status:
+Команда `wizard providers list` показывает настроенных провайдеров и их текущее состояние:
 
 ```bash
 ➜  jaffle-shop git:(mwong-v2) wizard providers list
@@ -64,39 +64,39 @@ snowflake             false    local      missing      3
 gemini                false    local      missing      3
 ```
 
-The `configure` command prompts you to enter credentials for the selected provider. To use environment variables or set a key without echoing it in your shell history, refer to [Set your API key](#set-your-api-key).
+Команда `configure` предлагает ввести учетные данные для выбранного провайдера. Чтобы использовать переменные окружения или задать ключ, не сохраняя его в истории команд оболочки, см. [Настройка API-ключа](#set-your-api-key).
 
-So for example, if you're using OpenAI, you would run and follow the prompts to configure it:
+Например, если вы используете OpenAI, выполните следующие команды и следуйте подсказкам для его настройки:
 
 ```bash
 wizard providers configure openai
 wizard providers enable openai
 ```
 
-To store an API key without echoing it in your shell history:
+Чтобы сохранить API-ключ, не записывая его в историю команд оболочки:
 
 ```bash
 printf '%s' 'sk-...' | wizard providers set-key PROVIDER_NAME
 ```
 
-Credentials are stored in `~/.dbt/wizard/provider-auth.json`. Provider settings are stored in `~/.dbt/wizard/providers.json`.
+Учетные данные хранятся в `~/.dbt/wizard/provider-auth.json`. Настройки провайдеров хранятся в `~/.dbt/wizard/providers.json`.
 
-### Configure in the TUI
+### Настройка в TUI {#configure-in-the-tui}
 
-You can configure providers from an active CLI TUI session with the `/providers` slash command:
+Вы можете настраивать провайдеров в активном сеансе TUI CLI с помощью слеш-команды `/providers`:
 
 ```bash
 /providers
 ```
 
-From the provider menu, you can:
+В меню провайдеров вы можете:
 
-* Enable or disable a provider.
-* Add or update credentials.
-* Select available models.
-* Check whether a provider is authenticated and active.
+* Включить или отключить провайдера.
+* Добавить или обновить учетные данные.
+* Выбрать доступные модели.
+* Проверить, прошел ли провайдер аутентификацию и активен ли он.
 
-Example provider menu:
+Пример меню провайдеров:
 
 ```bash
 /providers
@@ -114,30 +114,30 @@ Example provider menu:
   8. gemini               disabled; 3/3 models selected; missing credentials; needs setup
 ```
 
-## Set your API key
+## Настройка API-ключа {#set-your-api-key}
 
 <Tabs>
-<TabItem value="interactive" label="Interactive session" default>
+<TabItem value="interactive" label="Интерактивный сеанс" default>
 
-The first time you start <Constant name="wizard" /> in a project, onboarding prompts you to choose a provider.
+При первом запуске <Constant name="wizard" /> в проекте мастер начальной настройки предложит выбрать провайдера.
 
-1. At the **Configure a Provider** prompt, select your provider.
-2. Paste your API key or provider credentials when prompted.
-3. Choose an AI model to finish setup.
+1. В запросе **Configure a Provider** выберите провайдера.
+2. Когда появится соответствующий запрос, вставьте API-ключ или учетные данные провайдера.
+3. Выберите модель ИИ, чтобы завершить настройку.
 
-To add or switch providers later from an active session, type `/providers` in the TUI.
+Чтобы позднее добавить или сменить провайдера в активном сеансе, введите `/providers` в TUI.
 
-When you configure a provider through <Constant name="wizard" />, credentials are stored in `~/.dbt/wizard/provider-auth.json`.
+При настройке провайдера через <Constant name="wizard" /> учетные данные сохраняются в `~/.dbt/wizard/provider-auth.json`.
 
 </TabItem>
-<TabItem value="env-var" label="Environment variable">
+<TabItem value="env-var" label="Переменная окружения">
 
-Set the key as an environment variable if you want to:
+Задайте ключ через переменную окружения, если хотите:
 
-* Run <Constant name="wizard" /> in headless mode, such as with `wizard exec`.
-* Use a key for the current terminal [session](/docs/dbt-ai/wizard-how-it-works#sessions) only.
-* Reuse the same key across different terminal sessions.
-* Avoid storing credentials in the <Constant name="wizard" /> config directory.
+* Запускать <Constant name="wizard" /> без пользовательского интерфейса, например с помощью `wizard exec`.
+* Использовать ключ только в текущем [сеансе](/docs/dbt-ai/wizard-how-it-works#sessions) терминала.
+* Повторно использовать один и тот же ключ в разных сеансах терминала.
+* Не сохранять учетные данные в каталоге конфигурации <Constant name="wizard" />.
 
 <Tabs>
 <TabItem value="openai" label="OpenAI">
@@ -197,40 +197,40 @@ export DATABRICKS_API_BASE="https://adb-1234567890.azuredatabricks.net"
 
 </Tabs>
 
-To make an environment variable available across terminal sessions, add it to your shell profile, such as `.zshrc`, `.bashrc`, or equivalent.
+Чтобы переменная окружения была доступна в разных сеансах терминала, добавьте ее в файл профиля командной оболочки, например `.zshrc`, `.bashrc` или аналогичный.
 
-Avoid committing API keys to version control, project files, or shared configuration.
+Не добавляйте API-ключи в систему контроля версий, файлы проекта или общие конфигурационные файлы.
 
 </TabItem>
 </Tabs>
 
-To persist provider credentials, use one of the following options:
+Чтобы сохранить учетные данные провайдера для дальнейшего использования, воспользуйтесь одним из следующих вариантов:
 
 * `wizard providers configure PROVIDER_NAME`
 * `wizard providers set-key PROVIDER_NAME`
-* The provider's environment variable
+* Переменная окружения провайдера
 
-## Choose an AI model
+## Выбор модели ИИ
 
-<Constant name="wizard" /> CLI uses dbt Labs-managed models out of the box. You can switch to a BYOK model in the following ways:
+По умолчанию CLI <Constant name="wizard" /> использует модели под управлением dbt Labs. Переключиться на модель BYOK можно следующими способами:
 
 <SimpleTable>
-| Method | Description | Example |
+| Способ | Описание | Пример |
 |---|---|---|
-| Interactive session | Change the AI model interactively in the TUI. | `/model` |
-| Invocation flag | Change the AI model at invocation with the `-m` flag. | `wizard -m gpt-4o "refactor stg_orders to use incremental materialization"` |
-| Config file | Set a default AI model in the config file (`~/.dbt/wizard/config.toml`); applies to all future sessions. Run `wizard debug models` to list available model IDs. | `model = "gpt-4o"` |
+| Интерактивный сеанс | Измените модель ИИ интерактивно в TUI. | `/model` |
+| Флаг запуска | Измените модель ИИ при запуске с помощью флага `-m`. | `wizard -m gpt-4o "refactor stg_orders to use incremental materialization"` |
+| Файл конфигурации | Задайте модель ИИ по умолчанию в файле конфигурации (`~/.dbt/wizard/config.toml`); настройка применяется ко всем последующим сеансам. Выполните `wizard debug models`, чтобы получить список идентификаторов доступных моделей. | `model = "gpt-4o"` |
 </SimpleTable>
 
-Restart the <Constant name="wizard" /> CLI after changing the model.
+После изменения модели перезапустите CLI <Constant name="wizard" />.
 
-## Examples
+## Примеры
 
-The following examples use the same provider configuration flow described earlier, with provider-specific credential requirements.
+В следующих примерах используется описанный выше процесс настройки провайдера с учетом требований каждого провайдера к учетным данным.
 
 ### AWS Bedrock
 
-AWS Bedrock is supported in the CLI only. <Constant name="wizard" /> currently supports Bedrock through an Amazon Bedrock API key, not the full AWS credential chain. Ensure your AWS account has access to the Bedrock models you plan to use and that your Bedrock API key has permission to invoke them.
+AWS Bedrock поддерживается только в CLI. В настоящее время <Constant name="wizard" /> поддерживает Bedrock через API-ключ Amazon Bedrock, а не через полную цепочку учетных данных AWS. Убедитесь, что ваш аккаунт AWS имеет доступ к моделям Bedrock, которые вы планируете использовать, а ваш API-ключ Bedrock дает разрешение на их вызов.
 
 ```bash
 export AWS_BEARER_TOKEN_BEDROCK="ABSK..."
@@ -240,7 +240,7 @@ wizard providers list
 wizard debug models
 ```
 
-To set a default Bedrock model, add the model ID to `~/.dbt/wizard/config.toml`:
+Чтобы задать модель Bedrock по умолчанию, добавьте идентификатор модели в `~/.dbt/wizard/config.toml`:
 
 ```toml
 model = "BEDROCK_MODEL_ID"
@@ -248,9 +248,9 @@ model = "BEDROCK_MODEL_ID"
 
 ### Snowflake Cortex <Lifecycle status="preview"/>
 
-Snowflake Cortex BYOK support in the CLI is in preview. Availability and setup steps may change. Ensure your Snowflake account has the privileges required for Cortex large language model (LLM) functions. Refer to the [Snowflake Cortex documentation](https://docs.snowflake.com/en/user-guide/snowflake-cortex/overview).
+Поддержка BYOK для Snowflake Cortex в CLI находится на стадии предварительной версии. Доступность и порядок настройки могут измениться. Убедитесь, что ваш аккаунт Snowflake имеет необходимые права для использования функций больших языковых моделей (LLM) Cortex. См. [документацию Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/overview).
 
-You can [authenticate](#authentication-options) with Snowflake Cortex using an API token or a Programmatic Access Token (PAT) (for SSO and Okta users).
+Вы можете [пройти аутентификацию](#authentication-options) в Snowflake Cortex с помощью API-токена или токена программного доступа (Programmatic Access Token, PAT) (для пользователей SSO и Okta).
 
 ```bash
 wizard providers list
@@ -260,7 +260,7 @@ wizard providers list
 wizard debug models
 ```
 
-The `wizard providers configure snowflake` command walks you through the following prompts:
+Команда `wizard providers configure snowflake` последовательно выводит следующие запросы:
 
 ```
 Enable this provider? [Y/n]:
@@ -272,23 +272,23 @@ Paste API key/token, or press enter to configure it later:
 
 <SimpleTable>
 
-| Prompt | What to enter |
+| Запрос | Что ввести |
 |--------|---------------|
-| **Snowflake account ID** | Your Snowflake account identifier (for example, `myorg-myaccount`) |
-| **Snowflake API base override (optional)** | Leave blank — this is only needed for custom or private Snowflake endpoints |
-| **Paste API key/token** | Your authentication token &mdash; refer to [Authentication options](#authentication-options) in the next section |
+| **Snowflake account ID** | Идентификатор вашего аккаунта Snowflake (например, `myorg-myaccount`) |
+| **Snowflake API base override (optional)** | Оставьте поле пустым — оно требуется только для нестандартных или частных конечных точек Snowflake |
+| **Paste API key/token** | Ваш токен аутентификации &mdash; см. [Варианты аутентификации](#authentication-options) в следующем разделе |
 
 </SimpleTable>
 
-#### Authentication options
+#### Варианты аутентификации {#authentication-options}
 
-The key/token field accepts a regular API token or a Programmatic Access Token (PAT), depending on how your Snowflake account is configured. Both are entered in the same place &mdash; the **Paste API key/token** prompt in the terminal, or **Set key/token** (option 3) in the TUI.
+Поле ключа/токена принимает обычный API-токен или токен программного доступа (PAT) в зависимости от конфигурации вашего аккаунта Snowflake. Оба типа вводятся в одном и том же месте: в ответ на запрос **Paste API key/token** в терминале или через **Set key/token** (пункт 3) в TUI.
 
-1. In your Snowflake account, [generate your API or PAT token](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens#label-pat-generate).
-2. Select **Generate token** and copy the token value.
-3. Go back to <Constant name="wizard" /> and paste the PAT at the key/token prompt. 
+1. В своем аккаунте Snowflake [создайте API-токен или PAT](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens#label-pat-generate).
+2. Выберите **Generate token** и скопируйте значение токена.
+3. Вернитесь в <Constant name="wizard" /> и вставьте PAT в ответ на запрос ключа/токена. 
 
-To set a default Snowflake Cortex model, add the model ID to `~/.dbt/wizard/config.toml`:
+Чтобы задать модель Snowflake Cortex по умолчанию, добавьте идентификатор модели в `~/.dbt/wizard/config.toml`:
 
 ```toml
 model = "SNOWFLAKE_CORTEX_MODEL_ID"
@@ -296,7 +296,7 @@ model = "SNOWFLAKE_CORTEX_MODEL_ID"
 
 ### Databricks Unity AI Gateway <Lifecycle status="beta"/>
 
-<Constant name="wizard" /> connects to Databricks through the [Unity Catalog AI Gateway](https://docs.databricks.com/aws/en/ai-gateway/), so you bring your own models served from your Databricks workspace. Make sure the [serving endpoints](https://docs.databricks.com/en/machine-learning/model-serving/index.html) you plan to use are deployed and that your Databricks token has permission to query them.
+<Constant name="wizard" /> подключается к Databricks через [Unity Catalog AI Gateway](https://docs.databricks.com/aws/en/ai-gateway/), поэтому вы используете собственные модели, обслуживаемые в вашем рабочем пространстве Databricks. Убедитесь, что [конечные точки обслуживания моделей](https://docs.databricks.com/en/machine-learning/model-serving/index.html), которые вы планируете использовать, развернуты, а ваш токен Databricks дает разрешение на отправку запросов к ним.
 
 ```bash
 export DATABRICKS_API_KEY="dapi..."
@@ -306,7 +306,7 @@ wizard providers list
 wizard debug models
 ```
 
-The `wizard providers configure databricks` command first asks for your workspace URL, then for the serving endpoint name behind each model you enable:
+Команда `wizard providers configure databricks` сначала запрашивает URL вашего рабочего пространства, а затем имя конечной точки обслуживания для каждой включаемой модели:
 
 ```
 Enable this provider? [Y/n]:
@@ -318,19 +318,19 @@ Paste API key/token, or press enter to configure it later:
 
 <SimpleTable>
 
-| Prompt | What to enter |
+| Запрос | Что ввести |
 |--------|---------------|
-| **Databricks workspace URL** | Your Databricks workspace URL (for example, `https://adb-1234567890.azuredatabricks.net`) |
-| **Endpoint name** | The serving endpoint name for each model (for example, `databricks-claude-sonnet-4-6`). <Constant name="wizard" /> suggests a default endpoint name for each model |
-| **Paste API key/token** | Your Databricks personal access token (PAT) |
+| **Databricks workspace URL** | URL вашего рабочего пространства Databricks (например, `https://adb-1234567890.azuredatabricks.net`) |
+| **Endpoint name** | Имя конечной точки обслуживания для каждой модели (например, `databricks-claude-sonnet-4-6`). <Constant name="wizard" /> предлагает имя конечной точки по умолчанию для каждой модели |
+| **Paste API key/token** | Ваш персональный токен доступа Databricks (PAT) |
 
 </SimpleTable>
 
-By default, <Constant name="wizard" /> maps the following models to Databricks serving endpoints. You can override any endpoint name during configuration:
+По умолчанию <Constant name="wizard" /> сопоставляет следующие модели с конечными точками обслуживания Databricks. Во время настройки вы можете переопределить любое имя конечной точки:
 
 <SimpleTable>
 
-| Model | Default endpoint name |
+| Модель | Имя конечной точки по умолчанию |
 |-------|----------------------|
 | `claude-sonnet-4-6` | `databricks-claude-sonnet-4-6` |
 | `claude-opus-4-7` | `databricks-claude-opus-4-7` |
@@ -341,14 +341,14 @@ By default, <Constant name="wizard" /> maps the following models to Databricks s
 
 </SimpleTable>
 
-To set a default Databricks model, add the model ID to `~/.dbt/wizard/config.toml`:
+Чтобы задать модель Databricks по умолчанию, добавьте идентификатор модели в `~/.dbt/wizard/config.toml`:
 
 ```toml
 model = "databricks/claude-sonnet-4-6"
 ```
 
-## Related docs
+## Связанная документация
 
-* [Install <Constant name="wizard" />](/docs/dbt-ai/wizard-cli)
-* [Configuration reference](/docs/dbt-ai/wizard-config)
-* [dbt Wizard in Studio IDE](/docs/dbt-ai/wizard-ide)
+* [Установка <Constant name="wizard" />](/docs/dbt-ai/wizard-cli)
+* [Справочник по конфигурации](/docs/dbt-ai/wizard-config)
+* [dbt Wizard в Studio IDE](/docs/dbt-ai/wizard-ide)

@@ -1,8 +1,8 @@
 ---
-title: "API rate limits"
-description: "Learn how request limits apply when you use the dbt platform Administrative API, Discovery (GraphQL) API, Semantic Layer APIs, SCIM provisioning, and remote MCP."
+title: "Ограничения частоты запросов к API"
+description: "Узнайте, как действуют ограничения запросов при использовании Administrative API, Discovery (GraphQL) API, API Semantic Layer, подготовки пользователей через SCIM и удалённого MCP на платформе dbt."
 id: "rate-limits"
-sidebar_label: "Rate limits"
+sidebar_label: "Ограничения частоты запросов"
 pagination_next: "docs/dbt-apis/user-tokens"
 pagination_prev: "docs/dbt-apis/overview"
 availability:
@@ -11,76 +11,76 @@ availability:
   minPlan: starter
 ---
 
-# API rate limits
+# Ограничения частоты запросов к API
 
 <IntroText>
 
-<Constant name="dbt" /> applies request limits across the <Constant name="dbt_platform" /> APIs so integrations stay reliable and predictable.
+<Constant name="dbt" /> ограничивает частоту запросов к API <Constant name="dbt_platform" />, чтобы обеспечить надёжную и предсказуемую работу интеграций.
 
 </IntroText>
 
-The [Administrative API](/docs/dbt-apis/admin-api) and the [Discovery API](/docs/dbt-apis/discovery-api) do not share the same limit. You can send more requests per minute to admin endpoints under `/api/` and fewer to Discovery's GraphQL endpoints under `/graphql/`, because Discovery queries often return more data per call.
+Для [Administrative API](/docs/dbt-apis/admin-api) и [Discovery API](/docs/dbt-apis/discovery-api) действуют разные ограничения. К административным эндпоинтам в `/api/` можно отправлять больше запросов в минуту, а к GraphQL-эндпоинтам Discovery в `/graphql/` — меньше, поскольку запросы Discovery часто возвращают больше данных за один вызов.
 
-You use the same credentials for both APIs: [personal access tokens](/docs/dbt-apis/user-tokens), [service account tokens](/docs/dbt-apis/service-tokens), and OAuth when your organization supports it. Refer to [Authentication tokens](/docs/dbt-apis/authentication) to create and use those credentials, and the [APIs overview](/docs/dbt-apis/overview) to learn what each API does.
+Для обоих API используются одни и те же учётные данные: [персональные токены доступа](/docs/dbt-apis/user-tokens), [токены сервисных аккаунтов](/docs/dbt-apis/service-tokens) и OAuth, если ваша организация его поддерживает. Сведения о создании и использовании этих учётных данных приведены в разделе [Токены аутентификации](/docs/dbt-apis/authentication), а о назначении каждого API — в [обзоре API](/docs/dbt-apis/overview).
 
-This page summarizes the default rate limits across the main API and integration surfaces:
+На этой странице приведены стандартные ограничения частоты запросов для основных API и интерфейсов интеграции:
 
-- [Administrative API](/docs/dbt-apis/admin-api): 5,000 requests per minute per account (`/api/`).
-- [Discovery API](/docs/dbt-apis/discovery-api) (GraphQL): 500 requests per minute (`/graphql/` on the `metadata` host).
-- [Semantic Layer APIs](#semantic-layer-apis): Limited separately and not governed by the Discovery API limit.
-- [SCIM and IdP provisioning](#scim-and-idp-provisioning-): 20 requests every 5 seconds per account.
-- [Remote MCP](#remote-mcp): 5,000 requests per minute per IP (global API rate limit).
-- [Self-hosted MCP](#local-mcp): Uses the Administrative and Discovery API limits above.
+- [Administrative API](/docs/dbt-apis/admin-api): 5 000 запросов в минуту на аккаунт (`/api/`).
+- [Discovery API](/docs/dbt-apis/discovery-api) (GraphQL): 500 запросов в минуту (`/graphql/` на хосте `metadata`).
+- [API Semantic Layer](#semantic-layer-apis): ограничения действуют отдельно и не зависят от ограничения Discovery API.
+- [Подготовка пользователей через SCIM и IdP](#scim-and-idp-provisioning): 20 запросов за каждые 5 секунд на аккаунт.
+- [Удалённый MCP](#remote-mcp): 5 000 запросов в минуту на IP-адрес (глобальное ограничение частоты запросов к API).
+- [MCP на собственной инфраструктуре](#local-mcp): действуют указанные выше ограничения Administrative API и Discovery API.
 
-For SCIM scope, throttling responses, and identity provider behavior, see [SCIM and IdP provisioning](#scim-and-idp-provisioning-) and [Set up SCIM](/docs/platform/manage-access/scim). For MCP integration and usage patterns, see [Remote MCP](#remote-mcp) and [Self-hosted MCP](#local-mcp).
+Сведения об области действия ограничений SCIM, ответах при ограничении частоты запросов и поведении поставщиков удостоверений приведены в разделах [Подготовка пользователей через SCIM и IdP](#scim-and-idp-provisioning) и [Настройка SCIM](/docs/platform/manage-access/scim). Сведения об интеграции MCP и сценариях его использования приведены в разделах [Удалённый MCP](#remote-mcp) и [MCP на собственной инфраструктуре](#local-mcp).
 
-:::note Discovery API and Semantic Layer GraphQL endpoints
+:::note GraphQL-эндпоинты Discovery API и Semantic Layer
 
-The Discovery API limit applies only to the metadata endpoint. The [Semantic Layer GraphQL API](/docs/dbt-apis/sl-graphql) uses a different host and has its own rate limiting.
+Ограничение Discovery API распространяется только на эндпоинт метаданных. [GraphQL API Semantic Layer](/docs/dbt-apis/sl-graphql) использует другой хост и имеет собственное ограничение частоты запросов.
 
 :::
 
-## Pagination and the Discovery API
+## Пагинация и Discovery API
 
-The most common way teams hit the Discovery API limit is to request very small pages in GraphQL (for example, `first: 1`) repeatedly. Each page is another request, so small pages require far more calls than fetching the same data in larger chunks. Use the largest page size that still works for you, up to what that query allows (often up to `500`). Full examples, including how to page with `after`, are in [Query the Discovery API](/docs/dbt-apis/discovery-querying).
+Чаще всего команды достигают ограничения Discovery API, многократно запрашивая очень маленькие страницы в GraphQL (например, `first: 1`). Каждая страница — это отдельный запрос, поэтому получение маленьких страниц требует гораздо большего количества вызовов, чем получение тех же данных более крупными порциями. Используйте наибольший подходящий вам размер страницы в пределах, допустимых для конкретного запроса (часто до `500`). Полные примеры, в том числе пагинации с помощью `after`, приведены в разделе [Выполнение запросов к Discovery API](/docs/dbt-apis/discovery-querying).
 
-## SCIM and IdP provisioning <Lifecycle status="managed,managed_plus" />
+## Подготовка пользователей через SCIM и IdP <Lifecycle status="managed,managed_plus" /> {#scim-and-idp-provisioning}
 
-For SCIM, the application rate limit of 20 requests every 5 seconds per account (Enterprise and Enterprise+) applies only to creating a user (`POST /api/v3/accounts/{account_id}/scim/v2/Users`) and replacing a user (`PUT /api/v3/accounts/{account_id}/scim/v2/Users/{user_id}`). dbt counts requests in a fixed 5-second window.
+Для SCIM ограничение на уровне приложения в 20 запросов за каждые 5 секунд на аккаунт (Enterprise и Enterprise+) распространяется только на создание пользователя (`POST /api/v3/accounts/{account_id}/scim/v2/Users`) и замену пользователя (`PUT /api/v3/accounts/{account_id}/scim/v2/Users/{user_id}`). dbt подсчитывает запросы в фиксированном 5-секундном окне.
 
-It does not apply to `GET`, `PATCH`, or `DELETE` requests for users; to any Group operations (create, list, get, replace, patch, or delete); or to other SCIM endpoints such as Service Provider Config, schemas, resource types, or config token routes. Those operations are outside this limit but may still be subject to other platform rate limits.
+Оно не распространяется на запросы `GET`, `PATCH` и `DELETE` для пользователей; на любые операции с группами (создание, получение списка, получение отдельной группы, замена, частичное обновление или удаление); а также на другие эндпоинты SCIM, такие как конфигурация поставщика услуг, схемы, типы ресурсов или маршруты токенов конфигурации. Эти операции не подпадают под данное ограничение, но на них могут распространяться другие ограничения частоты запросов платформы.
 
-When you exceed that limit, dbt returns `429 Too Many Requests` with both `Retry-After` and `x-rate-limit-retry-after-seconds` (for example, Okta integrations often honor `Retry-After`, while SailPoint often honors `x-rate-limit-retry-after-seconds`). These headers indicate how long to wait before you send the next request. Configure your identity provider to read the header your provisioning stack supports, and to retry with exponential backoff when throttled.
+При превышении этого ограничения dbt возвращает `429 Too Many Requests` с обоими заголовками: `Retry-After` и `x-rate-limit-retry-after-seconds` (например, интеграции Okta часто учитывают `Retry-After`, а SailPoint — `x-rate-limit-retry-after-seconds`). Эти заголовки указывают, сколько времени нужно подождать перед отправкой следующего запроса. Настройте поставщика удостоверений так, чтобы он считывал заголовок, поддерживаемый вашим стеком подготовки пользователей, и повторял запросы с экспоненциальным увеличением задержки при ограничении частоты запросов.
 
-For configuration steps, use [Set up SCIM](/docs/platform/manage-access/scim). For information on licenses, permissions, [SSO](/docs/platform/manage-access/sso-overview), and how SCIM fits into account access, refer to [About user access in dbt](/docs/platform/manage-access/about-user-access).
+Инструкции по настройке приведены в разделе [Настройка SCIM](/docs/platform/manage-access/scim). Сведения о лицензиях, разрешениях, [SSO](/docs/platform/manage-access/sso-overview) и роли SCIM в управлении доступом к аккаунту приведены в разделе [О доступе пользователей в dbt](/docs/platform/manage-access/about-user-access).
 
-## Remote MCP
+## Удалённый MCP {#remote-mcp}
 
-[Remote MCP](/docs/dbt-ai/about-mcp) uses the same default global API rate limit as other <Constant name="dbt" /> APIs: 5,000 requests per minute per IP. It uses the same authentication as other integrations (for example, personal access tokens, service account tokens, or OAuth where supported).
+[Удалённый MCP](/docs/dbt-ai/about-mcp) использует то же стандартное глобальное ограничение частоты запросов, что и другие API <Constant name="dbt" />: 5 000 запросов в минуту на IP-адрес. Для него используются те же способы аутентификации, что и для других интеграций (например, персональные токены доступа, токены сервисных аккаунтов или OAuth, если он поддерживается).
 
-Treat remote MCP automation like any other API client: avoid retrying without pausing between attempts. When you receive a `429` response, wait before trying again, and wait longer between retries if you continue to receive `429` responses.
+При автоматизации с удалённым MCP придерживайтесь тех же правил, что и для любого другого API-клиента: не повторяйте запросы без пауз между попытками. Получив ответ `429`, подождите перед повторной попыткой и увеличивайте задержку между попытками, если ответы `429` продолжают поступать.
 
-## Semantic Layer APIs
+## API Semantic Layer {#semantic-layer-apis}
 
-dbt rate limits the [Semantic Layer APIs](/docs/dbt-apis/sl-api-overview) (GraphQL, JDBC, and Python SDK) independently of the Administrative API and Discovery API. The Semantic Layer limit is shared across all clients, users, and accounts in the same instance (for example, every account in US1 shares a single limit), so your own request volume isn't the only factor that determines whether you hit it.
+dbt ограничивает частоту запросов к [API Semantic Layer](/docs/dbt-apis/sl-api-overview) (GraphQL, JDBC и Python SDK) независимо от Administrative API и Discovery API. Ограничение Semantic Layer является общим для всех клиентов, пользователей и аккаунтов в одном экземпляре платформы (например, все аккаунты в US1 используют единое ограничение), поэтому вероятность его достижения зависит не только от объёма ваших запросов.
 
-## Self-hosted MCP {#local-mcp}
+## MCP на собственной инфраструктуре {#local-mcp}
 
-[Self-hosted MCP](/docs/dbt-ai/about-mcp) calls the public [Administrative API](/docs/dbt-apis/admin-api) and [Discovery API](/docs/dbt-apis/discovery-api) directly, so those limits apply: 5,000 requests per minute per account for `/api/` and 500 requests per minute for `/graphql/`, as summarized above.
+[MCP на собственной инфраструктуре](/docs/dbt-ai/about-mcp) напрямую вызывает публичные [Administrative API](/docs/dbt-apis/admin-api) и [Discovery API](/docs/dbt-apis/discovery-api), поэтому к нему применяются их ограничения: 5 000 запросов в минуту на аккаунт для `/api/` и 500 запросов в минуту для `/graphql/`, как указано выше.
 
-## Exceeding the rate limit
+## Превышение ограничения частоты запросов
 
-For the [Administrative API](/docs/dbt-apis/admin-api) and [Discovery API](/docs/dbt-apis/discovery-api), if you exceed the limit, dbt returns `429 Too Many Requests` and enforces a five-minute cooldown. After five minutes, you can send requests again as usual. 
+При превышении ограничения [Administrative API](/docs/dbt-apis/admin-api) или [Discovery API](/docs/dbt-apis/discovery-api) dbt возвращает `429 Too Many Requests` и вводит пятиминутный период ожидания. Через пять минут можно снова отправлять запросы в обычном режиме. 
 
-This cooldown doesn't apply to the Semantic Layer API.
+Этот период ожидания не применяется к API Semantic Layer.
 
-### Exceeding the rate limit for the Semantic Layer API
+### Превышение ограничения частоты запросов к API Semantic Layer
 
-If you receive a `429 Too Many Requests` error, you exceeded the Semantic Layer limit. There's no cooldown period, so requests succeed again as soon as shared usage drops back under the limit. To reduce your own request footprint:
+Если вы получили ошибку `429 Too Many Requests`, значит, вы превысили ограничение Semantic Layer. Периода ожидания нет, поэтому запросы снова начинают выполняться успешно, как только общая интенсивность использования опускается ниже ограничения. Чтобы снизить нагрузку от ваших запросов:
 
-- Batch multiple metrics into a single query.
-- Retry with exponential backoff and jitter instead of polling at a fixed interval.
-- Use preset date ranges instead of custom ranges so dbt can reuse cached results.
-- Pre-materialize metrics that can be pre-aggregated by using [exports](/docs/use-dbt-semantic-layer/exports) or [saved queries](/docs/build/saved-queries). Metrics that can't be pre-aggregated, such as distinct counts, still run live.
+- Объединяйте несколько метрик в один запрос.
+- Повторяйте запросы с экспоненциальным увеличением задержки и случайным разбросом интервалов вместо опроса с фиксированным интервалом.
+- Используйте предустановленные диапазоны дат вместо пользовательских, чтобы dbt мог повторно использовать кешированные результаты.
+- Заранее материализуйте метрики, которые можно предварительно агрегировать, с помощью [экспортов](/docs/use-dbt-semantic-layer/exports) или [сохранённых запросов](/docs/build/saved-queries). Метрики, которые нельзя предварительно агрегировать, например количество уникальных значений, по-прежнему вычисляются в реальном времени.
 
-These steps reduce your own usage but might not prevent every `429` error if other clients share the same limit. For dedicated options, contact your account team.
+Эти меры снижают вашу собственную интенсивность использования, но могут не предотвратить все ошибки `429`, если другие клиенты используют то же общее ограничение. Чтобы узнать о выделенных вариантах, свяжитесь с командой по работе с вашим аккаунтом.

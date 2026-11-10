@@ -1,26 +1,26 @@
 ---
-title: "Macro argument validation"
+title: "Валидация аргументов макросов"
 id: "validate_macro_args"
-sidebar_label: "validate macro args"
+sidebar_label: "Валидация аргументов макросов"
 ---
 
 
 
 | validate_macro_args | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
-|---|---|---|
-| Introduced | 2025.03 | 1.10.0 |
-| Matured (default → `true`) | 2026.09 | 1.12.0 |
-| Removed | — | — |
+|---|---|---|---|
+| Добавлен | 2025.03 | 1.10.0 |
+| Стабилизирован (по умолчанию → `true`) | 2026.09 | 1.12.0 |
+| Удалён | — | — |
 
 <br />
 
-dbt validates macro arguments using the `validate_macro_args` flag. Starting in <Constant name="dbt" /> v1.12, this flag defaults to `true`.
+dbt проверяет аргументы макросов с помощью флага `validate_macro_args`. Начиная с <Constant name="dbt" /> v1.12, значение этого флага по умолчанию — `true`.
 
-In the past, dbt didn't enforce a standard vocabulary for the [`type`](/reference/resource-properties/arguments#type) field on macro arguments in YAML. Because of this, the `type` field was used for documentation only, and dbt didn't check that:
-- the argument names matched those in your macro
-- the argument types were valid or consistent with the macro's Jinja definition
+Раньше dbt не требовал использовать стандартный набор значений для поля [`type`](/reference/resource-properties/arguments#type) у аргументов макросов в YAML. Поэтому поле `type` использовалось только для документации, и dbt не проверял, что:
+- имена аргументов совпадают с именами в макросе
+- типы аргументов допустимы и соответствуют определению макроса на Jinja
 
-Here's an example of a documented macro:
+Ниже приведён пример документированного макроса:
 
 <File name='macros/filename.yml'>
 
@@ -34,36 +34,36 @@ macros:
 
 </File>
 
-With this flag enabled (the default), dbt:
-- Validates macro arguments during project parsing.
-- Checks that all argument names in your YAML match those in the macro definition.
-- Raises warnings if the names or types don't match.
-- Validates that the [`type` values follow the supported format](/reference/resource-properties/arguments#supported-types).
-- If no arguments are documented in the YAML, infers them from the macro and includes them in the [`manifest.json` file](/reference/artifacts/manifest-json).
+Когда этот флаг включён (по умолчанию), dbt:
+- Проверяет аргументы макросов при разборе проекта.
+- Проверяет, что все имена аргументов в YAML совпадают с именами в определении макроса.
+- Выдаёт предупреждения, если имена или типы не совпадают.
+- Проверяет, что [значения `type` соответствуют поддерживаемому формату](/reference/resource-properties/arguments#supported-types).
+- Если в YAML не задокументированы аргументы, определяет их по макросу и включает в [файл `manifest.json`](/reference/artifacts/manifest-json).
 
-<Expandable alt_header="When does validation occur?">
+<Expandable alt_header="Когда выполняется валидация?">
 
-Macro argument validation runs during project parsing, not during macro execution. Any dbt command that parses the project triggers validation.
+Валидация аргументов макросов выполняется при разборе проекта, а не при выполнении макросов. Любая команда dbt, которая разбирает проект, запускает валидацию.
 
-- In <Constant name="core"/>:
-  - Validation runs as part of parsing for most commands (`parse`, `build`, `run`, `test`, `seed`, `snapshot`, `compile`).
-  - With a full parse, dbt validates all macros.
-  - With partial parsing (the default), dbt validates only macros affected by changed files.
-  - Use `--no-partial-parse` to force validation of all macros.
+- В <Constant name="core"/>:
+  - Валидация выполняется в рамках разбора для большинства команд (`parse`, `build`, `run`, `test`, `seed`, `snapshot`, `compile`).
+  - При полном разборе dbt проверяет все макросы.
+  - При частичном разборе (по умолчанию) dbt проверяет только макросы, затронутые изменёнными файлами.
+  - Используйте `--no-partial-parse`, чтобы принудительно проверить все макросы.
 
 </Expandable>
 
-## Impact
+## Влияние
 
-On its own, the flag emits warnings and builds continue. However, these warnings use the force-handled path and respect `--warn-error`, so projects with `--warn-error` set will see build failures at parse time.
+Сам по себе этот флаг приводит лишь к выдаче предупреждений, и сборки продолжаются. Однако эти предупреждения проходят через механизм принудительной обработки и учитывают `--warn-error`, поэтому в проектах с установленным `--warn-error` сборки будут завершаться с ошибкой на этапе разбора.
 
-This affects projects where the `arguments:` listed in a macro's YAML patch no longer match the macro's actual Jinja signature. For those projects, every command fails at parse time until you either update the YAML arguments to match the macro or remove the `arguments:` block entirely.
+Это затрагивает проекты, в которых аргументы `arguments:`, перечисленные в YAML-описании макроса, больше не соответствуют фактической сигнатуре макроса на Jinja. В таких проектах каждая команда завершается с ошибкой на этапе разбора, пока вы не обновите аргументы в YAML в соответствии с макросом или не удалите блок `arguments:` целиком.
 
-<Expandable alt_header="Recommended actions">
+<Expandable alt_header="Рекомендуемые действия">
 
-If `InvalidMacroAnnotation` warnings are appearing at parse time (or causing parse failures with `--warn-error` set), check each log line — it names the macro and the specific mismatch. In the `macros:` YAML block for each affected macro, align the `arguments:` entries with the `{% macro name(args) %}` declaration in the `.sql` file, or remove the `arguments:` block entirely.
+Если на этапе разбора появляются предупреждения `InvalidMacroAnnotation` (или они приводят к ошибкам разбора при установленном `--warn-error`), проверьте каждую строку журнала — в ней указаны макрос и конкретное несоответствие. В YAML-блоке `macros:` для каждого затронутого макроса приведите записи `arguments:` в соответствие с объявлением `{% macro name(args) %}` в файле `.sql` или удалите блок `arguments:` целиком.
 
-To silence the warnings without fixing the YAML, use `warn_error_options`:
+Чтобы отключить предупреждения, не исправляя YAML, используйте `warn_error_options`:
 
 <File name='dbt_project.yml'>
 
@@ -76,7 +76,7 @@ flags:
 
 </File>
 
-To opt out of this behavior, set the flag to `false`:
+Чтобы отключить это поведение, установите для флага значение `false`:
 
 <File name='dbt_project.yml'>
 

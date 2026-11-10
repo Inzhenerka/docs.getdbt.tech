@@ -1,6 +1,6 @@
 ---
 title: packages
-description: "Specify the third-party PyPI packages a Python user-defined function (UDF) needs so your warehouse installs them when it creates the function."
+description: "Укажите сторонние пакеты PyPI, необходимые пользовательской функции (UDF) на Python, чтобы хранилище данных установило их при создании функции."
 sidebar_label: "packages"
 id: packages
 ---
@@ -20,13 +20,13 @@ functions:
 
 </File>
 
-## Definition
+## Определение
 
-When creating Python UDFs, you can use the optional `packages` config to specify public third-party PyPI packages. You can list package names (for example, `numpy` and `pandas`) and pin versions (for example, `pandas==1.5.0`). The warehouse installs these packages when it creates the UDF, so your UDF can use functionality from external Python libraries.
+При создании UDF на Python можно использовать необязательную конфигурацию `packages`, чтобы указать общедоступные сторонние пакеты PyPI. Можно перечислить имена пакетов (например, `numpy` и `pandas`) и закрепить их версии (например, `pandas==1.5.0`). Хранилище данных устанавливает эти пакеты при создании UDF, чтобы функция могла использовать возможности внешних библиотек Python.
 
-On Snowflake, some packages are installed from the Anaconda repository, and you may need to [accept Anaconda's Terms of Service](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages#using-third-party-packages-from-anaconda) before you can use them.
+В Snowflake некоторые пакеты устанавливаются из репозитория Anaconda, и для их использования может потребоваться [принять условия обслуживания Anaconda](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages#using-third-party-packages-from-anaconda).
 
-Python UDFs are currently supported in Snowflake and BigQuery. Each warehouse uses a different mechanism to specify packages. For example:
+В настоящее время UDF на Python поддерживаются в Snowflake и BigQuery. Каждое хранилище данных использует свой механизм указания пакетов. Например:
 
 <Tabs
   defaultValue="snowflake"
@@ -59,7 +59,7 @@ functions:
 
 </File>
 
-Compiled SQL:
+Скомпилированный SQL:
 
 ```sql
 CREATE OR REPLACE FUNCTION my_schema.is_positive_int(a_string STRING)
@@ -99,7 +99,7 @@ functions:
 
 </File>
 
-Compiled SQL:
+Скомпилированный SQL:
 
 ```sql
 CREATE OR REPLACE FUNCTION my_dataset.is_positive_int(a_string STRING)
@@ -120,11 +120,11 @@ def main(a_string):
 
 </Tabs>
 
-## Related documentation
+## Связанная документация
 
-- [User-defined functions](/docs/build/udfs)
-- [Function properties](/reference/function-properties)
-- [Function configurations](/reference/function-configs)
+- [Пользовательские функции](/docs/build/udfs)
+- [Свойства функций](/reference/function-properties)
+- [Конфигурации функций](/reference/function-configs)
 - [runtime_version](/reference/resource-configs/runtime-version)
 - [entry_point](/reference/resource-configs/entry-point)
 - [type](/reference/resource-configs/type)

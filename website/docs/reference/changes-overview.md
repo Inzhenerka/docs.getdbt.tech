@@ -1,52 +1,52 @@
 ---
-title: "Deprecation & warnings overview"
+title: "Обзор устаревших возможностей и предупреждений"
 id: "changes-overview"
-sidebar_label: "Deprecation & warnings overview"
-description: "Quick reference page to help you understand deprecations, behavior changes, and deprecated flags in dbt"
+sidebar_label: "Устаревшие возможности и предупреждения"
+description: "Краткий справочник по устаревшим возможностям, изменениям поведения и устаревшим флагам в dbt"
 hide_table_of_contents: true
 ---
 
-When using dbt, you may see warnings or other changes that need your attention. These changes help us move forward with the latest version of dbt and improve the experience for all users. 
+При работе с dbt вы можете столкнуться с предупреждениями или другими изменениями, требующими вашего внимания. Эти изменения помогают нам развивать dbt и улучшать работу с ним для всех пользователей. 
 
-Use this page to understand the different types of changes, what to do, and where to find more information.
+На этой странице описаны различные типы изменений, необходимые действия и источники дополнительной информации.
 
 <div className="grid--3-col">
 
 <Card
-  title="Deprecations"
-  body="Features in your project code (models, YAML, macros) that still work but will be removed.<br/><br/><strong>Impact:</strong> Currently warnings; will cause errors in future versions.<br/><br/><strong>Action:</strong> Update your project code to use the new syntax."
+  title="Устаревшие возможности"
+  body="Возможности, используемые в коде вашего проекта (моделях, YAML, макросах), которые пока работают, но будут удалены.<br/><br/><strong>Влияние:</strong> Сейчас вызывают предупреждения; в будущих версиях будут вызывать ошибки.<br/><br/><strong>Действие:</strong> Обновите код проекта, чтобы использовать новый синтаксис."
   link="/reference/deprecations"
   icon="dbt-bit"
 />
 
 <Card
-  title="Behavior change flags"
-  body="Settings in your dbt_project.yml file that let you opt in or out of new behaviors during migration periods.<br/><br/><strong>Impact:</strong> Controls whether dbt uses old or new behavior; defaults change over time.<br/><br/><strong>Action:</strong> Set flags to control timing of adoption."
+  title="Флаги изменения поведения"
+  body="Настройки в файле dbt_project.yml, которые позволяют включать или отключать новое поведение в переходные периоды.<br/><br/><strong>Влияние:</strong> Определяют, использует ли dbt старое или новое поведение; значения по умолчанию со временем меняются.<br/><br/><strong>Действие:</strong> Настройте флаги, чтобы выбрать момент перехода на новое поведение."
   link="/reference/global-configs/behavior-changes"
   icon="dbt-bit"
 />
 
 <Card
-  title="Deprecated CLI flags"
-  body="Command-line flags passed to dbt commands that are being removed in dbt v2.<br/><br/><strong>Impact:</strong> Some ignored (with warnings); <strong>--models</strong> flag will error in dbt v2.<br/><br/><strong>Action:</strong> Update job definitions and scripts to remove or replace these flags."
+  title="Устаревшие флаги CLI"
+  body="Флаги командной строки, передаваемые командам dbt, которые будут удалены в dbt v2.<br/><br/><strong>Влияние:</strong> Некоторые игнорируются (с предупреждениями); флаг <strong>--models</strong> будет вызывать ошибку в dbt v2.<br/><br/><strong>Действие:</strong> Обновите определения заданий и скрипты, чтобы удалить или заменить эти флаги."
   link="/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags"
   icon="square-terminal"
 />
 
 </div>
 
-## Preparing for <Constant name="fusion" />
+## Подготовка к переходу на <Constant name="fusion" />
 
-If you're upgrading to <Constant name="fusion" />, you should:
+Если вы переходите на <Constant name="fusion" />, вам следует:
 
-- [ ] Resolve all [deprecations](/reference/deprecations) to avoid causing errors in <Constant name="fusion" />.
-- [ ] Review [behavior change flags](/reference/global-configs/behavior-changes#behavior-change-flags) and the **Removed** column to see which flags are always-on in <Constant name="fusion" /> versus which remain configurable.
-- [ ] Update [deprecated CLI flags](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags) to avoid errors in <Constant name="fusion" />.
+- [ ] Устранить использование всех [устаревших возможностей](/reference/deprecations), чтобы избежать ошибок в <Constant name="fusion" />.
+- [ ] Изучить [флаги изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags) и столбец **Removed**, чтобы узнать, какие флаги всегда включены в <Constant name="fusion" />, а какие по-прежнему можно настраивать.
+- [ ] Обновить используемые [устаревшие флаги CLI](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags), чтобы избежать ошибок в <Constant name="fusion" />.
 
-## Related docs
+## Связанная документация
 
-- [Full deprecations list](/reference/deprecations)
-- [Behavior change flags](/reference/global-configs/behavior-changes)
-- [Upgrading to <Constant name="fusion" />](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2)
-- [<Constant name="fusion" /> readiness checklist](/docs/dbt/dbt-readiness)
-- [Events and logging](/reference/events-logging)
+- [Полный список устаревших возможностей](/reference/deprecations)
+- [Флаги изменения поведения](/reference/global-configs/behavior-changes)
+- [Переход на <Constant name="fusion" />](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2)
+- [Контрольный список готовности к <Constant name="fusion" />](/docs/dbt/dbt-readiness)
+- [События и журналирование](/reference/events-logging)

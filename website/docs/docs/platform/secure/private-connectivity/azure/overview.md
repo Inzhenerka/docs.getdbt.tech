@@ -1,8 +1,8 @@
 ---
-title: "Azure private connectivity"
+title: "Частные подключения в Azure"
 id: azure-overview
-description: "Configure private connections for Azure deployments of the dbt platform."
-sidebar_label: "About Azure Private Link"
+description: "Настройка частных подключений для развертываний платформы dbt в Azure."
+sidebar_label: "Об Azure Private Link"
 availability:
   surface: platform
   access: paid_plan
@@ -14,12 +14,12 @@ import AzureMatrix from '/snippets/_azure-private-connectivity-matrix.md';
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-Azure Private Link enables secure, private connectivity between <Constant name="dbt" /> and your Azure-hosted services. With Private Link, traffic between dbt and your data platforms or self-hosted services stays within the Azure network and does not traverse the public internet.
+Azure Private Link обеспечивает безопасное частное подключение между <Constant name="dbt" /> и вашими сервисами, размещенными в Azure. При использовании Private Link трафик между dbt и вашими платформами данных или самостоятельно размещенными сервисами остается в сети Azure и не проходит через общедоступный интернет.
 
-For more details, refer to the [Azure Private Link documentation](https://learn.microsoft.com/en-us/azure/private-link/).
+Дополнительные сведения см. в [документации Azure Private Link](https://learn.microsoft.com/en-us/azure/private-link/).
 
 <AzureMatrix />
 
-## Cross-region private connections
+## Межрегиональные частные подключения
 
-dbt Labs has globally connected private networks specifically used to host private endpoints, which are connected to <Constant name="dbt" /> instance environments. This connectivity allows <Constant name="dbt" /> environments to connect to any supported region from any <Constant name="dbt" /> instance within the same cloud provider network. To ensure security, access to these endpoints is protected by security groups, network policies, and application connection safeguards, in addition to the authentication and authorization mechanisms provided by each of the connected platforms.
+dbt Labs располагает частными сетями, соединенными между собой по всему миру и предназначенными специально для размещения частных конечных точек, которые подключены к средам экземпляров <Constant name="dbt" />. Такое сетевое взаимодействие позволяет средам <Constant name="dbt" /> подключаться к любому поддерживаемому региону из любого экземпляра <Constant name="dbt" /> в пределах сети одного облачного провайдера. Для обеспечения безопасности доступ к этим конечным точкам защищен группами безопасности, сетевыми политиками и средствами защиты подключений на уровне приложений в дополнение к механизмам аутентификации и авторизации, предоставляемым каждой из подключенных платформ.

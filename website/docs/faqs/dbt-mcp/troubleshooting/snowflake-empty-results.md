@@ -1,10 +1,10 @@
 ---
-title: "The agent returns no metrics or empty results"
-sidebar_label: "The agent returns no metrics or empty results"
-description: "Troubleshooting: The agent returns no metrics or empty results"
+title: "Агент не возвращает метрики или возвращает пустые результаты"
+sidebar_label: "Агент не возвращает метрики или возвращает пустые результаты"
+description: "Устранение неполадок: агент не возвращает метрики или возвращает пустые результаты"
 id: mcp-troubleshoot-snowflake-empty-results
 ---
 
-- Confirm the project you authorized has a configured [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) with metrics and dimensions.
-- Check that the user who connected has at least read-only access to that project &mdash; the agent only sees what the user can see.
-- If you scoped the OAuth connection to a single project, make sure it's the project that contains your metrics.
+- Убедитесь, что в проекте, к которому вы предоставили доступ, настроен [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) с метриками и измерениями.
+- Проверьте, что у подключившегося пользователя есть как минимум доступ на чтение к этому проекту &mdash; агент видит только то, что доступно пользователю.
+- Если вы ограничили OAuth-подключение одним проектом, убедитесь, что именно в этом проекте находятся ваши метрики.

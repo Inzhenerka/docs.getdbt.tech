@@ -385,6 +385,8 @@ my-profile:
 
 Некоторые запросы неизбежно терпят неудачу на разных этапах процесса. Чтобы справиться с этими случаями, dbt поддерживает <Term id="grain">тонкую настройку</Term> конфигурации для тайм-аутов и повторных попыток запросов.
 
+<a id="job_execution_timeout_seconds" />
+
 #### job_execution_timeout_seconds {#jobexecutiontimeout_seconds}
 
 В более ранних версиях `dbt-bigquery` эта же настройка называлась `timeout_seconds`.
@@ -414,9 +416,9 @@ my-profile:
 
 <VersionBlock firstVersion="1.12">
 
-You can set the `job_execution_timeout_seconds` config in your BigQuery profile. The value set at the profile level becomes the default and applies to all runs. To override this default value, you can set the config individually per model, snapshot, seed, or test.
+Укажите `job_execution_timeout_seconds` в профиле BigQuery, чтобы задать тайм-аут по умолчанию для всех запусков. Переопределить его можно отдельно для модели, снимка, seed или теста.
 
-- Profile-level configuration:
+- Настройка на уровне профиля:
 
   ```yaml
   my-profile:
@@ -430,7 +432,7 @@ You can set the `job_execution_timeout_seconds` config in your BigQuery profile.
         job_execution_timeout_seconds: 600 # 10 minutes
   ```
 
-- Resource-level configuration:
+- Настройка на уровне ресурса:
 
   <Tabs>
   <TabItem value="model" label="Models">
@@ -465,7 +467,7 @@ You can set the `job_execution_timeout_seconds` config in your BigQuery profile.
         job_execution_timeout_seconds: 600
   ```
 
-  For seeds, the timeout applies to the SQL that runs after the CSV is uploaded. The upload step uses the profile-level timeout.
+  Для seed тайм-аут действует на SQL, выполняемый после загрузки CSV. Для самой загрузки используется тайм-аут из профиля.
 
   </TabItem>
   <TabItem value="snapshots" label="Snapshots">
@@ -496,7 +498,7 @@ You can set the `job_execution_timeout_seconds` config in your BigQuery profile.
 
 </VersionBlock>
   
-No timeout is set by default. For historical reasons, some query types use a default of 300 seconds when the `job_execution_timeout_seconds` configuration is not set. When you do set the `job_execution_timeout_seconds`, if any dbt query takes more than the configured number of seconds to finish, the `dbt-bigquery` adapter will run into an exception:
+По умолчанию тайм-аут не задан. По историческим причинам для некоторых типов запросов без настройки `job_execution_timeout_seconds` используется значение 300 секунд. Если параметр задан, адаптер `dbt-bigquery` выдаёт исключение, когда запрос dbt не завершается за указанное время:
 
 ```
  Operation did not complete within the designated timeout.
@@ -504,8 +506,8 @@ No timeout is set by default. For historical reasons, some query types use a def
 
 :::caution Note
 
-The `job_execution_timeout_seconds` represents the number of seconds to wait for the [underlying HTTP transport](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). It _doesn't_ represent the maximum allowable time for a BigQuery job itself. 
-Normally, BigQuery keeps running the job even if this timeout is reached; however, `dbt-bigquery` will send a request to BigQuery to cancel it.
+Параметр `job_execution_timeout_seconds` задаёт время ожидания [на уровне HTTP-транспорта](https://cloud.google.com/python/docs/reference/bigquery/latest/google.cloud.bigquery.job.QueryJob#google_cloud_bigquery_job_QueryJob_result). У самого задания BigQuery может быть другой предел времени выполнения.
+Обычно BigQuery продолжает выполнять задание после истечения этого времени, но `dbt-bigquery` отправит запрос на его отмену.
 
 :::
 

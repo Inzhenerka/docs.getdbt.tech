@@ -1,6 +1,6 @@
 ---
-title: "Tests object schema"
-sidebar_label: "Tests"
+title: "Схема объекта тестов"
+sidebar_label: "Тесты"
 id: "discovery-schema-environment-applied-tests"
 availability:
   surface: platform
@@ -10,38 +10,38 @@ availability:
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Tests](/docs/build/data-tests) are assertions you make about your models and other resources in your dbt project. When you run `dbt test`, dbt will tell you if each test in your project passes or fails. You can query tests through the Discovery API to understand information about them.
+[Тесты](/docs/build/data-tests) — это утверждения о моделях и других ресурсах вашего проекта dbt. При запуске `dbt test` dbt сообщает, прошёл ли каждый тест в вашем проекте или завершился неудачей. Вы можете запрашивать тесты через Discovery API, чтобы получать информацию о них.
 
-The [Example query](#example-query) illustrates a few fields you can query with the `tests` object and how to filter by last-known result. Refer to [Fields](#fields) to view the entire schema, which provides all possible fields you can query.
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать у объекта `tests`, и способ фильтрации по последнему известному результату. Полная схема со всеми доступными для запроса полями приведена в разделе [Поля](#fields).
 
-### Arguments
+### Аргументы
 
-When querying for `tests`, you can use the following arguments:
+При запросе `tests` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="tests" />
 
-:::note Deprecation: `lastKnownResult`
+:::note Устаревшее поле: `lastKnownResult`
 
-The single-value filter field `lastKnownResult: TestStatus` is deprecated. You should now use `lastKnownResults: [TestStatus]` to filter tests by one or more result statuses. If you pass both fields in the same query, `lastKnownResults` takes precedence. Refer to [Filter tests by last-known result](#filter-tests-by-last-known-result) for more information.
+Поле фильтра с одним значением `lastKnownResult: TestStatus` устарело. Теперь для фильтрации тестов по одному или нескольким статусам результата следует использовать `lastKnownResults: [TestStatus]`. Если передать оба поля в одном запросе, приоритет будет у `lastKnownResults`. Подробнее см. в разделе [Фильтрация тестов по последнему известному результату](#filter-tests-by-last-known-result).
 
 :::
 
-### Filter tests by last-known result
+### Фильтрация тестов по последнему известному результату {#filter-tests-by-last-known-result}
 
-You can filter tests by one or more last-known result values. Use `lastKnownResults` with any combination of these `TestStatus` values: 
+Вы можете фильтровать тесты по одному или нескольким значениям последнего известного результата. Используйте `lastKnownResults` с любой комбинацией следующих значений `TestStatus`: 
 - `pass`
 - `fail`
 - `error`
 - `skipped`
 - `warn`
 
-You can still use the deprecated `lastKnownResult`, but If you pass both fields in the same query, `lastKnownResults` takes precedence.
+Вы по-прежнему можете использовать устаревшее поле `lastKnownResult`, но если передать оба поля в одном запросе, приоритет будет у `lastKnownResults`.
 
-An empty list `[]`, omitting `lastKnownResults`, or passing `null` applies no filter on last-known result. All tests are returned regardless of result status.
+При передаче пустого списка `[]`, отсутствии `lastKnownResults` или передаче `null` фильтрация по последнему известному результату не применяется. Возвращаются все тесты независимо от статуса результата.
 
-### Example query
+### Пример запроса {#example-query}
 
-You can return tests whose last-known result is `error` or `fail`:
+Вы можете получить тесты, последний известный результат которых — `error` или `fail`:
 
 ```graphql
 query {
@@ -71,7 +71,7 @@ query {
 }
 ```
 
-You can combine `lastKnownResults` with other filters on `TestAppliedFilter`, such as `testTypes`:
+Вы можете сочетать `lastKnownResults` с другими фильтрами в `TestAppliedFilter`, например с `testTypes`:
 
 ```graphql
 query {
@@ -102,12 +102,12 @@ query {
 }
 ```
 
-### Fields
+### Поля {#fields}
 
-When querying for `tests`, you can use the following fields:
+При запросе `tests` можно использовать следующие поля:
 
 <SchemaTable nodeName="TestAppliedStateNodeConnection" />
 
-### Key fields from nodes
+### Основные поля узлов
 
 <SchemaTable nodeName="TestAppliedStateNode" />

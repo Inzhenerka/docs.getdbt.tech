@@ -1,27 +1,27 @@
 ---
-title: "dbt Wizard CLI configuration"
+title: "Конфигурация dbt Wizard CLI"
 id: "wizard-config"
-description: "Full reference for both dbt Wizard configuration files — the agent runtime config and the per-project dbt Wizard settings."
-sidebar_label: "Config reference"
+description: "Полный справочник по обоим файлам конфигурации dbt Wizard — конфигурации среды выполнения агента и настройкам dbt Wizard для отдельных проектов."
+sidebar_label: "Справочник по конфигурации"
 tags: [AI, Wizard]
 availability: local_all
 ---
 
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# <Constant name="wizard" /> config reference <Lifecycle status="beta"/>
+# Справочник по конфигурации <Constant name="wizard" /> <Lifecycle status="beta"/>
 
 <IntroText>
 
-<Constant name="wizard"/> stores configuration in two TOML files under `~/.dbt/wizard/`, each controlling a different part of the product.
+<Constant name="wizard"/> хранит конфигурацию в двух файлах TOML в каталоге `~/.dbt/wizard/`, каждый из которых управляет отдельной частью продукта.
 
 </IntroText>
 
-## The two config files
+## Два файла конфигурации {#the-two-config-files}
 
 <WizardFeedbackCallout />
 
-TOML (Tom's Obvious, Minimal Language) is a config file format. If you've written YAML or JSON before, it'll feel familiar &mdash; keys and values are separated by ` = ` (with spaces before and after the equals sign), and nested sections use `[section.name]` headers instead of indentation or curly braces. For example:
+TOML (Tom's Obvious, Minimal Language) — это формат файлов конфигурации. Если вы уже работали с YAML или JSON, он покажется вам знакомым &mdash; ключи и значения разделяются знаком ` = ` (с пробелами до и после знака равенства), а для вложенных разделов используются заголовки `[section.name]` вместо отступов или фигурных скобок. Например:
 
 <File name='~/.dbt/wizard/config.toml'>
 
@@ -33,126 +33,126 @@ trust_level = "trusted"
 ```
 </File>
 
-This config sets the default AI model for all new sessions and applies to all future invocations across all projects. You can override the default AI model for a specific project by setting the `model` key in the `wizard_config.toml` file for that project or using the `/model` picker in the text-based user interface (TUI).
+Эта конфигурация задаёт модель ИИ по умолчанию для всех новых сеансов и применяется ко всем последующим запускам во всех проектах. Вы можете переопределить модель ИИ по умолчанию для конкретного проекта, задав ключ `model` в файле `wizard_config.toml` для этого проекта или воспользовавшись меню выбора `/model` в текстовом пользовательском интерфейсе (TUI).
 
 <SimpleTable>
 
-| File | Controls | When to use |
+| Файл | Чем управляет | Когда использовать |
 |------|----------|-------------|
-| `~/.dbt/wizard/config.toml` | Agent runtime — AI model, MCP servers, approval rules, trusted projects | Change agent-level behavior across all sessions |
-| `~/.dbt/wizard/wizard_config.toml` | Per-project settings — dbt executable path, deferral, saved model preference | Change how <Constant name="wizard"/> works with a specific dbt project |
+| `~/.dbt/wizard/config.toml` | Среда выполнения агента — модель ИИ, серверы MCP, правила подтверждения, доверенные проекты | Чтобы изменить поведение агента во всех сеансах |
+| `~/.dbt/wizard/wizard_config.toml` | Настройки отдельных проектов — путь к исполняемому файлу dbt, отложенное разрешение ссылок, сохранённые предпочтения модели | Чтобы изменить работу <Constant name="wizard"/> с конкретным проектом dbt |
 
 </SimpleTable>
 
-Note that `dbt_project.yml` is separate from both and controls how dbt builds your project.
+Обратите внимание: `dbt_project.yml` — это отдельный файл, который управляет тем, как dbt собирает ваш проект.
 
-## Common tasks
+## Типовые задачи
 
 <SimpleTable>
 
-| Goal | Edit | Restart needed? |
+| Цель | Что изменить | Нужен перезапуск? |
 |------|------|----------------|
-| Change the default AI model | `config.toml` → `model = "gpt-4o"` | Yes |
-| Point <Constant name="wizard"/> at a specific dbt binary | `wizard_config.toml` → `path` | Yes |
-| Add the dbt MCP server | `config.toml` → `[mcp_servers.dbt]` | Yes |
-| Mark a repo as trusted | `config.toml` → `trust_level = "trusted"` under `[projects."..."]` | Yes |
-| Change approval or sandbox defaults | `config.toml` | Yes |
+| Изменить модель ИИ по умолчанию | `config.toml` → `model = "gpt-4o"` | Да |
+| Указать <Constant name="wizard"/> конкретный исполняемый файл dbt | `wizard_config.toml` → `path` | Да |
+| Добавить сервер dbt MCP | `config.toml` → `[mcp_servers.dbt]` | Да |
+| Пометить репозиторий как доверенный | `config.toml` → `trust_level = "trusted"` в разделе `[projects."..."]` | Да |
+| Изменить настройки подтверждения или песочницы по умолчанию | `config.toml` | Да |
 
 </SimpleTable>
 
-## Config precedence
+## Приоритет настроек {#config-precedence}
  
-Settings resolve in this order (highest to lowest):
+Настройки применяются в следующем порядке (от наивысшего приоритета к низшему):
  
-1. CLI flags (`-m`, `-c`) at invocation
-2. In-session model picker (`/model`)
+1. Флаги CLI (`-m`, `-c`), указанные при запуске
+2. Меню выбора модели в сеансе (`/model`)
 3. `~/.dbt/wizard/config.toml`
 4. `~/.dbt/wizard/wizard_config.toml`
-5. Built-in defaults
+5. Встроенные значения по умолчанию
 
 ## config.toml
 
-Global agent settings for models, approvals, sandboxing, web search, and MCP servers.
+Глобальные настройки агента: модели, подтверждения, песочница, веб-поиск и серверы MCP.
 
-`~/.dbt/wizard/config.toml` controls how the agent session behaves. It's created automatically when <Constant name="wizard"/> is installed.
+`~/.dbt/wizard/config.toml` управляет поведением сеанса агента. Он создаётся автоматически при установке <Constant name="wizard"/>.
 
-### Configuration keys
-This is the list of configuration keys that can be set in `config.toml`.
+### Ключи конфигурации
+Ниже перечислены ключи конфигурации, которые можно задать в `config.toml`.
 - `model`
 - `approval_policy`
 - `sandbox_mode`
 - `web_search`
 
-You can view more by running `wizard config --help`.
+Чтобы узнать больше, выполните `wizard config --help`.
 
-#### AI model and API
+#### Модель ИИ и API
 
-New <Constant name="wizard"/> CLI installs use dbt Labs-managed models out of the box. Refer to [Configure BYOK](/docs/dbt-ai/wizard-byok) to use a different provider.
-
-<SimpleTable>
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| `model` | string | — | Default AI model for new sessions. Refer to [AI model ID format](#ai-model-id-format) below. Change interactively with `/model` in the TUI. |
-
-</SimpleTable>
-
-#### Behavior
+При новой установке CLI <Constant name="wizard"/> по умолчанию используются модели, управляемые dbt Labs. Чтобы использовать другого поставщика, см. раздел [Настройка BYOK](/docs/dbt-ai/wizard-byok).
 
 <SimpleTable>
 
-| Key | Type | Default | Description |
+| Ключ | Тип | По умолчанию | Описание |
 |-----|------|---------|-------------|
-| `approval_policy` | string | `on-request` | When Wizard asks before executing commands. Options: `untrusted` (ask for non-trusted commands), `on-request` (<Constant name="wizard"/> decides), `never` (run without asking). |
-| `sandbox_mode` | string | `read-only` | Shell sandbox policy. Options: `read-only` (default), `workspace-write` (allow writes inside project dir), `danger-full-access` (no restrictions). |
-| `web_search` | string | `cached` | Web search mode. Options: `disabled`, `cached`, or `live`. |
+| `model` | string | — | Модель ИИ по умолчанию для новых сеансов. См. раздел [Формат идентификатора модели ИИ](#ai-model-id-format) ниже. Для интерактивного изменения используйте `/model` в TUI. |
 
 </SimpleTable>
 
-#### Project trust
+#### Поведение
 
-Set `trust_level` per-project to allow <Constant name="wizard"/> to use project-local config:
+<SimpleTable>
+
+| Ключ | Тип | По умолчанию | Описание |
+|-----|------|---------|-------------|
+| `approval_policy` | string | `on-request` | Определяет, когда Wizard запрашивает подтверждение перед выполнением команд. Варианты: `untrusted` (запрашивать для недоверенных команд), `on-request` (решает <Constant name="wizard"/>), `never` (выполнять без запроса). |
+| `sandbox_mode` | string | `read-only` | Политика песочницы для командной оболочки. Варианты: `read-only` (по умолчанию), `workspace-write` (разрешить запись в каталоге проекта), `danger-full-access` (без ограничений). |
+| `web_search` | string | `cached` | Режим веб-поиска. Варианты: `disabled`, `cached` или `live`. |
+
+</SimpleTable>
+
+#### Доверие к проекту
+
+Задайте `trust_level` для отдельного проекта, чтобы разрешить <Constant name="wizard"/> использовать локальную конфигурацию проекта:
 
 ```toml
 [projects."/absolute/path/to/your-repo"]
 trust_level = "trusted"
 ```
 
-#### MCP servers
+#### Серверы MCP
 
 ```toml
 [mcp_servers.dbt]
 command = "DBT_MCP_ENDPOINT"
 ```
 
-### AI model ID format
+### Формат идентификатора модели ИИ {#ai-model-id-format}
 
-AI model IDs in `config.toml` use the public model ID, such as `gpt-4o`.
+В качестве идентификаторов моделей ИИ в `config.toml` используются публичные идентификаторы моделей, например `gpt-4o`.
 
-To list all available AI model IDs:
+Чтобы вывести список всех доступных идентификаторов моделей ИИ:
 
 ```bash
 wizard debug models
 ```
 
-### Environment variables
+### Переменные окружения
 
-Any key can be set as an environment variable using the `DBT_WIZARD_` prefix in `SCREAMING_SNAKE_CASE`:
+Любой ключ можно задать через переменную окружения с префиксом `DBT_WIZARD_`, записав имя в формате `SCREAMING_SNAKE_CASE`:
 
 ```bash
 export DBT_WIZARD_MODEL=gpt-4o
 export DBT_WIZARD_APPROVAL_POLICY=never
-export OPENAI_API_KEY=sk-...        # OpenAI (no prefix needed)
-export ANTHROPIC_API_KEY=sk-ant-... # Anthropic (no prefix needed)
+export OPENAI_API_KEY=sk-...        # OpenAI (префикс не нужен)
+export ANTHROPIC_API_KEY=sk-ant-... # Anthropic (префикс не нужен)
 ```
 
-`OPENAI_API_KEY` and `ANTHROPIC_API_KEY` are read directly without the `DBT_WIZARD_` prefix, following each provider's convention.
+`OPENAI_API_KEY` и `ANTHROPIC_API_KEY` считываются напрямую без префикса `DBT_WIZARD_`, в соответствии с соглашениями каждого поставщика.
 
-### When it's read
+### Когда считывается файл
 
-`config.toml` is read at session start when you run `wizard`. Changes take effect only after you exit and restart the CLI. Per-invocation `-c` flags and the in-session `/model` picker override this file for that session only.
+`config.toml` считывается в начале сеанса при запуске `wizard`. Изменения вступают в силу только после выхода из CLI и его перезапуска. Флаги `-c`, указанные для отдельного запуска, и меню выбора `/model` внутри сеанса переопределяют настройки этого файла только для текущего сеанса.
 
-### Example
+### Пример
 
 ```toml
 model = "gpt-4o"
@@ -166,39 +166,39 @@ command = "DBT_MCP_ENDPOINT"
 
 ## wizard_config.toml
 
-Per-project settings Wizard writes during onboarding, including dbt path and deferral settings.
+Настройки отдельных проектов, которые Wizard записывает во время первоначальной настройки, включая путь к dbt и параметры отложенного разрешения ссылок.
 
-`~/.dbt/wizard/wizard_config.toml` stores what <Constant name="wizard"/> knows about each of your dbt projects. <Constant name="wizard"/> writes to this file automatically during onboarding and when you change project settings. You can also edit it manually.
+`~/.dbt/wizard/wizard_config.toml` хранит сведения <Constant name="wizard"/> о каждом из ваших проектов dbt. <Constant name="wizard"/> автоматически записывает данные в этот файл во время первоначальной настройки и при изменении настроек проекта. Вы также можете редактировать его вручную.
 
-### Configuration keys
+### Ключи конфигурации
 
 <SimpleTable>
 
-| Key | Description |
+| Ключ | Описание |
 |-----|-------------|
-| `version` | Schema version for this file (currently `1`). Don't change this manually. |
-| `global.terms_of_use_accepted_at` | Timestamp of when you accepted the <Constant name="wizard"/> Terms of Use. Written once under the `[global]` section and applies across all projects. |
-| `global.dbt_compile_on_startup` | Whether to compile the development project at startup. Defaults to `true`. |
-| `global.prod_parse_on_startup` | Whether to parse the production environment and refresh deferral state at startup. Defaults to `true`. |
-| `global.prod_parse_args` | Arguments for the production parse. Defaults to `["parse", "--target", "prod"]`. |
-| `global.prod_state_ttl_hours` | Number of hours a production state snapshot remains fresh. Defaults to `24`. |
-| `global.prod_state_dir` | Directory for production state snapshots. Defaults to `target/prod-state` in the project. |
-| `global.compile_extra_args` | Extra arguments to append when <Constant name="wizard" /> compiles any project without a project-specific override. |
-| `onboarded_at` | Timestamp of when you onboarded this project in <Constant name="wizard"/>. |
-| `path` | Path to the dbt binary <Constant name="wizard"/> should use for this project. |
-| `compile_extra_args` | Extra arguments to append when <Constant name="wizard" /> compiles this project. |
-| `prod_parse_args` | Project-specific arguments for the production parse command. |
-| `deferral.mode` | Who handles [deferral](/reference/node-selection/defer) for this project. Refer to [Deferral](#deferral) below. |
-| `deferral.target` | The [target](/docs/local/profiles.yml) from your `profiles.yml` that <Constant name="wizard"/> compiles and defers to when `deferral.mode` is `"wizard"` (for example, `"prod"`). |
-| `deferral.state` | Path to a state directory when `deferral.mode` is `"manual"`. |
-| `deferral.favor_state` | Whether deferred relations take precedence. Defaults to `true`. |
-| `profile_override.path` | Path to an alternative `profiles.yml` file for this project. |
-| `profile_override.profile` | Profile name to use from the selected profiles file. |
-| `profile_override.target` | Target to use from the selected profile. |
+| `version` | Версия схемы этого файла (сейчас `1`). Не изменяйте её вручную. |
+| `global.terms_of_use_accepted_at` | Отметка времени принятия Условий использования <Constant name="wizard"/>. Записывается один раз в разделе `[global]` и применяется ко всем проектам. |
+| `global.dbt_compile_on_startup` | Определяет, нужно ли компилировать проект разработки при запуске. По умолчанию `true`. |
+| `global.prod_parse_on_startup` | Определяет, нужно ли выполнять разбор производственной среды и обновлять состояние для отложенного разрешения ссылок при запуске. По умолчанию `true`. |
+| `global.prod_parse_args` | Аргументы для разбора производственной среды. По умолчанию `["parse", "--target", "prod"]`. |
+| `global.prod_state_ttl_hours` | Количество часов, в течение которых снимок состояния производственной среды считается актуальным. По умолчанию `24`. |
+| `global.prod_state_dir` | Каталог для снимков состояния производственной среды. По умолчанию `target/prod-state` в проекте. |
+| `global.compile_extra_args` | Дополнительные аргументы, добавляемые при компиляции любого проекта в <Constant name="wizard" />, если для проекта не задано переопределение. |
+| `onboarded_at` | Отметка времени первоначальной настройки этого проекта в <Constant name="wizard"/>. |
+| `path` | Путь к исполняемому файлу dbt, который <Constant name="wizard"/> должен использовать для этого проекта. |
+| `compile_extra_args` | Дополнительные аргументы, добавляемые при компиляции этого проекта в <Constant name="wizard" />. |
+| `prod_parse_args` | Аргументы команды разбора производственной среды для конкретного проекта. |
+| `deferral.mode` | Определяет, кто управляет [отложенным разрешением ссылок](/reference/node-selection/defer) для этого проекта. См. раздел [Отложенное разрешение ссылок](#deferral) ниже. |
+| `deferral.target` | [Целевая среда (target)](/docs/local/profiles.yml) из вашего `profiles.yml`, которую <Constant name="wizard"/> компилирует и использует для отложенного разрешения ссылок, когда `deferral.mode` имеет значение `"wizard"` (например, `"prod"`). |
+| `deferral.state` | Путь к каталогу состояния, когда `deferral.mode` имеет значение `"manual"`. |
+| `deferral.favor_state` | Определяет, имеют ли приоритет отношения, используемые при отложенном разрешении ссылок. По умолчанию `true`. |
+| `profile_override.path` | Путь к альтернативному файлу `profiles.yml` для этого проекта. |
+| `profile_override.profile` | Имя профиля из выбранного файла профилей, который следует использовать. |
+| `profile_override.target` | Целевая среда из выбранного профиля, которую следует использовать. |
 
 </SimpleTable>
 
-Settings are stored per-project under `[projects."/absolute/path/to/repo"]` blocks:
+Настройки хранятся отдельно для каждого проекта в блоках `[projects."/absolute/path/to/repo"]`:
 
 <File name='~/.dbt/wizard/wizard_config.toml'>
 ```toml
@@ -221,26 +221,26 @@ favor_state = true
 ```
 </File>
 
-#### Deferral
+#### Отложенное разрешение ссылок {#deferral}
 
-[Deferral](/reference/node-selection/defer) lets <Constant name="wizard"/> reuse models that are already built elsewhere (for example, in production) instead of rebuilding everything when you're only working on part of a project, saving you time and warehouse cost.
+[Отложенное разрешение ссылок (deferral)](/reference/node-selection/defer) позволяет <Constant name="wizard"/> повторно использовать модели, уже собранные в другой среде (например, в производственной), вместо того чтобы пересобирать всё, когда вы работаете только с частью проекта. Это экономит время и снижает затраты на хранилище данных.
 
-The `deferral.mode` setting in `wizard_config.toml` controls who handles deferral. It accepts six values, and <Constant name="wizard"/> usually sets it for you during onboarding:
+Настройка `deferral.mode` в `wizard_config.toml` определяет, кто управляет отложенным разрешением ссылок. Она принимает шесть значений, и <Constant name="wizard"/> обычно задаёт её за вас во время первоначальной настройки:
 
 <SimpleTable>
-| `deferral.mode` value | What it means |
+| Значение `deferral.mode` | Что оно означает |
 |---|---|
-| `"wizard"` | <Constant name="wizard"/> handles deferral for you. You tell <Constant name="wizard"/> which [target](/docs/local/profiles.yml) from your `profiles.yml` to defer to (it tries to detect one automatically when you first set up the project). <Constant name="wizard"/> then compiles that target and reuses its models for any upstream models you haven't built yourself. |
-| `"fusion_cloud"` | <Constant name="dbt_platform" /> handles deferral against your connected environment, so <Constant name="wizard"/> doesn't manage any local state. Set automatically when you're connected to the platform. |
-| `"cloud_cli"` | The <Constant name="platform_cli" /> manages credentials and deferral through <Constant name="dbt_platform" />, so <Constant name="wizard" /> skips its production compile and deferral flag injection. |
-| `"dbt_state"` | dbt State or run cache handles deferral, so <Constant name="wizard"/> skips its own production compile. |
-| `"manual"` | You provide the deferral manifest directory with `state`. |
-| `"disabled"` | Deferral is disabled for the project. |
+| `"wizard"` | <Constant name="wizard"/> управляет отложенным разрешением ссылок за вас. Вы указываете <Constant name="wizard"/>, какую [целевую среду](/docs/local/profiles.yml) из вашего `profiles.yml` использовать для отложенного разрешения ссылок (при первоначальной настройке проекта он пытается определить её автоматически). Затем <Constant name="wizard"/> компилирует эту целевую среду и повторно использует её модели для любых вышестоящих моделей, которые вы ещё не собрали самостоятельно. |
+| `"fusion_cloud"` | <Constant name="dbt_platform" /> управляет отложенным разрешением ссылок на основе подключённой среды, поэтому <Constant name="wizard"/> не управляет локальным состоянием. Задаётся автоматически при подключении к платформе. |
+| `"cloud_cli"` | <Constant name="platform_cli" /> управляет учётными данными и отложенным разрешением ссылок через <Constant name="dbt_platform" />, поэтому <Constant name="wizard" /> пропускает компиляцию производственной среды и добавление флагов отложенного разрешения ссылок. |
+| `"dbt_state"` | dbt State или кеш запусков управляет отложенным разрешением ссылок, поэтому <Constant name="wizard"/> пропускает собственную компиляцию производственной среды. |
+| `"manual"` | Вы указываете каталог с манифестом для отложенного разрешения ссылок с помощью `state`. |
+| `"disabled"` | Отложенное разрешение ссылок отключено для проекта. |
 </SimpleTable>
 
-For more about dbt State, refer to [About dbt State](/docs/deploy/dbt-state-about).
+Подробнее о dbt State см. в разделе [О dbt State](/docs/deploy/dbt-state-about).
 
-Set `state` to a directory containing a compatible `manifest.json` when `mode = "manual"`:
+Если `mode = "manual"`, задайте для `state` каталог, содержащий совместимый файл `manifest.json`:
 
 ```toml
 [projects."/Users/you/jaffle-shop".deferral]
@@ -249,58 +249,58 @@ state = "/Users/you/dbt-state/production"
 favor_state = true
 ```
 
-**About [favor-state](/reference/node-selection/defer?version=2.0#favor-state):** `favor_state` is configurable and defaults to `true`. When it is `true`, <Constant name="wizard" /> passes `--favor-state` so deferred relations take precedence. Set it to `false` to use a relation that already exists in development and fall back to deferred state when it doesn't.
+**О параметре [favor-state](/reference/node-selection/defer?version=2.0#favor-state):** параметр `favor_state` настраивается и по умолчанию имеет значение `true`. При значении `true` <Constant name="wizard" /> передаёт `--favor-state`, чтобы отношения, используемые при отложенном разрешении ссылок, имели приоритет. Задайте `false`, чтобы использовать отношение, уже существующее в среде разработки, и обращаться к состоянию для отложенного разрешения ссылок, только если такого отношения нет.
 
-You can also configure production snapshot and compile behavior with global `prod_parse_on_startup`, `prod_parse_args`, `prod_state_ttl_hours`, `prod_state_dir`, and `compile_extra_args` settings. Per-project `compile_extra_args` and `prod_parse_args` values let you override the global behavior for one project. Use a `profile_override` block to select a different profiles file, profile, or target for compilation.
+Вы также можете настроить поведение снимков производственной среды и компиляции с помощью глобальных параметров `prod_parse_on_startup`, `prod_parse_args`, `prod_state_ttl_hours`, `prod_state_dir` и `compile_extra_args`. Значения `compile_extra_args` и `prod_parse_args` на уровне проекта позволяют переопределить глобальное поведение для одного проекта. Используйте блок `profile_override`, чтобы выбрать другой файл профилей, профиль или целевую среду для компиляции.
 
-For configuration examples and a verification workflow, refer to [Developing with production deferral](/best-practices/how-to-use-wizard/wizard-6-production-deferral).
+Примеры конфигурации и порядок проверки см. в разделе [Разработка с отложенным разрешением ссылок на производственную среду](/best-practices/how-to-use-wizard/wizard-6-production-deferral).
 
-## Troubleshooting
+## Устранение неполадок
 
-Here are some common config mistakes and how to fix them:
+Ниже приведены распространённые ошибки конфигурации и способы их устранения:
 
 <SimpleTable>
 
-| Symptom | Likely cause | Fix |
+| Симптом | Вероятная причина | Решение |
 |---------|-------------|-----|
-| Still on old AI model after editing `wizard_config.toml` | `wizard_config.toml` doesn't store the model | Set `model` in `config.toml` and restart `wizard` |
-| AI model unchanged after editing `config.toml` | Old session still running | Press Ctrl+C, then run `wizard` again |
-| "Invalid model" error | Wrong AI model ID | Run `wizard debug models` to see valid AI model IDs |
+| После редактирования `wizard_config.toml` по-прежнему используется прежняя модель ИИ | `wizard_config.toml` не хранит модель | Задайте `model` в `config.toml` и перезапустите `wizard` |
+| Модель ИИ не изменилась после редактирования `config.toml` | Старый сеанс всё ещё работает | Нажмите Ctrl+C, затем снова запустите `wizard` |
+| Ошибка "Invalid model" | Неверный идентификатор модели ИИ | Выполните `wizard debug models`, чтобы увидеть допустимые идентификаторы моделей ИИ |
 
 </SimpleTable>
 
-### Re-trigger onboarding flows
+### Повторный запуск процедур первоначальной настройки {#re-trigger-onboarding-flows}
 
-If you need to re-run part of the setup — for example, after deleting config entries by mistake or switching to a new project — you can reset individual flows by deleting the relevant file. <Constant name="wizard" /> will re-prompt you the next time it runs.
+Если вам нужно повторить часть настройки — например, после случайного удаления записей конфигурации или перехода к новому проекту, — вы можете сбросить отдельные процедуры, удалив соответствующий файл. При следующем запуске <Constant name="wizard" /> снова предложит выполнить настройку.
 
-To delete a file, run the command in your terminal (macOS/Linux). For example:
+Чтобы удалить файл, выполните команду в терминале (macOS/Linux). Например:
 
 ```bash
 rm ~/.dbt/wizard/auth.json
 ```
 
-If you get a `No such file or directory` error, the file doesn't exist — which means that part of the setup hasn't run yet, or has already been reset. You can ignore the error.
+Если вы получили ошибку `No such file or directory`, файл не существует — это означает, что соответствующая часть настройки ещё не выполнялась или уже была сброшена. Эту ошибку можно игнорировать.
 
 <SimpleTable>
 
-| What you want to redo | File to delete |
+| Что вы хотите повторить | Какой файл удалить |
 |---|---|
-| Re-run the trusted folder prompt | Remove your project's entry from `~/.dbt/wizard/config.toml` under `[projects."..."]` |
-| Re-authenticate with <Constant name="dbt_platform" /> | `~/.dbt/wizard/auth.json` |
-| Re-run dbt project setup | Remove your project's entry from `~/.dbt/wizard/wizard_config.toml` under `[projects."..."]`, or delete the file entirely to reset all projects |
-| Re-trigger BYOK key configuration | `~/.dbt/wizard/provider*` (this matches all provider files) |
+| Повторно вызвать запрос о доверии к папке | Удалите запись вашего проекта из `~/.dbt/wizard/config.toml` в разделе `[projects."..."]` |
+| Повторно пройти аутентификацию в <Constant name="dbt_platform" /> | `~/.dbt/wizard/auth.json` |
+| Повторно настроить проект dbt | Удалите запись вашего проекта из `~/.dbt/wizard/wizard_config.toml` в разделе `[projects."..."]` или удалите файл целиком, чтобы сбросить все проекты |
+| Повторно запустить настройку ключа BYOK | `~/.dbt/wizard/provider*` (соответствует всем файлам поставщиков) |
 
 </SimpleTable>
 
 :::caution
-`config.toml` and `wizard_config.toml` are separate files that control different things. If you want to re-run project setup, edit `wizard_config.toml` — not `config.toml`. Editing the wrong file won't re-run the onboarding flow you expect. Refer to [The two config files](#the-two-config-files) at the top of this page for the difference.
+`config.toml` и `wizard_config.toml` — это отдельные файлы, которые управляют разными настройками. Если вы хотите повторно настроить проект, изменяйте `wizard_config.toml`, а не `config.toml`. Изменение не того файла не запустит ожидаемую процедуру первоначальной настройки. Различия описаны в разделе [Два файла конфигурации](#the-two-config-files) в начале этой страницы.
 :::
 
-## Related docs
+## Связанная документация
 
-Links to BYOK setup, approval behavior, and CLI command reference.
+Ссылки на настройку BYOK, порядок подтверждения действий и справочник команд CLI.
 
-- [Configure BYOK](/docs/dbt-ai/wizard-byok)
-- [Approval and sandboxing](/docs/dbt-ai/wizard-how-it-works#approval-and-sandboxing)
-- [<Constant name="wizard" /> command reference](/docs/dbt-ai/wizard-cli-reference)
-- [How <Constant name="wizard" /> works](/docs/dbt-ai/wizard-how-it-works)
+- [Настройка BYOK](/docs/dbt-ai/wizard-byok)
+- [Подтверждение действий и песочница](/docs/dbt-ai/wizard-how-it-works#approval-and-sandboxing)
+- [Справочник команд <Constant name="wizard" />](/docs/dbt-ai/wizard-cli-reference)
+- [Как работает <Constant name="wizard" />](/docs/dbt-ai/wizard-how-it-works)

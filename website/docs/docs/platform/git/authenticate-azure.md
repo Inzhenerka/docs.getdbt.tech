@@ -1,8 +1,8 @@
 ---
-title: "Authenticate with Azure DevOps"
+title: "Аутентификация в Azure DevOps"
 id: "authenticate-azure"
-description: "dbt developers need to authenticate with Azure DevOps."
-sidebar_label: "Authenticate with Azure DevOps"
+description: "Разработчикам dbt необходимо пройти аутентификацию в Azure DevOps."
+sidebar_label: "Аутентификация в Azure DevOps"
 pagination_next: null
 availability:
   surface: platform
@@ -11,48 +11,48 @@ availability:
 ---
 
 
-If you use the <Constant name="studio_ide" /> or <Constant name="dbt" /> CLI to collaborate on your team's Azure DevOps dbt repo, you need to [link your <Constant name="dbt" /> profile to Azure DevOps](#link-your-dbt-profile-to-azure-devops), which provides an extra layer of authentication.
+Если вы используете <Constant name="studio_ide" /> или <Constant name="dbt" /> CLI для совместной работы с dbt-репозиторием вашей команды в Azure DevOps, вам необходимо [связать свой профиль <Constant name="dbt" /> с Azure DevOps](#link-your-dbt-profile-to-azure-devops). Это обеспечивает дополнительный уровень аутентификации.
 
-## Link your dbt profile to Azure DevOps
+## Связывание профиля dbt с Azure DevOps {#link-your-dbt-profile-to-azure-devops}
 
-Connect your <Constant name="dbt" /> profile to Azure DevOps using OAuth:
+Подключите свой профиль <Constant name="dbt" /> к Azure DevOps с помощью OAuth:
 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**
-2. Scroll down to **Your profile** and select **Personal profile**.
-3. Go to the **Linked accounts** section in the middle of the page.
-   <Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/LinktoAzure.png" title="Azure DevOps Authorization Screen"/>
+1. Нажмите на имя своей учётной записи в нижней части левого меню и выберите **Account settings**.
+2. Прокрутите страницу до раздела **Your profile** и выберите **Personal profile**.
+3. Перейдите в раздел **Linked accounts** в середине страницы.
+   <Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/LinktoAzure.png" title="Экран авторизации Azure DevOps"/>
 
-4. Once you're redirected to Azure DevOps, sign into your account.
-5. When you see the permission request screen from Azure DevOps App, click **Accept**. 
-   <Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/OAuth Acceptance.png" title="Azure DevOps Authorization Screen"/>
+4. После перенаправления в Azure DevOps войдите в свою учётную запись.
+5. Когда появится экран запроса разрешений от приложения Azure DevOps, нажмите **Accept**. 
+   <Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/OAuth Acceptance.png" title="Экран авторизации Azure DevOps"/>
 
-You will be directed back to <Constant name="dbt" />, and your profile should be linked. You are now ready to develop in <Constant name="dbt" />!
+Вы будете перенаправлены обратно в <Constant name="dbt" />, и ваш профиль должен быть связан с Azure DevOps. Теперь вы готовы к разработке в <Constant name="dbt" />!
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
-Use these troubleshooting steps for common issues when authenticating with Azure DevOps.
+Используйте эти инструкции для устранения распространённых проблем при аутентификации в Azure DevOps.
 
-<Expandable alt_header="Missing Azure user error when starting Studio">
+<Expandable alt_header="Ошибка Missing Azure user при запуске Studio">
 
-If the <Constant name="studio_ide" /> fails to start and displays the following error, your personal Azure DevOps account isn't linked to <Constant name="dbt" />:
+Если <Constant name="studio_ide" /> не запускается и отображает следующую ошибку, ваша личная учётная запись Azure DevOps не связана с <Constant name="dbt" />:
 
 `Missing Azure user; link your Azure DevOps account in your personal profile`
 
-To resolve it, [link your dbt profile to Azure DevOps](#link-your-dbt-profile-to-azure-devops).
+Чтобы устранить проблему, [свяжите свой профиль dbt с Azure DevOps](#link-your-dbt-profile-to-azure-devops).
 
 </Expandable>
 
-<Expandable alt_header="Azure Service User not found error when starting Studio">
+<Expandable alt_header="Ошибка Azure Service User not found при запуске Studio">
 
-If the <Constant name="studio_ide" /> fails to start and displays the following error, the account-level service user isn't connected:
+Если <Constant name="studio_ide" /> не запускается и отображает следующую ошибку, служебный пользователь на уровне учётной записи не подключён:
 
 `Failed to start server. The project is not fully set up: Azure Service User not found`
 
-This applies to accounts that use the legacy service user authentication. An account admin needs to reconnect the service user, which is also required when an account has had no scheduled, API, or CI runs for over 90 days. Refer to [Connect a service user](/docs/platform/git/setup-service-user#connect-a-service-user) for more details.
+Это относится к учётным записям, использующим устаревший способ аутентификации через служебного пользователя. Администратору учётной записи необходимо повторно подключить служебного пользователя. Это также требуется, если в учётной записи более 90 дней не было запусков по расписанию, через API или в рамках CI. Подробнее см. в разделе [Подключение служебного пользователя](/docs/platform/git/setup-service-user#connect-a-service-user).
 
 </Expandable>
 
-## FAQs
+## Часто задаваемые вопросы
 
 <FAQ path="Git/gitignore"/>
 <FAQ path="Git/git-migration"/>

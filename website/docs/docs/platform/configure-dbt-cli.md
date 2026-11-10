@@ -1,8 +1,8 @@
 ---
-title: Configure and use the dbt platform CLI
+title: Настройка и использование dbt platform CLI
 id: configure-dbt-cli
-description: "Instructions on how to configure the dbt platform CLI"
-sidebar_label: "Configuration and usage"
+description: "Инструкции по настройке dbt platform CLI"
+sidebar_label: "Настройка и использование"
 pagination_next: null
 availability:
   surface: platform
@@ -11,34 +11,34 @@ availability:
 
 import LongSession from '/snippets/_long-sessions-cli.md';
 
-Learn how to configure the <Constant name="platform_cli" /> for your <Constant name="dbt" /> project to run dbt commands, like `dbt environment show` to view your <Constant name="dbt" /> configuration or `dbt compile` to compile your project and validate models and tests. You'll also benefit from:
+Узнайте, как настроить <Constant name="platform_cli" /> для вашего проекта <Constant name="dbt" />, чтобы выполнять команды dbt, например `dbt environment show` для просмотра конфигурации <Constant name="dbt" /> или `dbt compile` для компиляции проекта и проверки моделей и тестов. Вы также получите следующие преимущества:
 
-- Secure credential storage in the <Constant name="dbt_platform" />.
-- [Automatic deferral](/docs/platform/about-defer) of build artifacts to your project's production environment.
-- Speedier, lower-cost builds.
-- Support for <Constant name="mesh" /> ([cross-project ref](/docs/mesh/govern/project-dependencies)), and more.
+- Безопасное хранение учетных данных в <Constant name="dbt_platform" />.
+- [Автоматическое перенаправление ссылок](/docs/platform/about-defer) с использованием артефактов сборки из производственной среды вашего проекта.
+- Более быстрые сборки с меньшими затратами.
+- Поддержка <Constant name="mesh" /> ([межпроектные ссылки ref](/docs/mesh/govern/project-dependencies)) и другие возможности.
 
-## Prerequisites
+## Предварительные требования
 
-- You must set up a project in <Constant name="dbt" />.
-  - **Note** &mdash; If you're using the <Constant name="platform_cli" />, you can connect to your [data platform](/docs/platform/connect-data-platform/about-connections) directly in the <Constant name="dbt_platform" /> interface and don't need a [`profiles.yml`](/docs/local/profiles.yml) file. 
-- You must have your [personal user credentials](/docs/dbt-platform-environments#set-user-credentials) configured in **Account settings** assigned to that project. The <Constant name="platform_cli" /> will use these credentials, stored securely in <Constant name="dbt" />, to communicate with your data platform.
-- You must be on dbt version 1.5 or higher. Refer to [<Constant name="dbt" /> versions](/docs/dbt-versions/upgrade-dbt-platform-version) to upgrade.
+- Необходимо настроить проект в <Constant name="dbt" />.
+  - **Примечание** &mdash; Если вы используете <Constant name="platform_cli" />, вы можете подключиться к своей [платформе данных](/docs/platform/connect-data-platform/about-connections) непосредственно в интерфейсе <Constant name="dbt_platform" />; файл [`profiles.yml`](/docs/local/profiles.yml) при этом не требуется. 
+- В разделе **Account settings** необходимо настроить [личные учетные данные пользователя](/docs/dbt-platform-environments#set-developer-credentials) для этого проекта. <Constant name="platform_cli" /> будет использовать эти учетные данные, безопасно хранящиеся в <Constant name="dbt" />, для взаимодействия с вашей платформой данных.
+- Необходимо использовать dbt версии 1.5 или выше. Инструкции по обновлению см. в разделе [Версии <Constant name="dbt" />](/docs/dbt-versions/upgrade-dbt-platform-version).
 
-## Configure the dbt platform CLI
+## Настройка dbt platform CLI {#configure-the-dbt-platform-cli}
 
-Once you install the <Constant name="platform_cli" />, you need to configure it to connect to a <Constant name="dbt" /> project.
+После установки <Constant name="platform_cli" /> необходимо настроить его для подключения к проекту <Constant name="dbt" />.
 
-1. In <Constant name="dbt" />, select the project you want to configure your <Constant name="platform_cli" /> with. The project must already have a [development environment](/docs/dbt-platform-environments#create-a-development-environment) set up.
-2. Download your `dbt_cloud.yml` credentials file and save it to your `.dbt` directory (`~/.dbt/dbt_cloud.yml` on macOS/Linux, `C:\Users\yourusername\.dbt\dbt_cloud.yml` on Windows). For download steps, the full file structure, and a field reference, refer to [`dbt_cloud.yml`](/reference/dbt_cloud.yml).
+1. В <Constant name="dbt" /> выберите проект, для которого вы хотите настроить <Constant name="platform_cli" />. В проекте уже должна быть настроена [среда разработки](/docs/dbt-platform-environments#create-a-development-environment).
+2. Скачайте файл учетных данных `dbt_cloud.yml` и сохраните его в каталоге `.dbt` (`~/.dbt/dbt_cloud.yml` в macOS/Linux, `C:\Users\yourusername\.dbt\dbt_cloud.yml` в Windows). Инструкции по скачиванию, полную структуру файла и справочник полей см. в разделе [`dbt_cloud.yml`](/reference/dbt_cloud.yml).
 
-3. After downloading the config file and creating your directory, navigate to a project in your terminal:
+3. После скачивания файла конфигурации и создания каталога перейдите в каталог проекта в терминале:
 
     ```bash
     cd ~/dbt-projects/jaffle_shop
     ```
 
-4. In your `dbt_project.yml` file, ensure you have or include a [`dbt-cloud` block](/reference/dbt_cloud.yml#the-dbt-cloud-block-in-dbt_projectyml) with a `project-id` field that points to your <Constant name="dbt" /> project.
+4. Убедитесь, что в файле `dbt_project.yml` есть [блок `dbt-cloud`](/reference/dbt_cloud.yml#the-dbt-cloud-block-in-dbt_projectyml) с полем `project-id`, указывающим на ваш проект <Constant name="dbt" />, или добавьте его.
 
     ```yaml
     # dbt_project.yml
@@ -46,86 +46,86 @@ Once you install the <Constant name="platform_cli" />, you need to configure it 
         project-id: PROJECT_ID
     ```
 
-5. You should now be able to [use the <Constant name="platform_cli"/>](#use-the-dbt-platform-cli) and run [dbt commands](/reference/dbt-commands) like [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) to view your <Constant name="dbt" /> configuration details or `dbt compile` to compile models in your dbt project.
+5. Теперь вы можете [использовать <Constant name="platform_cli"/>](#use-the-dbt-cli) и выполнять [команды dbt](/reference/dbt-commands), например [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) для просмотра подробной информации о конфигурации <Constant name="dbt" /> или `dbt compile` для компиляции моделей в вашем проекте dbt.
 
-With your repo recloned, you can add, edit, and sync files with your repo.
+После повторного клонирования репозитория вы можете добавлять и редактировать файлы, а также синхронизировать их с репозиторием.
 
-## Set environment variables
+## Настройка переменных окружения
 
-To set environment variables in the <Constant name="platform_cli" /> for your dbt project:
+Чтобы настроить переменные окружения в <Constant name="platform_cli" /> для вашего проекта dbt:
 
-1. From <Constant name="dbt" />, click on your account name in the left side menu and select **Account settings**.
-2. Under the **Your profile** section, select **Credentials**.
-3. Click on your project and scroll to the **Environment variables** section.
-4. Click **Edit** on the lower right and then set the user-level environment variables.  
+1. В <Constant name="dbt" /> нажмите на имя своей учетной записи в левом боковом меню и выберите **Account settings**.
+2. В разделе **Your profile** выберите **Credentials**.
+3. Нажмите на свой проект и прокрутите страницу до раздела **Environment variables**.
+4. Нажмите **Edit** в правом нижнем углу, затем задайте переменные окружения на уровне пользователя.  
 
-## Use the dbt platform CLI
+## Использование dbt platform CLI {#use-the-dbt-cli}
 
-The <Constant name="platform_cli" /> uses the same set of [dbt commands](/reference/dbt-commands) and [MetricFlow commands](/docs/build/metricflow-commands) as <Constant name="core" /> to execute the commands you provide. For example, use the [`dbt environment`](/reference/commands/dbt-environment?version=2.0) command to view your <Constant name="dbt" /> configuration details. With the <Constant name="platform_cli" />, you can:
+<Constant name="platform_cli" /> использует тот же набор [команд dbt](/reference/dbt-commands) и [команд MetricFlow](/docs/build/metricflow-commands), что и <Constant name="core" />, для выполнения указанных вами команд. Например, используйте команду [`dbt environment`](/reference/commands/dbt-environment?version=2.0), чтобы просмотреть подробную информацию о конфигурации <Constant name="dbt" />. С помощью <Constant name="platform_cli" /> вы можете:
 
-- Run [multiple invocations in parallel](/reference/dbt-commands) and ensure [safe parallelism](/reference/dbt-commands#parallel-execution).
-- Automatically defer build artifacts to your project's production environment.
-- Support [project dependencies](/docs/mesh/govern/project-dependencies), which allows you to depend on another project using the metadata service in <Constant name="dbt" />. 
-  - Project dependencies instantly connect to and reference (or  `ref`) public models defined in other projects. You don't need to execute or analyze these upstream models yourself. Instead, you treat them as an API that returns a dataset.
+- Выполнять [несколько вызовов параллельно](/reference/dbt-commands), обеспечивая [безопасное параллельное выполнение](/reference/dbt-commands#parallel-execution).
+- Автоматически перенаправлять ссылки, используя артефакты сборки из производственной среды вашего проекта.
+- Использовать [зависимости между проектами](/docs/mesh/govern/project-dependencies), которые позволяют вашему проекту зависеть от другого проекта с помощью сервиса метаданных в <Constant name="dbt" />. 
+  - Зависимости между проектами позволяют сразу подключаться к публичным моделям, определенным в других проектах, и ссылаться на них (с помощью `ref`). Вам не нужно самостоятельно выполнять или анализировать эти вышестоящие модели. Вместо этого вы работаете с ними как с API, возвращающим набор данных.
  
-:::tip Use the <code>--help</code> flag
-As a tip, most command-line tools have a `--help` flag to show available commands and arguments. Use the `--help` flag with dbt in two ways:
-- `dbt --help`: Lists the commands available for dbt<br />
-- `dbt run --help`: Lists the flags available for the `run` command
+:::tip Используйте флаг <code>--help</code>
+Полезный совет: большинство инструментов командной строки поддерживают флаг `--help` для просмотра доступных команд и аргументов. Используйте флаг `--help` с dbt двумя способами:
+- `dbt --help`: выводит список доступных команд dbt<br />
+- `dbt run --help`: выводит список флагов, доступных для команды `run`
 :::
  
-## Lint SQL files 
+## Проверка SQL-файлов линтером {#lint-sql-files}
 
-From the <Constant name="platform_cli" />, you can invoke [SQLFluff](https://sqlfluff.com/), which is a modular and configurable SQL linter that warns you of complex functions, syntax, formatting, and compilation errors. Many of the same flags that you can pass to SQLFluff are available from the <Constant name="platform_cli" />.
+Из <Constant name="platform_cli" /> можно вызывать [SQLFluff](https://sqlfluff.com/) — модульный настраиваемый SQL-линтер, который предупреждает о сложных функциях, ошибках синтаксиса, форматирования и компиляции. Многие флаги, которые можно передавать SQLFluff, также доступны в <Constant name="platform_cli" />.
 
-The available SQLFluff commands are: 
+Доступны следующие команды SQLFluff: 
 
-- `lint` &mdash; Lint SQL files by passing a list of files or from standard input (stdin).
-- `fix` &mdash; Fix SQL files.
-- `format` &mdash; Autoformat SQL files.
+- `lint` &mdash; Проверяет SQL-файлы линтером, принимая список файлов или данные из стандартного ввода (stdin).
+- `fix` &mdash; Исправляет SQL-файлы.
+- `format` &mdash; Автоматически форматирует SQL-файлы.
 
 
-To lint SQL files, run the command as follows:  
+Чтобы проверить SQL-файлы линтером, выполните следующую команду:  
 
 ```
 dbt sqlfluff lint [PATHS]... [flags]
 ```
 
-When you don't specify a path, dbt lints all SQL files in the current project. To lint a specific SQL file or a directory, set `PATHS` to the path of the SQL file(s) or directory of files. To lint multiple files or directories, pass multiple `PATHS` flags.  
+Если путь не указан, dbt проверяет все SQL-файлы в текущем проекте. Чтобы проверить определенный SQL-файл или каталог, укажите в `PATHS` путь к SQL-файлу (или файлам) либо к каталогу с файлами. Чтобы проверить несколько файлов или каталогов, передайте несколько значений `PATHS`.  
 
-To show detailed information on all the dbt supported commands and flags, run the `dbt sqlfluff -h` command. 
+Чтобы просмотреть подробную информацию обо всех командах и флагах, поддерживаемых dbt, выполните команду `dbt sqlfluff -h`. 
 
-#### Considerations
+#### Особенности использования
 
-When running `dbt sqlfluff` from the <Constant name="platform_cli" />, the following are important behaviors to consider:
+При выполнении `dbt sqlfluff` из <Constant name="platform_cli" /> важно учитывать следующие особенности поведения:
 
-- dbt reads the `.sqlfluff` file, if it exists, for any custom configurations you might have.
-- For continuous integration/continuous development (CI/CD) workflows, your project must have a `dbt_cloud.yml` file and you have successfully run commands from within this dbt project.
-- An SQLFluff command will return an exit code of 0 if it ran with any file violations. This dbt behavior differs from SQLFluff behavior, where a linting violation returns a non-zero exit code. dbt Labs plans on addressing this in a later release.
+- dbt считывает пользовательские настройки из файла `.sqlfluff`, если он существует.
+- Для рабочих процессов непрерывной интеграции и непрерывной разработки (CI/CD) в проекте должен быть файл `dbt_cloud.yml`, а команды из каталога этого проекта dbt должны быть успешно выполнены хотя бы один раз.
+- Команда SQLFluff возвращает код завершения 0, даже если при ее выполнении обнаружены нарушения в файлах. Это поведение dbt отличается от поведения SQLFluff, где нарушение, обнаруженное линтером, приводит к ненулевому коду завершения. dbt Labs планирует исправить это в одном из будущих выпусков.
 
-## Considerations
+## Особенности использования {#considerations-1}
 
 import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
 <CloudCliRelativePath />
 
-## FAQs
+## Часто задаваемые вопросы
 
 import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
-<DetailsToggle alt_header="How to create a .dbt directory and move your file">
+<DetailsToggle alt_header="Как создать каталог .dbt и переместить в него файл">
 
 <DbtDirectoryFaq />
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="How to skip artifacts from being downloaded">
+<DetailsToggle alt_header="Как отключить скачивание артефактов">
 
-By default, the <Constant name="platform_cli" /> downloads [all artifacts](/reference/artifacts/dbt-artifacts) when you execute dbt commands. To skip these files from being downloaded, add `--download-artifacts=false` to the command you want to run. This can help improve run-time performance but might break workflows that depend on assets like the [manifest](/reference/artifacts/manifest-json). 
+По умолчанию <Constant name="platform_cli" /> скачивает [все артефакты](/reference/artifacts/dbt-artifacts) при выполнении команд dbt. Чтобы отключить скачивание этих файлов, добавьте `--download-artifacts=false` к команде, которую хотите выполнить. Это может ускорить выполнение, но способно нарушить рабочие процессы, зависящие от таких ресурсов, как [manifest](/reference/artifacts/manifest-json). 
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="I'm getting a `Session occupied` error in dbt platform CLI?">
+<DetailsToggle alt_header="Что делать при ошибке `Session occupied` в dbt platform CLI?">
 
 <LongSession />
 

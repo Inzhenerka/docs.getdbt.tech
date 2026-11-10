@@ -124,31 +124,12 @@ hide_table_of_contents: true
 7. Создайте две новые папки: `models/staging` и `models/core`.
 
 
-### Подготовительный слой (staging)
-Теперь, когда базовый проект настроен, приступим к созданию ресурсов данных. Настройте подготовительный слой следующим образом:
+### Подготовительный слой (staging) {#staging-layer}
+Теперь, когда базовый проект настроен, приступим к созданию ресурсов данных.
 
 1. Создайте новый YAML-файл свойств `models/staging/sources.yml`.
-2. Объявите источники, скопировав следующий фрагмент в файл и нажав **Save**.
+2. Объявите источники, скопировав следующий фрагмент в файл, и нажмите **Save**.
 
-Этот upstream‑проект — место, где вы создаете ключевые дата‑ассеты. Он будет содержать исходные источники данных, staging‑модели и основную бизнес‑логику.
-
-<Constant name="cloud" /> позволяет специалистам по данным разрабатывать в привычных инструментах и предоставляет как локальный [<Constant name="cloud" /> CLI](/docs/platform/dbt-cli-installation), так и браузерный [<Constant name="cloud_ide" />](/docs/platform/studio-ide/develop-in-studio).
-
-В этом разделе вы настроите проект “Jaffle | Data Analytics” как базовый, используя <Constant name="cloud_ide" />.
-
-1. Сначала перейдите на страницу **Develop**, чтобы проверить настройку.
-2. Нажмите **Initialize dbt project**, если вы начали с пустого репозитория.
-3. Удалите папку `models/example`.  
-4. Перейдите к файлу `dbt_project.yml` и переименуйте проект (строка 5) с `my_new_project` на `analytics`.
-5. В файле `dbt_project.yml` удалите строки 39–42 (ссылку на модель `my_new_project`).
-6. В **File <Constant name="explorer" />** наведите курсор на директорию проекта, нажмите **...** и выберите **Create file**.
-7. Создайте две новые папки: `models/staging` и `models/core`.
-
-### Staging‑слой {#staging-layer}
-Теперь, когда базовый проект настроен, начнем создавать дата‑ассеты. Настройте staging‑слой следующим образом:
-
-1. Создайте новый YAML‑файл свойств `models/staging/sources.yml`.
-2. Объявите источники, скопировав следующий код в файл и нажав **Save**.
 
 <File name='models/staging/sources.yml'>
 
@@ -199,11 +180,6 @@ from {{ source('jaffle_shop', 'orders') }}
 
 </File>
 
-Прежде чем команда, использующая результаты этого базового проекта, сможет воспользоваться его ресурсами, необходимо:
-- [Создать и определить](/docs/mesh/govern/model-access) хотя бы одну модель с уровнем доступа «public»
-- Успешно выполнить [задание развертывания](/docs/deploy/deploy-jobs)
-  - Обратите внимание: <VersionBlock lastVersion="1.99">включите [**Generate docs on run**](/docs/deploy/deploy-jobs) для этого задания, чтобы обновить ресурсы в <Constant name="catalog" />.</VersionBlock><VersionBlock firstVersion="2.0">это задание автоматически обновляет ресурсы в <Constant name="catalog" />.</VersionBlock> После выполнения задания нажмите **Catalog** в главном меню навигации и выберите свой проект, чтобы убедиться, что его граф зависимостей, тесты и документация успешно отображаются.
-
 5. Создайте файл `models/core/fct_orders.sql` для построения факт‑таблицы с данными о клиентах и заказах.
 
 <File name='models/core/fct_orders.sql'>
@@ -253,7 +229,7 @@ select * from final
 Прежде чем downstream‑команда сможет использовать ассеты из этого базового проекта, необходимо:
 - [Создать и определить](/docs/mesh/govern/model-access) как минимум одну модель с доступом “public”
 - Успешно выполнить [deployment‑задание](/docs/deploy/deploy-jobs)
-  - Обратите внимание: включите переключатель **Generate docs on run** для этого задания, чтобы обновить <Constant name="explorer" />. После выполнения вы сможете открыть Explore в верхнем меню и увидеть lineage, тесты и документацию.
+  - Примечание: <VersionBlock lastVersion="1.99">включите [**Generate docs on run**](/docs/deploy/deploy-jobs) для этого задания, чтобы обновить ресурсы в <Constant name="catalog" />.</VersionBlock><VersionBlock firstVersion="2.0">это задание обновляет ресурсы в <Constant name="catalog" /> автоматически.</VersionBlock> После запуска откройте **Catalog** в главном меню и выберите проект, чтобы проверить граф зависимостей, тесты и документацию.
 
 ## Определение публичной модели и запуск первого задания {#define-a-public-model-and-run-first-job}
 
@@ -267,7 +243,7 @@ select * from final
 
 <File name='models/core/core.yml'>
 
-2. Перейдите на вкладку **Lineage** в <Constant name="studio_ide" />, чтобы увидеть отметку **Public** под названием модели.
+```yaml
 
 models:
   - name: fct_orders
@@ -291,36 +267,28 @@ models:
         data_type: number
         description: ""
 
-Чтобы впервые запустить задание развертывания <Constant name="dbt" />, вам нужно создать новое задание <Constant name="dbt" />.  
-1. Перейдите в **Orchestration** > **Jobs**. 
-2. Нажмите **Create job**, а затем **Deploy job**.
-3. <VersionBlock lastVersion="1.99">Выберите параметр **Generate docs on run**. Это позволит наполнить <Constant name="catalog"/> вашими метаданными.</VersionBlock><VersionBlock firstVersion="2.0">Оставьте команду `dbt build`, заданную по умолчанию. При каждом запуске задания <Constant name="catalog"/> автоматически наполняется вашими метаданными.</VersionBlock>
-
-<VersionBlock lastVersion="1.99">
+      - name: first_name
+        data_type: varchar
+        description: ""
 
       - name: last_name
         data_type: varchar
         description: ""
 
-</VersionBlock>
+      - name: first_order_date
+        data_type: date
+        description: ""
 
-4. Нажмите **Save**.
-5. Нажмите **Run now**, чтобы запустить задание.
-6. После завершения запуска перейдите в <Constant name="catalog"/>. Теперь вы должны увидеть, что граф зависимостей, тесты и документация успешно отобразились.
-
-Подробнее о том, как <Constant name="dbt" /> использует метаданные из среды Staging для разрешения ссылок в зависимых проектах, см. в разделе [Staging с зависимыми проектами](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
+      - name: days_as_customer_at_purchase
+        data_type: number
+        description: "Days between this purchase and customer's first purchase"
+```
 
 </File>
 
 Примечание: по умолчанию доступ моделей установлен как “protected”, что означает, что на них можно ссылаться только внутри того же проекта. Подробнее о типах доступа и группах моделей читайте [здесь](/docs/mesh/govern/model-access#access-modifiers).
 
-1. Если вы также начали работу с новым репозиторием git, нажмите **Initialize dbt project** в разделе **Version control**.
-2. Удалите папку `models/example`.
-3. Откройте файл `dbt_project.yml` и измените имя проекта (строка 5) с `my_new_project` на `finance`.
-4. Откройте файл `dbt_project.yml` и удалите строки 39–42 (ссылку на модель `my_new_project`).
-5. В **File <Constant name="catalog" />** наведите указатель на каталог проекта, нажмите **...** и выберите **Create file**.
-6. Назовите файл `dependencies.yml`.
-7. Добавьте вышестоящий проект `analytics` и пакет `dbt_utils`. Нажмите **Save**.
+2. Перейдите на вкладку **Lineage** в <Constant name="studio_ide" />, чтобы увидеть отметку **Public** под названием модели.
 
 <Lightbox src="/img/guides/dbt-mesh/da_lineage.png" title="Lineage проекта Jaffle | Data Analytics" />
 
@@ -331,30 +299,34 @@ models:
 
 Прежде чем downstream‑команда сможет использовать ассеты из этого базового проекта, необходимо [создать production‑окружение](/guides/mesh-qs?step=3#create-a-production-environment) и успешно выполнить [deployment‑задание](/docs/deploy/deploy-jobs).
 
-Чтобы запустить первое deployment‑задание <Constant name="cloud" />, создайте новое задание:
-1. Перейдите в **Orchestration** > **Jobs**. 
-2. Нажмите **Create job**, затем **Deploy job**.
-3. Выберите опцию **Generate docs on run**, чтобы наполнить метаданные в <Constant name="explorer"/>.
+Чтобы впервые запустить задание развертывания <Constant name="dbt" />, вам нужно создать новое задание <Constant name="dbt" />.
+1. Перейдите в **Orchestration** > **Jobs**.
+2. Нажмите **Create job**, а затем **Deploy job**.
+3. <VersionBlock lastVersion="1.99">Выберите параметр **Generate docs on run**. Это позволит наполнить <Constant name="catalog"/> вашими метаданными.</VersionBlock><VersionBlock firstVersion="2.0">Оставьте команду `dbt build`, заданную по умолчанию. При каждом запуске задания <Constant name="catalog"/> автоматически наполняется вашими метаданными.</VersionBlock>
+
+<VersionBlock lastVersion="1.99">
 
 <Lightbox src="/img/guides/dbt-mesh/generate_docs_on_run.png" width="75%" title="Выберите опцию 'Generate docs on run' при настройке dbt‑задания." />
 
+</VersionBlock>
+
 4. Нажмите **Save**.
 5. Нажмите **Run now**, чтобы запустить задание.
-6. После завершения перейдите в <Constant name="explorer"/>. Теперь вы должны видеть lineage, тесты и документацию.
+6. После завершения запуска перейдите в <Constant name="catalog"/>. Теперь вы должны увидеть, что граф зависимостей, тесты и документация успешно отобразились.
 
-Подробнее о том, как <Constant name="cloud" /> использует метаданные из Staging‑окружения для разрешения ссылок в downstream‑проектах, читайте в разделе [Staging with downstream dependencies](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
+Подробнее о том, как <Constant name="dbt" /> использует метаданные из среды Staging для разрешения ссылок в зависимых проектах, см. в разделе [Staging с зависимыми проектами](/docs/mesh/govern/project-dependencies#staging-with-downstream-dependencies).
 
 ## Ссылка на публичную модель в downstream‑проекте {#reference-a-public-model-in-your-downstream-project}
 
 В этом разделе вы настроите downstream‑проект “Jaffle | Finance” и выполните [межпроектную ссылку](/docs/mesh/govern/project-dependencies) на модель `fct_orders` из базового проекта. Перейдите на страницу **Develop**, чтобы настроить проект:
 
-1. Если вы также начали с нового git‑репозитория, нажмите **Initialize dbt project** в разделе **Version control**.
+1. Если вы также начали работу с новым репозиторием git, нажмите **Initialize dbt project** в разделе **Version control**.
 2. Удалите папку `models/example`.
-3. Перейдите к файлу `dbt_project.yml` и переименуйте проект (строка 5) с `my_new_project` на `finance`.
-4. В файле `dbt_project.yml` удалите строки 39–42 (ссылку на модель `my_new_project`).
-5. В **File <Constant name="explorer" />** наведите курсор на директорию проекта, нажмите **...** и выберите **Create file**.
+3. Откройте файл `dbt_project.yml` и измените имя проекта (строка 5) с `my_new_project` на `finance`.
+4. Откройте файл `dbt_project.yml` и удалите строки 39–42 (ссылку на модель `my_new_project`).
+5. В **File <Constant name="catalog" />** наведите указатель на каталог проекта, нажмите **...** и выберите **Create file**.
 6. Назовите файл `dependencies.yml`.
-7. Добавьте upstream‑проект `analytics` и пакет `dbt_utils`. Нажмите **Save**.
+7. Добавьте вышестоящий проект `analytics` и пакет `dbt_utils`. Нажмите **Save**.
 
 <File name='dependencies.yml'>
 
@@ -416,9 +388,6 @@ select * from final
 ```
 
 </File>
-
-2. Обратите внимание, как работает межпроектный ref! Когда вы добавляете `ref`, функция автодополнения в <Constant name="studio_ide" /> распознаёт публичную модель как доступную.
-<Lightbox src="/img/guides/dbt-mesh/cross_proj_ref_autocomplete.png" title="Автодополнение межпроектного ref в Studio IDE" />
 
 ### Ссылка на публичную модель {#reference-the-public-model}
 

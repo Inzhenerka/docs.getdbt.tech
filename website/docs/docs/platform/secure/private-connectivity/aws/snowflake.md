@@ -1,7 +1,7 @@
 ---
-title: "Configuring Snowflake and AWS PrivateLink"
+title: "Настройка Snowflake и AWS PrivateLink"
 id: aws-snowflake
-description: "Configuring AWS PrivateLink for Snowflake."
+description: "Настройка AWS PrivateLink для Snowflake."
 sidebar_label: "Snowflake"
 availability:
   surface: platform
@@ -9,7 +9,7 @@ availability:
   minPlan: enterprise_plus
 ---
 
-# Configuring Snowflake PrivateLink
+# Настройка Snowflake PrivateLink
 
 import SetUpPages from '/snippets/_available-tiers-enterprise-plus.md';
 import PrivateLinkCreateConnection from '/snippets/_privatelink-create-connection.md';
@@ -17,7 +17,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-The following steps walk you through the setup of an AWS-hosted Snowflake PrivateLink endpoint in a <Constant name="dbt" /> multi-tenant environment.
+Следующие шаги помогут настроить размещенную в AWS конечную точку Snowflake PrivateLink в мультитенантной среде <Constant name="dbt" />.
 
 <CloudProviders type='Snowflake' />
 
@@ -25,131 +25,131 @@ import SnowflakeOauthWithPL from '/snippets/_snowflake-oauth-with-pl.md';
 
 <SnowflakeOauthWithPL />
 
-## Configure AWS PrivateLink
+## Настройка AWS PrivateLink
 
-This section walks you through the setup of an AWS-hosted Snowflake PrivateLink endpoint in a <Constant name="dbt_platform" />. You can set up in two ways:
-- [Self-serve private endpoints](#self-serve-private-endpoints-): Self-serve configuration of Snowflake PrivateLink endpoints directly in <Constant name="dbt_platform" /> user interface. Currently in beta. 
-- [Support-led setup](#support-led-setup): Requires contacting dbt Support to configure Snowflake PrivateLink endpoints. Non-self service configuration of Snowflake PrivateLink endpoints. 
+В этом разделе описана настройка размещенной в AWS конечной точки Snowflake PrivateLink в <Constant name="dbt_platform" />. Настройку можно выполнить двумя способами:
+- [Самостоятельная настройка частных конечных точек](#self-serve-private-endpoints): самостоятельная настройка конечных точек Snowflake PrivateLink непосредственно в пользовательском интерфейсе <Constant name="dbt_platform" />. В настоящее время доступна в бета-версии. 
+- [Настройка с помощью службы поддержки](#support-led-setup): для настройки конечных точек Snowflake PrivateLink необходимо обратиться в службу поддержки dbt. Этот способ не предусматривает самостоятельную настройку конечных точек Snowflake PrivateLink. 
 
-### Self-serve private endpoints <Lifecycle status="beta" />
+### Самостоятельная настройка частных конечных точек <Lifecycle status="beta" /> {#self-serve-private-endpoints}
 
-_Self-serve private endpoints are currently in beta for Snowflake on AWS, and available to all eligible customers. This feature isn't available for Azure or GCP. If you don't see **Private endpoints** in your account settings, use the [Support-led setup](#support-led-setup) instead._
+_Самостоятельная настройка частных конечных точек для Snowflake в AWS в настоящее время находится в стадии бета-тестирования и доступна всем клиентам, соответствующим требованиям. Эта функция недоступна для Azure и GCP. Если в настройках вашей учетной записи нет раздела **Private endpoints**, воспользуйтесь [настройкой с помощью службы поддержки](#support-led-setup)._
 
-This section walks you through the process of requesting a new Snowflake PrivateLink endpoint in <Constant name="dbt_platform" />. 
+В этом разделе описан процесс запроса новой конечной точки Snowflake PrivateLink в <Constant name="dbt_platform" />. 
 
-##### Prerequisites
+##### Предварительные требования
 
-- [Account admin](/docs/platform/manage-access/enterprise-permissions?version=2.0#account-admin) or [Project creator](/docs/platform/manage-access/enterprise-permissions?version=2.0#project-creator) permission sets in <Constant name="dbt_platform"/>. Users with an IT license can also create private endpoints.
-- [Snowflake `ACCOUNTADMIN` permissions](https://docs.snowflake.com/en/user-guide/security-access-control-overview#system-defined-roles).
+- Набор разрешений [Account admin](/docs/platform/manage-access/enterprise-permissions?version=2.0#account-admin) или [Project creator](/docs/platform/manage-access/enterprise-permissions?version=2.0#project-creator) в <Constant name="dbt_platform"/>. Пользователи с лицензией IT также могут создавать частные конечные точки.
+- [Разрешения `ACCOUNTADMIN` в Snowflake](https://docs.snowflake.com/en/user-guide/security-access-control-overview#system-defined-roles).
 
-##### Before you begin
+##### Перед началом работы
 
-Before requesting a private endpoint, allowlist <Constant name="dbt" /> Labs' AWS account in Snowflake. This is a one-time setup per Snowflake account and is handled through a Snowflake support case, which can take time &mdash; complete it before starting the request flow.
+Прежде чем запрашивать частную конечную точку, добавьте учетную запись AWS компании <Constant name="dbt" /> Labs в список разрешенных в Snowflake. Это однократная настройка для каждой учетной записи Snowflake, которая выполняется через обращение в службу поддержки Snowflake и может занять некоторое время &mdash; завершите ее до начала процедуры запроса.
 
-1. Open a support case with Snowflake to allow access from the <Constant name="dbt" /> AWS account.
-   - Snowflake prefers that the account owner opens the support case directly rather than dbt Labs acting on their behalf. For more information, refer to [Snowflake's knowledge base article](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors).
-   - Provide your <Constant name="dbt" /> account ID along with any other information requested in the article.
-     - **AWS account ID**: `346425330055` &mdash; _Note: This account ID only applies to AWS <Constant name="dbt" /> multi-tenant environments. For AWS Virtual Private/Single-Tenant account IDs, contact [dbt Support](mailto:support@getdbt.com)._
-2. Wait for Snowflake to confirm access has been granted before proceeding.
+1. Создайте обращение в службу поддержки Snowflake, чтобы разрешить доступ из учетной записи AWS <Constant name="dbt" />.
+   - Snowflake предпочитает, чтобы владелец учетной записи создавал обращение самостоятельно, а не через dbt Labs. Дополнительные сведения см. в [статье базы знаний Snowflake](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors).
+   - Укажите идентификатор вашей учетной записи <Constant name="dbt" />, а также другую информацию, запрашиваемую в статье.
+     - **Идентификатор учетной записи AWS**: `346425330055` &mdash; _Примечание: этот идентификатор учетной записи применим только к мультитенантным средам <Constant name="dbt" /> в AWS. Чтобы получить идентификаторы учетных записей AWS Virtual Private/Single-Tenant, обратитесь в [службу поддержки dbt](mailto:support@getdbt.com)._
+2. Прежде чем продолжить, дождитесь подтверждения от Snowflake о предоставлении доступа.
 
-   <Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink1.png" title="Open snowflake case"/>
+   <Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink1.png" title="Создание обращения в службу поддержки Snowflake"/>
 
-#### Request a new private endpoint
+#### Запрос новой частной конечной точки
 
-After Snowflake confirms they've allowlisted <Constant name="dbt" /> Labs' AWS account in Snowflake, you can request a new private endpoint. Follow these steps to do so:
+После того как Snowflake подтвердит добавление учетной записи AWS компании <Constant name="dbt" /> Labs в список разрешенных в Snowflake, вы сможете запросить новую частную конечную точку. Для этого выполните следующие действия:
 
-1. In <Constant name="dbt_platform" />, go to **Account settings → Private endpoints**.
-2. In the **Private endpoints** table, review your existing endpoints. The table shows all private endpoints in your account (including non-Snowflake ones) with the following details:
-   - **Name**
-   - **Connection type** (for example, Snowflake)
+1. В <Constant name="dbt_platform" /> перейдите в **Account settings → Private endpoints**.
+2. В таблице **Private endpoints** просмотрите существующие конечные точки. В таблице представлены все частные конечные точки вашей учетной записи (в том числе не относящиеся к Snowflake) со следующими сведениями:
+   - **Name** — имя
+   - **Connection type** — тип подключения (например, Snowflake)
    - **URL**
-   - **Connectivity status** (for example, **Success** or **Unknown**)
-   - **Connections** — the number of <Constant name="dbt_platform" /> connections using the endpoint
+   - **Connectivity status** — состояние подключения (например, **Success** или **Unknown**)
+   - **Connections** — количество подключений <Constant name="dbt_platform" />, использующих конечную точку
 
-   You can search by **Name** or **URL**. The table lists all private endpoints in your account, but self-serve create, edit, and delete is only available for Snowflake on AWS at this time.
+   Можно выполнять поиск по **Name** или **URL**. В таблице перечислены все частные конечные точки вашей учетной записи, но самостоятельное создание, редактирование и удаление в настоящее время доступны только для Snowflake в AWS.
 
-    <Lightbox src="/img/docs/dbt-platform/private-endpoint-page.png" title="Private endpoints table showing existing endpoints, connectivity status, and the Request new button"/>
+    <Lightbox src="/img/docs/dbt-platform/private-endpoint-page.png" title="Таблица частных конечных точек с существующими конечными точками, состоянием подключения и кнопкой Request new"/>
 
-3. To request a new endpoint, click **Request new**.
-4. Under **Provider type**, confirm **Snowflake** is selected. Currently other endpoint providers aren't supported, contact [dbt Support](mailto:support@getdbt.com) if you need to connect to a different service.
-5. Copy the SQL command in the **SQL command snippet** section.
-6. Go to Snowflake and run the SQL command snippet you copied from <Constant name="dbt_platform" />: `SELECT SYSTEM$GET_PRIVATELINK_CONFIG();`
-7. Copy the output from Snowflake and return to <Constant name="dbt_platform" /> to paste it into the **Snowflake output** field. If the output is correct, you'll see an inline **Output looks good** type message below the text box. If there's an error, review the message and make any updates as necessary.
-8. Click **Submit request**.
+3. Чтобы запросить новую конечную точку, нажмите **Request new**.
+4. В разделе **Provider type** убедитесь, что выбран **Snowflake**. В настоящее время другие поставщики конечных точек не поддерживаются. Если вам нужно подключиться к другому сервису, обратитесь в [службу поддержки dbt](mailto:support@getdbt.com).
+5. Скопируйте SQL-команду из раздела **SQL command snippet**.
+6. Перейдите в Snowflake и выполните SQL-команду, скопированную из <Constant name="dbt_platform" />: `SELECT SYSTEM$GET_PRIVATELINK_CONFIG();`
+7. Скопируйте результат из Snowflake и вернитесь в <Constant name="dbt_platform" />, чтобы вставить его в поле **Snowflake output**. Если результат корректен, под текстовым полем появится сообщение наподобие **Output looks good**. Если возникнет ошибка, ознакомьтесь с сообщением и внесите необходимые исправления.
+8. Нажмите **Submit request**.
 
-    <Lightbox src="/img/docs/dbt-platform/private-endpoint-config.png" title="Endpoint request form showing Provider type, SQL command snippet, and Snowflake output fields"/>
+    <Lightbox src="/img/docs/dbt-platform/private-endpoint-config.png" title="Форма запроса конечной точки с полями Provider type, SQL command snippet и Snowflake output"/>
 
-9. After submission, a confirmation popup appears (for example, **Endpoint request submitted**). From the popup, you can request another endpoint or return to **Private endpoints** to track request status.
-10. Proceed to the **Connections** page and following the steps in the [Create connection in dbt](#create-connection-in-dbt) section to configure PrivateLink. 
-Once you configure PrivateLink on the **Connections** page, you'll see the new endpoint appear under **Private endpoints → Associated connections**.
+9. После отправки появится всплывающее окно с подтверждением (например, **Endpoint request submitted**). В этом окне можно запросить еще одну конечную точку или вернуться в **Private endpoints**, чтобы отслеживать статус запроса.
+10. Перейдите на страницу **Connections** и выполните действия из раздела [Создание подключения в dbt](#create-connection-in-dbt), чтобы настроить PrivateLink. 
+После настройки PrivateLink на странице **Connections** новая конечная точка появится в разделе **Private endpoints → Associated connections**.
 
-:::note DNS propagation
-If the connection test fails immediately after setup, this is expected &mdash; it doesn't mean something is wrong. DNS changes can take a few minutes to propagate. Wait a few minutes, then test again before contacting support.
+:::note Распространение изменений DNS
+Если проверка подключения завершается ошибкой сразу после настройки, это ожидаемо и не означает, что что-то настроено неправильно. Распространение изменений DNS может занять несколько минут. Подождите несколько минут и повторите проверку, прежде чем обращаться в службу поддержки.
 :::
 
-<Expandable alt_header="Edit or delete a private endpoint" is_open={true}>
+<Expandable alt_header="Редактирование или удаление частной конечной точки" is_open={true}>
 
-If you don't see **Edit** or **Delete endpoint**, contact your account manager to enable private endpoint updates for your account.
+Если вы не видите **Edit** или **Delete endpoint**, обратитесь к менеджеру вашей учетной записи, чтобы включить возможность изменения частных конечных точек для вашей учетной записи.
 
-**Edit an endpoint**
+**Редактирование конечной точки**
 
-1. In the **Private endpoints** table, click the endpoint you want to update.
-2. On the endpoint details page, click **Edit**.
-3. Update **Name** and/or **Port** as needed.
-4. Click **Save changes**.
-5. In the **Save changes?** modal, click **Save changes** to apply your updates.
+1. В таблице **Private endpoints** нажмите на конечную точку, которую хотите изменить.
+2. На странице сведений о конечной точке нажмите **Edit**.
+3. При необходимости измените **Name** и/или **Port**.
+4. Нажмите **Save changes**.
+5. В модальном окне **Save changes?** нажмите **Save changes**, чтобы применить изменения.
 
-<Lightbox src="/img/docs/dbt-platform/private-endpoint-details-edit.png" title="Private endpoint details page with the Edit button" />
+<Lightbox src="/img/docs/dbt-platform/private-endpoint-details-edit.png" title="Страница сведений о частной конечной точке с кнопкой Edit" />
 
-**Delete an endpoint**
+**Удаление конечной точки**
 
-An endpoint with associated connections can't be deleted. Remove those connections first.
+Конечную точку со связанными подключениями удалить нельзя. Сначала удалите эти подключения.
 
-1. In the **Private endpoints** table, click the endpoint you want to delete.
-2. On the endpoint details page, click **Edit**.
-3. Scroll to the bottom of the page and click **Delete endpoint**.
-4. In the **Delete endpoint** modal, type `DELETE` to confirm, then click **Delete endpoint**.
+1. В таблице **Private endpoints** нажмите на конечную точку, которую хотите удалить.
+2. На странице сведений о конечной точке нажмите **Edit**.
+3. Прокрутите страницу вниз и нажмите **Delete endpoint**.
+4. В модальном окне **Delete endpoint** введите `DELETE` для подтверждения, затем нажмите **Delete endpoint**.
 
-<Lightbox src="/img/docs/dbt-platform/private-endpoint-details-delete.png" title="Private endpoint details page in edit mode with the Delete endpoint button" />
+<Lightbox src="/img/docs/dbt-platform/private-endpoint-details-delete.png" title="Страница сведений о частной конечной точке в режиме редактирования с кнопкой Delete endpoint" />
 
 </Expandable>
 
-#### Duplicate endpoint requests
+#### Повторные запросы конечных точек
 
-If you submit a request using a VPCE ID that matches an existing endpoint, <Constant name="dbt_platform"/> displays an **Endpoint already exists** popup with two options:
+Если вы отправите запрос с идентификатором VPCE, совпадающим с идентификатором существующей конечной точки, <Constant name="dbt_platform"/> отобразит всплывающее окно **Endpoint already exists** с двумя вариантами:
 
-- **Reuse existing interface endpoint** (default, recommended) — Links the new private endpoint to an already-approved interface endpoint. Use this option when your VPCE is already approved to avoid duplicating infrastructure.
-- **Create new interface endpoint** — Creates a new interface endpoint with its own network policy. Use this only if you need a distinct network policy configuration.
+- **Reuse existing interface endpoint** (по умолчанию, рекомендуется) — связывает новую частную конечную точку с уже одобренной интерфейсной конечной точкой. Используйте этот вариант, если ваша VPCE уже одобрена, чтобы избежать дублирования инфраструктуры.
+- **Create new interface endpoint** — создает новую интерфейсную конечную точку с собственной сетевой политикой. Используйте этот вариант, только если вам нужна отдельная конфигурация сетевой политики.
 
-Select your preferred option and click **Confirm & Submit**.
+Выберите нужный вариант и нажмите **Confirm & Submit**.
 
-  <Lightbox src="/img/docs/dbt-platform/endpoint-exists.png" width="70%" title="Endpoint already exists popup with options to create a new interface endpoint or re-use an existing one"/>
+  <Lightbox src="/img/docs/dbt-platform/endpoint-exists.png" width="70%" title="Всплывающее окно Endpoint already exists с вариантами создания новой интерфейсной конечной точки или повторного использования существующей"/>
 
-#### Troubleshooting and errors
+#### Устранение неполадок и ошибки
 
-If an endpoint request fails, <Constant name="dbt_platform"/> displays error details that are safe to share externally.
+Если запрос конечной точки завершается ошибкой, <Constant name="dbt_platform"/> отображает сведения об ошибке, которыми можно безопасно делиться за пределами организации.
 
-If you see a failure state without clear next steps, collect the request details (endpoint name, creation time, status, and the Snowflake output you provided) and contact [dbt Support](mailto:support@getdbt.com).
+Если вы видите статус ошибки без четких указаний о дальнейших действиях, соберите сведения о запросе (имя конечной точки, время создания, статус и предоставленный вами результат Snowflake) и обратитесь в [службу поддержки dbt](mailto:support@getdbt.com).
 
-### Support-led setup {#support-led-setup}
+### Настройка с помощью службы поддержки {#support-led-setup}
 
-If **Private endpoints** is not available in your account settings, configure Snowflake PrivateLink by following these steps and submitting a request to dbt Support.
+Если раздел **Private endpoints** недоступен в настройках вашей учетной записи, настройте Snowflake PrivateLink, выполнив следующие действия и отправив запрос в службу поддержки dbt.
 
-To configure Snowflake instances hosted on AWS for [PrivateLink](https://aws.amazon.com/privatelink):
+Чтобы настроить [PrivateLink](https://aws.amazon.com/privatelink) для экземпляров Snowflake, размещенных в AWS:
 
-1. Open a support case with Snowflake to allow access from the <Constant name="dbt" /> AWS account.
-   - Snowflake prefers that the account owner opens the support case directly rather than dbt Labs acting on their behalf. For more information, refer to [Snowflake's knowledge base article](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors).
-   - Provide them with your <Constant name="dbt" /> account ID along with any other information requested in the article.
-     - **AWS account ID**: `346425330055` &mdash; _Note: This account ID only applies to AWS <Constant name="dbt" /> multi-tenant environments. For AWS Virtual Private/Single-Tenant account IDs, contact [dbt Support](mailto:support@getdbt.com)._
-   - You need [Snowflake's `ACCOUNTADMIN` permissions](https://docs.snowflake.com/en/user-guide/security-access-control-overview#system-defined-roles).
+1. Создайте обращение в службу поддержки Snowflake, чтобы разрешить доступ из учетной записи AWS <Constant name="dbt" />.
+   - Snowflake предпочитает, чтобы владелец учетной записи создавал обращение самостоятельно, а не через dbt Labs. Дополнительные сведения см. в [статье базы знаний Snowflake](https://community.snowflake.com/s/article/HowtosetupPrivatelinktoSnowflakefromCloudServiceVendors).
+   - Укажите идентификатор вашей учетной записи <Constant name="dbt" />, а также другую информацию, запрашиваемую в статье.
+     - **Идентификатор учетной записи AWS**: `346425330055` &mdash; _Примечание: этот идентификатор учетной записи применим только к мультитенантным средам <Constant name="dbt" /> в AWS. Чтобы получить идентификаторы учетных записей AWS Virtual Private/Single-Tenant, обратитесь в [службу поддержки dbt](mailto:support@getdbt.com)._
+   - Вам необходимы [разрешения `ACCOUNTADMIN` в Snowflake](https://docs.snowflake.com/en/user-guide/security-access-control-overview#system-defined-roles).
 
-<Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink1.png" title="Open snowflake case"/>
+<Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink1.png" title="Создание обращения в службу поддержки Snowflake"/>
 
-2. After Snowflake has granted the requested access, run the Snowflake system function [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) and copy the output.
+2. После того как Snowflake предоставит запрошенный доступ, выполните системную функцию Snowflake [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) и скопируйте результат.
 
-3. Add the required information to the following template and submit your request to [dbt Support](mailto:support@getdbt.com):
+3. Добавьте необходимую информацию в следующий шаблон и отправьте запрос в [службу поддержки dbt](mailto:support@getdbt.com):
 
-<Expandable alt_header="Support request email template" is_open={true}>
+<Expandable alt_header="Шаблон письма для обращения в службу поддержки" is_open={true}>
 
 ```text
 Subject: New Multi-Tenant (Azure or AWS) PrivateLink Request
@@ -163,84 +163,84 @@ Subject: New Multi-Tenant (Azure or AWS) PrivateLink Request
 ```
 
 </Expandable>
-_*By default, <Constant name="dbt" /> will be configured to use `privatelink-account-url` from the provided [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) as the PrivateLink endpoint. Upon request, `regionless-privatelink-account-url` can be used instead._
+_*По умолчанию <Constant name="dbt" /> будет настроен на использование `privatelink-account-url` из предоставленного результата [SYSTEM$GET_PRIVATELINK_CONFIG](https://docs.snowflake.com/en/sql-reference/functions/system_get_privatelink_config.html) в качестве конечной точки PrivateLink. По запросу вместо него можно использовать `regionless-privatelink-account-url`._
 
-_** Internal Stage PrivateLink must be [enabled on the Snowflake account](https://docs.snowflake.com/en/user-guide/private-internal-stages-aws#prerequisites) to use this feature_
+_** Для использования этой функции необходимо [включить Internal Stage PrivateLink в учетной записи Snowflake](https://docs.snowflake.com/en/user-guide/private-internal-stages-aws#prerequisites)_
 
 
 import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Create connection in dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
-Once <Constant name="dbt" /> Support completes the configuration, you can start creating new connections using PrivateLink. 
+После того как служба поддержки <Constant name="dbt" /> завершит настройку, вы сможете создавать новые подключения с использованием PrivateLink. 
 
 <PrivateLinkCreateConnection platform="Snowflake" />
 
-## Configuring internal stage PrivateLink in <Constant name="dbt" />
+## Настройка PrivateLink для внутренней области хранения в <Constant name="dbt" />
 
-If an Internal Stage PrivateLink endpoint has been provisioned, your dbt environments must be configured to use this endpoint instead of the account default set in Snowflake.
+Если конечная точка Internal Stage PrivateLink уже создана, необходимо настроить среды dbt на использование этой конечной точки вместо конечной точки по умолчанию, заданной для учетной записи в Snowflake.
 
-1. Obtain the Internal Stage PrivateLink endpoint DNS from dbt Support. For example, `*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com`.
-2. In the appropriate dbt project, navigate to **Orchestration** → **Environments**.
-3. Open the environment that should use the dbt Internal Stage PrivateLink endpoint and set **Extended attributes**. Configuration steps differ for deployment and development; refer to [Extended attributes](/docs/dbt-platform-environments#extended-attributes). Use a value similar to the following:
+1. Получите DNS-имя конечной точки Internal Stage PrivateLink в службе поддержки dbt. Например, `*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com`.
+2. В соответствующем проекте dbt перейдите в **Orchestration** → **Environments**.
+3. Откройте среду, которая должна использовать конечную точку dbt Internal Stage PrivateLink, и задайте **Extended attributes**. Шаги настройки различаются для сред развертывания и разработки; см. раздел [Расширенные атрибуты](/docs/dbt-platform-environments#extended-attributes). Используйте значение, аналогичное следующему:
 ```
 s3_stage_vpce_dns_name: '*.vpce-012345678abcdefgh-4321dcba.s3.us-west-2.vpce.amazonaws.com'
 ```
-4. Save the changes.
+4. Сохраните изменения.
 
-<Lightbox src="/img/docs/dbt-platform/snowflake-internal-stage-dns.png" title="Internal Stage DNS"/>
+<Lightbox src="/img/docs/dbt-platform/snowflake-internal-stage-dns.png" title="DNS-имя внутренней области хранения"/>
 
-## Configuring network policies
-If your organization uses [Snowflake Network Policies](https://docs.snowflake.com/en/user-guide/network-policies) to restrict access to your Snowflake account, you need to add a network rule for <Constant name="dbt" />. Snowflake supports two network rule types: VPCE ID-based (recommended) and IP/CIDR-based. The following steps use VPCE ID. If your organization requires an IP-based network policy instead, the CIDR range isn't available in the <Constant name="dbt_platform" /> UI. Please contact [dbt Support](mailto:support@getdbt.com) to get it.
+## Настройка сетевых политик {#configuring-network-policies}
+Если ваша организация использует [сетевые политики Snowflake](https://docs.snowflake.com/en/user-guide/network-policies) для ограничения доступа к учетной записи Snowflake, необходимо добавить сетевое правило для <Constant name="dbt" />. Snowflake поддерживает два типа сетевых правил: на основе идентификатора VPCE (рекомендуется) и на основе IP/CIDR. В следующих шагах используется идентификатор VPCE. Если вашей организации требуется сетевая политика на основе IP-адресов, диапазон CIDR недоступен в интерфейсе <Constant name="dbt_platform" />. Чтобы получить его, обратитесь в [службу поддержки dbt](mailto:support@getdbt.com).
 
-You need a VPCE ID to create a network policy in Snowflake:
-1. In <Constant name="dbt_platform" />, go to **Account settings → Private endpoints** 
-2. Click the endpoint in the table, then locate its **Endpoint identifier** field on the endpoint details page. 
-3. If you configured PrivateLink through [Support-led setup](#support-led-setup), or **Private endpoints** is not available in your account settings, contact [<Constant name="dbt" /> Support](mailto:support@getdbt.com) to obtain the VPCE ID. 
-4. If you're creating an endpoint for Internal Stage, the VPCE ID is different from the VPCE ID for the main service endpoint.
+Для создания сетевой политики в Snowflake вам потребуется идентификатор VPCE:
+1. В <Constant name="dbt_platform" /> перейдите в **Account settings → Private endpoints** 
+2. Нажмите на конечную точку в таблице, затем найдите поле **Endpoint identifier** на странице сведений о конечной точке. 
+3. Если вы настроили PrivateLink [с помощью службы поддержки](#support-led-setup) или раздел **Private endpoints** недоступен в настройках вашей учетной записи, обратитесь в [службу поддержки <Constant name="dbt" />](mailto:support@getdbt.com), чтобы получить идентификатор VPCE. 
+4. Если вы создаете конечную точку для Internal Stage, ее идентификатор VPCE отличается от идентификатора VPCE основной конечной точки сервиса.
 
-:::note Network Policy for Snowflake Internal Stage PrivateLink
-For guidance on protecting both the Snowflake service and Internal Stage consult the Snowflake [network policies](https://docs.snowflake.com/en/user-guide/network-policies#strategies-for-protecting-both-service-and-internal-stage) and [network rules](https://docs.snowflake.com/en/user-guide/network-rules#incoming-requests) docs. 
+:::note Сетевая политика для Snowflake Internal Stage PrivateLink
+Рекомендации по защите как сервиса Snowflake, так и внутренней области хранения см. в документации Snowflake по [сетевым политикам](https://docs.snowflake.com/en/user-guide/network-policies#strategies-for-protecting-both-service-and-internal-stage) и [сетевым правилам](https://docs.snowflake.com/en/user-guide/network-rules#incoming-requests). 
 
 :::
 
-### Using the UI
+### Использование пользовательского интерфейса
 
-Open the Snowflake UI and take the following steps:
-1. Go to the **Security** tab.
-2. Click on **Network Rules**.
-3. Click on **Add Rule**.
-4. Give the rule a name.
-5. Select a database and schema where the rule will be stored. These selections are for permission settings and organizational purposes; they do not affect the rule itself.
-6. Set the type to `AWS VPCE ID` and the mode to `Ingress`.
-7. Enter the VPCE ID from the endpoint details page in <Constant name="dbt_platform" /> (or from <Constant name="dbt" /> Support if you used Support-led setup) into the identifier box.
-8. Click **Create Network Rule**.
+Откройте интерфейс Snowflake и выполните следующие действия:
+1. Перейдите на вкладку **Security**.
+2. Нажмите **Network Rules**.
+3. Нажмите **Add Rule**.
+4. Задайте имя правила.
+5. Выберите базу данных и схему, в которых будет храниться правило. Этот выбор служит для настройки разрешений и организации объектов; на само правило он не влияет.
+6. Установите тип `AWS VPCE ID` и режим `Ingress`.
+7. Введите в поле идентификатора идентификатор VPCE со страницы сведений о конечной точке в <Constant name="dbt_platform" /> (или полученный от службы поддержки <Constant name="dbt" />, если вы использовали настройку с помощью службы поддержки).
+8. Нажмите **Create Network Rule**.
 
-<Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink2.png" title="Create Network Rule"/>
+<Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink2.png" title="Создание сетевого правила"/>
 
-9. In the **Network Policy** tab, edit the policy you want to add the rule to. This could be your account-level policy or a policy specific to the users connecting from <Constant name="dbt" />.
+9. На вкладке **Network Policy** отредактируйте политику, в которую хотите добавить правило. Это может быть политика уровня учетной записи или политика для конкретных пользователей, подключающихся из <Constant name="dbt" />.
 
-10. Add the new rule to the allowed list and click **Update Network Policy**.
+10. Добавьте новое правило в список разрешенных и нажмите **Update Network Policy**.
 
-<Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink3.png" title="Update Network Policy"/>
+<Lightbox src="/img/docs/dbt-platform/snowflakeprivatelink3.png" title="Обновление сетевой политики"/>
 
-### Using SQL
+### Использование SQL
 
-For quick and automated setup of network rules via SQL in Snowflake, the following commands allow you to create and configure access rules for <Constant name="dbt" />. These SQL examples demonstrate how to add a network rule and update your network policy accordingly.
+Для быстрой и автоматизированной настройки сетевых правил с помощью SQL в Snowflake используйте следующие команды, которые позволяют создавать и настраивать правила доступа для <Constant name="dbt" />. Эти примеры SQL показывают, как добавить сетевое правило и соответствующим образом обновить сетевую политику.
 
-1. Create a new network rule with the following SQL:
+1. Создайте новое сетевое правило с помощью следующего SQL:
 ```sql
 
 CREATE NETWORK RULE allow_dbt_cloud_access
   MODE = INGRESS
   TYPE = AWSVPCEID
-  VALUE_LIST = ('<VPCE_ID>'); -- Replace '<VPCE_ID>' with the VPCE ID the actual value
+  VALUE_LIST = ('<VPCE_ID>'); -- Замените '<VPCE_ID>' фактическим значением идентификатора VPCE
 
 ```
 
-2. Add the rule to a network policy with the following SQL:
+2. Добавьте правило в сетевую политику с помощью следующего SQL:
 ```sql
 
 ALTER NETWORK POLICY <network_policy_name>

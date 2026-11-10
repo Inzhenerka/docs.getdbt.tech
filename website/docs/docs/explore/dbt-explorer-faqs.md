@@ -15,7 +15,7 @@ availability: platform_login
 
 </Expandable>
 
-<Expandable alt_header="Как формируется стоимость dbt Catalog?" >
+<Expandable alt_header="Как формируется стоимость dbt Catalog?"  anchor_id="dbt-catalog-details-2">
 
 <Constant name="catalog" /> общедоступен во всех регионах и для всех типов развертывания на всех [тарифных планах уровня Enterprise и плане Starter](https://www.getdbt.com/) в <Constant name="dbt" />. Некоторые функции <Constant name="catalog" />, такие как рекомендации по проектам, отслеживание происхождения данных между проектами, отслеживание происхождения данных на уровне столбцов и другие, доступны только на тарифных планах Enterprise и Enterprise+.
 
@@ -37,7 +37,7 @@ availability: platform_login
 
 </Expandable>
 
-<Expandable alt_header="Как dbt Catalog поддерживает окружения dbt?" >
+<Expandable alt_header="Как dbt Catalog поддерживает окружения dbt?"  anchor_id="dbt-catalog-dbt-details-2">
 
 <Constant name="catalog" /> поддерживает [среду развертывания](/docs/deploy/deploy-environments) production или staging для каждого проекта, который вы хотите изучить. По умолчанию используется последнее состояние проекта в среде production или staging. Пользователи могут назначить только одну среду production и одну среду staging для каждого проекта <Constant name="dbt" />.
 
@@ -63,7 +63,7 @@ availability: platform_login
 
 </Expandable>
 
-<Expandable alt_header="Почему ранее видимые данные исчезли из dbt Catalog?" >
+<Expandable alt_header="Почему ранее видимые данные исчезли из dbt Catalog?"  anchor_id="dbt-catalog-details-3">
 
 <Constant name="catalog" /> автоматически удаляет устаревшие метаданные через 3 месяца, если за это время не запускались задания для их обновления. Чтобы этого избежать, настройте расписание так, чтобы задания с необходимыми командами запускались чаще, чем раз в 3 месяца.
 
@@ -77,7 +77,7 @@ availability: platform_login
 
 </Expandable>
 
-<Expandable alt_header="Какие возможности поиска поддерживает dbt Catalog?" >
+<Expandable alt_header="Какие возможности поиска поддерживает dbt Catalog?"  anchor_id="dbt-catalog-details-4">
 
 Поиск ресурсов поддерживает ключевые слова, частичные совпадения (fuzzy search) и логические операторы, такие как `OR`. Поиск по lineage поддерживает использование dbt selectors. Подробности см. в разделе [Keyword search](/docs/explore/explore-projects#search-resources).
 
@@ -120,7 +120,7 @@ availability: platform_login
 
 </Expandable>
 
-<Expandable alt_header="Остается ли column-level lineage рабочим, если имена колонок различаются между моделями?" >
+<Expandable alt_header="Остается ли column-level lineage рабочим, если имена колонок различаются между моделями?"  anchor_id="column-level-lineage-details-1">
 
 Да. Column-level lineage корректно обрабатывает изменения имен колонок в разных местах dbt-проекта.
 
@@ -158,7 +158,7 @@ availability: platform_login
 
 </Expandable>
 
-<Expandable alt_header="Смогут ли пользователи самостоятельно размещённых установок dbt воспользоваться какими-либо из этих новых функций dbt Catalog?" >
+<Expandable alt_header="Смогут ли пользователи самостоятельно размещённых установок dbt воспользоваться какими-либо из этих новых функций dbt Catalog?"  anchor_id="dbt-dbt-catalog-details-2">
 
 Нет. <Constant name="catalog" /> — это продукт, доступный только в <Constant name="dbt" />.
 
@@ -170,13 +170,13 @@ availability: platform_login
 
 </Expandable>
 
-<Expandable alt_header="Есть ли простой способ поделиться полезным контентом dbt Catalog с людьми вне dbt?" >
+<Expandable alt_header="Есть ли простой способ поделиться полезным контентом dbt Catalog с людьми вне dbt?"  anchor_id="dbt-catalog-dbt-details-3">
 
 Возможность встраивания и шаринга представлений рассматривается как потенциальная функция в будущем.
 
 </Expandable>
 
-<Expandable alt_header="Доступен ли dbt Catalog из других разделов внутри dbt?" >
+<Expandable alt_header="Доступен ли dbt Catalog из других разделов внутри dbt?"  anchor_id="dbt-catalog-dbt-details-4">
 
 Да, вы можете [открыть <Constant name="catalog" /> из различных инструментов <Constant name="dbt" />](/docs/explore/access-from-dbt-platform), что позволяет легко переходить между ресурсами и графом зависимостей вашего проекта.
 

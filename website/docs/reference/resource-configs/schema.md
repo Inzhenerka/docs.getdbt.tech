@@ -131,11 +131,11 @@ data_tests:
 </File>
 </TabItem>
 
-<TabItem value="functions" label="Functions">
+<TabItem value="functions" label="Функции">
 
-Specify a [custom schema](/docs/build/custom-schemas#understanding-custom-schemas) for a function in your `dbt_project.yml` or properties file.
+Задайте для функции [пользовательскую схему](/docs/build/custom-schemas#understanding-custom-schemas) в `dbt_project.yml` или в файле свойств.
 
-For example, if you want to place a function in a schema called `finance` instead of the target schema, you can configure it in the `dbt_project.yml` or `properties.yml` file:
+Например, чтобы разместить функцию в схеме `finance` вместо целевой схемы, настройте её в `dbt_project.yml` или в `properties.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -159,7 +159,7 @@ functions:
 
 </File>
 
-This results in the function being located in the `target_schema_finance` schema, so the full relation name would be `analytics.target_schema_finance.calculate_tax`.
+Функция будет размещена в схеме `target_schema_finance`, поэтому её полное имя будет `analytics.target_schema_finance.calculate_tax`.
 
 </TabItem>
 </Tabs>

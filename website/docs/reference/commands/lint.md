@@ -1,74 +1,74 @@
 ---
-title: "About dbt lint command"
+title: "О команде dbt lint"
 sidebar_label: "lint"
-description: "Use dbt lint to check your SQL files for style, correctness, and convention violations using your .sqlfluff config and SQLFluff rule codes."
+description: "Используйте dbt lint для проверки SQL-файлов на нарушения стиля, корректности и соглашений с помощью конфигурации .sqlfluff и кодов правил SQLFluff."
 id: "lint"
 availability:
   engine: v2
 ---
 
-`dbt lint` is a fast SQL linter built into <Constant name="fusion_engine" />, available locally or in <Constant name="dbt_platform"/>. dbt lint requires v2 or later. If you're on an earlier version, [upgrade or install dbt](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2).
+`dbt lint` — это быстрый SQL-линтер, встроенный в <Constant name="fusion_engine" /> и доступный локально или на <Constant name="dbt_platform"/>. Для dbt lint требуется версия v2 или более поздняя. Если вы используете более раннюю версию, [обновите или установите dbt](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2).
 
-It's SQLFluff-compatible: it reads your `.sqlfluff` config, uses the same rule codes (for example, `CP01`, `RF03`), and respects `-- noqa` suppression comments. Compatible doesn't mean identical: `dbt lint` and SQLFluff can return different results for the same file and config. Refer to [Rule parity with SQLFluff](#rule-parity-with-sqlfluff).
+Он совместим с SQLFluff: читает вашу конфигурацию `.sqlfluff`, использует те же коды правил (например, `CP01`, `RF03`) и учитывает комментарии подавления `-- noqa`. Совместимость не означает идентичность: `dbt lint` и SQLFluff могут возвращать разные результаты для одного и того же файла с одной и той же конфигурацией. См. раздел [Соответствие правил SQLFluff](#rule-parity-with-sqlfluff).
 
-You can use your existing SQLFluff config with minimal changes. dbt Labs intends to track the latest SQLFluff rule spec going forward.
+Вы можете использовать существующую конфигурацию SQLFluff с минимальными изменениями. В дальнейшем dbt Labs планирует следовать актуальной спецификации правил SQLFluff.
 
 :::note
-`dbt lint` is part of <Constant name="fusion_engine" /> and is not the same as `dbt sqlfluff lint` on the <Constant name="platform_cli" />. For SQLFluff on the platform CLI, refer to [Configure the dbt platform CLI](/docs/platform/configure-dbt-cli). [Linting in Studio IDE](/docs/platform/studio-ide/lint-format) continues to use SQLFluff.
+`dbt lint` входит в состав <Constant name="fusion_engine" /> и отличается от `dbt sqlfluff lint` в <Constant name="platform_cli" />. Подробнее о SQLFluff в platform CLI см. в разделе [Настройка dbt platform CLI](/docs/platform/configure-dbt-cli). [Линтинг в Studio IDE](/docs/platform/studio-ide/lint-format) по-прежнему использует SQLFluff.
 :::
 
-## Benchmarks
+## Тесты производительности
 
-Across project sizes from 1k to 10k models, `dbt lint` runs _40×–250×_ faster than SQLFluff with all cores enabled and _280×–1500×_ faster than single-threaded SQLFluff.
+На проектах размером от 1 тыс. до 10 тыс. моделей `dbt lint` работает в _40–250 раз_ быстрее SQLFluff при использовании всех ядер и в _280–1500 раз_ быстрее SQLFluff в однопоточном режиме.
 
-dbt Labs ran these benchmarks on SQLFluff 4.2.1 against dbt projects on the Snowflake dialect, ranging from 1k to 10k models, on a MacBook Pro with a 12-core Apple M4 Pro and 24 GB of RAM.
+dbt Labs провела эти тесты с SQLFluff 4.2.1 на проектах dbt с диалектом Snowflake, содержащих от 1 тыс. до 10 тыс. моделей, на MacBook Pro с 12-ядерным процессором Apple M4 Pro и 24 ГБ оперативной памяти.
 
-## Usage
+## Использование
 
 ```shell
 dbt lint [FILE] [flags]
 ```
 
-`[FILE]` is optional. When you omit `[FILE]`, `dbt lint` lints all SQL files in your project.
+`[FILE]` — необязательный аргумент. Если не указать `[FILE]`, `dbt lint` проверит все SQL-файлы в вашем проекте.
 
-## Flags
+## Флаги
 
-| Flag | Description |
+| Флаг | Описание |
 |------|-------------|
-| `--fix` | Automatically apply fixes for auto-fixable rule violations. See [Rules without autofix](#rules-without-autofix) for rules that cannot be fixed automatically. |
-| `--config <path>` | Path to a `.sqlfluff` config file. Overrides auto-discovery. |
-| `--rules` | Comma-separated list of rule codes to enable. Overrides config. |
-| `--exclude-rules` | Comma-separated list of rule codes to disable. Overrides config. |
-| `--changed` | Lint only files modified in the current git working tree. |
-| `--format human\|json\|github-annotation` | Output format. Defaults to `human`. Use `json` for machine-readable output or `github-annotation` for GitHub Actions integration. |
-| `--jinja-render-mode <mode>` | How `dbt lint` renders Jinja before linting. Accepts `symbolic` (default), `rendered`, or `turbo`. Overrides `.sqlfluff` config. Refer to [Jinja render modes](#jinja-render-modes). |
+| `--fix` | Автоматически исправляет нарушения правил, для которых доступно автоматическое исправление. Правила, нарушения которых нельзя исправить автоматически, перечислены в разделе [Правила без автоматического исправления](#rules-without-autofix). |
+| `--config <path>` | Путь к файлу конфигурации `.sqlfluff`. Переопределяет автоматическое обнаружение. |
+| `--rules` | Список кодов правил для включения, разделённых запятыми. Переопределяет конфигурацию. |
+| `--exclude-rules` | Список кодов правил для отключения, разделённых запятыми. Переопределяет конфигурацию. |
+| `--changed` | Проверяет только файлы, изменённые в текущем рабочем дереве git. |
+| `--format human\|json\|github-annotation` | Формат вывода. По умолчанию — `human`. Используйте `json` для машиночитаемого вывода или `github-annotation` для интеграции с GitHub Actions. |
+| `--jinja-render-mode <mode>` | Способ рендеринга Jinja в `dbt lint` перед проверкой. Допустимые значения: `symbolic` (по умолчанию), `rendered` или `turbo`. Переопределяет конфигурацию `.sqlfluff`. См. раздел [Режимы рендеринга Jinja](#jinja-render-modes). |
 
-## Configuration
+## Конфигурация
 
-`dbt lint` auto-discovers the nearest `.sqlfluff` file in your project directory tree. CLI flags `--rules` and `--exclude-rules` take precedence over the values in the config file. To create a `.sqlfluff` file, see [SQLFluff configuration files](https://docs.sqlfluff.com/en/stable/configuration/setting_configuration.html).
+`dbt lint` автоматически обнаруживает ближайший файл `.sqlfluff` в дереве каталогов вашего проекта. Флаги CLI `--rules` и `--exclude-rules` имеют приоритет над значениями в файле конфигурации. О создании файла `.sqlfluff` см. в разделе [Файлы конфигурации SQLFluff](https://docs.sqlfluff.com/en/stable/configuration/setting_configuration.html).
 
-### Templater requirement
+### Требование к шаблонизатору {#templater-requirement}
 
-`dbt lint` and `dbt format` only support the SQLFluff `dbt` templater, not the `jinja` templater. Set the templater explicitly in your `.sqlfluff` file:
+`dbt lint` и `dbt format` поддерживают только шаблонизатор SQLFluff `dbt`, но не `jinja`. Явно укажите шаблонизатор в файле `.sqlfluff`:
 
 ```ini
 [sqlfluff]
 templater = dbt
 ```
 
-If your `.sqlfluff` file doesn't set `templater = dbt`, each run logs the following warning and continues anyway:
+Если в файле `.sqlfluff` не задано `templater = dbt`, при каждом запуске в журнал записывается следующее предупреждение, но выполнение всё равно продолжается:
 
 ```text
 [warning] [NotSupported (dbt9000)]: SQLFluff templater 'jinja' is not supported. dbt lint/format only supports SQLFluff templater 'dbt'. Continuing anyway.
 ```
 
-Setting `templater = dbt` removes the warning.
+Установка `templater = dbt` устраняет это предупреждение.
 
-## dbt-specific rules
+## Правила, специфичные для dbt
 
-`dbt lint` also ships five dbt-specific rules, under the `DBT` code prefix. These rules catch dbt patterns that generic SQL linting can't, like hard-coded relation names instead of `ref()`.
+`dbt lint` также включает пять правил, специфичных для dbt, с префиксом кода `DBT`. Эти правила выявляют особенности использования dbt, которые не обнаруживает обычный SQL-линтер, например жёстко заданные имена отношений вместо `ref()`.
 
-These rules are off by default and to turn them on, add a `rules` line to your `.sqlfluff` file:
+По умолчанию эти правила отключены. Чтобы включить их, добавьте строку `rules` в файл `.sqlfluff`:
 
 ```ini
 [sqlfluff]
@@ -77,34 +77,34 @@ These rules are off by default and to turn them on, add a `rules` line to your `
 [rules](https://docs.sqlfluff.com/en/stable/configuration/rule_configuration.html) = DBT02,DBT03,DBT04,DBT05
 ```
 <SimpleTable>
-| Code | Dotted name | Rule | 
+| Код | Имя с точечной нотацией | Правило | 
 |------|-------------|---------|
-| `DBT01` | `dbt.import_ctes` | Every `ref()/source()` must be imported through a top-level CTE, not referenced inline| 
-| `DBT02` | `dbt.join_condition_or` | A `JOIN`'s `ON` clause must not contain `OR` | 
-| `DBT03` | `dbt.function_wrapped_filter_column` | A comparison must not wrap a bare column reference in a function call |
-| `DBT04` | `dbt.leading_wildcard_like` | A `LIKE/ILIKE` pattern must not start with a wildcard| 
-| `DBT05` | `dbt.hard_coded_reference` | A `ref()/source()` must not be hard-coded to a literal string|
+| `DBT01` | `dbt.import_ctes` | Каждый вызов `ref()/source()` должен импортироваться через CTE верхнего уровня, а не использоваться непосредственно в запросе| 
+| `DBT02` | `dbt.join_condition_or` | Условие `ON` в `JOIN` не должно содержать `OR` | 
+| `DBT03` | `dbt.function_wrapped_filter_column` | В сравнении ссылка на столбец не должна быть обёрнута в вызов функции |
+| `DBT04` | `dbt.leading_wildcard_like` | Шаблон `LIKE/ILIKE` не должен начинаться с подстановочного символа| 
+| `DBT05` | `dbt.hard_coded_reference` | Ссылка `ref()/source()` не должна быть жёстко задана строковым литералом|
 </SimpleTable>
 
-## Jinja render modes
+## Режимы рендеринга Jinja {#jinja-render-modes}
 
-Before `dbt lint` can check a model, it has to turn your Jinja-templated SQL into plain SQL. Most Jinja renders cleanly at lint time, but some macros ask your data platform a question, such as which columns a table has, and `dbt lint` never connects to your platform, so those calls have no real answer. The `jinja_render_mode` setting controls how `dbt lint` handles them, and that changes which violations you see.
+Прежде чем `dbt lint` сможет проверить модель, ему нужно преобразовать SQL с шаблонами Jinja в обычный SQL. Большинство шаблонов Jinja корректно обрабатываются во время линтинга, но некоторые макросы запрашивают информацию у вашей платформы данных, например список столбцов таблицы. При этом `dbt lint` никогда не подключается к платформе, поэтому такие вызовы не получают реального ответа. Настройка `jinja_render_mode` определяет, как `dbt lint` обрабатывает эти вызовы, и от неё зависит, какие нарушения вы увидите.
 
-Most projects should keep the default, `symbolic`. The three modes are:
+Для большинства проектов рекомендуется оставить значение по умолчанию — `symbolic`. Доступны три режима:
 
-| Mode | Summary |
+| Режим | Краткое описание |
 |------|---------|
-| [`symbolic` (default)](#symbolic-default) | Renders your Jinja normally and substitutes a placeholder for results it can't get from your platform. |
-| [`rendered`](#rendered) | Renders your Jinja against empty stub values, with no signal that they're stand-ins. |
-| [`turbo`](#turbo) | Skips execution entirely and lints your literal template text. |
+| [`symbolic` (по умолчанию)](#symbolic-default) | Выполняет обычный рендеринг Jinja и подставляет заполнитель вместо результатов, которые невозможно получить от платформы. |
+| [`rendered`](#rendered) | Выполняет рендеринг Jinja с пустыми значениями-заглушками, никак не отмечая, что они подставные. |
+| [`turbo`](#turbo) | Полностью пропускает выполнение и проверяет буквальный текст шаблона. |
 
-### Symbolic (default)
+### Symbolic (по умолчанию) {#symbolic-default}
 
-Executes your Jinja, but tracks which values come from <Term id="introspective-adapter-call">introspective adapter calls</Term>, such as `adapter.execute`, `adapter.get_relation`, and `adapter.get_columns_in_relation`. Because those calls can't reach your warehouse at lint time, `dbt lint` replaces their output with a placeholder instead of a misleading empty value. Everything else renders normally.
+Выполняет Jinja, но отслеживает, какие значения получены из <Term id="introspective-adapter-call">интроспективных вызовов адаптера</Term>, таких как `adapter.execute`, `adapter.get_relation` и `adapter.get_columns_in_relation`. Поскольку во время линтинга эти вызовы не могут обратиться к хранилищу данных, `dbt lint` заменяет их результат заполнителем, а не вводящим в заблуждение пустым значением. Всё остальное обрабатывается как обычно.
 
-Keep the default. It produces the fewest false positives on projects that use <Term id="introspective-macro">introspective macros</Term>.
+Оставьте режим по умолчанию. Он даёт наименьшее количество ложных срабатываний в проектах, использующих <Term id="introspective-macro">интроспективные макросы</Term>.
 
-For example, a model that loops over the result of an introspective call:
+Например, модель, которая перебирает результат интроспективного вызова:
 
 ```jinja
 {% set cols = adapter.get_columns_in_relation(ref('orders')) %}
@@ -112,73 +112,73 @@ select {{ cols | map(attribute='name') | join(', ') }}
 from {{ ref('orders') }}
 ```
 
-renders, for linting purposes, as something like:
+для целей линтинга преобразуется примерно в следующее:
 
 ```sql
 select your_columns
 from orders
 ```
 
-`dbt lint` doesn't report violations against the placeholder value itself, but it lints everything else in the query normally.
+`dbt lint` не сообщает о нарушениях в самом значении-заполнителе, но проверяет всё остальное в запросе как обычно.
 
-### Rendered
+### Rendered {#rendered}
 
-Executes your Jinja against parse-time stub values. Introspective adapter calls return empty results with no signal that the values aren't real, so the same model renders as:
+Выполняет Jinja со значениями-заглушками, используемыми на этапе разбора. Интроспективные вызовы адаптера возвращают пустые результаты без каких-либо указаний на то, что эти значения не настоящие, поэтому та же модель преобразуется в:
 
 ```sql
 select
 from orders
 ```
 
-The empty `select` list can produce SQL your project would never run, and `dbt lint` checks that unrealistic result instead. Compare `rendered` against `symbolic` when you're investigating an unexpected violation.
+Пустой список `select` может привести к появлению SQL, который ваш проект никогда не выполнил бы, и `dbt lint` проверяет именно этот нереалистичный результат. Сравните `rendered` с `symbolic`, если разбираетесь с неожиданным нарушением.
 
-### Turbo
+### Turbo {#turbo}
 
-Never executes your Jinja. It reads the template syntactically, keeps the literal SQL you wrote, and replaces every `{{ ... }}` expression with a placeholder, including ones that aren't introspective:
+Никогда не выполняет Jinja. Анализирует синтаксис шаблона, сохраняет написанный вами SQL как есть и заменяет каждое выражение `{{ ... }}` заполнителем, в том числе выражения, не связанные с интроспекцией:
 
 ```sql
 select your_expression
 from your_expression
 ```
 
-Use it when rendering is too slow or fails outright on a model. It's the fastest mode, but it can't see anything a macro generates.
+Используйте этот режим, если рендеринг модели выполняется слишком медленно или завершается ошибкой. Это самый быстрый режим, но он не видит ничего из того, что генерируют макросы.
 
-### Set the render mode
+### Настройка режима рендеринга
 
-Set the mode for a single run with `--jinja-render-mode`. The flag works with both `dbt lint` and `dbt format`:
+Задайте режим для отдельного запуска с помощью `--jinja-render-mode`. Флаг работает как с `dbt lint`, так и с `dbt format`:
 
 ```shell
 dbt lint --jinja-render-mode rendered
 dbt format --jinja-render-mode turbo
 ```
 
-Set it for the whole project in the `[dbt]` section of your `.sqlfluff` file:
+Задайте его для всего проекта в секции `[dbt]` файла `.sqlfluff`:
 
 ```ini
 [dbt]
 jinja_render_mode = rendered
 ```
 
-The CLI flag takes precedence over the config file.
+Флаг CLI имеет приоритет над файлом конфигурации.
 
-### Render variants
+### Варианты рендеринга {#render-variants}
 
-In `symbolic` and `turbo` modes, a single model can produce more than one candidate SQL output. When `dbt lint` reaches an `{% if %}` block whose condition it can't resolve, it lints more than one branch rather than guessing which one you meant. Each candidate is a _render variant_, and `dbt lint` reports the violations it finds across all of them.
+В режимах `symbolic` и `turbo` одна модель может давать несколько возможных вариантов SQL. Когда `dbt lint` доходит до блока `{% if %}`, условие которого не удаётся вычислить, он проверяет несколько ветвей, а не пытается угадать, какую из них вы имели в виду. Каждый такой результат называется _вариантом рендеринга_, и `dbt lint` сообщает о нарушениях, найденных во всех этих вариантах.
 
-`render_variant_limit` caps how many variants `dbt lint` produces per model, and defaults to `5`. Set it in the `[sqlfluff]` section of your `.sqlfluff` file:
+`render_variant_limit` ограничивает число вариантов, которые `dbt lint` создаёт для каждой модели; значение по умолчанию — `5`. Задайте его в секции `[sqlfluff]` файла `.sqlfluff`:
 
 ```ini
 [sqlfluff]
 render_variant_limit = 10
 ```
 
-Raising the limit widens coverage at the cost of lint time, because each additional variant is another render of the template. Lowering it to `1` restricts `dbt lint` to a single variant per model.
+Увеличение лимита расширяет охват проверки, но увеличивает время линтинга, поскольку каждый дополнительный вариант требует ещё одного рендеринга шаблона. Уменьшение значения до `1` ограничивает `dbt lint` одним вариантом для каждой модели.
 
-## Ignoring files and directories
+## Игнорирование файлов и каталогов
 
-Use a `.sqlfluffignore` file at your project root to exclude paths you aren't ready to lint yet, such as `dbt_packages/` or `models/legacy/`.
+Используйте файл `.sqlfluffignore` в корне проекта, чтобы исключить пути, которые вы пока не готовы проверять, например `dbt_packages/` или `models/legacy/`.
 
-`.sqlfluffignore` uses `.gitignore`-style syntax. For the full pattern reference, see the [SQLFluff `.sqlfluffignore` documentation](https://docs.sqlfluff.com/en/stable/configuration.html#id2).
+`.sqlfluffignore` использует синтаксис в стиле `.gitignore`. Полный справочник по шаблонам см. в [документации SQLFluff по `.sqlfluffignore`](https://docs.sqlfluff.com/en/stable/configuration.html#id2).
 
 ```
 # .sqlfluffignore
@@ -187,75 +187,75 @@ models/legacy/
 snapshots/
 ```
 
-When you're ready to lint those paths, remove their entries from `.sqlfluffignore`.
+Когда будете готовы проверять эти пути, удалите соответствующие записи из `.sqlfluffignore`.
 
-### Reducing noise in the Studio IDE Problems tab
-The Studio IDE lints SQL automatically and surfaces violations in the **Problems** tab. If you see a large number of style warnings and aren't ready to address them, add your model directories to `.sqlfluffignore` to remove those violations from the **Problems** tab immediately. Remove the ignore entries incrementally as you clean up violations.
+### Уменьшение количества лишних сообщений на вкладке Problems в Studio IDE
+Studio IDE автоматически проверяет SQL и показывает нарушения на вкладке **Problems**. Если вы видите много предупреждений о стиле и пока не готовы их исправлять, добавьте каталоги моделей в `.sqlfluffignore`, чтобы сразу убрать эти нарушения с вкладки **Problems**. По мере устранения нарушений постепенно удаляйте записи об игнорировании.
 
-## Suppressing violations
+## Подавление нарушений
 
-`dbt lint` supports the full SQLFluff suppression syntax:
+`dbt lint` поддерживает полный синтаксис подавления SQLFluff:
 
-| Suppression | Scope |
+| Подавление | Область действия |
 |-------------|-------|
-| `-- noqa` | Suppress all violations on the line |
-| `-- noqa: CP01, RF03` | Suppress specific rules on this line |
-| `-- noqa-file` | Suppress all violations in the file |
-| `-- sqlfluff:disable CP01` | Disable a rule in the file |
+| `-- noqa` | Подавляет все нарушения в строке |
+| `-- noqa: CP01, RF03` | Подавляет указанные правила в этой строке |
+| `-- noqa-file` | Подавляет все нарушения в файле |
+| `-- sqlfluff:disable CP01` | Отключает правило в файле |
 
-## Supported dialects
+## Поддерживаемые диалекты
 
-The following dialects are currently supported with `dbt lint`:
+В настоящее время `dbt lint` поддерживает следующие диалекты:
 
 - Snowflake
 - BigQuery
 - DuckDB
 - Redshift
 - Databricks
-- SparkSQL (currently aliased to Databricks)
+- SparkSQL (сейчас является псевдонимом Databricks)
 
-Additional dialect support is coming soon.
+Поддержка дополнительных диалектов появится в ближайшее время.
 
 ## dbt format
 
-`dbt format` (also available as `dbt fmt`) requires v2 or later. It automatically formats your SQL files according to the layout (`LT*`) rules in your `.sqlfluff` file. Unlike `dbt lint`, it doesn't issue diagnostics. It applies fixes silently and in place when you run the command.
+Для `dbt format` (также доступной как `dbt fmt`) требуется версия v2 или более поздняя. Команда автоматически форматирует SQL-файлы в соответствии с правилами оформления (`LT*`) из файла `.sqlfluff`. В отличие от `dbt lint`, она не выводит диагностические сообщения. При запуске команда применяет исправления без вывода сообщений, непосредственно в файлах.
 
 ```shell
 dbt format [FILE] [flags]
 dbt fmt [FILE] [flags]
 ```
 
-`[FILE]` is optional. When omitted, `dbt format` formats all SQL files in your project. You can also pass a single file or a directory to scope the run.
+`[FILE]` — необязательный аргумент. Если его не указать, `dbt format` отформатирует все SQL-файлы в проекте. Вы также можете передать отдельный файл или каталог, чтобы ограничить область выполнения.
 
-`dbt format` logs a warning and continues when `.sqlfluff` does not set `templater = dbt`. Refer to [Templater requirement](#templater-requirement).
+Если в `.sqlfluff` не задано `templater = dbt`, `dbt format` записывает предупреждение в журнал и продолжает работу. См. раздел [Требование к шаблонизатору](#templater-requirement).
 
-### Format flags
+### Флаги форматирования
 
-| Flag | Description |
+| Флаг | Описание |
 |------|-------------|
-| `--check` | Checks whether files are formatted without writing changes. Exits with a non-zero code if any file isn't formatted. Never modifies a file. |
-| `--layout KEY=VALUE`, `-l KEY=VALUE` | Overrides SQLFluff-style layout rules for this run. Repeat the flag to set multiple options. Refer to [Layout options](#layout-options). |
-| `--jinja-render-mode MODE` | Sets how `dbt format` renders Jinja before formatting. Accepts `symbolic` (default), `rendered`, or `turbo`. Refer to [Jinja render modes](#jinja-render-modes). |
+| `--check` | Проверяет форматирование файлов, не записывая изменения. Завершается с ненулевым кодом, если хотя бы один файл не отформатирован. Никогда не изменяет файлы. |
+| `--layout KEY=VALUE`, `-l KEY=VALUE` | Переопределяет правила оформления в стиле SQLFluff для текущего запуска. Повторите флаг, чтобы задать несколько параметров. См. раздел [Параметры оформления](#layout-options). |
+| `--jinja-render-mode MODE` | Задаёт способ рендеринга Jinja в `dbt format` перед форматированием. Допустимые значения: `symbolic` (по умолчанию), `rendered` или `turbo`. См. раздел [Режимы рендеринга Jinja](#jinja-render-modes). |
 
-### Layout options
+### Параметры оформления {#layout-options}
 
-The `--layout` flag takes `KEY=VALUE` pairs and overrides the matching layout rules in your `.sqlfluff` file for a single run. It overrides only the keys you pass, and `dbt format` still reads all other layout rules from your `.sqlfluff` file. The supported keys are:
+Флаг `--layout` принимает пары `KEY=VALUE` и переопределяет соответствующие правила оформления из файла `.sqlfluff` для одного запуска. Он переопределяет только переданные ключи; все остальные правила оформления `dbt format` по-прежнему читает из файла `.sqlfluff`. Поддерживаются следующие ключи:
 
-| Key | Description |
+| Ключ | Описание |
 |-----|-------------|
-| `indent=NUMBER` | Sets the number of spaces to indent. |
-| `commas=leading\|trailing` | Sets comma placement. |
-| `line-length=NUMBER` | Sets the maximum line length. |
+| `indent=NUMBER` | Задаёт число пробелов для отступа. |
+| `commas=leading\|trailing` | Задаёт расположение запятых. |
+| `line-length=NUMBER` | Задаёт максимальную длину строки. |
 
-For example, to format with leading commas and a two-space indent:
+Например, чтобы отформатировать код с запятыми в начале строк и отступом в два пробела:
 
 ```shell
 dbt format -l commas=leading -l indent=2
 ```
 
-### Check formatting in CI
+### Проверка форматирования в CI
 
-Use `--check` as a dry run to gate pull requests on formatting. If every file is formatted, the command exits with code `0`. If a file isn't formatted, the command exits with code `1`, leaves the file untouched, and returns an error like this:
+Используйте `--check` для проверки без внесения изменений, чтобы разрешать принятие pull request только при соблюдении форматирования. Если все файлы отформатированы, команда завершается с кодом `0`. Если какой-либо файл не отформатирован, команда завершается с кодом `1`, оставляет файл без изменений и возвращает ошибку следующего вида:
 
 ```text
 [error] [Generic (dbt1000)]: Formatting check failed for models/staging/stg_orders.sql. Run `dbt fmt` to format it.
@@ -267,21 +267,21 @@ dbt format --check models/staging                 # check a directory
 dbt format --check models/staging/stg_orders.sql  # check a single file
 ```
 
-To fix failures, run `dbt format` without `--check`.
+Чтобы устранить ошибки проверки, запустите `dbt format` без `--check`.
 
-## Rule parity with SQLFluff
+## Соответствие правил SQLFluff {#rule-parity-with-sqlfluff}
 
-`dbt lint` aims for high overlap with SQLFluff, but it doesn't guarantee rule-for-rule parity, and small differences will always exist. Layout and indentation rules, such as `LT02`, are one known area of difference.
+`dbt lint` стремится обеспечить высокую степень соответствия SQLFluff, но не гарантирует полного совпадения по каждому правилу, и небольшие различия будут существовать всегда. Одна из известных областей различий — правила оформления и отступов, такие как `LT02`.
 
-Because [linting in the <Constant name="studio_ide" />](/docs/platform/studio-ide/lint-format) still uses SQLFluff, <Constant name="studio_ide" /> **Lint file** and `dbt lint` can report different violations for the same project code. Similarly, CI jobs on a <Constant name="fusion" /> version invoke `dbt lint` instead of SQLFluff, so results from [CI jobs](/docs/deploy/continuous-integration#sql-linting) can differ from your SQLFluff results.
+Поскольку [линтинг в <Constant name="studio_ide" />](/docs/platform/studio-ide/lint-format) по-прежнему использует SQLFluff, действие **Lint file** в <Constant name="studio_ide" /> и команда `dbt lint` могут сообщать о разных нарушениях в одном и том же коде проекта. Аналогично, задания CI, использующие версию <Constant name="fusion" />, вызывают `dbt lint` вместо SQLFluff, поэтому результаты [заданий CI](/docs/deploy/continuous-integration#sql-linting) могут отличаться от результатов SQLFluff.
 
-If you need SQLFluff behavior, you can either lint in the <Constant name="studio_ide" />, which continues to run SQLFluff, or run SQLFluff locally using the standalone <Constant name="core" /> engine templater. Refer to [<Constant name="fusion" /> limitations](/docs/dbt/supported-features#limitations) for more information.
+Если вам нужно поведение SQLFluff, вы можете выполнять линтинг в <Constant name="studio_ide" />, где по-прежнему используется SQLFluff, либо запускать SQLFluff локально с шаблонизатором для отдельного движка <Constant name="core" />. Дополнительные сведения см. в разделе [Ограничения <Constant name="fusion" />](/docs/dbt/supported-features#limitations).
 
-## Promoting lint warnings to errors
+## Преобразование предупреждений линтера в ошибки {#promoting-lint-warnings-to-errors}
 
-By default, violations from [rules without an autofix](#rules-without-autofix) show as warnings and don't fail `dbt lint`. Violations that `--fix` can fix show as errors and fail the command.
+По умолчанию нарушения [правил без автоматического исправления](#rules-without-autofix) отображаются как предупреждения и не приводят к завершению `dbt lint` с ошибкой. Нарушения, которые можно исправить с помощью `--fix`, отображаются как ошибки и приводят к завершению команды с ошибкой.
 
-If you want to report a rule violation as an error instead of a warning, add the rule's name to `warn_error_options` in `dbt_project.yml`. You can find the rule name in the lint output. For example, rule `ST05` shows as `PreferCTE`:
+Если вы хотите, чтобы нарушение правила отображалось как ошибка, а не предупреждение, добавьте имя правила в `warn_error_options` в файле `dbt_project.yml`. Имя правила можно найти в выводе линтера. Например, правило `ST05` отображается как `PreferCTE`:
 
 ```yaml
 flags:
@@ -290,7 +290,7 @@ flags:
       - PreferCTE
 ```
 
-If you set `error: all` instead, dbt promotes every warning, including warnings from commands other than `lint`:
+Если вместо этого задать `error: all`, dbt преобразует в ошибки все предупреждения, в том числе предупреждения команд, отличных от `lint`:
 
 ```yaml
 flags:
@@ -298,52 +298,52 @@ flags:
     error: all
 ```
 
-To promote one lint rule, list that rule by name as in the first example. Refer to [Warnings](/reference/global-configs/warnings).
+Чтобы преобразовать в ошибку нарушение одного правила линтера, укажите имя этого правила, как в первом примере. См. раздел [Предупреждения](/reference/global-configs/warnings).
 
-In a CI job, the **Linting** checkbox runs `dbt lint` and uses this project file. Select **Stop running on error** to fail the job when lint shows an error. To turn linting on, refer to [Set up CI jobs](/docs/deploy/ci-jobs#set-up-ci-jobs) and [SQL linting](/docs/deploy/continuous-integration#sql-linting).
+В задании CI флажок **Linting** запускает `dbt lint` с использованием этого файла проекта. Выберите **Stop running on error**, чтобы задание завершалось с ошибкой, когда линтер сообщает об ошибке. О включении линтинга см. в разделах [Настройка заданий CI](/docs/deploy/ci-jobs#set-up-ci-jobs) и [Линтинг SQL](/docs/deploy/continuous-integration#sql-linting).
 
-## Limitations
+## Ограничения
 
-Keep these limitations in mind:
+Учитывайте следующие ограничения:
 
-### Rules without autofix
+### Правила без автоматического исправления {#rules-without-autofix}
 
-The following rules report violations but can't be auto-fixed by `--fix`. They require reordering of SQL fragments or broader reflow that source-mapping (based on `macro_spans`) can't safely fix inside Jinja-templated SQL:
+Следующие правила сообщают о нарушениях, но не поддерживают автоматическое исправление с помощью `--fix`. Для их исправления требуется изменить порядок SQL-фрагментов или более существенно переработать их размещение, что механизм сопоставления с исходным кодом (на основе `macro_spans`) не может безопасно выполнить внутри SQL с шаблонами Jinja:
 
-- **Aliasing:** `AL03`, `AL04`, `AL06`, `AL08`
-- **References:** `RF01`, `RF02`, `RF04`, `RF05`
-- **Structure:** `ST03`, `ST04`, `ST05`, `ST06`, `ST07`, `ST09`, `ST10`, `ST11`
-- **Ambiguity / convention:** `AM01`, `AM06`, `CV08`, `CV09`, `CV12`
+- **Псевдонимы:** `AL03`, `AL04`, `AL06`, `AL08`
+- **Ссылки:** `RF01`, `RF02`, `RF04`, `RF05`
+- **Структура:** `ST03`, `ST04`, `ST05`, `ST06`, `ST07`, `ST09`, `ST10`, `ST11`
+- **Неоднозначность / соглашения:** `AM01`, `AM06`, `CV08`, `CV09`, `CV12`
 
-To fail the run on one of these rules, refer to [Promoting lint warnings to errors](#promoting-lint-warnings-to-errors).
+Чтобы выполнение завершалось с ошибкой при нарушении одного из этих правил, см. раздел [Преобразование предупреждений линтера в ошибки](#promoting-lint-warnings-to-errors).
 
-### Single fix pass
+### Один проход исправлений
 
-`--fix` runs a single pass; it doesn't iterate until the file is clean. A fix applied by one rule can expose a violation from another rule on the next run. For example, `AL09` removes a self-alias, which may then cause `RF02` to flag the now-unqualified reference. Re-run `dbt lint --fix` until the output is clean.
+`--fix` выполняет один проход и не повторяет его до устранения всех нарушений в файле. Исправление, применённое одним правилом, может выявить нарушение другого правила при следующем запуске. Например, `AL09` удаляет псевдоним, совпадающий с исходным именем, после чего `RF02` может отметить ссылку, которая теперь не содержит квалификатора. Повторно запускайте `dbt lint --fix`, пока в выводе не останется нарушений.
 
 
-## FAQs
+## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="Why doesn't dbt lint check every possible output of my Jinja?">
+<DetailsToggle alt_header="Почему dbt lint не проверяет все возможные результаты моего шаблона Jinja?">
 
-`dbt lint` lints a bounded set of [render variants](#render-variants) per model, not every SQL output your macros could produce under every combination of inputs.
+`dbt lint` проверяет ограниченный набор [вариантов рендеринга](#render-variants) для каждой модели, а не все варианты SQL, которые ваши макросы могут сгенерировать при любых сочетаниях входных данных.
 
-This is a deliberate choice. The number of possible outputs grows combinatorially with the number of unresolved conditions in a template, so linting all of them is expensive and surfaces violations in SQL your project might never execute. Instead, `dbt lint` varies one unresolved condition at a time, up to `render_variant_limit`.
+Это осознанный выбор. Число возможных результатов растёт комбинаторно с увеличением количества условий в шаблоне, которые не удаётся вычислить, поэтому проверка всех результатов требует больших затрат и выявляет нарушения в SQL, который ваш проект может никогда не выполнить. Вместо этого `dbt lint` поочерёдно изменяет одно невычисленное условие, не превышая `render_variant_limit`.
 
-Keep one consequence in mind: when `dbt lint` explores a branch your project never takes, it can surface a violation from that unused path, most often inside a third-party package macro. If you have feedback on this approach, open an issue in the [dbt-core GitHub repository](https://github.com/dbt-labs/dbt/issues) with the `Linter` label.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="Why doesn't dbt lint report violations from some macros?">
-
-`dbt lint` lints the SQL that all macros produce, but it can't resolve macros that depend on querying your warehouse. Introspective adapter calls, such as `adapter.execute` and `adapter.get_columns_in_relation`, have no real result at lint time.
-
-How `dbt lint` handles that depends on your [render mode](#jinja-render-modes). In the default `symbolic` mode, `dbt lint` substitutes a placeholder wherever an introspective result would appear and doesn't report violations against that placeholder, because flagging fabricated output generates noise rather than signal. The rest of the macro still lints normally.
-
-This behavior is similar to SQLFluff's `ignore_templated_areas` setting.
+Учитывайте одно следствие: когда `dbt lint` проверяет ветвь, которую ваш проект никогда не выполняет, он может выявить нарушение в этом неиспользуемом пути, чаще всего внутри макроса стороннего пакета. Если у вас есть замечания к этому подходу, создайте issue в [репозитории dbt-core на GitHub](https://github.com/dbt-labs/dbt/issues) с меткой `Linter`.
 
 </DetailsToggle>
 
-## Feedback
+<DetailsToggle alt_header="Почему dbt lint не сообщает о нарушениях в некоторых макросах?">
 
-If you encounter unexpected behavior or have suggestions, open an issue in the [dbt-labs/dbt GitHub repository](https://github.com/dbt-labs/dbt/issues) and apply the `Linter` label.
+`dbt lint` проверяет SQL, создаваемый всеми макросами, но не может вычислить результат макросов, которые зависят от запросов к вашему хранилищу данных. Интроспективные вызовы адаптера, такие как `adapter.execute` и `adapter.get_columns_in_relation`, не имеют реального результата во время линтинга.
+
+То, как `dbt lint` обрабатывает эту ситуацию, зависит от [режима рендеринга](#jinja-render-modes). В режиме по умолчанию `symbolic` команда `dbt lint` подставляет заполнитель везде, где должен появиться результат интроспективного вызова, и не сообщает о нарушениях в этом заполнителе, поскольку сообщения о нарушениях в искусственно созданном результате дают больше шума, чем полезной информации. Остальная часть макроса проверяется как обычно.
+
+Это поведение похоже на действие настройки `ignore_templated_areas` в SQLFluff.
+
+</DetailsToggle>
+
+## Обратная связь
+
+Если вы столкнулись с неожиданным поведением или у вас есть предложения, создайте issue в [репозитории dbt-labs/dbt на GitHub](https://github.com/dbt-labs/dbt/issues) и добавьте метку `Linter`.

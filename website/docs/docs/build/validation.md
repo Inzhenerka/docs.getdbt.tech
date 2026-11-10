@@ -17,36 +17,36 @@ availability: all_users
 
 Вы можете запускать проверки из <Constant name="dbt_platform" /> или из командной строки с помощью следующих [команд MetricFlow](/docs/build/metricflow-commands). В <Constant name="dbt" /> для запуска `dbt sl validate` в IDE или CLI необходимо настроить учетные данные пользователя в настройках вашей учетной записи, а для запуска в CI — учетные данные развертывания.
 
-- For <Constant name="fusion" /> and dbt users in the <Constant name="platform_cli" /> or locally with a valid [`dbt_cloud.yml`](/reference/dbt_cloud.yml):
+- Для пользователей <Constant name="fusion" /> и dbt в <Constant name="platform_cli" /> или локально с действительным [`dbt_cloud.yml`](/reference/dbt_cloud.yml):
 
   ```bash
   dbt sl validate
   ```
 
-  This runs parsing, semantic, and (where supported) data platform validations.
+  Команда проверяет разбор, семантику и, где поддерживается, совместимость с платформой данных.
 
-  When using `dbt sl validate` locally, the command validates your local semantic manifest, and not the platform's manifest. This means your uncommitted local changes are included in the validation.
+  При локальном запуске `dbt sl validate` проверяет локальный семантический манифест, поэтому в проверку попадают и незакоммиченные изменения.
 
-- For <Constant name="core" /> (open source) users or v2 CLI users not connected to dbt platform and using local MetricFlow:
+- Для пользователей <Constant name="core" /> с открытым исходным кодом или CLI v2 без подключения к платформе dbt, если используется локальный MetricFlow:
 
   ```bash
   mf validate-configs
   ```
   
-  This runs parsing and semantic validations.
+  Команда проверяет разбор и семантику.
 
-## Availability by environment
+## Доступность по средам {#availability-by-environment}
 
-Validation behavior and availability differ depending on your environment and setup:
+Доступность и поведение проверок зависят от среды и её настроек:
 
-| Environment | Who can use | Parsing | Semantic syntax | Data platform | How to run |
+| Среда | Для кого | Разбор | Семантический синтаксис | Платформа данных | Как запустить |
 | --- | --- | --- | --- | --- | --- |
-| <Constant name="fusion_engine"/>  | <Constant name="dbt_platform"/> users for full <Constant name="semantic_layer" /> features | ✅ | ✅ * | ✅ | - Parsing validations run automatically while generating the semantic manifest. <br></br> - When running in development, semantic syntax validations run automatically on <Constant name="dbt_platform"/> if [`dbt_cloud.yml`](/reference/dbt_cloud.yml) is configured. If not, run manually using `mf validate-configs`. <br></br> - Data platform validations don't run automatically for <Constant name="fusion" />. You must run `dbt sl validate` to run data platform validations.|
-| <Constant name="platform_cli"/>  | <Constant name="dbt_platform"/>  users | ✅ | ✅ | ✅ | Run any <Constant name="platform_cli"/>  command; validations execute automatically except data platform validations. You must run `dbt sl validate` to run data platform validations.|
-| <Constant name="core"/>  | Open source users | ✅ | ✅ | ❌ | Use <Constant name="core"/>  for parsing/builds. Run additional validation manually with the MetricFlow CLI. |
-| MetricFlow CLI | Open source users | ✅ | ✅ | ✅ | Run `mf validate-configs` locally to validate and test metrics. |
+| <Constant name="fusion_engine"/> | Пользователи <Constant name="dbt_platform"/> со всеми возможностями <Constant name="semantic_layer" /> | ✅ | ✅ * | ✅ | - Проверка разбора выполняется автоматически при создании семантического манифеста. <br></br> - В среде разработки <Constant name="dbt_platform"/> проверяет семантический синтаксис автоматически при наличии [`dbt_cloud.yml`](/reference/dbt_cloud.yml). Иначе запустите `mf validate-configs` вручную. <br></br> - Чтобы проверить платформу данных в <Constant name="fusion" />, запустите `dbt sl validate` вручную. |
+| <Constant name="platform_cli"/> | Пользователи <Constant name="dbt_platform"/> | ✅ | ✅ | ✅ | Любая команда <Constant name="platform_cli"/> автоматически запускает проверки, кроме проверки платформы данных. Для неё запустите `dbt sl validate`. |
+| <Constant name="core"/> | Пользователи версии с открытым исходным кодом | ✅ | ✅ | ❌ | Используйте <Constant name="core"/> для разбора и сборки. Дополнительную проверку запустите вручную через CLI MetricFlow. |
+| CLI MetricFlow | Пользователи версии с открытым исходным кодом | ✅ | ✅ | ✅ | Запустите `mf validate-configs` локально, чтобы проверить конфигурацию и протестировать метрики. |
 
-*Jobs run in **Orchestration** or **Studio IDE** run this validation automatically.
+\* Задания, запущенные в **Orchestration** или **Studio IDE**, выполняют эту проверку автоматически.
 
 ## Синтаксическая валидация {#parsing}
 

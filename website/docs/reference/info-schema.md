@@ -1,83 +1,83 @@
 ---
-title: "dbt Information Schema tables"
-sidebar_label: "Information Schema tables"
-description: "Reference for all tables available in the dbt Information Schema, organized by namespace."
+title: "Таблицы dbt Information Schema"
+sidebar_label: "Таблицы Information Schema"
+description: "Справочник по всем таблицам, доступным в dbt Information Schema, с группировкой по пространствам имён."
 id: "info-schema"
 availability:
   engine: v2
   access: free
 ---
 
-The [dbt Information Schema](/docs/build/dbt-information-schema) is a contracted interface into the metadata for all of the resources in your dbt project. Information Schema tables are produced by [`dbt build`](/reference/commands/build), [`dbt run`](/reference/commands/run), [`dbt compile`](/reference/commands/compile), or [`dbt parse`](/reference/commands/parse) with the `--generate-info-schema` flag.
+[dbt Information Schema](/docs/build/dbt-information-schema) — это интерфейс с определённым контрактом для доступа к метаданным всех ресурсов вашего проекта dbt. Таблицы Information Schema создаются командами [`dbt build`](/reference/commands/build), [`dbt run`](/reference/commands/run), [`dbt compile`](/reference/commands/compile) или [`dbt parse`](/reference/commands/parse) с флагом `--generate-info-schema`.
 
-## Tables
+## Таблицы
 
-The dbt Information Schema v1 generates tables across these namespaces:
+dbt Information Schema v1 создаёт таблицы в следующих пространствах имён:
 
-- [`dbt`](#dbt-namespace): Contains metadata about your project's structure, resources, and configuration. Answers the question: *What is your project?*
-- [`dbt_rt`](#dbt_rt-namespace): Contains runtime execution data. Answers the question: *What happened when you ran your project?*
+- [`dbt`](#dbt-namespace): содержит метаданные о структуре, ресурсах и конфигурации проекта. Отвечает на вопрос: *Что представляет собой ваш проект?*
+- [`dbt_rt`](#dbt_rt-namespace): содержит данные о выполнении. Отвечает на вопрос: *Что произошло при запуске вашего проекта?*
 
-### `dbt` namespace
+### Пространство имён `dbt` {#dbt-namespace}
 
-The `dbt` namespace tables contain metadata about your project's structure, resources, and configuration.
+Таблицы пространства имён `dbt` содержат метаданные о структуре, ресурсах и конфигурации проекта.
 
-| Table | Description |
+| Таблица | Описание |
 |-------|-------------|
-| `dbt.dag_nodes` | All DAG participants with `unique_id` and `resource_type` |
-| `dbt.project` | Project-level metadata |
-| `dbt.packages` | Installed packages, one row per package |
-| `dbt.project_vars` | Project variables, one row per (project scope, variable name) |
-| `dbt.project_env_vars` | Environment variables used in the project |
-| `dbt.models` | All models |
-| `dbt.seeds` | All seeds |
-| `dbt.sources` | All sources |
-| `dbt.snapshots` | All snapshots |
-| `dbt.functions` | All user-defined functions |
-| `dbt.analyses` | All analyses |
-| `dbt.hooks` | All `on-run-start` and `on-run-end` hook operations |
-| `dbt.checks` | All checks |
-| `dbt.data_tests` | All data tests (generic and singular) |
-| `dbt.unit_tests` | All unit tests |
-| `dbt.macros` | All macros |
-| `dbt.groups` | All groups |
-| `dbt.exposures` | All exposures |
-| `dbt.metrics` | All metrics |
-| `dbt.docs_blocks` | All docs blocks |
-| `dbt.saved_queries` | All saved queries |
-| `dbt.semantic_models` | All semantic models |
-| `dbt.semantic_entities` | Semantic model entities |
-| `dbt.semantic_measures` | Semantic model measures |
-| `dbt.semantic_dimensions` | Semantic model dimensions |
-| `dbt.semantic_relationships` | Relationships between semantic models |
-| `dbt.time_spines` | Time spine definitions |
-| `dbt.classifiers` | Resource classifiers |
-| `dbt.edges` | DAG edges (parent → child) |
-| `dbt.node_columns` | Column names, types, and descriptions for nodes; for sources, only columns declared in YAML are included (use [`--write-catalog`](/docs/build/dbt-information-schema#generating-the-information-schema) to include all columns from sources used by the selected nodes) |
-| `dbt.column_lineage` | Column-level lineage (populated with `--static-analysis strict`) |
+| `dbt.dag_nodes` | Все участники DAG с `unique_id` и `resource_type` |
+| `dbt.project` | Метаданные уровня проекта |
+| `dbt.packages` | Установленные пакеты, по одной строке на пакет |
+| `dbt.project_vars` | Переменные проекта, по одной строке на пару (область действия проекта, имя переменной) |
+| `dbt.project_env_vars` | Переменные окружения, используемые в проекте |
+| `dbt.models` | Все модели |
+| `dbt.seeds` | Все seed-файлы |
+| `dbt.sources` | Все источники |
+| `dbt.snapshots` | Все снимки |
+| `dbt.functions` | Все пользовательские функции |
+| `dbt.analyses` | Все анализы |
+| `dbt.hooks` | Все операции хуков `on-run-start` и `on-run-end` |
+| `dbt.checks` | Все проверки |
+| `dbt.data_tests` | Все тесты данных (универсальные и единичные) |
+| `dbt.unit_tests` | Все модульные тесты |
+| `dbt.macros` | Все макросы |
+| `dbt.groups` | Все группы |
+| `dbt.exposures` | Все экспозиции |
+| `dbt.metrics` | Все метрики |
+| `dbt.docs_blocks` | Все блоки документации |
+| `dbt.saved_queries` | Все сохранённые запросы |
+| `dbt.semantic_models` | Все семантические модели |
+| `dbt.semantic_entities` | Сущности семантических моделей |
+| `dbt.semantic_measures` | Меры семантических моделей |
+| `dbt.semantic_dimensions` | Измерения семантических моделей |
+| `dbt.semantic_relationships` | Связи между семантическими моделями |
+| `dbt.time_spines` | Определения временных осей |
+| `dbt.classifiers` | Классификаторы ресурсов |
+| `dbt.edges` | Рёбра DAG (родительский узел → дочерний узел) |
+| `dbt.node_columns` | Имена, типы и описания столбцов узлов; для источников включаются только столбцы, объявленные в YAML (используйте [`--write-catalog`](/docs/build/dbt-information-schema#generating-the-information-schema), чтобы включить все столбцы источников, используемых выбранными узлами) |
+| `dbt.column_lineage` | Происхождение данных на уровне столбцов (заполняется при использовании `--static-analysis strict`) |
 
-### `dbt_rt` namespace
+### Пространство имён `dbt_rt` {#dbt_rt-namespace}
 
-The `dbt_rt` namespace tables contain runtime execution data. These tables are not available for parse-time checks.
+Таблицы пространства имён `dbt_rt` содержат данные о выполнении. Эти таблицы недоступны для проверок на этапе разбора.
 
-| Table | Description |
+| Таблица | Описание |
 |-------|-------------|
-| `dbt_rt.invocations` | One row per dbt invocation |
-| `dbt_rt.run_results` | Results for each node in each invocation |
-| `dbt_rt.run_results_latest` | View of the most recent run result per node |
-| `dbt_rt.relations` | Warehouse catalog data for each materialized relation (populated with `--write-catalog`) |
-| `dbt_rt.freshness` | Freshness check results for sources and models; `resource_type` indicates whether a row is a `source` or `model` |
-| `dbt_rt.diagnostics` | Diagnostic data from invocations |
-| `dbt_rt.adapter_queries` | Adapter queries issued during invocations |
+| `dbt_rt.invocations` | По одной строке на вызов dbt |
+| `dbt_rt.run_results` | Результаты для каждого узла в каждом вызове |
+| `dbt_rt.run_results_latest` | Представление с последним результатом выполнения для каждого узла |
+| `dbt_rt.relations` | Данные каталога хранилища для каждого материализованного объекта (заполняется при использовании `--write-catalog`) |
+| `dbt_rt.freshness` | Результаты проверок свежести данных для источников и моделей; `resource_type` указывает, относится ли строка к `source` или `model` |
+| `dbt_rt.diagnostics` | Диагностические данные вызовов |
+| `dbt_rt.adapter_queries` | Запросы адаптера, отправленные во время вызовов |
 
 
-## Columns available for checks
+## Столбцы, доступные для проверок {#columns-available-for-checks}
 
-When you use `{{ info_schema() }}` macro in a check, you can access only columns resolved at parse time. dbt exposes these columns through a view with the same name as the Information Schema table. Pass that name without the `dbt.` prefix to the macro.
+При использовании макроса `{{ info_schema() }}` в проверке доступны только столбцы, определяемые на этапе разбора. dbt предоставляет доступ к этим столбцам через представление с тем же именем, что и таблица Information Schema. Передайте это имя в макрос без префикса `dbt.`.
 
-The full table in `target/info_schema/v1/` may have more columns. You can access all columns when you use the macro with `dbt show --inline`.
+Полная таблица в `target/info_schema/v1/` может содержать больше столбцов. Доступ ко всем столбцам можно получить, используя макрос с `dbt show --inline`.
 
 
-| View | Columns |
+| Представление | Столбцы |
 |------|---------|
 | `models` | `unique_id`, `name`, `resource_type`, `package_name`, `original_file_path`, `fqn`, `alias`, `description`, `node_language`, `database_name`, `schema_name`, `relation_name`, `identifier`, `enabled`, `materialized`, `config`, `access`, `group`, `contract_enforced`, `version`, `latest_version`, `deprecation_date`, `primary_key`, `properties_yml_file_path`, `tags`, `meta`, `ingested_at` |
 | `seeds` | `unique_id`, `name`, `resource_type`, `package_name`, `original_file_path`, `fqn`, `alias`, `description`, `node_language`, `database_name`, `schema_name`, `relation_name`, `identifier`, `enabled`, `materialized`, `config`, `access`, `group`, `contract_enforced`, `version`, `latest_version`, `deprecation_date`, `primary_key`, `properties_yml_file_path`, `tags`, `meta`, `ingested_at` |
@@ -90,7 +90,7 @@ The full table in `target/info_schema/v1/` may have more columns. You can access
 | `data_tests` | `unique_id`, `name`, `package_name`, `original_file_path`, `fqn`, `description`, `database_name`, `schema_name`, `relation_name`, `enabled`, `materialized`, `config`, `tags`, `meta`, `group`, `properties_yml_file_path`, `test_name`, `test_definition_package`, `arguments`, `column_name`, `node_unique_id`, `severity`, `warn_if`, `error_if`, `fail_calc`, `store_failures`, `store_failures_as`, `ingested_at` |
 | `unit_tests` | `unique_id`, `name`, `model`, `description`, `package_name`, `original_file_path`, `fqn`, `given`, `expect`, `overrides`, `versions`, `ingested_at` |
 | `node_columns` | `node_unique_id`, `column_name`, `data_type_declared`, `description`, `tags`, `ingested_at` |
-| `dag_nodes` | `unique_id`, `resource_type`, `ingested_at` — one row per enabled resource that participates in the DAG, including exposures, metrics, and unit tests |
+| `dag_nodes` | `unique_id`, `resource_type`, `ingested_at` — по одной строке на каждый включённый ресурс, участвующий в DAG, включая экспозиции, метрики и модульные тесты |
 | `edges` | `parent_unique_id`, `child_unique_id`, `ingested_at` |
 | `macros` | `unique_id`, `name`, `package_name`, `original_file_path`, `macro_sql`, `description`, `depends_on_macros`, `arguments`, `docs_show`, `properties_yml_file_path`, `meta`, `created_at`, `ingested_at` |
 | `docs_blocks` | `unique_id`, `name`, `package_name`, `original_file_path`, `content`, `ingested_at` |
@@ -105,10 +105,10 @@ The full table in `target/info_schema/v1/` may have more columns. You can access
 | `time_spines` | `unique_id`, `primary_column`, `primary_granularity`, `custom_granularities`, `node_relation`, `ingested_at` |
 | `project` | `project_name`, `dbt_version`, `adapter_type`, `git_sha`, `git_branch`, `git_uncommitted_changes`, `ingested_at` |
 | `packages` | `package_name`, `ingested_at` |
-| `project_vars` | `project_name`, `var_name`, `var_value`, `ingested_at` — a package-scoped var appears on that package's `project_name` |
+| `project_vars` | `project_name`, `var_name`, `var_value`, `ingested_at` — переменная с областью действия пакета отображается с `project_name` этого пакета |
 | `project_env_vars` | `env_var_name`, `ingested_at` |
 
-## Related docs
+## Связанная документация
 
 - [dbt Information Schema](/docs/build/dbt-information-schema)
-- [Checks](/docs/build/checks)
+- [Проверки](/docs/build/checks)

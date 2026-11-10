@@ -1,33 +1,33 @@
 ---
-title: "IBM Db2 configurations"
-description: "Configure IBM Db2-specific settings for dbt models, including instance requirements and adapter permissions."
+title: "Настройки IBM Db2"
+description: "Настройте параметры моделей dbt для IBM Db2, включая требования к экземпляру и права доступа для адаптера."
 id: "ibm-db2-config"
 ---
 
-## Instance requirements
+## Требования к экземпляру
 
-To use IBM Db2 with the `ibm-dbt-db2` adapter, ensure the instance has an attached database that supports creating, renaming, altering, and dropping objects such as tables and views. The user connecting to the instance via the `ibm-dbt-db2` adapter must have the necessary permissions for the target database and schema.
+Для использования IBM Db2 с адаптером `ibm-dbt-db2` убедитесь, что к экземпляру подключена база данных, которая поддерживает создание, переименование, изменение и удаление таких объектов, как таблицы и представления. Пользователь, подключающийся к экземпляру через адаптер `ibm-dbt-db2`, должен иметь необходимые права доступа к целевой базе данных и схеме.
 
-For more details, please visit the official [IBM Db2 documentation](https://www.ibm.com/docs/en/db2)
+Подробнее см. в официальной [документации IBM Db2](https://www.ibm.com/docs/en/db2)
 
 
-## Supported Db2 platforms
+## Поддерживаемые платформы Db2
 
-The `ibm-dbt-db2` adapter supports the following IBM Db2 platforms:
+Адаптер `ibm-dbt-db2` поддерживает следующие платформы IBM Db2:
 
-- **Db2 for Linux, Unix, and Windows (LUW)** - Version 9.7 and higher
-- **Db2 for z/OS** - Version 11 and higher
-- **Db2 for iSeries** - Compatible versions
+- **Db2 for Linux, Unix, and Windows (LUW)** — версия 9.7 и выше
+- **Db2 for z/OS** — версия 11 и выше
+- **Db2 for iSeries** — совместимые версии
 
-## Seeds and data types
+## Seed-файлы и типы данных
 
-The `ibm-dbt-db2` adapter offers comprehensive support for all Db2 data types in seed files. To leverage this functionality, you must explicitly define the data types for each column in your seed configuration.
+Адаптер `ibm-dbt-db2` обеспечивает полную поддержку всех типов данных Db2 в seed-файлах. Чтобы воспользоваться этой возможностью, необходимо явно определить тип данных каждого столбца в конфигурации seed.
 
-You can configure column data types either in the `dbt_project.yml` file or in property files, as supported by dbt. For more details on seed configuration and best practices, refer to the [dbt seed configuration documentation](/reference/seed-configs).
+Типы данных столбцов можно настроить в файле `dbt_project.yml` или в файлах свойств — dbt поддерживает оба варианта. Подробнее о настройке seed и рекомендуемых подходах см. в [документации по настройке seed в dbt](/reference/seed-configs).
 
-### Example seed configuration
+### Пример настройки seed
 
-In your `dbt_project.yml`:
+В файле `dbt_project.yml`:
 
 ```yaml
 seeds:
@@ -41,37 +41,37 @@ seeds:
         is_active: BOOLEAN
 ```
 
-### Supported Db2 data types
+### Поддерживаемые типы данных Db2
 
-| Db2 Data Type | Description | Example Usage |
+| Тип данных Db2 | Описание | Пример использования |
 |---------------|-------------|---------------|
-| INTEGER | 32-bit integer | `id: INTEGER` |
-| BIGINT | 64-bit integer | `large_id: BIGINT` |
-| SMALLINT | 16-bit integer | `status_code: SMALLINT` |
-| DECIMAL(p,s) | Fixed-point decimal | `price: DECIMAL(10,2)` |
-| FLOAT | Floating-point number | `rate: FLOAT` |
-| DOUBLE | Double precision float | `measurement: DOUBLE` |
-| VARCHAR(n) | Variable-length string | `name: VARCHAR(100)` |
-| CHAR(n) | Fixed-length string | `code: CHAR(10)` |
-| CLOB | Character large object | `description: CLOB` |
-| BLOB | Binary large object | `image_data: BLOB` |
-| DATE | Date value | `birth_date: DATE` |
-| TIME | Time value | `start_time: TIME` |
-| TIMESTAMP | Date and time | `created_at: TIMESTAMP` |
-| BOOLEAN | Boolean value | `is_active: BOOLEAN` |
-| XML | XML document | `config: XML` |
-| GRAPHIC(n) | Fixed-length graphic string | `unicode_text: GRAPHIC(50)` |
-| VARGRAPHIC(n) | Variable-length graphic string | `unicode_name: VARGRAPHIC(100)` |
-| DBCLOB | Double-byte CLOB | `large_unicode: DBCLOB` |
+| INTEGER | 32-битное целое число | `id: INTEGER` |
+| BIGINT | 64-битное целое число | `large_id: BIGINT` |
+| SMALLINT | 16-битное целое число | `status_code: SMALLINT` |
+| DECIMAL(p,s) | Десятичное число с фиксированной точкой | `price: DECIMAL(10,2)` |
+| FLOAT | Число с плавающей точкой | `rate: FLOAT` |
+| DOUBLE | Число с плавающей точкой двойной точности | `measurement: DOUBLE` |
+| VARCHAR(n) | Строка переменной длины | `name: VARCHAR(100)` |
+| CHAR(n) | Строка фиксированной длины | `code: CHAR(10)` |
+| CLOB | Большой символьный объект | `description: CLOB` |
+| BLOB | Большой двоичный объект | `image_data: BLOB` |
+| DATE | Значение даты | `birth_date: DATE` |
+| TIME | Значение времени | `start_time: TIME` |
+| TIMESTAMP | Дата и время | `created_at: TIMESTAMP` |
+| BOOLEAN | Логическое значение | `is_active: BOOLEAN` |
+| XML | XML-документ | `config: XML` |
+| GRAPHIC(n) | Строка двухбайтовых символов фиксированной длины | `unicode_text: GRAPHIC(50)` |
+| VARGRAPHIC(n) | Строка двухбайтовых символов переменной длины | `unicode_name: VARGRAPHIC(100)` |
+| DBCLOB | Большой объект с двухбайтовыми символами | `large_unicode: DBCLOB` |
 
 
-## Materialization strategies
+## Стратегии материализации
 
-The `ibm-dbt-db2` adapter supports all standard dbt materializations:
+Адаптер `ibm-dbt-db2` поддерживает все стандартные материализации dbt:
 
-### Table materialization
+### Материализация table
 
-Creates a physical table in the database. This is the default materialization if not specified.
+Создаёт физическую таблицу в базе данных. Эта материализация используется по умолчанию, если не указана другая.
 
 ```sql
 {{ config(materialized='table') }}
@@ -79,9 +79,9 @@ Creates a physical table in the database. This is the default materialization if
 SELECT * FROM source_table
 ```
 
-### View materialization
+### Материализация view
 
-Creates a database view. Views are virtual tables that don't store data physically.
+Создаёт представление в базе данных. Представления — это виртуальные таблицы, которые не хранят данные физически.
 
 ```sql
 {{ config(materialized='view') }}
@@ -89,13 +89,13 @@ Creates a database view. Views are virtual tables that don't store data physical
 SELECT * FROM source_table
 ```
 
-### Incremental materialization
+### Инкрементальная материализация
 
-Builds tables incrementally, processing only new or changed records. The `ibm-dbt-db2` adapter supports two incremental strategies:
+Формирует таблицы инкрементально, обрабатывая только новые или изменённые записи. Адаптер `ibm-dbt-db2` поддерживает две инкрементальные стратегии:
 
-#### Merge strategy (default)
+#### Стратегия merge (по умолчанию)
 
-Uses Db2's MERGE statement for efficient upserts:
+Использует оператор MERGE в Db2 для эффективного выполнения вставок и обновлений:
 
 ```sql
 {{
@@ -112,9 +112,9 @@ WHERE updated_at > (SELECT MAX(updated_at) FROM {{ this }})
 {% endif %}
 ```
 
-#### Delete+insert strategy
+#### Стратегия delete+insert
 
-Deletes matching records then inserts new ones:
+Удаляет совпадающие записи, затем вставляет новые:
 
 ```sql
 {{
@@ -131,9 +131,9 @@ WHERE updated_at > (SELECT MAX(updated_at) FROM {{ this }})
 {% endif %}
 ```
 
-### Ephemeral materialization
+### Материализация ephemeral
 
-Creates a Common Table Expression (CTE) that exists only for the duration of a single dbt run:
+Создаёт общее табличное выражение (CTE), которое существует только в течение одного запуска dbt:
 
 ```sql
 {{ config(materialized='ephemeral') }}
@@ -142,11 +142,11 @@ SELECT * FROM source_table
 ```
 
 
-## Snapshots
+## Снимки
 
-The `ibm-dbt-db2` adapter supports dbt snapshots for tracking slowly changing dimensions (SCD Type 2). Snapshots capture the state of your data at different points in time.
+Адаптер `ibm-dbt-db2` поддерживает снимки dbt для отслеживания медленно изменяющихся измерений (SCD типа 2). Снимки фиксируют состояние данных в разные моменты времени.
 
-Example snapshot:
+Пример снимка:
 
 ```sql
 {% snapshot customers_snapshot %}
@@ -166,19 +166,19 @@ SELECT * FROM {{ source('raw', 'customers') }}
 ```
 
 
-## Constraints
+## Ограничения
 
-The `ibm-dbt-db2` adapter supports defining constraints in your models, but enforcement varies:
+Адаптер `ibm-dbt-db2` поддерживает определение ограничений в моделях, но степень обеспечения их соблюдения различается:
 
-| Constraint Type | Support Level | Notes |
+| Тип ограничения | Уровень поддержки | Примечания |
 |----------------|---------------|-------|
-| NOT NULL | ✅ Enforced | Fully supported and enforced by Db2 |
-| CHECK | ⚠️ Not Enforced | Defined but not enforced in dbt context |
-| UNIQUE | ⚠️ Not Enforced | Defined but not enforced in dbt context |
-| PRIMARY KEY | ⚠️ Not Enforced | Defined but not enforced in dbt context |
-| FOREIGN KEY | ⚠️ Not Enforced | Defined but not enforced in dbt context |
+| NOT NULL | ✅ Соблюдение обеспечивается | Полностью поддерживается, соблюдение обеспечивается Db2 |
+| CHECK | ⚠️ Соблюдение не обеспечивается | Определяется, но соблюдение не обеспечивается в контексте dbt |
+| UNIQUE | ⚠️ Соблюдение не обеспечивается | Определяется, но соблюдение не обеспечивается в контексте dbt |
+| PRIMARY KEY | ⚠️ Соблюдение не обеспечивается | Определяется, но соблюдение не обеспечивается в контексте dbt |
+| FOREIGN KEY | ⚠️ Соблюдение не обеспечивается | Определяется, но соблюдение не обеспечивается в контексте dbt |
 
-Example with constraints:
+Пример с ограничениями:
 
 ```sql
 {{
@@ -195,7 +195,7 @@ SELECT
 FROM source_table
 ```
 
-Define constraints in your schema YAML:
+Определите ограничения в YAML-файле схемы:
 
 ```yaml
 models:
@@ -211,11 +211,11 @@ models:
 ```
 
 
-## Performance optimization
+## Оптимизация производительности
 
-### Indexing
+### Индексирование
 
-While dbt doesn't directly manage indexes, you can create them using post-hooks:
+Хотя dbt не управляет индексами напрямую, их можно создавать с помощью post-hook:
 
 ```sql
 {{
@@ -231,9 +231,9 @@ While dbt doesn't directly manage indexes, you can create them using post-hooks:
 SELECT * FROM source_table
 ```
 
-### Table organization
+### Организация таблиц
 
-Db2 supports different table organization types. You can specify these using post-hooks:
+Db2 поддерживает различные типы организации таблиц. Их можно задать с помощью post-hook:
 
 ```sql
 {{
@@ -249,9 +249,9 @@ SELECT * FROM source_table
 ```
 
 
-## Grants management
+## Управление правами доступа
 
-The `ibm-dbt-db2` adapter supports managing grants on database objects:
+Адаптер `ibm-dbt-db2` поддерживает управление правами доступа к объектам базы данных:
 
 ```sql
 {{
@@ -269,21 +269,21 @@ SELECT * FROM source_table
 ```
 
 
-## Case sensitivity
+## Чувствительность к регистру
 
-Db2 uppercases unquoted identifiers by default. The adapter handles this automatically, but keep in mind:
+По умолчанию Db2 переводит идентификаторы без кавычек в верхний регистр. Адаптер обрабатывает это автоматически, но учитывайте следующее:
 
-- Unquoted table and column names will be uppercased
-- Use double quotes to preserve case: `"MyTable"` vs `MYTABLE`
-- The adapter automatically handles case conversion for dbt operations
+- Имена таблиц и столбцов без кавычек будут переведены в верхний регистр
+- Используйте двойные кавычки для сохранения регистра: `"MyTable"` в отличие от `MYTABLE`
+- Адаптер автоматически выполняет преобразование регистра при операциях dbt
 
 
-## Recommendations
+## Рекомендации
 
-- **Check SQL Documentation**: Review IBM Db2 [SQL Reference](https://www.ibm.com/docs/en/db2) to understand platform-specific features and limitations.
-- **Use Incremental Models**: For large datasets, use incremental materializations with the `merge` strategy for optimal performance.
-- **Explicit Data Types**: Always define data types explicitly in seed configurations to ensure correct data loading.
-- **Connection Pooling**: Use appropriate thread counts in your profile to balance parallelism and connection overhead.
-- **SSL/TLS in Production**: Enable SSL/TLS security for production databases to protect data in transit.
-- **Monitor Performance**: Use Db2's built-in monitoring tools to track query performance and optimize your models.
-- **Test Incrementally**: When developing incremental models, test with small data samples before running on full datasets.
+- **Изучайте документацию SQL**: ознакомьтесь со [справочником SQL](https://www.ibm.com/docs/en/db2) IBM Db2, чтобы понимать особенности и ограничения платформы.
+- **Используйте инкрементальные модели**: для больших наборов данных используйте инкрементальную материализацию со стратегией `merge`, чтобы обеспечить оптимальную производительность.
+- **Явно задавайте типы данных**: всегда явно определяйте типы данных в конфигурациях seed, чтобы обеспечить корректную загрузку данных.
+- **Используйте пул соединений**: задавайте подходящее количество потоков в профиле, чтобы сбалансировать параллелизм и накладные расходы на соединения.
+- **Используйте SSL/TLS в производственной среде**: включите защиту SSL/TLS для производственных баз данных, чтобы защитить данные при передаче.
+- **Отслеживайте производительность**: используйте встроенные средства мониторинга Db2 для отслеживания производительности запросов и оптимизации моделей.
+- **Тестируйте инкрементальные модели**: при разработке инкрементальных моделей тестируйте их на небольших выборках данных, прежде чем запускать на полных наборах данных.

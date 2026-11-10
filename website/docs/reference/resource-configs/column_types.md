@@ -1,5 +1,5 @@
 ---
-description: "Optionally specify the data type of each column in a seed instead of letting dbt infer types from the column values."
+description: "Укажите типы столбцов seed-файла, если dbt не должен определять их по значениям."
 resource_types: [seeds]
 datatype: {column_name: datatype}
 ---

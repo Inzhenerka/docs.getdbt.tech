@@ -108,7 +108,7 @@ Wrote config file fly.toml<br/>
 Запомните ключ интеграции для дальнейшего использования.
 
 ## Настройка нового вебхука в dbt {#configure-a-new-webhook-in-dbt}
-См. [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription) для получения подробных инструкций. В качестве события укажите **Run completed**.
+См. [Создание подписки на вебхук](/docs/deploy/webhooks#create-a-webhook-subscription) для получения подробных инструкций. В качестве события укажите **Run completed**.
 
 Установите URL вебхука на имя хоста, которое вы создали ранее (`APP_NAME.fly.dev`).
 

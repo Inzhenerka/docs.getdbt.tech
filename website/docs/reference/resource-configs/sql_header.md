@@ -96,10 +96,10 @@ snapshots:
 
 <TabItem value="property-yaml">
 
-Setting `sql_header` in the `config` of a [generic data test](/docs/build/data-tests) is available starting in <Constant name="dbt" /> v1.12. Enable the [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs) flag to use `sql_header` in `properties.yml` for generic data tests.
+Начиная с <Constant name="dbt" /> v1.12, `sql_header` можно задавать в `config` [универсального теста данных](/docs/build/data-tests). Чтобы использовать `sql_header` в `properties.yml`, включите флаг [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs).
 
 
-Here's an example of a model-level configuration:
+Пример настройки на уровне модели:
 
 <File name="models/properties.yml">
 
@@ -116,7 +116,7 @@ models:
 ```
 </File>
 
-You can also use `sql_header` for column-level data tests:
+`sql_header` также можно использовать для тестов данных на уровне столбца:
 
 <File name="models/properties.yml">
 

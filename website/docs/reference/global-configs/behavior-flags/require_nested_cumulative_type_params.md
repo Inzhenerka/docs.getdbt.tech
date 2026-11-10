@@ -1,22 +1,22 @@
 ---
-title: "Cumulative metrics"
+title: "Кумулятивные метрики"
 id: "require_nested_cumulative_type_params"
-sidebar_label: "require nested cumulative type params"
+sidebar_label: "Требовать вложенные параметры кумулятивных метрик"
 ---
 
 
 
 | require_nested_cumulative_type_params | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2024.11 | 1.9.0 |
-| Matured (default → `true`) | 2026.09 | 1.12.0 |
-| Removed | — | — |
+| Введён | 2024.11 | 1.9.0 |
+| Стабилизирован (по умолчанию → `true`) | 2026.09 | 1.12.0 |
+| Удалён | — | — |
 
 <br />
 
-[Cumulative-type metrics](/docs/build/cumulative#parameters) are nested under the `cumulative_type_params` field in [the <Constant name="dbt" /> **v1 Latest** release track](/docs/dbt-versions/dbt-release-tracks), <Constant name="dbt" /> v1.9 and newer. Starting in <Constant name="dbt" /> v1.12, this flag defaults to `true`, which causes dbt to raise an error instead of a warning when cumulative metrics use the un-nested syntax.
+Параметры [кумулятивных метрик](/docs/build/cumulative#parameters) вложены в поле `cumulative_type_params` в [канале выпуска <Constant name="dbt" /> **v1 Latest**](/docs/dbt-versions/dbt-release-tracks), а также в <Constant name="dbt" /> v1.9 и новее. Начиная с <Constant name="dbt" /> v1.12, этот флаг по умолчанию имеет значение `true`, из-за чего dbt выдаёт ошибку вместо предупреждения, если кумулятивные метрики используют синтаксис без вложенности.
 
-Use the following metric configured with the syntax before v1.9 as an example:
+Рассмотрим следующую метрику, настроенную с использованием синтаксиса, применявшегося до v1.9:
 
 ```yaml
     type: cumulative
@@ -25,7 +25,7 @@ Use the following metric configured with the syntax before v1.9 as an example:
       window: 7 days
 ```
 
-If you run `dbt parse` with that syntax on <Constant name="dbt" /> v1.9 or [the <Constant name="dbt" /> **v1 Latest** release track](/docs/dbt-versions/dbt-release-tracks), you will receive a warning like:
+Если выполнить `dbt parse` с таким синтаксисом в <Constant name="dbt" /> v1.9 или в [канале выпуска <Constant name="dbt" /> **v1 Latest**](/docs/dbt-versions/dbt-release-tracks), появится предупреждение следующего вида:
 
 ```bash
 15:36:22  [WARNING]: Cumulative fields `type_params.window` and
@@ -36,13 +36,13 @@ behavior changes:
 https://docs.getdbt.com/reference/global-configs/behavior-changes
 ```
 
-Because `require_nested_cumulative_type_params` defaults to `true`, running `dbt parse` produces an error like:
+Поскольку `require_nested_cumulative_type_params` по умолчанию имеет значение `true`, выполнение `dbt parse` приводит к ошибке следующего вида:
 
 ```bash
 21:39:18  Cumulative fields `type_params.window` and `type_params.grain_to_date` should be nested under `type_params.cumulative_type_params.window` and `type_params.cumulative_type_params.grain_to_date`. Invalid metrics: orders_last_7_days. See documentation on behavior changes: https://docs.getdbt.com/reference/global-configs/behavior-changes.
 ```
 
-Once the metric is updated, it will work as expected:
+После обновления метрика будет работать как ожидается:
 
 ```yaml
     type: cumulative
@@ -53,13 +53,13 @@ Once the metric is updated, it will work as expected:
         window: 7 days
 ```
 
-## Impact
+## Влияние
 
-Any project with a cumulative metric still using the un-nested syntax stops parsing entirely on the first command. Because parsing fails, the error affects every dbt command: `run`, `build`, `test`, `compile`, `docs generate`, the <Constant name="semantic_layer" />, and more.
+Если в проекте есть хотя бы одна кумулятивная метрика, всё ещё использующая синтаксис без вложенности, разбор всего проекта прерывается уже при выполнении первой команды. Поскольку разбор завершается с ошибкой, это затрагивает все команды dbt: `run`, `build`, `test`, `compile`, `docs generate`, а также <Constant name="semantic_layer" /> и другие возможности.
 
-<Expandable alt_header="Recommended actions">
+<Expandable alt_header="Рекомендуемые действия">
 
-If `dbt parse` fails with `Semantic Manifest validation failed` referencing one or more cumulative metrics, migrate the metrics by moving `window` and `grain_to_date` from `type_params` into `type_params.cumulative_type_params`. Alternatively, you can migrate to the [latest YAML spec](/docs/build/latest-metrics-spec#type_params), which removes `type_params` entirely.
+Если `dbt parse` завершается с ошибкой `Semantic Manifest validation failed`, в которой упоминаются одна или несколько кумулятивных метрик, обновите эти метрики, переместив `window` и `grain_to_date` из `type_params` в `type_params.cumulative_type_params`. В качестве альтернативы можно перейти на [последнюю спецификацию YAML](/docs/build/latest-metrics-spec#type_params), в которой `type_params` полностью удалён.
 
 ```yaml
 # Legacy
@@ -87,9 +87,9 @@ metrics:
     window: 7 days
 ```
 
-Re-run `dbt parse` to confirm the manifest validates.
+Повторно выполните `dbt parse`, чтобы убедиться, что манифест проходит проверку.
 
-To opt out of this behavior, set the flag to `false`:
+Чтобы отключить это поведение, установите для флага значение `false`:
 
 <File name='dbt_project.yml'>
 

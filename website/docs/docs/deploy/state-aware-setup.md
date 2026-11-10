@@ -394,8 +394,8 @@ models:
 - [Артефакты](/docs/deploy/artifacts)
 - [Jobs непрерывной интеграции (CI)](/docs/deploy/ci-jobs)
 - [`freshness`](/reference/resource-configs/freshness)
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Setting up dbt State](/docs/deploy/dbt-state-setup)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+
+- [Параметры dbt State](/reference/resource-configs/dbt-state-configs)
 - [Migrate to dbt State](/docs/deploy/dbt-state-migration)

@@ -1,55 +1,55 @@
 ---
-title: "Idempotence in dbt"
+title: "Идемпотентность в dbt"
 id: "idempotence"
-description: "Learn about best practices for configuring your dbt project to ensure idempotent results."
+description: "Узнайте о рекомендациях по настройке проекта dbt для обеспечения идемпотентных результатов."
 ---
 
-<Term id="idempotent">Idempotence</Term> is a foundational goal for every dbt project. It means your transformations should be safe to re-run and always produce the same result, regardless of how many times they've run before.
+<Term id="idempotent">Идемпотентность</Term> — одна из основополагающих целей любого проекта dbt. Она означает, что ваши преобразования можно безопасно запускать повторно и они всегда будут давать один и тот же результат независимо от количества предыдущих запусков.
 
-:::info Why this matters early
-If you're new to dbt, idempotence is worth understanding before you build incremental models. It's easy to accidentally write logic that works fine the first time but breaks on re-runs.
+:::info Почему это важно с самого начала
+Если вы только начинаете работать с dbt, стоит разобраться в идемпотентности до создания инкрементальных моделей. Легко случайно написать логику, которая корректно работает при первом запуске, но приводит к ошибкам при повторных.
 :::
 
-## What idempotence means in dbt
+## Что означает идемпотентность в dbt
 
-A dbt model is idempotent if it produces the same results whether you run it once or a hundred times. The final state of the data should be identical regardless of how many times you've run the model.
+Модель dbt идемпотентна, если она даёт одинаковые результаты независимо от того, запускаете вы её один раз или сто раз. Итоговое состояние данных должно быть одинаковым независимо от количества запусков модели.
 
-This is because each model is a pure function of your code and the current state of your database, not of how many times it's run before. Given the same inputs, it always produces the same output.
+Это объясняется тем, что каждая модель — чистая функция от вашего кода и текущего состояния базы данных, а не от количества предыдущих запусков. При одинаковых входных данных она всегда выдаёт одинаковый результат.
 
-This makes dbt transformations:
+Благодаря этому преобразования dbt:
 
-- Safe to retry if a run fails partway through, re-running it won't corrupt your data.
-- Easy to backfill so you can re-run historical data without worrying about double-counting or drift.
-- Predictable in CI so the same code always produces the same data, which makes testing reliable.
+- Безопасно запускать повторно: если выполнение прервалось на полпути, повторный запуск не повредит данные.
+- Удобно использовать для дозагрузки исторических данных: их можно повторно обрабатывать, не опасаясь двойного подсчёта или расхождений.
+- Предсказуемы в CI: один и тот же код всегда создаёт одни и те же данные, что делает тестирование надёжным.
 
-## Materializations and idempotence
+## Материализации и идемпотентность
  
-Most dbt materializations are idempotent by default:
+Большинство материализаций dbt идемпотентны по умолчанию:
 
 <SimpleTable>
 
-| Materialization | How it achieves idempotence |
+| Материализация | Как обеспечивается идемпотентность |
 |---|---|
-| `table` | Rebuilds the table from scratch on every run (`create or replace`) |
-| `view` | Replaces the view definition on every run |
-| `incremental` | Requires deliberate configuration.  |
-| `materialized_view` | Creates or replaces the materialized view definition on each run; the warehouse manages data refresh |
+| `table` | Таблица пересоздаётся с нуля при каждом запуске (`create or replace`) |
+| `view` | Определение представления заменяется при каждом запуске |
+| `incremental` | Требует продуманной настройки.  |
+| `materialized_view` | Определение материализованного представления создаётся или заменяется при каждом запуске; обновлением данных управляет хранилище |
 
 </SimpleTable>
 
-## Idempotence and incremental models
+## Идемпотентность и инкрементальные модели {#idempotence-and-incremental-models}
 
-Incremental models only process new or changed rows, which means they depend on the existing state of the target table. If you're not careful, re-running an incremental model can produce duplicate rows or inconsistent results.
+Инкрементальные модели обрабатывают только новые или изменённые строки, поэтому зависят от текущего состояния целевой таблицы. Если не соблюдать осторожность, повторный запуск инкрементальной модели может привести к появлению дубликатов строк или несогласованным результатам.
 
-The most common pitfall is appending rows without deduplication or a reliable unique key. Compare these side by side:
+Самая распространённая ошибка — добавлять строки без дедупликации или надёжного уникального ключа. Сравните эти два примера:
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px'}}>
 
 <div>
 
-**Non-idempotent incremental model:**
+**Неидемпотентная инкрементальная модель:**
 
-This example filters incrementally but doesn't define a `unique_key`, so rows at the boundary can be appended again on each subsequent run, which might result in duplicate rows.
+В этом примере используется инкрементальная фильтрация, но не задан `unique_key`, поэтому строки на границе выборки могут добавляться повторно при каждом следующем запуске, что может привести к появлению дубликатов.
 
 ```sql
 -- ❌ Not idempotent: re-runs can duplicate rows 
@@ -66,9 +66,9 @@ select * from {{ source('events', 'raw_events') }}
 
 <div>
 
-**Idempotent incremental model:**
+**Идемпотентная инкрементальная модель:**
 
-This example adds a `unique_key`, so matching rows are updated or replaced instead of appended as duplicates.
+В этом примере добавлен `unique_key`, поэтому совпадающие строки обновляются или заменяются, а не добавляются как дубликаты.
 
 ```sql
 -- ✅ Idempotent when event_id is unique
@@ -88,34 +88,34 @@ select * from {{ source('events', 'raw_events') }}
 
 </div>
 
-With `unique_key` set, dbt updates existing rows and inserts new rows instead of appending duplicates. Depending on your adapter and [incremental strategy](/docs/build/incremental-strategy), dbt does this with `merge` or `delete+insert`.
+Если задан `unique_key`, dbt обновляет существующие строки и вставляет новые вместо добавления дубликатов. В зависимости от адаптера и [инкрементальной стратегии](/docs/build/incremental-strategy) dbt использует для этого `merge` или `delete+insert`.
 
-You can also use [microbatch incremental models](/docs/build/incremental-microbatch) for large time-series datasets. Microbatch models process data in batches based on an `event_time` column, and can be more resilient for very large incremental workloads.
+Для больших наборов данных временных рядов также можно использовать [микропакетные инкрементальные модели](/docs/build/incremental-microbatch). Микропакетные модели обрабатывают данные пакетами на основе столбца `event_time` и могут обеспечивать более устойчивую работу при очень больших объёмах инкрементальной обработки.
 
 
-### Common risks
+### Распространённые риски
 
 <SimpleTable>
 
-| Risk | Why it breaks idempotence | Fix |
+| Риск | Почему нарушается идемпотентность | Решение |
 |---|---|---|
-| Using `current_timestamp()` in a model | Produces different values on every run | Use a column from the source data as the timestamp |
-| Appending without a `unique_key` | Without a `unique_key`, most adapters/strategies append rows and can duplicate on re-runs.| Add `unique_key` to your incremental config |
-| Generating surrogate keys with random values | Different runs produce different keys for the same row | Use deterministic hashing (for example, `dbt_utils.generate_surrogate_key`) |
-| Hardcoding "today's date" in logic | Results change based on when the model runs, not the data | Filter on source timestamps |
+| Использование `current_timestamp()` в модели | При каждом запуске получаются разные значения | Используйте столбец из исходных данных в качестве временной метки |
+| Добавление строк без `unique_key` | Без `unique_key` большинство адаптеров и стратегий добавляют строки и могут создавать дубликаты при повторных запусках.| Добавьте `unique_key` в конфигурацию инкрементальной модели |
+| Генерация суррогатных ключей со случайными значениями | При разных запусках для одной и той же строки создаются разные ключи | Используйте детерминированное хеширование (например, `dbt_utils.generate_surrogate_key`) |
+| Жёсткая привязка логики к «сегодняшней дате» | Результаты меняются в зависимости от времени запуска модели, а не от данных | Фильтруйте по временным меткам исходных данных |
 
 </SimpleTable>
 
-## Full-refresh as a safety net
+## Полное обновление как страховка
 
-When an incremental model gets into a bad state (for example, due to a schema change or logic bug), you can always run `dbt run --full-refresh` to drop and rebuild the table from scratch. This is the escape hatch that makes incremental models recoverable.
+Если инкрементальная модель оказывается в некорректном состоянии (например, из-за изменения схемы или ошибки в логике), вы всегда можете выполнить `dbt run --full-refresh`, чтобы удалить таблицу и создать её заново с нуля. Это запасной механизм, позволяющий восстановить инкрементальные модели.
 
-Think of `--full-refresh` as proof that your underlying logic is still idempotent. Even if the incremental path is optimized, the full result should always be reproducible.
+Рассматривайте `--full-refresh` как подтверждение того, что базовая логика по-прежнему идемпотентна. Даже если инкрементальная обработка оптимизирована, полный результат всегда должен оставаться воспроизводимым.
 
-## Related docs
+## Связанная документация
 
-These docs cover the dbt features most affected by idempotence:
+Эти документы описывают возможности dbt, для которых идемпотентность наиболее важна:
 
-- [State selection and stateless runs](/reference/node-selection/state-selection)
-- [Incremental models](/docs/build/incremental-models)
-- [Microbatch incremental models](/docs/build/incremental-microbatch)
+- [Выбор узлов по состоянию и запуски без учёта состояния](/reference/node-selection/state-selection)
+- [Инкрементальные модели](/docs/build/incremental-models)
+- [Микропакетные инкрементальные модели](/docs/build/incremental-microbatch)

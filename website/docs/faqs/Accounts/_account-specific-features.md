@@ -29,7 +29,7 @@ import OpenAiProjectRegion from '/snippets/_open-ai-project-region.md';
 
 Код, генерируемый <Constant name="wizard" />, может включать:
 
-- Base/staging/semantic models (включая SQL для новых моделей)
+- Базовые, подготовительные и семантические модели, включая SQL для новых моделей.
 - YAML‑файлы для документации или тестов
 - Встроенные SQL‑выражения
 - Структуры семантических моделей и метрики

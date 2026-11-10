@@ -11,7 +11,7 @@ hide_table_of_contents: false
 date: 2022-05-15
 is_featured: false
 ---
-Существует множество различных функций для работы с датами в SQL — например, [DATEDIFF](https://docs.getdbt.tech/blog/datediff-sql-love-letter/), [DATEADD](https://docs.getdbt.tech/blog/sql-dateadd), DATE_PART и [DATE_TRUNC](https://docs.getdbt.tech/date-trunc-sql). У каждой из них свои случаи использования, и понимание того, как и когда их использовать, является основой работы с SQL. Является ли какая-либо из них такой же простой в использовании, как функция EXTRACT? Ну, это тема для другого обсуждения...
+Существует множество различных функций для работы с датами в SQL — например, [DATEDIFF](https://docs.getdbt.tech/blog/datediff-sql-love-letter/), [DATEADD](https://docs.getdbt.tech/blog/sql-dateadd), DATE_PART и [DATE_TRUNC](/blog/date-trunc-sql). У каждой из них свои случаи использования, и понимание того, как и когда их использовать, является основой работы с SQL. Является ли какая-либо из них такой же простой в использовании, как функция EXTRACT? Ну, это тема для другого обсуждения...
 
 В этом посте мы подробно рассмотрим функцию EXTRACT, как она работает и почему мы её используем.
 

@@ -1,7 +1,7 @@
 ---
-title: "dbt State usage examples"
-sidebar_label: "dbt State examples"
-description: "Side-by-side standalone local dbt execution and local dbt with dbt State execution scenarios using the Jaffle Shop project."
+title: "Примеры использования dbt State"
+sidebar_label: "Примеры dbt State"
+description: "Сравнение сценариев локального выполнения dbt без dbt State и с dbt State на примере проекта Jaffle Shop."
 id: "dbt-state-examples"
 tags: ['dbt State']
 pagination_prev: "docs/deploy/dbt-state-deferral"
@@ -9,40 +9,40 @@ pagination_next: "docs/deploy/dbt-state-migration"
 availability: everywhere_usage
 ---
 
-# Example usage for dbt State
+# Примеры использования dbt State
 
 <IntroText>
 
-These examples use the Jaffle Shop project to show side-by-side comparisons of CLI output with and without dbt State enabled. To enable dbt State, follow the steps in [Setting up dbt State](/docs/deploy/dbt-state-setup).
+В этих примерах используется проект Jaffle Shop для наглядного сравнения вывода CLI с включённым dbt State и без него. Чтобы включить dbt State, следуйте инструкциям в разделе [Настройка dbt State](/docs/deploy/dbt-state-setup).
 
 </IntroText>
 
-The following examples use this [Jaffle Shop project](https://github.com/dbt-labs/jaffle-shop) DAG as a reference. You can refer to it to understand the model lineage for each scenario.
+В следующих примерах в качестве ориентира используется DAG [проекта Jaffle Shop](https://github.com/dbt-labs/jaffle-shop). Обращайтесь к нему, чтобы понять зависимости между моделями в каждом сценарии.
 
-<Lightbox src="/img/docs/dbt-state/dbt_state_dag.png" title="The Jaffle Shop DAG" />
+<Lightbox src="/img/docs/dbt-state/dbt_state_dag.png" title="DAG проекта Jaffle Shop" />
 
-Each of the following scenarios shows how a run differs between <Constant name="dbt" /> alone and <Constant name="dbt" /> with dbt State, using the same command and project.
+Каждый из следующих сценариев показывает, чем отличается запуск <Constant name="dbt" /> без dbt State от запуска <Constant name="dbt" /> с dbt State при использовании одной и той же команды и проекта.
 
-| Scenario | Command | What dbt State changes |
+| Сценарий | Команда | Что меняет dbt State |
 | --- | --- | --- |
-| [Initial run in empty schema](#initial-run-in-empty-schema) | `dbt run --target prod` | Same result |
-| [Second run](#second-run) | `dbt run --target prod` | Reuses unchanged table models and most views; may rebuild views with `select *` directly on a `ref()` or `source()` |
-| [Selecting a model in a fresh dev environment after changing the customers model](#selecting-a-model-in-a-fresh-dev-environment-after-changing-the-customers-model) | `dbt run --target dev --select "customers"` | Defers to prod for upstream models |
-| [Selecting a model in a new dev schema with no model changes](#selecting-a-model-in-a-new-dev-schema-with-no-model-changes) | `dbt run --target dev --select "customers"` | Defers and clones unchanged models |
+| [Первый запуск в пустой схеме](#initial-run-in-empty-schema) | `dbt run --target prod` | Тот же результат |
+| [Второй запуск](#second-run) | `dbt run --target prod` | Повторно использует неизменённые табличные модели и большинство представлений; может пересоздавать представления с `select *`, обращающимся непосредственно к `ref()` или `source()` |
+| [Выбор модели в новой среде разработки после изменения модели customers](#selecting-a-model-in-a-fresh-dev-environment-after-changing-the-customers-model) | `dbt run --target dev --select "customers"` | Использует вышестоящие модели из prod за счёт перенаправления ссылок |
+| [Выбор модели в новой схеме разработки без изменений в моделях](#selecting-a-model-in-a-new-dev-schema-with-no-model-changes) | `dbt run --target dev --select "customers"` | Перенаправляет ссылки и клонирует неизменённые модели |
 <br></br>
 
-Every skipped model is a model you didn't pay to rebuild. dbt State tracks what's changed and skips the rest &mdash; reducing run time and warehouse costs.
+Каждая пропущенная модель — это модель, за повторное построение которой вам не пришлось платить. dbt State отслеживает изменения и пропускает всё остальное &mdash; сокращая время выполнения и затраты на хранилище данных.
 
-## Initial run in empty schema
+## Первый запуск в пустой схеме {#initial-run-in-empty-schema}
 
 ```shell
 dbt run --target prod
 ```
 
-With no prior state to compare against, dbt builds every model from scratch. dbt State captures metadata from this run for future comparisons.
+Если предыдущего состояния для сравнения нет, dbt строит каждую модель с нуля. dbt State сохраняет метаданные этого запуска для последующих сравнений.
 
 <Tabs queryString="initial-run">
-<TabItem value="without" label="Without dbt State">
+<TabItem value="without" label="Без dbt State">
 
 
 ```shell
@@ -86,7 +86,7 @@ Done. PASS=12 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=12
 
 
 </TabItem>
-<TabItem value="with" label="With dbt State">
+<TabItem value="with" label="С dbt State">
 
 ```shell
 Running with dbt=1.12.0-b2
@@ -132,20 +132,20 @@ Done. PASS=12 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=12
 </TabItem>
 </Tabs>
 
-## Second run
+## Второй запуск {#second-run}
 
 ```shell
 dbt run --target prod
 ```
 
-For each model, dbt State compares the current logic and upstream data against the previous run. If nothing has changed, dbt State skips the build or clones the result from another environment.
+Для каждой модели dbt State сравнивает текущую логику и данные вышестоящих моделей с предыдущим запуском. Если ничего не изменилось, dbt State пропускает построение или клонирует результат из другой среды.
 
-With dbt State enabled, all twelve models are reused &mdash; nothing changed, so there's nothing to rebuild.
+При включённом dbt State все двенадцать моделей используются повторно &mdash; ничего не изменилось, поэтому пересоздавать нечего.
 
-dbt State reuses views when their SQL logic is unchanged, even if new data has arrived upstream. Because views don't store data, they always read directly from the underlying tables when queried. The staging views shown here use `select *` on a CTE, which dbt State can reuse. For details on `select *` patterns that can force a rebuild, refer to [Views with `select *`](/faqs/State/views-rebuilt#views-with-select).
+dbt State повторно использует представления, если их SQL-логика не изменилась, даже если в вышестоящих моделях появились новые данные. Поскольку представления не хранят данные, при выполнении запроса они всегда читают их непосредственно из базовых таблиц. В показанных здесь промежуточных представлениях используется `select *` из CTE, и dbt State может использовать такие представления повторно. Подробнее о вариантах использования `select *`, которые могут привести к пересозданию, см. в разделе [Представления с `select *`](/faqs/State/views-rebuilt#views-with-select).
 
 <Tabs queryString="second-run">
-<TabItem value="without" label="Without dbt State">
+<TabItem value="without" label="Без dbt State">
 
 ```shell
 Running with dbt=1.12.0-b2
@@ -187,7 +187,7 @@ Done. PASS=12 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=12
 ```
 
 </TabItem>
-<TabItem value="with" label="With dbt State">
+<TabItem value="with" label="С dbt State">
 
 ```shell
 Running with dbt=1.12.0-b2
@@ -234,16 +234,16 @@ Done. PASS=0 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=12 TOTAL=12
 </TabItem>
 </Tabs>
 
-## Selecting a model in a fresh dev environment after changing the customers model
+## Выбор модели в новой среде разработки после изменения модели customers {#selecting-a-model-in-a-fresh-dev-environment-after-changing-the-customers-model}
 
 ```shell
 dbt run --target dev --select "customers"
 ```
 
-Imagine you've made a small change to the `customers` model and run it in a fresh developer schema. Without dbt State, <Constant name="core" /> fails because upstream relations are missing. With dbt State, dbt [defers](/docs/deploy/dbt-state-deferral) to prod for upstream models and runs only the updated `customers` model.
+Представьте, что вы внесли небольшое изменение в модель `customers` и запустили её в новой схеме разработчика. Без dbt State <Constant name="core" /> завершается с ошибкой, поскольку вышестоящие объекты базы данных отсутствуют. С dbt State dbt [перенаправляет ссылки](/docs/deploy/dbt-state-deferral) на вышестоящие модели в prod и запускает только обновлённую модель `customers`.
 
 <Tabs queryString="select-customers-fresh-dev">
-<TabItem value="without" label="Without dbt State">
+<TabItem value="without" label="Без dbt State">
 
 ```shell
 Running with dbt=1.12.0-b2
@@ -271,7 +271,7 @@ Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
 ```
 
 </TabItem>
-<TabItem value="with" label="With dbt State">
+<TabItem value="with" label="С dbt State">
 
 ```shell
 Running with dbt=1.12.0-b2
@@ -297,16 +297,16 @@ Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
 </Tabs>
 
 
-## Selecting a model in a new dev schema with no model changes
+## Выбор модели в новой схеме разработки без изменений в моделях {#selecting-a-model-in-a-new-dev-schema-with-no-model-changes}
 
 ```shell
 dbt run --target dev --select "customers"
 ```
 
-Suppose you create a fresh dev schema and run only the `customers` model. Without dbt State, <Constant name="core" /> fails because there is no data in the schema. With dbt State, dbt knows `customers` just ran in another schema: it defers to prod for upstream models and clones `customers` because the outcome is unchanged.
+Предположим, вы создаёте новую схему разработки и запускаете только модель `customers`. Без dbt State <Constant name="core" /> завершается с ошибкой, поскольку в схеме нет данных. С dbt State dbt знает, что модель `customers` только что была построена в другой схеме: он перенаправляет ссылки на вышестоящие модели в prod и клонирует `customers`, поскольку результат не изменился.
 
 <Tabs queryString="select-customers-new-dev">
-<TabItem value="without" label="Without dbt State">
+<TabItem value="without" label="Без dbt State">
 
 ```shell
 Running with dbt=1.12.0-b2
@@ -334,7 +334,7 @@ Done. PASS=0 WARN=0 ERROR=1 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
 ```
 
 </TabItem>
-<TabItem value="with" label="With dbt State">
+<TabItem value="with" label="С dbt State">
 
 ```shell
 Running with dbt=1.12.0-b2
@@ -358,12 +358,12 @@ Done. PASS=0 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=1 TOTAL=1
 </TabItem>
 </Tabs>
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Setting up dbt State](/docs/deploy/dbt-state-setup)
-- [Set up authentication for non-interactive environments](/docs/deploy/dbt-state-cicd)
-- [Configuring deferral in dbt State](/docs/deploy/dbt-state-deferral)
-- [Monitoring dbt State activity in dbt platform](/docs/deploy/dbt-state-interface)
-- [Migrating from state-aware orchestration to dbt State](/docs/deploy/dbt-state-migration)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Настройка аутентификации для неинтерактивных сред](/docs/deploy/dbt-state-cicd)
+- [Настройка перенаправления ссылок в dbt State](/docs/deploy/dbt-state-deferral)
+- [Мониторинг активности dbt State на платформе dbt](/docs/deploy/dbt-state-interface)
+- [Переход с оркестрации с учётом состояния на dbt State](/docs/deploy/dbt-state-migration)
+- [Параметры конфигурации dbt State](/reference/resource-configs/dbt-state-configs)

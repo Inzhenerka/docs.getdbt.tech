@@ -42,12 +42,6 @@ agent_guidance:
 ### Связанные материалы {#related-content}
 
 - [Курсы dbt Learn](https://learn.getdbt.com)
-- [CI‑задание <Constant name="cloud" />](/docs/deploy/continuous-integration)
-- [Уведомления о заданиях](/docs/deploy/job-notifications)
-- [Свежесть источников](/docs/deploy/source-freshness)
-- [Обзор SQL для Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/sql/index.html)
-
-- [Курсы dbt Learn](https://learn.getdbt.com)
 - [Задание CI в <Constant name="dbt" />](/docs/deploy/continuous-integration)
 - [Уведомления о заданиях](/docs/deploy/job-notifications)
 - [Актуальность источников](/docs/deploy/source-freshness)
@@ -60,6 +54,8 @@ agent_guidance:
 :::
 
 ## Загрузка данных в бакет Amazon S3 {#load-data-to-s3}
+
+С помощью Starburst Galaxy можно создавать таблицы и преобразовывать их в dbt. Сначала загрузите данные Jaffle Shop от dbt Labs в бакет S3.
 
 1. Скачайте следующие CSV‑файлы на локальный компьютер:
 
@@ -105,15 +101,13 @@ agent_guidance:
     - **Allow creating external tables** — включите.
     - **Allow writing to external tables** — включите.
 
-<Lightbox src="/img/quickstarts/dbt-platform/starburst-galaxy-config-s3.png" title="Настройки подключения к Amazon S3 в Starburst Galaxy" />
+    Страница **Amazon S3** должна выглядеть примерно так. Содержимое раздела **Authentication to S3** зависит от способа аутентификации.
+
+    <Lightbox src="/img/quickstarts/dbt-platform/starburst-galaxy-config-s3.png" title="Настройки подключения к Amazon S3 в Starburst Galaxy" />
 
 8. Нажмите **Test connection**. Это позволит проверить, есть ли у Starburst Galaxy доступ к вашему бакету S3. 
 9. Нажмите **Connect catalog**, если проверка подключения прошла успешно.
     <Lightbox src="/img/quickstarts/dbt-platform/test-connection-success.png" title="Успешная проверка подключения" />
-
-8. Нажмите **Test connection**, чтобы проверить доступ Starburst Galaxy к вашему бакету S3.
-9. Если тест прошел успешно, нажмите **Connect catalog**.
-    <Lightbox src="/img/quickstarts/dbt-cloud/test-connection-success.png" title="Успешная проверка подключения" />
 
 10. На странице **Set permissions** нажмите **Skip** — при необходимости вы сможете добавить права позже.
 11. На странице **Add to cluster** выберите кластер из выпадающего списка и нажмите **Add to cluster**.
@@ -121,7 +115,9 @@ agent_guidance:
 
     Если вы используете существующий кластер и не имеете доступа к роли accountadmin, выберите роль, к которой у вас есть доступ.
 
-<Lightbox src="/img/quickstarts/dbt-platform/add-privilege.png" title="Добавление привилегии роли accountadmin" />
+    Подробнее см. в разделе [Access control](https://docs.starburst.io/starburst-galaxy/security/access-control.html) документации Starburst Galaxy.
+
+    <Lightbox src="/img/quickstarts/dbt-platform/add-privilege.png" title="Добавление привилегии роли accountadmin" />
 
 13. На странице **Roles** откройте вкладку **Privileges** и нажмите **Add privilege**.
 14. На странице **Add privilege** задайте:
@@ -199,9 +195,9 @@ agent_guidance:
     );
     ```
 
-<Lightbox src="/img/quickstarts/dbt-platform/starburst-data-hierarchy.png" title="Иерархия данных в редакторе запросов" />
+4. После выполнения запросов в левой панели редактора появится следующая иерархия:
 
-    <Lightbox src="/img/quickstarts/dbt-cloud/starburst-data-hierarchy.png" title="Иерархия данных в редакторе запросов" />
+    <Lightbox src="/img/quickstarts/dbt-platform/starburst-data-hierarchy.png" title="Иерархия данных в редакторе запросов" />
 
 5. Проверьте, что таблицы были успешно созданы, выполнив запросы:
 
@@ -233,6 +229,8 @@ agent_guidance:
     - Оставьте остальные параметры без изменений. Можно использовать их значения по умолчанию.
 11. Нажмите **Test Connection**. Эта проверка позволяет убедиться, что <Constant name="dbt" /> может получить доступ к вашему кластеру Starburst Galaxy.
 12. Если проверка прошла успешно, нажмите **Next**. Если она завершилась ошибкой, возможно, потребуется проверить настройки и учётные данные Starburst Galaxy.
+
+## Настройка репозитория под управлением dbt {#set-up-a-dbt-managed-repository}
 
 <Snippet path="tutorial-managed-repo" />
 
@@ -320,7 +318,7 @@ select * from final
 
 Позже вы сможете подключить свои инструменты бизнес-аналитики (BI) (например, [dbt Charts](https://dbtcharts.com/)) к этим представлениям и таблицам, чтобы они считывали только очищенные, а не необработанные данные.
 
-#### FAQs {#faqs}
+#### Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -430,7 +428,7 @@ select * from final
 
     На этот раз dbt создаст отдельные представления/таблицы для `stg_customers`, `stg_orders` и `customers`. Порядок выполнения будет определен автоматически на основе зависимостей.
 
-#### FAQs {#faq-2}
+#### Часто задаваемые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />
@@ -444,7 +442,6 @@ select * from final
 
 ## Подключение к нескольким источникам данных {#connect-to-multiple-data-sources}
 
-## Подключение к нескольким источникам данных
 В этом кратком руководстве рассматривается использование <Constant name="dbt" /> для выполнения моделей с данными из озера данных (S3) с помощью Starburst Galaxy в качестве движка запросов. В большинстве реальных сценариев данные, необходимые для выполнения моделей, распределены между несколькими источниками и хранятся в различных форматах. С помощью Starburst Galaxy, Starburst Enterprise и Trino вы можете выполнять модели с любыми необходимыми данными независимо от того, где они хранятся.
 
 Если вы хотите попробовать это на практике, обратитесь к [документации Starburst Galaxy](https://docs.starburst.io/starburst-galaxy/catalogs/), чтобы добавить другие источники данных и загрузить данные Jaffle Shop в выбранный источник. Затем доработайте модели, чтобы они запрашивали данные как из нового источника, так и из источника, созданного в этом кратком руководстве.

@@ -1,9 +1,9 @@
 ---
-title: "Getting started with the terminal"
+title: "Начало работы с терминалом"
 id: terminal-guide
-description: "A short intro to the terminal for dbt users — learn how to open it, navigate folders, and run your first dbt commands."
-displayText: Getting started with the terminal
-hoverSnippet: "New to the terminal? Learn the basics you need to work with dbt from the command line."
+description: "Краткое введение в работу с терминалом для пользователей dbt — узнайте, как открыть терминал, перемещаться по папкам и выполнять первые команды dbt."
+displayText: Начало работы с терминалом
+hoverSnippet: "Впервые работаете с терминалом? Освойте основы, необходимые для работы с dbt из командной строки."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['dbt', 'CLI', 'Beginner']
@@ -12,116 +12,116 @@ level: 'Beginner'
 
 <div style={{maxWidth: '900px'}}>
 
-## What is the terminal?
+## Что такое терминал?
 
-The terminal (also called the command line, shell, or CLI) is a text-based interface for running commands on your computer. Many dbt tools — including <Constant name="fusion" />, <Constant name="core" />, and the <Constant name="wizard" /> CLI &mdash; run from the terminal.
+Терминал (также называемый командной строкой, оболочкой или CLI) — это текстовый интерфейс для выполнения команд на компьютере. Многие инструменты dbt, включая <Constant name="fusion" />, <Constant name="core" /> и <Constant name="wizard" /> CLI, работают из терминала.
 
-You don't need to be a terminal expert to use dbt. This guide covers the basics.
+Чтобы пользоваться dbt, не нужно быть экспертом по терминалу. В этом руководстве рассмотрены основы.
 
-## Open the terminal
+## Откройте терминал
 
 <Tabs>
 <TabItem value="mac" label="macOS" default>
 
-**Option 1: Spotlight**
-Press `⌘ Space`, type `Terminal`, and press Enter.
+**Вариант 1: Spotlight**
+Нажмите `⌘ Space`, введите `Terminal` и нажмите Enter.
 
-**Option 2: Applications folder**
-Go to **Applications** → **Utilities** → **Terminal**.
+**Вариант 2: папка «Программы»**
+Откройте **Программы** → **Утилиты** → **Терминал**.
 
-**Option 3: VS Code integrated terminal**
-In VS Code, press `` ⌃` `` (Control + backtick) to open a terminal panel directly in your editor.
+**Вариант 3: встроенный терминал VS Code**
+В VS Code нажмите `` ⌃` `` (Control + обратная кавычка), чтобы открыть панель терминала прямо в редакторе.
 
 </TabItem>
 <TabItem value="windows" label="Windows">
 
-**Option 1: Command Prompt or PowerShell**
-Press `Win + R`, type `cmd` or `powershell`, and press Enter.
+**Вариант 1: командная строка или PowerShell**
+Нажмите `Win + R`, введите `cmd` или `powershell` и нажмите Enter.
 
-**Option 2: Windows Terminal**
-Search for "Terminal" in the Start menu. Windows Terminal supports Command Prompt, PowerShell, and WSL side by side.
+**Вариант 2: Windows Terminal**
+Найдите «Терминал» в меню «Пуск». Windows Terminal позволяет работать с командной строкой, PowerShell и WSL в одном приложении.
 
-**Option 3: VS Code integrated terminal**
-In VS Code, press `` Ctrl+` `` to open a terminal panel directly in your editor.
+**Вариант 3: встроенный терминал VS Code**
+В VS Code нажмите `` Ctrl+` ``, чтобы открыть панель терминала прямо в редакторе.
 
-:::tip Using dbt on Windows?
-dbt runs natively on Windows via PowerShell. For the best experience, consider using [WSL (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install).
+:::tip Используете dbt в Windows?
+dbt работает непосредственно в Windows через PowerShell. Для более удобной работы рассмотрите возможность использования [WSL (подсистемы Windows для Linux)](https://learn.microsoft.com/en-us/windows/wsl/install).
 :::
 
 </TabItem>
 <TabItem value="linux" label="Linux">
 
-Open your distribution's terminal emulator — usually found in the applications menu, or press `Ctrl + Alt + T` on most desktop environments.
+Откройте эмулятор терминала вашего дистрибутива — обычно он находится в меню приложений. В большинстве графических сред также можно нажать `Ctrl + Alt + T`.
 
 </TabItem>
 </Tabs>
 
-## Navigate your file system
+## Перемещайтесь по файловой системе
 
-When the terminal opens, you're in a directory (folder). These commands help you move around:
+Когда терминал открывается, вы находитесь в определённом каталоге (папке). Эти команды помогут перемещаться между каталогами:
 
-| Command | What it does | Example |
+| Команда | Что делает | Пример |
 |---|---|---|
-| `pwd` | Print the current directory | `pwd` → `/Users/alice` |
-| `ls` | List files and folders (macOS/Linux) | `ls` |
-| `dir` | List files and folders (Windows) | `dir` |
-| `cd <folder>` | Change into a folder | `cd my-dbt-project` |
-| `cd ..` | Go up one folder | `cd ..` |
-| `cd ~` | Go to your home directory | `cd ~` |
+| `pwd` | Выводит текущий каталог | `pwd` → `/Users/alice` |
+| `ls` | Выводит список файлов и папок (macOS/Linux) | `ls` |
+| `dir` | Выводит список файлов и папок (Windows) | `dir` |
+| `cd <folder>` | Переходит в папку | `cd my-dbt-project` |
+| `cd ..` | Переходит на одну папку выше | `cd ..` |
+| `cd ~` | Переходит в домашний каталог | `cd ~` |
 
-**Tips:**
+**Советы:**
 
-- Press **Tab** to autocomplete folder and file names — saves a lot of typing.
-- Press **↑ / ↓** to scroll through previous commands.
-- Press **Ctrl+C** to cancel a running command.
+- Нажимайте **Tab** для автодополнения имён папок и файлов — это заметно сокращает объём ввода.
+- Нажимайте **↑ / ↓** для просмотра ранее введённых команд.
+- Нажмите **Ctrl+C**, чтобы прервать выполняющуюся команду.
 
-## Navigate to your dbt project
+## Перейдите в папку проекта dbt
 
-Your dbt project is a folder on your computer containing a `dbt_project.yml` file. Before running any dbt commands, navigate into that folder:
+Проект dbt — это папка на вашем компьютере, содержащая файл `dbt_project.yml`. Перед выполнением любых команд dbt перейдите в эту папку:
 
 ```bash
 cd ~/path/to/your-dbt-project
 ```
 
-Verify you're in the right place:
+Убедитесь, что вы находитесь в нужной папке:
 
 ```bash
-ls          # macOS/Linux — you should see dbt_project.yml
+ls          # macOS/Linux — вы должны увидеть dbt_project.yml
 dir         # Windows
 ```
 
-## Run your first dbt command
+## Выполните первую команду dbt
 
 <ConfettiTrigger>
-After installing dbt, you can run your first dbt command to verify it's installed and working. Make sure you're in your project folder before running any dbt commands:
+После установки dbt вы можете выполнить первую команду dbt, чтобы убедиться, что инструмент установлен и работает. Перед выполнением любых команд dbt убедитесь, что вы находитесь в папке проекта:
 ```bash
 cd ~/path/to/your-dbt-project
 ```
-Then run your first dbt command:
+Затем выполните первую команду dbt:
 ```bash
 dbt --version
 ```
-You should see output similar to the following:
+Вы должны увидеть примерно такой вывод:
 ```bash
 dbt-fusion 2.0.1
 ```
 </ConfettiTrigger>
-.... and that's it! Congrats, you're ready to start using dbt in the terminal! 🎉
+.... и это всё! Поздравляем, теперь вы готовы начать работу с dbt в терминале! 🎉
 
-## Common issues
+## Распространённые проблемы
 
 **`command not found`**
-The tool isn't installed or isn't on your PATH. Double-check the install instructions for [<Constant name="core" />](/docs/local/install-dbt) or [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).
+Инструмент не установлен или путь к нему не указан в переменной PATH. Ещё раз проверьте инструкции по установке [<Constant name="core" />](/docs/local/install-dbt) или [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).
 
 **`Permission denied`**
-You may need to run the command with elevated permissions, or check that the file is executable.
+Возможно, вам нужно выполнить команду с повышенными правами или проверить, разрешено ли выполнение файла.
 
-**Nothing happens after I type**
-Make sure you pressed **Enter** after the command.
+**После ввода ничего не происходит**
+Убедитесь, что вы нажали **Enter** после ввода команды.
 
-## Next steps
-- [Install the <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) — use the <Constant name="wizard" /> CLI in your terminal
-- [Install dbt](/docs/local/install-dbt) — set up <Constant name="fusion_engine" /> or <Constant name="core" /> locally
-- [dbt commands reference](/reference/dbt-commands) — all available dbt CLI commands
+## Дальнейшие шаги
+- [Установите <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) — используйте <Constant name="wizard" /> CLI в терминале
+- [Установите dbt](/docs/local/install-dbt) — настройте <Constant name="fusion_engine" /> или <Constant name="core" /> локально
+- [Справочник команд dbt](/reference/dbt-commands) — все доступные команды dbt CLI
 
 </div>

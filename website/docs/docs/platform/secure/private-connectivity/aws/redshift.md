@@ -1,7 +1,7 @@
 ---
-title: "Configure AWS PrivateLink for Redshift"
+title: "Настройка AWS PrivateLink для Redshift"
 id: aws-redshift
-description: "Configuring PrivateLink for Redshift."
+description: "Настройка PrivateLink для Redshift."
 sidebar_label: "Redshift"
 availability:
   surface: platform
@@ -9,7 +9,7 @@ availability:
   minPlan: enterprise_plus
 ---
 
-# Configure AWS PrivateLink for Redshift
+# Настройка AWS PrivateLink для Redshift
 
 import SetUpPages from '/snippets/_available-tiers-enterprise-plus.md';
 import PrivateLinkCreateConnection from '/snippets/_privatelink-create-connection.md';
@@ -19,118 +19,118 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-AWS provides two different ways to create a PrivateLink VPC endpoint for a Redshift cluster that is running in another VPC: 
-- [Redshift-managed PrivateLink Endpoints](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html)
-- [Redshift Interface-type PrivateLink Endpoints](https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html)
+AWS предоставляет два способа создания конечной точки VPC PrivateLink для кластера Redshift, работающего в другой VPC: 
+- [Конечные точки PrivateLink, управляемые Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html)
+- [Конечные точки PrivateLink интерфейсного типа для Redshift](https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html)
 
-<Constant name="dbt" /> supports both types of endpoints, but there are several [considerations](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html#managing-cluster-cross-vpc-considerations) to take into account when deciding which endpoint type to use. Redshift-managed provides a simpler setup with no additional cost, which might make it the preferred option for many, but may not be an option in all environments. Based on these criteria, determine which type is right for your system. Follow the instructions from the section below that corresponds to your chosen endpoint type.
+<Constant name="dbt" /> поддерживает оба типа конечных точек, но при выборе типа необходимо учитывать ряд [особенностей](https://docs.aws.amazon.com/redshift/latest/mgmt/managing-cluster-cross-vpc.html#managing-cluster-cross-vpc-considerations). Конечные точки, управляемые Redshift, проще настроить, и они не требуют дополнительных затрат, что делает их предпочтительным вариантом для многих пользователей. Однако они могут быть доступны не во всех средах. Определите подходящий для вашей системы тип с учётом этих критериев. Следуйте инструкциям в разделе ниже, соответствующем выбранному типу конечной точки.
 
 <CloudProviders type='Redshift' />
 
-You can set up a Redshift AWS PrivateLink endpoint in two ways:
+Настроить конечную точку AWS PrivateLink для Redshift можно двумя способами:
 
-- [Self-serve private endpoints](#self-serve-private-endpoints): Create and manage Redshift PrivateLink endpoints directly in the <Constant name="dbt_platform" /> user interface. Currently in beta.
-- [Support-led setup](#support-led-setup): Contact dbt Support to configure your Redshift PrivateLink endpoint.
+- [Самостоятельная настройка частных конечных точек](#self-serve-private-endpoints): создавайте конечные точки Redshift PrivateLink и управляйте ими непосредственно в пользовательском интерфейсе <Constant name="dbt_platform" />. Сейчас эта возможность находится в стадии бета-тестирования.
+- [Настройка с помощью службы поддержки](#support-led-setup): обратитесь в службу поддержки dbt для настройки конечной точки Redshift PrivateLink.
 
-The AWS-side setup is the same for both paths. You provision your AWS resources (grant access for Redshift-managed, or create the VPC endpoint service for interface-type), then either submit the request in the UI (self-serve) or email dbt Support (support-led).
+Настройка на стороне AWS одинакова для обоих способов. Вы подготавливаете ресурсы AWS (предоставляете доступ для конечных точек, управляемых Redshift, или создаёте сервис конечных точек VPC для конечных точек интерфейсного типа), а затем отправляете запрос через интерфейс (при самостоятельной настройке) или по электронной почте в службу поддержки dbt (при настройке с помощью службы поддержки).
 
-## Self-serve private endpoints <Lifecycle status="beta" /> {#self-serve-private-endpoints}
+## Самостоятельная настройка частных конечных точек <Lifecycle status="beta" /> {#self-serve-private-endpoints}
 
-_Self-serve private endpoints are currently in beta for Redshift on AWS, and available to all eligible customers. If you don't see **Private endpoints** in your account settings, use the [Support-led setup](#support-led-setup) instead._
+_Самостоятельная настройка частных конечных точек для Redshift в AWS сейчас находится в стадии бета-тестирования и доступна всем клиентам, соответствующим требованиям. Если в настройках вашего аккаунта нет раздела **Private endpoints**, используйте [настройку с помощью службы поддержки](#support-led-setup)._
 
-With self-serve, you request a Redshift PrivateLink endpoint in <Constant name="dbt_platform" /> without opening a support ticket. If a request fails, you can edit the request and resubmit, or delete the endpoint and retry on your own.
+При самостоятельной настройке вы запрашиваете конечную точку Redshift PrivateLink в <Constant name="dbt_platform" /> без создания обращения в службу поддержки. Если запрос завершится ошибкой, вы сможете изменить и повторно отправить его либо удалить конечную точку и повторить попытку самостоятельно.
 
-<Constant name="dbt_platform" /> supports all three Redshift types through self-serve:
+<Constant name="dbt_platform" /> поддерживает самостоятельную настройку для всех трёх типов Redshift:
 
-- **Redshift Managed** &mdash; provisioned Redshift clusters (select **Redshift Managed** in the UI).
-- **Redshift Managed Serverless** &mdash; Redshift Serverless (select **Redshift Managed** in the UI, then choose **Serverless**).
-- **Redshift interface-type** (select **Redshift** in the UI).
+- **Redshift Managed** &mdash; выделенные кластеры Redshift (выберите **Redshift Managed** в интерфейсе).
+- **Redshift Managed Serverless** &mdash; Redshift Serverless (выберите **Redshift Managed** в интерфейсе, затем выберите **Serverless**).
+- **Redshift интерфейсного типа** (выберите **Redshift** в интерфейсе).
 
-### Prerequisites
+### Предварительные требования
 
-- [Account admin](/docs/platform/manage-access/enterprise-permissions?version=2.0#account-admin) or [Project creator](/docs/platform/manage-access/enterprise-permissions?version=2.0#project-creator) permission sets in <Constant name="dbt_platform"/>. Users with an IT license can also create private endpoints.
-- Completed the AWS-side setup for your endpoint type. Follow the same steps as the [support-led setup](#support-led-setup) &mdash; grant access for [Redshift-managed](#configuring-redshift-managed-privatelink), or provision the VPC endpoint service for [interface-type](#configuring-redshift-interface-type-privatelink) &mdash; but stop before the **Submit your request to dbt Support** step and use the UI below instead.
+- Набор разрешений [Account admin](/docs/platform/manage-access/enterprise-permissions?version=2.0#account-admin) или [Project creator](/docs/platform/manage-access/enterprise-permissions?version=2.0#project-creator) в <Constant name="dbt_platform"/>. Пользователи с лицензией IT также могут создавать частные конечные точки.
+- Завершённая настройка на стороне AWS для выбранного типа конечной точки. Выполните те же действия, что и при [настройке с помощью службы поддержки](#support-led-setup): предоставьте доступ для [конечных точек, управляемых Redshift](#configuring-redshift-managed-privatelink), или подготовьте сервис конечных точек VPC для [конечных точек интерфейсного типа](#configuring-redshift-interface-type-privatelink). Однако остановитесь перед шагом **Отправьте запрос в службу поддержки dbt** и вместо него воспользуйтесь инструкциями для интерфейса ниже.
 
-### Request a new private endpoint
+### Запрос новой частной конечной точки
 
-1. In <Constant name="dbt_platform" />, go to **Account settings → Private endpoints**.
-2. In the **Private endpoints** table, review your existing endpoints. The table shows all private endpoints in your account (including non-Redshift ones) with details like **Name**, **Connection type**, **URL**, **Connectivity status**, and the number of **Connections** using the endpoint. You can search by **Name** or **URL**.
-3. To request a new endpoint, click **Request new**.
-4. Under **Provider type**, select the option that matches your endpoint type, then fill in the fields for that type:
+1. В <Constant name="dbt_platform" /> перейдите в **Account settings → Private endpoints**.
+2. В таблице **Private endpoints** просмотрите существующие конечные точки. В таблице представлены все частные конечные точки вашего аккаунта (включая те, которые не относятся к Redshift) с такими сведениями, как **Name**, **Connection type**, **URL**, **Connectivity status**, а также количеством подключений (**Connections**), использующих конечную точку. Поиск доступен по **Name** или **URL**.
+3. Чтобы запросить новую конечную точку, нажмите **Request new**.
+4. В разделе **Provider type** выберите вариант, соответствующий типу вашей конечной точки, затем заполните поля для этого типа:
 
    <Tabs>
 
    <TabItem value="managed" label="Redshift Managed / Serverless">
 
-   Select **Redshift Managed** for both provisioned Redshift clusters and Redshift Serverless.
+   Выберите **Redshift Managed** как для выделенных кластеров Redshift, так и для Redshift Serverless.
    
-        1. In **Step 1: Choose your deployment type**, select **Provisioned** or **Serverless**. If you choose **Serverless** and have multiple workgroups, make sure you grant access under  **Granted accounts** for each workgroup during the AWS-side setup. Refer to [Per-workgroup authorization required](#per-workgroup-authorization).
-        2. In **Step 2: Enter your cluster details**, enter your **Cluster identifier** and **Resource owner AWS account ID**.
-        3. In **Step 3: Select your AWS region**, choose the AWS region where your Redshift cluster or workgroup is hosted.
-        4. Click **Submit request**.
+        1. На шаге **Step 1: Choose your deployment type** выберите **Provisioned** или **Serverless**. Если вы выбрали **Serverless** и у вас несколько рабочих групп, обязательно предоставьте доступ в разделе **Granted accounts** для каждой рабочей группы при настройке на стороне AWS. См. раздел [Необходима авторизация для каждой рабочей группы](#per-workgroup-authorization).
+        2. На шаге **Step 2: Enter your cluster details** укажите **Cluster identifier** и **Resource owner AWS account ID**.
+        3. На шаге **Step 3: Select your AWS region** выберите регион AWS, в котором размещён кластер или рабочая группа Redshift.
+        4. Нажмите **Submit request**.
 
-   <Lightbox src="/img/docs/dbt-platform/redshift-managed-private-endpoint-request.png" title="Redshift Managed endpoint request form showing deployment type, cluster details, and AWS region fields"/>
+   <Lightbox src="/img/docs/dbt-platform/redshift-managed-private-endpoint-request.png" title="Форма запроса конечной точки Redshift Managed с полями типа развёртывания, сведений о кластере и региона AWS"/>
 
    </TabItem>
 
-   <TabItem value="interface" label="Redshift (interface-type)">
+   <TabItem value="interface" label="Redshift (интерфейсного типа)">
 
-   Select **Redshift** for an interface-type endpoint.
+   Для конечной точки интерфейсного типа выберите **Redshift**.
 
-   1. In **Step 1: Enter your AWS PrivateLink service name**, enter the name of the AWS VPC endpoint service you configured for your Redshift cluster (for example, `com.amazonaws.vpce.us-east-1.vpce-svc-xxxxxxxxxxxxxxxxx`).
-   2. In **Step 2: Name your Redshift endpoint**, choose a name to identify the endpoint. This is used as the hostname prefix when it's registered.
-   3. Click **Submit request**.
+   1. На шаге **Step 1: Enter your AWS PrivateLink service name** введите имя сервиса конечных точек AWS VPC, который вы настроили для своего кластера Redshift (например, `com.amazonaws.vpce.us-east-1.vpce-svc-xxxxxxxxxxxxxxxxx`).
+   2. На шаге **Step 2: Name your Redshift endpoint** выберите имя для идентификации конечной точки. При регистрации оно используется как префикс имени хоста.
+   3. Нажмите **Submit request**.
 
-   <Lightbox src="/img/docs/dbt-platform/redshift-interface-private-endpoint-request.png" title="Redshift interface-type endpoint request form showing AWS PrivateLink service name and endpoint name fields"/>
+   <Lightbox src="/img/docs/dbt-platform/redshift-interface-private-endpoint-request.png" title="Форма запроса конечной точки Redshift интерфейсного типа с полями имени сервиса AWS PrivateLink и имени конечной точки"/>
 
    </TabItem>
 
    </Tabs>
 
-5. After submission, you'll see the request and its status in the **Private endpoints** table. Once approved, you'll be notified.
-6. Proceed to the **Connections** page and follow the steps in the [Create connection in dbt](#create-connection-in-dbt) section to configure PrivateLink. Once configured, the new endpoint appears under **Private endpoints → Associated connections**.
+5. После отправки запрос и его статус появятся в таблице **Private endpoints**. После одобрения вы получите уведомление.
+6. Перейдите на страницу **Connections** и выполните действия из раздела [Создание подключения в dbt](#create-connection-in-dbt), чтобы настроить PrivateLink. После настройки новая конечная точка появится в разделе **Private endpoints → Associated connections**.
 
-:::note DNS propagation
-If the connection test fails immediately after setup, this is expected &mdash; it doesn't mean something is wrong. DNS changes can take a few minutes to propagate. Wait a few minutes, then test again before contacting support.
+:::note Распространение изменений DNS
+Если проверка подключения завершается ошибкой сразу после настройки, это ожидаемо и не означает, что что-то не так. Распространение изменений DNS может занять несколько минут. Подождите несколько минут и повторите проверку, прежде чем обращаться в службу поддержки.
 :::
 
-### Troubleshooting and errors
+### Устранение неполадок и ошибки
 
-If an endpoint request fails, <Constant name="dbt_platform"/> displays the error in a banner on the endpoint details page, along with details that are safe to share externally. Review the message, correct the underlying issue (for example, confirm dbt's AWS account has been granted access under the cluster's **Granted accounts** section), then click **Retry**.
+Если запрос конечной точки завершается ошибкой, <Constant name="dbt_platform"/> отображает её в баннере на странице сведений о конечной точке вместе с подробностями, которыми можно безопасно делиться за пределами организации. Изучите сообщение, устраните причину (например, убедитесь, что аккаунту AWS dbt предоставлен доступ в разделе **Granted accounts** кластера), затем нажмите **Retry**.
 
-<Lightbox src="/img/docs/dbt-platform/redshift-private-endpoint-error.png" title="Provisioning failed banner on a Redshift endpoint details page with a Retry button"/>
+<Lightbox src="/img/docs/dbt-platform/redshift-private-endpoint-error.png" title="Баннер ошибки создания ресурсов на странице сведений о конечной точке Redshift с кнопкой Retry"/>
 
-If you see a failure state without clear next steps, collect the request details (endpoint name, creation time, and status) and contact [dbt Support](mailto:support@getdbt.com).
+Если отображается состояние ошибки без понятных дальнейших действий, соберите сведения о запросе (имя конечной точки, время создания и статус) и обратитесь в [службу поддержки dbt](mailto:support@getdbt.com).
 
-## Support-led setup {#support-led-setup}
+## Настройка с помощью службы поддержки {#support-led-setup}
 
-If **Private endpoints** isn't available in your account settings, configure Redshift PrivateLink by following the steps below and submitting a request to dbt Support.
+Если раздел **Private endpoints** недоступен в настройках вашего аккаунта, настройте Redshift PrivateLink, выполнив приведённые ниже действия и отправив запрос в службу поддержки dbt.
 
-## Configuring Redshift-managed PrivateLink
+## Настройка PrivateLink, управляемого Redshift {#configuring-redshift-managed-privatelink}
 
-1. Locate the **Granted accounts** section of the Redshift configuration
-   - **Standard Redshift**
-        - On the running Redshift cluster, select the **Properties** tab.
-        <Lightbox src="/img/docs/dbt-platform/redshiftprivatelink1.png" title="Redshift Properties tab"/>
+1. Найдите раздел **Granted accounts** в настройках Redshift
+   - **Стандартный Redshift**
+        - В работающем кластере Redshift выберите вкладку **Properties**.
+        <Lightbox src="/img/docs/dbt-platform/redshiftprivatelink1.png" title="Вкладка Properties в Redshift"/>
      
    - **Redshift Serverless**
-       - On the Redshift Serverless **Workgroup configuration** page. If you have multiple workgroups, make sure you grant access under **Granted accounts** for each workgroup during the AWS-side setup. Refer to [Per-workgroup authorization required](#per-workgroup-authorization).  
+       - На странице **Workgroup configuration** в Redshift Serverless. Если у вас несколько рабочих групп, обязательно предоставьте доступ в разделе **Granted accounts** для каждой рабочей группы при настройке на стороне AWS. См. раздел [Необходима авторизация для каждой рабочей группы](#per-workgroup-authorization).  
 
-2. In the **Granted accounts** section, click **Grant access**.
+2. В разделе **Granted accounts** нажмите **Grant access**.
 
-<Lightbox src="/img/docs/dbt-platform/redshiftprivatelink2.png" title="Redshift granted accounts"/>
+<Lightbox src="/img/docs/dbt-platform/redshiftprivatelink2.png" title="Аккаунты с предоставленным доступом в Redshift"/>
 
-3. Enter the AWS account ID: `346425330055` - _NOTE: This account ID only applies to <Constant name="dbt" /> Multi-Tenant environments. For Virtual Private/Single-Tenant account IDs please contact [Support](mailto:support@getdbt.com)._
+3. Введите идентификатор аккаунта AWS: `346425330055` — _ПРИМЕЧАНИЕ: этот идентификатор аккаунта применим только к мультитенантным средам <Constant name="dbt" />. Для получения идентификаторов аккаунтов Virtual Private/Single-Tenant обратитесь в [службу поддержки](mailto:support@getdbt.com)._
 
-4. Choose **Grant access to all VPCs** &mdash;or&mdash; (optional) contact [Support](mailto:support@getdbt.com) for the appropriate regional VPC ID to designate in the **Grant access to specific VPCs** field.
+4. Выберите **Grant access to all VPCs** &mdash;или&mdash; (необязательно) обратитесь в [службу поддержки](mailto:support@getdbt.com), чтобы получить соответствующий региональный идентификатор VPC для указания в поле **Grant access to specific VPCs**.
 
-<Lightbox src="/img/docs/dbt-platform/redshiftprivatelink3.png" title="Redshift grant access"/>
+<Lightbox src="/img/docs/dbt-platform/redshiftprivatelink3.png" title="Предоставление доступа в Redshift"/>
 
-5. Add the required information to the following template, and submit your request to [dbt Support](mailto:support@getdbt.com):
+5. Добавьте необходимые сведения в следующий шаблон и отправьте запрос в [службу поддержки dbt](mailto:support@getdbt.com):
 
-   - **Standard Redshift**
+   - **Стандартный Redshift**
 
-     <Expandable alt_header="Support request email template" is_open={true}>
+     <Expandable alt_header="Шаблон письма с запросом в службу поддержки" is_open={true}>
 
      ```text
      Subject: New Multi-Tenant PrivateLink Request
@@ -147,7 +147,7 @@ If **Private endpoints** isn't available in your account settings, configure Red
 
    - **Redshift Serverless**
 
-     <Expandable alt_header="Support request email template" is_open={true}>
+     <Expandable alt_header="Шаблон письма с запросом в службу поддержки" anchor_id="redshift-serverless-support-request" is_open={true}>
 
      ```text
      Subject: New Multi-Tenant PrivateLink Request
@@ -162,75 +162,75 @@ If **Private endpoints** isn't available in your account settings, configure Red
 
      </Expandable>
 
-### Per-workgroup authorization required {#per-workgroup-authorization}
+### Необходима авторизация для каждой рабочей группы {#per-workgroup-authorization}
 
-For Redshift Serverless, **Granted accounts** is scoped to a single workgroup. If your environment has multiple workgroups, you must grant access separately for each workgroup you want to connect to <Constant name="dbt" />.
+В Redshift Serverless раздел **Granted accounts** относится к одной рабочей группе. Если в вашей среде несколько рабочих групп, необходимо отдельно предоставить доступ для каждой рабочей группы, которую вы хотите подключить к <Constant name="dbt" />.
 
-- Authorizing one workgroup (for example, _sales_) doesn't extend to any other workgroup (for example, _finance_  or _product_).
-- Repeat steps 1 to 4 in. [Configuring Redshift-managed](#configuring-redshift-managed-privatelink) section for each workgroup individually.
+- Авторизация одной рабочей группы (например, _sales_) не распространяется на другие рабочие группы (например, _finance_ или _product_).
+- Повторите шаги с 1 по 4 из раздела [Настройка PrivateLink, управляемого Redshift](#configuring-redshift-managed-privatelink) отдельно для каждой рабочей группы.
 
-This applies whether you set up the endpoint through [self-serve](#self-serve-private-endpoints) or support-led.
+Это требование действует независимо от того, настраиваете ли вы конечную точку [самостоятельно](#self-serve-private-endpoints) или с помощью службы поддержки.
 
 import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Configuring Redshift interface-type PrivateLink
+## Настройка PrivateLink интерфейсного типа для Redshift {#configuring-redshift-interface-type-privatelink}
 
-### 1. Provision AWS resources
+### 1. Подготовьте ресурсы AWS
 
-Creating an Interface VPC PrivateLink connection requires creating multiple AWS resources in the account containing the Redshift cluster:
+Для создания подключения Interface VPC PrivateLink необходимо создать несколько ресурсов AWS в аккаунте, содержащем кластер Redshift:
 
-- **Security Group** &mdash; If you are connecting to an existing Redshift cluster, this likely already exists, however, you may need to add or modify Security Group rules to accept traffic from the Network Load Balancer (NLB) created for this Endpoint Service.
-- **Target Group** &mdash; The Target Group will be attached to the NLB to tell it where to route requests. There are various target types available for NLB Target Groups, but you will use the IP address type.
+- **Группа безопасности (Security Group)** &mdash; если вы подключаетесь к существующему кластеру Redshift, она, скорее всего, уже существует. Однако может потребоваться добавить или изменить правила группы безопасности, чтобы принимать трафик от Network Load Balancer (NLB), созданного для этого сервиса конечных точек.
+- **Целевая группа (Target Group)** &mdash; целевая группа подключается к NLB и указывает, куда направлять запросы. Для целевых групп NLB доступны различные типы целей, но здесь будет использоваться тип IP-адреса.
     
-    - Target Type: **IP**
+    - Тип цели (Target Type): **IP**
 
-        - **Standard Redshift**
+        - **Стандартный Redshift**
 
-            - Use IP addresses from the Redshift cluster’s **Network Interfaces** whenever possible. While IPs listed in the **Node IP addresses** section will work, they are also more likely to change.
-            <Lightbox src="/img/docs/dbt-platform/redshiftprivatelink4.png" title="Target type: IP address"/>
+            - По возможности используйте IP-адреса из раздела **Network Interfaces** кластера Redshift. IP-адреса из раздела **Node IP addresses** тоже подойдут, но вероятность их изменения выше.
+            <Lightbox src="/img/docs/dbt-platform/redshiftprivatelink4.png" title="Тип цели: IP-адрес"/>
 
-            - There will likely be only one Network Interface (NI) to start, but if the cluster fails over to another availability zone (AZ), a new NI will also be created for that AZ. The NI IP from the original AZ will still work, but the new NI IP can also be added to the Target Group. If adding additional IPs, note that the NLB will also need to add the corresponding AZ. Once created, the NI(s) should stay the same (This is our observation from testing, but AWS does not officially document it).
+            - Изначально, скорее всего, будет только один сетевой интерфейс (NI), но если кластер переключится в другую зону доступности (AZ), для этой зоны также будет создан новый NI. IP-адрес NI из исходной зоны доступности продолжит работать, но IP-адрес нового NI тоже можно добавить в целевую группу. При добавлении дополнительных IP-адресов учтите, что соответствующую зону доступности также нужно добавить в NLB. После создания сетевые интерфейсы должны оставаться неизменными (это наше наблюдение по результатам тестирования, но AWS официально это не документирует).
 
         - **Redshift Serverless**
 
-            - To find the IP addresses for Redshift Serverless instance locate and copy the endpoint (only the URL listed before the port) in the Workgroup configuration section of the AWS console for the instance.
-            <Lightbox src="/img/docs/dbt-platform/redshiftserverless.png" title="Redshift Serverless endpoint"/>
+            - Чтобы найти IP-адреса экземпляра Redshift Serverless, найдите и скопируйте конечную точку (только URL, указанный до порта) в разделе Workgroup configuration консоли AWS для этого экземпляра.
+            <Lightbox src="/img/docs/dbt-platform/redshiftserverless.png" title="Конечная точка Redshift Serverless"/>
 
-            - From a command line run the command `nslookup <endpoint>` using the endpoint found in the previous step and use the associated IP(s) for the Target Group.
+            - Выполните в командной строке команду `nslookup <endpoint>`, используя конечную точку из предыдущего шага, и укажите полученные IP-адреса в целевой группе.
 
-    - Target Group protocol: **TCP** 
+    - Протокол целевой группы (Target Group protocol): **TCP** 
 
-- **Network Load Balancer (NLB)** &mdash; Requires creating a Listener that attaches to the newly created Target Group (port `5439`is the default)
+- **Network Load Balancer (NLB)** &mdash; необходимо создать прослушиватель (Listener), связанный с только что созданной целевой группой (порт по умолчанию — `5439`)
     - **Scheme:** Internal
     - **IP address type:** IPv4
-    - **Network mapping:** Choose the VPC that the VPC Endpoint Service and NLB are being deployed in, and choose subnets from at least two Availability Zones.
-    - **Security Groups:** The Network Load Balancer (NLB) associated with the VPC endpoint service must either not have an associated security group, or the security group must have a rule that allows requests from the appropriate <Constant name="dbt" /> **private CIDR(s)**. Note that _this is different_ than the static public IPs listed on the <Constant name="dbt" /> [Access, Regions, & IP addresses](/docs/platform/about-platform/access-regions-ip-addresses) page. dbt Support can provide the correct private CIDR(s) upon request. If necessary, until you can refine the rule to the smaller CIDR provided by dbt, allow connectivity by temporarily adding an allow rule of `10.0.0.0/8`.
-    - **Listeners:** Create one listener per target group that maps the appropriate incoming port to the corresponding target group ([details](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html)).
-- **VPC Endpoint Service** &mdash; Attach to the newly created NLB.
-    - Acceptance required (optional) &mdash; Requires you to [accept our connection request](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html#accept-reject-connection-requests) after dbt creates the endpoint.
+    - **Network mapping:** выберите VPC, в которой развёртываются сервис конечных точек VPC и NLB, и выберите подсети как минимум из двух зон доступности.
+    - **Security Groups:** у Network Load Balancer (NLB), связанного с сервисом конечных точек VPC, либо не должно быть связанной группы безопасности, либо в этой группе должно быть правило, разрешающее запросы из соответствующих **частных CIDR-диапазонов** <Constant name="dbt" />. Обратите внимание: _они отличаются_ от статических публичных IP-адресов, перечисленных на странице <Constant name="dbt" /> [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses). Служба поддержки dbt может предоставить нужные частные CIDR-диапазоны по запросу. При необходимости, пока вы не сможете сузить правило до меньшего CIDR-диапазона, предоставленного dbt, временно добавьте разрешающее правило для `10.0.0.0/8`, чтобы обеспечить подключение.
+    - **Listeners:** создайте по одному прослушивателю для каждой целевой группы, сопоставив соответствующий входящий порт с соответствующей целевой группой ([подробнее](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html)).
+- **Сервис конечных точек VPC (VPC Endpoint Service)** &mdash; свяжите его с только что созданным NLB.
+    - Acceptance required (необязательно) &mdash; требуется [принять наш запрос на подключение](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html#accept-reject-connection-requests) после того, как dbt создаст конечную точку.
 
 <PrivateLinkCrossZone features={'/snippets/_privatelink-cross-zone-load-balancing.md'}/>
 
-### 2. Grant dbt AWS account access to the VPC endpoint service
+### 2. Предоставьте аккаунту AWS dbt доступ к сервису конечных точек VPC
 
-On the provisioned VPC endpoint service, click the **Allow principals** tab. Click **Allow principals** to grant access. Enter the ARN of the root user in the appropriate production AWS account and save your changes.
+В созданном сервисе конечных точек VPC откройте вкладку **Allow principals**. Нажмите **Allow principals**, чтобы предоставить доступ. Введите ARN корневого пользователя соответствующего производственного аккаунта AWS и сохраните изменения.
 
  - Principal: `arn:aws:iam::346425330055:role/MTPL_Admin`
 
-<Lightbox src="/img/docs/dbt-platform/privatelink-allow-principals.png" title="Enter ARN"/>
+<Lightbox src="/img/docs/dbt-platform/privatelink-allow-principals.png" title="Ввод ARN"/>
 
-### 3. Obtain VPC endpoint service name
+### 3. Получите имя сервиса конечных точек VPC
 
-Once the VPC Endpoint Service is provisioned, you can find the service name in the AWS console by navigating to **VPC** → **Endpoint Services** and selecting the appropriate endpoint service. You can copy the service name field value and include it in your communication to <Constant name="dbt" /> support.
+После создания сервиса конечных точек VPC его имя можно найти в консоли AWS: перейдите в **VPC** → **Endpoint Services** и выберите соответствующий сервис конечных точек. Скопируйте значение поля имени сервиса и включите его в обращение в службу поддержки <Constant name="dbt" />.
 
-<Lightbox src="/img/docs/dbt-platform/privatelink-endpoint-service-name.png" title="Get service name field value"/>
+<Lightbox src="/img/docs/dbt-platform/privatelink-endpoint-service-name.png" title="Получение значения поля имени сервиса"/>
 
-### 4. Submit your request to dbt Support
-Add the required information to the template below and submit your request to [dbt Support](mailto:support@getdbt.com):
+### 4. Отправьте запрос в службу поддержки dbt
+Добавьте необходимые сведения в шаблон ниже и отправьте запрос в [службу поддержки dbt](mailto:support@getdbt.com):
 
-<Expandable alt_header="Support request email template" is_open={true}>
+<Expandable alt_header="Шаблон письма с запросом в службу поддержки" anchor_id="redshift-interface-endpoint-support-request" is_open={true}>
 
 ```text
 Subject: New Multi-Tenant PrivateLink Request
@@ -246,9 +246,9 @@ Subject: New Multi-Tenant PrivateLink Request
 
 <PrivateLinkSLA />
 
-## Create connection in dbt
+## Создание подключения в dbt {#create-connection-in-dbt}
 
-Once <Constant name="dbt" /> Support completes the configuration, you can start creating new connections using PrivateLink.
+После того как служба поддержки <Constant name="dbt" /> завершит настройку, вы сможете создавать новые подключения с использованием PrivateLink.
 
 <PrivateLinkCreateConnection platform="Redshift" />
 

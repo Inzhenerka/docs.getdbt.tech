@@ -142,7 +142,7 @@ dict_keys(['l_1_schema_project_evaluator', 'l_1_db_project_evaluator', 't_2', ..
 
 ### Использование отладчика для анализа переменных Jinja в dbt {#using-the-debugger-to-analyze-dbt-jinja-variables}
 
-Отладчик также можно использовать для исследования [встроенных переменных и функций Jinja, доступных в dbt](https://docs.getdbt.tech/reference/dbt-jinja-functions).
+Отладчик также можно использовать для исследования [встроенных переменных и функций Jinja, доступных в dbt](/reference/dbt-jinja-functions-context-variables).
 
 В моем коде я также смотрел на [объект результатов](https://docs.getdbt.tech/reference/dbt-jinja-functions/on-run-end-context#results), доступный в контексте `on-run-end`. Мы можем фактически увидеть его в предыдущем списке, названном `l_1_results`.
 

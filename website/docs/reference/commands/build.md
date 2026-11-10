@@ -72,15 +72,15 @@ dbt build --generate-info-schema --static-analysis strict
 
 <VersionBlock firstVersion="2.0">
 
-### The `--skip-checks` flag
+### Флаг `--skip-checks` {#the---skip-checks-flag}
 
-The `build` command supports `--skip-checks` to bypass the [checks](/docs/build/checks) gate.
+Флаг `--skip-checks` позволяет команде `build` пропустить обязательный этап [проверок](/docs/build/checks).
 
 ```shell
 dbt build --skip-checks
 ```
 
-To disable a single check rather than the entire gate, set `enabled: false` on that check's config:
+Чтобы отключить одну проверку, не пропуская весь этап, задайте в её конфигурации `enabled: false`:
 
 ```yaml
 checks:
@@ -141,7 +141,7 @@ Completed successfully
 
 Done. PASS=7 WARN=0 ERROR=0 SKIP=0 TOTAL=7
 ```
-## Functions {#functions}
+## Функции {#functions}
 _Доступно начиная с dbt Core v1.11 и в <Constant name="fusion_engine" />_
 
 ## Функции

@@ -173,7 +173,7 @@ dbt Core — это фантастическая платформа для ра�
 
 `dbt build –select result:error+ –defer –state <previous_state_artifacts>` … и это все!
 
-Вы можете увидеть больше примеров [здесь](https://docs.getdbt.tech/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci).
+Вы можете увидеть больше примеров [здесь](/best-practices/best-practice-workflows#run-only-modified-models-to-test-changes-slim-ci).
 
 Это означает, что независимо от того, активно ли вы разрабатываете или просто хотите повторно запустить запланированную задачу (из-за, скажем, ошибок разрешений или тайм-аутов в вашей базе данных), теперь у вас есть единый подход для выполнения обоих.
 
@@ -197,7 +197,7 @@ dbt Core — это фантастическая платформа для ра�
 
 #### Настройка Airflow и dbt Cloud {#setting-up-airflow-and-dbt-cloud}
 
-Чтобы настроить Airflow и dbt Cloud, вы можете следовать пошаговым инструкциям: [здесь](https://docs.getdbt.tech/guides/orchestration/airflow-and-dbt-cloud/2-setting-up-airflow-and-dbt-cloud)
+Чтобы настроить Airflow и dbt Cloud, вы можете следовать пошаговым инструкциям: [здесь](/guides/airflow-and-dbt-cloud)
 
 Если ваша задача выдает ошибку или завершается сбоем в любом из вышеупомянутых случаев использования, вы можете просмотреть логи в dbt Cloud (подумайте: инженеры данных могут доверять аналитикам для решения ошибок).
 

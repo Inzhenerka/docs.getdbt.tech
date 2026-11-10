@@ -1,17 +1,17 @@
 ---
-title: "Configuring deferral in dbt State"
-sidebar_label: "Configure deferral"
-description: "Configure which environment dbt State defers to, and use dbt State as the comparison source for state:* selectors in self-managed deployments."
+title: "Настройка отложенного разрешения ссылок в dbt State"
+sidebar_label: "Настройка отложенного разрешения ссылок"
+description: "Настройте среду, к которой dbt State обращается при отложенном разрешении ссылок, и используйте dbt State как источник сравнения для селекторов state:* в самостоятельно управляемых развертываниях."
 id: "dbt-state-deferral"
 tags: ['dbt State'] 
 availability: everywhere_usage
 ---
 
-# Configuring deferral in dbt State
+# Настройка отложенного разрешения ссылок в dbt State
 
-By default, dbt State defers to your production environment. You only need to configure this if you want to change that behavior:
+По умолчанию dbt State использует вашу производственную среду для отложенного разрешения ссылок. Настройка требуется только в том случае, если вы хотите изменить это поведение:
 
-- **<Constant name="dbt_platform" />**: To defer to an environment other than the default (for example, staging), add `defer-env-id` to the `dbt-cloud` block in `dbt_project.yml`. Refer to [Configure the <Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) for more information.
+- **<Constant name="dbt_platform" />**: Чтобы использовать для отложенного разрешения ссылок среду, отличную от среды по умолчанию (например, staging), добавьте `defer-env-id` в блок `dbt-cloud` в `dbt_project.yml`. Подробнее см. в разделе [Настройка <Constant name="platform_cli" />](/docs/platform/dbt-cli-installation).
 
   <File name="dbt_project.yml">
 
@@ -24,10 +24,10 @@ By default, dbt State defers to your production environment. You only need to co
   </File>
 
   :::note
-  `defer-env-id` is manifest-based. If you set it, [dbt State-powered `state:*` selectors](#dbt-state-powered-state-selectors) are disabled. Refer to that section's requirements for more information.
+  `defer-env-id` использует манифест. Если задать этот параметр, [селекторы `state:*` на основе dbt State](#dbt-state-powered-state-selectors) будут отключены. Дополнительную информацию см. в требованиях в соответствующем разделе.
   :::
 
-- **Self-managed deployments**: If you can't access a production or deployment manifest, you can set [`defer_to_target`](/reference/resource-configs/defer-to-target) in `profiles.yml` for best-effort auto-deferral. Note that this approach has known limitations; refer to [Caveats to dbt State without a manifest](/reference/resource-configs/defer-to-target#caveats-to-dbt-state-without-a-manifest).
+- **Самостоятельно управляемые развертывания**: Если у вас нет доступа к манифесту производственной среды или среды развертывания, можно задать [`defer_to_target`](/reference/resource-configs/defer-to-target) в `profiles.yml` для автоматического отложенного разрешения ссылок по мере возможности. Обратите внимание, что у этого подхода есть известные ограничения; см. раздел [Ограничения dbt State при работе без манифеста](/reference/resource-configs/defer-to-target#caveats-to-dbt-state-without-a-manifest).
 
   <File name="profiles.yml">
 
@@ -42,24 +42,24 @@ By default, dbt State defers to your production environment. You only need to co
 
   </File>
 
-  In self-managed deployments, you can use [dbt State-powered `state:*` selectors](#dbt-state-powered-state-selectors), which compare each node against its own last execution rather than a single job's `manifest.json`. To use this feature, connect your project to the <Constant name="dbt_platform" />.
+  В самостоятельно управляемых развертываниях можно использовать [селекторы `state:*` на основе dbt State](#dbt-state-powered-state-selectors), которые сравнивают каждый узел с его собственным последним выполнением, а не с `manifest.json` отдельного задания. Чтобы использовать эту возможность, подключите проект к <Constant name="dbt_platform" />.
 
-You can also pass `--state` or `--defer-state` to explicitly point dbt State to a specific `manifest.json`.
+Также можно передать `--state` или `--defer-state`, чтобы явно указать dbt State конкретный файл `manifest.json`.
 
 :::note
-If you've overridden `generate_*_name()` macros with runtime values (such as environment variables, file paths, or dates), provide a `manifest.json` file so dbt State can locate objects correctly. Without one, it infers object locations from your macros and profile target, which may be incorrect in these cases. Refer to [Caveats to dbt State without a manifest](/reference/resource-configs/defer-to-target#caveats-to-dbt-state-without-a-manifest).
+Если вы переопределили макросы `generate_*_name()`, используя значения времени выполнения (например, переменные окружения, пути к файлам или даты), предоставьте файл `manifest.json`, чтобы dbt State мог корректно определять расположение объектов. Без этого файла расположение объектов определяется по вашим макросам и целевой конфигурации профиля, что в таких случаях может приводить к ошибкам. См. раздел [Ограничения dbt State при работе без манифеста](/reference/resource-configs/defer-to-target#caveats-to-dbt-state-without-a-manifest).
 :::
 
-## dbt State-powered `state:*` selectors <Lifecycle status="beta" /> {#dbt-state-powered-state-selectors}
+## Селекторы `state:*` на основе dbt State <Lifecycle status="beta" /> {#dbt-state-powered-state-selectors}
 
-When dbt State is enabled, [`state:*` selectors](/reference/node-selection/methods#state) can use dbt State as their comparison source instead of a single `manifest.json` from the most recent job run. Each node (models, snapshots, seeds, and tests) is compared against its own last execution in the [`defer_to_target`](/reference/resource-configs/defer-to-target) environment (default: `prod`), so a node is only selected as modified if its own logic changed, no matter which job last ran it.
+Когда dbt State включен, [селекторы `state:*`](/reference/node-selection/methods#state) могут использовать dbt State как источник сравнения вместо отдельного файла `manifest.json` из последнего запуска задания. Каждый узел (модели, снимки, seed-файлы и тесты) сравнивается со своим собственным последним выполнением в среде [`defer_to_target`](/reference/resource-configs/defer-to-target) (по умолчанию: `prod`), поэтому узел выбирается как измененный только в том случае, если изменилась его собственная логика, независимо от того, какое задание выполняло его последним.
 
-This feature is for **self-managed deployments**, meaning you orchestrate dbt runs yourself (for example, with Airflow or GitHub Actions) rather than with <Constant name="dbt_platform" /> jobs. You still authenticate to the <Constant name="dbt_platform" /> for dbt State using `project-id`.
+Эта возможность предназначена для **самостоятельно управляемых развертываний**: вы самостоятельно организуете запуски dbt (например, с помощью Airflow или GitHub Actions), а не используете задания <Constant name="dbt_platform" />. При этом для работы с dbt State по-прежнему требуется аутентификация в <Constant name="dbt_platform" /> с использованием `project-id`.
 
-### Prerequisites
+### Предварительные требования
 
-- dbt State is enabled for your project.
-- `project-id` is set in the `dbt-cloud` block in `dbt_project.yml`:
+- Для вашего проекта включен dbt State.
+- В блоке `dbt-cloud` в `dbt_project.yml` задан `project-id`:
 
 <File name="dbt_project.yml">
 
@@ -71,14 +71,14 @@ dbt-cloud:
 </File>
 
 :::note
-When orchestrating with the <Constant name="dbt_platform" />, each job produces a `manifest.json`, so dbt State uses that for `state:*` comparisons instead of per-node execution history.
+При оркестрации с помощью <Constant name="dbt_platform" /> каждое задание создает `manifest.json`, поэтому dbt State использует его для сравнений `state:*` вместо истории выполнения отдельных узлов.
 :::
 
-## Specify your project or org
+## Укажите проект или организацию
 
-If you have multiple projects or orgs that use dbt State, configure the `dbt-cloud` block in `dbt_project.yml` so dbt State knows which one to use:
+Если у вас несколько проектов или организаций, использующих dbt State, настройте блок `dbt-cloud` в `dbt_project.yml`, чтобы dbt State знал, какой проект или какую организацию использовать:
 
-- **For <Constant name="dbt_platform" /> users with multiple projects**: Add `project-id` to identify which project dbt State should use.
+- **Для пользователей <Constant name="dbt_platform" /> с несколькими проектами**: Добавьте `project-id`, чтобы указать, какой проект должен использовать dbt State.
 
   <File name="dbt_project.yml">
 
@@ -89,7 +89,7 @@ If you have multiple projects or orgs that use dbt State, configure the `dbt-clo
 
   </File>
 
-- **For self-managed deployments with multiple dbt State orgs**: Add `state-org-id` to identify which org dbt State should use.
+- **Для самостоятельно управляемых развертываний с несколькими организациями dbt State**: Добавьте `state-org-id`, чтобы указать, какую организацию должен использовать dbt State.
 
   <File name="dbt_project.yml">
 
@@ -100,9 +100,9 @@ If you have multiple projects or orgs that use dbt State, configure the `dbt-clo
 
   </File>
 
-## Related docs
+## Связанная документация
 
-- [Defer in dbt](/docs/platform/about-defer)
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
+- [Отложенное разрешение ссылок в dbt](/docs/platform/about-defer)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Параметры конфигурации dbt State](/reference/resource-configs/dbt-state-configs)

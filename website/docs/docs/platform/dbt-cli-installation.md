@@ -1,8 +1,8 @@
 ---
-title: Install the dbt platform CLI 
-sidebar_label: "Installation"
+title: Установка CLI платформы dbt
+sidebar_label: "Установка"
 id: dbt-cli-installation
-description: "Instructions for installing and configuring dbt platform's CLI tool."
+description: "Инструкции по установке и настройке инструмента CLI платформы dbt."
 pagination_next: "docs/platform/configure-dbt-cli"
 availability:
   surface: platform
@@ -11,59 +11,57 @@ availability:
 
 import LongSession from '/snippets/_long-sessions-cli.md';
 
-The <Constant name="dbt_platform" /> natively supports developing using a command line interface (CLI), empowering team members to contribute with enhanced flexibility and collaboration. The <Constant name="platform_cli" /> allows you to run dbt commands against your <Constant name="dbt_platform" /> development environment from your local command line.
+<Constant name="dbt_platform" /> поддерживает разработку с помощью интерфейса командной строки (CLI), предоставляя участникам команды больше гибкости и возможностей для совместной работы. <Constant name="platform_cli" /> позволяет выполнять команды dbt в среде разработки <Constant name="dbt_platform" /> из локальной командной строки.
 
-:::note CLI compatibility
+:::note Совместимость CLI
 
-The <Constant name="platform_cli" /> is a <Constant name="dbt_platform" /> tool available to users on any [plan](https://www.getdbt.com/pricing). It is intended for use only with the <Constant name="dbt_platform" /> and may conflict with self-hosted installations of the <Constant name="core" /> or <Constant name="fusion_engine" /> CLIs. Refer to the [FAQs](#faqs) for more information.
+<Constant name="platform_cli" /> — это инструмент <Constant name="dbt_platform" />, доступный пользователям на любом [тарифном плане](https://www.getdbt.com/pricing). Он предназначен исключительно для работы с <Constant name="dbt_platform" /> и может конфликтовать с локальными установками CLI <Constant name="core" /> или <Constant name="fusion_engine" />. Подробнее см. в разделе [FAQs](#faqs).
 
 :::
 
-dbt commands run against the platform's infrastructure and benefit from:
+Команды dbt выполняются в инфраструктуре платформы, что обеспечивает следующие преимущества:
 
-* Secure credential storage in the <Constant name="dbt_platform" />
-* [Automatic deferral](/docs/platform/about-defer) of build artifacts to your project's production environment 
-* Speedier, lower-cost builds
-* Support for dbt Mesh ([cross-project `ref`](/docs/mesh/govern/project-dependencies))
+* Безопасное хранение учетных данных в <Constant name="dbt_platform" />
+* [Автоматическое использование артефактов сборки](/docs/platform/about-defer) из производственной среды вашего проекта
+* Более быстрые сборки с меньшими затратами
+* Поддержка dbt Mesh ([межпроектные ссылки `ref`](/docs/mesh/govern/project-dependencies))
 
-<Lightbox src="/img/docs/dbt-platform/dbt-cli-overview.png" title="Diagram of how the dbt platform CLI works with dbt's infrastructure to run dbt commands from your local command line." />
+<Lightbox src="/img/docs/dbt-platform/dbt-cli-overview.png" title="Схема взаимодействия CLI платформы dbt с инфраструктурой dbt для выполнения команд dbt из локальной командной строки." />
 
-## Prerequisites
+## Предварительные требования
 
-The <Constant name="platform_cli" /> is available in all [deployment regions](/docs/platform/about-platform/access-regions-ip-addresses) and for both multi-tenant and single-tenant accounts.
-- If you installed the <Constant name="core" /> CLI in a virtual environment, deactivate that environment or create an alias for the platform CLI before you run platform CLI commands.
-- If you installed dbt locally, create an alias for the platform CLI before you run platform CLI commands.
+<Constant name="platform_cli" /> доступен во всех [регионах развертывания](/docs/platform/about-platform/access-regions-ip-addresses) как для мультитенантных, так и для однотенантных учетных записей.
+- Если вы установили CLI <Constant name="core" /> в виртуальной среде, деактивируйте ее или создайте псевдоним для CLI платформы, прежде чем выполнять команды CLI платформы.
+- Если вы установили dbt локально, создайте псевдоним для CLI платформы, прежде чем выполнять команды CLI платформы.
 
-Refer to the [FAQs](#faqs) for more information about managing multiple <Constant name="platform_cli" /> tools and creating an alias.
+Подробнее об управлении несколькими инструментами <Constant name="platform_cli" /> и создании псевдонима см. в разделе [FAQs](#faqs).
 
-:::tip Using the <Constant name="dbt_platform"/> CLI for hybrid development with <Constant name="fusion"/>?
-See the [Hybrid development with <Constant name="dbt_platform"/> and <Constant name="fusion"/>](/guides/dbt-platform-local-workflow) guide to keep credentials, environment variables, and <Constant name="fusion"/> versions in sync across your local CLI and the <Constant name="dbt_platform"/>.
+:::tip Используете CLI <Constant name="dbt_platform"/> для гибридной разработки с <Constant name="fusion"/>?
+См. руководство [Гибридная разработка с <Constant name="dbt_platform"/> и <Constant name="fusion"/>](/guides/dbt-platform-local-workflow), чтобы синхронизировать учетные данные, переменные окружения и версии <Constant name="fusion"/> между локальным CLI и <Constant name="dbt_platform"/>.
 :::
 
 
-<a id="install-dbt-cloud-cli" />
+## Установка CLI платформы dbt {#install-dbt-cloud-cli}
 
-## Install dbt platform CLI
-
-You can install the <Constant name="platform_cli" /> via the command line by using one of the following methods: 
+Вы можете установить <Constant name="platform_cli" /> через командную строку одним из следующих способов:
 
 <Tabs queryString="install">
 
 <TabItem value="brew" label="macOS (brew)">
 
-Before you begin, make sure you have [Homebrew installed](http://brew.sh/) in your code editor or command line terminal. Refer to the [FAQs](#faqs) if your operating system runs into path conflicts. 
+Перед началом убедитесь, что [Homebrew установлен](http://brew.sh/) и доступен в вашем редакторе кода или терминале командной строки. Если в вашей операционной системе возникают конфликты путей, см. раздел [FAQs](#faqs).
 
-1. Verify that you don't already have <Constant name="dbt" /> installed by running the following command:
+1. Убедитесь, что <Constant name="dbt" /> еще не установлен, выполнив следующую команду:
   
   ```bash
   which dbt
   ```
   
-  If the output is `dbt not found`, then that confirms you don't have it installed.
+  Если выводится `dbt not found`, это подтверждает, что он не установлен.
 
-:::tip Run `pip uninstall dbt` to uninstall <Constant name="core" />
+:::tip Выполните `pip uninstall dbt`, чтобы удалить <Constant name="core" />
 
-If you've installed <Constant name="core" /> globally in some other way, uninstall it first before proceeding:
+Если вы установили <Constant name="core" /> глобально каким-либо другим способом, удалите его, прежде чем продолжить:
 
 ```bash
 pip uninstall dbt
@@ -71,75 +69,75 @@ pip uninstall dbt
 
 :::
 
-2. Install the <Constant name="platform_cli" /> with Homebrew:
+2. Установите <Constant name="platform_cli" /> с помощью Homebrew:
 
-   - First, remove the `dbt-labs` tap, the separate repository for packages, from Homebrew. This prevents Homebrew from installing packages from that repository:
+   - Сначала удалите из Homebrew tap `dbt-labs` — отдельный репозиторий пакетов. Это предотвратит установку пакетов из этого репозитория через Homebrew:
       ```bash
       brew untap dbt-labs/dbt
       ```
-   - Then, add and install the <Constant name="platform_cli" /> as a package:
+   - Затем добавьте и установите <Constant name="platform_cli" /> как пакет:
       ```bash
       brew tap dbt-labs/dbt-cli
       brew install dbt
       ```
-      If you have multiple taps, use `brew install dbt-labs/dbt-cli/dbt`.
+      Если у вас подключено несколько tap-репозиториев, используйте `brew install dbt-labs/dbt-cli/dbt`.
 
-3. Verify your installation by running `dbt --help` in the command line. If you see the following output, you installed it correctly:
+3. Проверьте установку, выполнив `dbt --help` в командной строке. Если вы видите следующий вывод, установка выполнена правильно:
       ```bash
       The dbt CLI - an ELT tool for running SQL transformations and data models in dbt...
       ```
 
-     If you don't see this output, check that you've deactivated pyenv or venv and don't have a global dbt version installed.
+     Если вы не видите этот вывод, убедитесь, что вы деактивировали pyenv или venv и что у вас нет глобально установленной версии dbt.
    
-   * Note that you no longer need to run the `dbt deps` command when your environment starts. Previously, initialization required this step. However, you should still run `dbt deps` if you make any changes to your `packages.yml` file.
+   * Обратите внимание: при запуске среды больше не нужно выполнять команду `dbt deps`. Раньше этот шаг требовался для инициализации. Однако при любых изменениях в файле `packages.yml` по-прежнему необходимо выполнять `dbt deps`.
 
-4. Clone your repository to your local computer using `git clone`. For example, to clone a GitHub repo using HTTPS format, run `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
+4. Клонируйте репозиторий на локальный компьютер с помощью `git clone`. Например, чтобы клонировать репозиторий GitHub по HTTPS, выполните `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
 
-5. After cloning your repo, [configure](/docs/platform/configure-dbt-cli) the <Constant name="platform_cli" /> for your <Constant name="dbt" /> project. This lets you run dbt commands like [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) to view your <Constant name="dbt" /> configuration or `dbt compile` to compile your project and validate models and tests. You can also add, edit, and synchronize files with your repo.
+5. После клонирования репозитория [настройте](/docs/platform/configure-dbt-cli) <Constant name="platform_cli" /> для своего проекта <Constant name="dbt" />. Это позволит выполнять команды dbt, например [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) для просмотра конфигурации <Constant name="dbt" /> или `dbt compile` для компиляции проекта и проверки моделей и тестов. Вы также сможете добавлять, редактировать и синхронизировать файлы с репозиторием.
 
 </TabItem>
 
-<TabItem value="windows" label="Windows (native executable)">
+<TabItem value="windows" label="Windows (нативный исполняемый файл)">
 
-Refer to the [FAQs](#faqs) if your operating system runs into path conflicts.
+Если в вашей операционной системе возникают конфликты путей, см. раздел [FAQs](#faqs).
 
-1. Download the latest Windows release for your platform from [GitHub](https://github.com/dbt-labs/dbt-cli/releases).
+1. Загрузите последнюю версию для Windows, соответствующую вашей платформе, с [GitHub](https://github.com/dbt-labs/dbt-cli/releases).
 
-2. Extract the `dbt.exe` executable into the same folder as your dbt project.
+2. Извлеките исполняемый файл `dbt.exe` в ту же папку, где находится ваш проект dbt.
 
 :::info
 
-Advanced users can configure multiple projects to use the same <Constant name="platform_cli" /> by:
+Опытные пользователи могут настроить несколько проектов для работы с одним и тем же <Constant name="platform_cli" /> следующим образом:
 
- 1. Placing the executable file (`.exe`) in the "Program Files" folder
- 2. [Adding it to their Windows PATH environment variable](https://medium.com/@kevinmarkvi/how-to-add-executables-to-your-path-in-windows-5ffa4ce61a53)
- 3. Saving it where needed
+ 1. Поместите исполняемый файл (`.exe`) в папку "Program Files"
+ 2. [Добавьте его в переменную окружения PATH в Windows](https://medium.com/@kevinmarkvi/how-to-add-executables-to-your-path-in-windows-5ffa4ce61a53)
+ 3. Сохраните его там, где необходимо
 
-Note that if you're using VS Code, you must restart it to pick up modified environment variables.
+Обратите внимание: если вы используете VS Code, его необходимо перезапустить, чтобы изменения переменных окружения вступили в силу.
 :::
 
-4. Verify your installation by running `./dbt --help` in the command line. If you see the following output, you installed it correctly:
+4. Проверьте установку, выполнив `./dbt --help` в командной строке. Если вы видите следующий вывод, установка выполнена правильно:
       ```bash
       The dbt CLI - an ELT tool for running SQL transformations and data models in dbt...
       ```
 
-     If you don't see this output, check that you've deactivated pyenv or venv and don't have a global dbt version installed.
+     Если вы не видите этот вывод, убедитесь, что вы деактивировали pyenv или venv и что у вас нет глобально установленной версии dbt.
 
-   * Note that you no longer need to run the `dbt deps` command when your environment starts. Previously, initialization required this step. However, you should still run `dbt deps` if you make any changes to your `packages.yml` file.
+   * Обратите внимание: при запуске среды больше не нужно выполнять команду `dbt deps`. Раньше этот шаг требовался для инициализации. Однако при любых изменениях в файле `packages.yml` по-прежнему необходимо выполнять `dbt deps`.
 
-5. Clone your repository to your local computer using `git clone`. For example, to clone a GitHub repo using HTTPS format, run `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
+5. Клонируйте репозиторий на локальный компьютер с помощью `git clone`. Например, чтобы клонировать репозиторий GitHub по HTTPS, выполните `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
 
-6. After cloning your repo, [configure](/docs/platform/configure-dbt-cli) the <Constant name="platform_cli" /> for your <Constant name="dbt" /> project. This lets you run dbt commands like [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) to view your <Constant name="dbt" /> configuration or `dbt compile` to compile your project and validate models and tests. You can also add, edit, and synchronize files with your repo.
+6. После клонирования репозитория [настройте](/docs/platform/configure-dbt-cli) <Constant name="platform_cli" /> для своего проекта <Constant name="dbt" />. Это позволит выполнять команды dbt, например [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) для просмотра конфигурации <Constant name="dbt" /> или `dbt compile` для компиляции проекта и проверки моделей и тестов. Вы также сможете добавлять, редактировать и синхронизировать файлы с репозиторием.
 
 </TabItem>
 
-<TabItem value="linux" label="Linux (native executable)">
+<TabItem value="linux" label="Linux (нативный исполняемый файл)">
 
-Refer to the [FAQs](#faqs) if your operating system runs into path conflicts.
+Если в вашей операционной системе возникают конфликты путей, см. раздел [FAQs](#faqs).
 
-1. Download the latest Linux release for your platform from [GitHub](https://github.com/dbt-labs/dbt-cli/releases). (Pick the file based on your CPU architecture)
+1. Загрузите последнюю версию для Linux, соответствующую вашей платформе, с [GitHub](https://github.com/dbt-labs/dbt-cli/releases). (Выберите файл в соответствии с архитектурой процессора)
 
-2. Extract the `dbt-cli` binary to the same folder as your dbt project.
+2. Извлеките бинарный файл `dbt-cli` в ту же папку, где находится ваш проект dbt.
 
   ```bash
   tar -xf dbt_0.29.9_linux_amd64.tar.gz
@@ -148,56 +146,56 @@ Refer to the [FAQs](#faqs) if your operating system runs into path conflicts.
 
 :::info
 
-Advanced users can configure multiple projects to use the same <Constant name="platform_cli" /> executable by adding it to their PATH environment variable in their shell profile.
+Опытные пользователи могут настроить несколько проектов для работы с одним и тем же исполняемым файлом <Constant name="platform_cli" />, добавив его в переменную окружения PATH в файле профиля командной оболочки.
 
 :::
 
-3. Verify your installation by running `./dbt --help` in the command line. If you see the following output, you installed it correctly:
+3. Проверьте установку, выполнив `./dbt --help` в командной строке. Если вы видите следующий вывод, установка выполнена правильно:
       ```bash
       The dbt CLI - an ELT tool for running SQL transformations and data models in dbt...
       ```
 
-     If you don't see this output, check that you've deactivated pyenv or venv and don't have a global dbt version installed.
+     Если вы не видите этот вывод, убедитесь, что вы деактивировали pyenv или venv и что у вас нет глобально установленной версии dbt.
    
-   * Note that you no longer need to run the `dbt deps` command when your environment starts. Previously, initialization required this step. However, you should still run `dbt deps` if you make any changes to your `packages.yml` file.
+   * Обратите внимание: при запуске среды больше не нужно выполнять команду `dbt deps`. Раньше этот шаг требовался для инициализации. Однако при любых изменениях в файле `packages.yml` по-прежнему необходимо выполнять `dbt deps`.
 
-4. Clone your repository to your local computer using `git clone`. For example, to clone a GitHub repo using HTTPS format, run `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
+4. Клонируйте репозиторий на локальный компьютер с помощью `git clone`. Например, чтобы клонировать репозиторий GitHub по HTTPS, выполните `git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY`.
 
-5. After cloning your repo, [configure](/docs/platform/configure-dbt-cli) the <Constant name="platform_cli" /> for your <Constant name="dbt" /> project. This lets you run dbt commands like [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) to view your <Constant name="dbt" /> configuration or `dbt compile` to compile your project and validate models and tests. You can also add, edit, and synchronize files with your repo.
+5. После клонирования репозитория [настройте](/docs/platform/configure-dbt-cli) <Constant name="platform_cli" /> для своего проекта <Constant name="dbt" />. Это позволит выполнять команды dbt, например [`dbt environment show`](/reference/commands/dbt-environment?version=2.0) для просмотра конфигурации <Constant name="dbt" /> или `dbt compile` для компиляции проекта и проверки моделей и тестов. Вы также сможете добавлять, редактировать и синхронизировать файлы с репозиторием.
 
 </TabItem>
 
 </Tabs>
 
-## Update dbt platform CLI
+## Обновление CLI платформы dbt
 
-The following instructions explain how to update the <Constant name="platform_cli" /> to the latest version depending on your operating system.
+Ниже приведены инструкции по обновлению <Constant name="platform_cli" /> до последней версии в зависимости от вашей операционной системы.
 
 
 <Tabs>
 
 <TabItem value="mac" label="macOS (brew)">
 
-To update the <Constant name="platform_cli" />, run `brew update` and then `brew upgrade dbt`.
+Чтобы обновить <Constant name="platform_cli" />, выполните `brew update`, а затем `brew upgrade dbt`.
 
 </TabItem>
 
-<TabItem value="windows" label="Windows (executable)">
+<TabItem value="windows" label="Windows (исполняемый файл)">
 
-To update, follow the [Windows installation instructions](/docs/platform/dbt-cli-installation?install=windows#install-dbt-cloud-cli) and replace the existing `dbt.exe` executable with the new one.
+Для обновления следуйте [инструкциям по установке для Windows](/docs/platform/dbt-cli-installation?install=windows#install-dbt-cloud-cli) и замените существующий исполняемый файл `dbt.exe` новым.
 
 </TabItem>
 
-<TabItem value="linux" label="Linux (executable)">
+<TabItem value="linux" label="Linux (исполняемый файл)">
 
-To update, follow the [Linux installation instructions](/docs/platform/dbt-cli-installation?install=linux#install-dbt-cloud-cli) and replace the existing `dbt` executable with the new one.
+Для обновления следуйте [инструкциям по установке для Linux](/docs/platform/dbt-cli-installation?install=linux#install-dbt-cloud-cli) и замените существующий исполняемый файл `dbt` новым.
 
 </TabItem>
 
 </Tabs>
   
   
-## Considerations
+## Особенности использования
 
 import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
@@ -205,58 +203,57 @@ import CloudCliRelativePath from '/snippets/_cloud-cli-relative-path.md';
 
 ## FAQs
 
-<DetailsToggle alt_header="What's the difference between the dbt platform CLI and dbt?">
+<DetailsToggle alt_header="В чем разница между CLI платформы dbt и dbt?">
 
-The <Constant name="platform_cli" /> and <a href="https://github.com/dbt-labs/dbt"><Constant name="dbt" /></a>, an open-source project, are both command line tools that enable you to run dbt commands. 
+<Constant name="platform_cli" /> и <a href="https://github.com/dbt-labs/dbt"><Constant name="dbt" /></a>, проект с открытым исходным кодом, — это инструменты командной строки, позволяющие выполнять команды dbt.
 
-The key distinction is that the <Constant name="platform_cli" /> is tailored for the <Constant name="dbt_platform" />'s infrastructure and integrates with all its <a href="https://docs.getdbt.com/docs/platform/about-platform/dbt-platform-features">features</a>.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="How do I run both the dbt platform CLI and dbt?">
-
-For compatibility, both the <Constant name="platform_cli" /> and <Constant name="dbt" /> are invoked by running `dbt`. This can create path conflicts if your operating system selects one over the other based on your $PATH environment variable (settings).
-
-If you have <Constant name="dbt" /> installed locally, either:
-
-1. Install natively, ensuring you either deactivate the virtual environment containing <Constant name="core" /> or create an alias for the <Constant name="platform_cli" />. 
-2. (Advanced users) Install natively, but modify the $PATH environment variable to correctly point to the <Constant name="platform_cli" /> binary to use both <Constant name="platform_cli" /> and <Constant name="dbt" /> together.
-
-You can always uninstall the <Constant name="platform_cli" /> to return to using <Constant name="dbt" />.
+Ключевое отличие заключается в том, что <Constant name="platform_cli" /> разработан специально для инфраструктуры <Constant name="dbt_platform" /> и интегрирован со всеми ее <a href="https://docs.getdbt.com/docs/platform/about-platform/dbt-platform-features">возможностями</a>.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="How to create an alias?">
+<DetailsToggle alt_header="Как использовать и CLI платформы dbt, и dbt?">
 
-To create an alias for the <Constant name="platform_cli" />: <br />
+Для совместимости и <Constant name="platform_cli" />, и <Constant name="dbt" /> запускаются командой `dbt`. Это может приводить к конфликтам путей, если операционная система выбирает один из инструментов на основе настроек переменной окружения $PATH.
 
-1. Open your shell's profile configuration file. Depending on your shell and system, this could be `~/.bashrc`, `~/.bash_profile`, `~/.zshrc`, or another file.<br />
+Если у вас локально установлен <Constant name="dbt" />, выберите один из вариантов:
 
-2. Add an alias that points to the <Constant name="platform_cli" /> binary. For example: <code>alias dbt-cli="path_to_dbt_cli_binary"</code>
+1. Выполните нативную установку, предварительно деактивировав виртуальную среду с <Constant name="core" /> или создав псевдоним для <Constant name="platform_cli" />.
+2. (Для опытных пользователей) Выполните нативную установку, но измените переменную окружения $PATH так, чтобы она корректно указывала на бинарный файл <Constant name="platform_cli" /> и позволяла использовать <Constant name="platform_cli" /> и <Constant name="dbt" /> вместе.
+
+Вы всегда можете удалить <Constant name="platform_cli" />, чтобы вернуться к использованию <Constant name="dbt" />.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Как создать псевдоним?">
+
+Чтобы создать псевдоним для <Constant name="platform_cli" />: <br />
+
+1. Откройте файл конфигурации профиля вашей командной оболочки. В зависимости от оболочки и системы это может быть `~/.bashrc`, `~/.bash_profile`, `~/.zshrc` или другой файл.<br />
+
+2. Добавьте псевдоним, указывающий на бинарный файл <Constant name="platform_cli" />. Например: <code>alias dbt-cli="path_to_dbt_cli_binary"</code>
    
-   Replace <code>path_to_dbt_cli_binary</code> with the actual path to the <Constant name="platform_cli" /> binary, which is <code>/opt/homebrew/bin/dbt</code>. With this alias, you can use the command <code>dbt-cli</code> to invoke the <Constant name="platform_cli" />.<br />
+   Замените <code>path_to_dbt_cli_binary</code> фактическим путем к бинарному файлу <Constant name="platform_cli" /> — <code>/opt/homebrew/bin/dbt</code>. С этим псевдонимом вы сможете использовать команду <code>dbt-cli</code> для запуска <Constant name="platform_cli" />.<br />
 
-3. Save the file and then either restart your shell or run <code>source</code> on the profile file to apply the changes.
-   For example, in bash you would run: <code>source ~/.bashrc</code><br />
+3. Сохраните файл, а затем перезапустите командную оболочку или выполните <code>source</code> для файла профиля, чтобы применить изменения.
+   Например, в bash нужно выполнить: <code>source ~/.bashrc</code><br />
 
-4. Test and use the alias to run commands:<br />
-   - To run the <Constant name="platform_cli" />, use the <code>dbt-cli</code> command: <code>dbt-cli command_name</code>. Replace 'command_name' with the specific dbt command you want to execute.<br />
-   - To run <Constant name="dbt" />, use the <code>dbt</code> command: <code>dbt command_name</code>. Replace 'command_name' with the specific dbt command you want to execute.<br />
+4. Проверьте псевдоним и используйте его для выполнения команд:<br />
+   - Для запуска <Constant name="platform_cli" /> используйте команду <code>dbt-cli</code>: <code>dbt-cli command_name</code>. Замените 'command_name' конкретной командой dbt, которую хотите выполнить.<br />
+   - Для запуска <Constant name="dbt" /> используйте команду <code>dbt</code>: <code>dbt command_name</code>. Замените 'command_name' конкретной командой dbt, которую хотите выполнить.<br />
 
 
-You can then use the <code>dbt-cli</code> command to invoke the <Constant name="platform_cli" /> while you keep <Constant name="dbt" /> installed natively.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="Why am I receiving a `Stuck session` error when trying to run a new command?">
-
-The <Constant name="platform_cli" /> allows only one command that writes to the data warehouse at a time. If you attempt to run multiple write commands simultaneously (for example, `dbt run` and `dbt build`), you will encounter a `stuck session` error. To resolve this, cancel the specific invocation by passing its ID to the cancel command. For more information, refer to [parallel execution](/reference/dbt-commands#parallel-execution).
+После этого вы сможете использовать команду <code>dbt-cli</code> для запуска <Constant name="platform_cli" />, сохраняя нативную установку <Constant name="dbt" />.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="I'm getting a `Session occupied` error in dbt platform CLI?">
+<DetailsToggle alt_header="Почему при попытке выполнить новую команду возникает ошибка `Stuck session`?">
+
+<Constant name="platform_cli" /> позволяет одновременно выполнять только одну команду, записывающую данные в хранилище данных. Если вы попытаетесь одновременно выполнить несколько команд записи (например, `dbt run` и `dbt build`), возникнет ошибка `stuck session`. Чтобы устранить ее, отмените конкретный запуск, передав его идентификатор команде отмены. Подробнее см. в разделе [Параллельное выполнение](/reference/dbt-commands#parallel-execution).
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Что делать, если в CLI платформы dbt возникает ошибка `Session occupied`?">
 
 <LongSession />
 
 </DetailsToggle>
-  

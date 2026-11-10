@@ -244,7 +244,7 @@ availability:
 
   </Expandable>
 
-## September 2023 {#september-2023}
+## Сентябрь 2023 {#september-2023}
 
 - <Expandable alt_header='Обновления CI'>
 
@@ -340,7 +340,7 @@ availability:
 
 ## Август 2023 {#august-2023}
 
-- <Expandable alt_header='Deprecation of endpoints in the Discovery API'>
+- <Expandable alt_header='Прекращение поддержки конечных точек Discovery API'>
 
   dbt Labs уже объявила некоторые шаблоны запросов устаревшими и продолжит этот процесс, заменяя их новыми подходами для повышения производительности [Discovery API](/docs/dbt-apis/discovery-api) в dbt Cloud.
 
@@ -376,7 +376,7 @@ availability:
     }
     ```
 
-    ## modelByEnvironment queries
+    ## Запросы modelByEnvironment \{#modelbyenvironment-queries}
   
     Объект `modelByEnvironment` был переименован и перемещён внутрь объекта `environment`. Это изменение уже действует с 15 августа 2023 года.
 
@@ -408,7 +408,7 @@ availability:
     }
     ```
 
-    ## Environment and account queries
+    ## Запросы к средам и аккаунтам \{#environment-and-account-queries}
 
     Запросы к окружениям и аккаунтам, использующие тип `Int` для ID, объявлены устаревшими. Теперь ID должны передаваться в формате `BigInt`. Это изменение действует с 15 августа 2023 года.
 
@@ -550,7 +550,7 @@ availability:
 
   </Expandable>
 
-- <Expandable alt_header='Обновления CI'>
+- <Expandable alt_header='Обновления CI' anchor_id="ci-details-2">
 
     CI в dbt Cloud — это ключевая часть workflow аналитической инженерии. Крупные команды полагаются на выстроенные процессы, чтобы поддерживать высокое качество кода, и используют dbt Cloud CI для автоматизации тестирования изменений эффективным образом — сохраняя высокую скорость работы без снижения стандартов. Благодаря статус-чекам, которые напрямую публикуются в PR в dbt, разработчики получают уверенность в том, что их изменения будут корректно работать в продакшене. А когда вы привыкнете видеть зелёную галочку в PR, работать иначе уже не захочется.
 
@@ -582,7 +582,7 @@ availability:
 
   </Expandable>
 
-- <Expandable alt_header='Обновления продуктовой документации'>
+- <Expandable alt_header='Обновления продуктовой документации' anchor_id='product-documentation-updates-june-2023'>
     
     Привет от команды dbt Docs: @mirnawong1, @matthewshaver, @nghi-ly и @runleonarun! В первую очередь мы хотим поблагодарить 17 новых контрибьюторов сообщества docs.getdbt.com &mdash; ✨ @aaronbini, @sjaureguimodo, @aranke, @eiof, @tlochner95, @mani-dbt, @iamtodor, @monilondo, @vrfn, @raginjason, @AndrewRTsao, @MitchellBarker, @ajaythomas, @smitsrr, @leoguyaux, @GideonShils, @michaelmherrera!
 
@@ -696,7 +696,7 @@ availability:
 
   </Expandable>
 
-- <Expandable alt_header='Обновления продуктовой документации'>
+- <Expandable alt_header='Обновления продуктовой документации' anchor_id='product-documentation-updates-may-2023'>
 
     Привет от команды dbt Docs: @mirnawong1, @matthewshaver, @nghi-ly и @runleonarun! В первую очередь хотим поблагодарить 13 новых контрибьюторов сообщества docs.getdbt.com!
 
@@ -736,7 +736,7 @@ availability:
 
 ## Апрель 2023 {#april-2023}
 
-- <Expandable alt_header='dbt Cloud IDE'>
+- <Expandable alt_header='dbt Cloud IDE' anchor_id="dbt-cloud-ide-details-2">
 
     ## Новые функции 
 
@@ -811,7 +811,7 @@ availability:
 
   </Expandable>
 
-- <Expandable alt_header='Обновления документации продукта'>
+- <Expandable alt_header='Обновления документации продукта' anchor_id='product-documentation-updates-april-2023'>
 
     Привет от команды документации dbt: @mirnawong1, @matthewshaver, @nghi-ly и @runleonarun! Мы хотим поделиться некоторыми основными моментами, представленными в docs.getdbt.com за последний месяц:
 
@@ -865,7 +865,7 @@ availability:
 
   </Expandable>
 
-- <Expandable alt_header='dbt Cloud IDE'>
+- <Expandable alt_header='dbt Cloud IDE' anchor_id="dbt-cloud-ide-details-3">
 
   Чтобы и дальше улучшать процесс разработки в [Cloud IDE](/docs/platform/studio-ide/develop-in-studio), команда dbt Labs продолжает добавлять новые функции, исправлять ошибки и повышать надежность ✨.
 
@@ -911,7 +911,7 @@ availability:
 
   </Expandable>
 
-- <Expandable alt_header='Обновления API'>
+- <Expandable alt_header='Обновления API' anchor_id="api-details-2">
 
     Чтобы сделать API более масштабируемым и надежным, мы внедрили максимальный лимит в `100` для всех запросов API к нашим `list` эндпоинтам. Если запросы API превышают максимальный лимит параметра `100`, пользователь получит сообщение об ошибке API.
 
@@ -931,7 +931,7 @@ availability:
 
   </Expandable>
 
-- <Expandable alt_header='dbt Cloud IDE'>
+- <Expandable alt_header='dbt Cloud IDE' anchor_id="dbt-cloud-ide-details-4">
 
   Чтобы сделать работу в [Cloud IDE](/docs/platform/studio-ide/develop-in-studio) ещё удобнее, команда dbt Labs работала над исправлением ошибок, повышением надёжности и добавлением новых возможностей ✨.
 
@@ -971,7 +971,7 @@ availability:
 
 ## Январь 2023 {#january-2023}
 
-- <Expandable alt_header='dbt Cloud IDE'>
+- <Expandable alt_header='dbt Cloud IDE' anchor_id="dbt-cloud-ide-details-5">
 
   Продолжая совершенствовать работу в [Cloud IDE](/docs/platform/studio-ide/develop-in-studio), команда dbt Labs работала над исправлением ошибок, повышением надежности и добавлением новых возможностей ✨.
 

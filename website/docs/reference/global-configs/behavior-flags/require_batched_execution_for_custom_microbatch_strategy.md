@@ -1,46 +1,46 @@
 ---
-title: "Custom microbatch strategy"
+title: "Пользовательская стратегия микропакетной обработки"
 id: "require_batched_execution_for_custom_microbatch_strategy"
-sidebar_label: "require batched execution for custom microbatch strategy"
+sidebar_label: "Обязательное пакетное выполнение пользовательской стратегии микропакетной обработки"
 ---
 
-:::caution Removed in v2
+:::caution Удалён в v2
 
-This flag was removed in v2. The new behavior is always enabled. If you're upgrading, remove this flag from your `dbt_project.yml`.
+Этот флаг удалён в v2. Новое поведение включено всегда. При обновлении удалите этот флаг из `dbt_project.yml`.
 
 :::
 
 
 
-| require_batched_execution_for_custom_microbatch_strategy | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
+| require_batched_execution_for_custom_microbatch_strategy | <Constant name="dbt" /> **Последняя версия v1** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2024.11 | 1.9.0 |
-| Matured (default → `true`) | 2026.09 | 1.12.0 |
-| Removed | — | v2.0 |
+| Введён | 2024.11 | 1.9.0 |
+| Стал стандартным (по умолчанию → `true`) | 2026.09 | 1.12.0 |
+| Удалён | — | v2.0 |
 
 <br />
 
-The `require_batched_execution_for_custom_microbatch_strategy` flag is only relevant if you already have a custom `get_incremental_microbatch_sql` macro in your project. If you don't have a custom microbatch macro, you don't need to set this flag — dbt handles microbatching automatically for any model using the [microbatch strategy](/docs/build/incremental-microbatch#how-microbatch-compares-to-other-incremental-strategies).
+Флаг `require_batched_execution_for_custom_microbatch_strategy` имеет значение только в том случае, если в вашем проекте уже есть пользовательский макрос `get_incremental_microbatch_sql`. Если пользовательского макроса микропакетной обработки нет, задавать этот флаг не нужно — dbt автоматически выполняет микропакетную обработку для любой модели, использующей [стратегию микропакетной обработки](/docs/build/incremental-microbatch#how-microbatch-compares-to-other-incremental-strategies).
 
-Starting in <Constant name="dbt" /> v1.12, this flag defaults to `true`, meaning dbt executes custom microbatch strategies in batches. If you have a custom microbatch macro and set the flag to `false`, dbt issues a deprecation warning.
+Начиная с <Constant name="dbt" /> v1.12, значение этого флага по умолчанию — `true`: dbt выполняет пользовательские стратегии микропакетной обработки пакетами. Если у вас есть пользовательский макрос микропакетной обработки и флаг установлен в `false`, dbt выдаёт предупреждение об устаревшем поведении.
 
-Previously, users needed to set the `DBT_EXPERIMENTAL_MICROBATCH` environment variable to `true` to prevent unintended interactions with existing custom incremental strategies. Setting `DBT_EXPERIMENTAL_MICROBATCH` no longer has any effect on runtime functionality.
+Ранее пользователям требовалось устанавливать переменную окружения `DBT_EXPERIMENTAL_MICROBATCH` в `true`, чтобы предотвратить нежелательное взаимодействие с существующими пользовательскими инкрементальными стратегиями. Теперь значение `DBT_EXPERIMENTAL_MICROBATCH` никак не влияет на поведение во время выполнения.
 
-## Impact
+## Влияние
 
-This flag is only relevant if your project has a custom `get_incremental_microbatch_sql` macro. Projects without a custom microbatch macro are unaffected — the built-in macro already runs in batches.
+Этот флаг имеет значение только в том случае, если в вашем проекте есть пользовательский макрос `get_incremental_microbatch_sql`. На проекты без пользовательского макроса микропакетной обработки он не влияет — встроенный макрос уже выполняется пакетами.
 
-If you have overridden `get_incremental_microbatch_sql` — typically to work around an adapter limitation or implement a custom partition strategy — your macro is invoked under a batched contract for which it was never written. Possible outcomes:
+Если вы переопределили `get_incremental_microbatch_sql` — обычно для обхода ограничений адаптера или реализации пользовательской стратегии партиционирования, — ваш макрос вызывается в режиме пакетного выполнения, на который он изначально не был рассчитан. Возможные последствия:
 
-- The macro ignores the smaller `event_time_start` / `event_time_end` window and re-processes the full range every batch, leading to wasted compute, duplicate rows, or `MERGE`/`INSERT` conflicts.
-- The macro errors because it expects a single invocation per run.
-- Row counts in the destination table differ between flag values.
+- Макрос игнорирует более узкое окно `event_time_start` / `event_time_end` и повторно обрабатывает весь диапазон для каждого пакета, что приводит к лишним вычислениям, дублированию строк или конфликтам `MERGE`/`INSERT`.
+- Макрос завершается с ошибкой, поскольку рассчитан на однократный вызов за запуск.
+- Количество строк в целевой таблице различается в зависимости от значения флага.
 
-<Expandable alt_header="Recommended actions">
+<Expandable alt_header="Рекомендуемые действия">
 
-If a microbatch model errors mid-run, produces duplicate rows or `MERGE`/`INSERT` conflicts, or reprocesses the full date range for every batch, check whether the `get_incremental_microbatch_sql` macro filters by the `event_time_start` / `event_time_end` window. If it uses a hard-coded date filter (for example, `where event_ts >= current_date - interval '1 day'`) or reads only `_dbt_max_partition`, the macro ignores the per-batch window and reprocesses the full range on every iteration.
+Если модель микропакетной обработки завершается с ошибкой в ходе выполнения, создаёт дублирующиеся строки или конфликты `MERGE`/`INSERT` либо повторно обрабатывает весь диапазон дат для каждого пакета, проверьте, фильтрует ли макрос `get_incremental_microbatch_sql` данные по окну `event_time_start` / `event_time_end`. Если он использует жёстко заданный фильтр по дате (например, `where event_ts >= current_date - interval '1 day'`) или считывает только `_dbt_max_partition`, макрос игнорирует окно отдельного пакета и повторно обрабатывает весь диапазон на каждой итерации.
 
-To fix, rewrite the macro to use the per-batch window:
+Чтобы исправить это, перепишите макрос так, чтобы он использовал окно отдельного пакета:
 
 ```sql
 {% macro get_incremental_microbatch_sql(arg_dict) %}
@@ -48,17 +48,17 @@ To fix, rewrite the macro to use the per-batch window:
     {%- set source = arg_dict["temp_relation"] -%}
     {%- set event_time = arg_dict["incremental_predicates"] -%}
 
-    -- Use the per-batch window dbt passes via event_time_start/event_time_end
-    -- (exposed through arg_dict["incremental_predicates"] or model.config.event_time_*),
-    -- NOT a hard-coded date filter.
+    -- Используйте окно отдельного пакета, которое dbt передаёт через event_time_start/event_time_end
+    -- (доступно через arg_dict["incremental_predicates"] или model.config.event_time_*),
+    -- А НЕ жёстко заданный фильтр по дате.
     insert into {{ target }}
     select * from {{ source }}
 {% endmacro %}
 ```
 
-To verify, run `dbt run --event-time-start <date> --event-time-end <date> -s <model>` for a single batch and confirm the row count matches that single day.
+Для проверки выполните `dbt run --event-time-start <date> --event-time-end <date> -s <model>` для одного пакета и убедитесь, что количество строк соответствует данным за этот день.
 
-To opt out of this behavior, set the flag to `false`:
+Чтобы отключить это поведение, установите флаг в `false`:
 
 <File name='dbt_project.yml'>
 

@@ -20,11 +20,11 @@ availability: local_free
 
 <VersionBlock firstVersion="2.0">
 
-# Connect Snowflake to <Constant name="fusion" />
+# Подключение Snowflake к <Constant name="fusion" /> {#connect-snowflake-to-fusion}
 
-You can configure the Snowflake adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type. To check out which Snowflake functions are supported in <Constant name="fusion"/> in `strict` mode, refer to [Snowflake function support](/reference/resource-configs/snowflake-function-support).
+Настройте адаптер Snowflake командой `dbt init` или вручную создайте `profiles.yml` с полями для выбранного способа аутентификации. Список функций Snowflake, поддерживаемых в режиме `strict` в <Constant name="fusion"/>, приведён в разделе [Поддержка функций Snowflake](/reference/resource-configs/snowflake-function-support).
 
-The Snowflake adapter for <Constant name="fusion" /> supports the following [authentication methods](#supported-authentication-types):
+Адаптер Snowflake для <Constant name="fusion" /> поддерживает следующие [способы аутентификации](#supported-authentication-types):
 - Password 
 - Key pair
 - Single sign-on (SSO)
@@ -32,54 +32,54 @@ The Snowflake adapter for <Constant name="fusion" /> supports the following [aut
 - Workload Identity Federation
 
 :::note
-[Snowflake is deprecating single-access password login](https://docs.snowflake.com/en/user-guide/security-mfa-rollout). Individual developers should use MFA or SSO instead of password authentication. Password-based login remains supported for service users (Snowflake user type: `LEGACY_SERVICE`).
+[Snowflake прекращает поддержку входа только по паролю](https://docs.snowflake.com/en/user-guide/security-mfa-rollout). Разработчикам следует использовать MFA или SSO. Вход по паролю остаётся доступным для сервисных пользователей Snowflake типа `LEGACY_SERVICE`.
 :::
 
-## Warehouse permissions
+## Разрешения в хранилище {#warehouse-permissions}
 
 import FusionSnowflakeWarehousePerms from '/snippets/_v2-warehouse-permissions-snowflake.md';
 
 <FusionSnowflakeWarehousePerms />
 
-For role examples and SQL grants in Snowflake, you can also refer to [Snowflake permissions](/reference/database-permissions/snowflake-permissions).
+Примеры ролей и выдачи прав через SQL приведены в разделе [Разрешения Snowflake](/reference/database-permissions/snowflake-permissions).
 
-## Snowflake configuration details
+## Параметры подключения Snowflake {#snowflake-configuration-details}
 
-The information required for configuring the Snowflake adapter can be found conveniently in your Snowflake account menu:
-1. Click on your name from the Snowflake sidebar. 
-2. Hover over the **Account** field.
-3. In the field with your account name, click **View account details**.
-4. Click **Config file** and select the appropriate **Warehouse** and **Database**. 
+Данные для настройки адаптера можно найти в меню аккаунта Snowflake:
+1. Нажмите на своё имя в боковой панели Snowflake.
+2. Наведите указатель на **Account**.
+3. Рядом с именем аккаунта нажмите **View account details**.
+4. Нажмите **Config file** и выберите нужные **Warehouse** и **Database**.
 
-<Lightbox src="/img/v2/connect-adapters/snowflake-account-details.png" width="60%" title="Sample config file in Snowflake." />
+<Lightbox src="/img/v2/connect-adapters/snowflake-account-details.png" width="60%" title="Пример файла конфигурации в Snowflake" />
 
-## Configure <Constant name="fusion" />
+## Настройка <Constant name="fusion" /> {#configure-fusion}
 
-Executing `dbt init` in your CLI will prompt for the following fields:
+При запуске `dbt init` в CLI укажите следующие данные:
 
-- **Account:** Snowflake account number
-- **User:** Your Snowflake username
-- **Database:** The database within your Snowflake account to connect to your project
-- **Warehouse:** The compute warehouse that will handle the tasks for your project
-- **Schema:** The development/staging/deployment schema for the project
-- **Role (Optional):** The role dbt should assume when connecting to the warehouse
+- **Account:** номер аккаунта Snowflake.
+- **User:** имя пользователя Snowflake.
+- **Database:** база данных Snowflake, которую нужно подключить к проекту.
+- **Warehouse:** вычислительное хранилище для выполнения задач проекта.
+- **Schema:** схема для разработки, промежуточной среды или развёртывания.
+- **Role (необязательно):** роль, которую dbt принимает при подключении к хранилищу.
 
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
+Файл `profiles.yml` также можно создать вручную. Формат полей показан в разделе [Способы аутентификации](#supported-authentication-types). Если файл уже существует, можно сохранить текущие поля или перезаписать их.
 
-Next, select your authentication method. Follow the on-screen prompts to provide the required information.
+Выберите способ аутентификации и заполните запрошенные поля.
 
-## Supported authentication types
+## Поддерживаемые способы аутентификации {#supported-authentication-types}
 
 <Tabs>
 
 <TabItem value="Password">
 
-Password authentication prompts for your Snowflake account password. This is becoming an increasingly less common option as organizations opt for more secure authentication.
+При аутентификации по паролю Snowflake запрашивает пароль аккаунта. Организации всё реже используют этот способ, переходя на более безопасные варианты.
 
-Selecting **Password with MFA** redirects you to the Snowflake account login to provide your passkey or authenticator password.
+Если выбрать **Password with MFA**, откроется страница входа в Snowflake, где нужно использовать ключ доступа или ввести код из приложения-аутентификатора.
 
-#### Example password configuration
+#### Пример настройки с паролем {#example-password-configuration}
 
 <File name="profiles.yml">
 
@@ -100,7 +100,7 @@ default:
 
 </File>
 
-#### Example password with MFA configuration
+#### Пример настройки с паролем и MFA {#example-password-with-mfa-configuration}
 
 <File name="profiles.yml">
 
@@ -125,17 +125,17 @@ default:
 
 <TabItem value="Key pair">
 
-Key pair authentication gives you the option to:
-- Define the path to the key. 
-- Provide the plain-text PEM format key inline.
+При аутентификации по паре ключей можно:
+- Указать путь к файлу ключа.
+- Вставить ключ в формате PEM непосредственно в конфигурацию.
 
 import FusionKeyPair from '/snippets/_v2-key-pair.md';
 
 <FusionKeyPair />
 
-  Once the key is configured, you will be given the option to provide a passphrase, if required. 
+  После настройки ключа можно указать парольную фразу, если она нужна.
 
-#### Example key pair configuration
+#### Пример настройки пары ключей {#example-key-pair-configuration}
 
 <File name="profiles.yml">
 
@@ -161,13 +161,13 @@ default:
 
 <TabItem value="Single sign-on">
 
-Single sign-on will leverage your browser to authenticate the Snowflake session.
+При едином входе сеанс Snowflake подтверждается в браузере.
 
-By default, every connection that dbt opens will require you to re-authenticate in a browser. The Snowflake connector package supports caching your session token, but it [currently only supports Windows and Mac OS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
+По умолчанию для каждого нового подключения dbt нужно заново пройти аутентификацию в браузере. Коннектор Snowflake умеет кэшировать токен сеанса, но [пока только на Windows и macOS](https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-use.html#optional-using-connection-caching-to-minimize-the-number-of-prompts-for-authentication).
 
-Refer to the [Snowflake docs](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token) for information on enabling this feature in your account.
+Как включить эту функцию для своего аккаунта, описано в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/parameters.html#label-allow-id-token).
 
-#### Example SSO configuration
+#### Пример настройки SSO {#example-sso-configuration}
 
 <File name="profiles.yml">
 
@@ -191,28 +191,28 @@ default:
 
 <TabItem value="Workload Identity Federation">
 
-Workload Identity Federation (WIF) lets you authenticate to Snowflake from a cloud workload using that platform's identity. Snowflake maps that identity to a service user, so you don't store a password or key. You can use an OpenID Connect (OIDC) token, such as one issued to a GitHub Actions workflow, or a native identity from AWS, Azure, or GCP.
+Workload Identity Federation (WIF) позволяет входить в Snowflake из облачной среды с удостоверением этой среды. Snowflake сопоставляет удостоверение с сервисным пользователем, поэтому хранить пароль или ключ не нужно. Можно использовать токен OpenID Connect (OIDC), например выданный процессу GitHub Actions, или удостоверение AWS, Azure либо GCP.
 
-Before you configure dbt, create a Snowflake service user with workload identity. For that setup, refer to the [Snowflake documentation](https://docs.snowflake.com/en/user-guide/workload-identity-federation).
+Перед настройкой dbt создайте сервисного пользователя Snowflake с удостоверением рабочей нагрузки. См. [документацию Snowflake](https://docs.snowflake.com/en/user-guide/workload-identity-federation).
 
-To authenticate with WIF, configure the following fields in your `profiles.yml` file:
+Для аутентификации через WIF укажите следующие поля в `profiles.yml`:
 
 <SimpleTable>
 
-| Config | Required? | Description |
+| Параметр | Обязательный? | Описание |
 | ------ | --------- | ----------- |
-| `method` | Yes | Set to `workload_identity`. |
-| `workload_identity_provider` | Yes | The identity provider. Must be one of `OIDC`, `AWS`, `AZURE`, or `GCP`. |
-| `token` | No | Required for OIDC; pass it with `env_var()`. Omit this field for AWS, Azure, or GCP. |
-| `workload_identity_entra_resource` | No | Azure only. Leave this unset unless Snowflake expects a custom Entra app as the token audience. Set it to that app's application ID URI (for example `api://APPLICATION_ID`). |
+| `method` | Да | Укажите `workload_identity`. |
+| `workload_identity_provider` | Да | Поставщик удостоверения. Допустимые значения: `OIDC`, `AWS`, `AZURE` или `GCP`. |
+| `token` | Нет | Обязательно для OIDC. Передайте токен через `env_var()`. Для AWS, Azure и GCP поле не задаётся. |
+| `workload_identity_entra_resource` | Нет | Только для Azure. Задайте поле, если Snowflake ожидает пользовательское приложение Entra в качестве аудитории токена. Значение — URI идентификатора приложения, например `api://APPLICATION_ID`. |
 
 </SimpleTable>
 
-Do not set the `authenticator` field. Setting both `method` and `authenticator` will prevent the profile from working.
+Не задавайте `authenticator` вместе с `method`: профиль с обоими полями не будет работать.
 
-The `user` field is optional. Snowflake uses the service user mapped to this cloud identity.
+Поле `user` необязательно. Snowflake использует сервисного пользователя, сопоставленного с удостоверением облачной среды.
 
-The following example uses OIDC:
+Пример с OIDC:
 
 <File name="profiles.yml">
 
@@ -236,23 +236,23 @@ default:
 
 </File>
 
-For AWS, Azure, or GCP, use the same configuration, but change the `workload_identity_provider` value and omit `token`. AWS, Azure, and GCP only work when dbt is running in that cloud environment.
+Для AWS, Azure или GCP используйте ту же конфигурацию, изменив `workload_identity_provider` и убрав `token`. Эти варианты работают только при запуске dbt в соответствующей облачной среде.
 
 </TabItem>
 
 </Tabs>
 
-## More information
+## Дополнительные сведения {#more-information}
 
-Find Snowflake-specific configuration information in the [Snowflake adapter reference guide](/reference/resource-configs/snowflake-configs).
+Настройки Snowflake описаны в [справочнике адаптера](/reference/resource-configs/snowflake-configs).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-# Connect Snowflake to <Constant name="core" />
+# Подключение Snowflake к <Constant name="core" /> {#connect-snowflake-to-core}
 
-<ProductCard text="dbt v2 compatible" url="/docs/local/connect-data-platform/snowflake-setup?version=2" /> connection also available.
+Также доступно подключение <ProductCard text="совместимое с dbt v2" url="/docs/local/connect-data-platform/snowflake-setup?version=2" />.
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 
@@ -556,6 +556,8 @@ my-snowflake-db:
 
 Функция `client_session_keep_alive` предназначена для поддержания сеансов Snowflake активными дольше стандартного времени ожидания, составляющего 4 часа. Реализация этой функции в snowflake-connector-python в определённых сценариях может препятствовать завершению процессов, которые её используют (то есть dbt). Если вы столкнулись с этим при использовании dbt в своей среде, сообщите нам об этом в [задаче на GitHub](https://github.com/dbt-labs/dbt/issues/1271), а в качестве обходного решения отключите keepalive.
 
+<a id="platform_detection_timeout_seconds" />
+
 ### platform_detection_timeout_seconds {#platformdetectiontimeout_seconds}
 
 Коннектор Snowflake использует параметр `platform_detection_timeout_seconds`, чтобы определить, сколько времени ожидать определения облачной платформы для подключения. Этот параметр доступен начиная с версии <Constant name="dbt"/> v1.10.
@@ -582,7 +584,7 @@ my-snowflake-db:
 
 По умолчанию `retry_on_database_errors` имеет значение `False` при использовании <Constant name="core" /> (например, если вы запускаете dbt локально с помощью `pip install dbt-core dbt-snowflake`).
   
-However, in the <Constant name="dbt_platform" />, this setting is automatically set to `True`, unless the user explicitly configures it. 
+На <Constant name="dbt_platform" /> значение автоматически устанавливается в `True`, если пользователь не указал его явно.
 
 ### retry_all {#retry_all}
 

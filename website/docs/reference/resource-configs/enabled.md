@@ -236,7 +236,7 @@ analyses:
 
 </File>
 
-To configure analyses at the project level, set the [`require_corrected_analysis_fqns`](/reference/global-configs/behavior-flags/require_corrected_analysis_fqns) flag to `true` in your `dbt_project.yml`.
+Чтобы настраивать analyses на уровне проекта, установите флаг [`require_corrected_analysis_fqns`](/reference/global-configs/behavior-flags/require_corrected_analysis_fqns) в `true` в файле `dbt_project.yml`.
 
 <File name='dbt_project.yml'>
 
@@ -408,7 +408,7 @@ skills:
 
 </File>
 
-For [agent skills](/docs/dbt-ai/package-skills), the resource path is the package that ships the skill, followed by the skill's name:
+Для [навыков агента](/docs/dbt-ai/package-skills) путь ресурса состоит из имени пакета, который поставляет навык, и имени самого навыка:
 
 <File name='dbt_project.yml'>
 
@@ -421,7 +421,7 @@ skills:
 
 </File>
 
-A package's own `skills` config sets the defaults for the skills it ships, and your root project's `skills` config overrides it. Disabling a skill is how you resolve two packages that ship skills with the same name.
+Настройка `skills` пакета задаёт значения по умолчанию для его навыков. Настройка `skills` корневого проекта может их переопределять. Если два пакета поставляют одноимённые навыки, отключите один из них.
 
 </VersionBlock>
 

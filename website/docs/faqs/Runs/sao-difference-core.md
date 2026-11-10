@@ -1,14 +1,14 @@
-# How is state-aware orchestration different from using selectors in dbt? 
+# Чем оркестрация с учётом состояния отличается от использования селекторов в dbt? 
 
-In <Constant name="core" />, running with the selectors `state:modified+` and `source_status:fresher+` builds models that either:
+В <Constant name="core" /> запуск с селекторами `state:modified+` и `source_status:fresher+` приводит к построению моделей, которые соответствуют одному из условий:
 
-- Have changed since the prior run (`state:modified+`)
-- Have upstream sources that are fresher than in the prior run (`source_status:fresher+`)
+- Изменились с момента предыдущего запуска (`state:modified+`)
+- Имеют вышестоящие источники с более свежими данными, чем при предыдущем запуске (`source_status:fresher+`)
 
-Instead of relying only on these selectors and prior-run artifacts, state-aware orchestration decides whether to rebuild a model based on:
+Вместо того чтобы полагаться только на эти селекторы и артефакты предыдущего запуска, оркестрация с учётом состояния принимает решение о повторном построении модели на основе:
 
-- Compiled SQL diffs that ignore non-meaningful changes like whitespace and comments
-- Upstream data changes at runtime and model-level freshness settings
-- Shared state across jobs
+- Различий в скомпилированном SQL, игнорируя несущественные изменения, такие как пробелы и комментарии
+- Изменений в вышестоящих данных во время выполнения и настроек свежести на уровне модели
+- Общего состояния для всех заданий
 
-While <Constant name="core" /> uses selectors like `state:modified+` and `source_status:fresher+` to decide what to build _only for a single run in a single job_, state-aware orchestration with <Constant name="fusion" /> maintains a _shared, real-time model state across every job in the environment_ and uses that state to determine whether a model’s code or upstream data have actually changed before rebuilding. This ensures dbt only rebuilds models when something has changed, no matter which job runs them.
+В то время как <Constant name="core" /> использует селекторы, такие как `state:modified+` и `source_status:fresher+`, чтобы определить, что строить, _только для одного запуска в рамках одного задания_, оркестрация с учётом состояния в <Constant name="fusion" /> поддерживает _общее состояние моделей, обновляемое в реальном времени для всех заданий в среде_, и использует его, чтобы перед повторным построением определить, действительно ли изменились код модели или вышестоящие данные. Это гарантирует, что dbt повторно строит модели только при наличии изменений, независимо от того, какое задание их запускает.

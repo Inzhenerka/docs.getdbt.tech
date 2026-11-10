@@ -1,7 +1,7 @@
 ---
-title: "Sail setup"
+title: "Настройка Sail"
 sidebar_label: "Sail"
-description: "Read this guide to learn about the Sail setup in dbt."
+description: "Из этого руководства вы узнаете, как настроить подключение к Sail в dbt."
 id: "sail-setup"
 meta:
   maintained_by: LakeSail
@@ -21,16 +21,16 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to Sail with **dbt-sail**
+## Подключение к Sail с помощью **dbt-sail**
 
-[Sail](https://github.com/lakehq/sail) is a drop-in replacement for Apache Spark, built and maintained by [LakeSail](https://lakesail.com/). Sail implements the Spark Connect protocol, so `dbt-sail` is a thin wrapper around `dbt-spark` that connects to Sail instead of JVM Spark. `dbt-sail` supports the same feature set as `dbt-spark`.
+[Sail](https://github.com/lakehq/sail) — это прямая замена Apache Spark, которую разрабатывает и поддерживает [LakeSail](https://lakesail.com/). Sail реализует протокол Spark Connect, поэтому `dbt-sail` представляет собой тонкую обёртку над `dbt-spark`, которая подключается к Sail вместо Spark на JVM. `dbt-sail` поддерживает тот же набор возможностей, что и `dbt-spark`.
 
-`dbt-sail` supports two connection modes:
+`dbt-sail` поддерживает два режима подключения:
 
-- `embedded` - starts a Sail server in-process via [`pysail`](https://pypi.org/project/pysail/). No external server required.
-- `remote` - connects to an already-running Sail server via Spark Connect.
+- `embedded` — запускает сервер Sail в текущем процессе с помощью [`pysail`](https://pypi.org/project/pysail/). Внешний сервер не требуется.
+- `remote` — подключается к уже работающему серверу Sail через Spark Connect.
 
-## Profile configuration
+## Настройка профиля
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -40,28 +40,28 @@ your_profile_name:
   outputs:
     dev:
       type: sail
-      mode: embedded   # or 'remote'
-      host: 127.0.0.1  # required for 'remote'; defaults to 127.0.0.1 for 'embedded'
-      port: 50051      # used by 'remote'; ignored by 'embedded'
+      mode: embedded   # или 'remote'
+      host: 127.0.0.1  # обязателен для 'remote'; по умолчанию 127.0.0.1 для 'embedded'
+      port: 50051      # используется в режиме 'remote'; игнорируется в режиме 'embedded'
       schema: SCHEMA_NAME
       threads: 1
 ```
 
 </File>
 
-| Field | Description | Required? | Default |
+| Поле | Описание | Обязательное? | Значение по умолчанию |
 | ----- | ----------- | --------- | ------- |
-| `type` | Must be `sail`. | Required | - |
-| `mode` | Connection mode. Either `embedded` or `remote`. | Required | - |
-| `host` | Hostname of the Sail server. Required for `remote` mode. | Required for `remote` | `127.0.0.1` (embedded) |
-| `port` | Spark Connect port on the Sail server. Used by `remote` mode. | Optional | `50051` |
-| `schema` | Default schema where dbt builds objects. | Required | - |
-| `threads` | Number of threads for dbt to use. | Optional | `1` |
-| `server_side_parameters` | Map of parameters passed through to the underlying Spark session. | Optional | `{}` |
+| `type` | Должно иметь значение `sail`. | Да | - |
+| `mode` | Режим подключения: `embedded` или `remote`. | Да | - |
+| `host` | Имя хоста сервера Sail. Обязательно для режима `remote`. | Обязательно для `remote` | `127.0.0.1` (embedded) |
+| `port` | Порт Spark Connect на сервере Sail. Используется в режиме `remote`. | Нет | `50051` |
+| `schema` | Схема по умолчанию, в которой dbt создаёт объекты. | Да | - |
+| `threads` | Количество потоков, используемых dbt. | Нет | `1` |
+| `server_side_parameters` | Словарь параметров, передаваемых в базовый сеанс Spark. | Нет | `{}` |
 
-Because `dbt-sail` extends `dbt-spark`, additional `dbt-spark` profile fields are also accepted. See the [Apache Spark setup](/docs/local/connect-data-platform/spark-setup) page for the full list.
+Поскольку `dbt-sail` расширяет `dbt-spark`, также поддерживаются дополнительные поля профиля `dbt-spark`. Полный список приведён на странице [Настройка Apache Spark](/docs/local/connect-data-platform/spark-setup).
 
-### Example: embedded mode
+### Пример: режим embedded
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -78,7 +78,7 @@ my_sail_project:
 
 </File>
 
-### Example: remote mode
+### Пример: режим remote
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -97,6 +97,6 @@ my_sail_project:
 
 </File>
 
-## Resource configuration
+## Настройка ресурсов
 
-`dbt-sail` accepts the same resource configurations as `dbt-spark`. See the [Apache Spark configurations](/reference/resource-configs/spark-configs) page for materialization options, incremental strategies, and other model-level configs.
+`dbt-sail` поддерживает те же настройки ресурсов, что и `dbt-spark`. Сведения о вариантах материализации, инкрементальных стратегиях и других настройках на уровне моделей приведены на странице [Настройки Apache Spark](/reference/resource-configs/spark-configs).

@@ -37,7 +37,7 @@ is_featured: true
 
 ### Почему `grants` лучше, чем хуки {#why-grants-are-better-than-hooks}
 
-Во-первых, [хуки сложны](#issues-related-to-hooks)! Особенно эта путаница с [вложенными фигурными скобками](https://docs.getdbt.tech/docs/building-a-dbt-project/dont-nest-your-curlies).
+Во-первых, [хуки сложны](#issues-related-to-hooks)! Особенно эта путаница с [вложенными фигурными скобками](/best-practices/dont-nest-your-curlies).
 
 #### Проблема тогда {#a-problem-then}
 Предположим, вы работали над инкрементальной моделью. Ранее вы предоставили доступ к этой инкрементальной модели напрямую `reporter`, чтобы люди могли запрашивать ее далее:

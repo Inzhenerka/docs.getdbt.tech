@@ -1,6 +1,6 @@
 ---
 title: lag_tolerance
-description: "Configure lag_tolerance to prevent unnecessary node rebuilds when upstream data updates more frequently than your node needs to."
+description: "Настройте lag_tolerance, чтобы избежать ненужных пересборок узла, когда вышестоящие данные обновляются чаще, чем требуется вашему узлу."
 id: "lag-tolerance"
 tags: ['dbt State']
 ---
@@ -8,7 +8,7 @@ tags: ['dbt State']
 # lag_tolerance
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
 
@@ -22,7 +22,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Properties YAML file">
+<TabItem value="property" label="YAML-файл свойств">
 
 <File name="models/<filename>.yml">
 
@@ -37,7 +37,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="SQL file config">
+<TabItem value="sql" label="Конфигурация в SQL-файле">
 
 <File name="models/<filename>.sql">
 
@@ -53,88 +53,88 @@ models:
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
-Source systems may update more frequently than some downstream models need to rebuild. For example, a model used for daily reporting doesn't need to refresh more than once per day, even if new upstream data is available hourly, while the model powering customer facing metrics that uses some of the same sources may need to update every 30 minutes.
+Исходные системы могут обновляться чаще, чем требуется пересобирать некоторые нижестоящие модели. Например, модель для ежедневной отчётности не нужно обновлять чаще одного раза в день, даже если новые вышестоящие данные поступают каждый час, тогда как модель для расчёта метрик, доступных клиентам, использующая часть тех же источников, может требовать обновления каждые 30 минут.
 
-`lag_tolerance` sets how long dbt State waits before rebuilding a node once its upstream data changes. A node rebuilds only when _both_ are true: its last build is older than the `lag_tolerance` window, and its upstream data has changed since that build. This acts as a compute-saving buffer that helps you stay aligned with data freshness [Service Level Agreements (SLAs)](https://www.getdbt.com/blog/data-slas-best-practices) without unnecessary rebuilds. It supports two key scenarios:
+`lag_tolerance` задаёт время, которое dbt State выжидает перед пересборкой узла при изменении вышестоящих данных. Узел пересобирается, только когда выполняются _оба_ условия: с момента его последней сборки прошло больше времени, чем задано в `lag_tolerance`, и вышестоящие данные изменились с момента этой сборки. Это создаёт буфер, позволяющий экономить вычислительные ресурсы и соблюдать [соглашения об уровне обслуживания (SLA)](https://www.getdbt.com/blog/data-slas-best-practices) в отношении актуальности данных без ненужных пересборок. Поддерживаются два основных сценария:
 
 
-- **Aligning builds with SLA requirements**: `lag_tolerance` allows you to align model execution directly with data freshness SLA requirements, decoupling high-frequency upstream changes from downstream models that operate under wider, less demanding freshness requirements.
-- **Protecting compute during upstream SLA breaches**: `lag_tolerance` protects your compute budget during freshness SLA breaches, preventing costly downstream rebuilds on static data when an upstream dependency fails its freshness SLA.
+- **Согласование сборок с требованиями SLA**: `lag_tolerance` позволяет напрямую согласовать выполнение моделей с требованиями SLA к актуальности данных, отделяя частые изменения вышестоящих данных от нижестоящих моделей с менее строгими требованиями к актуальности.
+- **Экономия вычислительных ресурсов при нарушениях SLA вышестоящих зависимостей**: `lag_tolerance` защищает ваш бюджет на вычисления при нарушениях SLA по актуальности, предотвращая затратные пересборки нижестоящих моделей на неизменившихся данных, когда вышестоящая зависимость не соответствует своему SLA по актуальности.
 
-The `lag_tolerance` config accepts two value types:
+Конфигурация `lag_tolerance` принимает два типа значений:
 
-- **Duration strings** in the format `<number><unit>`:
+- **Строки длительности** в формате `<number><unit>`:
 
   <SimpleTable>
 
-  | Unit | Accepted values |
+  | Единица измерения | Допустимые значения |
   |------|----------------|
-  | Seconds | `s`, `second`, `seconds` |
-  | Minutes | `m`, `minute`, `minutes` |
-  | Hours | `h`, `hour`, `hours` |
-  | Days | `d`, `day`, `days` |
-  | Weeks | `w`, `week`, `weeks` |
+  | Секунды | `s`, `second`, `seconds` |
+  | Минуты | `m`, `minute`, `minutes` |
+  | Часы | `h`, `hour`, `hours` |
+  | Дни | `d`, `day`, `days` |
+  | Недели | `w`, `week`, `weeks` |
 
   </SimpleTable>
 
-- **Jinja expressions** - `lag_tolerance` is evaluated as a Jinja template, so you can use any dbt context variables (`target`, `var()`, `env_var()`) to set dynamic tolerances. This is useful for applying different tolerances per environment without duplicating config blocks:
+- **Выражения Jinja** — `lag_tolerance` вычисляется как шаблон Jinja, поэтому для динамического задания допустимых задержек можно использовать любые переменные контекста dbt (`target`, `var()`, `env_var()`). Это удобно для задания разных допустимых задержек в разных окружениях без дублирования блоков конфигурации:
 
   ```yaml
   lag_tolerance: "{{ '4h' if target.name == 'prod' else '7d' }}"
   ```
 
-### When a node rebuilds
+### Когда узел пересобирается
 
-dbt State rebuilds a node only when _both_ conditions are met.  If either is false, it reuses the existing node:
+dbt State пересобирает узел, только когда выполняются _оба_ условия. Если хотя бы одно из них не выполняется, используется существующий узел:
 
 <SimpleTable>
 
-| Condition | What it means |
+| Условие | Что оно означает |
 | --- | --- |
-| The tolerance has elapsed | The time since the node's last build exceeds its `lag_tolerance`. |
-| Upstream data has changed | At least one upstream dependency has new data since that build. |
+| Допустимая задержка истекла | С момента последней сборки узла прошло больше времени, чем задано в его `lag_tolerance`. |
+| Вышестоящие данные изменились | Хотя бы в одной вышестоящей зависимости появились новые данные с момента этой сборки. |
 
 </SimpleTable>
 
-:::info `lag_tolerance` sets a minimum time between rebuilds
+:::info `lag_tolerance` задаёт минимальный интервал между пересборками
 
-`lag_tolerance` controls how often a node can rebuild, not how fresh its upstream data has to be.
+`lag_tolerance` определяет, как часто узел может пересобираться, а не то, насколько актуальными должны быть его вышестоящие данные.
 
 :::
 
-#### Example
+#### Пример
 
-Let's say you have a job that runs every 30 minutes, your model has a `45m` tolerance, and it last built at `08:00`. New upstream data arrived at `08:20`.
+Допустим, у вас есть задание, которое запускается каждые 30 минут, для модели задана допустимая задержка `45m`, а последняя сборка состоялась в `08:00`. Новые вышестоящие данные поступили в `08:20`.
 
 <SimpleTable>
 
-| Job run | Time since last build | New upstream data since last build? | Result |
+| Запуск задания | Время с последней сборки | Есть новые вышестоящие данные с момента последней сборки? | Результат |
 | --- | --- | --- | --- |
-| `08:30` | `30m` | Yes | Reuse: tolerance hasn't elapsed. |
-| `09:00` | `60m` | Yes | Rebuild: both conditions are met. |
-| `09:30` | `30m` | No | Reuse: tolerance hasn't elapsed and upstream data hasn't changed. |
-| `10:00` | `60m` | No | Reuse: upstream data hasn't changed since `09:00`. |
+| `08:30` | `30m` | Да | Повторное использование: допустимая задержка ещё не истекла. |
+| `09:00` | `60m` | Да | Пересборка: оба условия выполнены. |
+| `09:30` | `30m` | Нет | Повторное использование: допустимая задержка ещё не истекла, а вышестоящие данные не изменились. |
+| `10:00` | `60m` | Нет | Повторное использование: вышестоящие данные не изменились с `09:00`. |
 
 </SimpleTable>
 
-The `08:20` data waited until `09:00` to be picked up. This was the first run where the build was older than `45m` *and* upstream data had changed. At `10:00`, the build was old enough, but because no new upstream data had arrived since `09:00`, dbt reused the node.
+Данные, поступившие в `08:20`, ожидали обработки до `09:00`. Это был первый запуск, при котором с момента сборки прошло больше `45m` *и* вышестоящие данные изменились. В `10:00` с момента сборки прошло достаточно времени, но, поскольку после `09:00` новые вышестоящие данные не поступали, dbt повторно использовал узел.
 
-To rebuild a node whenever its upstream data changes, set `lag_tolerance` to `0s`:
+Чтобы пересобирать узел при каждом изменении его вышестоящих данных, установите `lag_tolerance` в `0s`:
 
 ```yaml
 state:
   lag_tolerance: 0s
 ```
 
-### When does `lag_tolerance` apply
+### Когда применяется `lag_tolerance`
 
-`lag_tolerance` only applies to data freshness checks. A downstream model still rebuilds within its tolerance window if an upstream model's compiled SQL has changed since the last run, regardless of the `lag_tolerance` setting.
+`lag_tolerance` применяется только к проверкам актуальности данных. Нижестоящая модель всё равно пересобирается до истечения допустимой задержки, если скомпилированный SQL вышестоящей модели изменился с момента последнего запуска, независимо от настройки `lag_tolerance`.
 
-This often happens with incremental models. The first time an incremental model runs, it executes a full load with no `WHERE` clause. On subsequent runs, `is_incremental()` becomes true and a filter is appended, changing the compiled SQL. dbt State detects this as a query change on the upstream model and rebuilds all downstream models, even those whose `lag_tolerance` has not elapsed.
+Это часто происходит с инкрементальными моделями. При первом запуске инкрементальная модель выполняет полную загрузку без предложения `WHERE`. При последующих запусках `is_incremental()` возвращает true и добавляется фильтр, что изменяет скомпилированный SQL. dbt State определяет это как изменение запроса вышестоящей модели и пересобирает все нижестоящие модели, даже те, для которых `lag_tolerance` ещё не истёк.
 
-For example, `fct_orders` is an incremental model that `agg_orders_daily` depends on:
+Например, `fct_orders` — инкрементальная модель, от которой зависит `agg_orders_daily`:
 
 <File name="models/fct_orders.sql">
 
@@ -161,21 +161,21 @@ group by 1
 
 </File>
 
-When `fct_orders` transitions from a full load to an incremental run, its compiled SQL changes. `agg_orders_daily` rebuilds on that run despite its 3-hour `lag_tolerance`.
+Когда `fct_orders` переходит от полной загрузки к инкрементальному запуску, её скомпилированный SQL меняется. При этом запуске `agg_orders_daily` пересобирается, несмотря на заданный для неё `lag_tolerance` в 3 часа.
 
 import LagToleranceRecommendationsTip from '/snippets/_lag-tolerance-recommendations-tip.md';
 
 <LagToleranceRecommendationsTip />
 
-## Default
+## Значение по умолчанию
 
-If you don't set `lag_tolerance`, dbt State uses `45m` (45 minutes).
+Если вы не задаёте `lag_tolerance`, dbt State использует `45m` (45 минут).
 
-## Examples
+## Примеры
 
-### Use different tolerances per environment
+### Использование разных допустимых задержек в разных окружениях
 
-Use a Jinja expression to set a shorter tolerance in production and a longer tolerance elsewhere. This keeps production data fresh while reducing unnecessary rebuilds during development:
+Используйте выражение Jinja, чтобы задать меньшую допустимую задержку в промышленном окружении и большую — в остальных. Это позволяет поддерживать актуальность данных в промышленном окружении и сокращать ненужные пересборки при разработке:
 
 <File name="dbt_project.yml">
 
@@ -187,11 +187,11 @@ models:
 
 </File>
 
-In this example, models in the `prod` target rebuild once their last build is more than 4 hours old and their upstream data has changed. In all other environments, models rebuild once their last build is more than 7 days old and their upstream data has changed.
+В этом примере модели для целевого окружения `prod` пересобираются, когда с момента последней сборки прошло больше 4 часов и вышестоящие данные изменились. Во всех остальных окружениях модели пересобираются, когда с момента последней сборки прошло больше 7 дней и вышестоящие данные изменились.
 
-### Vary tolerance by day of the week
+### Изменение допустимой задержки в зависимости от дня недели
 
-Use a Jinja expression to evaluate the day of the week and apply a tighter tolerance on weekdays than on weekends:
+Используйте выражение Jinja, чтобы определить день недели и задать более строгую допустимую задержку в будни, чем в выходные:
 
 <File name="dbt_project.yml">
 
@@ -203,11 +203,11 @@ models:
 
 </File>
 
-In this example, models rebuild once their last build is more than 1 hour old (Monday to Friday) or more than 24 hours old (Saturday to Sunday) and their upstream data has changed.
+В этом примере модели пересобираются, когда с момента последней сборки прошло больше 1 часа (с понедельника по пятницу) или больше 24 часов (с субботы по воскресенье) и вышестоящие данные изменились.
 
-### Apply different tolerances per folder
+### Применение разных допустимых задержек к разным папкам
 
-Set different tolerances for different parts of your project by targeting folders:
+Задайте разные допустимые задержки для разных частей проекта, указав соответствующие папки:
 
 <File name="dbt_project.yml">
 
@@ -224,9 +224,9 @@ models:
 
 </File>
 
-### Override for a specific model
+### Переопределение для отдельной модели
 
-Override the project-level default for a single model:
+Переопределите значение по умолчанию, заданное на уровне проекта, для отдельной модели:
 
 <File name="models/my_model.yml">
 
@@ -240,8 +240,8 @@ models:
 
 </File>
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [Monitor dbt State activity](/docs/deploy/dbt-state-interface)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Мониторинг активности dbt State](/docs/deploy/dbt-state-interface)

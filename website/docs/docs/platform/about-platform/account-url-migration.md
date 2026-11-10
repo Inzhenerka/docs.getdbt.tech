@@ -1,7 +1,7 @@
 ---
-title: "Migrating to account-specific access URLs"
+title: "Переход на URL-адреса доступа для отдельных аккаунтов"
 id: "account-url-migration"
-description: "Learn how to migrate to account-specific access URLs."
+description: "Узнайте, как перейти на URL-адреса доступа для отдельных аккаунтов."
 pagination_next: null
 pagination_prev: null
 availability:
@@ -9,175 +9,175 @@ availability:
   access: login_required
 ---
 
-Account-specific access URLs are being assigned to <Constant name="dbt" /> accounts as part of our ongoing efforts to improve your experience and strengthen security. Each account will receive its own unique <Constant name="dbt_platform" /> and [API access URLs](/docs/dbt-apis/overview), replacing the legacy region URLs that accounts share today. An account-specific access URL starts with a prefix unique to your account, such as `ab123`.
+В рамках постоянной работы над улучшением пользовательского опыта и повышением безопасности аккаунтам <Constant name="dbt" /> назначаются индивидуальные URL-адреса доступа. Каждый аккаунт получит собственные уникальные URL-адреса доступа к <Constant name="dbt_platform" /> и [API](/docs/dbt-apis/overview), которые заменят прежние региональные URL-адреса, используемые сейчас несколькими аккаунтами. Индивидуальный URL-адрес доступа начинается с уникального для вашего аккаунта префикса, например `ab123`.
 
-| Deployment | Legacy region URL (shared) | Account-specific access URL |
+| Развертывание | Прежний региональный URL-адрес (общий) | Индивидуальный URL-адрес доступа |
 |---|---|---|
-| Multi-tenant (North America) | `cloud.getdbt.com` | `ab123.us1.dbt.com` |
-| Multi-tenant (EMEA) | `emea.dbt.com` | `ab123.eu1.dbt.com` |
-| Multi-tenant (APAC) | `au.dbt.com` | `ab123.au1.dbt.com` |
-| Single tenant | `acme.getdbt.com` | `ab123.acme.dbt.com` |
+| Мультиарендное (Северная Америка) | `cloud.getdbt.com` | `ab123.us1.dbt.com` |
+| Мультиарендное (EMEA) | `emea.dbt.com` | `ab123.eu1.dbt.com` |
+| Мультиарендное (APAC) | `au.dbt.com` | `ab123.au1.dbt.com` |
+| Одноарендное | `acme.getdbt.com` | `ab123.acme.dbt.com` |
 
-## What does this mean for me?
+## Что это значит для меня? {#what-does-this-mean-for-me}
 
-If your account has been assigned a new access URL, please review the [migration timeline](#migration-timeline) and update your account's external integrations using the [integration checklist](#integration-checklist).
+Если вашему аккаунту уже назначен новый URL-адрес доступа, ознакомьтесь с [графиком перехода](#migration-timeline) и обновите внешние интеграции аккаунта, используя [контрольный список интеграций](#integration-checklist).
 
-If your account has not been assigned a new access URL, you will receive an email and in-app notification with a scheduled enablement date. When the change takes effect, you'll be automatically redirected to your account-specific access URL. Account sign-in remains the same. Both your new access URL and your legacy region URL will support integrations according to the dates on the [migration timeline](#migration-timeline). You can update most integrations any time before the end-of-support date, but network rules must be ready before your assignment date. For a summary, refer to [the update checklist by date](#what-do-i-need-to-update-before-and-after-my-assignment-date).
+Если вашему аккаунту еще не назначен новый URL-адрес доступа, вы получите уведомления по электронной почте и в приложении с запланированной датой его активации. Когда изменение вступит в силу, вы будете автоматически перенаправлены на индивидуальный URL-адрес доступа вашего аккаунта. Процесс входа в аккаунт останется прежним. Интеграции будут поддерживаться как по новому URL-адресу доступа, так и по прежнему региональному URL-адресу в соответствии с датами в [графике перехода](#migration-timeline). Большинство интеграций можно обновить в любое время до даты окончания поддержки, но сетевые правила необходимо подготовить до даты назначения нового адреса. Краткая сводка приведена в [контрольном списке обновлений по срокам](#what-do-i-need-to-update-before-and-after-my-assignment-date).
 
-:::info Update network rules before your assignment date
-If your organization uses network allowlisting or [IP restrictions](/docs/platform/secure/ip-restrictions), update the following before your assignment date so access isn't disrupted:
+:::info Обновите сетевые правила до даты назначения нового адреса
+Если ваша организация использует сетевые списки разрешений или [ограничения по IP-адресам](/docs/platform/secure/ip-restrictions), обновите следующие настройки до даты назначения нового адреса, чтобы избежать перебоев с доступом:
 
-- **Allowlists** — add your new access URL and your account's [API access URLs](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls). For the URL format in each region, refer to [Accessing your account](/docs/platform/about-platform/access-regions-ip-addresses#accessing-your-account).
-- **IP addresses** — multi-tenant accounts have updated IPs. Refer to [Access, Regions, & IP addresses](/docs/platform/about-platform/access-regions-ip-addresses). Single-tenant IP addresses don't change.
-- **VPN, proxy, and firewall rules** — refer to [Validating IP restrictions](#validating-ip-restrictions) to test your new URL before the date.
+- **Списки разрешений** — добавьте новый URL-адрес доступа и [URL-адреса доступа к API](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls) вашего аккаунта. Формат URL-адресов для каждого региона приведен в разделе [Доступ к аккаунту](/docs/platform/about-platform/access-regions-ip-addresses#accessing-your-account).
+- **IP-адреса** — для мультиарендных аккаунтов IP-адреса изменились. См. раздел [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses). IP-адреса одноарендных аккаунтов не меняются.
+- **Правила VPN, прокси-сервера и межсетевого экрана** — проверьте новый URL-адрес до даты назначения, следуя инструкциям в разделе [Проверка ограничений по IP-адресам](#validating-ip-restrictions).
 
 
 :::
 
-If your account uses inbound private connectivity (ingress PrivateLink), [dbt Support](mailto:support@getdbt.com) will contact you before your assignment with guidance for your configuration.
+Если ваш аккаунт использует частное подключение для входящего трафика (ingress PrivateLink), [служба поддержки dbt](mailto:support@getdbt.com) свяжется с вами до назначения нового адреса и предоставит рекомендации для вашей конфигурации.
 
-## Migration timeline
+## График перехода {#migration-timeline}
 
-Accounts across all regions and service providers are being assigned new access URLs. Legacy region URLs will continue to support integrations until the end-of-support date for your account.
+Новые URL-адреса доступа назначаются аккаунтам во всех регионах и у всех поставщиков услуг. Прежние региональные URL-адреса будут поддерживать интеграции до даты окончания поддержки для вашего аккаунта.
 
-| Stage | Status | Timeline |
+| Этап | Статус | Сроки |
 |---|---|---|
-| Multi-tenant account-specific access URL assignment | ✅ Completed | January 2026 |
-| Single tenant account-specific access URL assignment | In Progress | April 2026 - March 2027 |
-| Legacy region URL end of support (multi-tenant) | Scheduled | February 3, 2027 |
-| Legacy region URL end of support (single tenant) | Scheduled | Provided in your assignment notification |
+| Назначение индивидуальных URL-адресов доступа мультиарендным аккаунтам | ✅ Завершено | Январь 2026 г. |
+| Назначение индивидуальных URL-адресов доступа одноарендным аккаунтам | В процессе | Апрель 2026 г. — март 2027 г. |
+| Окончание поддержки прежних региональных URL-адресов (мультиарендные аккаунты) | Запланировано | 3 февраля 2027 г. |
+| Окончание поддержки прежних региональных URL-адресов (одноарендные аккаунты) | Запланировано | Указано в уведомлении о назначении нового адреса |
 
-## Integration checklist
+## Контрольный список интеграций {#integration-checklist}
 
-Review the following checklist before the legacy region URL end-of-support date documented in the [migration timeline](#migration-timeline). Update each integration that uses a <Constant name="dbt" /> access URL. If your integration isn't in this list, please speak with your IT or applicable team to identify whether you need to take action. 
+Ознакомьтесь со следующим контрольным списком до даты окончания поддержки прежнего регионального URL-адреса, указанной в [графике перехода](#migration-timeline). Обновите каждую интеграцию, использующую URL-адрес доступа к <Constant name="dbt" />. Если вашей интеграции нет в этом списке, обратитесь в ИТ-отдел или другую ответственную команду, чтобы определить, требуются ли какие-либо действия. 
 
-The managed <Constant name="dbt" /> GitHub application, the Slack application, and GitLab webhooks are updated automatically. Self-managed GitHub Enterprise applications and inbound Azure DevOps service hooks are not included.
+Управляемое приложение <Constant name="dbt" /> для GitHub, приложение Slack и вебхуки GitLab обновляются автоматически. Это не распространяется на самостоятельно управляемые приложения GitHub Enterprise и входящие сервисные хуки Azure DevOps.
 
-### Identity and access management
+### Управление идентификацией и доступом {#identity-and-access-management}
 
-| Integration | Action required |
+| Интеграция | Необходимое действие |
 |---|---|
-| [SAML 2.0 SSO](/docs/platform/manage-access/set-up-sso-saml-2.0) | No change to your identity provider application. Update any identity provider-initiated sign-in links to your new access URL. |
-| [Google Workspace SSO](/docs/platform/manage-access/set-up-sso-google-workspace#creating-credentials) | Update or add an OAuth client |
-| [SCIM (Okta)](/docs/platform/manage-access/scim#set-up-dbt) | Update the SCIM base URL in Okta |
+| [SAML 2.0 SSO](/docs/platform/manage-access/set-up-sso-saml-2.0) | Изменять приложение поставщика удостоверений не требуется. Обновите все ссылки для входа, инициируемого поставщиком удостоверений, указав новый URL-адрес доступа. |
+| [Google Workspace SSO](/docs/platform/manage-access/set-up-sso-google-workspace#creating-credentials) | Обновите или добавьте клиент OAuth |
+| [SCIM (Okta)](/docs/platform/manage-access/scim#set-up-dbt-cloud) | Обновите базовый URL-адрес SCIM в Okta |
 
-### Git providers
+### Поставщики Git {#git-providers}
 
-GitLab and Azure DevOps repositories connected before your account had an account-specific access URL keep using your legacy region URL for OAuth until you update them. Repositories connected after that already use your new access URL.
+Репозитории GitLab и Azure DevOps, подключенные до назначения аккаунту индивидуального URL-адреса доступа, продолжают использовать прежний региональный URL-адрес для OAuth, пока вы их не обновите. Репозитории, подключенные после этого, уже используют новый URL-адрес доступа.
 
-For GitLab, account admins can update an existing GitLab application to your new account access URL in <Constant name="dbt_platform" />. See [Update redirect URIs in dbt platform](#update-redirect-uris-in-dbt-platform). You can't yet update an existing Azure DevOps repository. Instead, recreate the repository to generate a redirect URI based on your new account access URL.
+Для GitLab администраторы аккаунта могут обновить существующее приложение GitLab в <Constant name="dbt_platform" />, указав новый URL-адрес доступа к аккаунту. См. раздел [Обновление URI перенаправления в dbt platform](#update-redirect-uris-in-dbt-platform). Обновление существующего репозитория Azure DevOps пока недоступно. Вместо этого создайте репозиторий заново, чтобы сформировать URI перенаправления на основе нового URL-адреса доступа к аккаунту.
 
-| Integration | Action required |
+| Интеграция | Необходимое действие |
 |---|---|
-| [GitLab (managed app)](/docs/platform/git/connect-gitlab#setting-up-a-gitlab-oauth-application) | Add the new redirect URI to your GitLab group application, then [update it in <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
-| [GitLab (bring-your-own app)](/docs/platform/git/connect-gitlab#setting-up-a-gitlab-oauth-application) | Add the new redirect URI to your GitLab group application, then [update it in <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
-| [Azure DevOps (service principal)](/docs/platform/git/setup-service-principal) | Update or add an app registration |
-| GitHub Enterprise (self-managed app) | Before your assignment date, add the callback URL from your assignment notification email to your GitHub app. Update webhook URLs to your new access URL before the end-of-support date. |
+| [GitLab (управляемое приложение)](/docs/platform/git/connect-gitlab#setting-up-a-gitlab-oauth-application) | Добавьте новый URI перенаправления в приложение группы GitLab, затем [обновите его в <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
+| [GitLab (собственное приложение)](/docs/platform/git/connect-gitlab#setting-up-a-gitlab-oauth-application) | Добавьте новый URI перенаправления в приложение группы GitLab, затем [обновите его в <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
+| [Azure DevOps (субъект-служба)](/docs/platform/git/setup-service-principal) | Обновите или добавьте регистрацию приложения |
+| GitHub Enterprise (самостоятельно управляемое приложение) | До даты назначения нового адреса добавьте в приложение GitHub URL-адрес обратного вызова из электронного письма с уведомлением о назначении. До даты окончания поддержки обновите URL-адреса вебхуков, указав новый URL-адрес доступа. |
 
-### Data platform connections
+### Подключения к платформам данных {#data-platform-connections}
 
-Data platform connections created before your account had an account-specific access URL keep using your legacy region URL for OAuth until you update them. Connections created after that already use your new access URL, so they need no changes.
+Подключения к платформам данных, созданные до назначения аккаунту индивидуального URL-адреса доступа, продолжают использовать прежний региональный URL-адрес для OAuth, пока вы их не обновите. Подключения, созданные после этого, уже используют новый URL-адрес доступа, поэтому менять их не требуется.
 
-Account admins can update older Snowflake, Databricks, and BigQuery OAuth connections to your new access URL directly in <Constant name="dbt_platform" />. See [Update redirect URIs in dbt platform](#update-redirect-uris-in-dbt-platform).
+Администраторы аккаунта могут обновить старые подключения OAuth к Snowflake, Databricks и BigQuery непосредственно в <Constant name="dbt_platform" />, указав новый URL-адрес доступа. См. раздел [Обновление URI перенаправления в dbt platform](#update-redirect-uris-in-dbt-platform).
 
-| Integration | Action required |
+| Интеграция | Необходимое действие |
 |---|---|
-| [Snowflake OAuth](/docs/platform/manage-access/set-up-snowflake-oauth#subdomain-migration) | Add the new redirect URI to your security integration, then [update it in <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
-| [Snowflake External OAuth](/docs/platform/manage-access/snowflake-external-oauth) | Update the redirect URI in your IdP application |
-| [Databricks OAuth](/docs/platform/manage-access/set-up-databricks-oauth) | Add the new redirect URI to your Databricks OAuth app, then [update it in <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
-| [BigQuery OAuth](/docs/platform/manage-access/set-up-bigquery-oauth) | Add the new redirect URI to your Google Cloud OAuth client, then [update it in <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
-| [Redshift External OAuth](/docs/platform/manage-access/redshift-external-oauth) | Update the redirect URI in your IdP application |
+| [Snowflake OAuth](/docs/platform/manage-access/set-up-snowflake-oauth#subdomain-migration) | Добавьте новый URI перенаправления в интеграцию безопасности, затем [обновите его в <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
+| [Snowflake External OAuth](/docs/platform/manage-access/snowflake-external-oauth#identity-provider-configuration) | Обновите URI перенаправления в приложении поставщика удостоверений (IdP) |
+| [Databricks OAuth](/docs/platform/manage-access/set-up-databricks-oauth) | Добавьте новый URI перенаправления в приложение OAuth Databricks, затем [обновите его в <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
+| [BigQuery OAuth](/docs/platform/manage-access/set-up-bigquery-oauth) | Добавьте новый URI перенаправления в клиент OAuth Google Cloud, затем [обновите его в <Constant name="dbt_platform" />](#update-redirect-uris-in-dbt-platform) |
+| [Redshift External OAuth](/docs/platform/manage-access/redshift-external-oauth) | Обновите URI перенаправления в приложении поставщика удостоверений (IdP) |
 
-### Update redirect URIs in dbt platform
+### Обновление URI перенаправления в dbt platform {#update-redirect-uris-in-dbt-platform}
 
-If your account has an account-specific access URL, <Constant name="dbt_platform" /> flags each Snowflake, Databricks, or BigQuery OAuth connection and GitLab application that still uses a legacy redirect URI. Updating connections requires the Account Admin or Project Creator [permission set](/docs/platform/manage-access/enterprise-permissions). Updating a GitLab application requires the Account Admin permission set.
+Если у вашего аккаунта есть индивидуальный URL-адрес доступа, <Constant name="dbt_platform" /> отмечает все подключения OAuth к Snowflake, Databricks и BigQuery, а также приложения GitLab, которые по-прежнему используют прежний URI перенаправления. Для обновления подключений требуется [набор разрешений](/docs/platform/manage-access/enterprise-permissions) Account Admin или Project Creator. Для обновления приложения GitLab требуется набор разрешений Account Admin.
 
-1. In <Constant name="dbt_platform" /> **Account settings**, go to **Connections** (or **Integrations** for GitLab) and select a flagged item. The page shows the new redirect URI.
-2. Add the new redirect URI to the OAuth configuration in your data platform or GitLab, alongside the existing one. The existing URI keeps working until you remove it.
-3. In <Constant name="dbt_platform" />, click **Update redirect URI**.
-4. Test data platform connections by signing in again from your development credentials. For GitLab, repeat the [personal GitLab authorization flow](/docs/platform/git/connect-gitlab#personally-authenticating-with-gitlab) from **Account settings** > **Personal profile** > **Linked accounts**. Confirm that the relevant OAuth flow returns successfully to <Constant name="dbt_platform" /> before removing the old redirect URI.
+1. В разделе **Account settings** в <Constant name="dbt_platform" /> перейдите в **Connections** (или **Integrations** для GitLab) и выберите отмеченный элемент. На странице отобразится новый URI перенаправления.
+2. Добавьте новый URI перенаправления в конфигурацию OAuth вашей платформы данных или GitLab, сохранив существующий. Существующий URI продолжит работать, пока вы его не удалите.
+3. В <Constant name="dbt_platform" /> нажмите **Update redirect URI**.
+4. Проверьте подключения к платформам данных, повторно выполнив вход с учетными данными для разработки. Для GitLab повторите [процедуру персональной авторизации в GitLab](/docs/platform/git/connect-gitlab#personally-authenticating-with-gitlab) в разделе **Account settings** > **Personal profile** > **Linked accounts**. Прежде чем удалять старый URI перенаправления, убедитесь, что соответствующая процедура OAuth успешно завершается возвратом в <Constant name="dbt_platform" />.
 
-Updating the redirect URI doesn't interrupt active sessions. The new URI takes effect the next time a session expires and the user signs in again.
+Обновление URI перенаправления не прерывает активные сеансы. Новый URI начнет использоваться после следующего истечения срока действия сеанса, когда пользователь снова выполнит вход.
 
-If sign-in fails after the update, you have 7 days to roll back this change. Open the connection or GitLab application and click **Revert to previous URI** to restore the previous redirect URI while you troubleshoot. After you confirm that every integration works with the new URI, remove the old URI from your data platform or GitLab.
+Если после обновления войти не удается, у вас есть 7 дней, чтобы отменить это изменение. Откройте подключение или приложение GitLab и нажмите **Revert to previous URI**, чтобы восстановить прежний URI перенаправления на время устранения проблемы. Убедившись, что все интеграции работают с новым URI, удалите старый URI из вашей платформы данных или GitLab.
 
-If several connections share one OAuth app, add the new redirect URI once to that app, then update each connection in <Constant name="dbt_platform" />.
+Если несколько подключений используют одно приложение OAuth, добавьте новый URI перенаправления в это приложение один раз, а затем обновите каждое подключение в <Constant name="dbt_platform" />.
 
-### Network and API
+### Сеть и API
 
-| Integration | Action required |
+| Интеграция | Необходимое действие |
 |---|---|
-| Network allowlists | Add your new access URL and API access URLs to your allowlist policies before your assignment date. See the [note on network rules](#what-does-this-mean-for-me). |
-| Inbound webhooks | Update access URLs in your webhook configurations |
-| [API integrations](/docs/dbt-apis/overview) | Update access URLs in your API clients |
-| [Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs) | Update access URLs in your Terraform configuration |
-| Browser bookmarks | Update personal and shared bookmarks |
+| Сетевые списки разрешений | Добавьте новый URL-адрес доступа и URL-адреса доступа к API в политики списков разрешений до даты назначения нового адреса. См. [примечание о сетевых правилах](#what-does-this-mean-for-me). |
+| Входящие вебхуки | Обновите URL-адреса доступа в конфигурациях вебхуков |
+| [Интеграции с API](/docs/dbt-apis/overview) | Обновите URL-адреса доступа в клиентах API |
+| [Провайдер Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs) | Обновите URL-адреса доступа в конфигурации Terraform |
+| Закладки браузера | Обновите личные и общие закладки |
 
-## Validating IP restrictions
+## Проверка ограничений по IP-адресам {#validating-ip-restrictions}
 
-If you've received notification of a new access URL assignment and have IP restrictions enabled, review the network rules that point specifically at your legacy region URL. These include VPN split-tunneling rules, proxy (PAC) rules, and firewall egress rules. Update these rules for your new access URL before your account's scheduled assignment date so access isn't disrupted.
+Если вы получили уведомление о назначении нового URL-адреса доступа и у вас включены ограничения по IP-адресам, проверьте сетевые правила, в которых явно указан прежний региональный URL-адрес. К ним относятся правила раздельного туннелирования VPN, правила прокси-сервера (PAC) и правила исходящего трафика межсетевого экрана. Обновите эти правила для нового URL-адреса доступа до запланированной даты его назначения аккаунту, чтобы избежать перебоев с доступом.
 
-To confirm your new access URL is accessible, send a test request from the same network you'd normally use to reach your legacy region URL. Replace `NEW_ACCESS_URL` with your account's new access URL and `ACCOUNT_ID` with your account ID:
+Чтобы убедиться, что новый URL-адрес доступа доступен, отправьте тестовый запрос из той же сети, которую вы обычно используете для доступа к прежнему региональному URL-адресу. Замените `NEW_ACCESS_URL` новым URL-адресом доступа вашего аккаунта, а `ACCOUNT_ID` — идентификатором аккаунта:
 
-- **Browser:** Go to `https://NEW_ACCESS_URL/api/v2/accounts/ACCOUNT_ID/`
-- **Terminal:** Run `curl https://NEW_ACCESS_URL/api/v2/accounts/ACCOUNT_ID/`
+- **Браузер:** перейдите по адресу `https://NEW_ACCESS_URL/api/v2/accounts/ACCOUNT_ID/`
+- **Терминал:** выполните `curl https://NEW_ACCESS_URL/api/v2/accounts/ACCOUNT_ID/`
 
-| Result | Response detail | What it means |
+| Результат | Содержимое ответа | Что это означает |
 |---|---|---|
-| ✅ Passed | `{ ... "detail": "Authentication credentials were not provided." ... }` | The request reached the API and passed IP restrictions. There's no authenticated session, which is expected for this test. |
-| ⚠️ Blocked | `{ ... "user_message": "Forbidden: Access denied" ... }` | The request's IP address isn't on your allowlist. Update your network egress rules for the new access URL and test again. |
+| ✅ Проверка пройдена | `{ ... "detail": "Authentication credentials were not provided." ... }` | Запрос достиг API и прошел проверку ограничений по IP-адресам. Аутентифицированный сеанс отсутствует, что ожидаемо для этого теста. |
+| ⚠️ Доступ заблокирован | `{ ... "user_message": "Forbidden: Access denied" ... }` | IP-адрес запроса отсутствует в вашем списке разрешений. Обновите сетевые правила исходящего трафика для нового URL-адреса доступа и повторите проверку. |
 
-## FAQs
+## Часто задаваемые вопросы
 
-<Expandable alt_header="Why are access URLs changing?">
+<Expandable alt_header="Почему меняются URL-адреса доступа?">
 
-We are transitioning from generic region URLs to account-specific URLs to enhance your experience and strengthen security. This change provides more descriptive URLs to improve <Constant name="dbt" /> URL management, and enables stronger cookie and token policies to protect account data.
-
-</Expandable>
-
-<Expandable alt_header="How do I know if my account has new access URLs?">
-
-Sign in to your <Constant name="dbt_platform" /> account. If your browser location starts with an account prefix, such as `ab123.us1.dbt.com`, your account has been assigned a new access URL. If your browser location is a legacy region URL, such as `cloud.getdbt.com`, `emea.dbt.com`, or `au.dbt.com`, your account has not been assigned a new access URL. You may refer to [API Access URLs](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls).
+Мы переходим от общих региональных URL-адресов к индивидуальным URL-адресам аккаунтов, чтобы улучшить пользовательский опыт и повысить безопасность. Это изменение делает URL-адреса более информативными, упрощая управление URL-адресами <Constant name="dbt" />, и позволяет применять более строгие политики для файлов cookie и токенов, чтобы защитить данные аккаунтов.
 
 </Expandable>
 
-<Expandable alt_header="How do I find my account's new access URLs?">
+<Expandable alt_header="Как узнать, назначены ли моему аккаунту новые URL-адреса доступа?" anchor_id="url-details-2">
 
-Refer to [API Access URLs](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls).
+Войдите в свой аккаунт <Constant name="dbt_platform" />. Если адрес в браузере начинается с префикса аккаунта, например `ab123.us1.dbt.com`, вашему аккаунту назначен новый URL-адрес доступа. Если в браузере отображается прежний региональный URL-адрес, например `cloud.getdbt.com`, `emea.dbt.com` или `au.dbt.com`, вашему аккаунту еще не назначен новый URL-адрес доступа. Дополнительные сведения см. в разделе [URL-адреса доступа к API](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls).
 
 </Expandable>
 
-<Expandable alt_header="What do I need to update before and after my assignment date?">
+<Expandable alt_header="Где найти новые URL-адреса доступа моего аккаунта?" anchor_id="url-details-3">
 
-| When | What to update |
+См. раздел [URL-адреса доступа к API](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls).
+
+</Expandable>
+
+<Expandable anchor_id="what-do-i-need-to-update-before-and-after-my-assignment-date" alt_header="Что нужно обновить до и после даты назначения нового адреса?">
+
+| Когда | Что обновить |
 |---|---|
-| Before your assignment date | [Network allowlists](#what-does-this-mean-for-me), VPN, proxy, and firewall rules for [IP restrictions](#validating-ip-restrictions), and callback URLs for self-managed GitHub Enterprise applications |
-| After your assignment date, before the end-of-support date | OAuth redirect URIs for [data platform connections](#data-platform-connections) and [Git providers](#git-providers), [identity and access management](#identity-and-access-management) settings, API clients, Terraform configurations, inbound webhooks, and bookmarks |
+| До даты назначения нового адреса | [Сетевые списки разрешений](#what-does-this-mean-for-me), правила VPN, прокси-сервера и межсетевого экрана для [ограничений по IP-адресам](#validating-ip-restrictions), а также URL-адреса обратного вызова для самостоятельно управляемых приложений GitHub Enterprise |
+| После даты назначения нового адреса, но до даты окончания поддержки | URI перенаправления OAuth для [подключений к платформам данных](#data-platform-connections) и [поставщиков Git](#git-providers), настройки [управления идентификацией и доступом](#identity-and-access-management), клиенты API, конфигурации Terraform, входящие вебхуки и закладки |
 
 </Expandable>
 
-<Expandable alt_header="What happens if my integrations are not updated by the end-of-support date?">
+<Expandable alt_header="Что произойдет, если я не обновлю интеграции до даты окончания поддержки?">
 
-After the end-of-support date, legacy region URLs are no longer actively supported. Update your integrations before this date to avoid disruption. For assistance, contact [dbt Support](mailto:support@getdbt.com).
-
-</Expandable>
-
-<Expandable alt_header="Do my API tokens and API calls keep working?">
-
-Yes. Personal access tokens and service tokens work with both your legacy region URL and your new access URL. API requests to legacy region URLs are served directly rather than redirected, so update your API clients to your new access URL before the end-of-support date.
+После даты окончания поддержки прежние региональные URL-адреса больше не будут активно поддерживаться. Обновите интеграции до этой даты, чтобы избежать перебоев в работе. За помощью обратитесь в [службу поддержки dbt](mailto:support@getdbt.com).
 
 </Expandable>
 
-<Expandable alt_header="What is unaffected by the migration to new access URLs?">
+<Expandable alt_header="Продолжат ли работать мои токены API и вызовы API?">
 
-The following are unaffected:
-- Your dbt project code, models, and configurations
-- Your data platform credentials (OAuth connections need a redirect URI update; see [Data platform connections](#data-platform-connections))
-- Your account settings, environments, jobs, and schedules
-- The managed <Constant name="dbt" /> GitHub application, the Slack application, and GitLab webhooks
-- Egress private connectivity
-- The underlying <Constant name="dbt_platform" /> functionality
+Да. Персональные токены доступа и сервисные токены работают как с прежним региональным URL-адресом, так и с новым URL-адресом доступа. Запросы API к прежним региональным URL-адресам обрабатываются напрямую, без перенаправления, поэтому обновите клиенты API, указав новый URL-адрес доступа, до даты окончания поддержки.
 
 </Expandable>
 
-For questions or assistance, contact [dbt Support](mailto:support@getdbt.com).
+<Expandable alt_header="На что не повлияет переход на новые URL-адреса доступа?" anchor_id="url-details-4">
+
+Переход не затронет:
+- Код, модели и конфигурации вашего проекта dbt
+- Учетные данные для платформы данных (для подключений OAuth необходимо обновить URI перенаправления; см. раздел [Подключения к платформам данных](#data-platform-connections))
+- Настройки аккаунта, среды, задания и расписания
+- Управляемое приложение <Constant name="dbt" /> для GitHub, приложение Slack и вебхуки GitLab
+- Частные подключения для исходящего трафика
+- Основные функциональные возможности <Constant name="dbt_platform" />
+
+</Expandable>
+
+Если у вас есть вопросы или нужна помощь, обратитесь в [службу поддержки dbt](mailto:support@getdbt.com).

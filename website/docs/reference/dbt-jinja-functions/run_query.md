@@ -49,7 +49,7 @@ description: "Используйте макрос `run_query` для выпол�
 :::info Впервые используете run_query?
 Посмотрите раздел руководства по началу работы о [использовании Jinja](/guides/using-jinja#dynamically-retrieve-the-list-of-payment-methods) для примера работы с результатами макроса `run_query`!
 :::
-**Note:** The `run_query` macro will not begin a transaction automatically - if you wish to run your query inside of a transaction, please use `begin` and `commit` statements as appropriate.
+**Примечание:** макрос `run_query` не начинает транзакцию автоматически. Если запрос должен выполняться внутри транзакции, используйте `begin` и `commit`.
 
 ### Примеры
 

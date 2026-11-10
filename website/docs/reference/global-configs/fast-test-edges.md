@@ -1,21 +1,21 @@
 ---
-title: "Fast test edges"
+title: "Ускоренная обработка рёбер тестов"
 id: "fast-test-edges"
-description: "Use the --use-fast-test-edges flag to reduce the number of test edges dbt adds to the execution graph during dbt build, improving performance in large projects."
-sidebar: "Fast test edges"
+description: "Используйте флаг --use-fast-test-edges, чтобы сократить количество рёбер тестов, которые dbt добавляет в граф выполнения при dbt build, и повысить производительность в крупных проектах."
+sidebar: "Ускоренная обработка рёбер тестов"
 ---
 
-:::caution Experimental
-This flag is experimental and has not been validated to produce the same results across all project configurations.
+:::caution Экспериментальная функция
+Этот флаг является экспериментальным: пока не подтверждено, что он даёт одинаковые результаты во всех конфигурациях проектов.
 :::
 
-The `--use-fast-test-edges` flag reduces the number of test edges dbt adds to the execution graph during `dbt build`.
+Флаг `--use-fast-test-edges` сокращает количество рёбер тестов, которые dbt добавляет в граф выполнения при `dbt build`.
 
-When you run `dbt build`, dbt adds edges so tests on upstream nodes tend to finish before downstream models run. In large projects, that can add a large number of edges, which slows the run and increases memory use.
+При запуске `dbt build` dbt добавляет рёбра, чтобы тесты вышестоящих узлов, как правило, завершались до запуска нижестоящих моделей. В крупных проектах это может приводить к добавлению большого количества рёбер, что замедляет выполнение и увеличивает потребление памяти.
 
-Using the `--use-fast-test-edges` flag with `dbt build` produces the same execution order with significantly fewer edges. If you experience slow run times or high memory usage during `dbt build`, use this flag.
+Использование флага `--use-fast-test-edges` с `dbt build` обеспечивает тот же порядок выполнения при значительно меньшем количестве рёбер. Если выполнение `dbt build` занимает много времени или требует большого объёма памяти, используйте этот флаг.
 
-You can set this flag using the CLI or an environment variable:
+Вы можете задать этот флаг через CLI или переменную окружения:
 
 <File name='CLI'>
 
@@ -25,7 +25,7 @@ dbt build --use-fast-test-edges
 
 </File>
 
-<File name='Env var'>
+<File name='Переменная окружения'>
 
 ```bash
 export DBT_ENGINE_USE_FAST_TEST_EDGES=true

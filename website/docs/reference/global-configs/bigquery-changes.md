@@ -4,6 +4,8 @@ id: "bigquery-changes"
 sidebar: "BigQuery"
 ---
 
+<a id="the-bigquery_use_batch_source_freshness-flag" />
+
 ## Флаг `bigquery_use_batch_source_freshness` {#the-bigqueryusebatchsourcefreshness-flag}
 
 Флаг `bigquery_use_batch_source_freshness` по умолчанию имеет значение `false`. Если установить для него значение `true` в файле `dbt_project.yml`, dbt будет вычислять результаты `source freshness` с помощью одного пакетного запроса к представлению BigQuery [`INFORMATION_SCHEMA.TABLE_STORAGE`](https://cloud.google.com/bigquery/docs/information-schema-table-storage), а не отправлять отдельный запрос метаданных для каждого источника.
@@ -22,7 +24,7 @@ sidebar: "BigQuery"
 
 <VersionBlock firstVersion="1.12">
 
-## Флаг `bigquery_reject_wildcard_metadata_source_freshness`
+## Флаг `bigquery_reject_wildcard_metadata_source_freshness` {#the-bigquery_reject_wildcard_metadata_source_freshness-flag}
 
 Если источник BigQuery использует идентификатор таблицы с подстановочным знаком (например, `events_*`), проверки актуальности данных источника на основе метаданных возвращают неверные результаты. Метод `client.get_table()` в BigQuery создаёт для таких идентификаторов временную объединённую таблицу, время изменения которой соответствует текущему времени &mdash; а не фактическому времени изменения исходных таблиц. В результате проверки актуальности сообщают, что возраст данных составляет примерно 0 секунд, скрывая устаревшие данные без каких-либо предупреждений.
 
@@ -72,7 +74,7 @@ sources:
 </File>
 
 
-## Флаг `bigquery_use_standard_sql_for_partitions`
+## Флаг `bigquery_use_standard_sql_for_partitions` {#the-bigquery_use_standard_sql_for_partitions-flag}
 
 В BigQuery [устаревший диалект SQL объявлен устаревшим](https://docs.cloud.google.com/bigquery/docs/release-notes#February_25_2026). В настоящее время макрос `get_partitions_metadata()` использует устаревший диалект SQL с `$__PARTITIONS_SUMMARY__` и не будет работать в проектах без [поддержки устаревшего диалекта SQL](https://docs.cloud.google.com/bigquery/docs/legacy-sql-feature-availability)
 

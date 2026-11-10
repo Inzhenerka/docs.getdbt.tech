@@ -31,13 +31,6 @@ _Пакеты_ dbt — это, по сути, самостоятельные п�
 * Вы можете использовать макросы из пакета в собственном проекте.
 * Важно отметить, что определение и установка пакетов dbt отличаются от [определения и установки пакетов Python](/docs/build/python-models#using-pypi-packages)
 
-Пакеты dbt на самом деле являются автономными проектами dbt, с моделями, макросами и другими ресурсами, которые решают конкретную проблему. Как пользователь dbt, добавляя пакет в свой проект, все ресурсы пакета станут частью вашего собственного проекта. Это означает:
-* Модели в пакете будут материализованы, когда вы выполните `dbt run`.
-* Вы можете использовать `ref` в своих моделях для ссылки на модели из пакета.
-* Вы можете использовать `source` для ссылки на источники в пакете.
-* Вы можете использовать макросы из пакета в своем собственном проекте.
-* Важно отметить, что определение и установка пакетов dbt отличается от [определения и установки пакетов Python](/docs/build/python-models#using-pypi-packages).
-
 import UseCaseInfo from '/snippets/_packages_or_dependencies.md';
 
 <UseCaseInfo/>
@@ -225,12 +218,12 @@ packages:
 </File>
 
 
-:::info Azure DevOps considerations and limitations
-There are some considerations and limitations when using native private packages from Azure DevOps. Open the expandable section to learn more.
+:::info Ограничения Azure DevOps
+У встроенной интеграции с приватными пакетами Azure DevOps есть ограничения. Разверните раздел, чтобы узнать подробнее.
 
-<Expandable alt_header="Native private packages and Azure DevOps limitations">
+<Expandable alt_header="Ограничения встроенной поддержки приватных пакетов в Azure DevOps">
 
-1. Use the `ado` provider and specify the `org/project/repo` path in the `private` key.
+1. Используйте провайдера `ado` и укажите путь `org/project/repo` в ключе `private`.
 
     <File name="packages.yml">
 
@@ -242,15 +235,15 @@ There are some considerations and limitations when using native private packages
     </File>
 
 
-2. On <Constant name="dbt_platform" />, native private packages from Azure DevOps can fail when the package is in a different Azure DevOps project than the job that installs it, especially if your account is connected to many Azure DevOps projects:
+2. На <Constant name="dbt_platform" /> установка приватного пакета может завершиться ошибкой, если пакет находится в другом проекте Azure DevOps, чем задание, которое его устанавливает. Это особенно вероятно, если к аккаунту подключено много проектов Azure DevOps:
 
-    - This happens because <Constant name="dbt_platform" /> has a 32 KB limit for the Azure DevOps authentication details it can use at job runtime. If your connected Azure DevOps projects exceed that limit, <Constant name="dbt_platform" /> can only use the current project's connection. As a result, packages in other Azure DevOps projects can't be accessed and `dbt deps` fails.
+    - Во время выполнения задания <Constant name="dbt_platform" /> может использовать до 32 КБ данных аутентификации Azure DevOps. При превышении лимита доступно только подключение текущего проекта. Поэтому `dbt deps` не сможет получить пакеты из других проектов и завершится ошибкой.
 
-    - As a workaround, reduce the number of Azure DevOps projects connected to your account, then rerun `dbt deps`. The number of projects you can connect depends on your Azure DevOps organization structure and repo count.
+    - Сократите число проектов Azure DevOps, подключённых к аккаунту, и повторно запустите `dbt deps`. Допустимое число проектов зависит от структуры организации Azure DevOps и числа репозиториев.
     
-    This limitation doesn't affect local development with <Constant name="core" /> or <Constant name="fusion" /> when cloning private packages over SSH.
+    Это ограничение не влияет на локальную разработку с <Constant name="core" /> или <Constant name="fusion" />, если вы клонируете приватные пакеты по SSH.
 
-    We're currently working to address this, and if you're running into issues, please contact your dbt Labs account team.
+    Мы работаем над устранением ограничения. Если вы столкнулись с этой проблемой, обратитесь к команде dbt Labs, которая обслуживает ваш аккаунт.
 
 </Expandable>
 :::
@@ -396,7 +389,7 @@ packages:
 
 </File>
 
-### Local packages {#local-packages}
+### Локальные пакеты {#local-packages}
 «Локальный» пакет — это dbt‑проект, доступный из вашей локальной файловой системы. Такие пакеты лучше всего подходят для случаев, когда у вас есть общий набор моделей и макросов, который вы хотите использовать в нескольких downstream‑проектах dbt (при этом каждый downstream‑проект всё равно имеет свои собственные уникальные модели, макросы и т.д.).
 
 Вы можете устанавливать локальные пакеты, указав путь к проекту. Лучше всего это работает, когда проект размещён во вложенном подкаталоге относительно директории вашего текущего проекта.
@@ -464,7 +457,7 @@ import FusionSupportedPackages from '/snippets/_v2-supported-packages.md';
 
 dbt выдаст предупреждение, если вы устанавливаете пакет, используя синтаксис `git`, не указав ревизию (см. ниже).
 
-### Configuring packages {#pinning-packages}
+### Настройка пакетов {#pinning-packages}
 Вы можете настраивать модели и seeds в пакете из файла `dbt_project.yml`, например:
 
 <File name='dbt_project.yml'>
@@ -515,11 +508,9 @@ packages:
 
 </File>
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
-If you encounter errors while working with dbt packages, see the following FAQs:
+Если при работе с пакетами dbt возникают ошибки, см. ответы на частые вопросы:
 
 <FAQ path="Troubleshooting/runtime-packages.yml" />
 <FAQ path="Troubleshooting/dispatch-could-not-find-package" />
-
-

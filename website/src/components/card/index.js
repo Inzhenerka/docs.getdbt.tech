@@ -85,7 +85,7 @@ function Card({ title, body, link, icon, pills, tag, lifecycle, showBorderBeam =
     <article className={styles.card}>
       <div className={styles.cardHeader}>
         {icon && getIconType(icon, styles.icon , imgClass)}
-        {lifecycle && <Lifecycle status={lifecycle} />}
+        {lifecycle && <Lifecycle status={lifecycle} disableLink={Boolean(link)} />}
       </div>
       {tag && <span className="tag">{tag}</span>}
       <Heading className="heading-4">{title}</Heading>

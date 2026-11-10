@@ -133,7 +133,7 @@ select * from events where event_type = '{{ var("event_type", "activation") }}'
 
 </File>
 
-### Command line variables
+### Переменные командной строки {#command-line-variables}
 
 import Commandlinevariable from '/snippets/_command-line-variables.md';
 

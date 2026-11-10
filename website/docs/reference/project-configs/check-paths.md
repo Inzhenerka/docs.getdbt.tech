@@ -13,13 +13,13 @@ check-paths: [directorypath]
 
 </File>
 
-## Definition
+## Определение
 
-Specify custom directories where dbt looks for [checks](/docs/build/checks).
+Укажите пользовательские каталоги, в которых dbt ищет [проверки](/docs/build/checks).
 
-## Default
+## Значение по умолчанию
 
-By default, dbt looks for checks in the `checks` directory.
+По умолчанию dbt ищет проверки в каталоге `checks`.
 
 <File name='dbt_project.yml'>
 
@@ -29,9 +29,9 @@ check-paths: ["checks"]
 
 </File>
 
-## Examples
+## Примеры
 
-Use a subdirectory named `project_rules` instead of `checks`:
+Используйте подкаталог с именем `project_rules` вместо `checks`:
 
 <File name='dbt_project.yml'>
 
@@ -41,7 +41,7 @@ check-paths: ["project_rules"]
 
 </File>
 
-Use multiple directories:
+Используйте несколько каталогов:
 
 <File name='dbt_project.yml'>
 

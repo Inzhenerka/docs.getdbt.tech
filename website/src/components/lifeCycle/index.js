@@ -92,7 +92,7 @@ export default function Lifecycle(props) {
     <>
       {statuses.map((status, index) => {
         const isKnownStatus = Object.prototype.hasOwnProperty.call(statusColors, status);
-        const url = isKnownStatus ? statusUrls[status] || props.customUrl || null : null;
+        const url = isKnownStatus && !props.disableLink ? statusUrls[status] || props.customUrl || null : null;
         const isPlanToken = PLAN_TOKENS.has(status);
         const pillClass = isPlanToken ? styles.planPill : styles.lifecycle;
         const pillModifier = isPlanToken ? 'plan-pill' : 'lifecycle';

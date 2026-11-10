@@ -1,8 +1,8 @@
 ---
-title: "Claude Code can't connect to the dbt MCP server"
-sidebar_label: "Claude Code can't connect to the dbt MCP server"
-description: "Troubleshooting: Claude Code can't connect to the dbt MCP server"
+title: "Claude Code не может подключиться к серверу dbt MCP"
+sidebar_label: "Claude Code не может подключиться к серверу dbt MCP"
+description: "Устранение неполадок: Claude Code не может подключиться к серверу dbt MCP"
 id: mcp-troubleshoot-claude-code
 ---
 
-If the dbt MCP server doesn't connect, confirm `.mcp.json` is at the _project root_ and that the `dbt` block matches one of the examples on the [Claude setup page](/docs/dbt-ai/integrate-mcp-claude#claude-code). For self-hosted installations, apply the same full-path fix for `uvx` (and for `--env-file` paths). For remote setups, verify the URL and headers, and try the equivalent `claude mcp add --transport http` command to compare.
+Если подключение к серверу dbt MCP не устанавливается, убедитесь, что файл `.mcp.json` находится в _корне проекта_, а блок `dbt` соответствует одному из примеров на [странице настройки Claude](/docs/dbt-ai/integrate-mcp-claude#claude-code). Для самостоятельно размещённых установок аналогичным образом укажите полный путь к `uvx` (а также полные пути в `--env-file`). При удалённом подключении проверьте URL и заголовки, а затем для сравнения попробуйте эквивалентную команду `claude mcp add --transport http`.

@@ -44,7 +44,7 @@ body="Используйте GraphQL для запросов к метрикам
 
 <Card
     title="JDBC API"
-    body="Use a JDBC driver to query metrics and dimensions in downstream tools, while also providing standard metadata functionality."
+    body="Используйте JDBC-драйвер, чтобы запрашивать метрики и измерения во внешних инструментах и получать стандартные метаданные."
     link="/docs/dbt-apis/sl-jdbc"
     icon="dbt-bit"/>
 

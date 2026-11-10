@@ -1,60 +1,60 @@
 ---
-title: "Near real-time data in dbt"
+title: "Данные в режиме, близком к реальному времени, в dbt"
 id: "1-intro"
-description: Learn how to achieve near real-time data freshness with dbt through streaming ingestion and frequent transformations
-hoverSnippet: Learn how to achieve near real-time data freshness with dbt
+description: Узнайте, как обеспечить актуальность данных в режиме, близком к реальному времени, с помощью dbt, используя потоковую загрузку и частые преобразования
+hoverSnippet: Узнайте, как обеспечить актуальность данных в режиме, близком к реальному времени, с помощью dbt
 ---
 
-By design, dbt is batch-oriented with jobs having a defined start and end time. But did you know that you can also use dbt to get near real-time data by combining your data warehouse's continuous ingestion with frequent dbt transformations?
+По своей архитектуре dbt ориентирован на пакетную обработку: у заданий есть определённое время начала и завершения. Но знаете ли вы, что dbt также позволяет получать данные в режиме, близком к реальному времени, если сочетать непрерывную загрузку в хранилище данных с частыми преобразованиями в dbt?
 
-This guide covers multiple patterns for achieving near real-time data freshness with dbt:
+В этом руководстве рассматриваются несколько подходов к обеспечению актуальности данных в режиме, близком к реальному времени, с помощью dbt:
 
-1. [Incremental patterns](/best-practices/how-we-handle-real-time-data/2-incremental-patterns) &mdash; `merge` strategies, Change Data Capture (CDC), and microbatch processing
-2. [Warehouse-native features](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features) &mdash; When to use dynamic tables and materialized views
-3. [Lambda views pattern](/best-practices/how-we-handle-real-time-data/4-lambda-views) &mdash; Combining batch and real-time data in a single view
-4. [Views-only pattern](/best-practices/how-we-handle-real-time-data/5-views-only-pattern) - Maximum freshness for lightweight transformations
-5. [Operational considerations](/best-practices/how-we-handle-real-time-data/6-operational-considerations) &mdash; Challenges, risks, and cost management
+1. [Инкрементальные подходы](/best-practices/how-we-handle-real-time-data/2-incremental-patterns) &mdash; стратегии `merge`, отслеживание изменений данных (Change Data Capture, CDC) и микропакетная обработка
+2. [Встроенные возможности хранилища](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features) &mdash; когда использовать динамические таблицы и материализованные представления
+3. [Подход с лямбда-представлениями](/best-practices/how-we-handle-real-time-data/4-lambda-views) &mdash; объединение пакетных данных и данных реального времени в одном представлении
+4. [Подход только с представлениями](/best-practices/how-we-handle-real-time-data/5-views-only-pattern) - максимальная актуальность для простых преобразований
+5. [Эксплуатационные аспекты](/best-practices/how-we-handle-real-time-data/6-operational-considerations) &mdash; сложности, риски и управление затратами
 
-Each pattern includes practical code examples, use cases, and tradeoffs to help you choose the right approach.
+Для каждого подхода приведены практические примеры кода, сценарии использования и компромиссы, которые помогут вам выбрать подходящее решение.
 
-Anyone can use this guide, but it's primarily for data engineers and architects who want to achieve near real-time data freshness with dbt.
+Это руководство может использовать любой желающий, но в первую очередь оно предназначено для инженеров и архитекторов данных, которые хотят обеспечить актуальность данных в режиме, близком к реальному времени, с помощью dbt.
 
-This series is about freshness (minutes, not hours). For guidance on choosing incremental models vs snapshots for change history, refer to [CDC in dbt](/best-practices/how-we-handle-cdc/1-intro).
+Эта серия посвящена актуальности данных (задержки в минутах, а не часах). Рекомендации по выбору между инкрементальными моделями и снимками для хранения истории изменений см. в разделе [CDC в dbt](/best-practices/how-we-handle-cdc/1-intro).
 
-## Where does dbt fit?
+## Какую роль играет dbt?
 
-There are two main ways to use dbt to get near real-time data:
+Существует два основных варианта использования dbt для получения данных в режиме, близком к реальному времени:
 
-- For near real-time (5 - 15 minutes) &mdash; dbt excels at this and is well-suited for most operational dashboards.
-- For true real-time (sub-second) &mdash; This requires dedicated streaming databases (ClickHouse, Materialize, Rockset, and so on) in front of or alongside dbt; dbt still owns “analytic” tables and history but not the ultra‑low‑latency read path.
+- Режим, близкий к реальному времени (5–15 минут) &mdash; dbt отлично справляется с этой задачей и хорошо подходит для большинства операционных дашбордов.
+- Настоящий режим реального времени (задержка менее секунды) &mdash; для этого нужны специализированные потоковые базы данных (ClickHouse, Materialize, Rockset и другие), работающие перед dbt или параллельно с ним; dbt по-прежнему отвечает за «аналитические» таблицы и историю, но не за чтение данных со сверхнизкой задержкой.
 
-## How dbt achieves near real-time data
-To achieve real-time data with dbt, we recommend using a two-layer architecture:
+## Как dbt обеспечивает обработку данных в режиме, близком к реальному времени
+Чтобы получать данные в реальном времени с помощью dbt, мы рекомендуем использовать двухуровневую архитектуру:
 
-#### Ingestion layer
+#### Уровень загрузки
 
-Continuous data landing using your data warehouse's streaming ingestion features. 
+Непрерывное поступление данных с использованием возможностей потоковой загрузки вашего хранилища данных. 
    
-Streaming ingestion features such as [streaming tables](https://docs.databricks.com/en/sql/load-data-streaming-table.html), [Snowpipe](https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview), or [Storage Write API](https://docs.cloud.google.com/bigquery/docs/write-api-streaming) work well for this. To find streaming ingestion features for your warehouse, refer to the [additional resources](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#resources-by-warehouse) section.
+Для этого хорошо подходят такие возможности потоковой загрузки, как [потоковые таблицы](https://docs.databricks.com/en/sql/load-data-streaming-table.html), [Snowpipe](https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview) или [Storage Write API](https://docs.cloud.google.com/bigquery/docs/write-api-streaming). Чтобы найти возможности потоковой загрузки для вашего хранилища, обратитесь к разделу [дополнительных ресурсов](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#resources-by-warehouse).
 
-#### dbt transformation layer
+#### Уровень преобразований dbt
 
-Run dbt every few minutes to transform the data, and use materialized views or dynamic tables for the lowest-latency reporting.
+Запускайте dbt каждые несколько минут для преобразования данных, а для отчётности с минимальной задержкой используйте материализованные представления или динамические таблицы.
 
-Specific transformation approaches include:
-- [Incremental models](/docs/build/incremental-models-overview) with merge or append strategies
-- [Microbatch incremental strategy](/docs/build/incremental-microbatch) for large time-series tables
-- Jobs scheduled very frequently (like every 5 minutes)
-- [Dynamic tables](/reference/resource-configs/snowflake-configs#dynamic-tables) or [materialized views](/docs/build/materializations#materialized-view) with short refresh intervals
+Конкретные подходы к преобразованию включают:
+- [Инкрементальные модели](/docs/build/incremental-models-overview) со стратегиями merge или append
+- [Микропакетную инкрементальную стратегию](/docs/build/incremental-microbatch) для больших таблиц временных рядов
+- Задания с очень частым запуском по расписанию (например, каждые 5 минут)
+- [Динамические таблицы](/reference/resource-configs/snowflake-configs#dynamic-tables) или [материализованные представления](/docs/build/materializations#materialized-view) с короткими интервалами обновления
 
-## Key recommendations
+## Основные рекомендации
 
-The following are some key recommendations to help you achieve near real-time data freshness with dbt:
+Ниже приведены основные рекомендации, которые помогут вам обеспечить актуальность данных в режиме, близком к реальному времени, с помощью dbt:
 
-- Ingest data continuously: Use your warehouse's native streaming or micro-batch ingestion to land raw data as soon as it arrives.
-- Transform with dbt on a frequent schedule: Schedule dbt jobs to run as often as your business needs allow (for example, every 1–15 minutes). Balance freshness with cost and resource constraints.
-- Materialized views and dynamic tables: For the lowest-latency reporting, use materialized views or dynamic tables. These can be refreshed as frequently as every minute.
-- Incremental models and microbatching: Use dbt's incremental models to process only new or changed data, keeping transformations efficient and scalable.
-- Decouple ingestion from transformation: Keep data acquisition and transformation flows separate. This allows you to optimize each independently.
-- Monitor and test data freshness: Implement data quality checks and freshness monitoring to ensure your near real-time pipelines deliver accurate, up-to-date results.
-- Cost and complexity considerations: Running dbt jobs more frequently drives up compute costs and operational complexity. Always weigh the business value against these trade-offs.
+- Загружайте данные непрерывно: используйте встроенные возможности потоковой или микропакетной загрузки вашего хранилища, чтобы сохранять исходные данные сразу по мере их поступления.
+- Часто выполняйте преобразования с помощью dbt по расписанию: настройте запуск заданий dbt с частотой, соответствующей потребностям вашего бизнеса (например, каждые 1–15 минут). Соблюдайте баланс между актуальностью данных, затратами и ограничениями ресурсов.
+- Материализованные представления и динамические таблицы: для отчётности с минимальной задержкой используйте материализованные представления или динамические таблицы. Их можно обновлять каждую минуту.
+- Инкрементальные модели и микропакетная обработка: используйте инкрементальные модели dbt для обработки только новых или изменённых данных, чтобы преобразования оставались эффективными и масштабируемыми.
+- Разделяйте загрузку и преобразование: поддерживайте раздельные потоки получения и преобразования данных. Это позволит оптимизировать каждый из них независимо.
+- Отслеживайте и проверяйте актуальность данных: внедрите проверки качества данных и мониторинг их актуальности, чтобы ваши конвейеры обработки в режиме, близком к реальному времени, выдавали точные и актуальные результаты.
+- Учитывайте затраты и сложность: более частый запуск заданий dbt увеличивает затраты на вычисления и усложняет эксплуатацию. Всегда сопоставляйте пользу для бизнеса с этими издержками.

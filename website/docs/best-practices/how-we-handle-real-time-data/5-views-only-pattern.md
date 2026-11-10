@@ -1,54 +1,54 @@
 ---
-title: "Views-only pattern for maximum freshness"
+title: "Подход на основе только представлений для максимальной актуальности данных"
 id: "5-views-only-pattern"
-description: Preserve source table latency with lightweight view transformations
-hoverSnippet: Learn when views-only patterns provide maximum data freshness
+description: Сохраняйте задержку исходной таблицы с помощью легковесных преобразований в представлениях
+hoverSnippet: Узнайте, когда подходы на основе только представлений обеспечивают максимальную актуальность данных
 ---
 
-:::info Snowflake examples ahead
-This page uses Snowflake for code examples, but you can adapt the views-only pattern to other warehouses.
+:::info Далее приведены примеры для Snowflake
+На этой странице в примерах кода используется Snowflake, но подход на основе только представлений можно адаптировать и для других хранилищ данных.
 :::
 
-For some workloads, the simplest and most "real-time" pattern is to materialize everything as views on top of a continuously updated source table. When transformations are very lightweight and the source is already being updated in near real-time, this can preserve the source's latency almost perfectly.
+Для некоторых рабочих нагрузок самый простой подход, наиболее близкий к работе «в реальном времени», — материализовать всё в виде представлений над непрерывно обновляемой исходной таблицей. Если преобразования очень легковесны, а источник уже обновляется почти в реальном времени, такой подход позволяет практически не увеличивать задержку источника.
 
-## When to use the views-only pattern
+## Когда использовать подход на основе только представлений
 
-Use this when:
+Используйте этот подход, если:
 
-- Source freshness is already "good enough" (for example, ingestion service or operational system writes into a warehouse table every few seconds or minutes).
-- You have very lightweight transformations, such as:
-  - Simple projections / renames
-  - One to two joins to small reference table
-  - Minimal or no heavy aggregations or window functions
-- You care most about preserving the source table's latency and are willing to trade off some query performance at read time.
-- This works best for small-to-medium tables with simple queries.
+- Актуальность источника уже «достаточно хорошая» (например, сервис загрузки данных или операционная система записывает данные в таблицу хранилища каждые несколько секунд или минут).
+- Преобразования очень легковесны, например:
+  - Простой выбор или переименование столбцов
+  - Одно-два соединения с небольшой справочной таблицей
+  - Минимальное использование ресурсоёмких агрегаций или оконных функций либо их полное отсутствие
+- Для вас важнее всего сохранить задержку исходной таблицы, и вы готовы пожертвовать некоторой производительностью запросов при чтении.
+- Лучше всего этот подход подходит для небольших и средних таблиц с простыми запросами.
 
-Typical examples:
+Типичные примеры:
 
-- Dashboards showing current system status (like active user sessions, current queue depth, or recent device heartbeats) where you need to see the latest data immediately.
-- Event data that you're forwarding to other tools with minimal transformation (raw data with just a bit of normalization, like cleaning up field names or adding a few reference fields).
+- Дашборды с текущим состоянием системы (например, активными пользовательскими сессиями, текущей длиной очереди или последними сигналами активности устройств), где необходимо сразу видеть самые свежие данные.
+- Данные событий, которые вы передаёте в другие инструменты с минимальными преобразованиями (необработанные данные с небольшой нормализацией, например приведением имён полей к единому виду или добавлением нескольких справочных полей).
 
-If your transform logic becomes heavier, multiple teams depend on the data, or you need better cost and performance control, transition to [incremental models](/best-practices/how-we-handle-real-time-data/2-incremental-patterns) or [dynamic tables/materialized views](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features). Reserve this pattern for the smallest, most latency‑sensitive use cases.
+Если логика преобразований становится сложнее, от данных зависят несколько команд или вам нужен более точный контроль затрат и производительности, переходите на [инкрементальные модели](/best-practices/how-we-handle-real-time-data/2-incremental-patterns) или [динамические таблицы / материализованные представления](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features). Оставьте этот подход для самых небольших сценариев, наиболее чувствительных к задержке.
 
-#### Assumptions
-The examples used in this page assume the following setup:
-- A non‑dbt system (ETL, streaming pipeline, app) is already writing into a warehouse‑resident table such as `raw.realtime_events` or `ops.active_sessions`, and that table meets your service level agreement for latency.
-- Querying that table directly is acceptable from a performance and cost standpoint for your expected concurrency.
-- You don't need dbt to persist intermediate tables; you mainly care about:
-  - Consistent SQL logic (column naming, type casting)
-  - Tests, contracts, and lineage
-  - Exposures to BI / downstream tools
+#### Предположения
+Примеры на этой странице предполагают следующую конфигурацию:
+- Внешняя по отношению к dbt система (ETL, потоковый конвейер, приложение) уже записывает данные в таблицу хранилища, например `raw.realtime_events` или `ops.active_sessions`, и эта таблица соответствует вашему соглашению об уровне обслуживания в части задержки.
+- Прямые запросы к этой таблице приемлемы с точки зрения производительности и стоимости при ожидаемом количестве одновременных запросов.
+- Вам не нужно, чтобы dbt сохранял промежуточные таблицы; для вас важны прежде всего:
+  - Единообразная логика SQL (именование столбцов, приведение типов)
+  - Тесты, контракты и происхождение данных
+  - Exposures для BI-инструментов и других потребителей данных
 
-All dbt models in this path are materialized as views, not tables or incremental models.
+Все модели dbt в этом подходе материализуются как представления, а не как таблицы или инкрементальные модели.
 
-## Example implementation
-Here's an example implementation of the views-only pattern, which has the following pattern structure:
+## Пример реализации
+Ниже приведён пример реализации подхода на основе только представлений со следующей структурой:
 
-- [Source table](#source-table-definition) (continuously updated): `raw.realtime_events`
-- [Thin staging view](#staging-view): `analytics.stg_realtime_events_v`
-- [Domain view(s)](#domain-view-definition): `analytics.vw_realtime_events_enriched`
+- [Исходная таблица](#source-table-definition) (непрерывно обновляется): `raw.realtime_events`
+- [Легковесное представление промежуточного слоя](#staging-view): `analytics.stg_realtime_events_v`
+- [Представление предметной области](#domain-view-definition): `analytics.vw_realtime_events_enriched`
 
-### Source table definition
+### Определение исходной таблицы {#source-table-definition}
 
 ```yaml
 # models/sources.yml
@@ -59,11 +59,11 @@ sources:
     schema: raw
     tables:
       - name: realtime_events
-        description: "Continuously updated event table from streaming pipeline."
+        description: "Непрерывно обновляемая таблица событий из потокового конвейера."
         loaded_at_field: event_ts
 ```
 
-### Staging view
+### Представление промежуточного слоя {#staging-view}
 
 ```sql
 -- models/staging/stg_realtime_events.sql
@@ -73,7 +73,7 @@ sources:
 
 select
     event_id,
-    event_ts::timestamp_ntz   as event_ts,  -- Snowflake syntax for type casting
+    event_ts::timestamp_ntz   as event_ts,  -- Синтаксис Snowflake для приведения типов
     to_date(event_ts)         as event_date,
     user_id,
     event_type,
@@ -81,7 +81,7 @@ select
 from {{ source('raw', 'realtime_events') }};
 ```
 
-### Domain view definition
+### Определение представления предметной области {#domain-view-definition}
 
 ```sql
 -- models/marts/vw_realtime_events_enriched.sql
@@ -99,7 +99,7 @@ user_dim as (
         user_id,
         user_segment,
         signup_date
-    from {{ ref('dim_user') }}   -- can be a table or incremental model
+    from {{ ref('dim_user') }}   -- может быть таблицей или инкрементальной моделью
 )
 
 select
@@ -115,52 +115,52 @@ left join user_dim as u
   on b.user_id = u.user_id;
 ```
 
-Downstream tools query `analytics.vw_realtime_events_enriched`. As long as `raw.realtime_events` is continuously updated, this view stack is as fresh as the source.
+Инструменты-потребители запрашивают `analytics.vw_realtime_events_enriched`. Пока `raw.realtime_events` непрерывно обновляется, эта цепочка представлений обеспечивает ту же актуальность данных, что и источник.
 
-## Benefits
+## Преимущества
 
-- Maximum freshness: The view reflects new data as soon as it lands in `raw.realtime_events`.
-- Simple operations: No incremental logic to tune and no extra dbt job needed just to keep the data fresh. You still schedule jobs for tests, docs, and so on.
-- Best for small datasets: Works well when tables are small and queries are simple. Computing the view on the fly is cheap and fast.
+- Максимальная актуальность: представление отражает новые данные сразу после их поступления в `raw.realtime_events`.
+- Простота эксплуатации: не нужно настраивать инкрементальную логику и запускать дополнительное задание dbt только ради поддержания актуальности данных. При этом задания для тестов, документации и других задач по-прежнему нужно запускать по расписанию.
+- Оптимально для небольших наборов данных: подход хорошо работает с небольшими таблицами и простыми запросами. Вычисление представления на лету выполняется быстро и с небольшими затратами.
 
-## Limitations and risks
+## Ограничения и риски
 
-This pattern is only safe under tight constraints and has several important limitations:
+Этот подход безопасен только при соблюдении строгих условий и имеет несколько важных ограничений:
 <!-- no toc -->
-    - [Doesn't scale to heavy transformations](#doesnt-scale-to-heavy-transformations)
-    - [No "frozen" intermediate tables](#no-frozen-intermediate-tables)
-    - [Schema change sensitivity](#schema-change-sensitivity)
-    - [Potential impact on operational systems](#potential-impact-on-operational-systems)
+    - [Не масштабируется для ресурсоёмких преобразований](#doesnt-scale-to-heavy-transformations)
+    - [Нет «зафиксированных» промежуточных таблиц](#no-frozen-intermediate-tables)
+    - [Чувствительность к изменениям схемы](#schema-change-sensitivity)
+    - [Возможное влияние на операционные системы](#potential-impact-on-operational-systems)
 
-### Doesn't scale to heavy transformations
+### Не масштабируется для ресурсоёмких преобразований {#doesnt-scale-to-heavy-transformations}
 
-If your logic evolves into large joins, deep view chains, or expensive aggregations, you'll quickly run into performance issues:
+Если логика усложняется и включает соединения больших таблиц, длинные цепочки представлений или ресурсоёмкие агрегации, вы быстро столкнётесь с проблемами производительности:
 
-- Every query must re‑execute all the logic.
-- The warehouse has to optimize and execute the full stack of views every time.
+- Каждый запрос должен заново выполнять всю логику.
+- Хранилищу приходится каждый раз оптимизировать и выполнять всю цепочку представлений.
 
-In those cases, use either of the following:
+В таких случаях используйте один из следующих вариантов:
 
-- [Incremental models](/best-practices/how-we-handle-real-time-data/2-incremental-patterns)
-- [Dynamic tables or materialized views](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features), where appropriate
+- [Инкрементальные модели](/best-practices/how-we-handle-real-time-data/2-incremental-patterns)
+- [Динамические таблицы или материализованные представления](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features), если они подходят для вашей задачи
 
-### No "frozen" intermediate tables
+### Нет «зафиксированных» промежуточных таблиц {#no-frozen-intermediate-tables}
 
-Because everything is a view:
+Поскольку всё реализовано в виде представлений:
 
-- There's no persisted intermediate layer to debug or profile.
-- You can't easily "rerun yesterday's logic" if upstream data changes—everything always reflects the current state.
+- Нет сохранённого промежуточного слоя для отладки или профилирования данных.
+- Нельзя легко «повторно выполнить вчерашнюю логику», если вышестоящие данные изменились: всё всегда отражает текущее состояние.
 
-### Schema change sensitivity
+### Чувствительность к изменениям схемы {#schema-change-sensitivity}
 
-Schema changes in the source table propagate immediately through the view stack, which:
+Изменения схемы исходной таблицы немедленно распространяются по всей цепочке представлений, что:
 
-- Can break downstream BI if columns are dropped or types change.
-- Make tests and model contracts more important, since there’s no batch boundary to catch issues before users see them.
+- Может нарушить работу BI-инструментов, использующих эти данные, при удалении столбцов или изменении типов.
+- Повышает важность тестов и контрактов моделей, поскольку нет границы между пакетными обработками, на которой можно обнаружить проблемы до того, как с ними столкнутся пользователи.
 
-### Potential impact on operational systems
+### Возможное влияние на операционные системы {#potential-impact-on-operational-systems}
 
-If the continuously‑updated source is itself a live operational store (not a warehouse landing table), you must be careful not to overload it with analytics queries. In most cases, it is recommended to:
+Если непрерывно обновляемый источник сам является рабочей операционной базой данных (а не таблицей приёма данных в хранилище), важно не перегрузить его аналитическими запросами. В большинстве случаев рекомендуется:
 
-1. Replicate into a warehouse table first (Snowflake, BigQuery, Databricks, and so on).
-2. Apply this views‑only pattern within the warehouse, not directly on the Online Transaction Processing system.
+1. Сначала реплицировать данные в таблицу хранилища (Snowflake, BigQuery, Databricks и т. д.).
+2. Применять этот подход на основе только представлений внутри хранилища, а не непосредственно в системе оперативной обработки транзакций (OLTP).

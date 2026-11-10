@@ -1,95 +1,95 @@
 ---
-title: "How to find your dbt MCP IDs"
-sidebar_label: "Finding your IDs"
-description: "Step-by-step instructions for finding the numeric IDs needed for dbt MCP configuration."
+title: "Как найти идентификаторы для dbt MCP"
+sidebar_label: "Поиск идентификаторов"
+description: "Пошаговые инструкции по поиску числовых идентификаторов, необходимых для настройки dbt MCP."
 id: "mcp-find-ids"
 availability: all_users
 ---
 
-Several dbt MCP environment variables and headers require numeric IDs from your <Constant name="dbt_platform"/> account. This guide shows exactly where to find each one.
+Некоторые переменные окружения и заголовки dbt MCP требуют числовых идентификаторов из вашей учетной записи <Constant name="dbt_platform"/>. В этом руководстве показано, где именно найти каждый из них.
 
-:::warning Use numeric IDs, not full URLs
-ID variables expect integers, not URLs. A common mistake is copying the URL from your browser address bar.
+:::warning Используйте числовые идентификаторы, а не полные URL-адреса
+Переменные идентификаторов принимают целые числа, а не URL-адреса. Распространенная ошибка — копирование URL-адреса из адресной строки браузера.
 
 ```bash
-# ✅ Correct
-DBT_HOST=cloud.getdbt.com            # https://cloud.getdbt.com also works
+# ✅ Правильно
+DBT_HOST=cloud.getdbt.com            # https://cloud.getdbt.com тоже подходит
 DBT_PROD_ENV_ID=54321
 DBT_USER_ID=123
 
-# ❌ Wrong — IDs must be numeric, not full URLs
+# ❌ Неправильно — идентификаторы должны быть числами, а не полными URL-адресами
 DBT_PROD_ENV_ID=https://cloud.getdbt.com/deploy/12345/projects/67890/environments/54321
 DBT_USER_ID=https://cloud.getdbt.com/settings/profile
 ```
 :::
 
-## DBT_HOST (account hostname) {#dbt-host}
+## DBT_HOST (имя хоста учетной записи) {#dbt-host}
 
-Your hostname is the domain you use to access <Constant name="dbt_platform"/>. Both `cloud.getdbt.com` and `https://cloud.getdbt.com` are accepted.
+Имя хоста — это домен, который вы используете для доступа к <Constant name="dbt_platform"/>. Допускаются оба варианта: `cloud.getdbt.com` и `https://cloud.getdbt.com`.
 
-1. Log in to your <Constant name="dbt_platform"/> account.
-2. Go to **Account settings**.
-3. Copy the **Access URL** value.
+1. Войдите в свою учетную запись <Constant name="dbt_platform"/>.
+2. Перейдите в **Account settings**.
+3. Скопируйте значение **Access URL**.
 
-| Account type | Example Access URL | DBT_HOST value |
+| Тип учетной записи | Пример Access URL | Значение DBT_HOST |
 | --- | --- | --- |
-| US multi-tenant | `cloud.getdbt.com` | `cloud.getdbt.com` |
-| Accounts with a subdomain prefix | `abc123.us1.dbt.com` | `abc123.us1.dbt.com` |
-| Single-tenant | `your-company.getdbt.com` | `your-company.getdbt.com` |
+| Мультитенантная в США | `cloud.getdbt.com` | `cloud.getdbt.com` |
+| Учетные записи с префиксом поддомена | `abc123.us1.dbt.com` | `abc123.us1.dbt.com` |
+| Однотенантная | `your-company.getdbt.com` | `your-company.getdbt.com` |
 
-For more information on regions and hosting, refer to [Access, Regions, & IP addresses](/docs/platform/about-platform/access-regions-ip-addresses).
+Дополнительные сведения о регионах и размещении см. в разделе [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses).
 
-## DBT_ACCOUNT_ID (account ID) {#dbt-account-id}
+## DBT_ACCOUNT_ID (идентификатор учетной записи) {#dbt-account-id}
 
-1. Log in to your <Constant name="dbt_platform"/> account.
-2. Go to **Account settings**.
-3. The account ID is displayed on the settings page, or you can find it in the URL: `https://cloud.getdbt.com/settings/accounts/ACCOUNT_ID/`. So for example, if the URL is `https://YOUR_ACCESS_URL/settings/accounts/12345/`, the account ID would be `12345`.
+1. Войдите в свою учетную запись <Constant name="dbt_platform"/>.
+2. Перейдите в **Account settings**.
+3. Идентификатор учетной записи отображается на странице настроек. Его также можно найти в URL-адресе: `https://cloud.getdbt.com/settings/accounts/ACCOUNT_ID/`. Например, если URL-адрес — `https://YOUR_ACCESS_URL/settings/accounts/12345/`, идентификатор учетной записи — `12345`.
 
-Alternatively, see [Finding your user and account IDs](/faqs/Accounts/find-user-id) for additional methods.
+Другие способы описаны в разделе [Поиск идентификаторов пользователя и учетной записи](/faqs/Accounts/find-user-id).
 
-## DBT_PROD_ENV_ID (production environment ID) {#dbt-prod-env-id}
+## DBT_PROD_ENV_ID (идентификатор производственной среды) {#dbt-prod-env-id}
 
-1. Log in to your <Constant name="dbt_platform"/> account.
-2. Go to **Orchestration** → **Environments**.
-3. Click on your production environment.
-4. The environment ID is in the URL: `https://cloud.getdbt.com/deploy/ACCOUNT_ID/projects/PROJECT_ID/environments/ENVIRONMENT_ID`. So for example, if the URL is `https://YOUR_ACCESS_URL/deploy/12345/projects/67890/environments/54321`, the environment ID would be `54321`.
+1. Войдите в свою учетную запись <Constant name="dbt_platform"/>.
+2. Перейдите в **Orchestration** → **Environments**.
+3. Нажмите на свою производственную среду.
+4. Идентификатор среды указан в URL-адресе: `https://cloud.getdbt.com/deploy/ACCOUNT_ID/projects/PROJECT_ID/environments/ENVIRONMENT_ID`. Например, если URL-адрес — `https://YOUR_ACCESS_URL/deploy/12345/projects/67890/environments/54321`, идентификатор среды — `54321`.
 
-Copy only the number at the end — for example, `54321`.
+Скопируйте только число в конце — например, `54321`.
 
-## DBT_DEV_ENV_ID (development environment ID) {#dbt-dev-env-id}
+## DBT_DEV_ENV_ID (идентификатор среды разработки) {#dbt-dev-env-id}
 
-Follow the same steps as for `DBT_PROD_ENV_ID`, but click on your development environment instead of production.
+Выполните те же действия, что и для `DBT_PROD_ENV_ID`, но выберите среду разработки вместо производственной среды.
 
-This variable is required for `execute_sql`. If you don't have a dedicated development environment, you can use your production environment ID here, though a separate development environment is recommended.
+Эта переменная обязательна для `execute_sql`. Если у вас нет выделенной среды разработки, здесь можно использовать идентификатор производственной среды, хотя рекомендуется создать отдельную среду разработки.
 
-## DBT_USER_ID (user ID) {#dbt-user-id}
+## DBT_USER_ID (идентификатор пользователя) {#dbt-user-id}
 
-1. Log in to your <Constant name="dbt_platform"/> account.
-2. Go to **Account settings** → **Profile** (or click your profile/avatar).
-3. Your user ID is in the URL: `https://cloud.getdbt.com/settings/profile/USER_ID`. So for example, if the URL is `https://YOUR_ACCESS_URL/settings/profile/123`, the user ID would be `123`.
+1. Войдите в свою учетную запись <Constant name="dbt_platform"/>.
+2. Перейдите в **Account settings** → **Profile** (или нажмите на свой профиль/аватар).
+3. Идентификатор пользователя указан в URL-адресе: `https://cloud.getdbt.com/settings/profile/USER_ID`. Например, если URL-адрес — `https://YOUR_ACCESS_URL/settings/profile/123`, идентификатор пользователя — `123`.
 
-Copy only the number.
+Скопируйте только число.
 
-Alternatively, see [Finding your user and account IDs](/faqs/Accounts/find-user-id).
+Другой способ описан в разделе [Поиск идентификаторов пользователя и учетной записи](/faqs/Accounts/find-user-id).
 
-## DBT_TOKEN (access token) {#dbt-token}
+## DBT_TOKEN (токен доступа) {#dbt-token}
 
-The following sections explain how to find your Personal Access Token (PAT) and Service token.
+В следующих разделах объясняется, как найти персональный токен доступа (PAT) и сервисный токен.
 
-### Personal Access Token (PAT) {#pat}
+### Персональный токен доступа (PAT) {#pat}
 
-Required for `execute_sql`. Tied to your personal account.
+Обязателен для `execute_sql`. Привязан к вашей личной учетной записи.
 
-1. Go to **Account settings** → **API tokens** → **Personal tokens**.
-2. Click **+ New token**, give it a name, and copy the token value.
-3. Store it somewhere safe — you can't view it again after closing the dialog.
+1. Перейдите в **Account settings** → **API tokens** → **Personal tokens**.
+2. Нажмите **+ New token**, задайте имя и скопируйте значение токена.
+3. Сохраните его в безопасном месте — после закрытия диалогового окна вы не сможете просмотреть его снова.
 
-### Service token {#service-token}
+### Сервисный токен {#service-token}
 
-Used for shared or team setups. Better for CI/automation.
+Используется для общих или командных конфигураций. Лучше подходит для CI и автоматизации.
 
-1. Go to **Account settings** → **API tokens** → **Service tokens**.
-2. Click **+ New token**, assign the required permissions, and copy the token value.
-3. Assign the `Developer` permission set, scoped either to the project that owns the environment you'll use for `x-dbt-prod-environment-id` or to all projects. A token without this permission set is rejected with a `401` when the MCP client connects. No other permission sets are required.  `Developer` can only be assigned to a service token on Enterprise and Enterprise+ plans; on other plans, use [OAuth](/docs/dbt-ai/setup-remote-mcp#oauth-remote-mcp).
+1. Перейдите в **Account settings** → **API tokens** → **Service tokens**.
+2. Нажмите **+ New token**, назначьте необходимые разрешения и скопируйте значение токена.
+3. Назначьте набор разрешений `Developer`, ограничив его действие либо проектом, которому принадлежит среда, используемая для `x-dbt-prod-environment-id`, либо распространив его на все проекты. Токен без этого набора разрешений отклоняется с кодом `401` при подключении MCP-клиента. Другие наборы разрешений не требуются.  Назначить `Developer` сервисному токену можно только на тарифных планах Enterprise и Enterprise+; на других тарифных планах используйте [OAuth](/docs/dbt-ai/setup-remote-mcp#oauth-remote-mcp).
 
-For more information, see [User tokens (PAT)](/docs/dbt-apis/user-tokens) and [Service tokens](/docs/dbt-apis/service-tokens).
+Дополнительные сведения см. в разделах [Пользовательские токены (PAT)](/docs/dbt-apis/user-tokens) и [Сервисные токены](/docs/dbt-apis/service-tokens).

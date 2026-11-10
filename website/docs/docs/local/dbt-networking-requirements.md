@@ -1,83 +1,83 @@
 ---
-title: "dbt v2 networking requirements"
+title: "Сетевые требования dbt v2"
 id: "dbt-networking-requirements"
-sidebar_label: "v2 networking requirements"
-description: "Outbound network access requirements for dbt v2, including adapter drivers, telemetry, and manifest downloads."
+sidebar_label: "Сетевые требования v2"
+description: "Требования к исходящему сетевому доступу для dbt v2, включая драйверы адаптеров, телеметрию и загрузку манифестов."
 
 ---
 
-# dbt v2 networking requirements
+# Сетевые требования dbt v2
 
-<Constant name="fusion" /> requires outbound HTTPS access to several endpoints depending on your usage. This page describes each requirement and provides guidance for enterprise environments that restrict outbound traffic.
+<Constant name="fusion" /> требует исходящего доступа по HTTPS к нескольким конечным точкам в зависимости от сценария использования. На этой странице описаны все требования и приведены рекомендации для корпоративных сред с ограничениями на исходящий трафик.
 
-The following table summarizes all endpoints. See each section below for details.
+В следующей таблице перечислены все конечные точки. Подробности приведены в соответствующих разделах ниже.
 
-| Resource | URL | Required for |
+| Ресурс | URL | Кому требуется |
 | --- | --- | --- |
-| [Adapter drivers](#adapter-drivers) | `https://public.cdn.getdbt.com` | All users |
-| [Telemetry](#telemetry) | `https://p.vx.dbt.com` | All users (can be disabled) |
-| [Manifest downloads](#manifest-downloads) | Cloud provider storage URLs (varies by region) | <Constant name="dbt_platform" /> users only |
+| [Драйверы адаптеров](#adapter-drivers) | `https://public.cdn.getdbt.com` | Всем пользователям |
+| [Телеметрия](#telemetry) | `https://p.vx.dbt.com` | Всем пользователям (можно отключить) |
+| [Загрузка манифестов](#manifest-downloads) | URL-адреса хранилищ облачного провайдера (зависят от региона) | Только пользователям <Constant name="dbt_platform" /> |
 
-## Adapter drivers {#adapter-drivers}
+## Драйверы адаптеров {#adapter-drivers}
 
-The <Constant name="fusion" /> binary does _not_ bundle database drivers. Instead, <Constant name="fusion" /> automatically downloads the correct [ADBC](https://arrow.apache.org/adbc/) driver for your data platform the first time you run a dbt command (such as `dbt run`, `dbt debug`, or `dbt compile`). <Constant name="fusion" /> detects which driver you need based on your `profiles.yml` configuration and downloads it from the dbt Labs CDN. <Constant name="fusion" /> distributes all checksums with the binary itself to guarantee authenticity of the downloaded drivers.
+Бинарный файл <Constant name="fusion" /> _не_ включает драйверы баз данных. Вместо этого <Constant name="fusion" /> автоматически загружает подходящий драйвер [ADBC](https://arrow.apache.org/adbc/) для вашей платформы данных при первом выполнении команды dbt (например, `dbt run`, `dbt debug` или `dbt compile`). <Constant name="fusion" /> определяет необходимый драйвер на основе конфигурации `profiles.yml` и загружает его из CDN dbt Labs. Все контрольные суммы поставляются вместе с самим бинарным файлом <Constant name="fusion" />, чтобы гарантировать подлинность загружаемых драйверов.
 
-Adapter driver downloads require outbound HTTPS access to the dbt CDN:
+Для загрузки драйверов адаптеров требуется исходящий доступ по HTTPS к CDN dbt:
 
-| Resource | URL | Purpose |
+| Ресурс | URL | Назначение |
 | --- | --- | --- |
-| **Adapter drivers** | `https://public.cdn.getdbt.com` | Downloads ADBC adapter driver libraries (`.dylib`, `.so`, `.dll`) on first use or when running `dbt system install-drivers` |
+| **Драйверы адаптеров** | `https://public.cdn.getdbt.com` | Загрузка библиотек драйверов адаптеров ADBC (`.dylib`, `.so`, `.dll`) при первом использовании или при выполнении `dbt system install-drivers` |
 
 :::info
-<Constant name="fusion" /> handles driver download automatically on first use. The `dbt system install-drivers` command downloads **all** supported drivers (Snowflake, BigQuery, Postgres, Databricks, Redshift, and DuckDB) at once. This is useful if you work across multiple data platforms and want to pre-cache every driver before going offline or switching projects.
+<Constant name="fusion" /> автоматически загружает драйвер при первом использовании. Команда `dbt system install-drivers` загружает **все** поддерживаемые драйверы (Snowflake, BigQuery, Postgres, Databricks, Redshift и DuckDB) за один раз. Это полезно, если вы работаете с несколькими платформами данных и хотите заранее закэшировать все драйверы перед переходом в автономный режим или переключением между проектами.
 :::
 
-### Enterprise proxy considerations
+### Особенности работы с корпоративными прокси-серверами
 
-Adapter drivers are native shared libraries (`.dylib` on macOS, `.so` on Linux, `.dll` on Windows). Some enterprise proxy filters and security tools classify these file types as executables and may block the download &mdash; even if you allowlist `public.cdn.getdbt.com` at the domain level.
+Драйверы адаптеров представляют собой нативные разделяемые библиотеки (`.dylib` в macOS, `.so` в Linux, `.dll` в Windows). Некоторые корпоративные прокси-фильтры и средства безопасности классифицируют эти типы файлов как исполняемые и могут блокировать их загрузку &mdash; даже если вы добавили `public.cdn.getdbt.com` в список разрешённых на уровне домена.
 
-If your organization's proxy blocks adapter driver downloads, work with your IT team to ensure both:
+Если прокси-сервер вашей организации блокирует загрузку драйверов адаптеров, совместно с ИТ-отделом убедитесь, что выполнены оба условия:
 
-1. You allowlist the domain `public.cdn.getdbt.com`.
-2. Content inspection rules permit downloading native library file types (`.dylib`, `.so`, `.dll`) from that domain.
+1. Домен `public.cdn.getdbt.com` добавлен в список разрешённых.
+2. Правила проверки содержимого разрешают загрузку файлов нативных библиотек (`.dylib`, `.so`, `.dll`) с этого домена.
 
-If you cannot change your proxy configuration, see [Restricted network installation](#restricted-network-installation).
+Если вы не можете изменить конфигурацию прокси-сервера, см. раздел [Установка в сети с ограниченным доступом](#restricted-network-installation).
 
-### Restricted network installation
+### Установка в сети с ограниченным доступом {#restricted-network-installation}
 
-If your environment cannot access `public.cdn.getdbt.com` for adapter driver downloads, you can pre-build a bundle of the <Constant name="fusion" /> binary and the adapter drivers into a single `.tar.gz` or Docker image and host it on an internally approved fileshare.
+Если в вашей среде нет доступа к `public.cdn.getdbt.com` для загрузки драйверов адаптеров, вы можете заранее упаковать бинарный файл <Constant name="fusion" /> и драйверы адаптеров в единый архив `.tar.gz` или образ Docker и разместить его на файловом ресурсе, одобренном для внутреннего использования.
 
-When you assemble a bundle for air-gapped or firewall-restricted machines:
+При подготовке комплекта для компьютеров, изолированных от внешних сетей или с доступом, ограниченным межсетевым экраном:
 
-1. Use the [version compatibility matrix](/docs/dbt-versions/dbt-version-compatibility#compatibility-matrix) to choose a <Constant name="fusion" /> version that matches the dbt VS Code extension your users run.
-2. Verify the binary against its published SHA-256 checksum before distributing it. Refer to [Verify binaries for manual and air-gapped installs](/docs/dbt-versions/dbt-version-compatibility#verify-binaries-for-manual-and-air-gapped-installs).
-3. Point the dbt VS Code extension at the bundled binary with the `dbt.fusionPath` setting. Refer to [dbt extension settings](/docs/configure-dbt-extension#dbt-extension-settings).
+1. Используйте [матрицу совместимости версий](/docs/dbt-versions/dbt-version-compatibility#compatibility-matrix), чтобы выбрать версию <Constant name="fusion" />, совместимую с расширением dbt для VS Code, которое используют ваши пользователи.
+2. Перед распространением проверьте бинарный файл по опубликованной контрольной сумме SHA-256. См. раздел [Проверка бинарных файлов при ручной установке и установке в изолированных средах](/docs/dbt-versions/dbt-version-compatibility#verify-binaries-for-manual-and-air-gapped-installs).
+3. Укажите расширению dbt для VS Code путь к бинарному файлу из комплекта с помощью настройки `dbt.fusionPath`. См. раздел [Настройки расширения dbt](/docs/configure-dbt-extension#dbt-extension-settings).
 
-For supported adapters, refer to [v2 requirements](/docs/dbt/supported-features#requirements).
+Информацию о поддерживаемых адаптерах см. в разделе [Требования v2](/docs/dbt/supported-features#requirements).
 
-## Telemetry {#telemetry}
+## Телеметрия {#telemetry}
 
-<Constant name="fusion" /> sends anonymous usage statistics to help improve the product. If the telemetry endpoint is unreachable (for example, blocked by a firewall or proxy), <Constant name="fusion" /> logs errors on each invocation.
+<Constant name="fusion" /> отправляет анонимную статистику использования, чтобы помочь улучшить продукт. Если конечная точка телеметрии недоступна (например, заблокирована межсетевым экраном или прокси-сервером), <Constant name="fusion" /> записывает ошибки в журнал при каждом запуске.
 
-| Resource | URL | Purpose |
+| Ресурс | URL | Назначение |
 | --- | --- | --- |
-| **Telemetry** | `https://p.vx.dbt.com` | Sends anonymous usage statistics |
+| **Телеметрия** | `https://p.vx.dbt.com` | Отправка анонимной статистики использования |
 
-To suppress these errors without allowlisting the URL, disable telemetry using the options described in [Anonymous usage stats](/reference/global-configs/usage-stats).
+Чтобы предотвратить появление этих ошибок без добавления URL в список разрешённых, отключите телеметрию с помощью параметров, описанных в разделе [Анонимная статистика использования](/reference/global-configs/usage-stats).
 
-## Manifest downloads (dbt platform only) <Lifecycle status="managed" /> {#manifest-downloads} 
+## Загрузка манифестов (только для dbt platform) <Lifecycle status="managed" /> {#manifest-downloads} 
 
-For [<Constant name="dbt_platform" />](/docs/platform/about-platform/dbt-platform-features) customers using <Constant name="fusion" /> locally, <Constant name="fusion" /> downloads production manifests from <Constant name="dbt_platform" /> to enable features like [deferral](/reference/node-selection/defer) and [cross-project references](/docs/mesh/govern/project-dependencies). The [cloud storage provider](/docs/platform/about-platform/access-regions-ip-addresses) hosting your <Constant name="dbt_platform" /> cell serves these manifests via **pre-signed URLs**.
+Для клиентов [<Constant name="dbt_platform" />](/docs/platform/about-platform/dbt-platform-features), использующих <Constant name="fusion" /> локально, <Constant name="fusion" /> загружает манифесты производственной среды из <Constant name="dbt_platform" />, чтобы обеспечить работу таких возможностей, как [отложенное разрешение ссылок (deferral)](/reference/node-selection/defer) и [межпроектные ссылки](/docs/mesh/govern/project-dependencies). [Провайдер облачного хранилища](/docs/platform/about-platform/access-regions-ip-addresses), у которого размещена ваша ячейка <Constant name="dbt_platform" />, предоставляет эти манифесты через **предварительно подписанные URL-адреса**.
 
-The specific hostnames depend on your <Constant name="dbt_platform" /> deployment region and the underlying cloud provider. To ensure <Constant name="fusion" /> can download manifests, allowlist the appropriate storage domain for your region:
+Конкретные имена хостов зависят от региона развёртывания <Constant name="dbt_platform" /> и используемого облачного провайдера. Чтобы <Constant name="fusion" /> мог загружать манифесты, добавьте в список разрешённых соответствующий домен хранилища для вашего региона:
 
-| Cloud provider | URL pattern | Example |
+| Облачный провайдер | Шаблон URL | Пример |
 | --- | --- | --- |
 | **AWS (S3)** | `https://s3.<region>.amazonaws.com` | `https://s3.ap-northeast-1.amazonaws.com` (JP1) |
 | **Azure (Blob Storage)** | `https://<account>.blob.core.windows.net` | `https://prodeu2.blob.core.windows.net` (EU2) |
 | **GCP (Cloud Storage)** | `https://storage.googleapis.com` | `storage.googleapis.com` |
 
-Because pre-signed URLs contain region and account-specific hostnames that may change over time, we recommend allowlisting the **base storage domain** for your cloud provider rather than individual URLs:
+Поскольку предварительно подписанные URL-адреса содержат имена хостов, зависящие от региона и учётной записи и способные меняться со временем, мы рекомендуем добавлять в список разрешённых **базовый домен хранилища** вашего облачного провайдера, а не отдельные URL-адреса:
 
 - **AWS** &mdash; `s3.*.amazonaws.com`
 - **Azure** &mdash; `*.blob.core.windows.net`

@@ -1,151 +1,151 @@
 ---
-title: "Configuring Azure Private Link to your self-hosted service"
+title: "Настройка Azure Private Link для сервиса в вашей инфраструктуре"
 id: azure-self-hosted
-description: "Setting up an Azure Private Link connection between dbt and your self-hosted service."
-sidebar_label: "Self-hosted services"
+description: "Настройка подключения Azure Private Link между dbt и сервисом в вашей инфраструктуре."
+sidebar_label: "Сервисы в вашей инфраструктуре"
 availability:
   surface: platform
   access: paid_plan
   minPlan: enterprise_plus
 ---
 
-# Configuring Azure Private Link for a self-hosted service
+# Настройка Azure Private Link для сервиса в вашей инфраструктуре
 
 import SetUpPages from '/snippets/_available-tiers-enterprise-plus.md';
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-Azure Private Link enables secure, private connectivity between <Constant name="dbt" /> and your self-hosted services. These services may include version control systems (VCS), data warehouses, or any other applications you manage. With Private Link, you do not need to expose your service to the public internet. All communication occurs over a private network, significantly enhancing security. For more details, refer to the Azure [Private Link documentation](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview).
+Azure Private Link обеспечивает безопасное частное подключение между <Constant name="dbt" /> и сервисами в вашей инфраструктуре. К таким сервисам могут относиться системы контроля версий (VCS), хранилища данных и любые другие приложения, которыми вы управляете. При использовании Private Link вам не нужно предоставлять доступ к сервису через общедоступный интернет. Весь обмен данными происходит по частной сети, что значительно повышает безопасность. Подробнее см. в [документации Azure Private Link](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview).
 
-## What this guide covers
-The focus of this guide is not on any particular service or backend architecture, but on the [Private Link Service](#terminology) that interconnects <Constant name="dbt" /> with your self-hosted service. This process should be standard across most use cases.
+## Что рассматривается в этом руководстве
+Это руководство посвящено не конкретному сервису или архитектуре серверной части, а [Private Link Service](#terminology), который связывает <Constant name="dbt" /> с сервисом в вашей инфраструктуре. Этот процесс должен быть одинаковым для большинства сценариев использования.
 
-<!-- TODO: Add architecture diagram showing scope of guide -->
-<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/scope-of-guide.png" width="90%" title="The scope of this guide" />
+<!-- TODO: Добавить архитектурную схему, показывающую область охвата руководства -->
+<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/scope-of-guide.png" width="90%" title="Область охвата этого руководства" />
 
-:::note Out of scope
-This guide does not cover the configuration or troubleshooting of your self-hosted service, load balancer, or backend pool health, due to the virtually limitless ways these environments can be configured. While dbt Support may assist with such issues on a best-effort basis, we recommend engaging [Azure Support](https://azure.microsoft.com/en-us/support/) to expedite resolution.
+:::note Что не входит в руководство
+Это руководство не охватывает настройку и устранение неполадок сервиса в вашей инфраструктуре, балансировщика нагрузки или работоспособности серверного пула, поскольку варианты конфигурации таких сред практически не ограничены. Служба поддержки dbt может по возможности помочь с такими проблемами, однако для ускорения их решения мы рекомендуем обращаться в [службу поддержки Azure](https://azure.microsoft.com/en-us/support/).
 :::
 
-## Audience
-This guide is intended for cloud network administrators or engineers responsible for configuring and maintaining secure network communications within your organization's Microsoft Azure environment.
+## Для кого предназначено руководство
+Это руководство предназначено для администраторов облачных сетей и инженеров, отвечающих за настройку и поддержание безопасного сетевого взаимодействия в среде Microsoft Azure вашей организации.
 
-## Terminology
-This guide uses several important terms related to Azure Private Link. Understanding these definitions will help ensure successful implementation. For a more detailed explanation of these concepts, refer to the [Azure Private Link Service documentation](https://learn.microsoft.com/en-us/azure/private-link/private-link-service-overview).
+## Терминология {#terminology}
+В этом руководстве используется несколько важных терминов, связанных с Azure Private Link. Понимание этих определений поможет успешно выполнить настройку. Более подробное объяснение этих понятий см. в [документации Azure Private Link Service](https://learn.microsoft.com/en-us/azure/private-link/private-link-service-overview).
 
-- **Consumer:** In this context, the Consumer is <Constant name="dbt" />, which creates a private endpoint to connect to your Private Link Service.
-- **Service provider:** Your organization, which owns and operates the service behind the Standard Load Balancer and creates the Private Link Service.
-- **Private Link Service:** The Azure resource that exposes your service to consumers, allowing them to create private endpoints to access it. This is tied to a Standard Load Balancer frontend IP configuration.
-- **Alias:** A globally unique name generated by Azure for your Private Link Service. You share this alias with dbt Support to establish the connection to your service as a consumer.
-- **Standard Load Balancer:** The required load balancer type that sits in front of your service. Your application must run behind a Standard Load Balancer to use Private Link Service.
-- **NAT subnet:** A dedicated subnet in your VNet used for Source Network Address Translation (SNAT) IP addresses for the Private Link Service. Consumer traffic appears to originate from this pool of private IP addresses.
+- **Потребитель (Consumer):** В данном контексте потребителем является <Constant name="dbt" />, который создаёт частную конечную точку для подключения к вашему Private Link Service.
+- **Поставщик сервиса (Service provider):** Ваша организация, которая владеет сервисом за Standard Load Balancer, эксплуатирует его и создаёт Private Link Service.
+- **Private Link Service:** Ресурс Azure, который предоставляет потребителям доступ к вашему сервису, позволяя им создавать частные конечные точки для подключения к нему. Этот ресурс привязан к конфигурации внешнего IP-адреса Standard Load Balancer.
+- **Псевдоним (Alias):** Глобально уникальное имя, которое Azure генерирует для вашего Private Link Service. Вы передаёте этот псевдоним службе поддержки dbt, чтобы dbt мог подключиться к вашему сервису в качестве потребителя.
+- **Standard Load Balancer:** Обязательный тип балансировщика нагрузки, размещаемого перед вашим сервисом. Для использования Private Link Service ваше приложение должно работать за Standard Load Balancer.
+- **Подсеть NAT:** Выделенная подсеть в вашей VNet, используемая для IP-адресов трансляции сетевых адресов источника (SNAT) в Private Link Service. Трафик потребителя выглядит так, будто он поступает из этого пула частных IP-адресов.
 
-## Prerequisites
-Before you begin, make sure to review the following requirements:
+## Предварительные требования
+Перед началом ознакомьтесь со следующими требованиями:
 
-1. **Supported Load Balancer Types**
+1. **Поддерживаемые типы балансировщиков нагрузки**
 
-    dbt has officially validated Private Link functionality with the following load balancer type:
+    dbt официально проверил работу Private Link со следующим типом балансировщика нагрузки:
     - Standard Load Balancer (Internal)
 
-    > While other configurations may be compatible with Azure Private Link Services, this guide assumes your service is configured behind a Standard Internal Load Balancer.
-    > For more details, see the [Azure Load Balancer documentation](https://learn.microsoft.com/en-us/azure/load-balancer/load-balancer-overview).
+    > Хотя другие конфигурации могут быть совместимы с Azure Private Link Services, в этом руководстве предполагается, что ваш сервис настроен за Standard Internal Load Balancer.
+    > Подробнее см. в [документации Azure Load Balancer](https://learn.microsoft.com/en-us/azure/load-balancer/load-balancer-overview).
 
-2. **Service Health**
+2. **Работоспособность сервиса**
 
-    - Confirm that your service or application is operational and healthy behind the designated load balancer before proceeding.
+    - Прежде чем продолжить, убедитесь, что ваш сервис или приложение работает корректно за выбранным балансировщиком нагрузки.
 
-3. **dbt Azure Subscription ID**
+3. **Идентификатор подписки dbt в Azure**
 
-    - Contact [dbt Support](mailto:support@getdbt.com) to obtain the dbt Azure subscription ID. You will need this in order to allow dbt to connect to your Private Link Service.
+    - Обратитесь в [службу поддержки dbt](mailto:support@getdbt.com), чтобы получить идентификатор подписки dbt в Azure. Он потребуется, чтобы разрешить dbt подключаться к вашему Private Link Service.
 
 
-## Instructions
-1. Log in to the [Azure Portal](https://portal.azure.com).
-2. Navigate to the Azure Subscription and Resource Group where your self-hosted service is located.
+## Инструкции
+1. Войдите на [портал Azure](https://portal.azure.com).
+2. Перейдите к подписке Azure и группе ресурсов, в которых размещён сервис в вашей инфраструктуре.
 
-### Create a NAT subnet for the Private Link service
-3. Under the **Resources** section, search for **Virtual network** and go into the VNet where your self-hosted service is running.
-4. Expand the **Settings** in the left side panel, and go into **Subnets**. Click the **+ Subnet** button to create a new subnet.
-5. In the subnet creation panel:
+### Создание подсети NAT для Private Link Service
+3. В разделе **Resources** найдите **Virtual network** и откройте VNet, в которой работает сервис в вашей инфраструктуре.
+4. Разверните **Settings** на панели слева и перейдите в **Subnets**. Нажмите кнопку **+ Subnet**, чтобы создать новую подсеть.
+5. На панели создания подсети:
 
-    a. **Subnet purpose:** Leave as **Default**
+    a. **Subnet purpose:** Оставьте значение **Default**
 
-    b. **Name:** Provide a descriptive name, such as **private-link-nat-subnet**
+    b. **Name:** Укажите понятное имя, например **private-link-nat-subnet**
 
-    c. **IPv4 address range:** Choose the appropriate CIDR block from your VNet that you want to create a NAT subnet from. In this example, the CIDR is 10.30.0.0/16, as seen in the screenshot below.
+    c. **IPv4 address range:** Выберите подходящий блок CIDR из вашей VNet, в котором вы хотите создать подсеть NAT. В этом примере используется CIDR 10.30.0.0/16, как показано на снимке экрана ниже.
 
-    d. **Starting address:** Your desired starting address of the new subnet
+    d. **Starting address:** Укажите желаемый начальный адрес новой подсети
 
-    e. **Size:** The smallest available size is recommended (for example, /28).
+    e. **Size:** Рекомендуется наименьший доступный размер (например, /28).
 
-    f. Check the **Enable private subnet (no default outbound access)** checkbox.
+    f. Установите флажок **Enable private subnet (no default outbound access)**.
 
-    g. **NAT gateway:** Leave as **None**
+    g. **NAT gateway:** Оставьте значение **None**
 
-    h. Leave **Network security group** and **Route table** fields as **None** unless your environment requires specific values here.
+    h. Оставьте в полях **Network security group** и **Route table** значение **None**, если ваша среда не требует указания других значений.
 
-    i. Leave all remaining fields as their default values.
+    i. Оставьте значения по умолчанию во всех остальных полях.
 
-    j. Click **Add** to create the subnet.
+    j. Нажмите **Add**, чтобы создать подсеть.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/vnet-search.png" width="90%" title="Screenshot of step 3: Search for VNet of self-hosted service" />
+<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/vnet-search.png" width="90%" title="Снимок экрана для шага 3: поиск VNet сервиса в вашей инфраструктуре" />
 
-<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/nat-subnet-creation.png" width="90%" title="Screenshot of steps 4-5: NAT Subnet creation for Private Link Service" />
+<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/nat-subnet-creation.png" width="90%" title="Снимок экрана для шагов 4–5: создание подсети NAT для Private Link Service" />
 
 </DocCarousel>
 
-### Create a Private Link service
-6. After the subnet creation has completed, in the search field at the top-middle of the portal, search for **Private link services**, and click on its page.
-7. Click the **+ Create** button.
-8. In the Create private link service page:
+### Создание Private Link Service
+6. После завершения создания подсети в поле поиска в верхней центральной части портала найдите **Private link services** и откройте соответствующую страницу.
+7. Нажмите кнопку **+ Create**.
+8. На странице Create private link service:
 
-    **Under Basics**
+    **В разделе Basics**
 
-    a. Select your **Subscription** and **Resource group**
+    a. Выберите **Subscription** и **Resource group**
 
-    b. **Name:** Give a descriptive name, such as **pls-to-my-vcs**
+    b. **Name:** Укажите понятное имя, например **pls-to-my-vcs**
 
-    c. **Region:** Select the region where your self-hosted service is located
+    c. **Region:** Выберите регион, в котором размещён сервис в вашей инфраструктуре
 
-    **Under Outbound settings**
+    **В разделе Outbound settings**
 
-    d. **Load balancer:** In the dropdown, choose the Standard Internal Load Balancer that is in front of your self-hosted service
+    d. **Load balancer:** В раскрывающемся списке выберите Standard Internal Load Balancer, размещённый перед сервисом в вашей инфраструктуре
 
-    e. **Load balancer frontend IP address:** Choose the frontend IP configuration for your load balancer
+    e. **Load balancer frontend IP address:** Выберите конфигурацию внешнего IP-адреса вашего балансировщика нагрузки
 
-    f. **Source NAT subnet:** Select the NAT subnet you created in step 5 above
+    f. **Source NAT subnet:** Выберите подсеть NAT, созданную на шаге 5 выше
 
-    g. **Source NAT Virtual network:** This will auto-populate based on your subnet selection
+    g. **Source NAT Virtual network:** Это поле будет заполнено автоматически на основе выбранной подсети
 
-    h. **Enable TCP proxy V2:** Leave this disabled
+    h. **Enable TCP proxy V2:** Оставьте этот параметр отключённым
 
-    **Under Access security**
+    **В разделе Access security**
 
-    i. Select **Restricted by subscription**
+    i. Выберите **Restricted by subscription**
 
-    j. Click **Add subscriptions** and add dbt's Azure subscription ID that you acquired from support
+    j. Нажмите **Add subscriptions** и добавьте идентификатор подписки dbt в Azure, полученный от службы поддержки
 
-    k. Set **Request Auto-approve** selection to **Yes** for dbt's subscription
+    k. Установите для параметра **Request Auto-approve** значение **Yes** для подписки dbt
 
-    l. Click **Next: Review + create**, then **Create**
+    l. Нажмите **Next: Review + create**, затем **Create**
 
-<!-- TODO: Add screenshot of Private Link Service creation -->
-<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/privatelink-service-creation.png" width="90%" title="Screenshot of step 8: Creation of Azure Private Link Service" />
+<!-- TODO: Добавить снимок экрана создания Private Link Service -->
+<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/privatelink-service-creation.png" width="90%" title="Снимок экрана для шага 8: создание Azure Private Link Service" />
 
-9. After the Private Link Service has been created, click on it to open its details page.
-10. Copy the **Alias** value (this is the identifier you'll share with dbt Support).
+9. После создания Private Link Service нажмите на него, чтобы открыть страницу с подробными сведениями.
+10. Скопируйте значение **Alias** (это идентификатор, который вы передадите службе поддержки dbt).
 
-<!-- TODO: Add screenshot of Private Link Service details page showing Alias -->
-<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/alias-info.png" width="90%" title="Screenshot of step 10: Copy the Private Link Service Alias" />
+<!-- TODO: Добавить снимок экрана страницы сведений Private Link Service с полем Alias -->
+<Lightbox src="/img/docs/dbt-platform/az-self-hosted-privatelink/alias-info.png" width="90%" title="Снимок экрана для шага 10: копирование псевдонима Private Link Service" />
 
-### Providing dbt Support with connection details
+### Передача сведений о подключении службе поддержки dbt
 
-11. Add the required information to the template below, and submit your request to [dbt Support](mailto:support@getdbt.com):
+11. Добавьте необходимые сведения в приведённый ниже шаблон и отправьте запрос в [службу поддержки dbt](mailto:support@getdbt.com):
 
-<Expandable alt_header="Support request email template" is_open={true}>
+<Expandable alt_header="Шаблон письма для обращения в службу поддержки" is_open={true}>
 
 ```text
 Subject: New Azure Self-hosted Private Link Request
@@ -166,47 +166,45 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Troubleshooting
+## Устранение неполадок
 
-If the Private Link endpoint has been provisioned and configured in <Constant name="dbt" /> but connectivity is still failing, check the following in your networking setup to ensure requests and responses can be successfully routed between dbt and your service.
+Если конечная точка Private Link уже создана и настроена в <Constant name="dbt" />, но подключение по-прежнему не работает, проверьте перечисленные ниже параметры сети, чтобы убедиться, что запросы и ответы могут успешно передаваться между dbt и вашим сервисом.
 
-### Configuration checklist
+### Контрольный список конфигурации
 
-1. **Private Link Service status**
+1. **Состояние Private Link Service**
 
-   In the Azure Portal, navigate to your Private Link Service and verify the **Provisioning state** is **Succeeded**. Check the **Private endpoint connections** tab to confirm dbt's connection shows as **Approved**.
+   На портале Azure перейдите к вашему Private Link Service и убедитесь, что параметр **Provisioning state** имеет значение **Succeeded**. На вкладке **Private endpoint connections** убедитесь, что подключение dbt отображается со статусом **Approved**.
 
-2. **Load balancer backend health**
+2. **Работоспособность серверной части балансировщика нагрузки**
 
-   Navigate to your Standard Load Balancer and check the **Backend pool** health. At least one backend instance must be **Healthy**. Unhealthy backends could indicate the service is down or that a Network Security Group (NSG) is blocking traffic from the load balancer.
+   Перейдите к вашему Standard Load Balancer и проверьте работоспособность **Backend pool**. Как минимум один серверный экземпляр должен иметь статус **Healthy**. Неработоспособность серверных экземпляров может означать, что сервис недоступен или что группа безопасности сети (NSG) блокирует трафик от балансировщика нагрузки.
 
-3. **NAT subnet configuration**
+3. **Конфигурация подсети NAT**
 
-   Verify the NAT subnet has sufficient IP addresses available. Azure Private Link Service uses these IPs for SNAT. If the subnet is exhausted, new connections may fail.
+   Убедитесь, что в подсети NAT достаточно свободных IP-адресов. Azure Private Link Service использует эти IP-адреса для SNAT. Если адреса в подсети исчерпаны, новые подключения могут завершаться ошибкой.
 
-4. **Network Security Groups**
+4. **Группы безопасности сети**
 
-   If you have NSGs applied to the NAT subnet or backend subnet, ensure they allow traffic appropriately:
-   - NAT subnet: Recommended to leave NSG as **None** (as noted in the setup instructions)
-   - Backend subnet: Must allow traffic from the load balancer's frontend IP
+   Если к подсети NAT или подсети серверной части применены NSG, убедитесь, что они разрешают необходимый трафик:
+   - Подсеть NAT: рекомендуется оставить для NSG значение **None** (как указано в инструкциях по настройке)
+   - Подсеть серверной части: должна разрешать трафик с внешнего IP-адреса балансировщика нагрузки
 
-### Monitoring
+### Мониторинг
 
-To help isolate connection issues, use Azure's monitoring tools:
+Чтобы локализовать проблемы с подключением, используйте инструменты мониторинга Azure:
 
-#### Private Link Service metrics
+#### Метрики Private Link Service
 
-In the Azure Portal, navigate to your Private Link Service and click **Metrics**. Monitor:
-- **Bytes In/Out** — Confirms traffic is flowing through the service
-- **NAT Port Usage** — High usage may indicate the NAT subnet needs more IPs
+На портале Azure перейдите к вашему Private Link Service и нажмите **Metrics**. Отслеживайте:
+- **Bytes In/Out** — подтверждает, что трафик проходит через сервис
+- **NAT Port Usage** — высокая загрузка может указывать на то, что подсети NAT требуется больше IP-адресов
 
-#### Load Balancer metrics
+#### Метрики Load Balancer
 
-Navigate to your Standard Load Balancer and click **Metrics**. Monitor:
-- **Health Probe Status** — Shows backend health over time
-- **Byte Count** — Confirms traffic is reaching the load balancer
-- **SNAT Connection Count** — Tracks outbound connections
+Перейдите к вашему Standard Load Balancer и нажмите **Metrics**. Отслеживайте:
+- **Health Probe Status** — показывает работоспособность серверной части с течением времени
+- **Byte Count** — подтверждает, что трафик достигает балансировщика нагрузки
+- **SNAT Connection Count** — отслеживает исходящие подключения
 
-For more information, see [Azure Private Link monitoring](https://learn.microsoft.com/en-us/azure/private-link/private-link-service-overview#monitoring) and [Load Balancer monitoring](https://learn.microsoft.com/en-us/azure/load-balancer/monitor-load-balancer).
-
-
+Дополнительные сведения см. в разделах [Мониторинг Azure Private Link](https://learn.microsoft.com/en-us/azure/private-link/private-link-service-overview#monitoring) и [Мониторинг Load Balancer](https://learn.microsoft.com/en-us/azure/load-balancer/monitor-load-balancer).

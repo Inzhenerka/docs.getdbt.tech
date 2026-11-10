@@ -1,6 +1,6 @@
 ---
 title: runtime_version
-description: "Specify the Python runtime version used to run a Python user-defined function (UDF) on Snowflake and BigQuery."
+description: "Укажите версию среды Python для выполнения пользовательской функции (UDF) в Snowflake и BigQuery."
 sidebar_label: "runtime_version"
 id: runtime-version
 ---
@@ -25,7 +25,7 @@ runtime_version: <string> # обязателен для Snowflake и BigQuery; �
 
 - [Snowflake](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction): `3.10`, `3.11`, `3.12` и `3.13`
 - [BigQuery](https://cloud.google.com/bigquery/docs/user-defined-functions-python): `3.11`
-- Databricks: Accepted for compatibility but has no effect. Databricks manages the Python runtime internally, so dbt displays a warning if you set it. Available in `dbt-databricks` v1.12+.
+- Databricks: параметр принимается для совместимости, но не действует. Databricks управляет средой Python самостоятельно, поэтому dbt выдаёт предупреждение, если параметр задан. Доступно в `dbt-databricks` v1.12 и выше.
 
 ## Пример {#example}
 

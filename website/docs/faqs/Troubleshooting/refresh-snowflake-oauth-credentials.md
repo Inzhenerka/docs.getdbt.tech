@@ -1,19 +1,19 @@
 ---
-title: Reconnecting to Snowflake OAuth after authentication expires
-description: "The `authentication has expired` error happens because Snowflake requires tools to renew their OAuth connection at least every 90 days."
-sidebar_label: 'Reconnecting to Snowflake OAuth after authentication expires'
+title: Повторное подключение к Snowflake через OAuth после истечения срока действия аутентификации
+description: "Ошибка `authentication has expired` возникает, потому что Snowflake требует, чтобы инструменты обновляли подключение через OAuth не реже одного раза в 90 дней."
+sidebar_label: 'Повторное подключение к Snowflake через OAuth после истечения срока действия аутентификации'
 ---
 
-When you connect Snowflake to <Constant name="dbt_platform"/> using [OAuth](/docs/platform/manage-access/set-up-snowflake-oauth), dbt stores a refresh token. This allows your user credentials to be reused in tools like the <Constant name="studio_ide" /> and the dbt Semantic Layer without needing to re-authenticate each time.
+При подключении Snowflake к <Constant name="dbt_platform"/> с помощью [OAuth](/docs/platform/manage-access/set-up-snowflake-oauth) dbt сохраняет токен обновления. Это позволяет повторно использовать ваши учетные данные в таких инструментах, как <Constant name="studio_ide" /> и dbt Semantic Layer, без необходимости каждый раз проходить аутентификацию заново.
 
-If you see an `authentication has expired` error when you try to run queries, you must renew your connection between Snowflake and the <Constant name="dbt_platform"/>.
+Если при попытке выполнить запросы вы видите ошибку `authentication has expired`, необходимо обновить подключение между Snowflake и <Constant name="dbt_platform"/>.
 
-To resolve the issue, complete the following steps:
+Чтобы устранить проблему, выполните следующие действия:
 
-1. Go to **Your profile**, accessible from the navigation menu.
-2. Navigate to **Credentials** and then choose the project where you're experiencing the issue.
-3. Under **User credentials**, click the **Reconnect Snowflake Account** button. This will guide you through re-authenticating using your SSO workflow.
+1. Перейдите в раздел **Your profile**, доступный в меню навигации.
+2. Откройте раздел **Credentials** и выберите проект, в котором возникла проблема.
+3. В разделе **User credentials** нажмите кнопку **Reconnect Snowflake Account**. Затем следуйте инструкциям, чтобы повторно пройти аутентификацию с помощью единого входа (SSO).
 
-Your Snowflake administrator can [configure the refresh token validity period](/docs/platform/manage-access/set-up-snowflake-oauth#create-a-security-integration), up to the maximum 90 days.
+Администратор Snowflake может [настроить срок действия токена обновления](/docs/platform/manage-access/set-up-snowflake-oauth#create-a-security-integration), но он не может превышать 90 дней.
 
-If you've tried these step and are still getting this error, please contact the Support team at support@getdbt.com for further assistance.
+Если вы выполнили эти действия, но ошибка по-прежнему возникает, обратитесь в службу поддержки по адресу support@getdbt.com за дополнительной помощью.

@@ -68,7 +68,7 @@ metadata = response.json()['data'][ENDPOINT]
 
 На этой странице приведено несколько наглядных примеров запросов. Дополнительные примеры см. в разделе [Сценарии использования и примеры для Discovery API](/docs/dbt-apis/discovery-use-cases-and-examples).
 
-## Discovery API endpoints {#discovery-api-endpoints}
+## Конечные точки Discovery API {#discovery-api-endpoints}
 
 Найдите свой эндпоинт Discovery API в разделе **Account settings** → **Access URLs** в <Constant name="dbt_platform"/>. Формат зависит от типа развертывания и региона:
 

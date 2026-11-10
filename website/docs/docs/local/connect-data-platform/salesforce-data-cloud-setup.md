@@ -1,6 +1,6 @@
 ---
-title: "Salesforce Data 360 setup"
-description: "Read this guide to learn about the Salesforce Data 360 warehouse setup in dbt."
+title: "Настройка Salesforce Data 360"
+description: "В этом руководстве описана настройка хранилища Salesforce Data 360 в dbt."
 id: "salesforce-data-cloud-setup"
 meta:
   maintained_by: dbt Labs
@@ -18,17 +18,17 @@ unlisted: true
 availability: local_free
 ---
 
-# Salesforce Data 360 setup <Lifecycle status="beta"/>
+# Настройка Salesforce Data 360 <Lifecycle status="beta"/>
 
-This `dbt-salesforce` adapter is available via the <Constant name="fusion_engine" /> CLI. To access the adapter, [install <Constant name="fusion" />](/docs/local/install-dbt). We recommend using the [VS Code Extension](/docs/local/install-dbt?version=2) as the development interface. <Constant name="dbt_platform" /> support coming soon. 
+Адаптер `dbt-salesforce` доступен через CLI <Constant name="fusion_engine" />. Чтобы получить доступ к адаптеру, [установите <Constant name="fusion" />](/docs/local/install-dbt). В качестве интерфейса разработки рекомендуем использовать [расширение для VS Code](/docs/local/install-dbt?version=2). Поддержка в <Constant name="dbt_platform" /> появится в ближайшее время. 
 
 import SalesforcePrereqs from '/snippets/_salesforce-data-cloud-prereqs.md';
 
 <SalesforcePrereqs />
 
-## Configure <Constant name="fusion" />
+## Настройка <Constant name="fusion" />
 
-To connect dbt to Salesforce Data 360, set up your `profiles.yml`. Refer to the following configuration:
+Чтобы подключить dbt к Salesforce Data 360, настройте файл `profiles.yml`. Используйте следующую конфигурацию:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -47,15 +47,15 @@ company-name:
 </File>
 
 
-| Profile field | Required | Description | Example |
+| Поле профиля | Обязательно | Описание | Пример |
 | --- | --- | --- | --- |
-| `method` | Yes | Authentication Method. Currently, only `jwt_bearer` supported. | `jwt_bearer` |
-| `client_id` | Yes | This is the `Consumer Key` from your connected app secrets. |  |
-| `private_key_path` | Yes | File path of the `server.key` file in your computer. | `/Users/dbt_user/Documents/server.key` |
-| `login_url` | Yes | Login URL of the Salesforce instance.  | [https://login.salesforce.com](https://login.salesforce.com/) |
-| `username` | Yes | Username on the Data 360 Instance. | dbt_user@dbtlabs.com |
+| `method` | Да | Метод аутентификации. В настоящее время поддерживается только `jwt_bearer`. | `jwt_bearer` |
+| `client_id` | Да | Значение `Consumer Key` из секретов подключенного приложения. |  |
+| `private_key_path` | Да | Путь к файлу `server.key` на вашем компьютере. | `/Users/dbt_user/Documents/server.key` |
+| `login_url` | Да | URL для входа в экземпляр Salesforce.  | [https://login.salesforce.com](https://login.salesforce.com/) |
+| `username` | Да | Имя пользователя в экземпляре Data 360. | dbt_user@dbtlabs.com |
 
 
-## More information
+## Дополнительная информация
 
-Find Salesforce-specific configuration information in the [Salesforce adapter reference guide](/reference/resource-configs/data-cloud-configs).
+Информацию о настройках, специфичных для Salesforce, можно найти в [справочном руководстве по адаптеру Salesforce](/reference/resource-configs/data-cloud-configs).

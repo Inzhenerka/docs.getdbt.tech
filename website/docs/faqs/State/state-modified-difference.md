@@ -1,18 +1,18 @@
 ---
-title: How is dbt State different from using state:modified?
-description: "Learn how dbt State compares to the state:modified selector in dbt v1."
-sidebar_label: 'How is this different from state:modified?'
+title: Чем dbt State отличается от использования state:modified?
+description: "Узнайте, чем dbt State отличается от селектора state:modified в dbt v1."
+sidebar_label: 'Чем это отличается от state:modified?'
 id: state-modified-difference
 ---
 
-On its own, `state:modified` requires manual management of `manifest.json`, which is cumbersome and error-prone. dbt State is completely managed with almost zero setup and no workflow changes. In self-managed deployments, dbt State can also power `state:*` selectors directly &mdash; see the last item below.
+Сам по себе `state:modified` требует ручного управления файлом `manifest.json`, что неудобно и чревато ошибками. dbt State полностью управляется автоматически, практически не требует настройки и не меняет рабочие процессы. В развертываниях с самостоятельным управлением dbt State также может напрямую обеспечивать работу селекторов `state:*` &mdash; см. последний пункт ниже.
 
-`state:modified` only checks if a file has changed. dbt State has semantic understanding of SQL, so meaningless changes like whitespace or table aliases are not counted as a change &mdash; making dbt State smarter about what actually needs to rebuild.
+`state:modified` проверяет только то, изменился ли файл. dbt State понимает семантику SQL, поэтому несущественные изменения, такие как пробелы или псевдонимы таблиц, не учитываются &mdash; это позволяет dbt State точнее определять, что действительно нужно пересоздать.
 
-`state:modified` does not consider upstream data changes. dbt State checks all sources to see if there is any new data or if the schema has been modified. This enables dbt State to skip running models if the result of the run would be the same as before. For example, if you run `dbt run` with `state:modified` twice, it runs all modified models both times. dbt State only reruns models the second time if upstream sources have changed.
+`state:modified` не учитывает изменения данных в вышестоящих источниках. dbt State проверяет все источники на наличие новых данных или изменений схемы. Это позволяет dbt State пропускать выполнение моделей, если результат будет таким же, как прежде. Например, если дважды выполнить `dbt run` с `state:modified`, все измененные модели будут выполнены оба раза. dbt State повторно выполнит модели во второй раз только в том случае, если вышестоящие источники изменились.
 
-dbt State also has the ability to auto-defer refs and automatically clone tables when the result of the clone would have been the same as a full model run.
+dbt State также может автоматически перенаправлять ссылки ref на объекты из другого окружения и автоматически клонировать таблицы, когда результат клонирования будет таким же, как при полноценном выполнении модели.
 
-`state:modified` has a limitation on seed files over 1MB, while dbt State does not.
+У `state:modified` есть ограничение для seed-файлов размером более 1 МБ, а у dbt State такого ограничения нет.
 
-When dbt State is enabled in a self-managed deployment, all [`state:*` selectors](/reference/node-selection/methods#state) can use dbt State as their comparison source. This provides per-node granularity &mdash; each node is compared against its own last execution in the [`defer_to_target`](/reference/resource-configs/defer-to-target) environment, rather than comparing all nodes against a single `manifest.json` from the most recent job. This applies automatically when no explicit [`--state`](/reference/node-selection/configure-state) manifest has been provided. For more details, refer to [dbt State-powered `state:*` selectors](/docs/deploy/dbt-state-deferral#dbt-state-powered-state-selectors).
+Когда dbt State включен в развертывании с самостоятельным управлением, все [селекторы `state:*`](/reference/node-selection/methods#state) могут использовать dbt State как источник состояния для сравнения. Это обеспечивает детализацию на уровне отдельных узлов &mdash; каждый узел сравнивается с состоянием после его собственного последнего выполнения в окружении [`defer_to_target`](/reference/resource-configs/defer-to-target), а не все узлы сравниваются с одним файлом `manifest.json` из последнего задания. Это применяется автоматически, если манифест не был явно указан с помощью [`--state`](/reference/node-selection/configure-state). Подробнее см. в разделе [Селекторы `state:*` на базе dbt State](/docs/deploy/dbt-state-deferral#dbt-state-powered-state-selectors).

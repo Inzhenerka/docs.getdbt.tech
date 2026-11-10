@@ -1,6 +1,6 @@
 import MCPExample from '/snippets/_mcp-config-files.md';
 
-<Expandable alt_header="Самостоятельно размещённый MCP с OAuth" lifecycle="self_service,managed,managed_plus">
+<Expandable alt_header="Самостоятельно размещённый MCP с OAuth" anchor_id={"mcp-oauth" + (props.anchorSuffix ?? "")} lifecycle="self_service,managed,managed_plus">
 
 Конфигурация для пользователей, которым нужна удобная аутентификация OAuth в <Constant name="dbt_platform" />. 
 
@@ -9,7 +9,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 </Expandable>
 
-<Expandable alt_header="Самостоятельно размещённый MCP (только CLI)">
+<Expandable alt_header="Самостоятельно размещённый MCP (только CLI)" anchor_id={"mcp-cli" + (props.anchorSuffix ?? "")}>
 
 Конфигурация для самостоятельного размещения для пользователей, которым нужно только выполнять команды dbt с <Constant name="core" /> или <Constant name="fusion" />
 
@@ -35,7 +35,7 @@ import MCPExample from '/snippets/_mcp-config-files.md';
 
 </Expandable>
 
-<Expandable alt_header="Самостоятельно размещённый MCP с .env">
+<Expandable alt_header="Самостоятельно размещённый MCP с .env" anchor_id={"mcp-env" + (props.anchorSuffix ?? "")}>
 
 Расширенная конфигурация для пользователей, которым нужны собственные [переменные окружения](/docs/dbt-ai/mcp-environment-variables). Поместите файл `.env` в _корневую папку проекта dbt_ (ту же папку, где находится `dbt_project.yml`) и укажите абсолютный путь с помощью `--env-file`.
 

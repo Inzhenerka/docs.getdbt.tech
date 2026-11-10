@@ -1,14 +1,14 @@
 ---
-title: "Upgrading to v2"
+title: "Переход на v2"
 id: upgrading-to-v2
-description: New features and changes in v2
+description: Новые возможности и изменения в v2
 displayed_sidebar: "docs"
 availability:
   engine: v2
   access: free
 ---
 
-# Upgrading to v2
+# Переход на v2
 
 import FusionAdapters from '/snippets/_v2-dwh.md';
 import FusionUpgradeSteps from '/snippets/_v2-upgrade-steps.md';
@@ -17,9 +17,9 @@ import FusionThreads from '/snippets/_v2-threads.md';
 import FusionPartialParseCliFlags from '/snippets/_v2-partial-parse-cli-flags.md';
 import SourceFreshnessLegacy from '/snippets/_source-freshness-legacy.md';
 
-dbt v2 is the latest major version of the dbt framework. When you install dbt, you get <Constant name="fusion" /> by default. This guide walks you through upgrading a v1 project to v2. 
+dbt v2 — последняя основная версия фреймворка dbt. При установке dbt вы по умолчанию получаете <Constant name="fusion" />. В этом руководстве описан переход проекта с v1 на v2. 
 
-v2 is faster and stricter, but your existing project language and DAG semantics carry over, so once you upgrade, your project works as before &mdash; just faster.
+v2 работает быстрее и предъявляет более строгие требования, но язык вашего существующего проекта и семантика DAG сохраняются, поэтому после обновления проект работает как прежде &mdash; только быстрее.
 
 
 <FusionLifecycle />
@@ -28,119 +28,119 @@ import AboutFusion from '/snippets/_about-v2.md';
 
 <AboutFusion hideUpgradeLink />
 
-## Install dbt
+## Установка dbt
 
-dbt v2 has a new PyPI name: `dbt`. When installing with a package manager like `pip`, use the `dbt` namespace to get the free, fully-featured distribution:
+У dbt v2 новое имя в PyPI: `dbt`. При установке с помощью менеджера пакетов, такого как `pip`, используйте пространство имён `dbt`, чтобы получить бесплатный полнофункциональный дистрибутив:
 
 ```shell
 python -m pip install dbt
 ```
 
-For full instructions, including Homebrew, winget, and additional options, refer to [Install dbt](/docs/local/install-dbt).
+Полные инструкции, включая установку через Homebrew, winget и дополнительные варианты, приведены в разделе [Установка dbt](/docs/local/install-dbt).
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-If you have an older project that isn't ready to move to v2, or you need compatibility with existing tooling, packages, or workflows that haven't moved to v2 yet, you can stay on dbt v1.x, which remains fully supported. Over time, new capabilities will land in v2 only, so most people will eventually want to upgrade. To install or continue using v1.x, refer to [Install dbt v1.x](/docs/local/install-dbt?version=1).
+Если ваш старый проект ещё не готов к переходу на v2 или вам нужна совместимость с существующими инструментами, пакетами или рабочими процессами, которые ещё не перешли на v2, вы можете остаться на dbt v1.x — эта версия по-прежнему полностью поддерживается. Со временем новые возможности будут появляться только в v2, поэтому большинство пользователей в конечном счёте захотят обновиться. Чтобы установить или продолжить использовать v1.x, обратитесь к разделу [Установка dbt v1.x](/docs/local/install-dbt?version=1).
 
-This new major version is an opportunity to _strengthen the framework_ by removing deprecated functionality, rationalizing confusing behavior, and providing more rigorous validation on erroneous inputs. This means that there is some work involved in preparing an existing dbt project for v2.
+Эта новая основная версия даёт возможность _усовершенствовать фреймворк_: удалить устаревшую функциональность, упорядочить неоднозначное поведение и обеспечить более строгую проверку ошибочных входных данных. Это означает, что подготовка существующего проекта dbt к v2 потребует некоторых действий.
 
-That work is documented below — it should be simple, straightforward, and in many cases, auto-fixable with the [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) helper or the [agent skill](https://github.com/dbt-labs/dbt-agent-skills/tree/main/skills/dbt-migration/skills/migrating-dbt-core-to-v2).
+Эти действия описаны ниже — они должны быть простыми, понятными и во многих случаях могут выполняться автоматически с помощью вспомогательного инструмента [`dbt-autofix`](https://github.com/dbt-labs/dbt-autofix) или [навыка агента](https://github.com/dbt-labs/dbt-agent-skills/tree/main/skills/dbt-migration/skills/migrating-dbt-core-to-v2).
 
-:::tip Test v2 parser compatibility from <Constant name="dbt" /> v1.12
+:::tip Проверка совместимости с парсером v2 в <Constant name="dbt" /> v1.12
 
-If you're on <Constant name="dbt" /> v1.12, you can test the rust parser compatibility before fully migrating by using the opt-in [`--use-v2-parser`](/reference/global-configs/parsing#opt-in-v2-parser) flag. This delegates parsing to the v2 parser without changing any other behavior, making it a low-risk way to catch compatibility issues early.
+Если вы используете <Constant name="dbt" /> v1.12, вы можете проверить совместимость с парсером на Rust до полного перехода, включив флаг [`--use-v2-parser`](/reference/global-configs/parsing#opt-in-v2-parser). Он передаёт разбор парсеру v2, не меняя остального поведения, что позволяет заранее выявить проблемы совместимости с минимальным риском.
 
 :::
 
 <FusionUpgradeSteps />
 
-### Supported adapters
+### Поддерживаемые адаптеры
 
-The following adapters are supported in v2:
+В v2 поддерживаются следующие адаптеры:
 
 <FusionAdapters />
 
-### A clean slate
+### С чистого листа
 
-v2 will not support any deprecated functionality (see the [Changes overview](/reference/changes-overview) for details):
-- All [deprecation warnings](/reference/deprecations) must be resolved before upgrading to the new engine. This includes historic deprecations and [new ones as of <Constant name="dbt" /> v1.10](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.10#deprecation-warnings).
-- Some [behavior change flags](/reference/global-configs/behavior-changes#behavior-change-flags) will be removed (generally enabled). Flags marked `2.0` in the **Removed** column in that table are removed: the new behavior is always enabled and you can no longer opt out with `flags:` in your `dbt_project.yml`. All other flags without a removal version (marked `-`) remain configurable, including v2-specific flags listed later on that page.
+v2 не будет поддерживать никакую устаревшую функциональность (подробнее см. [Обзор изменений](/reference/changes-overview)):
+- Перед переходом на новый движок необходимо устранить все [предупреждения об устаревании](/reference/deprecations). Это касается как ранее устаревших возможностей, так и [новых предупреждений, появившихся в <Constant name="dbt" /> v1.10](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.10#deprecation-warnings).
+- Некоторые [флаги изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags) будут удалены (как правило, соответствующее поведение будет включено). Флаги, отмеченные значением `2.0` в столбце **Removed** этой таблицы, удалены: новое поведение всегда включено, и отключить его через `flags:` в `dbt_project.yml` больше нельзя. Все остальные флаги без указанной версии удаления (отмеченные `-`) остаются настраиваемыми, включая флаги, специфичные для v2 и перечисленные далее на этой странице.
 
-### Ecosystem packages
+### Пакеты экосистемы
 
-The most popular `dbt-labs` packages (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) are already compatible with v2. External packages published by organizations outside of dbt may use outdated code or incompatible features that fail to parse in v2. We're working with those package maintainers to make packages available for v2. Packages requiring an upgrade to a new release for v2 compatibility, will be documented in this upgrade guide.
+Самые популярные пакеты `dbt-labs` (`dbt_utils`, `audit_helper`, `dbt_external_tables`, `dbt_project_evaluator`) уже совместимы с v2. Сторонние пакеты, опубликованные организациями за пределами dbt, могут использовать устаревший код или несовместимые возможности, которые не удаётся разобрать в v2. Мы работаем с сопровождающими этих пакетов, чтобы сделать их доступными для v2. Пакеты, для совместимости которых с v2 требуется обновление до нового выпуска, будут указаны в этом руководстве по переходу.
 
-## New and changed features and functionality 
+## Новые и изменённые возможности и функциональность 
 
-### Strict validation
+### Строгая валидация
 
-In v1, misspelled configs, unexpected YAML keys, and invalid flags were silently ignored. In v2, dbt enforces a tightly-defined language specification at parse time and raises explicit errors for any violation, including unused config paths in `dbt_project.yml`, unknown CLI options, and duplicate config keys.
+В v1 настройки с опечатками, неожиданные ключи YAML и недопустимые флаги молча игнорировались. В v2 dbt применяет строго определённую спецификацию языка на этапе разбора и выдаёт явные ошибки при любых нарушениях, включая неиспользуемые пути конфигурации в `dbt_project.yml`, неизвестные параметры CLI и дублирующиеся ключи конфигурации.
 
-### Faster Rust parser
+### Более быстрый парсер на Rust
 
-The v2 engine is a complete rewrite in Rust, delivering faster parse and compile times, especially on large projects. No configuration is needed; the performance improvement is automatic.
+Движок v2 полностью переписан на Rust, что ускоряет разбор и компиляцию, особенно в крупных проектах. Настройка не требуется; повышение производительности происходит автоматически.
 
 ### dbt Information Schema
 
-Similar to a database's `INFORMATION_SCHEMA`, the [dbt Information Schema](/docs/build/dbt-information-schema) is a contracted interface into the metadata for all of the resources in your dbt project.
+Подобно `INFORMATION_SCHEMA` в базе данных, [dbt Information Schema](/docs/build/dbt-information-schema) представляет собой интерфейс с гарантированным контрактом для доступа к метаданным всех ресурсов вашего проекта dbt.
 
-When you use the `--generate-info-schema` flag or set `DBT_ENGINE_GENERATE_INFO_SCHEMA=true`, dbt writes the Information Schema to `target/info_schema/` in a versioned subdirectory (for example, `target/info_schema/v1/`) as standard Parquet files. The metadata available in the schema grows with each step: parsing produces basic metadata, compiling adds model column types and column-level lineage (with `--static-analysis strict`), and running or building populates runtime results.
+При использовании флага `--generate-info-schema` или установке `DBT_ENGINE_GENERATE_INFO_SCHEMA=true` dbt записывает Information Schema в `target/info_schema/`, в подкаталог с номером версии (например, `target/info_schema/v1/`), в виде стандартных файлов Parquet. Доступные в схеме метаданные дополняются на каждом этапе: разбор создаёт базовые метаданные, компиляция добавляет типы столбцов моделей и происхождение данных на уровне столбцов (при использовании `--static-analysis strict`), а выполнение или сборка добавляют результаты выполнения.
 
-For more information, refer to [dbt Information Schema](/docs/build/dbt-information-schema).
+Подробнее см. [dbt Information Schema](/docs/build/dbt-information-schema).
 
-### Checks
+### Проверки
 
-In dbt v2, you can create [checks](/docs/build/checks) to enforce project standards (for example, all models must have a description, a public model must have an owner, and so on) at parse time, before any warehouse work runs. Write a SQL rule under the `checks/` directory, then run checks on demand with `dbt check`. Checks also run automatically with every `dbt build`. Use `--skip-checks` to bypass checks on a build.
+В dbt v2 можно создавать [проверки](/docs/build/checks), чтобы обеспечивать соблюдение стандартов проекта (например, у всех моделей должно быть описание, у публичной модели должен быть владелец и т. д.) на этапе разбора, до выполнения каких-либо операций в хранилище. Напишите SQL-правило в каталоге `checks/`, а затем запускайте проверки по мере необходимости с помощью `dbt check`. Проверки также автоматически выполняются при каждом запуске `dbt build`. Используйте `--skip-checks`, чтобы пропустить проверки при сборке.
 
-For more information, refer to [Checks](/docs/build/checks).
+Подробнее см. [Проверки](/docs/build/checks).
 
 ### dbt Docs v2
 
-v2 introduces [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2), a fast, modern self-hosted catalog experience built to help you understand and trust your production data. You get column-level lineage, Semantic Layer metadata, and a beautifully refreshed interface, all working smoothly on the largest projects. Under the hood, your metadata lives in efficient Parquet artifacts for faster load times and a catalog that scales as your project grows.
+В v2 появилась [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2) — быстрый современный каталог для самостоятельного размещения, который помогает разобраться в производственных данных и доверять им. Вы получаете происхождение данных на уровне столбцов, метаданные Semantic Layer и полностью обновлённый интерфейс, который плавно работает даже с самыми крупными проектами. На внутреннем уровне метаданные хранятся в эффективных артефактах Parquet, что ускоряет загрузку и позволяет каталогу масштабироваться по мере роста проекта.
 
-`dbt docs generate` compiles your project, produces the v2 Parquet artifacts, and exports a static site in a single command. `dbt docs serve` previews that site locally. Because the browser queries those artifacts directly with DuckDB-WASM, you can also host the generated files on any static file host. Column-level lineage is visible when you build with `--static-analysis strict`.
+`dbt docs generate` компилирует проект, создаёт артефакты Parquet v2 и экспортирует статический сайт одной командой. `dbt docs serve` позволяет просмотреть этот сайт локально. Поскольку браузер запрашивает эти артефакты напрямую через DuckDB-WASM, сгенерированные файлы также можно разместить на любом хостинге статических файлов. Происхождение данных на уровне столбцов отображается при сборке с `--static-analysis strict`.
 
-dbt Docs v2 runs locally only. If you use <Constant name="dbt_platform" />, your jobs refresh <Constant name="catalog" /> metadata automatically, so explore your project in [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs) instead.
+dbt Docs v2 работает только локально. Если вы используете <Constant name="dbt_platform" />, ваши задания автоматически обновляют метаданные <Constant name="catalog" />, поэтому изучайте проект в [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs).
 
-To hydrate catalog metadata (`catalog.json`) for <Constant name="catalog" /> without building the site, use the [`--write-catalog` flag](/reference/commands/cmd-docs#--write-catalog-flag) instead.
+Чтобы заполнить метаданные каталога (`catalog.json`) для <Constant name="catalog" /> без сборки сайта, используйте [флаг `--write-catalog`](/reference/commands/cmd-docs#--write-catalog-flag).
 
-For full usage, refer to [About dbt docs commands](/reference/commands/cmd-docs?version=2).
+Полные сведения об использовании приведены в разделе [О командах dbt docs](/reference/commands/cmd-docs?version=2).
 
-### Batch tests
+### Пакетное выполнение тестов
 
-Data tests can now run in batches! When you use `--batch-tests`, compatible data tests applied to a single model are batched into one query per test type. Internal testing shows batch tests reduce test command runtime by 40%, queries issued by 65%, and warehouse cost of running tests by 15%!
+Теперь тесты данных можно выполнять пакетами! При использовании `--batch-tests` совместимые тесты данных, применяемые к одной модели, объединяются в один запрос для каждого типа теста. Внутреннее тестирование показывает, что пакетное выполнение сокращает время работы команды тестирования на 40%, количество отправляемых запросов — на 65%, а стоимость выполнения тестов в хранилище — на 15%!
 
-Enable with `--batch-tests` on [`dbt test`](/reference/commands/test) or [`dbt build`](/reference/commands/build), or using the `DBT_ENGINE_BATCH_TESTS=true` environment variable.
+Включите эту возможность с помощью `--batch-tests` в [`dbt test`](/reference/commands/test) или [`dbt build`](/reference/commands/build) либо с помощью переменной окружения `DBT_ENGINE_BATCH_TESTS=true`.
 
-For more information on batching, refer to [batch tests](/reference/global-configs/batch-tests).
+Подробнее о пакетном выполнении см. [Пакетное выполнение тестов](/reference/global-configs/batch-tests).
 
-### Model freshness and the `dbt freshness` command
+### Актуальность моделей и команда `dbt freshness` {#model-freshness-and-the-dbt-freshness-command}
 
-v2 expands freshness checks to models, building on the existing support for sources. You can configure freshness thresholds on models to receive warnings or errors when the data is stale. For config options and materialization requirements, refer to [freshness](/reference/resource-configs/freshness).
+v2 расширяет проверки актуальности на модели, дополняя существующую поддержку источников. Вы можете настроить пороговые значения актуальности для моделей, чтобы получать предупреждения или ошибки, когда данные устаревают. Параметры конфигурации и требования к материализации приведены в разделе [freshness](/reference/resource-configs/freshness).
 
-Use the new [`dbt freshness`](/reference/commands/freshness) command to check all sources and models with freshness configured in a single invocation and, and to write results to a [`target/freshness.json` file](/reference/artifacts/freshness-json).
+Используйте новую команду [`dbt freshness`](/reference/commands/freshness), чтобы за один вызов проверить все источники и модели с настроенной актуальностью и записать результаты в [файл `target/freshness.json`](/reference/artifacts/freshness-json).
 
-The [`dbt source freshness`](/reference/commands/source?version=2#dbt-source-freshness) command remains supported for backward compatibility, checks sources only, and continues to produce a `sources.json` file. We recommend using  `dbt freshness` going forward.
+Команда [`dbt source freshness`](/reference/commands/source?version=2#dbt-source-freshness) по-прежнему поддерживается для обратной совместимости, проверяет только источники и продолжает создавать файл `sources.json`. В дальнейшем мы рекомендуем использовать `dbt freshness`.
 
-### Adapters built on ADBC drivers
+### Адаптеры на основе драйверов ADBC
 
-All v2 adapters connect to data warehouses via the [Arrow Database Connectivity (ADBC)](https://arrow.apache.org/adbc/) standard instead of Python-based adapter libraries. As a result, dbt ships as a single self-contained binary with no Python runtime required.
+Все адаптеры v2 подключаются к хранилищам данных через стандарт [Arrow Database Connectivity (ADBC)](https://arrow.apache.org/adbc/), а не через библиотеки адаптеров на Python. В результате dbt поставляется в виде единого автономного бинарного файла, которому не требуется среда выполнения Python.
 
-On first run, dbt downloads adapter drivers from the dbt Labs CDN and caches them locally. Subsequent runs work offline. For supported adapters, refer to [Supported data platforms](/docs/supported-data-platforms).
+При первом запуске dbt загружает драйверы адаптеров из CDN dbt Labs и кеширует их локально. Последующие запуски работают без доступа к сети. Сведения о поддерживаемых адаптерах приведены в разделе [Поддерживаемые платформы данных](/docs/supported-data-platforms).
 
 ### `dbt lint`
 
-v2 introduces [`dbt lint`](/reference/commands/lint), a high-performance SQL linter built into dbt. It is SQLFluff-compatible: you keep your existing .sqlfluff config and rule codes (for example, `CP01`, `RF03`). Run `dbt lint` to lint all models, or `dbt lint [FILE]` to target a specific file. Use `--fix` to auto-apply fixable violations.
+В v2 появилась команда [`dbt lint`](/reference/commands/lint) — высокопроизводительный SQL-линтер, встроенный в dbt. Он совместим с SQLFluff: вы сохраняете существующую конфигурацию .sqlfluff и коды правил (например, `CP01`, `RF03`). Запустите `dbt lint`, чтобы проверить все модели, или `dbt lint [FILE]`, чтобы проверить конкретный файл. Используйте `--fix` для автоматического исправления нарушений, которые можно исправить.
 
-### Static analysis
+### Статический анализ
 
-Unlike dbt v1.x, which only rendered Jinja-templated SQL strings into queries, v2 adds a second phase: static analysis. After rendering, the engine produces and validates a logical plan for every query in your project &mdash; without executing anything against the warehouse. This enables dialect-aware validation, column-level lineage, and precise type checking. The [`static_analysis`](/reference/resource-configs/static-analysis) config controls how strictly this is applied.
+В отличие от dbt v1.x, который только преобразовывал SQL-строки с шаблонами Jinja в запросы, v2 добавляет второй этап: статический анализ. После рендеринга движок создаёт и проверяет логический план для каждого запроса в проекте &mdash; ничего не выполняя в хранилище. Это обеспечивает валидацию с учётом диалекта, отслеживание происхождения данных на уровне столбцов и точную проверку типов. Настройка [`static_analysis`](/reference/resource-configs/static-analysis) определяет строгость этого анализа.
 
-#### Baseline static analysis
+#### Базовый статический анализ
 
-Baseline mode is the default in dbt v2. It parses each model's SQL at compile time to understand its structure without a warehouse connection, catching most SQL errors while providing a smooth migration experience. In baseline mode, all findings are warnings rather than errors, so your project continues running even when the compiler flags issues.
+Базовый режим используется в dbt v2 по умолчанию. Он разбирает SQL каждой модели на этапе компиляции, чтобы определить его структуру без подключения к хранилищу, выявляя большинство ошибок SQL и обеспечивая плавный переход. В базовом режиме все выявленные проблемы выдаются как предупреждения, а не ошибки, поэтому проект продолжает выполняться, даже если компилятор обнаруживает проблемы.
 
-Enable it explicitly per-model or project-wide:
+Включите его явно для отдельных моделей или всего проекта:
 
 ```yaml
 # dbt_project.yml
@@ -149,13 +149,13 @@ models:
     +static_analysis: baseline
 ```
 
-Or pass `--static-analysis baseline` on the CLI. For details, refer to [About static analysis](/docs/build/about-static-analysis).
+Или передайте `--static-analysis baseline` через CLI. Подробнее см. [О статическом анализе](/docs/build/about-static-analysis).
 
-#### Strict static analysis
+#### Строгий статический анализ
 
-Strict mode fully resolves column types and validates references across your entire project before execution begins; nothing runs until the project is proven valid. It is required to produce [column-level lineage](/docs/explore/column-level-lineage) and unlocks additional LSP features like column go-to-definition and type checking.
+Строгий режим полностью определяет типы столбцов и проверяет ссылки во всём проекте до начала выполнения; ничего не запускается, пока корректность проекта не подтверждена. Он необходим для формирования [происхождения данных на уровне столбцов](/docs/explore/column-level-lineage) и открывает дополнительные возможности LSP, такие как переход к определению столбца и проверка типов.
 
-Enable it per-model or project-wide:
+Включите его для отдельных моделей или всего проекта:
 
 ```yaml
 # dbt_project.yml
@@ -164,68 +164,68 @@ models:
     +static_analysis: strict
 ```
 
-Or pass `--static-analysis strict` on the CLI (or set `DBT_STATIC_ANALYSIS=strict`). For details, refer to [static_analysis](/reference/resource-configs/static-analysis).
+Или передайте `--static-analysis strict` через CLI (либо установите `DBT_STATIC_ANALYSIS=strict`). Подробнее см. [static_analysis](/reference/resource-configs/static-analysis).
 
-:::note Deprecated values
-`static_analysis: on` and `static_analysis: unsafe` are deprecated synonyms for `strict`. Update these to `strict`; they will be removed in a future release.
+:::note Устаревшие значения
+`static_analysis: on` и `static_analysis: unsafe` — устаревшие синонимы `strict`. Замените их на `strict`; они будут удалены в одном из будущих выпусков.
 :::
 
-### Column-level lineage
+### Происхождение данных на уровне столбцов
 
-v2 tracks which source columns flow into which output columns across your entire DAG. To generate column lineage, build or compile with `--static-analysis strict`:
+v2 отслеживает, какие исходные столбцы формируют какие выходные столбцы во всём DAG. Чтобы сгенерировать происхождение данных на уровне столбцов, выполните сборку или компиляцию с `--static-analysis strict`:
 
 ```shell
 dbt build --static-analysis strict
 ```
 
-The lineage is then visible in [dbt-docs](/docs/build/view-documentation#dbt-docs-v2). No additional configuration is needed; the site detects the presence of the lineage artifact automatically. For details, refer to [Column-level lineage](/docs/explore/column-level-lineage).
+После этого происхождение данных отображается в [dbt-docs](/docs/build/view-documentation#dbt-docs-v2). Дополнительная настройка не требуется; сайт автоматически обнаруживает артефакт с данными о происхождении. Подробнее см. [Происхождение данных на уровне столбцов](/docs/explore/column-level-lineage).
 
-### Language server protocol (LSP)
+### Протокол языкового сервера (LSP)
 
-v2 includes a built-in language server that enables IDE features for dbt SQL and YAML files, including hover information, diagnostics, go-to-definition, and column-level completions. The standalone `dbt-lsp` package is no longer published; LSP is now bundled in the `dbt` binary and used automatically by the dbt VS Code extension and <Constant name="studio_ide" />.
+v2 включает встроенный языковой сервер, который предоставляет возможности IDE для SQL- и YAML-файлов dbt: информацию при наведении, диагностику, переход к определению и автодополнение на уровне столбцов. Отдельный пакет `dbt-lsp` больше не публикуется; теперь LSP входит в бинарный файл `dbt` и автоматически используется расширением dbt для VS Code и <Constant name="studio_ide" />.
 
-Features available depend on your `static_analysis` setting: `baseline` adds syntax error detection and CTE preview; `strict` adds column go-to-definition, column lineage, and type checking. For details, refer to [About dbt LSP](/docs/about-dbt-lsp).
+Доступные возможности зависят от настройки `static_analysis`: `baseline` добавляет обнаружение синтаксических ошибок и предварительный просмотр CTE; `strict` добавляет переход к определению столбца, происхождение данных на уровне столбцов и проверку типов. Подробнее см. [О dbt LSP](/docs/about-dbt-lsp).
 
-### Agent skills
+### Навыки агентов
 
-v2 introduces [agent skills](/docs/dbt-ai/package-skills), which are reusable instructions your coding agent reads from a `SKILL.md` file. You and your team can ship skills from your own project or from a package, so everyone works from one set of conventions instead of copying files between repos.
+В v2 появились [навыки агентов](/docs/dbt-ai/package-skills) — многократно используемые инструкции, которые ваш агент программирования читает из файла `SKILL.md`. Вы и ваша команда можете распространять навыки из собственного проекта или из пакета, чтобы все работали по единому набору соглашений, а не копировали файлы между репозиториями.
 
-To use agent skills, you need to:
+Чтобы использовать навыки агентов, необходимо:
 
-- Include skills in your project's `skills/` directory, use a package that ships skills, or both
-- Set the `ai_provider` flag in your root project to tell dbt which coding agent you use. Supported values are `wizard`, `claude`, `openai`, `codex`, `cursor`, or `gemini` (case-insensitive).
+- Добавить навыки в каталог `skills/` проекта, использовать пакет, содержащий навыки, или совместить оба способа
+- Установить флаг `ai_provider` в корневом проекте, чтобы указать dbt, какой агент программирования вы используете. Поддерживаемые значения: `wizard`, `claude`, `openai`, `codex`, `cursor` или `gemini` (без учёта регистра).
 
-Once both are in place, `dbt deps` installs those skills into the directory your agent reads from (such as `.claude/skills` or `.agents/skills`), and `dbt clean` removes them. If you're missing either piece, `dbt deps` installs your packages as usual and skips the skills.
+Когда выполнены оба условия, `dbt deps` устанавливает эти навыки в каталог, из которого их читает агент (например, `.claude/skills` или `.agents/skills`), а `dbt clean` удаляет их. Если хотя бы одно условие не выполнено, `dbt deps` устанавливает пакеты как обычно и пропускает навыки.
 
-For full usage info, including how to disable a skill you don't want, refer to [Installing agent skills from dbt packages](/docs/dbt-ai/package-skills).
+Полные сведения об использовании, включая отключение ненужного навыка, приведены в разделе [Установка навыков агентов из пакетов dbt](/docs/dbt-ai/package-skills).
 
-### Experimental features
+### Экспериментальные возможности
 
-#### Local execution of unit tests
+#### Локальное выполнение модульных тестов
 
-v2 introduces the [`compute`](/reference/resource-configs/compute) config for unit tests. Set your unit tests with `compute: local` and dbt runs the test with DuckDB instead of sending it to your data platform, which takes the warehouse round trip out of your development loop.
+В v2 появилась настройка [`compute`](/reference/resource-configs/compute) для модульных тестов. Укажите для модульных тестов `compute: local`, и dbt будет выполнять тест с помощью DuckDB, а не отправлять его на вашу платформу данных, исключая обмен с хранилищем из цикла разработки.
 
-This config is experimental and requires opt-in: set `DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS=true` in the environment where dbt runs before you use `compute: local`. For details, refer to [Run unit tests locally](/docs/build/unit-tests#run-unit-tests-locally).
+Эта настройка экспериментальная и требует явного включения: перед использованием `compute: local` установите `DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS=true` в окружении, где запускается dbt. Подробнее см. [Локальное выполнение модульных тестов](/docs/build/unit-tests#run-unit-tests-locally).
 
-#### Multi-adapter invocations
+#### Запуски с несколькими адаптерами
 
-v2 supports running a single project against multiple adapters simultaneously as part of our cross-platform [dbt Mesh](/docs/mesh/cross-platform-mesh?version=2). This is experimental and requires opt-in:
+v2 поддерживает выполнение одного проекта одновременно с несколькими адаптерами в рамках кроссплатформенного [dbt Mesh](/docs/mesh/cross-platform-mesh?version=2). Эта возможность экспериментальная и требует явного включения:
 
 ```bash
 export DBT_ENGINE_EXPERIMENTAL_MULTI_ADAPTER=true
 ```
 
-Without this flag, dbt fails at parse time if any node in the project has an `adapter` config, even for runs that don't select that node. The gate reads config as written, not as selected, so the entire project needs the env var to parse once any model uses a non-default adapter.
+Без этого флага dbt завершается с ошибкой на этапе разбора, если у любого узла проекта задана настройка `adapter`, даже при запусках, в которых этот узел не выбран. Проверка учитывает записанную конфигурацию, а не выбранные узлы, поэтому для разбора всего проекта требуется эта переменная окружения, как только хотя бы одна модель использует адаптер, отличный от адаптера по умолчанию.
 
-### Changed functionality
+### Изменённая функциональность
 
-When developing v2, there were opportunities to improve the dbt framework — failing earlier (when possible), fixing bugs, optimizing run order, and deprecating flags that are no longer relevant. The result is a handful of specific and nuanced changes to existing behavior.
+При разработке v2 появилась возможность улучшить фреймворк dbt: раньше выявлять ошибки (где это возможно), исправить ошибки реализации, оптимизировать порядок выполнения и объявить устаревшими флаги, которые больше не актуальны. В результате внесён ряд точечных изменений с определёнными нюансами в существующее поведение.
 
-When upgrading to v2, you should expect the following changes in functionality:
+При переходе на v2 следует учитывать следующие изменения функциональности:
 
-#### Calling project macros in YAML files
+#### Вызов макросов проекта в YAML-файлах
 
-You can call project macros directly in YAML files such as `sources.yml` and `schema.yml`:
+Вы можете вызывать макросы проекта непосредственно в YAML-файлах, таких как `sources.yml` и `schema.yml`:
 
 ```yaml
 sources:
@@ -233,21 +233,21 @@ sources:
     database: "{{ get_environment() }}"
 ```
 
-This is not supported in <Constant name="core_v1" />, because the two engines use different Jinja contexts when rendering YAML:
-- <Constant name="core_v2" /> registers project macros before rendering, so they're available to Jinja in the YAML.
-- In <Constant name="core_v1" />, YAML files are rendered using a separate, restricted context that doesn't include project macros &mdash; only built-in Jinja functions like `env_var()` and `doc()`.
+В <Constant name="core_v1" /> это не поддерживается, поскольку два движка используют разные контексты Jinja при рендеринге YAML:
+- <Constant name="core_v2" /> регистрирует макросы проекта до рендеринга, поэтому они доступны Jinja в YAML.
+- В <Constant name="core_v1" /> YAML-файлы обрабатываются с использованием отдельного ограниченного контекста, который не включает макросы проекта &mdash; только встроенные функции Jinja, такие как `env_var()` и `doc()`.
 
-For more information, refer to [Jinja support by file type](/reference/jinja-file-support).
+Подробнее см. [Поддержка Jinja по типам файлов](/reference/jinja-file-support).
 
-#### Parse time printing of relations will print out the full qualified name, instead of an empty string
+#### При выводе отношений на этапе разбора отображается полное имя вместо пустой строки
 
-In <Constant name="core_v1" />, when printing the result of `get_relation()`, the parse time output for that Jinja would print `None` (the undefined object coerces to the string "None").
+В <Constant name="core_v1" /> при выводе результата `get_relation()` соответствующий код Jinja на этапе разбора выводил `None` (неопределённый объект преобразуется в строку "None").
 
-In v2, to help with intelligent batching of `get_relation()` calls (and significantly speed up `dbt compile`), dbt needs to construct a relation object with the fully qualified name resolved at parse time for the `get_relation()` adapter call.
+В v2 для интеллектуального объединения вызовов `get_relation()` в пакеты (и значительного ускорения `dbt compile`) dbt необходимо создавать объект отношения с полным именем, определённым на этапе разбора, для вызова метода адаптера `get_relation()`.
 
-Constructing a relation object with the fully qualified name in v2 produces different behavior than v1 in `print()`, `log()`, or any Jinja macro that outputs to `stdout` or `stderr` at parse time. 
+Создание объекта отношения с полным именем в v2 приводит к поведению, отличному от v1, в `print()`, `log()` или любом макросе Jinja, который выводит данные в `stdout` или `stderr` на этапе разбора. 
 
-Example:
+Пример:
 
 ```jinja
 {% set relation = adapter.get_relation(
@@ -265,80 +265,80 @@ identifier='a'
 {{ print('relation_via_api: ' ~ relation_via_api) }}
 ```
 
-The output after `dbt parse` in <Constant name="core_v1" />:
+Вывод после `dbt parse` в <Constant name="core_v1" />:
 
 ```
 relation: None
 relation_via_api: my_db.my_schema.my_table
 ```
 
-The output after `dbt parse` in v2:
+Вывод после `dbt parse` в v2:
 
 ```
 relation: my_db.my_schema.my_table
 relation_via_api: my_db.my_schema.my_table
 ```
 
-#### Deprecated flags
+#### Устаревшие флаги {#deprecated-flags}
 
-Deprecated flags are command-line flags (like `--models`, `--print`) that you pass to dbt commands. These are being removed in v2. This is different from:
-- [Deprecation warnings](/reference/deprecations) &mdash; Features in your project code (models, YAML, macros) that need to be updated
-- [Behavior change flags](/reference/global-configs/behavior-changes) &mdash; Flags in `dbt_project.yml` that let you opt in/out of new behaviors
+Устаревшие флаги — это флаги командной строки (например, `--models`, `--print`), которые вы передаёте командам dbt. В v2 они удаляются. Их следует отличать от:
+- [Предупреждений об устаревании](/reference/deprecations) &mdash; возможностей в коде проекта (моделях, YAML, макросах), которые необходимо обновить
+- [Флагов изменения поведения](/reference/global-configs/behavior-changes) &mdash; флагов в `dbt_project.yml`, позволяющих включать или отключать новое поведение
 
-See the [Changes overview](/reference/changes-overview) for a full comparison.
+Полное сравнение приведено в разделе [Обзор изменений](/reference/changes-overview).
 
-Some historic CLI flags from v1 will no longer do anything in v2. If you pass them into a dbt command in v2, the command will not error, but the flag will do nothing (and warn accordingly).
+Некоторые старые флаги CLI из v1 больше не будут действовать в v2. Если передать их команде dbt в v2, команда не завершится с ошибкой, но флаг не окажет никакого действия (и будет выдано соответствующее предупреждение).
 
-| flag name | remediation |
+| имя флага | необходимые действия |
 | ----------| ----------- |
-| `--models` / `--model` / `-m` | Refer to [CLI flags that need changes](#cli-flags-that-need-changes). |
-| `dbt seed` [`--show`](/reference/commands/seed) | N/A |
-| [`--print` / `--no-print`](/reference/global-configs/print-output) | No action required |
-| [`--printer-width`](/reference/global-configs/print-output#printer-width) | No action required |
-| [`--source`](/reference/commands/deps#non-hub-packages) | No action required |
-| [`--record-timing-info` / `-r`](/reference/global-configs/record-timing-info) | No action required |
-| [`--cache-selected-only` / `--no-cache-selected-only`](/reference/global-configs/cache) | No action required |
-| [`--clean-project-files-only` / `--no-clean-project-files-only`](/reference/commands/clean#clean-project-files-only) | No action required |
-| `--single-threaded` / `--no-single-threaded` | No action required |
+| `--models` / `--model` / `-m` | См. [Флаги CLI, требующие изменений](#cli-flags-that-need-changes). |
+| `dbt seed` [`--show`](/reference/commands/seed) | Неприменимо |
+| [`--print` / `--no-print`](/reference/global-configs/print-output) | Никаких действий не требуется |
+| [`--printer-width`](/reference/global-configs/print-output#printer-width) | Никаких действий не требуется |
+| [`--source`](/reference/commands/deps#non-hub-packages) | Никаких действий не требуется |
+| [`--record-timing-info` / `-r`](/reference/global-configs/record-timing-info) | Никаких действий не требуется |
+| [`--cache-selected-only` / `--no-cache-selected-only`](/reference/global-configs/cache) | Никаких действий не требуется |
+| [`--clean-project-files-only` / `--no-clean-project-files-only`](/reference/commands/clean#--clean-project-files-only) | Никаких действий не требуется |
+| `--single-threaded` / `--no-single-threaded` | Никаких действий не требуется |
 | `dbt source freshness` [`--output` / `-o`](/reference/commands/source?version=1.12#source-freshness-commands)  | |
-| [`--config-dir`](/reference/commands/debug)  | No action required | 
-| [`--resource-type` / `--exclude-resource-type`](/reference/global-configs/resource-type) | Refer to [CLI flags that need changes](#cli-flags-that-need-changes). |
-| `--show-resource-report` / `--no-show-resource-report` | No action required |
-| [`--log-cache-events` / `--no-log-cache-events`](/reference/global-configs/logs#logging-relational-cache-events) | No action required | 
-| `--use-experimental-parser` / `--no-use-experimental-parser` | No action required |
+| [`--config-dir`](/reference/commands/debug)  | Никаких действий не требуется | 
+| [`--resource-type` / `--exclude-resource-type`](/reference/global-configs/resource-type) | См. [Флаги CLI, требующие изменений](#cli-flags-that-need-changes). |
+| `--show-resource-report` / `--no-show-resource-report` | Никаких действий не требуется |
+| [`--log-cache-events` / `--no-log-cache-events`](/reference/global-configs/logs#logging-relational-cache-events) | Никаких действий не требуется | 
+| `--use-experimental-parser` / `--no-use-experimental-parser` | Никаких действий не требуется |
 | [`--empty-catalog`](/reference/commands/cmd-docs?version=1.12#dbt-docs-generate ) | |
 | [`--compile` / `--no-compile`](/reference/commands/cmd-docs?version=1.12#dbt-docs-generate) | |
-| `--inline-direct` |  No action required |
-| `--partial-parse-file-diff` / `--no-partial-parse-file-diff` | No action required |
-| `--partial-parse-file-path` | No action required |
-| `--populate-cache` / `--no-populate-cache` | No action required |
-| `--static-parser` / `--no-static-parser` | No action required |
-| `--use-fast-test-edges` / `--no-use-fast-test-edges` | No action required |
+| `--inline-direct` |  Никаких действий не требуется |
+| `--partial-parse-file-diff` / `--no-partial-parse-file-diff` | Никаких действий не требуется |
+| `--partial-parse-file-path` | Никаких действий не требуется |
+| `--populate-cache` / `--no-populate-cache` | Никаких действий не требуется |
+| `--static-parser` / `--no-static-parser` | Никаких действий не требуется |
+| `--use-fast-test-edges` / `--no-use-fast-test-edges` | Никаких действий не требуется |
 | `--inject-ephemeral-ctes` / `--no-inject-ephemeral-ctes` | | 
-| [`--partial-parse` / `--no-partial-parse`](/reference/parsing#partial-parsing)  | Refer to [CLI flags that need changes](#cli-flags-that-need-changes). |
+| [`--partial-parse` / `--no-partial-parse`](/reference/parsing#partial-parsing)  | См. [Флаги CLI, требующие изменений](#cli-flags-that-need-changes). |
 
-##### CLI flags that need changes {#cli-flags-that-need-changes}
+##### Флаги CLI, требующие изменений {#cli-flags-that-need-changes}
 
-The following deprecated flag requires updates in your job definitions or scripts:
+Следующий устаревший флаг требует обновления определений заданий или скриптов:
 
-- **`--models` / `--model` / `-m`:** Use `--select` / `-s` instead (renamed in <Constant name="dbt" /> v0.21). dbt raises an error in v2 if you use the old flags. Do not pass `--models` as the value to `-s` (for example, `dbt run -s --models`); v1 treated that as a model name, but v2 requires a valid selector.
+- **`--models` / `--model` / `-m`:** Используйте вместо него `--select` / `-s` (переименован в <Constant name="dbt" /> v0.21). В v2 dbt выдаёт ошибку при использовании старых флагов. Не передавайте `--models` в качестве значения `-s` (например, `dbt run -s --models`); v1 воспринимал это как имя модели, но v2 требует допустимый селектор.
 
 <FusionPartialParseCliFlags />
 
-#### Conflicting package versions when a local package depends on a hub package which the root package also wants will error
+#### Конфликт версий, когда локальный пакет зависит от пакета из Hub, который также нужен корневому пакету, приводит к ошибке
 
-If a local package depends on a hub package that the root package also wants, `dbt deps` doesn't resolve conflicting versions in <Constant name="core" />; it will install whatever the root project requests.
+Если локальный пакет зависит от пакета из Hub, который также нужен корневому пакету, `dbt deps` в <Constant name="core" /> не разрешает конфликты версий; команда устанавливает то, что запрашивает корневой проект.
 
-v2 will present an error:
+v2 выдаст ошибку:
 
 ```bash
 error: dbt8999: Cannot combine non-exact versions: =0.8.3 and =1.1.1
 ```
 
 
-#### Parse will fail on nonexistent macro invocations and adapter methods
+#### Разбор завершается ошибкой при вызове несуществующих макросов и методов адаптера
 
-When you call a nonexistent macro in dbt:
+При вызове несуществующего макроса в dbt:
 
 ```sql
 select
@@ -348,19 +348,19 @@ select
 from app_data.payments
 ```
 
-Or a nonexistent adapter method:
+Или несуществующего метода адаптера:
 
 ```sql
 {{ adapter.does_not_exist() }}
 ```
 
-In v1, `dbt parse` passes, but `dbt compile` fails.
+В v1 `dbt parse` выполняется успешно, но `dbt compile` завершается ошибкой.
 
-In v2, dbt will error out during `parse`.
+В v2 dbt выдаёт ошибку уже на этапе `parse`.
 
-#### Parse will fail on missing generic test
+#### Разбор завершается ошибкой при отсутствии универсального теста
 
-When you have an undefined generic test in your project:
+Если в проекте указан неопределённый универсальный тест:
 
 ```yaml
 
@@ -371,13 +371,13 @@ models:
 
 ```
 
-In v1, `dbt parse` passes, but `dbt compile` fails.
+В v1 `dbt parse` выполняется успешно, но `dbt compile` завершается ошибкой.
 
-In v2, dbt will error out during `parse`.   
+В v2 dbt выдаёт ошибку уже на этапе `parse`.   
 
-#### Parse will fail on missing variable
+#### Разбор завершается ошибкой при отсутствии переменной
 
-When you have an undefined variable in your project:
+Если в проекте используется неопределённая переменная:
 
 ```sql
 
@@ -385,58 +385,58 @@ select {{ var('does_not_exist') }} as my_column
 
 ```
 
-In v1, `dbt parse` passes, but `dbt compile` fails.
+В v1 `dbt parse` выполняется успешно, но `dbt compile` завершается ошибкой.
 
-In v2, dbt will error out during `parse`.
+В v2 dbt выдаёт ошибку уже на этапе `parse`.
 
-#### Stricter evaluation of duplicate docs blocks
+#### Более строгая проверка дублирующихся блоков docs {#stricter-evaluation-of-duplicate-docs-blocks}
 
-In v1, it was possible to create scenarios with duplicate [docs blocks](/docs/build/documentation#using-docs-blocks). For example, you can have two packages with identical docs blocks referenced by an unqualified name in your dbt project. In this case, v1 would use whichever docs block is referenced without any warnings or errors.
+В v1 можно было создавать ситуации с дублирующимися [блоками docs](/docs/build/documentation#using-docs-blocks). Например, у вас могли быть два пакета с одинаковыми блоками docs, на которые в проекте dbt ссылаются по имени без указания пакета. В этом случае v1 использовал один из этих блоков docs без каких-либо предупреждений или ошибок.
 
 
-v2 adds stricter evaluation of names of docs blocks to prevent such ambiguity. It will present an error if it detects duplicate names:
+v2 добавляет более строгую проверку имён блоков docs, чтобы исключить такую неоднозначность. При обнаружении повторяющихся имён будет выдана ошибка:
 
 ```bash
 dbt found two docs with the same name: 'docs_block_title' in files: 'models/crm/_crm.md' and 'docs/crm/business_class_marketing.md'
 ```
 
-To resolve this error, rename any duplicate docs blocks. 
+Чтобы устранить эту ошибку, переименуйте все дублирующиеся блоки docs. 
 
-#### `dbt clean` will not delete any files in configured resource paths or files outside the project directory
+#### `dbt clean` не удаляет файлы в настроенных путях ресурсов или за пределами каталога проекта
 
-In <Constant name="core_v1" />, `dbt clean` deletes:
-- Any files outside the project directory if `clean-targets` is configured with an absolute path or relative path containing `../`, though there is an opt-in config to disable this (`--clean-project-files-only` / `--no-clean-project-files-only`).
-- Any files in the `asset-paths` or `doc-paths` (even though other resource paths, like `model-paths` and `seed-paths`, are restricted).
+В <Constant name="core_v1" /> команда `dbt clean` удаляет:
+- Любые файлы за пределами каталога проекта, если в `clean-targets` задан абсолютный путь или относительный путь, содержащий `../`, хотя существует настройка для явного отключения этого поведения (`--clean-project-files-only` / `--no-clean-project-files-only`).
+- Любые файлы в `asset-paths` или `doc-paths` (хотя для других путей ресурсов, таких как `model-paths` и `seed-paths`, действуют ограничения).
 
-In v2, `dbt clean` will not delete any files in configured resource paths or files outside the project directory.
+В v2 `dbt clean` не удаляет файлы в настроенных путях ресурсов или за пределами каталога проекта.
 
-#### All unit tests are run first in `dbt build`
+#### В `dbt build` все модульные тесты выполняются первыми
 
-In <Constant name="core_v1" />, the direct parents of the model being unit tested needed to exist in the warehouse to retrieve the needed column name and type information. `dbt build` runs the unit tests (and their dependent models) _in lineage order_.
+В <Constant name="core_v1" /> непосредственные родительские модели тестируемой модели должны были существовать в хранилище, чтобы получить необходимые сведения об именах и типах столбцов. `dbt build` выполняет модульные тесты (и модели, от которых они зависят) _в порядке зависимостей_.
 
-In v2, `dbt build` runs _all_ of the unit tests _first_, and then builds the rest of the DAG, due to built-in column name and type awareness.
+В v2 `dbt build` _сначала_ выполняет _все_ модульные тесты, а затем собирает остальную часть DAG благодаря встроенной информации об именах и типах столбцов.
 
-#### Configuring `--threads`
+#### Настройка `--threads`
 
-<Constant name="core" /> runs with `--threads 1` by default. You can increase this number to run more nodes in parallel on the remote data platform, up to the max parallelism enabled by the DAG.
+<Constant name="core" /> по умолчанию запускается с `--threads 1`. Вы можете увеличить это число, чтобы выполнять больше узлов параллельно на удалённой платформе данных, вплоть до максимального параллелизма, допускаемого DAG.
 
-v2 handles threading differently depending on your data platform:
+v2 управляет потоками по-разному в зависимости от вашей платформы данных:
 
 <FusionThreads />
 
-For more information, refer to [Using threads](/docs/running-a-dbt-project/using-threads#dbt-v2-thread-optimization).
+Подробнее см. [Использование потоков](/docs/running-a-dbt-project/using-threads#dbt-v2-thread-optimization).
 
-#### Continue to compile unrelated nodes after hitting a compile error
+#### Продолжение компиляции независимых узлов после ошибки компиляции
 
-As soon as v1's `compile` encounters an error compiling one of your models, dbt stops and doesn't compile anything else.
+Как только `compile` в v1 сталкивается с ошибкой при компиляции одной из моделей, dbt останавливается и больше ничего не компилирует.
 
-When v2's `compile` encounters an error, it will skip nodes downstream of the one that failed to compile, but it will keep compiling the rest of the DAG (in parallel, up to the number of configured / optimal threads).
+Когда `compile` в v2 сталкивается с ошибкой, команда пропускает узлы, зависящие от узла, который не удалось скомпилировать, но продолжает компилировать остальную часть DAG (параллельно, в пределах настроенного или оптимального числа потоков).
 
-#### Seeds with extra commas don't result in extra columns
+#### Лишние запятые в seed-файлах не приводят к появлению дополнительных столбцов
 
-In <Constant name="core_v1" />, if you have an additional comma on your seed, dbt creates a seed with an additional empty column.
+В <Constant name="core_v1" />, если в seed-файле есть дополнительная запятая, dbt создаёт seed с дополнительным пустым столбцом.
 
-For example, the following seed file (with an extra comma):
+Например, следующий seed-файл (с лишней запятой):
 
 ```
 animal,  
@@ -446,7 +446,7 @@ bear,
 
 ```
 
-Will produce this table when `dbt seed` is executed:
+При выполнении `dbt seed` создаст такую таблицу:
 
 | animal | b |  
 | ------ | - |  
@@ -454,7 +454,7 @@ Will produce this table when `dbt seed` is executed:
 | cat    |   |  
 | bear   |   |  
 
-In v2, it will not produce this extra column in the table resulting from `dbt seed`:
+В v2 этот дополнительный столбец в таблице, полученной в результате `dbt seed`, не создаётся:
 
 | animal |  
 | ------ |  
@@ -462,11 +462,11 @@ In v2, it will not produce this extra column in the table resulting from `dbt se
 | cat    |  
 | bear   |  
 
-#### Move standalone anchors under `anchors:` key
+#### Перенос отдельных якорей под ключ `anchors:`
 
-As part of the ongoing process of making the dbt authoring language more precise, unexpected top-level keys in a YAML file will result in errors. A common use case behind these unexpected keys is standalone anchor definitions at the top level of a YAML file. You can use the new top-level `anchors:` key as a container for these reusable configuration blocks.
+В рамках продолжающейся работы по уточнению языка описания проектов dbt неожиданные ключи верхнего уровня в YAML-файле будут приводить к ошибкам. Частая причина появления таких ключей — отдельные определения якорей на верхнем уровне YAML-файла. Вы можете использовать новый ключ верхнего уровня `anchors:` как контейнер для этих многократно используемых блоков конфигурации.
 
-For example, rather than using this configuration:
+Например, вместо следующей конфигурации:
 
 <File name='models/_models.yml'>
 
@@ -493,7 +493,7 @@ models:
 
 </File>
 
-Move the anchor under the `anchors:` key instead:
+Перенесите якорь под ключ `anchors:`:
 
 <File name='models/_models.yml'>
 
@@ -520,11 +520,11 @@ models:
 
 </File>
 
-This move is only necessary for fragments defined outside of the main YAML structure. For more information about this new key, see [anchors](/reference/resource-properties/anchors).
+Такой перенос необходим только для фрагментов, определённых вне основной структуры YAML. Подробнее об этом новом ключе см. [anchors](/reference/resource-properties/anchors).
 
-#### Self-referential (recursive) YAML anchors are not supported {#self-referential-yaml}
+#### Самоссылочные (рекурсивные) якоря YAML не поддерживаются {#self-referential-yaml}
 
-In v1, dbt could parse a YAML anchor that merges into an element of the same sequence it's defined on, creating a self-referential (cyclic) anchor. For example, anchoring a full `tables:` sequence and then merging that anchor into one of the sequence's own elements:
+В v1 dbt мог разобрать якорь YAML, который объединяется с элементом той же последовательности, для которой он определён, создавая самоссылочный (циклический) якорь. Например, якорь задаётся для всей последовательности `tables:`, а затем объединяется с одним из элементов этой же последовательности:
 
 ```yml
 sources:
@@ -536,11 +536,11 @@ sources:
         name: merged_item
 ```
 
-This parsed successfully in v1 only because PyYAML (the YAML library <Constant name="core_v1" /> depends on) incidentally allows self-referential anchors, a side effect of Python's own support for cyclic data structures, not an intentional YAML feature. No other major YAML implementation allows this pattern.
+В v1 такой код успешно разбирался только потому, что PyYAML (библиотека YAML, от которой зависит <Constant name="core_v1" />) попутно допускает самоссылочные якоря. Это побочный эффект поддержки циклических структур данных в самом Python, а не намеренно предусмотренная возможность YAML. Никакая другая крупная реализация YAML не допускает такой шаблон.
 
-In v2, parsing this pattern hits a recursion limit and raises an error, so the entire properties file fails to parse. This is a deliberate limitation, not a bug. v2 does not plan to support self-referential anchors.
+В v2 разбор такого шаблона достигает предела рекурсии и вызывает ошибку, поэтому весь файл свойств не удаётся разобрать. Это намеренное ограничение, а не ошибка реализации. Поддержка самоссылочных якорей в v2 не планируется.
 
-To resolve this, remove the self-reference. Anchor only the parts of the document that don't merge back into themselves, for example, anchor a single table mapping instead of the whole sequence:
+Чтобы исправить это, удалите самоссылку. Задавайте якоря только для тех частей документа, которые не объединяются сами с собой: например, задайте якорь для отображения одной таблицы, а не для всей последовательности:
 
 ```yml
 sources:
@@ -553,9 +553,9 @@ sources:
         name: merged_item
 ```
 
-#### Algebraic operations in Jinja macros
+#### Алгебраические операции в макросах Jinja
 
-In v1, you can set algebraic functions in the return function of a Jinja macro:
+В v1 можно использовать алгебраические операции с функцией return в макросе Jinja:
 
 ```jinja
 {% macro my_macro() %}
@@ -565,7 +565,7 @@ return('xyz') + 'abc'
 {% endmacro %}
 ```
 
-This is no longer supported in v2 and will emit a warning:
+В v2 это больше не поддерживается и приводит к предупреждению:
 
 ```bash
 [warning] [JinjaTopLevelReturn (dbt1508)]: return is not at the top level of the block.
@@ -573,7 +573,7 @@ Its value is final and cannot be modified by surrounding expressions.
 Example: return(0) + 1. The + 1 is ignored and the macro returns 0.
 ```
 
-This is not a common use case and there is no deprecation warning for this behavior in v1. The supported format is:
+Такое использование встречается редко, и в v1 для этого поведения нет предупреждения об устаревании. Поддерживаемый формат:
 
 ```jinja
 {% macro my_macro() %}
@@ -582,9 +582,9 @@ return('xyzabc')
 
 {% endmacro %}
 ```
-#### Accessing custom configurations in meta
+#### Доступ к пользовательским настройкам в meta
 
-`config.get()` and `config.require()` don't return values from the `meta` dictionary. If you try to access a key that only exists in `meta`, dbt emits a warning:
+`config.get()` и `config.require()` не возвращают значения из словаря `meta`. Если вы попытаетесь обратиться к ключу, который существует только в `meta`, dbt выдаст предупреждение:
 
 ```bash
 warning: The key 'my_key' was not found using config.get('my_key'), but was 
@@ -592,55 +592,55 @@ detected as a custom config under 'meta'. Please use config.meta_get('my_key')
 or config.meta_require('my_key') instead.
 ```
 
-Behavior when a key exists only in meta:
+Поведение, когда ключ существует только в meta:
 
 <SimpleTable>
-| Method | Behavior |
+| Метод | Поведение |
 |--------|----------|
-| `config.get('my_key')` | Returns the default value and emits a warning. |
-| `config.require('my_key')` | Raises an error and emits a warning. |
+| `config.get('my_key')` | Возвращает значение по умолчанию и выдаёт предупреждение. |
+| `config.require('my_key')` | Вызывает ошибку и выдаёт предупреждение. |
 </SimpleTable>
 
-In addition, accessing the `meta` dictionary itself (rather than a specific key) behaves differently across engines:
+Кроме того, доступ к самому словарю `meta` (а не к конкретному ключу) работает по-разному в разных движках:
 
 <SimpleTable>
-| Engine | `config.get('meta', default={})` |
+| Движок | `config.get('meta', default={})` |
 |--------|-----------------------------------|
-| <Constant name="core_v1" /> | Does not work. |
-| <Constant name="core_v2" /> | Returns the full `meta` dictionary. |
+| <Constant name="core_v1" /> | Не работает. |
+| <Constant name="core_v2" /> | Возвращает весь словарь `meta`. |
 </SimpleTable>
 
-To access custom configurations stored under `meta`, use the explicit methods:
+Для доступа к пользовательским настройкам, хранящимся в `meta`, используйте специальные методы:
 
 ```jinja
 {% set owner = config.meta_get('owner') %}
 {% set has_pii = config.meta_require('pii') %}
 ```
 
-For more information, see [config.meta_get()](/reference/dbt-jinja-functions/config#configmeta_get) and [config.meta_require()](/reference/dbt-jinja-functions/config#configmeta_require).
+Подробнее см. [config.meta_get()](/reference/dbt-jinja-functions/config#configmeta_get) и [config.meta_require()](/reference/dbt-jinja-functions/config#configmeta_require).
 
 
-## Quick hits
+## Коротко о других изменениях
 
-- v2 supports exporting traces and logs in JSONL, Parquet, and OTLP formats. For details, refer to [dbt v2 telemetry and observability](/reference/telemetry-observability).
-- The v2 compiler parses and type-checks [Snowflake model function](https://docs.snowflake.com/en/guides-overview-ml-functions) calls (`model!method(...)`), accepting any arguments and treating results as `VARIANT`. Cast the result to the type you need (for example, `model!predict(col)::float`).
-- In <Constant name="dbt" /> v2, [`dbt login`](/reference/commands/login?version=2.0) opens your browser to sign in to <Constant name="dbt_platform" /> or create a free account. Run [`dbt login status`](/reference/commands/login?version=2.0#dbt-login-status) to view your current authentication status.
+- v2 поддерживает экспорт трассировок и журналов в форматах JSONL, Parquet и OTLP. Подробнее см. [Телеметрия и наблюдаемость dbt v2](/reference/telemetry-observability).
+- Компилятор v2 разбирает и проверяет типы вызовов [функций моделей Snowflake](https://docs.snowflake.com/en/guides-overview-ml-functions) (`model!method(...)`), принимая любые аргументы и рассматривая результаты как `VARIANT`. Приведите результат к нужному типу (например, `model!predict(col)::float`).
+- В <Constant name="dbt" /> v2 команда [`dbt login`](/reference/commands/login?version=2.0) открывает браузер для входа в <Constant name="dbt_platform" /> или создания бесплатной учётной записи. Выполните [`dbt login status`](/reference/commands/login?version=2.0#dbt-login-status), чтобы просмотреть текущий статус аутентификации.
 
-## Package support
+## Поддержка пакетов
 
 import FusionPackages from '/snippets/_v2-supported-packages.md';
 
 <FusionPackages />
 
-## Distributions
+## Дистрибутивы
 
-v2 is available in two distributions. For more information, refer to [dbt licensing](/docs/dbt-licensing).
+v2 доступна в двух дистрибутивах. Подробнее см. [Лицензирование dbt](/docs/dbt-licensing).
 
 <SimpleTable>
-| Distribution | Package | Use it when |
+| Дистрибутив | Пакет | Когда использовать |
 | --- | --- | --- |
-| <Constant name="fusion" /> | `dbt` | The recommended v2 experience. |
-| dbt OSS | `dbt-oss` | Your organization has a strict requirement to use the Apache 2.0 [open-source runtime](/docs/local/install-dbt-v2). |
+| <Constant name="fusion" /> | `dbt` | Рекомендуемый вариант использования v2. |
+| dbt OSS | `dbt-oss` | В вашей организации действует строгое требование использовать [среду выполнения с открытым исходным кодом](/docs/local/install-dbt-v2) под лицензией Apache 2.0. |
 </SimpleTable>
 
-If you have a older project that isn’t ready to move to v2, continue using v1.x for compatibility. For new or upgraded projects, we recommend v2.
+Если ваш старый проект ещё не готов к переходу на v2, продолжайте использовать v1.x для совместимости. Для новых или обновлённых проектов мы рекомендуем v2.

@@ -1,8 +1,8 @@
 ---
-title: Does the Cost Insights feature incur warehouse costs?
-description: "Explanation of whether Cost Insights queries incur warehouse costs"
-sidebar_label: 'Cost Insights warehouse costs'
+title: Приводит ли использование Cost Insights к расходам на хранилище данных?
+description: "Объяснение того, приводят ли запросы Cost Insights к расходам на хранилище данных"
+sidebar_label: 'Расходы Cost Insights на хранилище данных'
 id: metadata-warehouse-costs
 ---
 
-dbt issues lightweight, read-only queries against your warehouse to retrieve metadata and to power features such as Cost Insights. dbt scopes and filters these queries to minimize impact, and most customers see negligible costs (typically on the order of cents).
+dbt выполняет легковесные запросы только для чтения к вашему хранилищу данных, чтобы получать метаданные и обеспечивать работу таких функций, как Cost Insights. dbt ограничивает область действия этих запросов и применяет фильтры, чтобы свести их влияние к минимуму. У большинства клиентов расходы незначительны (обычно составляют считаные центы).

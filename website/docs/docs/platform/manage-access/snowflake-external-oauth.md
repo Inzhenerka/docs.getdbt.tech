@@ -62,9 +62,7 @@ external_oauth_any_role_mode = 'ENABLE'
 - Стандартные роли Snowflake `ACCOUNTADMIN`, `ORGADMIN` и `SECURITYADMIN` по умолчанию заблокированы для внешнего OAuth, поэтому аутентификация с ними, скорее всего, завершится неудачей. Подробнее см. в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/sql/create-security-integration-oauth-external).  
 - Значение параметра `external_oauth_snowflake_user_mapping_attribute` должно корректно сопоставляться с именем пользователя Snowflake. Например, если используется `email_address`, то email в токене от IdP должен в точности совпадать с именем пользователя Snowflake.
 
-## Конфигурация провайдера идентификации
-
-## Настройка поставщика удостоверений
+## Настройка поставщика удостоверений {#identity-provider-configuration}
 
 Выберите поддерживаемого поставщика удостоверений (IdP), чтобы получить инструкции по настройке внешнего OAuth в его среде и завершению интеграции в <Constant name="dbt" />:
 
@@ -85,13 +83,13 @@ external_oauth_any_role_mode = 'ENABLE'
 1. Разверните раздел **Applications** на панели управления Okta и нажмите **Applications**. Нажмите кнопку **Create app integration**.
 2. Выберите **OIDC** в качестве метода входа и **Web applications** в качестве типа приложения. Нажмите **Next**.
 
-<Lightbox src="/img/docs/dbt-platform/create-okta-app.png" width="60%" title="The Okta app creation window with OIDC and Web Application selected." />
+<Lightbox src="/img/docs/dbt-platform/create-okta-app.png" width="60%" title="Создание приложения в Okta с параметрами OIDC и Web Application." />
 
 3. Дайте приложению подходящее имя, например «Внешнее OAuth-приложение для <Constant name="dbt" />», чтобы его было легко идентифицировать.
 4. В разделе **Grant type** включите опцию **Refresh token**.
 5. Прокрутите страницу вниз до опции **Sign-in redirect URIs**. Вставьте URI перенаправления, полученный из <Constant name="dbt" /> на шаге 1.3.
 
-<Lightbox src="/img/docs/dbt-platform/configure-okta-app.png" width="60%" title="The Okta app configuration window with the sign-in redirect URI configured to the dbt value." />
+<Lightbox src="/img/docs/dbt-platform/configure-okta-app.png" width="60%" title="Настройка приложения Okta с URI перенаправления для входа в dbt." />
 
 6. Сохраните конфигурацию приложения. Вы вернетесь к нему позже, но пока переходите к следующим шагам.
 
@@ -172,24 +170,11 @@ external_oauth_any_role_mode = 'ENABLE'
 
 2. **Сохраните** конфигурацию
 
-### 6. Создание нового соединения в dbt Cloud
-
 ### 6. Создайте новое подключение в dbt
-
-<Lightbox src="/img/docs/dbt-cloud/configure-new-connection.png" width="60%" title="Новое окно конфигурации в dbt Cloud с отображением внешнего OAuth в качестве опции" />
 
 1. Перейдите в **Account settings** и выберите **Connections** в меню. Нажмите **New connection**.
 2. Настройте `Account`, `Database` и `Warehouse` так же, как вы делаете это обычно, а в поле `OAuth method` выберите внешний OAuth, который вы только что создали.
 
-<Lightbox src="/img/docs/dbt-cloud/select-oauth-config.png" width="60%" title="Новое соединение отображается в блоке конфигураций External OAuth" />
-
-<Lightbox src="/img/docs/dbt-cloud/configure-new-connection.png" width="60%" title="Новое окно конфигурации в dbt, где External OAuth доступен как вариант." />
-
-
-3. Прокрутите вниз до блока конфигураций **External OAuth** и выберите нужную конфигурацию из списка.
-
-
-<Lightbox src="/img/docs/dbt-cloud/select-oauth-config.png" width="60%" title="Новое подключение, отображаемое в блоке External OAuth Configurations." />
 
 <Lightbox src="/img/docs/dbt-platform/configure-new-connection.png" width="60%" title="Новое окно настройки в dbt с доступным вариантом External OAuth." />
 

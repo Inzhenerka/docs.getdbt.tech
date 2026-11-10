@@ -260,7 +260,7 @@ semantic_models:
 
 <VersionBlock firstVersion="1.12">
 
-Notice how the schema can be translated into the following three MetricFlow semantic models to create the metric 'Average purchase price by country' using the `purchase_price` simple metric from the sales table and the `country_name` dimension from the `country_dim` table.
+Ниже показано, как представить схему тремя семантическими моделями MetricFlow и получить среднюю цену покупки по странам. Для этого используются простая метрика `purchase_price` из таблицы продаж и измерение `country_name` из таблицы `country_dim`.
 
 <File name='models/model.yml'>
 

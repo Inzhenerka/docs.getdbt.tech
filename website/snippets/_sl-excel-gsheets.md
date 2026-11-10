@@ -1,10 +1,8 @@
 <p><span>При выполнении запроса к вашим данным с помощью {props.type}:</span></p>
 
 <ul>
-```html
-<li>Он возвращает данные в ту ячейку, по которой вы кликнули.</li>
-<li>{props.bullet_1}</li>
-```
+  <li>Результат записывается в выбранную ячейку.</li>
+  <li>{props.bullet_1}</li>
   <li>{props.bullet_2}</li>
   <li>{props.bullet_3}</li>
 </ul>

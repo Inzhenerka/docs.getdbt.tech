@@ -37,7 +37,7 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 2. Добавьте необходимую информацию в следующий шаблон и отправьте запрос в [службу поддержки dbt](mailto:support@getdbt.com):
 
-<Expandable alt_header="Support request email template" is_open={true}>
+<Expandable alt_header="Шаблон письма в поддержку" is_open={true}>
 
 ```text
 Subject: New Multi-Tenant GCP PSC Request

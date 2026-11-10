@@ -34,8 +34,6 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 
 ## Конфигурация провайдера идентификации {#identity-provider-configuration}
 
-## Настройка поставщика удостоверений
-
 Выберите поддерживаемого поставщика удостоверений (IdP), чтобы получить инструкции по настройке внешнего OAuth в его среде и завершению интеграции с <Constant name="dbt" />:
 
 <Tabs>
@@ -122,12 +120,6 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 1. Перейдите в **Account settings** и выберите **Connections** в меню. Нажмите **New connection**.
 2. Настройте `Account`, `Database` и `Warehouse` как обычно, а в поле `OAuth method` выберите созданный вами внешний OAuth.
 
-<Lightbox src="/img/docs/dbt-cloud/configure-new-connection.png" width="60%" title="Окно новой конфигурации в dbt с опцией External OAuth." />
-
-3. Прокрутите страницу до блока **External OAuth** и выберите нужную конфигурацию из списка.
-
-<Lightbox src="/img/docs/dbt-cloud/select-oauth-config.png" width="60%" title="Новое подключение, отображаемое в блоке External OAuth Configurations." />
-
 <Lightbox src="/img/docs/dbt-platform/configure-new-connection.png" width="60%" title="Новое окно настройки в dbt, в котором доступен вариант External OAuth." />
 
 
@@ -204,15 +196,7 @@ import AboutExternal from '/snippets/_about-external-oauth.md';
 5. `Authorization URL` и `Token URL`: в приложении Client ID откройте вкладку `Endpoints`. Эти URL соответствуют полям `OAuth 2.0 authorization endpoint (v2)` и `OAuth 2.0 token endpoint (v2)`. *Обязательно используйте версию v2 для `OAuth 2.0 authorization endpoint`. Не используйте V1.* Для `OAuth 2.0 token endpoint` можно использовать любую из версий.
 6. `Application ID URI`: скопируйте значение поля `Application ID URI` со страницы Overview сервера ресурсов.
 
-1. Вернитесь на страницу <Constant name="cloud" /> **Account settings** —> **Integrations**, открытую в начале. Здесь потребуется некоторое переключение между аккаунтом Entra ID и <Constant name="cloud" />.
-2. `Integration name`: Укажите описательное имя интеграции с информацией об окружении Entra ID.
-3. `Client secrets`: Находится в Client ID на странице **Certificates and secrets**. Поле `Value` — это `Client secret`. Учтите, что оно отображается только при создании; _Microsoft скрывает секрет при повторном посещении страницы, и его необходимо создавать заново_.
-4. `Client ID`: Скопируйте значение **Application (client) ID** на странице обзора client app.
-5. `Authorization URL` и `Token URL`: В client app откройте вкладку `Endpoints`. Эти URL соответствуют полям `OAuth 2.0 authorization endpoint (v2)` и `OAuth 2.0 token endpoint (v2)`. *Обязательно используйте версию v2 для `OAuth 2.0 authorization endpoint`. Не используйте v1.* Для `OAuth 2.0 token endpoint` можно использовать любую версию.
-6. `Application ID URI`: Скопируйте значение поля `Application ID URI` со страницы Overview resource server.
-
 </TabItem>
-
 </Tabs>
 
 ## Настройка Trusted Token Issuer в IAM IdC {#configure-the-trusted-token-issuer-in-iam-idc}

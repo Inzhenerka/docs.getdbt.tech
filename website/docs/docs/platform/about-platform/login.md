@@ -1,7 +1,7 @@
 ---
-title: "Log in to dbt platform"
+title: "Вход в dbt platform"
 id: "login"
-description: "Use login.dbt.com to discover and access your dbt platform accounts."
+description: "Используйте login.dbt.com для поиска своих аккаунтов dbt platform и доступа к ним."
 pagination_next: null
 pagination_prev: null
 availability: platform
@@ -9,51 +9,51 @@ availability: platform
 
 import UniversalLoginST from '/snippets/_universal-login-st.md';
 
-[https://login.dbt.com](https://login.dbt.com) is the universal entry point for <Constant name="dbt_platform"/> accounts with a static access URL (for example, `abc123.us1.dbt.com`). It sits outside any specific account and maps your email to the accounts you can access across instances and regions.
+[https://login.dbt.com](https://login.dbt.com) — это единая точка входа в аккаунты <Constant name="dbt_platform"/> со статическим URL-адресом доступа (например, `abc123.us1.dbt.com`). Она не привязана к конкретному аккаунту и позволяет по вашему адресу электронной почты найти доступные вам аккаунты в разных экземплярах и регионах.
 
-You can also sign in directly with your account **Access URL** if you already know it, for example, `abc123.us1.dbt.com`. Refer to [Access, regions, and IP addresses](/docs/platform/about-platform/access-regions-ip-addresses) for the full list of access URLs by region.
+Вы также можете войти напрямую через **Access URL** своего аккаунта, если он вам уже известен, например `abc123.us1.dbt.com`. Полный список URL-адресов доступа по регионам приведён в разделе [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses).
 
 <UniversalLoginST />
 
-## How login works
+## Как работает вход
 
-1. Go to [https://login.dbt.com](https://login.dbt.com).
-2. Enter your email and you will receive a verification code to log in if you have access to a dbt account. If you don't have a dbt account, you can create one on the same login page.
-3. Check your email for the verification code, then enter it on `login.dbt.com` to confirm your identity. The code expires after 5 minutes or 3 attempts.
-   - If you didn't receive a code, check your spam folder or request a new one. You may not receive a verification code if your email is not associated with a dbt account.
-4. Once you verify, <Constant name="dbt_platform"/> looks up which accounts are associated with your email address:
-    - If you have access to multiple accounts, you see a list of accounts including their region and tenancy. Select the one you want to open.
-    - If you have access to only one account, you're redirected to that account directly.
-5. Authenticate using the method configured for that account (password, SSO, or MFA).
+1. Перейдите на [https://login.dbt.com](https://login.dbt.com).
+2. Введите свой адрес электронной почты. Если у вас есть доступ к аккаунту dbt, вы получите код подтверждения для входа. Если у вас нет аккаунта dbt, его можно создать на той же странице входа.
+3. Найдите письмо с кодом подтверждения, затем введите код на `login.dbt.com`, чтобы подтвердить свою личность. Код становится недействительным через 5 минут или после 3 попыток ввода.
+   - Если вы не получили код, проверьте папку со спамом или запросите новый. Код подтверждения может не прийти, если ваш адрес электронной почты не связан с аккаунтом dbt.
+4. После подтверждения <Constant name="dbt_platform"/> определит, какие аккаунты связаны с вашим адресом электронной почты:
+    - Если у вас есть доступ к нескольким аккаунтам, появится их список с указанием региона и типа размещения. Выберите аккаунт, который хотите открыть.
+    - Если у вас есть доступ только к одному аккаунту, вы будете перенаправлены непосредственно в него.
+5. Пройдите аутентификацию способом, настроенным для этого аккаунта (пароль, SSO или MFA).
 
 :::note
-If no accounts are found for your email, contact [dbt Support](mailto:support@getdbt.com) or your account admin. You can also sign in directly at your account [**Access URL**](/docs/platform/about-platform/access-regions-ip-addresses).
+Если для вашего адреса электронной почты не найдено ни одного аккаунта, обратитесь в [службу поддержки dbt](mailto:support@getdbt.com) или к администратору своего аккаунта. Вы также можете войти напрямую через [**Access URL**](/docs/platform/about-platform/access-regions-ip-addresses) своего аккаунта.
 :::
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/login-email-page.png" width="85%" title="Login to dbt platform using the login.dbt.com page."/>
+<Lightbox src="/img/docs/dbt-platform/login-email-page.png" width="85%" title="Вход в dbt platform через страницу login.dbt.com."/>
 
-<Lightbox src="/img/docs/dbt-platform/login-email-verify-code.png" width="85%" title="Verify code to login to dbt platform"/>
+<Lightbox src="/img/docs/dbt-platform/login-email-verify-code.png" width="85%" title="Подтверждение кода для входа в dbt platform"/>
 
-<Lightbox src="/img/docs/dbt-platform/login-account-list.png" width="85%" title="Select account to login to dbt platform"/>
+<Lightbox src="/img/docs/dbt-platform/login-account-list.png" width="85%" title="Выбор аккаунта для входа в dbt platform"/>
 </DocCarousel>
 
-## SSO behavior
+## Особенности работы SSO
 
-After you select an account, <Constant name="dbt_platform"/> applies that account's authentication requirements. If SSO is enforced for the account, you'll be redirected to your identity provider (IdP) to complete authentication. Refer to [SSO overview](/docs/platform/manage-access/sso-overview) for more information about SSO configuration.
+После выбора аккаунта <Constant name="dbt_platform"/> применяет установленные для него требования к аутентификации. Если для аккаунта настроено обязательное использование SSO, вы будете перенаправлены к своему поставщику удостоверений (IdP) для завершения аутентификации. Подробнее о настройке SSO см. в разделе [Обзор SSO](/docs/platform/manage-access/sso-overview).
 
 <!--
-OAuth and external clients
-External clients that integrate with <Constant name="dbt_platform"/> use OAuth to authenticate &mdash; like <Constant name="platform_cli"/> and the [dbt VS Code extension](/docs/about-dbt-extension?version=2.0), and [dbt MCP](/docs/dbt-ai/about-mcp) &mdash; use `login.dbt.com` as the consistent redirect entry point. This means you go through the same account discovery and authentication flow regardless of which client initiates the login.
+OAuth и внешние клиенты
+Внешние клиенты, интегрированные с <Constant name="dbt_platform"/>, используют OAuth для аутентификации &mdash; например, <Constant name="platform_cli"/>, [расширение dbt для VS Code](/docs/about-dbt-extension?version=2.0) и [dbt MCP](/docs/dbt-ai/about-mcp) &mdash; и используют `login.dbt.com` как единую точку входа для перенаправления. Это означает, что вы проходите один и тот же процесс поиска аккаунтов и аутентификации независимо от того, какой клиент инициирует вход.
 -->
 
-## Admin settings
+## Настройки администратора
 
-Account administrators can control whether users can discover an account through `login.dbt.com`. 
+Администраторы аккаунта могут управлять тем, смогут ли пользователи находить аккаунт через `login.dbt.com`. 
 
-1. In <Constant name="dbt_platform" />, account admins can go to [**Account settings**](/docs/platform/account-settings#enable-global-account-discovery) and scroll to **Settings**. 
-2. Navigate to the bottom and check the **Enable global account discovery** option to allow users will be able to find the account by entering their email at `login.dbt.com`.   
-- When an admin turns off the option, users must know their account **Access URL** to sign in and won't see the account in the discovery list.
+1. В <Constant name="dbt_platform" /> администраторы аккаунта могут перейти в [**Account settings**](/docs/platform/account-settings#enable-global-account-discovery) и прокрутить страницу до раздела **Settings**. 
+2. В нижней части страницы установите флажок **Enable global account discovery**, чтобы пользователи могли находить аккаунт, вводя свой адрес электронной почты на `login.dbt.com`.   
+- Когда администратор отключает эту опцию, пользователям необходимо знать **Access URL** своего аккаунта для входа, а сам аккаунт не отображается в списке найденных аккаунтов.
 
-To change this setting, go to **Account settings** and select or clear **Enable global account discovery**. For details, refer to [Account settings](/docs/platform/account-settings#enable-global-account-discovery).
+Чтобы изменить эту настройку, перейдите в **Account settings** и установите или снимите флажок **Enable global account discovery**. Подробнее см. в разделе [Настройки аккаунта](/docs/platform/account-settings#enable-global-account-discovery).

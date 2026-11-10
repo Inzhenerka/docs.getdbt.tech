@@ -1,57 +1,57 @@
 ---
-title: "Migrate to dbt Wizard"
+title: "Переход на dbt Wizard"
 id: "wizard-migrate"
-description: "Move project context and skills from Claude Code to dbt Wizard."
-sidebar_label: "Migrate to dbt Wizard"
+description: "Перенесите контекст проекта и навыки из Claude Code в dbt Wizard."
+sidebar_label: "Переход на dbt Wizard"
 tags: [AI, Wizard]
 availability: local_all
 ---
 
 <IntroText>
-Move from Claude Code to <Constant name="wizard" /> while keeping your project conventions.
+Перейдите с Claude Code на <Constant name="wizard" />, сохранив принятые в проекте соглашения.
 </IntroText>
 
-<Constant name="wizard" /> automatically imports Claude Code instructions, skills, and settings from your repo. Use this page if you already use Claude Code on dbt projects and want to bring over project context, skills, or model settings. If you're new to AI agents, check out the [dbt Wizard overview](/docs/platform/wizard-overview).
+<Constant name="wizard" /> автоматически импортирует инструкции, навыки и настройки Claude Code из вашего репозитория. Эта страница предназначена для тех, кто уже использует Claude Code в проектах dbt и хочет перенести контекст проекта, навыки или настройки модели. Если вы только начинаете работать с ИИ-агентами, ознакомьтесь с [обзором dbt Wizard](/docs/platform/wizard-overview).
 
-## Prerequisites
+## Предварительные требования
 
-You'll need:
+Вам понадобятся:
 
-- [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) installed or <Constant name="wizard" /> enabled in [<Constant name="dbt_platform" />](/docs/platform/wizard-platform)
-- [BYOK](/docs/dbt-ai/wizard-byok) configured for a supported CLI provider (OpenAI, Anthropic, AWS Bedrock, or Snowflake Cortex in preview)
-- Any existing Claude Code files you want to migrate, such as `CLAUDE.md`, `.claude/CLAUDE.md`, or `.claude/skills/`
+- Установленный [CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-cli) или включённый <Constant name="wizard" /> в [<Constant name="dbt_platform" />](/docs/platform/wizard-platform)
+- [BYOK](/docs/dbt-ai/wizard-byok), настроенный для поддерживаемого в CLI провайдера (OpenAI, Anthropic, AWS Bedrock или Snowflake Cortex в предварительной версии)
+- Существующие файлы Claude Code, которые вы хотите перенести, например `CLAUDE.md`, `.claude/CLAUDE.md` или `.claude/skills/`
 
-## Review project context and skills
+## Проверьте контекст проекта и навыки
 
-<Constant name="wizard" /> automatically reads common agent instruction files and skills from your repo. You usually don't need to move existing project context before using <Constant name="wizard" />.
+<Constant name="wizard" /> автоматически считывает распространённые файлы инструкций для агентов и навыки из вашего репозитория. Обычно перед началом работы с <Constant name="wizard" /> переносить существующий контекст проекта не требуется.
 
 <SimpleTable>
 
-| File or folder | What Wizard does | Migration needed? |
+| Файл или папка | Что делает Wizard | Нужен ли перенос? |
 | --- | --- | --- |
-| `AGENTS.override.md` at the project root | Checks this first for local override instructions. | No |
-| `AGENTS.md` at the project root | Uses this as the primary project instruction file. | No |
-| `CLAUDE.md` at the project root | Uses this as a built-in fallback when `AGENTS.md` is absent. | No |
-| `.claude/CLAUDE.md` | Uses this as another fallback instruction file. | No |
-| `.claude/skills/NAME/SKILL.md` | Auto-discovers these as skills. | No |
-| Reusable prompts or new skills | Place them in `.agents/skills/NAME/SKILL.md` at the repo root. | Yes |
+| `AGENTS.override.md` в корне проекта | Сначала проверяет этот файл на наличие локальных переопределяющих инструкций. | Нет |
+| `AGENTS.md` в корне проекта | Использует его как основной файл инструкций проекта. | Нет |
+| `CLAUDE.md` в корне проекта | Использует его как встроенный резервный вариант при отсутствии `AGENTS.md`. | Нет |
+| `.claude/CLAUDE.md` | Использует его как ещё один резервный файл инструкций. | Нет |
+| `.claude/skills/NAME/SKILL.md` | Автоматически обнаруживает эти файлы как навыки. | Нет |
+| Многоразовые промпты или новые навыки | Размещайте их в `.agents/skills/NAME/SKILL.md` в корне репозитория. | Да |
 
 </SimpleTable>
 
-<Constant name="wizard" /> also walks the directory tree from your project root to your current working directory, picks up instruction files at each level, and combines them for the session.
+<Constant name="wizard" /> также проходит по дереву каталогов от корня проекта до текущего рабочего каталога, считывает файлы инструкций на каждом уровне и объединяет их для сеанса.
 
-For the full skill format, refer to [Skills](/docs/dbt-ai/wizard-skills).
+Полное описание формата навыков приведено в разделе [Навыки](/docs/dbt-ai/wizard-skills).
 
-### Convert reusable prompts to skills
+### Преобразуйте многоразовые промпты в навыки
 
-Use skills for reusable workflows or specialized instructions, not for general project context that already lives in `AGENTS.md` or `CLAUDE.md`. Each repo-level skill lives in `.agents/skills/SKILL_NAME/SKILL.md`.
+Используйте навыки для повторяющихся рабочих процессов или специализированных инструкций, а не для общего контекста проекта, который уже содержится в `AGENTS.md` или `CLAUDE.md`. Каждый навык уровня репозитория хранится в `.agents/skills/SKILL_NAME/SKILL.md`.
 
 ```bash
 mkdir -p .agents/skills/my-team-style
 touch .agents/skills/my-team-style/SKILL.md
 ```
 
-Then add frontmatter and instructions:
+Затем добавьте блок метаданных и инструкции:
 
 ```markdown
 ---
@@ -64,45 +64,45 @@ description: Apply team-specific dbt modeling conventions when creating, editing
 (add your reusable instructions here)
 ```
 
-Write a specific `description:` because <Constant name="wizard" /> uses it to decide when to load the skill.
+Сформулируйте конкретное описание в `description:`, поскольку <Constant name="wizard" /> использует его, чтобы определить, когда загружать навык.
 
-## Configure model settings
+## Настройте параметры модели
 
-Set provider credentials in [Configure BYOK](/docs/dbt-ai/wizard-byok).
+Укажите учётные данные провайдера, следуя разделу [Настройка BYOK](/docs/dbt-ai/wizard-byok).
 
-To set a default model across sessions, add this to `~/.dbt/wizard/config.toml`:
+Чтобы задать модель по умолчанию для всех сеансов, добавьте следующую строку в `~/.dbt/wizard/config.toml`:
 
 ```toml
 model = "claude-sonnet-4-6"   # use a model ID from `wizard debug models`
 ```
 
-You can also pick a model in the TUI with `/model` without editing config or the `--config` flag. Run `wizard --help` to see all available flags.
+Вы также можете выбрать модель в TUI с помощью `/model`, не изменяя конфигурацию и не используя флаг `--config`. Выполните `wizard --help`, чтобы увидеть все доступные флаги.
 
-## Verify the migration
+## Проверьте результат переноса
 
-From your dbt project root, start a new session:
+Запустите новый сеанс из корневого каталога проекта dbt:
 
 ```bash
 wizard
 ```
 
-Ask <Constant name="wizard" /> to do something that should use your migrated skill, such as:
+Попросите <Constant name="wizard" /> выполнить задачу, для которой должен использоваться перенесённый навык, например:
 
 ```text
 create a new staging model for raw_invoices
 ```
 
-And if your conventions aren't applied, check:
+Если принятые в проекте соглашения не применяются, проверьте следующее:
 
-- General project context is in an instruction file such as `AGENTS.md` or `CLAUDE.md`
-- Reusable skills are under `.agents/skills/` at the project root or `~/.agents/skills/` for CLI-global skills
-- The skill has a clear `description:`
-- You started a new session after adding the skill
+- Общий контекст проекта находится в файле инструкций, например `AGENTS.md` или `CLAUDE.md`
+- Многоразовые навыки находятся в `.agents/skills/` в корне проекта или в `~/.agents/skills/` для навыков, доступных глобально в CLI
+- У навыка есть понятное описание в `description:`
+- После добавления навыка вы начали новый сеанс
 
-## Related docs
+## Связанная документация
 
-- [Use dbt Wizard locally](/docs/platform/wizard-overview#get-started)
-- [Skills](/docs/dbt-ai/wizard-skills)
-- [Configure BYOK](/docs/dbt-ai/wizard-byok)
-- [Use cases and examples](/docs/dbt-ai/wizard-use-cases)
-- [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro) for recommended workflows
+- [Использование dbt Wizard локально](/docs/platform/wizard-overview#get-started)
+- [Навыки](/docs/dbt-ai/wizard-skills)
+- [Настройка BYOK](/docs/dbt-ai/wizard-byok)
+- [Сценарии использования и примеры](/docs/dbt-ai/wizard-use-cases)
+- [Как использовать dbt Wizard в проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro) — рекомендуемые рабочие процессы

@@ -1,33 +1,33 @@
 ---
-title: "Apache Ossie semantic layer documents"
+title: "Документы семантического слоя Apache Ossie"
 id: "ossie-semantic-models"
-description: "Use Apache Ossie JSON documents to define semantic models and metrics in your dbt project."
-sidebar_label: "Apache Ossie semantic layer documents"
+description: "Используйте JSON-документы Apache Ossie для определения семантических моделей и метрик в вашем проекте dbt."
+sidebar_label: "Документы семантического слоя Apache Ossie"
 tags: [Metrics, Semantic Layer]
 availability: all_users
 ---
 
-# Apache Ossie semantic layer documents
+# Документы семантического слоя Apache Ossie
 
 <VersionCallout version="1.12" />
 
-<Constant name="dbt" /> v1.12 supports the [Apache Ossie](https://github.com/apache/ossie) standard for defining semantic models and metrics. You can place Ossie-format `.json` files in an `osi/` directory at the root of your project, or configure [`osi-paths`](/reference/project-configs/osi-paths) in `dbt_project.yml` to use one or more custom directories relative to your project root. dbt parses them into the manifest alongside any native dbt semantic models. Ossie-sourced definitions and native dbt semantic models can coexist in the same project.
+<Constant name="dbt" /> v1.12 поддерживает стандарт [Apache Ossie](https://github.com/apache/ossie) для определения семантических моделей и метрик. Вы можете размещать файлы `.json` в формате Ossie в каталоге `osi/` в корне проекта или настроить [`osi-paths`](/reference/project-configs/osi-paths) в `dbt_project.yml`, чтобы использовать один или несколько пользовательских каталогов с путями относительно корня проекта. dbt разбирает эти файлы и добавляет их содержимое в манифест вместе с семантическими моделями, определёнными в собственном формате dbt. Определения из Ossie и семантические модели в собственном формате dbt могут сосуществовать в одном проекте.
 
-## Prerequisites
+## Предварительные требования
 
-- You must be on <Constant name="dbt" /> v1.12. v2 support is coming soon.
-- Ossie documents must use version `0.1.0` or `0.1.1`. Any other version string raises a parse error.
+- Необходимо использовать <Constant name="dbt" /> v1.12. Поддержка v2 появится в ближайшее время.
+- Документы Ossie должны использовать версию `0.1.0` или `0.1.1`. Любая другая строка версии вызывает ошибку разбора.
 
-## Defining semantic models using Ossie documents
+## Определение семантических моделей с помощью документов Ossie
 
-To define semantic models with Ossie documents:
+Чтобы определить семантические модели с помощью документов Ossie:
 
-1. Create an `osi/` directory at the root of your dbt project, at the same level as `dbt_project.yml`. To use one or more custom directories instead, configure [`osi-paths`](/reference/project-configs/osi-paths) in `dbt_project.yml` with paths relative to your project root.
-2. Add one or more Ossie `.json` files to the directory. You can organize files into subdirectories; dbt scans the entire directory tree.
+1. Создайте каталог `osi/` в корне проекта dbt, на том же уровне, что и `dbt_project.yml`. Чтобы вместо него использовать один или несколько пользовательских каталогов, настройте [`osi-paths`](/reference/project-configs/osi-paths) в `dbt_project.yml`, указав пути относительно корня проекта.
+2. Добавьте в каталог один или несколько файлов Ossie `.json`. Файлы можно распределять по подкаталогам: dbt сканирует всё дерево каталогов.
 
-    The `source` field must be the fully qualified warehouse location of a dbt model in this project, in the form `database.schema.alias` (for example, `my_database.my_schema.fct_orders`). dbt matches each dataset on database, schema, and model alias. Each dataset `source` must resolve to a dbt model. For restrictions on dataset sources, refer to [Limitations](#limitations).
+    Поле `source` должно содержать полное расположение модели dbt из этого проекта в хранилище данных в формате `database.schema.alias` (например, `my_database.my_schema.fct_orders`). dbt сопоставляет каждый набор данных с моделью по базе данных, схеме и псевдониму модели. Значение `source` каждого набора данных должно соответствовать модели dbt. Ограничения на источники наборов данных описаны в разделе [Ограничения](#limitations).
 
-    The following is an example Ossie document that defines a semantic model on a dbt model called `fct_orders`:
+    Ниже приведён пример документа Ossie, который определяет семантическую модель на основе модели dbt с именем `fct_orders`:
 
     ```json
     {
@@ -46,14 +46,14 @@ To define semantic models with Ossie documents:
     }
     ```
 
-    This example defines a semantic model only. To add metrics, include a `metrics` array on the semantic model per the [Ossie specification](https://github.com/apache/ossie).
+    В этом примере определяется только семантическая модель. Чтобы добавить метрики, включите в семантическую модель массив `metrics` в соответствии со [спецификацией Ossie](https://github.com/apache/ossie).
 
-3. Run any command that triggers compilation, such as `dbt compile` or `dbt run`. dbt automatically discovers and parses Ossie files.
+3. Выполните любую команду, которая запускает компиляцию, например `dbt compile` или `dbt run`. dbt автоматически обнаруживает и разбирает файлы Ossie.
 
-The resulting semantic models (and metrics, when defined in your Ossie documents) appear in [dbt artifacts](/reference/artifacts/dbt-artifacts) in your `target/` directory, including [`manifest.json`](/reference/artifacts/manifest-json), [`semantic_manifest.json`](/reference/artifacts/sl-manifest), and [`osi_document.json`](/reference/artifacts/sl-manifest#apache-ossie-document).
+Полученные семантические модели (и метрики, если они определены в документах Ossie) появляются в [артефактах dbt](/reference/artifacts/dbt-artifacts) в каталоге `target/`, включая [`manifest.json`](/reference/artifacts/manifest-json), [`semantic_manifest.json`](/reference/artifacts/sl-manifest) и [`osi_document.json`](/reference/artifacts/sl-manifest#osi-document).
 
-## Limitations
+## Ограничения {#limitations}
 
-- dbt scans only the root project's Ossie directories (configured through [`osi-paths`](/reference/project-configs/osi-paths), default `osi/`). Ossie files in installed dependency packages are ignored.
-- Each Ossie dataset source must resolve to a dbt model. Ossie documents that reference sources, seeds, snapshots, or external tables are not supported.
-- If the Ossie converter encounters unsupported metric types or other constructs, those elements are dropped and dbt emits a warning (event code `I078`), but parsing continues. Warnings appear in the CLI and in `logs/dbt.log`; for more information, refer to [Events and logs](/reference/events-logging).
+- dbt сканирует каталоги Ossie только в корневом проекте (они настраиваются через [`osi-paths`](/reference/project-configs/osi-paths), по умолчанию используется `osi/`). Файлы Ossie в установленных пакетах зависимостей игнорируются.
+- Источник каждого набора данных Ossie должен соответствовать модели dbt. Документы Ossie, ссылающиеся на источники (sources), seeds, snapshots или внешние таблицы, не поддерживаются.
+- Если конвертер Ossie встречает неподдерживаемые типы метрик или другие конструкции, эти элементы отбрасываются, а dbt выдаёт предупреждение (код события `I078`), но разбор продолжается. Предупреждения отображаются в CLI и записываются в `logs/dbt.log`; дополнительные сведения см. в разделе [События и журналы](/reference/events-logging).

@@ -1,148 +1,150 @@
 ---
-title: "Use subagents with dbt Wizard CLI"
+title: "Использование субагентов в dbt Wizard CLI"
 id: "wizard-subagents"
-description: "Delegate work to specialized subagents in dbt Wizard CLI."
-sidebar_label: "Use subagents"
+description: "Делегируйте работу специализированным субагентам в dbt Wizard CLI."
+sidebar_label: "Использование субагентов"
 tags: [AI, Wizard]
 availability: local_all
 ---
 
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# Use subagents with <Constant name="wizard"/> CLI <Lifecycle status="beta"/>
+# Использование субагентов в <Constant name="wizard"/> CLI <Lifecycle status="beta"/>
 
 <IntroText>
-Subagents let <Constant name="wizard" /> spin up focused, parallel agents to handle parts of a larger task &mdash; one to explore your project, one to make changes, one to review them. <Constant name="wizard"/> orchestrates them and consolidates the results back into your session.
+Субагенты позволяют <Constant name="wizard" /> запускать специализированных агентов, которые параллельно выполняют части более крупной задачи &mdash; один исследует ваш проект, другой вносит изменения, третий проверяет их. <Constant name="wizard"/> координирует их работу и объединяет результаты в вашем сеансе.
 </IntroText>
 
-Use subagents when you can split a task into independent pieces of work. They're useful for reviewing a large pull request, debugging a failed job, adding tests across multiple models, or researching documentation while another agent inspects your project.
+Используйте субагентов, когда задачу можно разделить на независимые части. Они полезны для проверки большого pull request, отладки задания, завершившегося с ошибкой, добавления тестов для нескольких моделей или поиска информации в документации, пока другой агент изучает ваш проект.
 
-For smaller, direct tasks, you usually don't need subagents. Ask a single question, like "What does this model do?" or "Fix this failing test," without splitting the work across agents.
+Для небольших, конкретных задач субагенты обычно не нужны. Задайте один вопрос, например «Что делает эта модель?» или «Исправь этот тест, который завершается с ошибкой», не распределяя работу между агентами.
 
-Subagents run work in parallel, which uses more tokens than handling the same task in a single-agent session. Use them when the task benefits from dividing the work.
+Субагенты выполняют работу параллельно, что расходует больше токенов, чем выполнение той же задачи в сеансе с одним агентом. Используйте их, когда разделение работы помогает решить задачу.
 
 <WizardFeedbackCallout />
 
-## Locations and precedence
+## Расположение и приоритет
 
-You can define custom agent roles by adding standalone TOML files at the project level or user level. Use project-level agents for roles that should travel with a repo, and user-level agents for roles you want across all local projects.
+Вы можете определять собственные роли агентов, добавляя отдельные TOML-файлы на уровне проекта или пользователя. Используйте агентов уровня проекта для ролей, которые должны распространяться вместе с репозиторием, а агентов уровня пользователя &mdash; для ролей, которые нужны во всех локальных проектах.
 
-The following table summarizes where <Constant name="wizard" /> looks for custom agents. Use the intended locations for new agents, and keep compatibility locations only when migrating existing setup. Project-level agent config loads only for trusted projects. Within project-level locations, the current working directory wins over parent directories. Project-level agents win over user-level agents with the same name.
+В следующей таблице перечислены расположения, в которых <Constant name="wizard" /> ищет пользовательских агентов. Для новых агентов используйте предназначенные для этого расположения, а расположения для совместимости сохраняйте только при переносе существующей конфигурации. Конфигурация агентов уровня проекта загружается только для доверенных проектов. Среди расположений уровня проекта текущий рабочий каталог имеет приоритет над родительскими каталогами. Агенты уровня проекта имеют приоритет над агентами уровня пользователя с тем же именем.
 
 <SimpleTable>
 
-| Location | Level | Use for new agents? | Precedence |
+| Расположение | Уровень | Использовать для новых агентов? | Приоритет |
 | --- | --- | --- | --- |
-| `.dbt/wizard/agents/NAME.toml` | Project | Yes. Use this for agents shared with a repo or subdirectory. | Highest project agent location; closer to the current working directory wins over parent directories. |
-| `~/.dbt/wizard/agents/NAME.toml` | User | Yes. Use this for agents you want across all local projects. | Below project agents, above compatibility imports. |
-| `.claude/agents/NAME.md` | Project | No. Compatibility import for existing Claude Code agents. | Below `.dbt/wizard/agents/` in the same project location. |
-| `~/.claude/agents/NAME.md` | User | No. Compatibility import for existing Claude Code agents. | Below `~/.dbt/wizard/agents/`. |
+| `.dbt/wizard/agents/NAME.toml` | Проект | Да. Используйте для агентов, общих для репозитория или подкаталога. | Наивысший приоритет среди расположений агентов проекта; расположения ближе к текущему рабочему каталогу имеют приоритет над родительскими каталогами. |
+| `~/.dbt/wizard/agents/NAME.toml` | Пользователь | Да. Используйте для агентов, которые нужны во всех локальных проектах. | Ниже агентов проекта, выше импортов для совместимости. |
+| `.claude/agents/NAME.md` | Проект | Нет. Импорт существующих агентов Claude Code для совместимости. | Ниже `.dbt/wizard/agents/` в том же расположении проекта. |
+| `~/.claude/agents/NAME.md` | Пользователь | Нет. Импорт существующих агентов Claude Code для совместимости. | Ниже `~/.dbt/wizard/agents/`. |
 
 </SimpleTable>
 
-If two custom agents use the same name, <Constant name="wizard" /> uses the higher-precedence location and fills in any missing fields from lower-precedence locations when possible. Avoid duplicate names unless you intentionally want to override an existing role.
+Если два пользовательских агента имеют одинаковое имя, <Constant name="wizard" /> использует расположение с более высоким приоритетом и по возможности заполняет отсутствующие поля из расположений с более низким приоритетом. Избегайте повторяющихся имён, если только вы не хотите намеренно переопределить существующую роль.
 
-## Where you can use subagents
+## Где можно использовать субагентов
 
-Subagents work in the [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).
+Субагенты работают в [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli).
 
-You can define custom agent roles, set display nicknames, and configure global limits through the `config.toml` file.
+Вы можете определять собственные роли агентов, задавать отображаемые псевдонимы и настраивать глобальные ограничения в файле `config.toml`.
 
-## How subagents work
+## Как работают субагенты
 
-An agent is a role that describes a type of work, like `explorer`, `worker`, or `test_writer`.
+Агент &mdash; это роль, описывающая тип работы, например `explorer`, `worker` или `test_writer`.
 
-A subagent is a running instance of one of those roles. For example, if you start two explorer agents to answer two different questions, you have two subagents that share the same agent role.
+Субагент &mdash; это запущенный экземпляр одной из таких ролей. Например, если вы запускаете двух агентов explorer для ответа на два разных вопроса, у вас будет два субагента с одной и той же ролью.
 
-<Constant name="wizard"/> handles orchestration for you. It starts subagents, routes work to them, waits for their results, and consolidates their output into your session.
+<Constant name="wizard"/> берёт на себя координацию. Он запускает субагентов, направляет им работу, ожидает результатов и объединяет их вывод в вашем сеансе.
 
-You can use subagents in the following ways:
+Вы можете использовать субагентов следующими способами:
 
-| How subagents start | Example |
+| Как запускаются субагенты | Пример |
 | ------------------- | ------- |
-| You ask to split up the work. | `Review PR #123. Use one agent to map what changed, one to check tests and downstream impact, and one to look up the relevant dbt docs.` |
-| <Constant name="wizard"/> automatically uses a configured agent because your task matches that agent's description. | `Add tests for stg_customers and check whether similar staging models are missing tests.` |
+| Вы просите разделить работу. | `Review PR #123. Use one agent to map what changed, one to check tests and downstream impact, and one to look up the relevant dbt docs.` |
+| <Constant name="wizard"/> автоматически использует настроенного агента, поскольку ваша задача соответствует его описанию. | `Add tests for stg_customers and check whether similar staging models are missing tests.` |
 
-<Constant name="wizard"/> then spawns the agents, lets them work in parallel, and brings their findings back into one response.
+Затем <Constant name="wizard"/> запускает агентов, позволяет им работать параллельно и объединяет их выводы в одном ответе.
 
-## Built-in agents
+## Встроенные агенты
 
-<Constant name="wizard"/> ships with built-in agents that it can spawn without any configuration. Several are purpose-built for dbt work:
+В <Constant name="wizard"/> есть встроенные агенты, которых можно запускать без настройки. Некоторые из них специально предназначены для работы с dbt:
 
 <SimpleTable>
 
-| Agent | What it's for | Example |
+| Агент | Для чего предназначен | Пример |
 |-------|---------------| ------- | 
-| `explorer` | Answers specific, well-scoped questions about your project. Fast and read-only &mdash; spawn several in parallel for independent questions. | `Use explorer to explain what depends on fct_orders.` |
-| `worker` | Performs execution and production work, such as implementing part of a feature, fixing tests or bugs, or splitting a large refactor into independent chunks. | `Use worker to update these staging models to follow our naming convention.` |
-| `validation` | Provides dbt validation. After model edits, runs structured validation &mdash; SQL check, `dbt run` with `--defer`, prod vs. dev comparison, and impact analysis &mdash; to validate changes before you merge. | `Use validation to check whether my changes to int_payments are safe to merge.` |
-| `test_writer` | Improves dbt test coverage. Analyzes project metadata and warehouse data to find coverage gaps, validates assumptions with queries, and writes `schema.yml` tests for models with low or no coverage. | `Use test_writer to add tests to stg_customers.` |
+| `explorer` | Отвечает на конкретные, чётко ограниченные вопросы о вашем проекте. Работает быстро и только в режиме чтения &mdash; запускайте несколько экземпляров параллельно для независимых вопросов. | `Use explorer to explain what depends on fct_orders.` |
+| `worker` | Выполняет практические задачи, например реализует часть функциональности, исправляет тесты или ошибки либо разбивает масштабный рефакторинг на независимые части. | `Use worker to update these staging models to follow our naming convention.` |
+| `validation` | Выполняет проверку dbt. После редактирования моделей проводит структурированную проверку &mdash; проверку SQL, `dbt run` с `--defer`, сравнение prod и dev и анализ влияния &mdash; чтобы проверить изменения перед слиянием. | `Use validation to check whether my changes to int_payments are safe to merge.` |
+| `test_writer` | Улучшает покрытие тестами dbt. Анализирует метаданные проекта и данные в хранилище, чтобы найти пробелы в покрытии, проверяет предположения с помощью запросов и пишет тесты в `schema.yml` для моделей с низким покрытием или без него. | `Use test_writer to add tests to stg_customers.` |
 
 </SimpleTable>
 
-You don't need to declare these &mdash; <Constant name="wizard"/> routes to them automatically when a task fits, or you can ask for one by name. For example, both of these prompts can use the `test_writer` agent:
+Объявлять этих агентов не нужно &mdash; <Constant name="wizard"/> автоматически направляет им подходящие задачи, или вы можете запросить агента по имени. Например, оба этих запроса могут задействовать агента `test_writer`:
 
-| Prompt style	| Example |
+| Стиль запроса	| Пример |
 | ------------- | ------- |
-| Ask naturally	| Add useful tests for stg_customers. |
-| Ask for the agent by name	| Use test_writer to add tests to stg_customers. |
+| Запрос на естественном языке | Добавь полезные тесты для stg_customers. |
+| Запрос агента по имени | Используй test_writer, чтобы добавить тесты для stg_customers. |
 
-To add your own roles, refer to [Custom agents](#custom-agents).
+Чтобы добавить собственные роли, обратитесь к разделу [Пользовательские агенты](#custom-agents-cli).
 
-## Manage subagents
+## Управление субагентами
 
-Use slash commands inside an interactive session to inspect and steer agent threads:
+Используйте слеш-команды в интерактивном сеансе, чтобы просматривать потоки агентов и направлять их работу:
 
 <SimpleTable>
 
-| Command | What it does | Example |
+| Команда | Что делает | Пример |
 |---------|------------- | ------- |
-| `/agent` | Switch the active agent thread to inspect or steer ongoing work. | Use `/agent` when you want to jump from the main session into a specific agent thread to give it more direction. |
-| `/subagents` | View and switch between running subagent threads. | Use `/subagents` to see which helper agents are active during a delegated task, then select one to inspect its progress. |
+| `/agent` | Переключает активный поток агента, чтобы просмотреть текущую работу или направить её. | Используйте `/agent`, когда хотите перейти из основного сеанса в поток конкретного агента и дать ему дополнительные указания. |
+| `/subagents` | Показывает запущенные потоки субагентов и позволяет переключаться между ними. | Используйте `/subagents`, чтобы увидеть, какие вспомогательные агенты активны при выполнении делегированной задачи, а затем выберите одного из них, чтобы просмотреть ход его работы. |
 
 </SimpleTable>
 
-You can also tell <Constant name="wizard"/> in plain language to steer, stop, or close an agent thread. For example, `Stop the docs researcher agent and continue with the reviewer findings.`
+Вы также можете на естественном языке попросить <Constant name="wizard"/> направить работу потока агента, остановить или закрыть его. Например: `Stop the docs researcher agent and continue with the reviewer findings.`
 
-For the full list of session commands, refer to the [slash command reference](/docs/dbt-ai/wizard-slash-commands).
+Полный список команд сеанса приведён в [справочнике слеш-команд](/docs/dbt-ai/wizard-slash-commands).
 
-## Approvals and sandbox
+## Подтверждения и песочница
 
-Subagents inherit the parent session's [approval and sandbox policy](/docs/dbt-ai/wizard-how-it-works#approval-and-sandboxing). Any runtime overrides you set for a turn (permissions, sandbox mode) apply to the subagents it spawns. When a subagent requests approval, your session shows the request with its source so you know which agent is asking.
+Субагенты наследуют [политику подтверждений и песочницы](/docs/dbt-ai/wizard-how-it-works#approval-and-sandboxing) родительского сеанса. Любые переопределения, которые вы задаёте на время выполнения одного хода (разрешения, режим песочницы), применяются к запускаемым в этом ходе субагентам. Когда субагент запрашивает подтверждение, в вашем сеансе отображается запрос с указанием источника, чтобы вы знали, какой агент его отправил.
 
-A custom agent can override sandbox settings for itself &mdash; useful when, for example, an exploration agent should stay read-only while a build agent needs workspace write access.
+Пользовательский агент может переопределить для себя настройки песочницы &mdash; это полезно, например, когда агенту для исследования нужен только доступ на чтение, а агенту для сборки требуется доступ на запись в рабочую область.
 
-## Custom agents {#custom-agents}
+<a id="custom-agents-cli" />
 
-A custom agent role is a reusable role for a particular type of work you want <Constant name="wizard"/> to perform, such as writing UDFs, exploring a project, or debugging an issue. You can create any role name that fits your workflow; it does not have to be one of the built-in roles.
+## Пользовательские агенты {#custom-agents}
 
-Each file defines one custom agent role. The file name must match the agent's `name` field. For example, an agent with `name = "udf_helper"` must be defined in an `agents/udf_helper.toml` file.
+Роль пользовательского агента &mdash; это многократно используемая роль для определённого типа работы, которую вы хотите поручить <Constant name="wizard"/>, например написания UDF, исследования проекта или отладки проблемы. Вы можете выбрать любое имя роли, подходящее для вашего рабочего процесса; оно не обязано совпадать с одной из встроенных ролей.
 
-<Constant name="wizard"/> loads each custom agent file as a configuration layer for spawned agent sessions. This means a custom agent can override the same settings as a normal <Constant name="wizard"/> session config, such as the model, instructions, sandbox mode, and MCP servers.
+Каждый файл определяет одну роль пользовательского агента. Имя файла должно совпадать со значением поля `name` агента. Например, агент с `name = "udf_helper"` должен быть определён в файле `agents/udf_helper.toml`.
 
-The best custom agents are narrow and opinionated. Give each one a clear job, the tools it needs for that job, and instructions that keep it from drifting into adjacent work.
+<Constant name="wizard"/> загружает каждый файл пользовательского агента как слой конфигурации для запускаемых сеансов агентов. Это означает, что пользовательский агент может переопределять те же настройки, что и обычная конфигурация сеанса <Constant name="wizard"/>, например модель, инструкции, режим песочницы и MCP-серверы.
 
-Every custom agent file must define:
+Лучшие пользовательские агенты имеют узкую специализацию и чётко заданный подход к работе. Дайте каждому конкретную задачу, необходимые для неё инструменты и инструкции, которые не позволят ему отвлекаться на смежную работу.
+
+Каждый файл пользовательского агента должен определять:
 
 <SimpleTable>
 
-| Field | Required | Description |
+| Поле | Обязательное | Описание |
 |-------|----------|-------------|
-| `name` | Yes | Agent name <Constant name="wizard"/> uses when spawning or referring to this agent. Must match the file name without `.toml`. For example, `name = "udf_helper"` must be in `udf_helper.toml`. |
-| `description` | Yes | Explains when to use the agent. <Constant name="wizard"/> reads this description to decide whether the agent fits a task. |
-| `developer_instructions` | Yes | Self-hosted dbt instructions that define the agent's behavior. |
-| `nickname_candidates` | No | Display-only labels for spawned instances of this agent in the UI, such as `UDF helper` or `UDF queen`. The nickname does not identify the agent. |
-| `model` | No | Model this agent should use. Inherits from the parent session when omitted. |
-| `sandbox_mode` | No | Sandbox mode for this agent. Inherits from the parent session when omitted. |
-| `mcp_servers` | No | MCP servers available to this agent. Inherits from the parent session when omitted. |
+| `name` | Да | Имя агента, которое <Constant name="wizard"/> использует при его запуске или обращении к нему. Должно совпадать с именем файла без `.toml`. Например, `name = "udf_helper"` должно находиться в `udf_helper.toml`. |
+| `description` | Да | Объясняет, когда следует использовать агента. <Constant name="wizard"/> читает это описание, чтобы определить, подходит ли агент для задачи. |
+| `developer_instructions` | Да | Инструкции для самостоятельно размещённого dbt, определяющие поведение агента. |
+| `nickname_candidates` | Нет | Метки, используемые только для отображения запущенных экземпляров этого агента в интерфейсе, например `UDF helper` или `UDF queen`. Псевдоним не служит идентификатором агента. |
+| `model` | Нет | Модель, которую должен использовать этот агент. Если не указана, наследуется из родительского сеанса. |
+| `sandbox_mode` | Нет | Режим песочницы для этого агента. Если не указан, наследуется из родительского сеанса. |
+| `mcp_servers` | Нет | MCP-серверы, доступные этому агенту. Если не указаны, наследуются из родительского сеанса. |
 
 </SimpleTable>
 
-You can also include other supported [`config.toml`](/docs/dbt-ai/wizard-config#configtoml) keys in a custom agent file. Any setting you don't define in the custom agent file inherits from the parent session.
+В файл пользовательского агента также можно включать другие поддерживаемые ключи [`config.toml`](/docs/dbt-ai/wizard-config#configtoml). Любая настройка, не заданная в файле пользовательского агента, наследуется из родительского сеанса.
 
-### Example custom agent
+### Пример пользовательского агента
 
-Create a standalone custom agent file. The file name and `name` value must match:
+Создайте отдельный файл пользовательского агента. Имя файла и значение `name` должны совпадать:
 
 <File name="~/.dbt/wizard/agents/udf_helper.toml">
 
@@ -171,29 +173,29 @@ nickname_candidates = ["UDF helper", "UDF queen"]
 
 </File>
 
-Then ask <Constant name="wizard"/> to use the agent by name:
+Затем попросите <Constant name="wizard"/> использовать агента по имени:
 
 ```text
 Use udf_helper to create a UDF model that checks whether customer IDs are positive integers.
 ```
 
-You can also let <Constant name="wizard"/> choose the agent automatically by describing the task:
+Вы также можете позволить <Constant name="wizard"/> выбрать агента автоматически, описав задачу:
 
 ```text
 Create a dbt UDF that checks whether customer IDs are positive integers, then add a small model that uses it.
 ```
 
-### Display nicknames
+### Отображаемые псевдонимы
 
-When several instances of the same agent run at once, use `nickname_candidates` to give each instance a readable label in the UI. For example, two spawned `udf_helper` agents might appear as `UDF helper` and `UDF queen`.
+Когда одновременно работают несколько экземпляров одного агента, используйте `nickname_candidates`, чтобы дать каждому экземпляру понятную метку в интерфейсе. Например, два запущенных агента `udf_helper` могут отображаться как `UDF helper` и `UDF queen`.
 
-Nicknames are display-only. <Constant name="wizard"/> identifies the agent by its `name` field, not by the nickname shown in the UI.
+Псевдонимы используются только для отображения. <Constant name="wizard"/> определяет агента по полю `name`, а не по псевдониму, показанному в интерфейсе.
 
-### Example with an MCP server
+### Пример с MCP-сервером
 
-Custom agent files can include MCP server configuration when the agent needs additional tools or context.
+Файлы пользовательских агентов могут содержать конфигурацию MCP-сервера, если агенту нужны дополнительные инструменты или контекст.
 
-Again, the file name and `name` value must match:
+Как и прежде, имя файла и значение `name` должны совпадать:
 
 <File name="~/.dbt/wizard/agents/dbt_docs_helper.toml">
 
@@ -216,15 +218,15 @@ args = ["dbt-mcp"]
 
 </File>
 
-This setup works well for prompts like:
+Эта конфигурация хорошо подходит для таких запросов:
 
 ```text
 Have udf_helper design the UDF change and dbt_docs_helper verify the dbt function configuration.
 ```
 
-### Global settings
+### Глобальные настройки
 
-Global subagent settings live under the `[agents]` section in `~/.dbt/wizard/config.toml`:
+Глобальные настройки субагентов находятся в секции `[agents]` файла `~/.dbt/wizard/config.toml`:
 
 <File name="~/.dbt/wizard/config.toml">
 
@@ -239,19 +241,19 @@ interrupt_message = true
 
 <SimpleTable>
 
-| Key | Description |
+| Ключ | Описание |
 |-----|-------------|
-| `max_depth` | Maximum nesting depth for spawned agent threads. Root sessions start at depth 0. |
-| `job_max_runtime_seconds` | Default maximum runtime, in seconds, for agent job workers. |
-| `interrupt_message` | Whether to record a model-visible message when an agent turn is interrupted. Defaults to `true`. |
+| `max_depth` | Максимальная глубина вложенности запускаемых потоков агентов. Корневые сеансы начинаются с глубины 0. |
+| `job_max_runtime_seconds` | Максимальное время выполнения по умолчанию, в секундах, для агентов, выполняющих задания. |
+| `interrupt_message` | Определяет, нужно ли записывать видимое модели сообщение при прерывании хода агента. По умолчанию — `true`. |
 
 </SimpleTable>
 
-## Examples
+## Примеры
 
-### UDF implementation
+### Реализация UDF
 
-Define a custom agent that specializes in dbt UDF work. Each custom agent is a standalone TOML file under `~/.dbt/wizard/agents/`.
+Определите пользовательского агента, специализирующегося на работе с UDF в dbt. Каждый пользовательский агент &mdash; это отдельный TOML-файл в `~/.dbt/wizard/agents/`.
 
 <File name="~/.dbt/wizard/agents/udf_helper.toml">
 
@@ -280,7 +282,7 @@ nickname_candidates = ["UDF helper", "UDF queen"]
 
 </File>
 
-Optionally, configure global subagent settings in your main `config.toml`:
+При необходимости задайте глобальные настройки субагентов в основном файле `config.toml`:
 
 <File name="~/.dbt/wizard/config.toml">
 
@@ -291,17 +293,17 @@ max_depth = 2
 
 </File>
 
-Then prompt <Constant name="wizard"/>:
+Затем отправьте запрос <Constant name="wizard"/>:
 
 ```text
 Use udf_helper to create a UDF that checks whether customer IDs are positive integers, then add a small model that uses it.
 ```
 
-<Constant name="wizard"/> starts the requested agent, lets it work on the UDF implementation, and consolidates the result into your session.
+<Constant name="wizard"/> запускает указанного агента, позволяет ему реализовать UDF и добавляет итоговый результат в ваш сеанс.
 
-### Debug a failed job run (home app)
+### Отладка запуска задания, завершившегося с ошибкой (главное приложение)
 
-In the <Constant name="dbt_platform" /> home app, ask <Constant name="wizard"/> to investigate a failed job by delegating to focused agents:
+В главном приложении <Constant name="dbt_platform" /> попросите <Constant name="wizard"/> исследовать задание, завершившееся с ошибкой, делегировав работу специализированным агентам:
 
 ```text
 The nightly job failed. Use one agent to pull the run error and logs,
@@ -309,12 +311,12 @@ one to trace the failing model's lineage and find the root cause, and
 one to propose a fix. Summarize what each found.
 ```
 
-<Constant name="wizard"/> spawns the agents, each one works on its part of your connected project, and <Constant name="wizard"/> consolidates the diagnosis and proposed fix into one response.
+<Constant name="wizard"/> запускает агентов, каждый из них работает над своей частью подключённого проекта, а <Constant name="wizard"/> объединяет результаты диагностики и предложенное исправление в одном ответе.
 
-## Related docs
+## Связанная документация
 
-- [Use MCP servers with the <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp) to give agents more tools and context
-- [Use skills](/docs/dbt-ai/wizard-skills) for reusable, project-specific instructions
-- [<Constant name="wizard" /> slash commands](/docs/dbt-ai/wizard-slash-commands) for `/agent` and `/subagents`
-- [<Constant name="wizard" /> CLI config](/docs/dbt-ai/wizard-config) for `config.toml` keys and precedence
-- [How <Constant name="wizard" /> works](/docs/dbt-ai/wizard-how-it-works) for approvals and sandboxing
+- [Использование MCP-серверов с <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp) — чтобы предоставить агентам дополнительные инструменты и контекст
+- [Использование навыков](/docs/dbt-ai/wizard-skills) — для многократно используемых инструкций, специфичных для проекта
+- [Слеш-команды <Constant name="wizard" />](/docs/dbt-ai/wizard-slash-commands) — о командах `/agent` и `/subagents`
+- [Конфигурация <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-config) — о ключах `config.toml` и приоритетах
+- [Как работает <Constant name="wizard" />](/docs/dbt-ai/wizard-how-it-works) — о подтверждениях и песочнице

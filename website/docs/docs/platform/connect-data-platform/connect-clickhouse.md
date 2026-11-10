@@ -1,84 +1,84 @@
 ---
-title: "Connect ClickHouse"
+title: "Подключение к ClickHouse"
 id: connect-clickhouse
-description: "Configure the ClickHouse platform connection in dbt."
-sidebar_label: "Connect ClickHouse"
+description: "Настройте подключение к платформе ClickHouse в dbt."
+sidebar_label: "Подключение к ClickHouse"
 availability:
   surface: platform
   access: login_required
   engine: v2
 ---
 
-# Connect ClickHouse <Lifecycle status="private_beta" /> <ProductCard text="dbt v2 compatible" />
+# Подключение к ClickHouse <Lifecycle status="private_beta" /> <ProductCard text="Совместимо с dbt v2" />
 
-The <Constant name="fusion_engine" /> in <Constant name="dbt_platform" /> supports connecting to [ClickHouse Cloud](https://clickhouse.com/cloud) and to self-managed single-node ClickHouse. Use a <Constant name="fusion" /> release track for the environment that uses this connection.
+<Constant name="fusion_engine" /> в <Constant name="dbt_platform" /> поддерживает подключение к [ClickHouse Cloud](https://clickhouse.com/cloud) и к самостоятельно управляемым одноузловым экземплярам ClickHouse. Для среды, использующей это подключение, выберите канал выпуска <Constant name="fusion" />.
 
-:::caution ClickHouse private beta
-ClickHouse connections on v2 are in private beta and not production-ready. To request access, contact your account representative. Expect some minor bugs, and avoid using them in production environments for now. Refer to [Limitations](#limitations) before you connect.
+:::caution Закрытое бета-тестирование ClickHouse
+Подключения к ClickHouse в v2 находятся на этапе закрытого бета-тестирования и не готовы к использованию в производственных средах. Чтобы запросить доступ, свяжитесь с представителем, который ведёт вашу учётную запись. Возможны небольшие ошибки, поэтому пока не используйте эти подключения в производственных средах. Перед подключением ознакомьтесь с разделом [Ограничения](#limitations).
 :::
 
-## Warehouse permissions for <Constant name="fusion" />
+## Права доступа к хранилищу для <Constant name="fusion" />
 
 import FusionClickHouseWarehousePerms from '/snippets/_v2-warehouse-permissions-clickhouse.md';
 
 <FusionClickHouseWarehousePerms />
 
-For the full privilege model, refer to [access control in the ClickHouse documentation](https://clickhouse.com/docs/operations/access-rights).
+Полное описание модели привилегий см. в разделе [Управление доступом в документации ClickHouse](https://clickhouse.com/docs/operations/access-rights).
 
-## Connection fields
+## Поля подключения
 
-Configure the following fields when you create a ClickHouse connection.
+При создании подключения к ClickHouse настройте следующие поля.
 
 <SimpleTable>
 
-| Field           | Description                                                                                      | Type   | Required? | Example |
+| Поле            | Описание                                                                                         | Тип    | Обязательное? | Пример |
 | --------------- | ------------------------------------------------------------------------------------------------ | ------ | --------- | ------- |
-| Server Hostname | The ClickHouse Cloud endpoint URL. Do not include `https://` or the port. Copy this from **Connect** in the [ClickHouse Cloud console](https://clickhouse.com/docs/get-started/quickstarts/obtain-your-cloud-connection-details#find-your-connection-details). | String | Required  | `abc123.us-east-1.aws.clickhouse.cloud` |
-| Port            | The port to connect to. The dbt ClickHouse adapter connects over HTTPS. Use port `8443`. Port `9440` (native protocol) is not supported by the adapter. | String | Optional  | `8443` |
-| Database        | The name of the database to connect to.                                                          | String | Optional  | `default` |
+| Server Hostname | URL конечной точки ClickHouse Cloud. Не указывайте `https://` и порт. Скопируйте адрес из раздела **Connect** в [консоли ClickHouse Cloud](https://clickhouse.com/docs/get-started/quickstarts/obtain-your-cloud-connection-details#find-your-connection-details). | Строка | Да        | `abc123.us-east-1.aws.clickhouse.cloud` |
+| Port            | Порт для подключения. Адаптер dbt для ClickHouse подключается по HTTPS. Используйте порт `8443`. Порт `9440` (нативный протокол) не поддерживается адаптером. | Строка | Нет       | `8443` |
+| Database        | Имя базы данных для подключения.                                                                 | Строка | Нет       | `default` |
 
 </SimpleTable>
 
-<Lightbox src="/img/docs/dbt-platform/clickhouse-connection.png" title="Example of the ClickHouse connection fields." />
+<Lightbox src="/img/docs/dbt-platform/clickhouse-connection.png" title="Пример полей подключения к ClickHouse." />
 
-After you save the connection, set up your development environment:
+После сохранения подключения настройте среду разработки:
 
-1. Create a new project or open an existing one.
-2. In your project settings, select **Environments** from the left menu and open your development environment.
-3. Under **Connection**, select the ClickHouse connection you just created.
-4. Save the environment.
+1. Создайте новый проект или откройте существующий.
+2. В настройках проекта выберите **Environments** в меню слева и откройте свою среду разработки.
+3. В разделе **Connection** выберите только что созданное подключение к ClickHouse.
+4. Сохраните среду.
 
-<Lightbox src="/img/docs/dbt-platform/clickhouse-environment.png" title="Select the ClickHouse connection for the development environment." />
+<Lightbox src="/img/docs/dbt-platform/clickhouse-environment.png" title="Выбор подключения к ClickHouse для среды разработки." />
 
-## Development and deployment credentials
+## Учётные данные для разработки и развёртывания
 
-Each developer enters personal development credentials in **Your profile** → **Credentials**. For ClickHouse Cloud, copy the username and password from the **Connect** dialog in the [ClickHouse Cloud console](https://clickhouse.com/docs/get-started/quickstarts/obtain-your-cloud-connection-details#find-your-connection-details). The username is typically `default`.
+Каждый разработчик вводит личные учётные данные для разработки в разделе **Your profile** → **Credentials**. Для ClickHouse Cloud скопируйте имя пользователя и пароль из диалогового окна **Connect** в [консоли ClickHouse Cloud](https://clickhouse.com/docs/get-started/quickstarts/obtain-your-cloud-connection-details#find-your-connection-details). Обычно используется имя пользователя `default`.
 
 <SimpleTable>
 
-| Field        | Description                                                                                  | Type   | Required? | Example             |
+| Поле         | Описание                                                                                     | Тип    | Обязательное? | Пример              |
 | ------------ | -------------------------------------------------------------------------------------------- | ------ | --------- | ------------------- |
-| Username     | The database username.                                                                       | String | Required  | `default`           |
-| Password     | The database password.                                                                       | String | Optional  | DatabasePassword123 |
-| Schema       | In development, dbt builds your models into a schema with this name. Use a schema unique to your personal development environment. | String | Required  | dbtlabsdocstest     |
-| Target name  | The target name for this credential.                                                         | String | Optional  | `default`           |
-| Threads      | The number of threads to use for dbt operations.                                             | Integer | Optional | `4`                 |
+| Username     | Имя пользователя базы данных.                                                                | Строка | Да        | `default`           |
+| Password     | Пароль базы данных.                                                                          | Строка | Нет       | DatabasePassword123 |
+| Schema       | При разработке dbt создаёт ваши модели в схеме с этим именем. Используйте схему, уникальную для вашей личной среды разработки. | Строка | Да        | dbtlabsdocstest     |
+| Target name  | Имя целевой конфигурации для этих учётных данных.                                             | Строка | Нет       | `default`           |
+| Threads      | Количество потоков для выполнения операций dbt.                                              | Целое число | Нет  | `4`                 |
 
 </SimpleTable>
 
-<Lightbox src="/img/docs/dbt-platform/clickhouse-credentials.png" title="Example of the ClickHouse user credential fields." />
+<Lightbox src="/img/docs/dbt-platform/clickhouse-credentials.png" title="Пример полей учётных данных пользователя ClickHouse." />
 
-## Configuration
+## Настройка
 
-To learn how to optimize performance with data platform-specific configurations in <Constant name="dbt" />, refer to [ClickHouse configurations](/reference/resource-configs/clickhouse-configs).
+О том, как оптимизировать производительность с помощью настроек <Constant name="dbt" />, специфичных для платформы данных, см. в разделе [Настройки ClickHouse](/reference/resource-configs/clickhouse-configs).
 
-For a description of the ClickHouse profile fields that the connection maps to, refer to [ClickHouse setup](/docs/local/connect-data-platform/clickhouse-setup).
+Описание полей профиля ClickHouse, которым соответствуют поля подключения, см. в разделе [Настройка ClickHouse](/docs/local/connect-data-platform/clickhouse-setup).
 
-## Limitations
+## Ограничения {#limitations}
 
-The ClickHouse connection is in private beta. On the <Constant name="dbt_platform" /> specifically:
+Подключение к ClickHouse находится на этапе закрытого бета-тестирования. В частности, в <Constant name="dbt_platform" />:
 
-- The dbt <Constant name="semantic_layer" /> isn't supported for ClickHouse connections yet.
-- Only username and password authentication is available. OAuth, key pair authentication, SSH tunneling, and private connectivity aren't supported for ClickHouse yet.
+- <Constant name="semantic_layer" /> dbt пока не поддерживается для подключений к ClickHouse.
+- Доступна только аутентификация по имени пользователя и паролю. OAuth, аутентификация с помощью пары ключей, SSH-туннелирование и подключение по частной сети пока не поддерживаются для ClickHouse.
 
-The <Constant name="fusion" /> ClickHouse adapter limitations apply here too, including the gaps in clusters, grants, `dbt clone`, `dbt source freshness`, and SQL comprehension. For the complete picture, refer to [ClickHouse limitations](/docs/local/connect-data-platform/clickhouse-setup#limitations).
+Здесь также действуют ограничения адаптера ClickHouse для <Constant name="fusion" />, включая ограничения в поддержке кластеров, предоставления прав доступа, `dbt clone`, `dbt source freshness` и анализа SQL. Полную информацию см. в разделе [Ограничения ClickHouse](/docs/local/connect-data-platform/clickhouse-setup#limitations).

@@ -18,7 +18,7 @@ quoting:
 
 </File>
 
-## Definition {#definition}
+## Определение {#definition}
 
 При желании вы можете включить квотирование (quoting) в проекте dbt, чтобы управлять тем, будет ли dbt оборачивать имена баз данных, схем или идентификаторов в кавычки при генерации SQL. dbt использует эту настройку в следующих случаях:
 
@@ -183,16 +183,16 @@ select * from analytics.orders;
 
 ### Redshift
 
-Leave the default quoting values. You can do this  in `dbt_project.yml` by either omitting the `quoting` config or setting `database`, `schema`, and `identifier` to `true`. The `quoting` config only controls whether dbt wraps names in double quotes, so it can't work around Redshift lowercasing mixed-case names. If you need mixed-case names, turn on the Redshift `enable_case_sensitive_identifier` setting and keep `quoting` on. If you set `quoting` to `false`, dbt sends unquoted names, and Redshift lowercases them even when `enable_case_sensitive_identifier` is `true`.
+Сохраните настройки кавычек по умолчанию: не задавайте `quoting` в `dbt_project.yml` либо установите `database`, `schema` и `identifier` в `true`. Настройка `quoting` определяет только наличие двойных кавычек. Чтобы сохранить смешанный регистр, включите в Redshift `enable_case_sensitive_identifier` и оставьте кавычки включёнными. При `quoting: false` dbt отправляет имена без кавычек, и Redshift приводит их к нижнему регистру даже при `enable_case_sensitive_identifier: true`.
 
-By default, Redshift lowercases database, schema, table, and column names, even when they're quoted. The `enable_case_sensitive_identifier` setting controls this:
+По умолчанию Redshift приводит имена баз, схем, таблиц и столбцов к нижнему регистру, даже если они заключены в кавычки. Это поведение задаёт параметр `enable_case_sensitive_identifier`:
 
-- `false` (default): Redshift lowercases all names, whether or not they're quoted.
-- `true`: Redshift keeps the case of quoted names. Unquoted names are still lowercased.
+- `false` (по умолчанию): Redshift приводит к нижнему регистру все имена, независимо от кавычек.
+- `true`: Redshift сохраняет регистр имён в кавычках. Имена без кавычек по-прежнему приводятся к нижнему регистру.
 
-You can set this parameter to `true` for a cluster or workgroup. A `SET` command applies only to the current session. Refer to [Turn on case sensitivity](https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-setting-up.case-sensitivity.html) and the [parameter reference](https://docs.aws.amazon.com/redshift/latest/dg/r_enable_case_sensitive_identifier.html) in the Amazon Redshift documentation.
+Параметр можно включить для кластера или рабочей группы. Команда `SET` действует только в текущем сеансе. Подробнее см. [Включение учёта регистра](https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-setting-up.case-sensitivity.html) и [Справочник параметра](https://docs.aws.amazon.com/redshift/latest/dg/r_enable_case_sensitive_identifier.html) в документации Amazon Redshift.
 
-The following example shows the difference between setting the parameter to `false` or `true` when run in a Redshift session:
+Пример показывает разницу между `false` и `true` при выполнении в сеансе Redshift:
 
 <File name="redshift_casing.sql">
 

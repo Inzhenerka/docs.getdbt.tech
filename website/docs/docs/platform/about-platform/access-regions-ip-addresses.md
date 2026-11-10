@@ -1,102 +1,102 @@
 ---
-title: "Access, Regions, & IP addresses"
-sidebar: "Access, Regions, & IP Addresses"
+title: "Доступ, регионы и IP-адреса"
+sidebar: "Доступ, регионы и IP-адреса"
 id: "access-regions-ip-addresses"
-description: "Available regions and ip addresses"
+description: "Доступные регионы и IP-адреса"
 availability:
   surface: platform
   access: login_required
 ---
 
-Except as indicated below, <Constant name="dbt" /> is [hosted](/docs/platform/about-platform/architecture) in multiple regions across the following service providers:
+За исключением случаев, указанных ниже, <Constant name="dbt" /> [размещается](/docs/platform/about-platform/architecture) в нескольких регионах у следующих поставщиков облачных услуг:
 
 - [Amazon Web Services](#AWS)
 - [Google Cloud Platform](#GCP)
 - [Microsoft Azure](#Azure)
 
-Your <Constant name="dbt" /> account will connect to your data platform or git provider from the below IP addresses. Be sure to allow traffic from these IPs in your firewall, and include them in any database grants.
+Ваш аккаунт <Constant name="dbt" /> будет подключаться к вашей платформе данных или Git-провайдеру с указанных ниже IP-адресов. Обязательно разрешите трафик с этих IP-адресов в межсетевом экране и укажите их во всех соответствующих разрешениях на доступ к базе данных.
 
-- [<Constant name="dbt" /> Enterprise-tier](https://www.getdbt.com/pricing/) plans can choose to have their account hosted in any of the regions listed in the following table. 
-- Organizations **must** choose a single region per <Constant name="dbt" /> account. To run <Constant name="dbt" /> in multiple regions, we recommend using multiple <Constant name="dbt" /> accounts. 
+- На [тарифных планах Enterprise для <Constant name="dbt" />](https://www.getdbt.com/pricing/) можно выбрать размещение аккаунта в любом из регионов, перечисленных в следующей таблице. 
+- Организации **должны** выбрать один регион для каждого аккаунта <Constant name="dbt" />. Для работы с <Constant name="dbt" /> в нескольких регионах рекомендуем использовать несколько аккаунтов <Constant name="dbt" />. 
 
-[dbt State](/docs/deploy/dbt-state-about) is currently only available in a Google Cloud Platform US region. For more information, refer to [How is data stored in dbt State?](/faqs/State/data-storage)
+[dbt State](/docs/deploy/dbt-state-about) в настоящее время доступен только в регионе Google Cloud Platform в США. Подробнее см. в разделе [Как хранятся данные в dbt State?](/faqs/State/data-storage)
 
 ## Amazon Web Services (AWS) {#AWS}
 
 
-| Region | Location | <div style={{width:'110px'}}>Access URL</div> | <div style={{width:'100px'}}>IP addresses</div> | Available plans | <div style={{width:'200px'}}>Status page link</div> |
+| Регион | Расположение | <div style={{width:'110px'}}>URL для доступа</div> | <div style={{width:'100px'}}>IP-адреса</div> | Доступные тарифные планы | <div style={{width:'200px'}}>Ссылка на страницу состояния</div> |
 |--------|----------|------------|--------------|-------| --------- |
-| North America  | AWS us-east-1 (N. Virginia) | <small>ACCOUNT_PREFIX.us1.dbt.com</small> | 52.45.144.63 <br /> 54.81.134.249 <br />52.22.161.231 <br />52.3.77.232 <br />3.214.191.130 <br />34.233.79.135 | [All dbt platform plans](https://www.getdbt.com/pricing/) | **Multi-tenant:** <br /> [US East AWS](https://status.getdbt.com/us-aws)<br /><br /> **Cell based:** <br />[US East Cell 1 AWS](https://status.getdbt.com/us-cell-1-aws) <br /> [US East Cell 2 AWS](https://status.getdbt.com/us-cell-2-aws) <br /> [US East Cell 3 AWS](https://status.getdbt.com/us-cell-3-aws) <br /> [US East Cell 4 AWS](https://status.getdbt.com/us-cell-4-aws) |
-| North America  | AWS us-west-2 (Oregon)      | <small>ACCOUNT_PREFIX.us5.dbt.com</small> | 32.185.64.51 <br /> 34.217.173.137 <br /> 52.37.223.167 | All Enterprise plans | [US West Cell 1 AWS](https://status.getdbt.com/us-5-cell-1-aws) |
-| EMEA  | eu-central-1	(Frankfurt) | <small>ACCOUNT_PREFIX.eu1.dbt.com</small> | 3.123.45.39 <br /> 3.126.140.248 <br /> 3.72.153.148 | All Enterprise plans | [EMEA AWS](https://status.getdbt.com/emea-aws) |
-| APAC  | ap-southeast-2  (Sydney)| <small>ACCOUNT_PREFIX.au1.dbt.com</small> | 52.65.89.235 <br /> 3.106.40.33 <br /> 13.239.155.206 <br />|  All Enterprise plans | [APAC AWS](https://status.getdbt.com/apac-aws) |
-| Japan | ap-northeast-1 (Tokyo) | <small>ACCOUNT_PREFIX.jp1.dbt.com</small> | 35.76.76.152 <br />  54.238.211.79 <br /> 13.115.236.233 <br /> | All Enterprise plans | [JP Cell 1 AWS](https://status.getdbt.com/jp-cell-1-aws) | 
-| Virtual Private dbt or Single tenant | Customized |  Customized | Ask [Support](/community/resources/getting-help#dbt-support) for your IPs | All Enterprise plans | Customized |
+| Северная Америка  | AWS us-east-1 (Северная Вирджиния) | <small>ACCOUNT_PREFIX.us1.dbt.com</small> | 52.45.144.63 <br /> 54.81.134.249 <br />52.22.161.231 <br />52.3.77.232 <br />3.214.191.130 <br />34.233.79.135 | [Все тарифные планы платформы dbt](https://www.getdbt.com/pricing/) | **Мультитенантное размещение:** <br /> [US East AWS](https://status.getdbt.com/us-aws)<br /><br /> **Размещение на основе ячеек:** <br />[US East Cell 1 AWS](https://status.getdbt.com/us-cell-1-aws) <br /> [US East Cell 2 AWS](https://status.getdbt.com/us-cell-2-aws) <br /> [US East Cell 3 AWS](https://status.getdbt.com/us-cell-3-aws) <br /> [US East Cell 4 AWS](https://status.getdbt.com/us-cell-4-aws) |
+| Северная Америка  | AWS us-west-2 (Орегон)      | <small>ACCOUNT_PREFIX.us5.dbt.com</small> | 32.185.64.51 <br /> 34.217.173.137 <br /> 52.37.223.167 | Все тарифные планы Enterprise | [US West Cell 1 AWS](https://status.getdbt.com/us-5-cell-1-aws) |
+| EMEA  | eu-central-1	(Франкфурт) | <small>ACCOUNT_PREFIX.eu1.dbt.com</small> | 3.123.45.39 <br /> 3.126.140.248 <br /> 3.72.153.148 | Все тарифные планы Enterprise | [EMEA AWS](https://status.getdbt.com/emea-aws) |
+| APAC  | ap-southeast-2  (Сидней)| <small>ACCOUNT_PREFIX.au1.dbt.com</small> | 52.65.89.235 <br /> 3.106.40.33 <br /> 13.239.155.206 <br />|  Все тарифные планы Enterprise | [APAC AWS](https://status.getdbt.com/apac-aws) |
+| Япония | ap-northeast-1 (Токио) | <small>ACCOUNT_PREFIX.jp1.dbt.com</small> | 35.76.76.152 <br />  54.238.211.79 <br /> 13.115.236.233 <br /> | Все тарифные планы Enterprise | [JP Cell 1 AWS](https://status.getdbt.com/jp-cell-1-aws) | 
+| Virtual Private dbt или выделенное размещение | Индивидуально |  Индивидуально | Уточните свои IP-адреса в [службе поддержки](/community/resources/getting-help#dbt-cloud-support) | Все тарифные планы Enterprise | Индивидуально |
 
 
 ## Google Cloud Platform (GCP) {#GCP}
 
 
-| Region | Location | <div style={{width:'110px'}}>Access URL</div> | <div style={{width:'100px'}}>IP addresses</div> | Available plans | <div style={{width:'200px'}}>Status page link</div> |
+| Регион | Расположение | <div style={{width:'110px'}}>URL для доступа</div> | <div style={{width:'100px'}}>IP-адреса</div> | Доступные тарифные планы | <div style={{width:'200px'}}>Ссылка на страницу состояния</div> |
 |--------|----------|------------|--------------|-------| --------- |
-| North America  | us-central1 | <small>ACCOUNT_PREFIX.us3.dbt.com</small> | 34.33.2.0/26 | All Enterprise plans | [US Cell 1 GCP](https://status.getdbt.com/us-cell-1-gcp) | 
-| EMEA  | London  |  <small>ACCOUNT_PREFIX.eu3.dbt.com</small> |  34.39.41.0/26  | All Enterprise plans | [EU Cell 1 GCP](https://status.getdbt.com/eu-cell-1-gcp) |
-| EMEA  | Frankfurt | <small>ACCOUNT_PREFIX.eu4.dbt.com</small> | 34.185.244.128/26 | All Enterprise plans | [EU4 Cell 1 GCP](https://status.getdbt.com/eu-4-cell-1-gcp) |
-| Virtual Private dbt or Single tenant | Customized |  Customized | Ask [Support](/community/resources/getting-help#dbt-support) for your IPs | All Enterprise plans | Customized |
+| Северная Америка  | us-central1 | <small>ACCOUNT_PREFIX.us3.dbt.com</small> | 34.33.2.0/26 | Все тарифные планы Enterprise | [US Cell 1 GCP](https://status.getdbt.com/us-cell-1-gcp) | 
+| EMEA  | Лондон  |  <small>ACCOUNT_PREFIX.eu3.dbt.com</small> |  34.39.41.0/26  | Все тарифные планы Enterprise | [EU Cell 1 GCP](https://status.getdbt.com/eu-cell-1-gcp) |
+| EMEA  | Франкфурт | <small>ACCOUNT_PREFIX.eu4.dbt.com</small> | 34.185.244.128/26 | Все тарифные планы Enterprise | [EU4 Cell 1 GCP](https://status.getdbt.com/eu-4-cell-1-gcp) |
+| Virtual Private dbt или выделенное размещение | Индивидуально |  Индивидуально | Уточните свои IP-адреса в [службе поддержки](/community/resources/getting-help#dbt-cloud-support) | Все тарифные планы Enterprise | Индивидуально |
 
 
 ## Microsoft Azure {#Azure}
 
-| Region | Location | <div style={{width:'110px'}}>Access URL</div> | <div style={{width:'100px'}}>IP addresses</div> | Available plans | <div style={{width:'200px'}}>Status page link</div> |
+| Регион | Расположение | <div style={{width:'110px'}}>URL для доступа</div> | <div style={{width:'100px'}}>IP-адреса</div> | Доступные тарифные планы | <div style={{width:'200px'}}>Ссылка на страницу состояния</div> |
 |--------|----------|------------|--------------|-------| --------- |
-| North America  | East US 2 (Virginia) | <small>ACCOUNT_PREFIX.us2.dbt.com</small> | 20.10.67.192/26 | All Enterprise plans | [US Cell 1 AZURE](https://status.getdbt.com/us-cell-1-azure) |
-| EMEA  |  North Europe (Ireland)  |  <small>ACCOUNT_PREFIX.eu2.dbt.com</small>  | 20.13.190.192/26   | All Enterprise plans | [EMEA Cell 1 AZURE](https://status.getdbt.com/emea-cell-1-azure) |
-| APAC | Australia East | <small>ACCOUNT_PREFIX.au2.dbt.com</small> | 20.11.97.208/28 | All Enterprise plans | [AUS Cell 1 AZURE](https://status.getdbt.com/au-2-cell-1-azure) |
-| Virtual Private dbt or Single tenant | Customized |  Customized | Ask [Support](/community/resources/getting-help#dbt-support) for your IPs | All Enterprise plans | Customized |
+| Северная Америка  | East US 2 (Вирджиния) | <small>ACCOUNT_PREFIX.us2.dbt.com</small> | 20.10.67.192/26 | Все тарифные планы Enterprise | [US Cell 1 AZURE](https://status.getdbt.com/us-cell-1-azure) |
+| EMEA  |  North Europe (Ирландия)  |  <small>ACCOUNT_PREFIX.eu2.dbt.com</small>  | 20.13.190.192/26   | Все тарифные планы Enterprise | [EMEA Cell 1 AZURE](https://status.getdbt.com/emea-cell-1-azure) |
+| APAC | Australia East | <small>ACCOUNT_PREFIX.au2.dbt.com</small> | 20.11.97.208/28 | Все тарифные планы Enterprise | [AUS Cell 1 AZURE](https://status.getdbt.com/au-2-cell-1-azure) |
+| Virtual Private dbt или выделенное размещение | Индивидуально |  Индивидуально | Уточните свои IP-адреса в [службе поддержки](/community/resources/getting-help#dbt-cloud-support) | Все тарифные планы Enterprise | Индивидуально |
 
 
-## Accessing your account
+## Доступ к аккаунту {#accessing-your-account}
 
-The recommended way to sign in to <Constant name="dbt_platform"/> is [https://login.dbt.com](https://login.dbt.com). Enter your email, verify it, and select the account you want to open from the list of accounts associated with your email. For more information about the login process, refer to [Log in to dbt platform](/docs/platform/about-platform/login).
+Рекомендуемый способ входа в <Constant name="dbt_platform"/> — через [https://login.dbt.com](https://login.dbt.com). Введите свой адрес электронной почты, подтвердите его и выберите нужный аккаунт из списка аккаунтов, связанных с этим адресом. Подробнее о процессе входа см. в разделе [Вход в платформу dbt](/docs/platform/about-platform/login).
 
-If you already know your account **Access URL**, you can sign in directly. Your access URL depends on your region and tenancy:
+Если вы уже знаете **URL для доступа** к своему аккаунту, вы можете войти напрямую. URL для доступа зависит от региона и типа размещения:
 
-<Lightbox src="/img/docs/dbt-platform/find-account.png" width="60%" title="dbt accounts" />
+<Lightbox src="/img/docs/dbt-platform/find-account.png" width="60%" title="Аккаунты dbt" />
 
-- **US multi-tenant:** `ACCOUNT_PREFIX.us1.dbt.com` (for example, `abc123.us1.dbt.com`)
-- **EMEA multi-tenant:** `ACCOUNT_PREFIX.eu1.dbt.com` (for example, `abc123.eu1.dbt.com`)
-- **APAC multi-tenant:** `ACCOUNT_PREFIX.au1.dbt.com` (for example, `abc123.au1.dbt.com`)
-- **Worldwide single-tenant and VPC:** Use the vanity URL provided during your onboarding.
+- **Мультитенантное размещение в США:** `ACCOUNT_PREFIX.us1.dbt.com` (например, `abc123.us1.dbt.com`)
+- **Мультитенантное размещение в EMEA:** `ACCOUNT_PREFIX.eu1.dbt.com` (например, `abc123.eu1.dbt.com`)
+- **Мультитенантное размещение в APAC:** `ACCOUNT_PREFIX.au1.dbt.com` (например, `abc123.au1.dbt.com`)
+- **Выделенное размещение и VPC по всему миру:** используйте персонализированный URL, предоставленный при подключении.
 
-Refer to the [tables earlier](#AWS) for the full list of access URLs by region.
+Полный список URL для доступа по регионам см. в [таблицах выше](#AWS).
 
-## Locating your dbt IP addresses
+## Где найти IP-адреса dbt
 
-There are two ways to view your <Constant name="dbt_platform" /> IP addresses:
-- If no projects exist in the account, create a new project, and the IP addresses will be displayed during the **Configure your environment** steps.
-- If you have an existing project, navigate to **Account Settings** and ensure you are in the **Projects** pane. Click on a project name, and the **Project Settings** window will open. Locate the **Connection** field and click on the name. Scroll down to the **Settings**, and the first text block lists your IP addresses. 
+Просмотреть IP-адреса <Constant name="dbt_platform" /> можно двумя способами:
+- Если в аккаунте ещё нет проектов, создайте новый проект: IP-адреса отобразятся на этапах **Configure your environment**.
+- Если у вас уже есть проект, перейдите в **Account Settings** и убедитесь, что открыта панель **Projects**. Нажмите на название проекта, чтобы открыть окно **Project Settings**. Найдите поле **Connection** и нажмите на название подключения. Прокрутите страницу вниз до раздела **Settings**: ваши IP-адреса перечислены в первом текстовом блоке. 
 
-### Static IP addresses
+### Статические IP-адреса
 
-<Constant name="dbt_platform" /> is hosted on AWS, Azure, and the Google Cloud Platform (GCP). While we can offer static URLs for access, we cannot provide a list of IP addresses to configure connections due to the nature of these cloud services.
+<Constant name="dbt_platform" /> размещается в AWS, Azure и Google Cloud Platform (GCP). Мы можем предоставить постоянные URL для доступа, но из-за особенностей этих облачных сервисов не можем предоставить список IP-адресов для настройки подключений.
 
-* Dynamic IP addresses &mdash; <Constant name="dbt_platform" /> provides static URLs for streamlined access, but the dynamic nature of cloud services means the underlying IP addresses can change occasionally. Cloud providers manage these IP ranges and may update them based on operational and security needs.
+* Динамические IP-адреса &mdash; <Constant name="dbt_platform" /> предоставляет постоянные URL для удобного доступа, однако из-за динамической природы облачных сервисов соответствующие IP-адреса могут время от времени меняться. Облачные провайдеры управляют этими диапазонами IP-адресов и могут обновлять их в соответствии с эксплуатационными требованиями и требованиями безопасности.
 
-* Using hostnames for consistent access &mdash; To ensure uninterrupted access, use <Constant name="dbt_platform" /> hostnames. Hostnames provide a consistent reference point, such as `abc123.us1.dbt.com`, even if underlying IP addresses change. This aligns with an industry-standard practice used by platforms such as Snowflake.
+* Использование имён хостов для стабильного доступа &mdash; чтобы обеспечить бесперебойный доступ, используйте имена хостов <Constant name="dbt_platform" />. Имя хоста, например `abc123.us1.dbt.com`, остаётся постоянной точкой доступа, даже если соответствующие IP-адреса меняются. Такой подход соответствует общепринятой отраслевой практике, которую используют, в частности, такие платформы, как Snowflake.
 
-* Optimizing VPN connections &mdash; You should integrate a proxy alongside VPN for users who leverage VPN connections. This strategy enables steady IP addresses for your connections, facilitating smooth traffic flow through the VPN and onward to <Constant name="dbt_platform" />. By employing a proxy and a VPN, you can direct traffic through the VPN and then to <Constant name="dbt_platform" />. It's crucial to set up the proxy if you need to integrate with additional services.
+* Оптимизация VPN-подключений &mdash; для пользователей, подключающихся через VPN, следует дополнительно настроить прокси-сервер. Такой подход обеспечивает постоянные IP-адреса для подключений, позволяя трафику беспрепятственно проходить через VPN и далее к <Constant name="dbt_platform" />. Используя прокси-сервер совместно с VPN, вы можете направлять трафик через VPN, а затем к <Constant name="dbt_platform" />. Настройка прокси-сервера особенно важна, если вам требуется интеграция с дополнительными сервисами.
 
-## API Access URLs
+## URL для доступа к API {#api-access-urls}
 
-For <Constant name="dbt_platform" /> accounts with cell-based account prefixes, account API access URLs are unique per account. You can find these URLs in **Account settings**, under **Account information**.
+Для аккаунтов <Constant name="dbt_platform" /> с префиксами, основанными на ячейках, URL для доступа к API уникальны для каждого аккаунта. Эти URL можно найти в **Account settings**, в разделе **Account information**.
 
-<Lightbox src="/img/docs/dbt-platform/access-urls.png" title="Access URLs in the account settings" />
+<Lightbox src="/img/docs/dbt-platform/access-urls.png" title="URL для доступа в настройках аккаунта" />
 
-These URLs are unique to each account and begin with the same prefix as the URL used to [access your account](#accessing-your-account). The URLs cover the following APIs:
+Эти URL уникальны для каждого аккаунта и начинаются с того же префикса, что и URL для [доступа к аккаунту](#accessing-your-account). URL предназначены для следующих API:
 
-- Admin API (via access URL)
-- <Constant name="semantic_layer" /> JDBC API
-- <Constant name="semantic_layer" /> GraphQL API
+- Admin API (через URL для доступа)
+- JDBC API <Constant name="semantic_layer" />
+- GraphQL API <Constant name="semantic_layer" />
 - Discovery API 
 
-Learn more about these features in our [API documentation](/docs/dbt-apis/overview).
+Подробнее об этих возможностях см. в нашей [документации по API](/docs/dbt-apis/overview).

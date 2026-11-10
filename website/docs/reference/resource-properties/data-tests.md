@@ -7,13 +7,13 @@ datatype: data-test
 keywords: [test, tests, custom tests, custom test name, test name]
 ---
 
-## Description
+## Описание {#description}
 
-The `data_tests` property defines assertions about a column, <Term id="table" />, or <Term id="view" />. The property contains a list of [generic data tests](/docs/build/data-tests#generic-data-tests), referenced by name, which can include the four built-in generic tests available in dbt. For example, you can add data tests that ensure a column contains no duplicates and zero null values. Any arguments or [configurations](/reference/data-test-configs) passed to those data tests should be nested below the `arguments` property.
+Свойство `data_tests` задаёт проверки для столбца, <Term id="table">таблицы</Term> или <Term id="view">представления</Term>. Оно содержит список [универсальных тестов данных](/docs/build/data-tests#generic-data-tests), указанных по имени. Можно использовать и четыре встроенных теста dbt. Например, можно проверить, что в столбце нет дубликатов и значений NULL. Аргументы и [настройки](/reference/data-test-configs), передаваемые этим тестам, вложите в свойство `arguments`.
 
-Once these data tests are defined, you can validate their correctness by running `dbt test`.
+После определения тестов выполните `dbt test`, чтобы проверить данные.
 
-To help you get started, the examples below show how to define the `data_tests` property on different resource types (models, sources, seeds, snapshots, and analyses).
+В примерах ниже показано, как задать `data_tests` для моделей, источников, seeds, снимков и analyses.
 
 <Tabs
   defaultValue="models"

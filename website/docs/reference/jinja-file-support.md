@@ -1,84 +1,84 @@
 ---
-title: "Jinja support by file type"
+title: "Поддержка Jinja по типам файлов"
 id: "jinja-file-support"
-sidebar_label: "Jinja support by file type"
-description: "Which dbt file types support Jinja expressions, built-in dbt functions, and custom macros in v1 and v2."
+sidebar_label: "Поддержка Jinja по типам файлов"
+description: "Какие типы файлов dbt поддерживают выражения Jinja, встроенные функции dbt и пользовательские макросы в v1 и v2."
 availability: all_users
 ---
 
-Jinja support varies by file type. Some files support Jinja expressions, built-in dbt functions, and custom macros. Others support only a few built-in functions, and some don't render Jinja at all. Use this page to check what each file type supports.
+Поддержка Jinja зависит от типа файла. Некоторые файлы поддерживают выражения Jinja, встроенные функции dbt и пользовательские макросы. Другие поддерживают лишь несколько встроенных функций, а в некоторых Jinja вообще не обрабатывается. На этой странице можно узнать, что поддерживает каждый тип файлов.
 
-This page covers three kinds of support:
+На этой странице рассматриваются три вида поддержки:
 
-- **Jinja expressions** (`{{ }}`, `{% %}`, and `{# #}`): Control flow, string output, and comments
-- **Built-in dbt functions and variables**: Context methods like [`env_var()`](/reference/dbt-jinja-functions/env_var), [`ref()`](/reference/dbt-jinja-functions/ref), and [`target`](/reference/dbt-jinja-functions/target)
-- **Custom macros**: Project-defined macros like `{{ my_macro() }}`
+- **Выражения Jinja** (`{{ }}`, `{% %}` и `{# #}`): управление потоком выполнения, вывод строк и комментарии
+- **Встроенные функции и переменные dbt**: методы и переменные контекста, такие как [`env_var()`](/reference/dbt-jinja-functions/env_var), [`ref()`](/reference/dbt-jinja-functions/ref) и [`target`](/reference/dbt-jinja-functions/target)
+- **Пользовательские макросы**: макросы, определенные в проекте, например `{{ my_macro() }}`
 
-Jinja expressions are how you write dynamic logic in a file. Custom macros are one kind of custom Jinja block you define with tags like `{% macro %}`. Other block types include `{% test %}`, `{% materialization %}`, `{% snapshot %}`, and `{% docs %}`. Refer to [Where to define custom Jinja blocks](#where-to-define-custom-jinja-blocks) for where each belongs.
+Выражения Jinja позволяют писать динамическую логику в файле. Пользовательские макросы — один из видов пользовательских блоков Jinja, которые определяются с помощью тегов, таких как `{% macro %}`. Другие типы блоков включают `{% test %}`, `{% materialization %}`, `{% snapshot %}` и `{% docs %}`. О том, где размещать каждый из них, см. в разделе [Где определять пользовательские блоки Jinja](#where-to-define-custom-jinja-blocks).
 
-## Summary table
+## Сводная таблица
 
-| File type | Jinja expressions | dbt functions and variables | Custom macros | Notes |
+| Тип файла | Выражения Jinja | Функции и переменные dbt | Пользовательские макросы | Примечания |
 | --- | --- | --- | --- | --- |
-| `.sql` models, analyses, singular tests | ✅ | ✅ | ✅ | Call macros here, including hooks and operations. Refer to [Where to define custom Jinja blocks](#where-to-define-custom-jinja-blocks). |
-| `.sql` generic tests (`{% test %}`) | ✅ | ✅ | ✅ | |
-| `.sql` snapshots (legacy `{% snapshot %}`) | ✅ | ✅ | ✅ | Prefer [YAML snapshots](/docs/build/snapshots). |
-| `.sql` materializations (`{% materialization %}`) | ✅ | ✅ | ✅ | |
-| `.md` docs blocks (`{% docs %}`) | ✅ | ❌ | ❌ | Pure Jinja only; use [`doc()`](/reference/dbt-jinja-functions/doc) to reference blocks. |
-| `dbt_project.yml` | ✅ | Limited | v1: ❌ / v2: Limited | Custom macros in v2 are Limited to hooks. The top-level `vars:` block is literal (not Jinja). Refer to [dbt_project.yml context](/reference/dbt-jinja-functions/dbt-project-yml-context). |
-| `profiles.yml` | ✅ | Limited | ❌ | Supports the `DBT_ENV_SECRET_` prefix for [`env_var()`](/reference/dbt-jinja-functions/env_var). Refer to [profiles.yml context](/reference/dbt-jinja-functions/profiles-yml-context). |
-| `packages.yml` | ✅ | Limited | ❌ | Supports the `DBT_ENV_SECRET_` prefix for [`env_var()`](/reference/dbt-jinja-functions/env_var). Refer to [packages.yml context](/reference/dbt-jinja-functions/packages.yml%20context). |
-| `properties.yml` / `schema.yml` | ✅ | Limited | v1: ❌ / v2: ✅ | In v2 you can call custom macros in YAML values (for example `description`). `ref()` and `source()` are not available. Refer to [properties.yml context](/reference/dbt-jinja-functions/dbt-properties-yml-context). |
-| `selectors.yml` | ✅ | Limited | v1: ❌ / v2: ✅ | Also supports `env_var()`, `target`, `as_bool()`, and related context. Refer to [YAML selectors](/reference/node-selection/yaml-selectors). |
-| `dependencies.yml` | v1: ❌ / v2: ✅ | v1: ❌ / v2: Limited | ❌ | In v2, Jinja works (for example `env_var()` in a git URL). Prefer `packages.yml` if the project must also run on v1. |
-| `.py` Python models | ❌ | ❌ | ❌ | Use the Python `dbt` class API instead. |
-| `.csv` seeds | ❌ | ❌ | ❌ | Data files only. |
-| Unit test SQL fixtures | ❌ | ❌ | ❌ | Refer to [data formats](/reference/resource-properties/data-formats). |
-| `.sql.j2` / `.md.j2` (optional) | Same as `.sql` / `.md` | Same as `.sql` / `.md` | Same as `.sql` / `.md` | Requires [`allow_jinja_file_extensions`](/reference/global-configs/behavior-flags/allow_jinja_file_extensions) (`false` by default). |
+| Модели, аналитические запросы и единичные тесты `.sql` | ✅ | ✅ | ✅ | Здесь можно вызывать макросы, в том числе хуки и операции. См. раздел [Где определять пользовательские блоки Jinja](#where-to-define-custom-jinja-blocks). |
+| Универсальные тесты `.sql` (`{% test %}`) | ✅ | ✅ | ✅ | |
+| Снимки `.sql` (устаревший синтаксис `{% snapshot %}`) | ✅ | ✅ | ✅ | Рекомендуется использовать [снимки в YAML](/docs/build/snapshots). |
+| Материализации `.sql` (`{% materialization %}`) | ✅ | ✅ | ✅ | |
+| Блоки документации `.md` (`{% docs %}`) | ✅ | ❌ | ❌ | Только чистый Jinja; для ссылок на блоки используйте [`doc()`](/reference/dbt-jinja-functions/doc). |
+| `dbt_project.yml` | ✅ | Ограниченно | v1: ❌ / v2: Ограниченно | В v2 пользовательские макросы поддерживаются только в хуках. Блок `vars:` верхнего уровня обрабатывается буквально (не как Jinja). См. раздел [Контекст dbt_project.yml](/reference/dbt-jinja-functions/dbt-project-yml-context). |
+| `profiles.yml` | ✅ | Ограниченно | ❌ | Поддерживает префикс `DBT_ENV_SECRET_` для [`env_var()`](/reference/dbt-jinja-functions/env_var). См. раздел [Контекст profiles.yml](/reference/dbt-jinja-functions/profiles-yml-context). |
+| `packages.yml` | ✅ | Ограниченно | ❌ | Поддерживает префикс `DBT_ENV_SECRET_` для [`env_var()`](/reference/dbt-jinja-functions/env_var). См. раздел [Контекст packages.yml](/reference/dbt-jinja-functions/packages.yml%20context). |
+| `properties.yml` / `schema.yml` | ✅ | Ограниченно | v1: ❌ / v2: ✅ | В v2 можно вызывать пользовательские макросы в значениях YAML (например, в `description`). `ref()` и `source()` недоступны. См. раздел [Контекст properties.yml](/reference/dbt-jinja-functions/dbt-properties-yml-context). |
+| `selectors.yml` | ✅ | Ограниченно | v1: ❌ / v2: ✅ | Также поддерживает `env_var()`, `target`, `as_bool()` и связанный с ними контекст. См. раздел [Селекторы YAML](/reference/node-selection/yaml-selectors). |
+| `dependencies.yml` | v1: ❌ / v2: ✅ | v1: ❌ / v2: Ограниченно | ❌ | В v2 Jinja работает (например, `env_var()` в URL Git). Если проект должен также работать в v1, рекомендуется использовать `packages.yml`. |
+| Модели Python `.py` | ❌ | ❌ | ❌ | Вместо этого используйте API класса `dbt` для Python. |
+| Сиды `.csv` | ❌ | ❌ | ❌ | Только файлы данных. |
+| SQL-фикстуры юнит-тестов | ❌ | ❌ | ❌ | См. раздел [Форматы данных](/reference/resource-properties/data-formats). |
+| `.sql.j2` / `.md.j2` (необязательно) | Как у `.sql` / `.md` | Как у `.sql` / `.md` | Как у `.sql` / `.md` | Требуется [`allow_jinja_file_extensions`](/reference/global-configs/behavior-flags/allow_jinja_file_extensions) (по умолчанию `false`). |
 
 <br />
 
-**Table key**
+**Условные обозначения таблицы**
 
-- **Limited:** Only a subset of built-in dbt functions and variables is available (typically [`env_var()`](/reference/dbt-jinja-functions/env_var), [`var()`](/reference/dbt-jinja-functions/var), and [`target`](/reference/dbt-jinja-functions/target)). The exact list depends on the file type.
-- For custom macros, Limited means support only in specific fields (for example hooks in `dbt_project.yml` in v2).
-- **Same as `.sql` / `.md`:** Optional `.j2` extensions match the non-`.j2` file type (for example `.sql.j2` matches `.sql`).
+- **Ограниченно:** доступна только часть встроенных функций и переменных dbt (обычно [`env_var()`](/reference/dbt-jinja-functions/env_var), [`var()`](/reference/dbt-jinja-functions/var) и [`target`](/reference/dbt-jinja-functions/target)). Точный список зависит от типа файла.
+- Для пользовательских макросов «Ограниченно» означает поддержку только в определенных полях (например, в хуках в `dbt_project.yml` в v2).
+- **Как у `.sql` / `.md`:** необязательные расширения `.j2` соответствуют типу файла без `.j2` (например, `.sql.j2` соответствует `.sql`).
 
-## Where to define custom Jinja blocks
+## Где определять пользовательские блоки Jinja {#where-to-define-custom-jinja-blocks}
 
-Calling a macro (`{{ my_macro() }}`) uses Jinja expressions. Defining one uses a custom Jinja block (`{% macro %}`). Use the table below for where each block type belongs:
+Для вызова макроса (`{{ my_macro() }}`) используются выражения Jinja. Для его определения используется пользовательский блок Jinja (`{% macro %}`). В таблице ниже указано, где следует размещать каждый тип блока:
 
-| Block | File type | Location | Notes |
+| Блок | Тип файла | Расположение | Примечания |
 | --- | --- | --- | --- |
-| `{% macro %}` | `.sql` | `macros/` | Call from models, tests, hooks, and more. |
-| `{% test %}` | `.sql` | `tests/generic/` or `macros/` | Can call other macros. |
-| `{% materialization %}` | `.sql` | `macros/` | Define custom materializations here. |
-| `{% snapshot %}` | `.sql` | `snapshots/` (legacy) | Prefer [YAML snapshots](/docs/build/snapshots). Refer to [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy) for the older syntax. |
-| `{% docs %}` | `.md` | Any resource path or `docs/` | Pure Jinja only; no custom macro calls. |
+| `{% macro %}` | `.sql` | `macros/` | Можно вызывать из моделей, тестов, хуков и других мест. |
+| `{% test %}` | `.sql` | `tests/generic/` или `macros/` | Может вызывать другие макросы. |
+| `{% materialization %}` | `.sql` | `macros/` | Здесь определяются пользовательские материализации. |
+| `{% snapshot %}` | `.sql` | `snapshots/` (устаревший вариант) | Рекомендуется использовать [снимки в YAML](/docs/build/snapshots). О старом синтаксисе см. в разделе [Устаревшие конфигурации снимков](/reference/resource-configs/snapshots-jinja-legacy). |
+| `{% docs %}` | `.md` | Любой путь к ресурсам или `docs/` | Только чистый Jinja; вызовы пользовательских макросов не поддерживаются. |
 
-## Common exceptions
+## Распространенные исключения
 
-Some config fields are stricter than the summary table.
+Для некоторых полей конфигурации действуют более строгие ограничения, чем указано в сводной таблице.
 
-### `vars:` block in `dbt_project.yml`
+### Блок `vars:` в `dbt_project.yml`
 
-Values in the `vars:` block in `dbt_project.yml` are literal, not Jinja. To set values dynamically, use `--vars` on the command line. Refer to [Project variables](/docs/build/project-variables).
+Значения в блоке `vars:` в `dbt_project.yml` обрабатываются буквально, а не как Jinja. Чтобы задавать значения динамически, используйте `--vars` в командной строке. См. раздел [Переменные проекта](/docs/build/project-variables).
 
-### `sql_header` config
+### Конфигурация `sql_header`
 
-The [`sql_header`](/reference/resource-configs/sql_header) config doesn't support Jinja or macros like `ref()`, `source()`, and `{{ this }}`.
+Конфигурация [`sql_header`](/reference/resource-configs/sql_header) не поддерживает Jinja и макросы, такие как `ref()`, `source()` и `{{ this }}`.
 
-## Jinja differences between v1 and v2
+## Различия в поддержке Jinja между v1 и v2
 
-v2 supports some Jinja that v1 doesn't:
+В v2 поддерживаются некоторые возможности Jinja, недоступные в v1:
 
-- Custom macros in `properties.yml` and `selectors.yml` values
-- Custom macros in `dbt_project.yml` hooks (Limited)
-- Jinja in `dependencies.yml`
+- Пользовательские макросы в значениях `properties.yml` и `selectors.yml`
+- Пользовательские макросы в хуках `dbt_project.yml` (ограниченно)
+- Jinja в `dependencies.yml`
 
-If your project must also run on v1, don't use these. In v1, a custom macro in a YAML file fails with an undefined macro error. Jinja in `dependencies.yml` stays an unrendered string that dbt passes to git, which typically fails the install.
+Если ваш проект должен также работать в v1, не используйте эти возможности. В v1 пользовательский макрос в файле YAML приводит к ошибке неопределенного макроса. Jinja в `dependencies.yml` остается необработанной строкой, которую dbt передает в git, что обычно приводит к сбою установки.
 
-This example calls a custom macro in a property value. It works in v2 but fails in v1:
+В этом примере пользовательский макрос вызывается в значении свойства. Он работает в v2, но приводит к ошибке в v1:
 
 <File name="models/schema.yml">
 
@@ -90,7 +90,7 @@ models:
 
 </File>
 
-This example uses `env_var()` in a package spec. Put it in `packages.yml` so it works in v1 and v2:
+В этом примере `env_var()` используется в спецификации пакета. Разместите ее в `packages.yml`, чтобы она работала в v1 и v2:
 
 <File name="packages.yml">
 
@@ -101,11 +101,11 @@ packages:
 
 </File>
 
-For more on package files, refer to [Packages use cases](/docs/build/packages#use-cases).
+Подробнее о файлах пакетов см. в разделе [Сценарии использования пакетов](/docs/build/packages#use-cases).
 
-## Related docs
+## Связанная документация
 
-- [Jinja and macros](/docs/build/jinja-macros)
-- [YAML tips](/docs/build/dbt-tips#yaml-tips)
-- [dbt Jinja functions and context variables](/reference/dbt-jinja-functions-context-variables)
-- [Packages use cases](/docs/build/packages#use-cases)
+- [Jinja и макросы](/docs/build/jinja-macros)
+- [Советы по YAML](/docs/build/dbt-tips#yaml-tips)
+- [Функции Jinja и переменные контекста dbt](/reference/dbt-jinja-functions-context-variables)
+- [Сценарии использования пакетов](/docs/build/packages#use-cases)

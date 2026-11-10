@@ -1,12 +1,12 @@
 ---
-title:  How does increasing job frequency affect cost reduction estimates?
-description: "Explanation of how increasing run frequency affects cost reductions"
-sidebar_label: 'Job frequency and cost reductions'
+title:  Как увеличение частоты запуска заданий влияет на оценку снижения затрат?
+description: "Объяснение того, как увеличение частоты запусков влияет на снижение затрат"
+sidebar_label: 'Частота запуска заданий и снижение затрат'
 id: job-frequency
 ---
 
-Cost reduction metrics reflect how dbt optimizes compute costs by reusing existing results instead of running the same model again.
+Показатели снижения затрат отражают то, как dbt оптимизирует затраты на вычисления, повторно используя существующие результаты вместо повторного выполнения той же модели.
 
-When you increase your job run frequency (for example, because performance improvements make it easier to schedule jobs more often), dbt has more opportunities to reuse models. As reuse increases, dbt optimizes more compute, which means your reported cost reductions may also increase.
+Когда вы увеличиваете частоту запуска заданий (например, потому что повышение производительности позволяет чаще запускать задания по расписанию), у dbt появляется больше возможностей для повторного использования моделей. По мере роста повторного использования dbt экономит больше вычислительных ресурсов, а значит, и отображаемые показатели снижения затрат могут увеличиваться.
 
-This metric shows the efficiency impact of reuse within your current workload. It reflects the compute costs that dbt reduces by reusing models instead of rebuilding them, rather than showing your total warehouse spend reduction.
+Этот показатель отражает влияние повторного использования на эффективность вашей текущей рабочей нагрузки. Он показывает, насколько dbt снижает затраты на вычисления за счет повторного использования моделей вместо их повторного построения, а не общее снижение расходов на хранилище данных.

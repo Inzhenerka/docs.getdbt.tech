@@ -148,7 +148,7 @@ is_featured: true
 
 Вместо этого, если вы решите использовать стратегию ветвления, которая включает несколько основных веток (таких как `dev`, `staging` и `prod`):
 
-- Защитите свою ветку `dev` с помощью dbt cloud [CI job](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration)
+- Защитите свою ветку `dev` с помощью dbt cloud [CI job](/docs/deploy/continuous-integration)
 - Обеспечьте тщательные проверки кода (ознакомьтесь с нашим рекомендуемым [шаблоном PR](https://docs.getdbt.tech/blog/analytics-pull-request-template))
 - Продвигайте каждую основную ветку иерархически друг в друга
 

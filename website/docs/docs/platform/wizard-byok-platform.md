@@ -1,7 +1,7 @@
 ---
-title: "Configure BYOK for dbt Wizard in dbt platform"
-sidebar_label: "BYOK configuration"
-description: "Bring your own API key to use dbt Wizard and dbt Copilot in dbt platform. Supports OpenAI, Azure AI Foundry, and Anthropic."
+title: "Настройка BYOK для dbt Wizard на платформе dbt"
+sidebar_label: "Настройка BYOK"
+description: "Используйте собственный API-ключ для работы с dbt Wizard и dbt Copilot на платформе dbt. Поддерживаются OpenAI, Azure AI Foundry и Anthropic."
 availability:
   surface: platform
   access: paid_plan
@@ -13,37 +13,36 @@ import OpenAiProjectRegion from '/snippets/_open-ai-project-region.md';
 import WizardConfigureAiProvider from '/snippets/_wizard-configure-ai-provider.md';
 
 <IntroText>
-Use bring-your-own-key (BYOK) to connect <Constant name="wizard" /> or dbt Copilot in <Constant name="dbt_platform" /> to your own AI provider account instead of using dbt Labs' managed infrastructure.
+Используйте собственный ключ (bring-your-own-key, BYOK), чтобы подключить <Constant name="wizard" /> или dbt Copilot на <Constant name="dbt_platform" /> к своей учётной записи у поставщика ИИ вместо использования инфраструктуры под управлением dbt Labs.
 </IntroText>
 
-The following BYOK instructions apply to <Constant name="dbt_platform" /> only. For CLI BYOK setup, refer to [Configure BYOK for dbt Wizard](/docs/dbt-ai/wizard-byok).
+Приведённые ниже инструкции по настройке BYOK применимы только к <Constant name="dbt_platform" />. О настройке BYOK для CLI см. в разделе [Настройка BYOK для dbt Wizard](/docs/dbt-ai/wizard-byok).
 
-When you configure a provider with your own key, usage costs appear on your provider account instead of your dbt Labs account, and token costs are billed by whichever provider you choose.
+При настройке поставщика с собственным ключом расходы на использование отражаются в вашей учётной записи у поставщика, а не в учётной записи dbt Labs, и оплату за токены взимает выбранный вами поставщик.
 
-If you'd rather skip that upkeep, the [dbt Labs-<Term id="managed" /> option](/docs/platform/manage-dbt-ai#configure-ai-provider) is ready to use with no setup, and comes with [trial and monthly usage credits](/docs/dbt-ai/pricing-billing/trial-and-billing).
+Если вы предпочитаете обойтись без самостоятельного обслуживания, [вариант под управлением dbt Labs (<Term id="managed" />)](/docs/platform/manage-dbt-ai#configure-ai-provider) готов к использованию без настройки и включает [пробные и ежемесячные кредиты на использование](/docs/dbt-ai/pricing-billing/trial-and-billing).
 
-## Prerequisites
+## Предварительные требования
 
-- A [<Constant name="dbt_platform" /> account](https://www.getdbt.com/pricing) on a Starter, Enterprise, or Enterprise+ plan
-- <Constant name="dbt" /> admin permissions to enable AI features and configure providers in **Account settings**
-- An API key or credentials for your supported AI provider
-<Expandable alt_header="See the full list of supported AI providers">
+- [Учётная запись <Constant name="dbt_platform" />](https://www.getdbt.com/pricing) на тарифном плане Starter, Enterprise или Enterprise+
+- Права администратора <Constant name="dbt" /> для включения функций ИИ и настройки поставщиков в **Account settings**
+- API-ключ или учётные данные для поддерживаемого поставщика ИИ
+<Expandable alt_header="Посмотреть полный список поддерживаемых поставщиков ИИ">
 
 <WizardSupportedProviders />
 
 #### dbt Copilot
 
-dbt Copilot supports different AI providers, including bring your own key (BYOK) on Starter, Enterprise, and Enterprise+ plans:
+dbt Copilot поддерживает различных поставщиков ИИ, в том числе использование собственного ключа (BYOK) на тарифных планах Starter, Enterprise и Enterprise+:
 
-- dbt Labs-<Term id="managed" /> OpenAI API key
-- BYOK OpenAI API key
-- BYOK Azure OpenAI API key
+- API-ключ OpenAI под управлением dbt Labs (<Term id="managed" />)
+- Собственный API-ключ OpenAI (BYOK)
+- Собственный API-ключ Azure OpenAI (BYOK)
 
-Snowflake Cortex, AWS Bedrock, Azure AI Foundry, and Anthropic aren't supported for dbt Copilot.
+Snowflake Cortex, AWS Bedrock, Azure AI Foundry и Anthropic не поддерживаются в dbt Copilot.
 
 </Expandable>
 
-## Configure AI provider
+## Настройка поставщика ИИ
 
 <WizardConfigureAiProvider />
-

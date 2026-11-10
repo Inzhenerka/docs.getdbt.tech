@@ -1,5 +1,5 @@
 ---
-description: "Set a model's access level (private, protected, or public) to control whether other groups, packages, or projects can reference it."
+description: "Задайте уровень доступа к модели (private, protected или public), чтобы определить, могут ли на неё ссылаться другие группы, пакеты или проекты."
 resource_types: [models]
 datatype: access
 ---

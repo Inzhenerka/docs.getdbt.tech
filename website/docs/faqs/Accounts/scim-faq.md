@@ -1,11 +1,11 @@
 ---
-title: Where can I find SCIM FAQs and troubleshooting?
-description: "Common questions and troubleshooting for SCIM provisioning in dbt platform"
-sidebar_label: 'SCIM FAQs and troubleshooting'
+title: Где найти ответы на частые вопросы о SCIM и рекомендации по устранению неполадок?
+description: "Частые вопросы и устранение неполадок при управлении пользователями и группами на платформе dbt с помощью SCIM"
+sidebar_label: 'SCIM: частые вопросы и устранение неполадок'
 id: scim-faq
 
 ---
 
-System for Cross-domain Identity Management (SCIM) lets you automatically provision, update, and deprovision <Constant name="dbt_platform"/> users and groups directly from your identity provider (IdP). Instead of managing users manually in <Constant name="dbt_platform"/>, your IdP becomes the source of truth. SCIM is available on [Enterprise plans](https://www.getdbt.com/pricing).
+System for Cross-domain Identity Management (SCIM) позволяет автоматически создавать, обновлять и удалять пользователей и группы в <Constant name="dbt_platform"/> непосредственно через вашего поставщика удостоверений (IdP). Вместо ручного управления пользователями в <Constant name="dbt_platform"/> вы используете IdP как единый источник достоверных данных. SCIM доступен в [тарифных планах Enterprise](https://www.getdbt.com/pricing).
 
-For common questions and troubleshooting guidance, refer to the [SCIM FAQ and troubleshooting](/docs/platform/manage-access/scim-faq) page.
+Ответы на частые вопросы и рекомендации по устранению неполадок приведены на странице [SCIM: частые вопросы и устранение неполадок](/docs/platform/manage-access/scim-faq).

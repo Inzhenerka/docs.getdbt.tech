@@ -1,222 +1,222 @@
 ---
-title: "dbt AI FAQs"
-sidebar_label: "dbt AI FAQs"
-description: "Answers to common questions about dbt AI features, including dbt Wizard and dbt Copilot."
+title: "Часто задаваемые вопросы об ИИ в dbt"
+sidebar_label: "Вопросы об ИИ в dbt"
+description: "Ответы на распространённые вопросы о функциях ИИ в dbt, включая dbt Wizard и dbt Copilot."
 availability: all_users
 ---
 
 import WizardArchitecturePlatform from '/snippets/_wizard-architecture-platform.md';
 
-# dbt AI FAQs
+# Часто задаваемые вопросы об ИИ в dbt
 
 <IntroText>
-Answers to common questions about dbt AI features, including <Constant name="wizard" /> and dbt Copilot.
+Ответы на распространённые вопросы о функциях ИИ в dbt, включая <Constant name="wizard" /> и dbt Copilot.
 </IntroText>
 
-<Constant name="wizard" /> is an AI-powered assistant fully integrated into your <Constant name="dbt" /> experience that handles the tedious tasks, speeds up workflows, and ensures consistency, helping you deliver exceptional data products faster.
+<Constant name="wizard" /> — это ИИ-помощник, полностью интегрированный в вашу работу с <Constant name="dbt" />. Он берёт на себя рутинные задачи, ускоряет рабочие процессы и обеспечивает единообразие, помогая вам быстрее создавать высококачественные продукты на основе данных.
 
-dbt Labs is committed to protecting your privacy and data. This page provides information about how <Constant name="wizard" /> handles your data. For more information, check out the [dbt Labs AI development principles](https://www.getdbt.com/legal/ai-principles) page.
+dbt Labs стремится защищать вашу конфиденциальность и данные. На этой странице описано, как <Constant name="wizard" /> обрабатывает ваши данные. Дополнительные сведения см. на странице [Принципы разработки ИИ в dbt Labs](https://www.getdbt.com/legal/ai-principles).
 
-## Overview
+## Обзор
 
-<Expandable alt_header="What is dbt Wizard?">
+<Expandable alt_header="Что такое dbt Wizard?">
 
-<Constant name="wizard" /> is the latest and recommended agentic experience for governed data development in dbt. Wizard is available in the <Constant name="dbt_platform" />, the terminal CLI, and as a [Desktop app](/docs/dbt-ai/wizard-desktop). It helps teams ship trusted dbt changes faster and with less risk by understanding project context, routing to the right dbt tools, validating changes, and supporting review before changes are persisted.
+<Constant name="wizard" /> — это новейший и рекомендуемый инструмент на основе ИИ-агента для разработки с контролем и управлением данными в dbt. Wizard доступен в <Constant name="dbt_platform" />, в терминале через CLI и как [настольное приложение](/docs/dbt-ai/wizard-desktop). Он помогает командам быстрее и с меньшим риском внедрять надёжные изменения в dbt: учитывает контекст проекта, выбирает подходящие инструменты dbt, проверяет изменения и позволяет просматривать их перед сохранением.
 
-Use <Constant name="wizard" /> to investigate lineage and downstream impact, generate or refactor SQL from natural-language prompts, create [documentation](/docs/build/documentation), [data tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models), and validate changes with warehouse awareness.
+Используйте <Constant name="wizard" />, чтобы исследовать происхождение данных и влияние на нижестоящие объекты, генерировать SQL или выполнять его рефакторинг по запросам на естественном языке, создавать [документацию](/docs/build/documentation), [тесты данных](/docs/build/data-tests), [метрики](/docs/build/metrics-overview) и [семантические модели](/docs/build/semantic-models), а также проверять изменения с учётом контекста хранилища данных.
 
-In the <Constant name="dbt_platform" />, <Constant name="wizard" /> is available in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-studio-ai) and the [<Constant name="wizard" /> home tab](/docs/platform/wizard-home). dbt Copilot is available in [<Constant name="insights" />](/docs/explore/dbt-insights).
+В <Constant name="dbt_platform" /> инструмент <Constant name="wizard" /> доступен в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-studio-ai) и на [главной вкладке <Constant name="wizard" />](/docs/platform/wizard-home). dbt Copilot доступен в [<Constant name="insights" />](/docs/explore/dbt-insights).
 
-In the CLI, you can use <Constant name="wizard" /> from your terminal for local development workflows.
+В CLI вы можете использовать <Constant name="wizard" /> из терминала для локальных процессов разработки.
 
-In [Wizard Desktop](/docs/dbt-ai/wizard-desktop), you get <Constant name="wizard" /> as a native app. View rich data visualizations, data diffs, and lineage to understand your data and your changes, and keep several conversations going at once, each on its own branch, so you can work on more than one thing at a time.
-
-</Expandable>
-
-<Expandable alt_header="Where can I find dbt Wizard?">
-
-<Constant name="wizard" /> is available in the <Constant name="dbt_platform" />, as a terminal CLI, and as Wizard Desktop.
-
-- In the platform, you can use <Constant name="wizard" /> in the [<Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide) for governed data development in dbt.
-- In the CLI, use the [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) for local development and automation.
-- In [Wizard Desktop](/docs/dbt-ai/wizard-desktop), use a native app with rich data visualizations, data diffs, lineage, and multiple conversations running at once.
-
-To use <Constant name="wizard" /> in the platform, you need any <Constant name="dbt" /> [platform account](https://www.getdbt.com/contact). 
-
-All <Constant name="dbt_platform"/> plans have access to <Constant name="wizard" /> in <Constant name="studio_ide" /> and the [home tab](/docs/platform/wizard-home).
-
-AI features are enabled by default. Admins can [turn them off or back on anytime](/docs/platform/manage-dbt-ai).
+В [Wizard Desktop](/docs/dbt-ai/wizard-desktop) инструмент <Constant name="wizard" /> доступен как нативное приложение. Просматривайте подробные визуализации данных, различия в данных и их происхождение, чтобы лучше понимать свои данные и изменения, и ведите несколько диалогов одновременно, каждый в отдельной ветке, чтобы работать над несколькими задачами параллельно.
 
 </Expandable>
 
-<Expandable alt_header="What are the benefits of using dbt Wizard?">
+<Expandable alt_header="Где доступен dbt Wizard?" anchor_id="dbt-wizard-details-2">
 
-<Constant name="wizard" /> helps teams ship trusted dbt changes faster and with less risk. Use it to:
+<Constant name="wizard" /> доступен в <Constant name="dbt_platform" />, в терминале через CLI и как Wizard Desktop.
 
-- Ask project-aware questions and investigate lineage, dependencies, and downstream impact.
-- Generate or refactor SQL from natural-language prompts.
-- Generate documentation, tests, metrics, and semantic models.
-- Validate changes with warehouse awareness before review.
-- Review proposed file changes as diffs before they are persisted.
+- На платформе вы можете использовать <Constant name="wizard" /> в [<Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide) для разработки с контролем и управлением данными в dbt.
+- В CLI используйте [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) для локальной разработки и автоматизации.
+- В [Wizard Desktop](/docs/dbt-ai/wizard-desktop) используйте нативное приложение с подробными визуализациями данных, сравнением данных, просмотром их происхождения и несколькими одновременными диалогами.
 
-<Constant name="wizard" /> is built into dbt experiences with dbt governance, privacy, and security controls.
+Чтобы использовать <Constant name="wizard" /> на платформе, вам нужна любая [учётная запись платформы](https://www.getdbt.com/contact) <Constant name="dbt" />. 
 
-</Expandable>
+Все тарифные планы <Constant name="dbt_platform"/> предоставляют доступ к <Constant name="wizard" /> в <Constant name="studio_ide" /> и на [главной вкладке](/docs/platform/wizard-home).
 
-<Expandable alt_header="Is dbt Wizard the same as dbt Copilot?">
-
-No, <Constant name="wizard" /> and dbt Copilot are separate products.
-
-<Constant name="wizard" /> is the latest and next generation of agentic product available in the <Constant name="dbt_platform" /> and as a CLI. It uses your project context to help you develop governed dbt changes faster. Think of it like a smart AI agent that has a map of your project. Instead of having to read through each file and understand the context, it can answer questions and help you develop _and_ validate your changes faster.
-
-dbt Copilot features for those who have access to them, include quick-action buttons in <Constant name="studio_ide" /> and the Copilot pane in <Constant name="insights" />.
+Функции ИИ включены по умолчанию. Администраторы могут [отключать и снова включать их в любое время](/docs/platform/manage-dbt-ai).
 
 </Expandable>
 
-<Expandable alt_header="Can I use my existing dbt Copilot action allotment with dbt Wizard?">
+<Expandable alt_header="Каковы преимущества использования dbt Wizard?" anchor_id="dbt-wizard-details-3">
 
-No, dbt Copilot actions apply only to dbt Copilot usage. Refer to [<Constant name="wizard" /> billing and AI access FAQs](/docs/dbt-ai/wizard-billing-faqs).
+<Constant name="wizard" /> помогает командам быстрее и с меньшим риском внедрять надёжные изменения в dbt. Используйте его, чтобы:
 
-</Expandable>
+- Задавать вопросы с учётом контекста проекта и исследовать происхождение данных, зависимости и влияние на нижестоящие объекты.
+- Генерировать SQL или выполнять его рефакторинг по запросам на естественном языке.
+- Генерировать документацию, тесты, метрики и семантические модели.
+- Проверять изменения с учётом контекста хранилища данных перед рецензированием.
+- Просматривать предлагаемые изменения файлов в виде различий перед их сохранением.
 
-## Availability
-
-<Expandable alt_header="Who has access to dbt Wizard?">
-
-**In the <Constant name="dbt_platform" />**:
-
-When enabled by an admin, <Constant name="wizard" /> is available to users with a <Constant name="dbt" /> [developer license](/docs/platform/manage-access/seats-and-users) on any [dbt platform account](https://www.getdbt.com/contact).
-**In Wizard Desktop**:
-
-<Constant name="wizard" /> Desktop works without a <Constant name="dbt_platform" /> account, so you can use it with a self-hosted dbt project. Use [BYOK](/docs/dbt-ai/wizard-byok) to connect your own AI provider credentials, with no sign-in required. If you sign up for a free <Constant name="dbt" /> account instead, you get a 30-day trial that includes dbt-managed keys.
-
-Refer to [Wizard Desktop](/docs/dbt-ai/wizard-desktop) for installation and setup.
-
-**In the CLI**:
-
-<Constant name="wizard" /> CLI uses dbt Labs-managed models (OpenAI, Anthropic, or open weight models), billed through dbt's spend-limit billing. You can also bring your own API key or credentials for a supported provider using [BYOK](/docs/dbt-ai/wizard-byok): OpenAI, Anthropic, Azure AI Foundry, AWS Bedrock, Google Gemini, or Snowflake Cortex (preview). BYOK is a good backup option if you want to manage AI costs directly &mdash; token costs are billed directly by whichever provider you choose. Install and configure the CLI on your local machine.
-
-Refer to [Wizard in the CLI](/docs/platform/wizard-overview#wizard-in-the-cli-) for more information.
+<Constant name="wizard" /> встроен в инструменты dbt и использует механизмы dbt для управления, защиты конфиденциальности и обеспечения безопасности.
 
 </Expandable>
 
-<Expandable alt_header="Is dbt Wizard available for all deployment types?">
+<Expandable anchor_id="is-dbt-wizard-the-same-as-dbt-copilot" alt_header="dbt Wizard и dbt Copilot — это одно и то же?">
 
-Yes, <Constant name="wizard" /> is deployed everywhere, including [multi-tenant and single-tenant deployments](/docs/platform/about-platform/access-regions-ip-addresses).
+Нет, <Constant name="wizard" /> и dbt Copilot — это отдельные продукты.
 
-</Expandable>
+<Constant name="wizard" /> — это новейший продукт на основе ИИ-агента нового поколения, доступный в <Constant name="dbt_platform" /> и как CLI. Он использует контекст вашего проекта, помогая быстрее разрабатывать изменения в dbt с соблюдением правил управления. Представьте его как умного ИИ-агента, у которого есть карта вашего проекта. Вместо того чтобы вам приходилось читать каждый файл и разбираться в контексте, он может отвечать на вопросы и помогать вам быстрее разрабатывать _и_ проверять изменения.
 
-## How it works
-
-<Expandable alt_header="What data/code is used to train the AI model supporting dbt Wizard?">
-
-
-<Constant name="wizard" /> is supported by dbt Labs-managed models (OpenAI, Anthropic, or open weight models), or by several third-party pre-trained AI models at your discretion (BYOK OpenAI, BYOK Anthropic, BYOK Azure AI Foundry, and so on). When using <Term id="managed" /> OpenAI, our agreement with OpenAI prohibits OpenAI from retaining your data persistently. Refer to our [dbt Labs AI principles page](https://www.getdbt.com/legal/ai-principles) for more information.
-
+Для пользователей, имеющих доступ к функциям dbt Copilot, они включают кнопки быстрых действий в <Constant name="studio_ide" /> и панель Copilot в <Constant name="insights" />.
 
 </Expandable>
 
-<Expandable alt_header="Which AI model providers does dbt Wizard use?">
+<Expandable alt_header="Можно ли использовать имеющийся лимит действий dbt Copilot в dbt Wizard?">
 
-In the <Constant name="dbt_platform" />, <Constant name="wizard" /> uses a managed OpenAI model by default. dbt Labs also offers managed open weight models. On any plan, you can also [bring your own provider keys](/docs/platform/wizard-byok-platform) for OpenAI, Anthropic, or Azure AI Foundry.
-
-The [<Constant name="wizard"/> CLI](/docs/dbt-ai/wizard-cli) supports the same dbt Labs-managed models, or OpenAI, Anthropic, Azure AI Foundry, AWS Bedrock, Google Gemini, and Snowflake Cortex (preview) in bring-your-own-key mode. Refer to [Configure BYOK](/docs/dbt-ai/wizard-byok) and [Supported AI providers](/docs/dbt-ai/pricing-billing/overview#supported-ai-providers) for more information.
-
-For how model choice affects cost, which models draw from your consumption pool, and how BYOK billing works, refer to [<Constant name="wizard" /> billing and access FAQs](/docs/dbt-ai/wizard-billing-faqs).
-
-Refer to the [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table) for more information.
+Нет, действия dbt Copilot применяются только к использованию dbt Copilot. См. [часто задаваемые вопросы об оплате и доступе к ИИ в <Constant name="wizard" />](/docs/dbt-ai/wizard-billing-faqs).
 
 </Expandable>
 
-<Expandable alt_header="Do we support BYOK (bring your own key) at the project level?">
+## Доступность
 
-In <Constant name="dbt_platform" />, the <Constant name="wizard"/> BYOK option is currently an account-only configuration. However, there may be a future where we make this configurable on a project-level. BYOK is a good option if you want to manage AI costs directly, rather than using a dbt Labs-managed model.
+<Expandable alt_header="У кого есть доступ к dbt Wizard?" anchor_id="dbt-wizard-details-4">
 
-<Constant name="wizard" /> CLI supports BYOK locally for OpenAI, Anthropic, Azure AI Foundry, AWS Bedrock, Google Gemini, and Snowflake Cortex (preview). 
+**В <Constant name="dbt_platform" />**:
+
+После включения администратором <Constant name="wizard" /> доступен пользователям с [лицензией разработчика](/docs/platform/manage-access/seats-and-users) <Constant name="dbt" /> в любой [учётной записи платформы dbt](https://www.getdbt.com/contact).
+**В Wizard Desktop**:
+
+<Constant name="wizard" /> Desktop работает без учётной записи <Constant name="dbt_platform" />, поэтому его можно использовать с самостоятельно размещённым проектом dbt. Используйте [BYOK](/docs/dbt-ai/wizard-byok), чтобы подключить собственные учётные данные провайдера ИИ без входа в систему. Если вместо этого вы зарегистрируете бесплатную учётную запись <Constant name="dbt" />, вы получите 30-дневный пробный период с ключами, управляемыми dbt.
+
+Инструкции по установке и настройке см. в разделе [Wizard Desktop](/docs/dbt-ai/wizard-desktop).
+
+**В CLI**:
+
+<Constant name="wizard" /> CLI использует модели под управлением dbt Labs (OpenAI, Anthropic или модели с открытыми весами), оплата за которые осуществляется через систему dbt с лимитом расходов. Вы также можете использовать собственный API-ключ или учётные данные поддерживаемого провайдера с помощью [BYOK](/docs/dbt-ai/wizard-byok): OpenAI, Anthropic, Azure AI Foundry, AWS Bedrock, Google Gemini или Snowflake Cortex (предварительная версия). BYOK — хороший запасной вариант, если вы хотите напрямую управлять расходами на ИИ &mdash; оплату за токены взимает непосредственно выбранный вами провайдер. Установите и настройте CLI на своём локальном компьютере.
+
+Дополнительные сведения см. в разделе [Wizard в CLI](/docs/platform/wizard-overview#wizard-in-the-cli-).
 
 </Expandable>
 
-## Privacy and data
+<Expandable alt_header="Доступен ли dbt Wizard для всех типов развёртывания?" anchor_id="dbt-wizard-details-5">
 
-This section covers <Constant name="wizard" /> in the <Constant name="dbt_platform" />. For what the CLI collects and how to opt out, refer to [<Constant name="wizard" /> CLI data use and telemetry](/docs/dbt-ai/wizard-telemetry).
+Да, <Constant name="wizard" /> развёрнут во всех средах, включая [многопользовательские и выделенные развёртывания](/docs/platform/about-platform/access-regions-ip-addresses).
+
+</Expandable>
+
+## Как это работает
+
+<Expandable alt_header="Какие данные и код используются для обучения ИИ-модели, на которой работает dbt Wizard?" anchor_id="dbt-wizard-details-6">
+
+
+<Constant name="wizard" /> работает на моделях под управлением dbt Labs (OpenAI, Anthropic или моделях с открытыми весами) либо, по вашему выбору, на предварительно обученных ИИ-моделях сторонних провайдеров (BYOK OpenAI, BYOK Anthropic, BYOK Azure AI Foundry и т. д.). При использовании OpenAI в режиме <Term id="managed" /> наше соглашение с OpenAI запрещает OpenAI сохранять ваши данные на постоянной основе. Дополнительные сведения см. на [странице принципов ИИ dbt Labs](https://www.getdbt.com/legal/ai-principles).
+
+
+</Expandable>
+
+<Expandable alt_header="Каких провайдеров ИИ-моделей использует dbt Wizard?" anchor_id="dbt-wizard-details-7">
+
+В <Constant name="dbt_platform" /> инструмент <Constant name="wizard" /> по умолчанию использует управляемую модель OpenAI. dbt Labs также предлагает управляемые модели с открытыми весами. На любом тарифном плане вы также можете [использовать собственные ключи провайдера](/docs/platform/wizard-byok-platform) для OpenAI, Anthropic или Azure AI Foundry.
+
+[<Constant name="wizard"/> CLI](/docs/dbt-ai/wizard-cli) поддерживает те же модели под управлением dbt Labs, а также OpenAI, Anthropic, Azure AI Foundry, AWS Bedrock, Google Gemini и Snowflake Cortex (предварительная версия) в режиме использования собственного ключа. Дополнительные сведения см. в разделах [Настройка BYOK](/docs/dbt-ai/wizard-byok) и [Поддерживаемые провайдеры ИИ](/docs/dbt-ai/pricing-billing/overview#supported-ai-providers).
+
+О том, как выбор модели влияет на стоимость, какие модели расходуют общий лимит потребления и как работает оплата при использовании BYOK, см. в разделе [Часто задаваемые вопросы об оплате и доступе к <Constant name="wizard" />](/docs/dbt-ai/wizard-billing-faqs).
+
+Дополнительные сведения см. в [таблице тарифов провайдеров моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблице потребления сервисов](https://www.getdbt.com/legal/service-consumption-table).
+
+</Expandable>
+
+<Expandable alt_header="Поддерживается ли BYOK (использование собственного ключа) на уровне проекта?">
+
+В <Constant name="dbt_platform" /> параметр BYOK для <Constant name="wizard"/> сейчас настраивается только на уровне учётной записи. Однако в будущем мы можем добавить возможность настройки на уровне проекта. BYOK — хороший вариант, если вы хотите напрямую управлять расходами на ИИ вместо использования модели под управлением dbt Labs.
+
+<Constant name="wizard" /> CLI поддерживает BYOK локально для OpenAI, Anthropic, Azure AI Foundry, AWS Bedrock, Google Gemini и Snowflake Cortex (предварительная версия). 
+
+</Expandable>
+
+## Конфиденциальность и данные {#privacy-and-data}
+
+В этом разделе рассматривается <Constant name="wizard" /> в <Constant name="dbt_platform" />. Сведения о том, какие данные собирает CLI и как отказаться от их сбора, см. в разделе [Использование данных и телеметрия в <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-telemetry).
 
 <WizardArchitecturePlatform />
 
-<Expandable alt_header="Does dbt Wizard access my warehouse data?">
+<Expandable alt_header="Получает ли dbt Wizard доступ к данным моего хранилища?" anchor_id="dbt-wizard-details-8">
 
-<Constant name="wizard" /> can run dbt commands and queries on your behalf, and every query needs your explicit permission first. When a query runs, <Constant name="wizard" /> sends those results &mdash; which may include row-level data &mdash; to the AI provider so it can respond in your session.
+<Constant name="wizard" /> может выполнять команды dbt и запросы от вашего имени, причём для каждого запроса сначала требуется ваше явное разрешение. При выполнении запроса <Constant name="wizard" /> отправляет его результаты &mdash; которые могут включать данные на уровне строк &mdash; провайдеру ИИ, чтобы тот мог сформировать ответ в вашем сеансе.
 
-For dbt-<Term id="managed"/> AI providers, we have agreements in place that prevent the provider from using this data for training, and have limited retention. If you bring your own AI provider (BYOK), that provider's terms will govern retention and training. Always review AI output for accuracy.
+Для провайдеров ИИ, работающих в режиме dbt-<Term id="managed"/>, у нас действуют соглашения, запрещающие провайдеру использовать эти данные для обучения и ограничивающие срок их хранения. Если вы используете собственного провайдера ИИ (BYOK), хранение данных и их использование для обучения регулируются условиями этого провайдера. Всегда проверяйте точность результатов работы ИИ.
 
-Refer to [Model Provider Rate table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) and [Service Consumption Table](https://www.getdbt.com/legal/service-consumption-table) for more information.
-
-</Expandable>
-
-<Expandable alt_header="Does dbt Wizard store or use personal data?">
-
-<Constant name="wizard" /> stores your conversation history &mdash; including your prompts, responses, and any query results returned during your session &mdash; so you can revisit past chats. Conversation history is retained for 90 days; feedback you submit on a <Constant name="wizard" /> conversation is retained for 400 days. You can delete your conversation history or feedback at any time in the product.
-
-You control the information you submit to <Constant name="wizard" />. dbt Labs does not use your prompts, conversation history, command results, or feedback to train AI models.
+Дополнительные сведения см. в [таблице тарифов провайдеров моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) и [таблице потребления сервисов](https://www.getdbt.com/legal/service-consumption-table).
 
 </Expandable>
 
-<Expandable alt_header="Is my data used by dbt Labs to train AI models?">
+<Expandable alt_header="Хранит или использует ли dbt Wizard персональные данные?" anchor_id="dbt-wizard-details-9">
 
-No. dbt Labs does not use customer content processed by <Constant name="wizard" /> &mdash; including warehouse query results, prompts, or conversation history &mdash; for AI model training. Our terms with AI providers prevent training on the provider side as well.
+<Constant name="wizard" /> хранит историю ваших диалогов &mdash; включая ваши запросы, ответы и любые результаты запросов к данным, полученные во время сеанса, &mdash; чтобы вы могли возвращаться к прошлым беседам. История диалогов хранится 90 дней; отзывы, которые вы оставляете о диалогах с <Constant name="wizard" />, хранятся 400 дней. Вы можете в любое время удалить историю диалогов или отзывы в интерфейсе продукта.
 
-</Expandable>
-
-<Expandable alt_header="Does dbt Labs share my personal data with third parties?">
-
-dbt Labs only shares client personal information as needed to perform the services, under client instructions, or for legal, tax, or compliance reasons.
+Вы сами контролируете информацию, которую передаёте <Constant name="wizard" />. dbt Labs не использует ваши запросы, историю диалогов, результаты команд или отзывы для обучения ИИ-моделей.
 
 </Expandable>
 
-<Expandable alt_header="Can dbt Wizard data be deleted upon client written request?">
+<Expandable alt_header="Использует ли dbt Labs мои данные для обучения ИИ-моделей?">
 
-Yes. <Constant name="wizard" /> conversation history is retained for 90 days by default, feedback you submit on a <Constant name="wizard" /> conversation is retained for 400 days, and you can delete this information in the product at any time. To the extent a client identifies personal or sensitive information uploaded to dbt Labs systems, that data can be deleted within 30 days of written request.
-
-</Expandable>
-
-<Expandable alt_header="Does dbt Labs own the output generated by dbt Wizard?">
-
-
-dbt Labs will not dispute your ownership of any output (e.g., code or artifacts) that are unique to your company generated when you use <Constant name="wizard" />. Your code will not be used to train AI models for the benefit of dbt Labs or other third parties, including other dbt Labs customers.
+Нет. dbt Labs не использует содержимое клиентов, обрабатываемое <Constant name="wizard" />, &mdash; включая результаты запросов к хранилищу данных, запросы пользователей и историю диалогов &mdash; для обучения ИИ-моделей. Наши условия с провайдерами ИИ также запрещают обучение на стороне провайдера.
 
 </Expandable>
 
-<Expandable alt_header="Does dbt Labs have terms in place?">
+<Expandable alt_header="Передаёт ли dbt Labs мои персональные данные третьим лицам?" anchor_id="dbt-labs-details-2">
 
-
-dbt Wizard is governed by our [Terms of Use](https://www.getdbt.com/terms-of-use). In the event clients prefer additional terms, clients may enter into the presigned AI & Beta Addendum (the dbt Labs signature will be dated as of the date the client signs). Contact your account manager for more information.
-
-Clients who signed with terms after January 2024 don't need additional terms prior to enabling <Constant name="wizard" />. Longer term clients have also protected their data through confidentiality and data deletion obligations. In the event clients prefer additional terms, clients may enter into the presigned AI & Beta Addendum (the dbt Labs signature will be dated as of the date the client signs).
+dbt Labs передаёт персональные данные клиентов только в той мере, в какой это необходимо для оказания услуг, по указанию клиента либо по юридическим, налоговым причинам или для соблюдения нормативных требований.
 
 </Expandable>
 
-## Considerations
+<Expandable alt_header="Можно ли удалить данные dbt Wizard по письменному запросу клиента?" anchor_id="dbt-wizard-details-10">
 
-<Expandable alt_header="What are the considerations for using dbt Wizard?">
-
-- <Constant name="wizard" /> is not available in the <Constant name="dbt" /> API.
-
-Future releases are planned that may bring <Constant name="wizard" /> to even more parts of the <Constant name="dbt" /> application.
+Да. История диалогов с <Constant name="wizard" /> по умолчанию хранится 90 дней, отзывы, которые вы оставляете о диалогах с <Constant name="wizard" />, хранятся 400 дней, и вы можете в любое время удалить эту информацию в интерфейсе продукта. Если клиент укажет, какие персональные или конфиденциальные сведения были загружены в системы dbt Labs, эти данные могут быть удалены в течение 30 дней после письменного запроса.
 
 </Expandable>
 
-## dbt Wizard allowlisting URLs
+<Expandable alt_header="Принадлежат ли dbt Labs права на результаты, созданные dbt Wizard?">
 
-<Expandable alt_header="Allowlisting URLs">
 
-<Constant name="wizard" /> doesn't specifically block AI-related URLs. However, if your organization use endpoint protection platforms, firewalls, or network proxies (such as Zscaler), you may encounter the following issues with <Constant name="wizard" />:
+dbt Labs не будет оспаривать ваше право собственности на любые уникальные для вашей компании результаты (например, код или артефакты), созданные при использовании <Constant name="wizard" />. Ваш код не будет использоваться для обучения ИИ-моделей в интересах dbt Labs или других третьих лиц, включая других клиентов dbt Labs.
 
-    - Block unknown or AI-related domains.
-    - Break TLS/SSL traffic to inspect it.
-    - Disallow specific ports or services.
+</Expandable>
 
-We recommend the following URLs to be allowlisted:
+<Expandable alt_header="Есть ли у dbt Labs соответствующие условия использования?" anchor_id="dbt-labs-details-3">
 
-**For <Constant name="wizard" /> in the IDE**:
+
+Использование dbt Wizard регулируется нашими [Условиями использования](https://www.getdbt.com/terms-of-use). Если клиентам нужны дополнительные условия, они могут заключить предварительно подписанное Дополнение об ИИ и бета-версиях (AI & Beta Addendum); подпись dbt Labs будет датирована датой подписания клиентом. Для получения дополнительной информации обратитесь к своему менеджеру по работе с клиентами.
+
+Клиентам, подписавшим договор с условиями после января 2024 года, не требуются дополнительные условия перед включением <Constant name="wizard" />. Данные клиентов, заключивших договор ранее, также защищены обязательствами по соблюдению конфиденциальности и удалению данных. Если клиентам нужны дополнительные условия, они могут заключить предварительно подписанное Дополнение об ИИ и бета-версиях (AI & Beta Addendum); подпись dbt Labs будет датирована датой подписания клиентом.
+
+</Expandable>
+
+## Особенности использования
+
+<Expandable alt_header="Что следует учитывать при использовании dbt Wizard?" anchor_id="dbt-wizard-details-11">
+
+- <Constant name="wizard" /> недоступен в API <Constant name="dbt" />.
+
+В будущих выпусках планируется сделать <Constant name="wizard" /> доступным в ещё большем числе разделов приложения <Constant name="dbt" />.
+
+</Expandable>
+
+## URL-адреса dbt Wizard для списка разрешённых
+
+<Expandable alt_header="Добавление URL-адресов в список разрешённых">
+
+<Constant name="wizard" /> не блокирует специально URL-адреса, связанные с ИИ. Однако если ваша организация использует платформы защиты конечных точек, межсетевые экраны или сетевые прокси (например, Zscaler), при работе с <Constant name="wizard" /> вы можете столкнуться со следующими проблемами:
+
+    - Блокировка неизвестных доменов или доменов, связанных с ИИ.
+    - Прерывание TLS/SSL-трафика для его проверки.
+    - Запрет определённых портов или сервисов.
+
+Рекомендуем добавить следующие URL-адреса в список разрешённых:
+
+**Для <Constant name="wizard" /> в IDE**:
 
 - `/api/ide/accounts/${accountId}/develop/${developId}/ai/generate_generic_tests/...`
 - `/api/ide/accounts/${accountId}/develop/${developId}/ai/generate_documentation/...`

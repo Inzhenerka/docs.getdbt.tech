@@ -1,236 +1,238 @@
 ---
-title: "Use Wizard Desktop"
+title: "Использование Wizard Desktop"
 id: "wizard-desktop-use"
-description: "Reference for Wizard Desktop: starting a session, permission modes, worktrees, diff review, validation, and troubleshooting."
-sidebar_label: "Use Desktop"
+description: "Справочник по Wizard Desktop: запуск сеанса, режимы разрешений, рабочие деревья, проверка изменений, валидация и устранение неполадок."
+sidebar_label: "Использование Desktop"
 tags: [AI, Agents, dbt Wizard]
 availability: local_all
 ---
 
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# Use Wizard Desktop <Lifecycle status="beta"/>
+# Использование Wizard Desktop <Lifecycle status="beta"/>
 
 <IntroText>
-Navigate Wizard Desktop and learn how to work in a session with dbt Wizard &mdash; with rich data visualizations, data diffs, lineage, and more rendered right in the app. Start with [Get started](/docs/dbt-ai/wizard-desktop).
+Познакомьтесь с интерфейсом Wizard Desktop и узнайте, как работать в сеансе с dbt Wizard &mdash; с наглядными визуализациями данных, сравнением данных, графом зависимостей и другими возможностями прямо в приложении. Начните с раздела [Начало работы](/docs/dbt-ai/wizard-desktop).
 </IntroText>
 
-This page is your map of the app: where everything lives, how a session works, what to do when <Constant name="wizard" /> proposes a change, and how it <WizardPopcorn>conjures its magic</WizardPopcorn>.
+Эта страница поможет вам сориентироваться в приложении: где что находится, как устроен сеанс, что делать, когда <Constant name="wizard" /> предлагает изменение, и как он <WizardPopcorn>творит свою магию</WizardPopcorn>.
 
-## Tour the app
+## Обзор приложения
 
-When you open Wizard Desktop, everything you need is in one window &mdash; you'll have your projects and sessions on the left, the chat in the middle, and panes on the right that show your project, your lineage, your changes, and your results as rendered charts and tables.
+Когда вы открываете Wizard Desktop, всё необходимое находится в одном окне: слева &mdash; проекты и сеансы, посередине &mdash; чат, а справа &mdash; панели с вашим проектом, графом зависимостей, изменениями и результатами в виде диаграмм и таблиц.
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/wizard/desktop/wizard-desktop-ui.png" width="95%" title="A new session, with the sidebar, chat composer, and Explorer pane" />
-<Lightbox src="/img/wizard/desktop/wizard-desktop-validation.png" width="95%" title="The same layout mid-task, with a chart in the chat and validation results in the side pane" />
+<Lightbox src="/img/wizard/desktop/wizard-desktop-ui.png" width="95%" title="Новый сеанс с боковой панелью, полем ввода сообщения и панелью Explorer" />
+<Lightbox src="/img/wizard/desktop/wizard-desktop-validation.png" width="95%" title="Тот же интерфейс во время выполнения задачи: диаграмма в чате и результаты валидации на боковой панели" />
 </DocCarousel>
 
 <SimpleTable>
 
-| What you see | What it's for |
+| Элемент интерфейса | Назначение |
 |---|---|
-| Sidebar (left) | **+ New** starts a session. **Pinned** keeps the chats and environments you pin at the top, and you can reorder them. **Projects** lists your projects and the sessions in each one, **Chats** holds conversations that aren't tied to a project, and **Settings** sits at the bottom |
-| Session header | The session name, the branch it's working on, and **Open in** to jump to the same branch in Finder, VS Code, Cursor, iTerm, or Terminal |
-| Chat area (middle) | Your conversation. Replies, charts, tables, and diffs all render here |
-| Wayfinder bar | Above the chat composer box: your project, branch, connection · environment, plus **Validation** and **Create PR** |
-| Chat composer | Where you ask. Press <kbd>⌘</kbd> + <kbd>L</kbd> to jump to it. **+** attaches files, and the two pickers set your permission mode and AI model |
-| Side pane (right) | Whichever pane you've opened, with a terminal underneath. You can edit text files in the Explorer |
-| Pane rail (far right) | Switch panes: Explorer, Lineage, Changes, Queries, Commands, Validation, Summary, CI checks, Metrics, and Insights. A badge means something needs a look |
+| Боковая панель (слева) | **+ New** запускает сеанс. В разделе **Pinned** закреплённые чаты и окружения остаются наверху; их порядок можно менять. **Projects** содержит список проектов и сеансов в каждом из них, **Chats** &mdash; беседы, не привязанные к проекту, а **Settings** находится внизу |
+| Заголовок сеанса | Название сеанса, рабочая ветка и меню **Open in** для перехода к той же ветке в Finder, VS Code, Cursor, iTerm или Terminal |
+| Область чата (посередине) | Ваша беседа. Здесь отображаются ответы, диаграммы, таблицы и различия |
+| Панель навигации Wayfinder | Над полем ввода сообщения: проект, ветка, подключение · окружение, а также **Validation** и **Create PR** |
+| Поле ввода сообщения | Место для ваших запросов. Нажмите <kbd>⌘</kbd> + <kbd>L</kbd>, чтобы перейти к нему. **+** позволяет прикреплять файлы, а два списка выбора задают режим разрешений и модель ИИ |
+| Боковая панель (справа) | Открытая вами панель, под которой расположен терминал. В Explorer можно редактировать текстовые файлы |
+| Панель значков (крайняя справа) | Переключение между панелями: Explorer, Lineage, Changes, Queries, Commands, Validation, Summary, CI checks, Metrics и Insights. Значок уведомления означает, что что-то требует внимания |
 
 </SimpleTable>
 
-To change or remove a project, hover its name in the sidebar and select the ellipsis (**⋮**) &rarr; **Project settings** or **Remove project**.
+Чтобы изменить или удалить проект, наведите указатель на его название в боковой панели и выберите меню с многоточием (**⋮**) &rarr; **Project settings** или **Remove project**.
 
-<Lightbox src="/img/wizard/desktop/wizard-desktop-project-settings.png" title="The project row ellipsis menu with Project settings and Remove project" />
+<Lightbox src="/img/wizard/desktop/wizard-desktop-project-settings.png" title="Меню с многоточием в строке проекта с пунктами Project settings и Remove project" />
 
-### Use the panes
+### Использование панелей
 
-Select an icon in the right hand pane rail to open a pane in the side panel:
+Выберите значок в правой панели значков, чтобы открыть соответствующую панель сбоку:
 
 <SimpleTable>
 
-| Pane | What's in it |
+| Панель | Содержимое |
 |---|---|
-| Summary | A summary of the work in this chat |
-| Changes | Diffs waiting for review |
-| Validation | Your validation plan and its results &mdash; what passed, what failed, and what needs a look. Refer to [Validation](#validation) |
-| Explorer |  View and edit your project files here or by clicking file paths in chat. Save changes with Save or <kbd>Cmd</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>.  Edits stay isolated to the chat environment, unsaved drafts remain intact if you navigate away or restart, and if you make external changes &mdash; it won't be overwritten.|
-| Lineage | How your dbt models connect |
-| Queries | Write and run ad hoc SQL against your connection. Refer to [Explore your data](#explore-your-data) |
-| Commands | Queries you run and commands <Constant name="wizard" /> executes, scoped to this chat |
-| CI checks | The CI checks <Constant name="wizard" /> ran and their results |
-| Insights | Analysis of your project and data |
-| Metrics | The metrics in your project |
-| Terminal | Run commands without leaving the app. Sits underneath whichever pane you've opened |
+| Summary | Сводка о работе в этом чате |
+| Changes | Различия, ожидающие проверки |
+| Validation | План валидации и его результаты: что прошло проверку, что не прошло и что требует внимания. См. раздел [Валидация](#validation) |
+| Explorer |  Просматривайте и редактируйте файлы проекта здесь или нажимая на пути к файлам в чате. Сохраняйте изменения с помощью Save или <kbd>Cmd</kbd>/<kbd>Ctrl</kbd> + <kbd>S</kbd>.  Правки остаются изолированными в окружении чата, несохранённые черновики сохраняются при переходе в другое место или перезапуске, а изменения, внесённые извне, не перезаписываются.|
+| Lineage | Связи между вашими моделями dbt |
+| Queries | Написание и выполнение произвольных SQL-запросов через ваше подключение. См. раздел [Исследование данных](#explore-your-data) |
+| Commands | Запросы, которые запускаете вы, и команды, которые выполняет <Constant name="wizard" />, в рамках этого чата |
+| CI checks | Проверки CI, запущенные <Constant name="wizard" />, и их результаты |
+| Insights | Анализ проекта и данных |
+| Metrics | Метрики вашего проекта |
+| Terminal | Выполнение команд без выхода из приложения. Расположен под открытой панелью |
 
 </SimpleTable>
 
-<Lightbox src="/img/wizard/desktop/wizard-desktop-right-pane.png" title="Select an icon in the right hand pane rail to open a pane in the side panel" />
+<Lightbox src="/img/wizard/desktop/wizard-desktop-right-pane.png" title="Выберите значок в правой панели значков, чтобы открыть соответствующую панель сбоку" />
 
-Prefer your own editor? Select **Open in** to open <Constant name="wizard" /> and your branch in Finder, VS Code, Cursor, iTerm, or Terminal, or copy the file path.
+Предпочитаете свой редактор? Выберите **Open in**, чтобы открыть <Constant name="wizard" /> и вашу ветку в Finder, VS Code, Cursor, iTerm или Terminal либо скопировать путь к файлу.
 
-## Start a session
+## Запуск сеанса
 
-Set these in the prompt area before you send your first message. You can change the AI model and permission mode mid-session; the rest are set for the chat.
+Задайте эти параметры в области ввода запроса перед отправкой первого сообщения. Модель ИИ и режим разрешений можно менять во время сеанса; остальные параметры задаются для всего чата.
 
 <SimpleTable>
 
-| Setting | What it does |
+| Параметр | Назначение |
 |---|---|
-| Project | The dbt project <Constant name="wizard" /> works in. The app finds projects in <Constant name="git" /> repos in your home folder, and you can add a folder yourself. You can also skip adding a project &mdash; <Constant name="wizard" /> can work across projects |
-| Connection · environment | Which warehouse connection and environment to run against, like `default · dev`. Comes from your local [`profiles.yml`](/docs/local/profiles.yml) |
-| Schema suffix | Gets appended onto your <Term id="target-schema" /> so this chat builds into its own tables. Refer to [Schema suffix](#schema-suffix) |
-| AI model | The AI model and how hard it thinks. Refer to [dbt <Term id="managed"/> <Term id="inference"/>](/docs/dbt-ai/pricing-billing/overview#dbt-managed-providers) for more info.  |
-| Permission mode | How much <Constant name="wizard" /> does before checking with you. Refer to [Permission modes](#permission-modes) |
+| Project | Проект dbt, в котором работает <Constant name="wizard" />. Приложение находит проекты в репозиториях <Constant name="git" /> в вашей домашней папке; вы также можете добавить папку самостоятельно. Добавлять проект необязательно: <Constant name="wizard" /> может работать с несколькими проектами |
+| Connection · environment | Подключение к хранилищу данных и окружение для выполнения, например `default · dev`. Берётся из вашего локального файла [`profiles.yml`](/docs/local/profiles.yml) |
+| Schema suffix | Добавляется к <Term id="target-schema" />, чтобы результаты сборки в этом чате записывались в отдельные таблицы. См. раздел [Суффикс схемы](#schema-suffix) |
+| AI model | Модель ИИ и глубина её рассуждений. Подробнее см. в разделе [dbt <Term id="managed"/> <Term id="inference"/>](/docs/dbt-ai/pricing-billing/overview#dbt-managed-providers).  |
+| Permission mode | Какие действия <Constant name="wizard" /> выполняет без вашего подтверждения. См. раздел [Режимы разрешений](#permission-modes) |
 
 </SimpleTable>
 
-Type your task, hit **Enter**, and you're off. Each chat keeps its own context, branch, and changes.
+Опишите задачу, нажмите **Enter** &mdash; и работа начнётся. Каждый чат сохраняет собственный контекст, ветку и изменения.
 
-You don't have to pick a project to get started. Skip it and <Constant name="wizard" /> can work across your projects &mdash; useful when you're asking a question that spans more than one, or you're not sure which project holds the answer yet. Project-less conversations live under **Chats** in the sidebar.
+Для начала работы необязательно выбирать проект. Пропустите этот шаг, и <Constant name="wizard" /> сможет работать с несколькими вашими проектами. Это удобно, если вопрос затрагивает несколько проектов или вы ещё не знаете, в каком из них искать ответ. Беседы без привязки к проекту находятся в разделе **Chats** на боковой панели.
 
-### Permission modes
+### Режимы разрешений {#permission-modes}
 
-Pick a mode from the selector next to the send button. Switch any time, even mid-run.
+Выберите режим в списке рядом с кнопкой отправки. Переключать его можно в любой момент, даже во время выполнения.
 
 <SimpleTable>
 
-| Mode | What <Constant name="wizard" /> does |
+| Режим | Что делает <Constant name="wizard" /> |
 |---|---|
-| Plan changes | Looks around your project and tells you what it would do. Nothing gets edited |
-| Ask for approval | Asks first. You get a diff and decide, change by change |
-| Auto | Just does it. Edits land and you review them after |
+| Plan changes | Изучает проект и описывает, что планирует сделать. Ничего не редактируется |
+| Ask for approval | Сначала запрашивает подтверждение. Вы видите различия и принимаете решение по каждому изменению |
+| Auto | Действует самостоятельно. Изменения вносятся сразу, а вы проверяете их после |
 
 </SimpleTable>
 
-Start big jobs in **Plan changes** so you can sanity-check the approach, then switch to **Auto** to let it run.
+Начинайте крупные задачи в режиме **Plan changes**, чтобы оценить предложенный подход, а затем переключайтесь на **Auto** для его выполнения.
 
 
-### Schema suffix
+### Суффикс схемы {#schema-suffix}
 
-Each chat builds into its own schema, so two chats (or you and a chat) never overwrite each other's tables. The suffix is what makes that schema unique &mdash; your target schema plus the suffix.
+Каждый чат выполняет сборку в собственной схеме, поэтому два чата (или вы и чат) никогда не перезаписывают таблицы друг друга. Суффикс делает эту схему уникальной: она образуется из имени вашей целевой схемы и суффикса.
 
-## Work in a session
-This section goes over what you can do when you're working in a chat session. 
+## Работа в сеансе
+В этом разделе описано, что можно делать во время работы в сеансе чата. 
 
-### Prompt Wizard
+### Отправка запросов Wizard
 
-- Type your prompt and hit **Enter**. <Constant name="wizard" /> reads your files, lineage, tests, and metadata, then edits and runs things based on your permission mode.
-- Attach files and images, like a screenshot of the error you hit, a chart that looks wrong, or a mockup of what you want. Select **+** next to the chat composer, drag files in, paste them, or copy them from Finder. You can preview attachments before you send them, and sent files show up as readable cards in the chat.
-- Changed your mind halfway through? No worries, just stop the run, or just type the correction and send it &mdash; <Constant name="wizard" /> then picks it up after the current step and adjusts.
-- When <Constant name="wizard" /> mentions a dbt model, select its name to:
-    - **Copy name**
-    - **Add to chat** so <Constant name="wizard" /> uses it as context
-    - **Open code** to read the SQL in the Explorer
-    - **Open lineage** to see what it's connected to
+- Введите запрос и нажмите **Enter**. <Constant name="wizard" /> изучит ваши файлы, граф зависимостей, тесты и метаданные, а затем будет вносить изменения и выполнять действия в соответствии с выбранным режимом разрешений.
+- Прикрепляйте файлы и изображения: например, снимок экрана с ошибкой, диаграмму с неверным результатом или макет того, что вы хотите получить. Выберите **+** рядом с полем ввода сообщения, перетащите файлы, вставьте их или скопируйте из Finder. Вложения можно просмотреть перед отправкой, а отправленные файлы отображаются в чате в виде удобных для просмотра карточек.
+- Передумали в процессе? Ничего страшного: просто остановите выполнение или введите уточнение и отправьте его &mdash; <Constant name="wizard" /> учтёт его после текущего шага и скорректирует действия.
+- Когда <Constant name="wizard" /> упоминает модель dbt, выберите её имя, чтобы:
+    - **Copy name** &mdash; скопировать имя
+    - **Add to chat** &mdash; добавить модель в чат, чтобы <Constant name="wizard" /> использовал её как контекст
+    - **Open code** &mdash; прочитать SQL в Explorer
+    - **Open lineage** &mdash; посмотреть связи модели
 
-<Lightbox src="/img/wizard/desktop/wizard-desktop-model-menu.png" title="Selecting a dbt model name in a Wizard response opens Copy name, Add to chat, Open code, and Open lineage" />
+<Lightbox src="/img/wizard/desktop/wizard-desktop-model-menu.png" title="При выборе имени модели dbt в ответе Wizard открываются пункты Copy name, Add to chat, Open code и Open lineage" />
 
-### Review and validate changes
+<a id="review-what-changed" />
 
-When using Wizard, nothing gets committed without you seeing it:
+### Проверка и валидация изменений {#review-and-validate-changes}
 
-- **Changes** shows the diffs, file by file.
-- **Inline impact** shows which dbt models a change touches, with diffs you can open right there.
-- **Comments** let you hover a line, diff, table cell, or chart and say what's wrong with that exact thing. Mark up a few and send them together. Way faster than describing it in a paragraph.
+При работе с Wizard никакие изменения не попадают в коммит без вашего просмотра:
 
-Once the changes look right, [validation](#validation) helps you preview the output of <Constant name="wizard" />'s changes and check for problems before you open a pull request. It becomes available after <Constant name="wizard" /> creates the change summary.
+- **Changes** показывает различия по каждому файлу.
+- **Inline impact** показывает, какие модели dbt затрагивает изменение, и позволяет открыть различия прямо на месте.
+- **Comments** позволяет навести указатель на строку, различие, ячейку таблицы или диаграмму и указать, что именно не так с этим элементом. Оставьте несколько комментариев и отправьте их вместе. Это гораздо быстрее, чем описывать всё абзацем текста.
 
-#### Validation
-Generate a validation plan to see which affected resources and checks <Constant name="wizard" /> proposes to validate. Review the plan, then run the checks you approve. The results show what passed, what failed, and what needs your attention.
+Когда изменения будут выглядеть правильно, [валидация](#validation) поможет предварительно просмотреть результаты изменений <Constant name="wizard" /> и выявить проблемы до создания пул-реквеста. Она становится доступна после того, как <Constant name="wizard" /> создаст сводку изменений.
 
-Validation is broader than previewing or compiling:
+#### Валидация {#validation}
+Сформируйте план валидации, чтобы увидеть, какие затронутые ресурсы и проверки <Constant name="wizard" /> предлагает проверить. Изучите план, затем запустите одобренные проверки. Результаты покажут, что прошло проверку, что не прошло и что требует вашего внимания.
 
-- **Preview** lets you inspect the output of a particular change. It helps you determine whether the result looks right, but doesn't check the rest of the affected project.
-- [**Compile**](/reference/commands/compile) generates executable SQL from your dbt code. It can catch compilation problems, but it doesn't build the changed dbt models or compare their data.
-- **Validation** assesses the affected resources and creates a plan that can combine compilation, builds, tests, previews, and data comparisons. The checks depend on your changes and on the **Validation level** you select: 
-    - **Small** compiles and lints the modified dbt models, runs their schema and data tests, and reviews them for dbt anti-patterns, with no warehouse writes
-    - **Medium** also materializes those dbt models and builds their downstream dependents
-    - **Large** adds a comparison of prod against dev row counts, schema, and sample records. <br /><br />
+Валидация охватывает больше, чем предварительный просмотр или компиляция:
+
+- **Preview** позволяет изучить результат конкретного изменения. Это помогает определить, выглядит ли результат правильно, но не проверяет остальные затронутые части проекта.
+- [**Compile**](/reference/commands/compile) генерирует исполняемый SQL из вашего кода dbt. Этот процесс может выявить проблемы компиляции, но не собирает изменённые модели dbt и не сравнивает их данные.
+- **Validation** оценивает затронутые ресурсы и создаёт план, который может включать компиляцию, сборку, тесты, предварительный просмотр и сравнение данных. Набор проверок зависит от ваших изменений и выбранного уровня **Validation level**: 
+    - **Small** компилирует изменённые модели dbt, проверяет их линтером, запускает их тесты схемы и данных и проверяет наличие антипаттернов dbt, не выполняя запись в хранилище данных
+    - **Medium** дополнительно материализует эти модели dbt и собирает зависящие от них нижестоящие ресурсы
+    - **Large** добавляет сравнение количества строк, схемы и выборочных записей между prod и dev. <br /><br />
     
-    Each level lists its checks and its warehouse impact before you select **Run validation**.
+    Для каждого уровня список проверок и их влияние на хранилище данных отображаются до того, как вы выберете **Run validation**.
 
-If the plan includes `dbt-compare`, you can use its results to understand how the changes affect your data. Expand a check to see what ran, or select **Re-run validation** after addressing a failure.
+Если план включает `dbt-compare`, его результаты помогут понять, как изменения влияют на ваши данные. Разверните проверку, чтобы увидеть, что выполнялось, или выберите **Re-run validation** после устранения причины сбоя.
 
-When the checks pass, commit from the app and select **Create PR**. Each chat works on its own branch, so the pull request only carries that chat's work.
+Когда проверки пройдут успешно, создайте коммит из приложения и выберите **Create PR**. Каждый чат работает в собственной ветке, поэтому пул-реквест включает только работу из этого чата.
 
-### Explore your data
+### Исследование данных {#explore-your-data}
 
-For exploratory analysis, you can use Wizard to ask it questions about your data. For ad-hoc production SQL, [<Constant name="semantic_layer" />](/docs/build/about-metricflow) queries, and business-user analytics, use [dbt platform](/docs/platform/wizard-platform).
+Для исследовательского анализа вы можете задавать Wizard вопросы о своих данных. Для произвольных SQL-запросов к рабочему окружению, запросов к [<Constant name="semantic_layer" />](/docs/build/about-metricflow) и аналитики для бизнес-пользователей используйте [платформу dbt](/docs/platform/wizard-platform).
 
-Sometimes you just want to poke at the data yourself:
+Иногда хочется самостоятельно изучить данные:
 
-1. Select **Queries** in the pane rail on the right.
-2. Write your ad hoc SQL in the query editor.
-3. Select **Run**. Your results render in **Results** underneath the editor.
+1. Выберите **Queries** в панели значков справа.
+2. Напишите произвольный SQL-запрос в редакторе запросов.
+3. Выберите **Run**. Результаты отобразятся в разделе **Results** под редактором.
 
-To run SQL that <Constant name="wizard" /> wrote, select **Open in Queries** on the SQL in the chat. It opens in the same pane.
+Чтобы выполнить SQL, написанный <Constant name="wizard" />, выберите **Open in Queries** у SQL-кода в чате. Он откроется в той же панели.
 
-The pane sits alongside your chat, so you can check something yourself without losing your place in the conversation. To start another conversation instead, select **+ New** in the left sidebar.
+Панель расположена рядом с чатом, поэтому вы можете проверить что-то самостоятельно, не теряя нить беседы. Чтобы вместо этого начать другую беседу, выберите **+ New** в левой боковой панели.
 
-The app uses the same config as the CLI, so the skills, subagents, and MCP servers you've already set up just work:
+Приложение использует ту же конфигурацию, что и CLI, поэтому уже настроенные навыки, субагенты и MCP-серверы работают без дополнительной настройки:
 
-- [Skills](/docs/dbt-ai/wizard-skills)
-- [Subagents](/docs/dbt-ai/wizard-subagents)
-- [MCP servers](/docs/dbt-ai/wizard-mcp)
-- [Config files](/docs/dbt-ai/wizard-config)
+- [Навыки](/docs/dbt-ai/wizard-skills)
+- [Субагенты](/docs/dbt-ai/wizard-subagents)
+- [MCP-серверы](/docs/dbt-ai/wizard-mcp)
+- [Файлы конфигурации](/docs/dbt-ai/wizard-config)
 
-## Chats and worktrees
+## Чаты и рабочие деревья
 
-Every chat on a project gets its own <Constant name="git" /> <Term id="git-worktree" />.
+Каждый чат, привязанный к проекту, получает собственное <Term id="git-worktree" /> <Constant name="git" />.
 
-A worktree is a second copy of your repo, sitting in its own folder, on its own branch. Same repo and same history &mdash; just a separate place to work. So when a chat edits `stg_orders`, it's editing its own copy, not the files in your other tasks so you can have Wizard work on multiple bugs in the same project at the same time.
+Рабочее дерево &mdash; это вторая копия вашего репозитория в отдельной папке и в собственной ветке. Репозиторий и история те же, просто место для работы отдельное. Поэтому, когда чат редактирует `stg_orders`, он редактирует собственную копию, а не файлы из других ваших задач. Это позволяет Wizard одновременно работать над несколькими ошибками в одном проекте.
 
-That's what lets you run several chats at once. Refactor a model in one, chase a failing test in another, answer a data question in a third. Nothing collides, and you don't have to stash anything.
+Именно благодаря этому можно вести несколько чатов одновременно. В одном &mdash; рефакторить модель, в другом &mdash; разбираться со сбоем теста, в третьем &mdash; отвечать на вопрос о данных. Изменения не конфликтуют, и вам не нужно временно сохранять их через stash.
 
-Because each project chat has an isolated worktree, start a new chat with **+ New** for each discrete task rather than reusing one long conversation. Go back to an existing chat only when you're continuing that same task.
+Поскольку у каждого чата проекта есть изолированное рабочее дерево, начинайте новый чат с помощью **+ New** для каждой отдельной задачи, а не используйте одну длинную беседу для всего. Возвращайтесь к существующему чату, только если продолжаете ту же задачу.
 
-For more info on how worktrees work, refer to [git worktree](https://git-scm.com/docs/git-worktree).
+Подробнее о рабочих деревьях см. в документации [git worktree](https://git-scm.com/docs/git-worktree).
 
-### Worktree and schema names
+### Имена рабочих деревьев и схем {#worktree-and-schema-names}
 
-<Constant name="wizard" /> names each chat's worktree for you by pairing a random adjective with a random animal, like `docs-fox`. The name has nothing to do with your project or your data, so you won't recognize it. The branch and schema for that chat are then built from the worktree name:
+<Constant name="wizard" /> автоматически задаёт имя рабочего дерева каждого чата, сочетая случайное прилагательное со случайным названием животного, например `docs-fox`. Это имя никак не связано с вашим проектом или данными, поэтому не будет вам знакомо. Затем на основе имени рабочего дерева формируются ветка и схема этого чата:
 
 <SimpleTable>
 
-| What you see | Example | Where it comes from |
+| Элемент интерфейса | Пример | Откуда берётся |
 |---|---|---|
-| Worktree name, which is also the chat name | `docs-fox` | Generated when the chat starts |
-| Branch | `oz/docs-fox` | Your `github.user` git config value, or `feature` if you haven't set one |
-| Target in the worktree's `profiles.yml` | `docs-fox` | The worktree name, with hyphens swapped for underscores |
-| Schema | `dbt_oz_a1b2` | Your project's schema plus a random four-character suffix |
+| Имя рабочего дерева, которое также является именем чата | `docs-fox` | Генерируется при запуске чата |
+| Ветка | `oz/docs-fox` | Значение `github.user` из вашей конфигурации git или `feature`, если оно не задано |
+| Цель в `profiles.yml` рабочего дерева | `docs-fox` | Имя рабочего дерева с заменой дефисов на подчёркивания |
+| Схема | `dbt_oz_a1b2` | Схема вашего проекта со случайным суффиксом из четырёх символов |
 
 </SimpleTable>
 
-<Lightbox src="/img/wizard/desktop/wizard-desktop-git-worktree.png" width="90%" title="You can find the dbt project, git worktree name, branch, target, and schema above the chat composer"/ >
+<Lightbox src="/img/wizard/desktop/wizard-desktop-git-worktree.png" width="90%" title="Проект dbt, имя рабочего дерева git, ветку, цель и схему можно найти над полем ввода сообщения"/ >
 
-The suffix on the schema is what keeps each chat in its own schema, so two chats never write to the same tables.
+Суффикс схемы обеспечивает каждому чату отдельную схему, поэтому два чата никогда не записывают данные в одни и те же таблицы.
 
-<Constant name="wizard" /> writes these targets to a `profiles.yml` inside the worktree folder and adds it to `.gitignore`. Your own `profiles.yml` is left alone.
+<Constant name="wizard" /> записывает эти цели в файл `profiles.yml` внутри папки рабочего дерева и добавляет его в `.gitignore`. Ваш собственный `profiles.yml` остаётся без изменений.
 
-## Troubleshooting
+## Устранение неполадок
 
-<Expandable alt_header="No connections found in the connection picker">
+<Expandable alt_header="В списке выбора подключений ничего не найдено">
 
-The picker lists targets from your local [`profiles.yml`](/docs/local/profiles.yml). If you've only ever run this project in [<Constant name="dbt_platform" />](/docs/platform/wizard-platform), you probably don't have one yet.
+Список выбора содержит цели из вашего локального файла [`profiles.yml`](/docs/local/profiles.yml). Если вы до сих пор запускали этот проект только в [<Constant name="dbt_platform" />](/docs/platform/wizard-platform), скорее всего, такого файла у вас ещё нет.
 
-You don't need to write one by hand. A banner on the project opens a form where you pick your warehouse, enter your credentials, and let the app write the profile for you &mdash; then it runs `dbt debug` so you see the warehouse's own error instead of a silent empty picker. If you prefer to use platform-managed warehouse credentials, the same dialog walks you through connecting the project through the [<Constant name="dbt_platform" /> CLI](/docs/platform/dbt-cli-installation) instead. Refer to [Set up your warehouse connection](/docs/dbt-ai/wizard-desktop#set-up-your-warehouse-connection).
-
-</Expandable>
-
-<Expandable alt_header="My project isn't listed">
-
-The app only scans <Constant name="git" /> repos in your home folder. If your project lives somewhere else, add the folder from **Settings**.
+Писать его вручную не нужно. Баннер в проекте открывает форму, где вы выбираете хранилище данных, вводите учётные данные и позволяете приложению создать профиль за вас. Затем приложение запускает `dbt debug`, чтобы вместо пустого списка без объяснений вы увидели ошибку самого хранилища данных. Если вы предпочитаете использовать учётные данные хранилища, управляемые платформой, тот же диалог поможет подключить проект через [CLI <Constant name="dbt_platform" />](/docs/platform/dbt-cli-installation). См. раздел [Настройка подключения к хранилищу данных](/docs/dbt-ai/wizard-desktop#set-up-your-warehouse-connection).
 
 </Expandable>
 
-## Related docs
+<Expandable alt_header="Моего проекта нет в списке">
 
-- [Get started with Wizard Desktop](/docs/dbt-ai/wizard-desktop)
-- [Wizard Desktop settings](/docs/dbt-ai/wizard-desktop-settings)
-- [Use <Constant name="wizard" /> locally (CLI)](/docs/dbt-ai/wizard-cli)
-- [<Constant name="wizard" /> config reference](/docs/dbt-ai/wizard-config)
-- [Data use and telemetry](/docs/dbt-ai/wizard-telemetry)
+Приложение сканирует только репозитории <Constant name="git" /> в вашей домашней папке. Если проект находится в другом месте, добавьте папку через **Settings**.
+
+</Expandable>
+
+## Связанная документация
+
+- [Начало работы с Wizard Desktop](/docs/dbt-ai/wizard-desktop)
+- [Настройки Wizard Desktop](/docs/dbt-ai/wizard-desktop-settings)
+- [Локальное использование <Constant name="wizard" /> (CLI)](/docs/dbt-ai/wizard-cli)
+- [Справочник по конфигурации <Constant name="wizard" />](/docs/dbt-ai/wizard-config)
+- [Использование данных и телеметрия](/docs/dbt-ai/wizard-telemetry)
 
 <WizardFeedbackCallout />

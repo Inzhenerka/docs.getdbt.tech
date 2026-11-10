@@ -1,7 +1,7 @@
 ---
-title: Tenancy
+title: Аренда
 id: tenancy
-description: "Single tenant, multi-tenant, and cell-based (multi-cell) dbt platform hosting"
+description: "Выделенный, многопользовательский и ячеечный хостинг платформы dbt."
 availability:
   surface: platform
   access: login_required
@@ -11,26 +11,26 @@ import AboutCloud from '/snippets/_test-tenancy.md';
 
 <AboutCloud tenancy={'/snippets/_test-tenancy.md'}/>
 
-## Multi-tenant
+## Мультитенантная среда {#multi-tenant}
 
-The Multi Tenant (SaaS) deployment environment refers to the SaaS <Constant name="dbt" /> application hosted by dbt Labs. This is the most commonly used deployment and is completely managed and maintained by dbt Labs, the makers of dbt. As a SaaS product, a user can quickly [create an account](https://www.getdbt.com/signup/) on our North American servers and get started using the dbt and related services immediately. _If your organization requires cloud services hosted on EMEA or APAC regions_, please [contact us](https://www.getdbt.com/contact/). The deployments are hosted on AWS, Azure, or GCP and are always kept up to date with the currently supported dbt versions, software updates, and bug fixes.
+Мультитенантная среда развертывания (SaaS) — это приложение SaaS <Constant name="dbt" />, размещаемое компанией dbt Labs. Это наиболее распространенный вариант развертывания, полностью управляемый и обслуживаемый компанией dbt Labs, разработчиком dbt. Поскольку это SaaS-продукт, пользователь может быстро [создать учетную запись](https://www.getdbt.com/signup/) на наших серверах в Северной Америке и сразу начать использовать dbt и связанные сервисы. _Если вашей организации требуются облачные сервисы, размещенные в регионах EMEA или APAC_, пожалуйста, [свяжитесь с нами](https://www.getdbt.com/contact/). Среды развертывания размещаются в AWS, Azure или GCP и всегда поддерживаются в актуальном состоянии с использованием поддерживаемых версий dbt, обновлений программного обеспечения и исправлений ошибок.
 
-#### Multi-cell hosting
+#### Размещение по ячейкам {#multi-cell-hosting}
 
-Multi-cell (also called cell-based hosting) means your <Constant name="dbt_platform" /> account runs in a cell: a defined slice of our shared SaaS stack with its own capacity, scaling, and status boundaries. Cells segment how we run multi-tenant infrastructure at scale; you still remain on the same multi-tenant product managed by dbt Labs. Cell-based hosting is different from [single tenant](#single-tenant) in that it doesn't provide a dedicated virtual private cloud (VPC) or isolated cloud account on its own.
+Размещение по ячейкам (также называемое ячеистым размещением) означает, что ваша учетная запись <Constant name="dbt_platform" /> работает в ячейке: определенном сегменте нашего общего стека SaaS с собственными ресурсами, масштабированием и границами отслеживания состояния. Ячейки разделяют нашу мультитенантную инфраструктуру на сегменты для работы в больших масштабах; при этом вы продолжаете пользоваться тем же мультитенантным продуктом под управлением dbt Labs. Размещение по ячейкам отличается от [однотенантной среды](#single-tenant) тем, что само по себе не предоставляет выделенное виртуальное частное облако (VPC) или изолированную облачную учетную запись.
 
-Generally, your plan and the features available to you stay the same as for other multi-tenant accounts in your managed cloud provider and region (described in [Available features](#available-features)). The main differences are in some setup details, such as the URL you use to sign in, which IP addresses to allow, and which status page to monitor if something goes wrong in your cell. Refer to the [API access URLs](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls) section for more information.
+Как правило, ваш тарифный план и доступные вам функции остаются такими же, как и для других мультитенантных учетных записей у вашего управляемого облачного провайдера и в вашем регионе (описаны в разделе [Доступные функции](#available-features)). Основные различия заключаются в некоторых деталях настройки, таких как URL для входа, IP-адреса, которые нужно разрешить, и страница состояния, которую следует отслеживать при возникновении проблем в вашей ячейке. Дополнительные сведения см. в разделе [URL для доступа к API](/docs/platform/about-platform/access-regions-ip-addresses#api-access-urls).
 
-## Single tenant
+## Однотенантная среда {#single-tenant}
 
-The single tenant deployment environment provides a hosted alternative to the multi-tenant (SaaS) <Constant name="dbt" /> environment. While still managed and maintained by dbt Labs, single tenant <Constant name="dbt" /> instances provide dedicated infrastructure in a VPC environment. This is accomplished by spinning up all the necessary infrastructure with a re-usable Infrastructure as Code (IaC) deployment built with [Terraform](https://www.terraform.io/). The single tenant infrastructure lives in a dedicated AWS, Azure, or GCP account and can be customized with certain configurations, such as firewall rules, to limit inbound traffic or hosting in a specific region.
+Однотенантная среда развертывания представляет собой размещаемую альтернативу мультитенантной среде (SaaS) <Constant name="dbt" />. Однотенантные экземпляры <Constant name="dbt" /> по-прежнему управляются и обслуживаются компанией dbt Labs, но предоставляют выделенную инфраструктуру в среде VPC. Это достигается путем создания всей необходимой инфраструктуры с помощью многократно используемого развертывания «инфраструктура как код» (IaC), созданного с использованием [Terraform](https://www.terraform.io/). Однотенантная инфраструктура размещается в выделенной учетной записи AWS, Azure или GCP и может быть адаптирована с помощью определенных настроек, например правил межсетевого экрана, для ограничения входящего трафика или размещения в определенном регионе.
 
-A few common reasons for choosing a single tenant deployment over the Production SaaS product include:
-- A requirement that the <Constant name="dbt" /> application be hosted in a dedicated VPC that is logically separated from other customer infrastructure
-- A desire for multiple isolated <Constant name="dbt" /> instances for testing, development, etc
+Несколько распространённых причин выбора single tenant‑развертывания вместо Production SaaS‑продукта:
+- Требование, чтобы приложение <Constant name="dbt" /> размещалось в выделенном VPC, логически изолированном от инфраструктуры других клиентов
+- Необходимость в нескольких изолированных экземплярах <Constant name="dbt" /> для тестирования, разработки и других целей
 
-_To learn more about setting up a <Constant name="dbt" /> single tenant deployment, [please contact our sales team](mailto:sales@getdbt.com)._
+_Чтобы узнать больше о настройке single tenant‑развертывания <Constant name="dbt" />, [свяжитесь с нашей командой продаж](mailto:sales@getdbt.com)._
 
-## Available features
+## Доступные функции {#available-features}
 
 <Snippet path="cloud-feature-parity" />

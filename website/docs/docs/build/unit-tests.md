@@ -17,6 +17,8 @@ availability: all_users
 
 import UnitTestsPrereqs from '/snippets/_unit-tests-prereqs.md';
 
+<a id="before-you-begin" />
+
 <UnitTestsPrereqs />
 
 #### Особенности, зависящие от адаптера {#adapter-specific-caveats}

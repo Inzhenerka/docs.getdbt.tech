@@ -2,7 +2,7 @@
 title: "Адаптеры сообщества"
 id: "community-adapters"
 sidebar_label: "Community adapters"
-description: "Community adapters connect dbt to data platforms. They are maintained by dbt Labs, partners, and the community."
+description: "Адаптеры сообщества подключают dbt к платформам данных. Их поддерживают dbt Labs, партнёры и сообщество."
 hide_table_of_contents: true
 availability: all_users
 ---

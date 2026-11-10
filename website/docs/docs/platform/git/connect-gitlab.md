@@ -1,6 +1,6 @@
 ---
-title: "Connect to GitLab"
-description: "Learn how connecting your GitLab account provides convenience and another layer of security to dbt."
+title: "Подключение к GitLab"
+description: "Узнайте, как подключение вашей учетной записи GitLab обеспечивает удобство и дополнительный уровень безопасности в dbt."
 id: "connect-gitlab"
 availability:
   surface: platform
@@ -8,122 +8,122 @@ availability:
 ---
 
 
-Connecting your GitLab account to <Constant name="dbt" /> provides convenience and another layer of security to <Constant name="dbt" />:
-- Import new GitLab repos with a couple of clicks during <Constant name="dbt" /> project setup.
-- Clone repos using HTTPS rather than SSH.
-- Carry GitLab user permissions through to <Constant name="dbt" /> and <Constant name="platform_cli" /> git actions.
-- Trigger [continuous integration](/docs/deploy/continuous-integration) builds when merge requests are opened in GitLab.
+Подключение вашей учетной записи GitLab к <Constant name="dbt" /> обеспечивает удобство и дополнительный уровень безопасности в <Constant name="dbt" />:
+- Импортируйте новые репозитории GitLab в пару кликов при настройке проекта <Constant name="dbt" />.
+- Клонируйте репозитории по HTTPS вместо SSH.
+- Применяйте права пользователей GitLab к операциям git в <Constant name="dbt" /> и <Constant name="platform_cli" />.
+- Запускайте сборки [непрерывной интеграции](/docs/deploy/continuous-integration) при открытии запросов на слияние в GitLab.
 
 :::info
-When configuring the repository in <Constant name="dbt" />, GitLab automatically:
-- Registers a webhook that triggers pipeline jobs in <Constant name="dbt" />.
-- Creates a [project access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html) in your GitLab repository, which sends the job run status back to GitLab using the <Constant name="dbt" /> API for CI jobs. <Constant name="dbt" /> automatically refreshes this token for you.
+При настройке репозитория в <Constant name="dbt" /> GitLab автоматически:
+- Регистрирует webhook, который запускает задания пайплайна в <Constant name="dbt" />.
+- Создаёт [project access token](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html) в вашем репозитории GitLab, который отправляет статус выполнения задания обратно в GitLab с использованием API <Constant name="dbt" /> для CI‑заданий. <Constant name="dbt" /> автоматически обновляет этот токен за вас.
 
-You must have a [GitLab Premium or Ultimate account](https://about.gitlab.com/pricing/).
+У вас должна быть [учетная запись GitLab Premium или Ultimate](https://about.gitlab.com/pricing/).
 
 :::
 
 
-Depending on your plan, use these steps to integrate GitLab with <Constant name="dbt" />:
-- For the Developer or Starter plans, follow these [instructions](#for-dbt-developer-and-starter-plans).
-- For the Enterprise or Enterprise+ plans, follow these [instructions](#for-the-dbt-enterprise-plans).
+В зависимости от вашего тарифного плана выполните следующие действия для интеграции GitLab с <Constant name="dbt" />:
+- Для тарифных планов Developer или Starter следуйте этим [инструкциям](#for-dbt-developer-and-starter-plans).
+- Для тарифных планов Enterprise или Enterprise+ следуйте этим [инструкциям](#for-the-dbt-enterprise-plans).
 
-## For dbt Developer and Starter plans
+## Для планов dbt Developer и Starter {#for-dbt-developer-and-starter-plans}
 
-Before you can work with GitLab repositories in <Constant name="dbt" />, you’ll need to connect your GitLab account to your user profile. This allows <Constant name="dbt" /> to authenticate your actions when interacting with Git repositories. Make sure to read the [requirements and limitations](#requirements-and-limitations) of the Starter and Developer plans before you connect your account.
+Прежде чем работать с репозиториями GitLab в <Constant name="dbt" />, необходимо подключить учетную запись GitLab к своему профилю пользователя. Это позволяет <Constant name="dbt" /> аутентифицировать ваши действия при взаимодействии с репозиториями Git. Перед подключением учетной записи обязательно ознакомьтесь с [требованиями и ограничениями](#requirements-and-limitations) тарифных планов Starter и Developer.
 
-To connect your GitLab account:
-1. From <Constant name="dbt" />, click on your account name in the left-side menu and select **Account settings**.
-2. Select **Personal profile** under the **Your profile** section.
-3. Go to **Linked accounts**.
-4. Click **Link** to the right of your GitLab account.
-5. In GitLab, sign in if prompted. When an authorization prompt appears, select the option to authorize <Constant name="dbt" />.
+Чтобы подключить аккаунт GitLab:
+1. В <Constant name="dbt" /> нажмите на название своей учетной записи в меню слева и выберите **Настройки учетной записи**.
+2. В разделе **Your profile** выберите **Personal profile**.
+3. Перейдите в раздел **Связанные учетные записи**.
+4. Нажмите **Link** справа от вашего аккаунта GitLab.
+5. В GitLab войдите в систему при появлении соответствующего запроса. Когда появится запрос авторизации, выберите вариант авторизации <Constant name="dbt" />.
 
-After you authorize the request, you’ll be redirected back to <Constant name="dbt" />, and you'll see that your account has been linked to your profile.
+После подтверждения запроса авторизации вы будете перенаправлены обратно в <Constant name="dbt" /> и увидите, что ваша учетная запись связана с вашим профилем.
 
-### Requirements and limitations
+### Требования и ограничения {#requirements-and-limitations}
 
-<Constant name="dbt" /> Starter and Developer plans use a single GitLab deploy token created by the first user who connects the repository, which means:
-- All repositories that users access from the <Constant name="dbt_platform" /> must belong to a [GitLab group](https://docs.gitlab.com/user/group/).
-- All Git operations (like commits and pushes) from the <Constant name="studio_ide" /> appear as coming from the same deploy token.
-- GitLab push rules may reject pushes made through <Constant name="dbt" />, particularly when multiple users are committing via the same deploy token. 
+Тарифные планы Starter и Developer в <Constant name="dbt" /> используют единый токен развертывания GitLab, созданный первым пользователем, подключившим репозиторий, что означает:
+- Все репозитории, к которым пользователи обращаются из <Constant name="dbt_platform" />, должны принадлежать [группе GitLab](https://docs.gitlab.com/user/group/).
+- Все Git-операции (например, коммиты и push’и) из <Constant name="studio_ide" /> отображаются как выполненные от имени одного и того же deploy token.
+- Правила push в GitLab могут отклонять push’и, выполненные через <Constant name="dbt" />, особенно когда несколько пользователей делают коммиты с использованием одного deploy token.
 
-To support advanced Git workflows and multi-user commit behavior, upgrade to the Enterprise plan, which provides more flexible Git authentication strategies.
+Для поддержки более сложных Git‑процессов и корректной работы с коммитами от нескольких пользователей рекомендуется перейти на тариф Enterprise, который предоставляет более гибкие стратегии аутентификации Git.
 
-## For the dbt Enterprise plans
+## Для тарифов dbt Enterprise {#for-the-dbt-enterprise-plans}
 
-<Constant name="dbt" /> Enterprise and Enterprise+ customers have the added benefit of bringing their own GitLab OAuth application to <Constant name="dbt" />. This tier benefits from extra security, as <Constant name="dbt" /> will:
-- Enforce user authorization with OAuth.
-- Carry GitLab's user repository permissions (read/write access) through to <Constant name="dbt" /> or <Constant name="platform_cli" /> git actions.
+Клиенты <Constant name="dbt" /> с тарифными планами Enterprise и Enterprise+ получают дополнительную возможность использовать собственное OAuth-приложение GitLab в <Constant name="dbt" />. Эти тарифные планы обеспечивают дополнительную безопасность, поскольку <Constant name="dbt" /> будет:
+- Принудительно применять авторизацию пользователей через OAuth.
+- Применять права пользователей GitLab на доступ к репозиториям (доступ на чтение/запись) к операциям git в <Constant name="dbt" /> или <Constant name="platform_cli" />.
 
-In order to connect GitLab in <Constant name="dbt" />, a GitLab account admin must:
-1. [Set up a GitLab OAuth application](#setting-up-a-gitlab-oauth-application).
-2. [Add the GitLab app to <Constant name="dbt" />](#adding-the-gitlab-oauth-application-to-dbt).
+Чтобы подключить GitLab в <Constant name="dbt" />, администратор аккаунта GitLab должен:
+1. [Настроить OAuth‑приложение GitLab](#setting-up-a-gitlab-oauth-application).
+2. [Добавить приложение GitLab в <Constant name="dbt" />](#adding-the-gitlab-oauth-application-to-dbt).
 
-Once the admin completes those steps, <Constant name="dbt" /> developers need to:
-1. [Personally authenticate with GitLab](#personally-authenticating-with-gitlab) from <Constant name="dbt" />.
+После выполнения этих шагов администратором, разработчикам <Constant name="dbt" /> необходимо:
+1. [Лично пройти аутентификацию в GitLab](#personally-authenticating-with-gitlab) из <Constant name="dbt" />.
 
 
-### Setting up a GitLab OAuth application
+### Настройка OAuth‑приложения GitLab {#setting-up-a-gitlab-oauth-application}
 
-We recommend that before you set up a project in <Constant name="dbt" />, a GitLab account admin set up an OAuth application in GitLab for use in <Constant name="dbt" />.
+Мы рекомендуем, чтобы перед настройкой проекта в <Constant name="dbt" /> администратор аккаунта GitLab создал OAuth‑приложение в GitLab для использования в <Constant name="dbt" />.
 
-For more detail, GitLab has a [guide for creating a Group Application](https://docs.gitlab.com/ee/integration/oauth_provider.html#group-owned-applications).
+Более подробные сведения можно найти в [руководстве GitLab по созданию группового приложения](https://docs.gitlab.com/ee/integration/oauth_provider.html#group-owned-applications).
 
-To create a group-owned OAuth application in GitLab:
-1. In GitLab, navigate to your group settings and select **Applications**.
+Чтобы создать OAuth-приложение, принадлежащее группе, в GitLab:
+1. В GitLab перейдите в настройки своей группы и выберите **Приложения**.
 
-    <Lightbox src="/img/docs/dbt-platform/connecting-gitlab/gitlab nav.gif" title="GitLab application navigation"/>
+    <Lightbox src="/img/docs/dbt-platform/connecting-gitlab/gitlab nav.gif" title="Навигация по приложениям GitLab"/>
 
-2. When creating your group application, enter the following:
-    | Field | Value |
+2. При создании группового приложения укажите следующие данные:
+    | Поле | Значение |
     | ------ | ----- |
-    | **Name** | <Constant name="dbt" /> |
-    | **Redirect URI** | `https://YOUR_ACCESS_URL/complete/gitlab` |
-    | **Confidential** | ✅ |
-    | **Scopes** | ✅ api |
+    | **Название** | <Constant name="dbt" /> |
+    | **URI перенаправления** | `https://YOUR_ACCESS_URL/complete/gitlab` |
+    | **Конфиденциальное** | ✅ |
+    | **Области доступа (Scopes)** | ✅ api |
 
-    For the **Redirect URI** field, replace `YOUR_ACCESS_URL` with the [appropriate Access URL](/docs/platform/about-platform/access-regions-ip-addresses) for your region and plan.
+    В поле **URI перенаправления** замените `YOUR_ACCESS_URL` на [соответствующий URL доступа](/docs/platform/about-platform/access-regions-ip-addresses) для вашего региона и тарифного плана.
 
-3. Click **Save application**. GitLab will generate an **Application ID** and **Secret**. These values remain available even if you close the app screen, so you can return to save them later.
+3. Нажмите **Сохранить приложение**. GitLab создаст **Идентификатор приложения** и **Секрет**. Эти значения остаются доступными даже после закрытия экрана приложения, поэтому вы можете вернуться и сохранить их позже.
 
-If you're a Business Critical customer using [IP restrictions](/docs/platform/secure/ip-restrictions), ensure you've added the appropriate GitLab CIDRs to your IP restriction rules, or else the GitLab connection will fail.
+Если вы используете тарифный план Business Critical с [ограничениями по IP-адресам](/docs/platform/secure/ip-restrictions), убедитесь, что вы добавили соответствующие диапазоны CIDR GitLab в правила ограничения по IP-адресам, иначе подключение к GitLab не удастся.
 
-### Adding the GitLab OAuth application to dbt
+### Добавление OAuth‑приложения GitLab в dbt {#adding-the-gitlab-oauth-application-to-dbt}
 
-After you've created your GitLab application, add it to <Constant name="dbt" />:
+После создания приложения GitLab добавьте его в <Constant name="dbt" />:
 
-1. In <Constant name="dbt" />, go to **Account settings** > **Integrations**, then expand the GitLab section.
-2. Enter the following values:
-    | Field | Value |
+1. В <Constant name="dbt" /> перейдите в **Настройки учетной записи** > **Интеграции**, затем разверните раздел GitLab.
+2. Введите следующие значения:
+    | Поле | Значение |
     | ------ | ----- |
-    | **GitLab Instance** | `https://gitlab.com` |
-    | **Application ID** | *copy value from GitLab app* |
-    | **Secret** | *copy value from GitLab app* |
+    | **Экземпляр GitLab** | `https://gitlab.com` |
+    | **ID приложения** | *скопируйте значение из приложения GitLab* |
+    | **Секрет** | *скопируйте значение из приложения GitLab* |
 
-    If you use a self-hosted GitLab instance, set **GitLab Instance** to your organization’s GitLab hostname (for example, `https://gitlab.yourgreatcompany.com`).
+    Если вы используете самостоятельно размещенный экземпляр GitLab, укажите в поле **Экземпляр GitLab** имя хоста GitLab вашей организации (например, `https://gitlab.yourgreatcompany.com`).
 
-3. Click **Save**.
-4. You will then be redirected to GitLab and prompted to sign in.
-5. When an authorization prompt appears, select the option to authorize <Constant name="dbt" />.
+3. Нажмите **Сохранить**.
+4. Затем вы будете перенаправлены в GitLab и получите запрос на вход в систему.
+5. Когда появится запрос авторизации, выберите вариант авторизации <Constant name="dbt" />.
 
-After you authorize the request, you’ll be redirected back to <Constant name="dbt" />. Your integration is now ready for developers on your team to [personally authenticate with GitLab](#personally-authenticating-with-gitlab).
+После подтверждения запроса авторизации вы будете перенаправлены обратно в <Constant name="dbt" />. Теперь интеграция готова, и разработчики вашей команды могут [пройти индивидуальную аутентификацию в GitLab](#personally-authenticating-with-gitlab).
 
-### Personally authenticating with GitLab
+### Персональная аутентификация с GitLab {#personally-authenticating-with-gitlab}
 
-<Constant name="dbt" /> developers on the Enterprise or Enterprise+ plan must each connect their GitLab profiles to <Constant name="dbt" />, as every developer's read/write access for the <Constant name="dbt" /> repo is checked in the <Constant name="studio_ide" /> or <Constant name="platform_cli" />.
+Каждый разработчик <Constant name="dbt" /> на тарифном плане Enterprise или Enterprise+ должен подключить свой профиль GitLab к <Constant name="dbt" />, поскольку права каждого разработчика на чтение/запись в репозитории <Constant name="dbt" /> проверяются в <Constant name="studio_ide" /> или <Constant name="platform_cli" />.
 
-To connect a personal GitLab account:
+Чтобы подключить личную учетную запись GitLab:
 
-1. From <Constant name="dbt" />, click on your account name in the left-side menu and select **Account settings**.
-2. Select **Personal profile** under the **Your profile** section.
-3. Go to **Linked accounts**.
-4. If your GitLab account is not connected, you’ll see "No connected account". Select **Link** to begin the setup process.
-5. In GitLab, sign in if prompted. When an authorization prompt appears, select the option to authorize <Constant name="dbt" />.
+1. В <Constant name="dbt" /> нажмите на название своей учетной записи в меню слева и выберите **Настройки учетной записи**.
+2. Выберите **Личный профиль** в разделе **Ваш профиль**.
+3. Перейдите в раздел **Связанные учетные записи**.
+4. Если ваша учетная запись GitLab не подключена, вы увидите "Нет подключенной учетной записи". Выберите **Связать**, чтобы начать процесс настройки.
+5. В GitLab войдите в систему при появлении соответствующего запроса. Когда появится запрос авторизации, выберите вариант авторизации <Constant name="dbt" />.
 
-Once you approve authorization, you will be redirected to <Constant name="dbt" />, and you should see your connected account. You're now ready to start developing in the <Constant name="studio_ide" /> or <Constant name="dbt" /> CLI.
+После подтверждения авторизации вы будете перенаправлены обратно в <Constant name="dbt" />, и там вы должны увидеть подключенную учетную запись. Теперь вы готовы начать разработку в <Constant name="studio_ide" /> или с помощью CLI <Constant name="dbt" />.
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
 <FAQ path="Troubleshooting/gitlab-webhook"/>
 <FAQ path="Troubleshooting/error-importing-repo"/>

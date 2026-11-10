@@ -121,7 +121,7 @@ arguments: # Доступно в версии v1.10.5 и выше. В более
 
 Этот механизм конфигурации поддерживается только для конкретных экземпляров общих тестов. Чтобы настроить конкретный отдельный тест, следует использовать макрос `config()` в его SQL-определении.
 
-Starting in <Constant name="dbt" /> v1.12, you can set [`sql_header`](/reference/resource-configs/sql_header) in the `config` of a generic data test at the model or column level of your `properties.yml`. Enable the [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs) flag to use `config.sql_header` in your data tests.
+Начиная с <Constant name="dbt" /> v1.12, [`sql_header`](/reference/resource-configs/sql_header) можно задать в `config` универсального теста данных на уровне модели или столбца в `properties.yml`. Чтобы использовать `config.sql_header` в тестах данных, включите флаг [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs).
 
 
 </TabItem>

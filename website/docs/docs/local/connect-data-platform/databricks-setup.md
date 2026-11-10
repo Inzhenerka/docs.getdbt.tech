@@ -1,7 +1,7 @@
 ---
-title: "Databricks setup"
+title: "Настройка Databricks"
 sidebar_label: "Databricks"
-description: "Read this guide to learn about the Databricks warehouse setup in dbt."
+description: "Из этого руководства вы узнаете, как настроить хранилище Databricks в dbt."
 id: "databricks-setup"
 meta:
   maintained_by: Databricks
@@ -15,60 +15,60 @@ meta:
   slack_channel_link: 'https://getdbt.slack.com/archives/CNGCW8HKL'
   platform_name: 'Databricks'
   config_page: '/reference/resource-configs/databricks-configs'
-  product_badge: "dbt v2 compatible"
+  product_badge: "Совместимо с dbt v2"
 availability: local_free
 --- 
 
 <VersionBlock firstVersion="2.0">
 
-# Connect Databricks to <Constant name="fusion" />
+# Подключение Databricks к <Constant name="fusion" />
 
 
-You can configure the Databricks adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+Вы можете настроить адаптер Databricks, выполнив `dbt init` в интерфейсе командной строки (CLI) или вручную создав файл `profiles.yml` с полями, настроенными для вашего типа аутентификации.
 
-The Databricks adapter for <Constant name="fusion" /> supports the following [authentication methods](#supported-authentication-types):
-- Personal access token (for individual users)
-- Service Principal token (for service users)
+Адаптер Databricks для <Constant name="fusion" /> поддерживает следующие [способы аутентификации](#supported-authentication-types):
+- Персональный токен доступа (для отдельных пользователей)
+- Токен сервисного принципала (для служебных пользователей)
 - OAuth
-- OAuth token federation using OIDC
+- Федерация токенов OAuth с использованием OIDC
 
-## Warehouse permissions for <Constant name="fusion" />
+## Разрешения на доступ к хранилищу для <Constant name="fusion" />
 
 import FusionDatabricksWarehousePerms from '/snippets/_v2-warehouse-permissions-databricks.md';
 
 <FusionDatabricksWarehousePerms />
 
-## Databricks configuration details
+## Сведения о настройке Databricks
 
-The <Constant name="fusion_engine" /> `dbt-databricks` adapter is the only supported connection method for Databricks.
+Адаптер `dbt-databricks` для <Constant name="fusion_engine" /> — единственный поддерживаемый способ подключения к Databricks.
 
-`dbt-databricks` can connect to Databricks SQL Warehouses. These warehouses are the recommended way to get started with Databricks.
+`dbt-databricks` может подключаться к хранилищам Databricks SQL Warehouse. Эти хранилища рекомендуется использовать для начала работы с Databricks.
 
-Refer to the [Databricks docs](https://docs.databricks.com/dev-tools/dbt.html#) for more info on how to obtain the credentials for configuring your profile.
+Подробнее о получении учетных данных для настройки профиля см. в [документации Databricks](https://docs.databricks.com/dev-tools/dbt.html#).
 
-## Configure <Constant name="fusion" />
+## Настройка <Constant name="fusion" />
 
-Executing `dbt init` in your CLI will prompt for the following fields:
+При выполнении `dbt init` в CLI вам будет предложено заполнить следующие поля:
 
-- **Host:** Databricks instance hostname (excluding the `http` or `https` prefix)
-- **HTTP Path:** Path to your SQL server or cluster
-- **Schema:** The development/staging/deployment schema for the project
-- **Catalog (Optional):** The Databricks catalog containing your schemas and tables
+- **Host:** Имя хоста экземпляра Databricks (без префикса `http` или `https`)
+- **HTTP Path:** Путь к вашему SQL-серверу или кластеру
+- **Schema:** Схема проекта для разработки, промежуточной среды или развертывания
+- **Catalog (необязательно):** Каталог Databricks, содержащий ваши схемы и таблицы
 
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
+Кроме того, вы можете вручную создать файл `profiles.yml` и настроить поля. Примеры форматирования см. в разделе [аутентификации](#supported-authentication-types). Если файл `profiles.yml` уже существует, вам будет предложено сохранить существующие поля или перезаписать их. 
 
-Next, select your authentication method. Follow the on-screen prompts to provide the required information.
+Затем выберите способ аутентификации. Следуйте инструкциям на экране, чтобы указать необходимые сведения.
 
-## Supported authentication types
+## Поддерживаемые типы аутентификации {#supported-authentication-types}
 
 <Tabs>
 
 <TabItem value="Personal access token">
 
-Enter your personal access token (PAT) for the Databricks environment. For more information about obtaining a PAT, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/dev-tools/auth/pat). This is considered a legacy feature by Databricks and OAuth is recommended over PATs.
+Введите свой персональный токен доступа (PAT) для среды Databricks. Подробнее о получении PAT см. в [документации Databricks](https://docs.databricks.com/aws/en/dev-tools/auth/pat). Databricks считает эту возможность устаревшей и рекомендует использовать OAuth вместо PAT.
 
-#### Example personal access token configuration
+#### Пример настройки с персональным токеном доступа
 
 <File name="profiles.yml">
 
@@ -93,9 +93,9 @@ default:
 
 <TabItem value="Service Principal token">
 
-Enter your Service Principal token for the Databricks environment. For more information about obtaining a Service Principal token, refer to the [Databricks documentation](https://docs.databricks.com/aws/en/admin/users-groups/service-principals).
+Введите токен сервисного принципала для среды Databricks. Подробнее о получении токена сервисного принципала см. в [документации Databricks](https://docs.databricks.com/aws/en/admin/users-groups/service-principals).
 
-#### Example Service Principal token configuration
+#### Пример настройки с токеном сервисного принципала
 
 <File name="profiles.yml">
 
@@ -120,9 +120,9 @@ default:
 
 <TabItem value="OAuth (Recommended)">
 
-Selecting the OAuth option will create a connection to your Databricks environment and open a web browser so you can complete the authentication. Users will be prompted to re-authenticate with each new dbt session they initiate.
+При выборе OAuth будет создано подключение к вашей среде Databricks и откроется веб-браузер для завершения аутентификации. Пользователям потребуется повторно проходить аутентификацию при запуске каждого нового сеанса dbt.
 
-#### Example OAuth configuration
+#### Пример настройки OAuth
 
 <File name="profiles.yml">
 
@@ -145,11 +145,11 @@ default:
 
 <TabItem value="OAuth token federation">
 
-To use OAuth token federation, you may provide an OIDC token either in an environment variable or a file.
+Для использования федерации токенов OAuth можно передать токен OIDC через переменную окружения или файл.
 
-#### Example OIDC configuration using an environment variable
+#### Пример настройки OIDC с использованием переменной окружения
 
-To provide the OIDC token using an environment variable, set `auth_type: env-oidc` in `profiles.yml`, and provide the OIDC token in `DATABRICKS_OIDC_TOKEN`.
+Чтобы передать токен OIDC через переменную окружения, задайте `auth_type: env-oidc` в `profiles.yml` и укажите токен OIDC в `DATABRICKS_OIDC_TOKEN`.
 
 <File name="profiles.yml">
   
@@ -169,11 +169,11 @@ To provide the OIDC token using an environment variable, set `auth_type: env-oid
 
 </File>
 
-#### Example OIDC configuration using a token file
+#### Пример настройки OIDC с использованием файла токена
 
-To provide the OIDC token using a token file, set `auth_type: file-oidc` in `profiles.yml` and provide the file path in `oidc_token_filepath`.
+Чтобы передать токен OIDC через файл токена, задайте `auth_type: file-oidc` в `profiles.yml` и укажите путь к файлу в `oidc_token_filepath`.
 
-You can instead leave `oidc_token_filepath` out of `profiles.yml` and set the path in the `DATABRICKS_OIDC_TOKEN_FILE` or `DATABRICKS_OIDC_TOKEN_FILEPATH` environment variable. dbt uses the environment variable only when `oidc_token_filepath` isn't in `profiles.yml`. When both are set, dbt only uses the `profiles.yml` setting and never falls back to the environment variable. We recommend setting the path in `profiles.yml`.
+Вместо этого можно не указывать `oidc_token_filepath` в `profiles.yml`, а задать путь в переменной окружения `DATABRICKS_OIDC_TOKEN_FILE` или `DATABRICKS_OIDC_TOKEN_FILEPATH`. dbt использует переменную окружения, только если `oidc_token_filepath` отсутствует в `profiles.yml`. Если заданы оба значения, dbt использует только настройку из `profiles.yml` и никогда не обращается к переменной окружения в качестве запасного варианта. Мы рекомендуем задавать путь в `profiles.yml`.
 
 <File name="profiles.yml">
 
@@ -199,21 +199,21 @@ default:
 
 </Tabs>
 
-## Optional connection settings
+## Необязательные настройки подключения
 
-Add these optional fields to your Databricks output in `profiles.yml` to control connection timeouts and retries.
+Добавьте эти необязательные поля в настройки подключения Databricks в `profiles.yml`, чтобы управлять временем ожидания подключения и повторными попытками.
 
-| Profile field | Description | Default |
+| Поле профиля | Описание | Значение по умолчанию |
 | --- | --- | --- |
-| `connect_timeout` | How many seconds dbt waits for a connection to Databricks before giving up. Enter a number greater than `0`, or dbt returns an error. For example, `600` becomes 600s (10 mins). Raise this if your jobs start while your SQL warehouse is still starting up. | `200` |
-| `connect_retries` | The number of times dbt should retry the connection to Databricks after the first attempt fails. A retry runs only when Databricks marks the error as retryable, or when `retry_all` is `true`. | `1` |
-| `retry_all` | Set to `true` to retry every connection error. Set to `false` to retry only errors Databricks marks as retryable. | `false` |
+| `connect_timeout` | Сколько секунд dbt ожидает подключения к Databricks, прежде чем прекратить попытку. Укажите число больше `0`, иначе dbt вернет ошибку. Например, `600` означает 600 секунд (10 минут). Увеличьте это значение, если ваши задания запускаются, пока SQL-хранилище еще запускается. | `200` |
+| `connect_retries` | Количество повторных попыток подключения к Databricks после неудачной первой попытки. Повторная попытка выполняется, только если Databricks помечает ошибку как допускающую повторную попытку или если `retry_all` имеет значение `true`. | `1` |
+| `retry_all` | Установите `true`, чтобы повторять попытки при любой ошибке подключения. Установите `false`, чтобы повторять попытки только при ошибках, которые Databricks помечает как допускающие повторную попытку. | `false` |
 
-These settings apply only to connecting. They don't retry queries that fail after dbt has connected.
+Эти настройки применяются только к установлению подключения. Они не обеспечивают повторное выполнение запросов, завершившихся ошибкой после подключения dbt.
 
-#### Example
+#### Пример
 
-The following example sets `connect_timeout` to `600` (10 minutes) so dbt can wait for a SQL warehouse that is still starting.
+В следующем примере для `connect_timeout` задано значение `600` (10 минут), чтобы dbt мог дождаться запуска SQL-хранилища.
 
 <File name="profiles.yml">
 
@@ -221,52 +221,52 @@ The following example sets `connect_timeout` to `600` (10 minutes) so dbt can wa
 outputs:
   dev:
     type: databricks
-    # ...your other connection fields
+    # ...остальные поля подключения
     connect_timeout: 600
 ```
 
 </File>
 
-## More information
+## Дополнительная информация
 
-Find Databricks-specific configuration information in the [Databricks adapter reference guide](/reference/resource-configs/databricks-configs).
+Информацию о настройках, специфичных для Databricks, см. в [справочном руководстве по адаптеру Databricks](/reference/resource-configs/databricks-configs).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-# Connect Databricks to <Constant name="core" /> 
+# Подключение Databricks к <Constant name="core" /> 
 
-<ProductCard text="dbt v2 compatible" url="/docs/local/connect-data-platform/databricks-setup?version=2" /> connection also available.
+Также доступно подключение <ProductCard text="Совместимо с dbt v2" url="/docs/local/connect-data-platform/databricks-setup?version=2" />.
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
 
-`dbt-databricks` is the recommended adapter for Databricks. It includes features not available in `dbt-spark`, such as:
-- Unity Catalog support
-- No need to install additional drivers or dependencies for use on the CLI
-- Use of Delta Lake for all models out of the box
-- SQL macros that are optimized to run with [Photon](https://docs.databricks.com/runtime/photon.html)
+`dbt-databricks` — рекомендуемый адаптер для Databricks. Он включает возможности, недоступные в `dbt-spark`, например:
+- Поддержка Unity Catalog
+- Отсутствие необходимости устанавливать дополнительные драйверы или зависимости для использования в CLI
+- Использование Delta Lake для всех моделей без дополнительной настройки
+- SQL-макросы, оптимизированные для работы с [Photon](https://docs.databricks.com/runtime/photon.html)
 
-## Connecting to Databricks
+## Подключение к Databricks
 
-To connect to a data platform with <Constant name="core" />, create the appropriate _profile_ and _target_ YAML keys/values in the `profiles.yml` configuration file for your Databricks SQL Warehouse/cluster. This dbt YAML file lives in the  `.dbt/` directory of your user/home directory. For more info, refer to [Connection profiles](/docs/local/profiles.yml) and [profiles.yml](/docs/local/profiles.yml).
+Чтобы подключиться к платформе данных с помощью <Constant name="core" />, создайте соответствующие YAML-ключи и значения _профиля_ и _целевой среды_ в файле конфигурации `profiles.yml` для вашего хранилища Databricks SQL Warehouse или кластера. Этот YAML-файл dbt находится в каталоге `.dbt/` в домашнем каталоге пользователя. Подробнее см. в разделах [Профили подключения](/docs/local/profiles.yml) и [profiles.yml](/docs/local/profiles.yml).
 
-`dbt-databricks` can connect to Databricks SQL Warehouses and all-purpose clusters. Databricks SQL Warehouses is the recommended way to get started with Databricks.
+`dbt-databricks` может подключаться к хранилищам Databricks SQL Warehouse и универсальным кластерам. Хранилища Databricks SQL Warehouse — рекомендуемый способ начать работу с Databricks.
 
-Refer to the [Databricks docs](https://docs.databricks.com/dev-tools/dbt.html#) for more info on how to obtain the credentials for configuring your profile.
+Подробнее о получении учетных данных для настройки профиля см. в [документации Databricks](https://docs.databricks.com/dev-tools/dbt.html#).
 
-### Examples {#examples}
+### Примеры {#examples}
 
-You can use token-based authentication, OAuth client-based authentication, or OAuth Token Federation using OIDC to connect to Databricks. Refer to the following examples for more on how to configure your profile for each type of authentication.
+Для подключения к Databricks можно использовать аутентификацию на основе токенов, клиентскую аутентификацию OAuth или федерацию токенов OAuth с использованием OIDC. В следующих примерах показано, как настроить профиль для каждого типа аутентификации.
 
-The default OAuth app for dbt-databricks is auto-enabled in every account with expected settings.  You can find the adapter app in [Account Console](https://accounts.cloud.databricks.com) > [Settings](https://accounts.cloud.databricks.com/settings) > [App Connections](https://accounts.cloud.databricks.com/settings/app-integrations) > dbt adapter for Databricks. If you cannot find the adapter app, dbt may be disabled in your account, please refer to this [guide](https://docs.databricks.com/en/integrations/enable-disable-oauth.html) to re-enable dbt-databricks as an OAuth app.
+Приложение OAuth по умолчанию для dbt-databricks автоматически включено в каждой учетной записи с ожидаемыми настройками.  Приложение адаптера можно найти в [Account Console](https://accounts.cloud.databricks.com) > [Settings](https://accounts.cloud.databricks.com/settings) > [App Connections](https://accounts.cloud.databricks.com/settings/app-integrations) > dbt adapter for Databricks. Если вы не можете найти приложение адаптера, возможно, dbt отключен в вашей учетной записи. Воспользуйтесь этим [руководством](https://docs.databricks.com/en/integrations/enable-disable-oauth.html), чтобы снова включить dbt-databricks в качестве приложения OAuth.
 
 <Tabs queryString="tokenoauth">
 
-<TabItem value="token" label="Token-based authentication">
+<TabItem value="token" label="Аутентификация на основе токенов">
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -276,19 +276,19 @@ your_profile_name:
   outputs:
     dev:
       type: databricks
-      catalog: CATALOG_NAME #optional catalog name if you are using Unity Catalog]
-      schema: SCHEMA_NAME # Required
-      host: YOURORG.databrickshost.com # Required
-      http_path: /SQL/YOUR/HTTP/PATH # Required
-      token: dapiXXXXXXXXXXXXXXXXXXXXXXX # Required Personal Access Token (PAT) if using token-based authentication
-      threads: 1_OR_MORE  # Optional, default 1
+      catalog: CATALOG_NAME #необязательное имя каталога при использовании Unity Catalog]
+      schema: SCHEMA_NAME # Обязательно
+      host: YOURORG.databrickshost.com # Обязательно
+      http_path: /SQL/YOUR/HTTP/PATH # Обязательно
+      token: dapiXXXXXXXXXXXXXXXXXXXXXXX # Персональный токен доступа (PAT), обязателен при аутентификации на основе токенов
+      threads: 1_OR_MORE  # Необязательно, по умолчанию 1
 ```
 
 </File>
 
 </TabItem>
 
-<TabItem value="oauth-m2m" label="OAuth client-based authentication (M2M)">
+<TabItem value="oauth-m2m" label="Клиентская аутентификация OAuth (M2M)">
 
 
 <File name='~/.dbt/profiles.yml'>
@@ -299,20 +299,20 @@ your_profile_name:
   outputs:
     dev:
       type: databricks
-      catalog: CATALOG_NAME #optional catalog name if you are using Unity Catalog
-      schema: SCHEMA_NAME # Required
-      host: YOUR_ORG.databrickshost.com # Required
-      http_path: /SQL/YOUR/HTTP/PATH # Required
-      auth_type: oauth # Required if using OAuth-based authentication
-      client_id: OAUTH_CLIENT_ID # The ID of your OAuth application. Required if using OAuth-based authentication. Key should be azure_client_id for Azure Databricks.
-      client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXXX # OAuth client secret. Required if using OAuth-based authentication. Key should be azure_client_secret for Azure Databricks.
-      threads: 1_OR_MORE  # Optional, default 1
+      catalog: CATALOG_NAME #необязательное имя каталога при использовании Unity Catalog
+      schema: SCHEMA_NAME # Обязательно
+      host: YOUR_ORG.databrickshost.com # Обязательно
+      http_path: /SQL/YOUR/HTTP/PATH # Обязательно
+      auth_type: oauth # Обязательно при аутентификации на основе OAuth
+      client_id: OAUTH_CLIENT_ID # Идентификатор вашего приложения OAuth. Обязательно при аутентификации на основе OAuth. Для Azure Databricks ключ должен называться azure_client_id.
+      client_secret: XXXXXXXXXXXXXXXXXXXXXXXXXXX # Секрет клиента OAuth. Обязательно при аутентификации на основе OAuth. Для Azure Databricks ключ должен называться azure_client_secret.
+      threads: 1_OR_MORE  # Необязательно, по умолчанию 1
 ```
 </File>
 
 </TabItem>
 
-<TabItem value="oauth-u2m" label="OAuth client-based authentication (U2M)">
+<TabItem value="oauth-u2m" label="Клиентская аутентификация OAuth (U2M)">
 
 
 <File name='~/.dbt/profiles.yml'>
@@ -323,24 +323,24 @@ your_profile_name:
   outputs:
     dev:
       type: databricks
-      catalog: CATALOG_NAME #optional catalog name if you are using Unity Catalog
-      schema: SCHEMA_NAME # Required
-      host: YOUR_ORG.databrickshost.com # Required
-      http_path: /SQL/YOUR/HTTP/PATH # Required
-      auth_type: oauth # Required if using OAuth-based authentication
-      threads: 1_OR_MORE  # Optional, default 1
+      catalog: CATALOG_NAME #необязательное имя каталога при использовании Unity Catalog
+      schema: SCHEMA_NAME # Обязательно
+      host: YOUR_ORG.databrickshost.com # Обязательно
+      http_path: /SQL/YOUR/HTTP/PATH # Обязательно
+      auth_type: oauth # Обязательно при аутентификации на основе OAuth
+      threads: 1_OR_MORE  # Необязательно, по умолчанию 1
 ```
 </File>
 
 </TabItem>
 
-<TabItem value="oauth-token-federation" label="OAuth token federation">
+<TabItem value="oauth-token-federation" label="Федерация токенов OAuth">
 
-To use OAuth token federation, you may provide an OIDC token either in an environment variable or a file.
+Для использования федерации токенов OAuth можно передать токен OIDC через переменную окружения или файл.
 
-#### Example OIDC configuration using an environment variable
+#### Пример настройки OIDC с использованием переменной окружения
 
-To provide the OIDC token using an environment variable, set `auth_type: env-oidc` in `profiles.yml`, and provide the OIDC token in `DATABRICKS_OIDC_TOKEN`.
+Чтобы передать токен OIDC через переменную окружения, задайте `auth_type: env-oidc` в `profiles.yml` и укажите токен OIDC в `DATABRICKS_OIDC_TOKEN`.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -350,21 +350,21 @@ your_profile_name:
   outputs:
     dev:
       type: databricks
-      catalog: CATALOG_NAME # optional catalog name if you are using Unity Catalog
-      schema: SCHEMA_NAME # Required
-      host: YOUR_ORG.databrickshost.com # Required
-      http_path: /SQL/YOUR/HTTP/PATH # Required
-      auth_type: env-oidc # Required if using environment variable OIDC authentication
-      client_id: CLIENT_ID # The client ID of your service principal. Required if using OIDC authentication.
-      threads: 1_OR_MORE  # Optional, default 1
+      catalog: CATALOG_NAME # необязательное имя каталога при использовании Unity Catalog
+      schema: SCHEMA_NAME # Обязательно
+      host: YOUR_ORG.databrickshost.com # Обязательно
+      http_path: /SQL/YOUR/HTTP/PATH # Обязательно
+      auth_type: env-oidc # Обязательно при аутентификации OIDC через переменную окружения
+      client_id: CLIENT_ID # Идентификатор клиента вашего сервисного принципала. Обязательно при аутентификации OIDC.
+      threads: 1_OR_MORE  # Необязательно, по умолчанию 1
 ```
 </File>
 
-#### Example OIDC configuration using a token file
+#### Пример настройки OIDC с использованием файла токена
 
-To provide the OIDC token using a token file, set `auth_type: file-oidc` in `profiles.yml` and provide the file path in `oidc_token_filepath`.
+Чтобы передать токен OIDC через файл токена, задайте `auth_type: file-oidc` в `profiles.yml` и укажите путь к файлу в `oidc_token_filepath`.
 
-You can instead leave `oidc_token_filepath` out of `profiles.yml` and set the path in the `DATABRICKS_OIDC_TOKEN_FILE` or `DATABRICKS_OIDC_TOKEN_FILEPATH` environment variable. dbt uses the environment variable only when `oidc_token_filepath` isn't in `profiles.yml`. When both are set, dbt only uses the `profiles.yml` setting and never falls back to the environment variable. We recommend setting the path in `profiles.yml`.
+Вместо этого можно не указывать `oidc_token_filepath` в `profiles.yml`, а задать путь в переменной окружения `DATABRICKS_OIDC_TOKEN_FILE` или `DATABRICKS_OIDC_TOKEN_FILEPATH`. dbt использует переменную окружения, только если `oidc_token_filepath` отсутствует в `profiles.yml`. Если заданы оба значения, dbt использует только настройку из `profiles.yml` и никогда не обращается к переменной окружения в качестве запасного варианта. Мы рекомендуем задавать путь в `profiles.yml`.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -374,14 +374,14 @@ your_profile_name:
   outputs:
     dev:
       type: databricks
-      catalog: CATALOG_NAME #optional catalog name if you are using Unity Catalog
-      schema: SCHEMA_NAME # Required
-      host: YOUR_ORG.databrickshost.com # Required
-      http_path: /SQL/YOUR/HTTP/PATH # Required
-      auth_type: file-oidc # Required if using file OIDC authentication
-      client_id: CLIENT_ID # The client ID of your service principal. Required if using OIDC authentication.
-      oidc_token_filepath: /PATH/TO/TOKEN/FILE # Path to the file that contains the OIDC token
-      threads: 1_OR_MORE  # Optional, default 1
+      catalog: CATALOG_NAME #необязательное имя каталога при использовании Unity Catalog
+      schema: SCHEMA_NAME # Обязательно
+      host: YOUR_ORG.databrickshost.com # Обязательно
+      http_path: /SQL/YOUR/HTTP/PATH # Обязательно
+      auth_type: file-oidc # Обязательно при аутентификации OIDC через файл
+      client_id: CLIENT_ID # Идентификатор клиента вашего сервисного принципала. Обязательно при аутентификации OIDC.
+      oidc_token_filepath: /PATH/TO/TOKEN/FILE # Путь к файлу, содержащему токен OIDC
+      threads: 1_OR_MORE  # Необязательно, по умолчанию 1
 ```
 </File>
 
@@ -389,57 +389,57 @@ your_profile_name:
 
 </Tabs>
 
-## Host parameters
+## Параметры хоста
 
-The following profile fields are always required. 
+Следующие поля профиля обязательны всегда. 
 
-| Field     | Description | Example |
+| Поле     | Описание | Пример |
 | --------- | ------- | ----------- |
-|   `host`  | The hostname of your cluster.<br/><br/>Don't include the `http://` or `https://` prefix. |  `YOURORG.databrickshost.com` | 
-|   `http_path`   | The http path to your SQL Warehouse or all-purpose cluster. | `/SQL/YOUR/HTTP/PATH`  | 
-|  `schema`  |  The name of a schema within your cluster's catalog. <br/><br/>It's _not recommended_ to use schema names that have upper case or mixed case letters.  | `MY_SCHEMA`  |
+|   `host`  | Имя хоста вашего кластера.<br/><br/>Не включайте префикс `http://` или `https://`. |  `YOURORG.databrickshost.com` | 
+|   `http_path`   | HTTP-путь к вашему SQL-хранилищу или универсальному кластеру. | `/SQL/YOUR/HTTP/PATH`  | 
+|  `schema`  |  Имя схемы в каталоге вашего кластера. <br/><br/>_Не рекомендуется_ использовать имена схем, содержащие буквы в верхнем или смешанном регистре.  | `MY_SCHEMA`  |
 
-## Authentication parameters
+## Параметры аутентификации
 
-The `dbt-databricks` adapter supports both [token-based authentication](/docs/local/connect-data-platform/databricks-setup?tokenoauth=token#examples) and [OAuth client-based authentication](/docs/local/connect-data-platform/databricks-setup?tokenoauth=oauth#examples).  
+Адаптер `dbt-databricks` поддерживает как [аутентификацию на основе токенов](/docs/local/connect-data-platform/databricks-setup?tokenoauth=token#examples), так и [клиентскую аутентификацию OAuth](/docs/local/connect-data-platform/databricks-setup?tokenoauth=oauth#examples).  
 
-Refer to the following **required** parameters to configure your profile for each type of authentication:
+Используйте следующие **обязательные** параметры для настройки профиля для каждого типа аутентификации:
 
-| Field     | Authentication type | Description | Example | 
+| Поле     | Тип аутентификации | Описание | Пример | 
 | --------- | ------- | ----------- | ---- | 
-|  `token`  |  Token-based  | The Personal Access Token (PAT) to connect to Databricks.  | `dapiXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |
-|  `client_id`  | OAuth-based (AWS/GCP) |  The client ID for your Databricks OAuth application  | `OAUTH_CLIENT_ID`  | 
-|  `client_secret`  | OAuth-based (AWS/GCP) |  The client secret for your Databricks OAuth application. | `XXXXXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |  
-|  `azure_client_id`  | OAuth-based (Azure) |  The client ID for your Azure Databricks OAuth application. | `AZURE_CLIENT_ID`  | 
-|  `azure_client_secret`  | OAuth-based (Azure) |  The client secret for your Azure Databricks OAuth application. | `XXXXXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |
-|  `auth_type`  |  OAuth-based |  The type of authorization needed to connect to Databricks. <br /> | `oauth`  |
+|  `token`  |  На основе токенов  | Персональный токен доступа (PAT) для подключения к Databricks.  | `dapiXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |
+|  `client_id`  | На основе OAuth (AWS/GCP) |  Идентификатор клиента для вашего приложения OAuth в Databricks  | `OAUTH_CLIENT_ID`  | 
+|  `client_secret`  | На основе OAuth (AWS/GCP) |  Секрет клиента для вашего приложения OAuth в Databricks. | `XXXXXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |  
+|  `azure_client_id`  | На основе OAuth (Azure) |  Идентификатор клиента для вашего приложения OAuth в Azure Databricks. | `AZURE_CLIENT_ID`  | 
+|  `azure_client_secret`  | На основе OAuth (Azure) |  Секрет клиента для вашего приложения OAuth в Azure Databricks. | `XXXXXXXXXXXXX`<br /> `XXXXXXXXXXXXXX`  |
+|  `auth_type`  |  На основе OAuth |  Тип авторизации, необходимый для подключения к Databricks. <br /> | `oauth`  |
 
-## Additional parameters
+## Дополнительные параметры
 
-The following profile fields are optional to set up. They help you configure how your cluster's session and dbt work for your connection.
+Следующие поля профиля необязательны. Они помогают настроить работу сеанса кластера и dbt для вашего подключения.
 
-| Profile field  |  Description  | Example   |
+| Поле профиля  |  Описание  | Пример   |
 | ------------- | ------------------- | --------------- |
-| `threads`   | The number of threads dbt should use (default is `1`) |`8`  | 
-| `connect_retries`  | The number of times dbt should retry the connection to Databricks (default is `1`)  |`3`   | 
-| `connect_timeout`     | How many seconds before the connection to Databricks should timeout (default behavior is no timeouts)  | `1000` | 
-| `session_properties`  | This sets the Databricks session properties used in the connection. Execute `SET -v` to see available options  |`ansi_mode: true` |
-| `query_tags`  | JSON string of key-value pairs to attach as [query tags](/reference/resource-configs/databricks-configs#query-tags) for tracking and auditing. (Available in dbt-databricks 1.11+)  | `'{"team": "analytics"}'` | 
+| `threads`   | Количество потоков, которые должен использовать dbt (по умолчанию `1`) |`8`  | 
+| `connect_retries`  | Количество повторных попыток подключения dbt к Databricks (по умолчанию `1`)  |`3`   | 
+| `connect_timeout`     | Время ожидания подключения к Databricks в секундах (по умолчанию время ожидания не ограничено)  | `1000` | 
+| `session_properties`  | Задает свойства сеанса Databricks, используемые при подключении. Выполните `SET -v`, чтобы увидеть доступные параметры  |`ansi_mode: true` |
+| `query_tags`  | JSON-строка пар «ключ — значение», добавляемых в качестве [тегов запросов](/reference/resource-configs/databricks-configs#query-tags) для отслеживания и аудита. (Доступно в dbt-databricks 1.11+)  | `'{"team": "analytics"}'` | 
 
-## Supported Functionality
+## Поддерживаемые возможности
 
 ### Delta Lake
 
-Most <Constant name="core" /> functionality is supported, but some features are only available
-on Delta Lake.
+Поддерживается большинство возможностей <Constant name="core" />, однако некоторые функции доступны только
+в Delta Lake.
 
-Delta-only features:
-1. Incremental model updates by `unique_key` instead of `partition_by` (see [`merge` strategy](/reference/resource-configs/databricks-configs#the-merge-strategy))
-2. [Snapshots](/docs/build/snapshots)
+Возможности, доступные только в Delta Lake:
+1. Обновление инкрементальных моделей по `unique_key` вместо `partition_by` (см. [стратегию `merge`](/reference/resource-configs/databricks-configs#the-merge-strategy))
+2. [Снимки](/docs/build/snapshots)
 
 
 ### Unity Catalog
 
-The adapter `dbt-databricks>=1.1.1` supports the 3-level namespace of Unity Catalog (catalog / schema / relations) so you can organize and secure your data the way you like.
+Адаптер `dbt-databricks>=1.1.1` поддерживает трехуровневое пространство имен Unity Catalog (каталог / схема / отношения), позволяя организовывать и защищать данные так, как вам удобно.
 
 </VersionBlock>

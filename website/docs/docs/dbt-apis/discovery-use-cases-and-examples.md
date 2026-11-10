@@ -254,7 +254,7 @@ query ($jobId: BigInt!, $runId: BigInt!) {
 }
 ```
 
-For jobs with many models, paginate with `first`, `after`, and `paginationCursor`. Refer to [Job-based queries](/docs/dbt-apis/discovery-querying#job-based-queries) in the Discovery API querying guide.
+Для заданий с большим числом моделей используйте постраничную выдачу через `first`, `after` и `paginationCursor`. См. [Запросы по заданиям](/docs/dbt-apis/discovery-querying#job-based-queries).
 
 ```graphql
 query JobModelsPage($jobId: BigInt!, $runId: BigInt, $first: Int!, $after: String) {
@@ -515,7 +515,7 @@ def create_freshness_graph(models_df, sources_df):
 
 Проверка [source freshness](/docs/build/sources#source-data-freshness) позволяет убедиться, что источники данных, загружаемые и используемые в вашем проекте dbt, соответствуют заданным ожиданиям. API предоставляет актуальные метаданные о загрузке источников, а также информацию о критериях проверки свежести данных.
 
-<Lightbox src="/img/docs/dbt-platform/discovery-api/source-freshness-page.png" width="75%" title="Source freshness page in dbt"/>
+<Lightbox src="/img/docs/dbt-platform/discovery-api/source-freshness-page.png" width="75%" title="Страница актуальности источников в dbt"/>
 
 <details>
 <summary>Пример запроса</summary>

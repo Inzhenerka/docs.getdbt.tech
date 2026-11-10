@@ -174,7 +174,7 @@ dbt sl validate --select state:modified+
 
 Для семантических узлов и моделей, которые не зависят от изменённых моделей, <Constant name="dbt" /> использует модели из производственной среды.
 
-<Lightbox src="/img/docs/dbt-platform/deployment/ci-dbt-sl-validate-downstream.png" width="90%" title="Validate semantic nodes downstream of model changes in your CI job." />
+<Lightbox src="/img/docs/dbt-platform/deployment/ci-dbt-sl-validate-downstream.png" width="90%" title="Проверка зависимых семантических узлов после изменения моделей в задании CI." />
 
 </Expandable>
 

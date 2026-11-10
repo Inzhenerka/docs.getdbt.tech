@@ -1,302 +1,302 @@
 ---
-title: "Upgrade to dbt v2 part 1: Preparing to upgrade"
+title: "Переход на dbt v2, часть 1: подготовка к обновлению"
 id: "prepare-v2-upgrade"
 level: 'Intermediate'
 icon: 'zap'
 hide_table_of_contents: true
 tags: ['dbt v2', 'dbt platform', 'Upgrade']
 recently_updated: true
-intro_text: This guide helps you prepare for an in-place upgrade from v1 to v2 in the dbt platform.
+intro_text: Это руководство поможет вам подготовиться к обновлению с v1 до v2 на платформе dbt без переноса проекта.
 ---
 
 <div style={{maxWidth: '900px'}}>
 
 import FusionAdapters from '/snippets/_v2-dwh-platform.md';
 
-## Introduction
+## Введение
 
-<Constant name="fusion_engine" /> represents the next evolution of data transformation. dbt has been rebuilt from the ground up but at its most basic, <Constant name="fusion" /> is a new version, and like any new version you should take steps to prepare to upgrade. This guide will take you through those preparations. 
+<Constant name="fusion_engine" /> — это следующий этап развития трансформации данных. dbt был полностью переработан, но по своей сути <Constant name="fusion" /> — это новая версия, и, как и перед переходом на любую новую версию, к обновлению нужно подготовиться. Это руководство поможет вам пройти все этапы подготовки. 
 
-If <Constant name="fusion" /> is brand new to you, take a look at our [comprehensive documentation](/docs/introduction) on what it is, how it behaves, and what's different from <Constant name="core" /> before getting started with this guide. Once you're caught up, it's time to begin preparing your projects for the speed and power that <Constant name="fusion" /> has to offer.
+Если вы впервые знакомитесь с <Constant name="fusion" />, перед началом работы с этим руководством изучите нашу [подробную документацию](/docs/introduction): в ней рассказывается, что это такое, как работает и чем отличается от <Constant name="core" />. Освоив основы, можно приступать к подготовке проектов, чтобы воспользоваться скоростью и возможностями <Constant name="fusion" />.
 
-## Prerequisites
+## Предварительные требования
 
-This guide will cover the preparations for upgrading to <Constant name="fusion_engine" /> and is intended for customers already using the <Constant name="dbt_platform" /> with a version of <Constant name="core" />. If you're brand new to dbt, check out our [quickstart guides](/guides).
+В этом руководстве рассматривается подготовка к обновлению до <Constant name="fusion_engine" />. Оно предназначено для клиентов, которые уже используют <Constant name="dbt_platform" /> с одной из версий <Constant name="core" />. Если вы только начинаете работать с dbt, ознакомьтесь с нашими [руководствами по быстрому старту](/guides).
 
-To follow the steps in this guide, you must meet the following prerequisites:
+Чтобы выполнить действия из этого руководства, необходимо соблюсти следующие условия:
 
-- You're using a <Constant name="dbt_platform" /> account on any tier.
-- You have a developer license.
-- You have [proper permissions](/docs/platform/manage-access/enterprise-permissions) to edit projects.
-- Your project is using a [supported adapter](/docs/platform/connect-data-platform/about-connections?version=2.0)
+- Вы используете учетную запись <Constant name="dbt_platform" /> на любом тарифном плане.
+- У вас есть лицензия разработчика.
+- У вас есть [необходимые разрешения](/docs/platform/manage-access/enterprise-permissions) для редактирования проектов.
+- В вашем проекте используется [поддерживаемый адаптер](/docs/platform/connect-data-platform/about-connections?version=2.0)
     <FusionAdapters/>
 
-:::tip Upgrading your first project
+:::tip Обновление первого проекта
 
-Start with smaller, newer, or more familiar projects first. This makes it easier to identify and troubleshoot any issues before upgrading larger, more complex projects.
-
-:::
-
-## Enable dbt v2 readiness features
-
-The <Constant name="fusion" /> readiness panel in the <Constant name="dbt_platform" /> and shows each project's eligibility status and blockers, is being rolled out in phases. If it hasn't been automatically enabled for your account yet, an [account admin](/docs/platform/manage-access/enterprise-permissions#account-admin) can manually enable it. This lets admins and developers see which projects and jobs are eligible for <Constant name="fusion" />, identify blockers, and initiate the upgrade once preparation is complete.
-
-### Step 1: Enable the readiness toggle
-
-This step requires account admin access in <Constant name="dbt_platform" />:
-
-1. Click your account name in the left sidebar and select **Account settings**.
-2. Navigate to the **Account** screen and click **Edit**.
-3. Scroll to the **Settings** section and select the checkbox next to **Enable dbt v2 readiness & upgrade features**.
-4. Click **Save**.
-
-Once enabled:
-- All admins and developers can see each project's <Constant name="fusion" /> readiness status, including which jobs are eligible or ineligible for <Constant name="fusion" /> and why.
-- Admins can initiate the <Constant name="fusion" /> upgrade from development environments, environment settings, and job settings (subject to existing permissions).
-
-### Step 2: Restrict upgrade access (optional)
-
-By default, any user who can see the upgrade assistant can use it to initiate an upgrade. To limit upgrade execution to designated users, you can enable an additional access control toggle.
-
-:::note Enterprise tier accounts only
-
-The **Enable restricted dbt v2 upgrade permissions** toggle is only available to Enterprise/Enterprise+ accounts that have been granted this entitlement. Contact your account manager if you need this capability.
+Начните с небольших, более новых или хорошо знакомых вам проектов. Так будет проще выявить и устранить возможные проблемы, прежде чем переходить к обновлению более крупных и сложных проектов.
 
 :::
 
-1. In the same **Account** settings screen, select the checkbox next to **Enable restricted dbt v2 upgrade permissions**.
-2. Click **Save**.
+## Включение функций проверки готовности к dbt v2
 
-When enabled, only users assigned the [`v2 Migration Admin`](/docs/platform/manage-access/enterprise-permissions#v2-migration-admin) permission set (scoped to specific projects) can execute the upgrade. For instructions on assigning this permission, refer to [Assign upgrade access](/guides/upgrade-to-v2?step=3#assign-upgrade-access-optional) in Part 2 of this guide.
+Панель готовности к <Constant name="fusion" /> в <Constant name="dbt_platform" />, которая показывает статус готовности каждого проекта и препятствия для обновления, внедряется поэтапно. Если она еще не включена автоматически для вашей учетной записи, [администратор учетной записи](/docs/platform/manage-access/enterprise-permissions#account-admin) может включить ее вручную. Это позволит администраторам и разработчикам видеть, какие проекты и задания готовы к <Constant name="fusion" />, выявлять препятствия и запускать обновление после завершения подготовки.
 
-### The dbt v2 readiness panel
+### Шаг 1: включите переключатель проверки готовности
 
-With the readiness experience enabled, you can monitor your project's eligibility as you work through the preparation steps below. The panel shows which jobs are eligible or ineligible for <Constant name="fusion" /> and why.
+Для этого шага нужны права администратора учетной записи в <Constant name="dbt_platform" />:
 
-<Lightbox src="/img/v2/v2-readiness.png" width="60%" title="The dbt v2 readiness checklist"/>
+1. Нажмите на имя своей учетной записи на левой боковой панели и выберите **Account settings**.
+2. Перейдите на экран **Account** и нажмите **Edit**.
+3. Прокрутите страницу до раздела **Settings** и установите флажок рядом с **Enable dbt v2 readiness & upgrade features**.
+4. Нажмите **Save**.
 
-Common ineligibility reasons include:
-- Environment(s) not on the **v1 Latest** [release track](/docs/dbt-versions/dbt-release-tracks#which-release-tracks-are-available)
-- Not using a [supported data platform](/docs/dbt/supported-features?version=2.0#requirements)
-- Project doesn't have at least one successful job run
-- Jobs that haven't run in the last 7 days or have recent failures
+После включения:
+- Все администраторы и разработчики смогут видеть статус готовности каждого проекта к <Constant name="fusion" />, в том числе какие задания готовы или не готовы к <Constant name="fusion" /> и почему.
+- Администраторы смогут запускать обновление до <Constant name="fusion" /> из сред разработки, настроек сред и настроек заданий (в рамках имеющихся разрешений).
 
-As you complete the steps in this guide, check the readiness panel to see your eligibility improve.
+### Шаг 2: ограничьте доступ к обновлению (необязательно)
 
-## Upgrade to the latest <Constant name="core" /> version
+По умолчанию любой пользователь, которому доступен помощник по обновлению, может запустить обновление с его помощью. Чтобы разрешить запуск обновления только определенным пользователям, можно включить дополнительный переключатель управления доступом.
 
-Before upgrading to <Constant name="fusion" />, you need to move your environments to the **v1 Latest** [<Constant name="core" /> release track](/docs/dbt-versions/dbt-release-tracks). The **v1 Latest** track includes all the features and tooling to help you prepare for <Constant name="fusion" />. It ensures the smoothest upgrade experience by validating that your project doesn't rely on deprecated behaviors.
+:::note Только для учетных записей на тарифе Enterprise
 
-:::tip Test before you deploy
-
-Always test version upgrades in development first. Use the [Override dbt version](#step-1-test-in-development-using-override) feature to safely try the **v1 Latest** release track without affecting your team or production runs.
+Переключатель **Enable restricted dbt v2 upgrade permissions** доступен только учетным записям Enterprise/Enterprise+, для которых предоставлена эта возможность. Если она вам нужна, обратитесь к своему менеджеру по работе с клиентами.
 
 :::
 
-### Step 1: Test in development (using override)
+1. На том же экране настроек **Account** установите флажок рядом с **Enable restricted dbt v2 upgrade permissions**.
+2. Нажмите **Save**.
 
-Test the **v1 Latest** release track for your individual account without changing the environment for your entire team:
+После включения выполнять обновление смогут только пользователи, которым назначен набор разрешений [`v2 Migration Admin`](/docs/platform/manage-access/enterprise-permissions#v2-migration-admin) для соответствующих проектов. Инструкции по назначению этого разрешения приведены в разделе [Предоставление доступа к обновлению](/guides/upgrade-to-v2?step=3#assign-upgrade-access-optional) во второй части этого руководства.
 
-1. Click your account name in the left sidebar and select **Account settings**.
-2. Select **Credentials** from the sidebar and choose your project.
-3. In the side panel, click **Edit** and scroll to **User development settings**.
-4. Select **v1 Latest** from the **dbt version** dropdown and click **Save**.
+### Панель готовности к dbt v2
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/choosing-dbt-version/example-override-version.png" width="60%" title="Override dbt version in your account settings"/>
+После включения функций проверки готовности вы сможете отслеживать готовность проекта по мере выполнения описанных ниже шагов подготовки. Панель показывает, какие задания готовы или не готовы к <Constant name="fusion" /> и почему.
 
-5. Launch the <Constant name="studio_ide" /> or <Constant name="platform_cli" /> and test your normal development workflows.
-6. Verify the override is active by running any dbt command and checking the **System Logs**. The first line should show `Running with dbt=` and your selected version. If the version number is `v1.11` or higher, you're on the right path to <Constant name="fusion" /> readiness.
+<Lightbox src="/img/v2/v2-readiness.png" width="60%" title="Контрольный список готовности к dbt v2"/>
 
-If everything works as expected, proceed to the next step to start upgrading your environments. If you encounter deprecation warnings, don't fear! We'll address those [later in this guide](/guides/prepare-v2-upgrade?step=4). If you encounter errors, revert to your previous version and refer to the [version upgrade guides](/docs/dbt-versions/dbt-upgrade) to resolve any differences between your current version and the latest available <Constant name="core" /> version.
+Распространенные причины неготовности:
+- Одна или несколько сред не используют [канал выпусков](/docs/dbt-versions/dbt-release-tracks#which-release-tracks-are-available) **v1 Latest**
+- Не используется [поддерживаемая платформа данных](/docs/dbt/supported-features?version=2.0#requirements)
+- В проекте нет ни одного успешного запуска задания
+- Задания не запускались в течение последних 7 дней или недавно завершались с ошибками
 
-### Step 2: Upgrade your development environment
+По мере выполнения шагов этого руководства проверяйте панель готовности, чтобы отслеживать прогресс.
 
-After successfully testing your individual development environment with the override, upgrade the development environment for the entire project (be sure to give your team notice!):
+## Обновление до последней версии <Constant name="core" />
 
-1. Navigate to **Environments** in your project settings.
-2. Select your **Development** environment and click **Edit**.
-3. Click the **dbt version** dropdown and select **v1 Latest**.
-4. Click **Save** to apply the changes.
+Перед обновлением до <Constant name="fusion" /> необходимо перевести среды на [канал выпусков <Constant name="core" />](/docs/dbt-versions/dbt-release-tracks) **v1 Latest**. Канал **v1 Latest** включает все функции и инструменты, которые помогут вам подготовиться к <Constant name="fusion" />. Он обеспечивает наиболее плавное обновление, проверяя, что ваш проект не зависит от устаревшего поведения.
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/choosing-dbt-version/select-development.png" width="90%" title="Upgrade development environment to **v1 Latest** release track"/>
+:::tip Тестируйте перед развертыванием
 
-:::info Remove your override
-
-Once your development environment is upgraded, you can remove your personal override by returning to your account credentials and selecting the same version as your environment.
+Всегда сначала тестируйте обновления версий в среде разработки. Используйте функцию [переопределения версии dbt](#step-1-test-in-development-using-override), чтобы безопасно опробовать канал выпусков **v1 Latest**, не затрагивая команду и запуски в рабочей среде.
 
 :::
 
-### Step 3: Upgrade staging and pre-production
+### Шаг 1: протестируйте в среде разработки (с переопределением версии) {#step-1-test-in-development-using-override}
 
-If your organization has staging or pre-production environments, upgrade these before production:
+Протестируйте канал выпусков **v1 Latest** для своей учетной записи, не меняя среду для всей команды:
 
-1. Navigate to **Environments** and select your staging/pre-production environment.
-2. Click **Edit** and select **v1 Latest** from the **dbt version** dropdown.
-3. Click **Save**.
-4. Run your jobs in this environment for a few days to validate everything works correctly.
+1. Нажмите на имя своей учетной записи на левой боковой панели и выберите **Account settings**.
+2. Выберите **Credentials** на боковой панели и укажите свой проект.
+3. На боковой панели нажмите **Edit** и прокрутите до **User development settings**.
+4. Выберите **v1 Latest** в раскрывающемся списке **dbt version** и нажмите **Save**.
 
-This provides a final validation layer before upgrading production environments.
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/choosing-dbt-version/example-override-version.png" width="60%" title="Переопределение версии dbt в настройках учетной записи"/>
 
-### Step 4: Upgrade your production environment
+5. Запустите <Constant name="studio_ide" /> или <Constant name="platform_cli" /> и протестируйте привычные рабочие процессы разработки.
+6. Убедитесь, что переопределение активно: выполните любую команду dbt и проверьте **System Logs**. В первой строке должны отображаться `Running with dbt=` и выбранная вами версия. Если номер версии — `v1.11` или выше, вы на верном пути к готовности к <Constant name="fusion" />.
 
-After validating in staging (or development if you don't have staging), upgrade your production environment:
+Если все работает как ожидается, перейдите к следующему шагу, чтобы начать обновление сред. Если появятся предупреждения об устаревших возможностях, не пугайтесь! Мы рассмотрим их [далее в этом руководстве](/guides/prepare-v2-upgrade?step=4). Если возникнут ошибки, вернитесь к предыдущей версии и обратитесь к [руководствам по обновлению версий](/docs/dbt-versions/dbt-upgrade), чтобы устранить проблемы, вызванные различиями между текущей и последней доступной версией <Constant name="core" />.
 
-1. Navigate to **Environments** and select your **Production** environment.
-2. Click **Edit** and select **v1 Latest** from the **dbt version** dropdown.
-3. Click **Save** to apply the changes.
-4. Monitor your first few production runs to ensure everything executes successfully.
+### Шаг 2: обновите среду разработки
 
+После успешного тестирования своей индивидуальной среды разработки с переопределенной версией обновите среду разработки для всего проекта (обязательно предупредите команду!):
 
-### Step 5: Update jobs
+1. Перейдите в **Environments** в настройках проекта.
+2. Выберите среду **Development** и нажмите **Edit**.
+3. Откройте раскрывающийся список **dbt version** и выберите **v1 Latest**.
+4. Нажмите **Save**, чтобы применить изменения.
 
-While environments control the dbt version for most scenarios, some older job configurations may have version overrides. Review your jobs and [update any that specify a dbt version](/docs/dbt-versions/upgrade-dbt-platform-version#jobs) to ensure they use the environment's v1 Latest release track.
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/choosing-dbt-version/select-development.png" width="90%" title="Обновление среды разработки до канала выпусков **v1 Latest**"/>
 
-## Resolve all deprecation warnings
+:::info Удалите переопределение версии
 
-<Constant name="fusion" /> enforces strict validation and won't accept deprecated code that currently generates warnings in <Constant name="core" />. You must resolve all deprecation warnings before upgrading to <Constant name="fusion" />. Fortunately, the autofix tool in the <Constant name="studio_ide" /> can automatically resolve most common deprecations for you.
-
-:::tip VS Code extension
-
-This guide provides steps to resolve deprecation warnings without leaving <Constant name="dbt_platform" />. If you prefer to work in the VS Code or Cursor editors locally, you can run the autofix in our dbt VS Code extension. Check out the [installation guide](/docs/install-dbt-extension) for more information about those workflows.
+После обновления среды разработки можно удалить личное переопределение: вернитесь к учетным данным своей учетной записи и выберите ту же версию, что используется в среде.
 
 :::
 
-### What the autofix tool handles
+### Шаг 3: обновите промежуточные и предпродуктивные среды
 
-The autofix tool can resolve many deprecations automatically, including:
+Если в вашей организации есть промежуточные или предпродуктивные среды, обновите их до обновления рабочей среды:
 
-- Moving custom configurations into the `meta` dictionary
-- Fixing duplicate YAML keys
-- Correcting unrecognized resource properties
-- Updating deprecated configuration patterns
+1. Перейдите в **Environments** и выберите промежуточную или предпродуктивную среду.
+2. Нажмите **Edit** и выберите **v1 Latest** в раскрывающемся списке **dbt version**.
+3. Нажмите **Save**.
+4. Запускайте задания в этой среде в течение нескольких дней, чтобы убедиться, что все работает корректно.
 
-Check out the [autofix readme](https://github.com/dbt-labs/dbt-autofix/) for a complete list of the deprecations it addresses.
+Это обеспечит дополнительную заключительную проверку перед обновлением рабочих сред.
 
-:::note dbt v2 package compatibility
+### Шаг 4: обновите рабочую среду
 
-In addition to deprecations, the autofix tool attempts to upgrade packages to the lowest supported <Constant name="fusion" />-compatible version. Check out [package support](/docs/dbt/supported-features#package-support) for more information about <Constant name="fusion" /> compatibility.
+После проверки в промежуточной среде (или в среде разработки, если промежуточной нет) обновите рабочую среду:
 
-:::
+1. Перейдите в **Environments** и выберите среду **Production**.
+2. Нажмите **Edit** и выберите **v1 Latest** в раскрывающемся списке **dbt version**.
+3. Нажмите **Save**, чтобы применить изменения.
+4. Отслеживайте первые несколько запусков в рабочей среде, чтобы убедиться, что все выполняется успешно.
 
-### Step 1: Create a new branch
 
-Before running the autofix tool, create a new branch to isolate your changes:
+### Шаг 5: обновите задания
 
-1. Navigate to the <Constant name="studio_ide" /> by clicking **Studio** in the left-side menu.
-2. Click the **Version control** panel (git branch icon) on the left sidebar.
-3. Click **Create branch** and name it something descriptive like `fusion-deprecation-fixes`.
-4. Click **Create** to switch to your new branch.
+Хотя в большинстве случаев версией dbt управляют среды, в некоторых старых конфигурациях заданий могут быть переопределения версии. Проверьте задания и [обновите те, в которых явно указана версия dbt](/docs/dbt-versions/upgrade-dbt-platform-version#jobs), чтобы они использовали канал выпусков v1 Latest, заданный для среды.
 
-:::warning Save before autofixing
+## Устранение всех предупреждений об устаревших возможностях
 
-The autofix tool will modify files in your project. Make sure to commit or stash any unsaved work to avoid losing changes.
+<Constant name="fusion" /> выполняет строгую проверку и не принимает устаревший код, который сейчас вызывает предупреждения в <Constant name="core" />. Перед обновлением до <Constant name="fusion" /> необходимо устранить все предупреждения об устаревших возможностях. К счастью, инструмент автоматического исправления в <Constant name="studio_ide" /> может автоматически устранить большинство распространенных проблем такого рода.
 
-:::
+:::tip Расширение для VS Code
 
-### Step 2: Run the autofix tool
-
-Now you're ready to scan for and automatically fix deprecation warnings:
-
-1. Click the **three-dot menu** in the bottom right corner of the <Constant name="studio_ide" />.
-2. Select **Check & fix deprecations**.
-
-<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-options-menu-with-save.png" width="90%" title="Access the Studio IDE options menu"/>
-
-The tool runs `dbt parse --show-all-deprecations --no-partial-parse` to identify all deprecations in your project. This may take a few moments depending on your project size.
-
-3. When parsing completes, view the results in the **Command history** panel in the bottom left.
-
-<Lightbox src="/img/docs/dbt-platform/platform-ide/command-history.png" width="90%" title="View command history and deprecation results"/>
-
-### Step 3: Review and apply autofixes
-
-After the deprecation scan completes, review the findings and apply automatic fixes:
-
-1. In the **Command history** panel, review the list of deprecation warnings.
-2. Click the **Autofix warnings** button to proceed.
-
-<Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-button.png" width="90%" title="Click Autofix warnings to resolve deprecations automatically"/>
-
-3. In the **Proceed with autofix** dialog, review the warning and click **Continue**.
-
-<Lightbox src="/img/docs/dbt-platform/platform-ide/proceed-with-autofix.png" width="90%" title="Confirm autofix operation"/>
-
-The tool automatically modifies your project files to resolve fixable deprecations, then runs another parse to identify any remaining warnings.
-
-4. When complete, a success message appears. Click **Review changes**.
-
-<Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-success.png" width="90%" title="Autofix complete"/>
-
-### Step 4: Verify the changes
-
-Review the changes made by the autofix tool to ensure they're correct:
-
-1. Open the **Version control** panel to view all modified files.
-2. Click on individual files to review the specific changes.
-3. Look for files with moved configurations, corrected properties, or updated syntax.
-4. If needed, make any additional manual adjustments.
-
-### Step 5: Commit your changes
-
-Once you're satisfied with the autofix changes, commit them to your branch:
-
-1. In the **Version control** panel, add a descriptive commit message like "Fix deprecation warnings for dbt v2 upgrade".
-2. Click **Commit and sync** to save your changes.
-
-### Step 6: Address remaining deprecations
-
-If the autofix tool reports remaining deprecation warnings that couldn't be automatically fixed:
-
-1. Review the warning messages in the **Command history** panel. Each warning includes the file path and line number.
-2. Manually update the code based on the deprecation guidance:
-   - Custom inputs should be moved to the `meta` config.
-   - Deprecated properties should be updated to their new equivalents.
-   - Refer to specific [version upgrade guides](/docs/dbt-versions/dbt-upgrade) for detailed migration instructions.
-3. After making manual fixes, run **Check & fix deprecations** again to verify all warnings are resolved.
-4. Commit your changes.
-
-### Step 7: Merge to your main branch
-
-Once all deprecations are resolved:
-
-1. Create a pull request in your git provider to merge your deprecation fixes.
-2. Have your team review the changes.
-3. Merge the PR to your main development branch.
-4. Ensure these changes are deployed to your environments before proceeding with the <Constant name="fusion" /> upgrade.
-
-## Validate and upgrade your dbt packages
-
-:::tip Run autofix first
-
-This section contains instructions for manual package upgrades. We recommend running the autofix tool before taking these steps.
-
-The autofix tool finds packages incompatible with <Constant name="fusion" /> and upgrades them to the lowest compatible version. For more information, check out [package support](/docs/dbt/supported-features#package-support).
+В этом руководстве описано, как устранить предупреждения об устаревших возможностях, не покидая <Constant name="dbt_platform" />. Если вы предпочитаете работать локально в редакторах VS Code или Cursor, можно запустить автоматическое исправление в нашем расширении dbt для VS Code. Подробнее об этих рабочих процессах см. в [руководстве по установке](/docs/install-dbt-extension).
 
 :::
 
-dbt packages extend your project's functionality, but they must be compatible with <Constant name="fusion" />. Most commonly used packages from dbt Labs (like `dbt_utils` and `dbt_project_evaluator`) and many community packages [already support <Constant name="fusion" />](/docs/dbt/supported-features#package-support). Before upgrading, verify your packages are compatible and upgrade them to the latest versions. Check for packages that support version 2.0.0, or ask the maintainer if you're unsure.
+### Что обрабатывает инструмент автоматического исправления {#what-the-autofix-tool-handles}
 
-What if a package isn't compatible?
+Инструмент автоматического исправления может автоматически устранить многие проблемы, связанные с устаревшими возможностями, в том числе:
 
-If a critical package isn't yet compatible with <Constant name="fusion" />:
-- Check with the package maintainer about their roadmap.
-- Open an issue requesting <Constant name="fusion" /> support.
-- Consider contributing the compatibility updates yourself.
-- Try it out anyway! The incompatible portion of the package might not impact your project. 
+- Переместить пользовательские настройки в словарь `meta`
+- Исправить повторяющиеся ключи YAML
+- Исправить нераспознаваемые свойства ресурсов
+- Обновить устаревшие варианты конфигурации
+
+Полный список обрабатываемых устаревших возможностей см. в [README инструмента autofix](https://github.com/dbt-labs/dbt-autofix/).
+
+:::note Совместимость пакетов с dbt v2
+
+Помимо устранения устаревших возможностей, инструмент автоматического исправления пытается обновить пакеты до минимальной поддерживаемой версии, совместимой с <Constant name="fusion" />. Подробнее о совместимости с <Constant name="fusion" /> см. в разделе [Поддержка пакетов](/docs/dbt/supported-features#package-support).
+
+:::
+
+### Шаг 1: создайте новую ветку
+
+Перед запуском инструмента автоматического исправления создайте новую ветку, чтобы изолировать изменения:
+
+1. Перейдите в <Constant name="studio_ide" />, нажав **Studio** в меню слева.
+2. Откройте панель **Version control** (значок ветки git) на левой боковой панели.
+3. Нажмите **Create branch** и задайте понятное имя, например `fusion-deprecation-fixes`.
+4. Нажмите **Create**, чтобы переключиться на новую ветку.
+
+:::warning Сохраните работу перед автоматическим исправлением
+
+Инструмент автоматического исправления изменит файлы вашего проекта. Обязательно создайте коммит или временно сохраните незавершенную работу с помощью stash, чтобы не потерять изменения.
+
+:::
+
+### Шаг 2: запустите инструмент автоматического исправления
+
+Теперь можно выполнить поиск предупреждений об устаревших возможностях и автоматически устранить их:
+
+1. Нажмите **меню с тремя точками** в правом нижнем углу <Constant name="studio_ide" />.
+2. Выберите **Check & fix deprecations**.
+
+<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-options-menu-with-save.png" width="90%" title="Открытие меню параметров Studio IDE"/>
+
+Инструмент запускает `dbt parse --show-all-deprecations --no-partial-parse`, чтобы выявить все устаревшие возможности в проекте. В зависимости от размера проекта это может занять некоторое время.
+
+3. После завершения разбора просмотрите результаты на панели **Command history** внизу слева.
+
+<Lightbox src="/img/docs/dbt-platform/platform-ide/command-history.png" width="90%" title="Просмотр истории команд и результатов проверки устаревших возможностей"/>
+
+### Шаг 3: проверьте и примените автоматические исправления
+
+После завершения проверки на устаревшие возможности просмотрите результаты и примените автоматические исправления:
+
+1. На панели **Command history** просмотрите список предупреждений об устаревших возможностях.
+2. Нажмите кнопку **Autofix warnings**, чтобы продолжить.
+
+<Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-button.png" width="90%" title="Нажмите Autofix warnings для автоматического устранения устаревших возможностей"/>
+
+3. В диалоговом окне **Proceed with autofix** ознакомьтесь с предупреждением и нажмите **Continue**.
+
+<Lightbox src="/img/docs/dbt-platform/platform-ide/proceed-with-autofix.png" width="90%" title="Подтверждение автоматического исправления"/>
+
+Инструмент автоматически изменяет файлы проекта, устраняя проблемы, поддающиеся автоматическому исправлению, а затем повторно выполняет разбор, чтобы выявить оставшиеся предупреждения.
+
+4. По завершении появится сообщение об успешном выполнении. Нажмите **Review changes**.
+
+<Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-success.png" width="90%" title="Автоматическое исправление завершено"/>
+
+### Шаг 4: проверьте изменения
+
+Просмотрите изменения, внесенные инструментом автоматического исправления, чтобы убедиться в их корректности:
+
+1. Откройте панель **Version control**, чтобы увидеть все измененные файлы.
+2. Нажимайте на отдельные файлы, чтобы просмотреть конкретные изменения.
+3. Найдите файлы с перемещенными настройками, исправленными свойствами или обновленным синтаксисом.
+4. При необходимости внесите дополнительные изменения вручную.
+
+### Шаг 5: создайте коммит с изменениями
+
+Убедившись, что автоматические исправления вас устраивают, сохраните их в коммите в своей ветке:
+
+1. На панели **Version control** добавьте содержательное сообщение коммита, например «Устранены предупреждения об устаревших возможностях для обновления до dbt v2».
+2. Нажмите **Commit and sync**, чтобы сохранить изменения.
+
+### Шаг 6: устраните оставшиеся устаревшие возможности
+
+Если инструмент автоматического исправления сообщает об оставшихся предупреждениях, которые не удалось устранить автоматически:
+
+1. Просмотрите сообщения с предупреждениями на панели **Command history**. Каждое предупреждение содержит путь к файлу и номер строки.
+2. Обновите код вручную, следуя рекомендациям по устранению устаревших возможностей:
+   - Пользовательские входные параметры следует переместить в конфигурацию `meta`.
+   - Устаревшие свойства следует заменить их новыми аналогами.
+   - Подробные инструкции по миграции см. в соответствующих [руководствах по обновлению версий](/docs/dbt-versions/dbt-upgrade).
+3. После внесения исправлений вручную снова запустите **Check & fix deprecations**, чтобы убедиться, что все предупреждения устранены.
+4. Создайте коммит с изменениями.
+
+### Шаг 7: выполните слияние с основной веткой
+
+После устранения всех устаревших возможностей:
+
+1. Создайте pull request у своего провайдера git, чтобы выполнить слияние исправлений устаревших возможностей.
+2. Попросите команду проверить изменения.
+3. Выполните слияние PR с основной веткой разработки.
+4. Убедитесь, что эти изменения развернуты в ваших средах, прежде чем переходить к обновлению до <Constant name="fusion" />.
+
+## Проверка и обновление пакетов dbt
+
+:::tip Сначала запустите автоматическое исправление
+
+Этот раздел содержит инструкции по ручному обновлению пакетов. Рекомендуем запустить инструмент автоматического исправления, прежде чем выполнять эти действия.
+
+Инструмент автоматического исправления находит пакеты, несовместимые с <Constant name="fusion" />, и обновляет их до минимальной совместимой версии. Подробнее см. в разделе [Поддержка пакетов](/docs/dbt/supported-features#package-support).
+
+:::
+
+Пакеты dbt расширяют функциональность проекта, но они должны быть совместимы с <Constant name="fusion" />. Большинство широко используемых пакетов от dbt Labs (например, `dbt_utils` и `dbt_project_evaluator`) и многие пакеты сообщества [уже поддерживают <Constant name="fusion" />](/docs/dbt/supported-features#package-support). Перед обновлением убедитесь в совместимости пакетов и обновите их до последних версий. Проверьте, поддерживают ли пакеты версию 2.0.0, или уточните это у сопровождающего, если не уверены.
+
+Что делать, если пакет несовместим?
+
+Если критически важный пакет пока несовместим с <Constant name="fusion" />:
+- Уточните у сопровождающего пакета планы по поддержке.
+- Создайте issue с запросом на поддержку <Constant name="fusion" />.
+- Рассмотрите возможность самостоятельно внести изменения для обеспечения совместимости.
+- Все равно попробуйте его использовать! Несовместимая часть пакета может не затрагивать ваш проект. 
 
 import FusionPackageCompatibility from '/snippets/_v2-package-compatibility.md';
 
 <FusionPackageCompatibility />
 
-### Step 1: Review your current packages
+### Шаг 1: проверьте текущие пакеты
 
-Identify which packages your project uses:
+Определите, какие пакеты использует ваш проект:
 
-1. In the <Constant name="studio_ide" />, open your project's root directory.
-2. Look for either `packages.yml` or `dependencies.yml` file.
-3. Review the list of packages and their current versions.
+1. В <Constant name="studio_ide" /> откройте корневой каталог проекта.
+2. Найдите файл `packages.yml` или `dependencies.yml`.
+3. Просмотрите список пакетов и их текущие версии.
 
-Your file will look something like this:
+Ваш файл будет выглядеть примерно так:
 
 ```yaml
 packages:
@@ -306,22 +306,22 @@ packages:
     version: 0.9.0
 ```
 
-### Step 2: Check compatibility and find the latest package versions
+### Шаг 2: проверьте совместимость и найдите последние версии пакетов
 
-Review [the dbt package hub](https://hub.getdbt.com) to see verified <Constant name="fusion" />-compatible packages by checking that the `require-dbt-version` configuration includes `2.0.0` or higher. Refer to [package support](/docs/dbt/supported-features#package-support) for more information.
+Найдите проверенные пакеты, совместимые с <Constant name="fusion" />, в [каталоге пакетов dbt](https://hub.getdbt.com): убедитесь, что конфигурация `require-dbt-version` включает `2.0.0` или более высокую версию. Подробнее см. в разделе [Поддержка пакетов](/docs/dbt/supported-features#package-support).
 
-For packages that aren't <Constant name="fusion" />-compatible:
-   - Visit the package's GitHub repository.
-   - Check the README or recent releases for <Constant name="fusion" /> compatibility information.
-   - Look for issues or discussions about <Constant name="fusion" /> support.
+Для пакетов, несовместимых с <Constant name="fusion" />:
+   - Перейдите в репозиторий пакета на GitHub.
+   - Проверьте README или последние выпуски на наличие информации о совместимости с <Constant name="fusion" />.
+   - Найдите issues или обсуждения поддержки <Constant name="fusion" />.
 
-For each package, find the most recent version:
+Для каждого пакета найдите самую новую версию:
 
-- Visit [dbt Hub](https://hub.getdbt.com) for packages hosted there.
-- For packages from GitHub, check the repository's releases page.
-- Note the latest version number for each package you use.
+- Для пакетов, размещенных на [dbt Hub](https://hub.getdbt.com), посетите этот сайт.
+- Для пакетов из GitHub проверьте страницу выпусков репозитория.
+- Запишите номер последней версии каждого используемого пакета.
 
-For Hub packages, you can use version ranges to stay up-to-date:
+Для пакетов из Hub можно использовать диапазоны версий, чтобы получать актуальные обновления:
 
 ```yaml
 packages:
@@ -329,15 +329,15 @@ packages:
     version: [">=1.0.0", "<3.0.0"]  # Gets latest 1.x or 2.x version
 ```
 
-### Step 3: Update your package versions
+### Шаг 3: обновите версии пакетов
 
-Update your `packages.yml` or `dependencies.yml` file with the latest compatible versions:
+Укажите последние совместимые версии в файле `packages.yml` или `dependencies.yml`:
 
-1. In the <Constant name="studio_ide" />, open your `packages.yml` or `dependencies.yml` file.
-2. Update each package version to the latest compatible version.
-3. Save the file.
+1. В <Constant name="studio_ide" /> откройте файл `packages.yml` или `dependencies.yml`.
+2. Обновите версию каждого пакета до последней совместимой.
+3. Сохраните файл.
 
-   Before update:
+   До обновления:
    ```yaml
    packages:
    - package: dbt-labs/dbt_utils
@@ -346,7 +346,7 @@ Update your `packages.yml` or `dependencies.yml` file with the latest compatible
       version: 0.9.0
    ```
 
-   After update:
+   После обновления:
    ```yaml
    packages:
    - package: dbt-labs/dbt_utils
@@ -355,119 +355,119 @@ Update your `packages.yml` or `dependencies.yml` file with the latest compatible
       version: [">=0.12.0", "<1.0.0"]
    ```
 
-### Step 4: Install updated packages
+### Шаг 4: установите обновленные пакеты
 
-After updating your package versions, install them:
+После изменения версий пакетов установите их:
 
-1. In the <Constant name="studio_ide" /> command line, run:
+1. В командной строке <Constant name="studio_ide" /> выполните:
    ```bash
    dbt deps --upgrade
    ```
 
-The `--upgrade` flag ensures dbt installs the latest versions within your specified ranges, updating the `package-lock.yml` file.
+Флаг `--upgrade` указывает dbt установить последние версии в заданных диапазонах и обновить файл `package-lock.yml`.
 
-2. Review the output to confirm all packages installed successfully.
-3. Check that the `package-lock.yml` file was updated with the new package versions.
+2. Просмотрите вывод команды, чтобы убедиться, что все пакеты установлены успешно.
+3. Убедитесь, что файл `package-lock.yml` обновлен и содержит новые версии пакетов.
 
-:::info About package-lock.yml
+:::info О файле package-lock.yml
 
-The `package-lock.yml` file pins your packages to specific versions for reproducible builds. We recommend committing this file to version control so your entire team uses the same package versions.
+Файл `package-lock.yml` фиксирует конкретные версии пакетов для воспроизводимых сборок. Рекомендуем сохранять этот файл в системе контроля версий, чтобы вся команда использовала одинаковые версии пакетов.
 
 :::
 
-### Step 5: Test your project with updated packages
+### Шаг 5: протестируйте проект с обновленными пакетами
 
-After upgrading packages, test your project to ensure everything works:
+После обновления пакетов протестируйте проект, чтобы убедиться, что все работает:
 
-1. Run a subset of your models to verify basic functionality:
+1. Запустите часть моделей, чтобы проверить базовую функциональность:
    ```bash
    dbt run --select tag:daily
    ```
 
-2. Run your tests to catch any breaking changes (exact command may vary):
+2. Запустите тесты, чтобы обнаружить несовместимые изменения (конкретная команда может отличаться):
    ```bash
    dbt test
    ```
 
-3. If you encounter issues:
-   - Review the package's changelog for breaking changes
-   - Adjust your code to match new package behavior
-   - If problems persist, temporarily pin to an older compatible version (if possible)
+3. Если возникнут проблемы:
+   - Просмотрите журнал изменений пакета на наличие несовместимых изменений
+   - Адаптируйте код к новому поведению пакета
+   - Если проблемы сохраняются, временно зафиксируйте более старую совместимую версию (если возможно)
 
-### Step 6: Commit package updates
+### Шаг 6: создайте коммит с обновлениями пакетов
 
-Once you've verified the updated packages work correctly:
+Убедившись, что обновленные пакеты работают корректно:
 
-1. In the **Version control** panel, stage your changes:
-   - `packages.yml` or `dependencies.yml`
+1. На панели **Version control** подготовьте изменения к коммиту:
+   - `packages.yml` или `dependencies.yml`
    - `package-lock.yml`
 
-2. Add a commit message like "Upgrade dbt packages for dbt v2 compatibility".
-3. Click **Commit and sync**.
+2. Добавьте сообщение коммита, например «Обновлены пакеты dbt для совместимости с dbt v2».
+3. Нажмите **Commit and sync**.
 
-## Update your jobs
+## Обновление заданий
 
-Use the <Constant name="fusion" /> readiness panel to validate your jobs against <Constant name="fusion_engine" /> and fix any issues you find.
+Используйте панель готовности к <Constant name="fusion" />, чтобы проверить задания на совместимость с <Constant name="fusion_engine" /> и устранить найденные проблемы.
 
-For jobs that are eligible for <Constant name="fusion" /> in the readiness experience, **Run once on <Constant name="fusion" />** is replaced by a **Debug on <Constant name="fusion" />** dropdown in the eligibility banner or modal. Use a debug option when you want to inspect or fix issues interactively in <Constant name="studio_ide" />. Use **Run once on <Constant name="fusion" />** when you want to validate execution behavior in a deployment context.
+Для заданий, отмеченных как готовые к <Constant name="fusion" /> в интерфейсе проверки готовности, кнопка **Run once on <Constant name="fusion" />** заменяется раскрывающимся списком **Debug on <Constant name="fusion" />** в баннере или модальном окне статуса готовности. Выбирайте вариант отладки, если хотите интерактивно изучить или исправить проблемы в <Constant name="studio_ide" />. Используйте **Run once on <Constant name="fusion" />**, если хотите проверить поведение при выполнении в контексте развертывания.
 
-### Review your jobs
+### Проверьте задания
 
-The readiness panel shows how many jobs are ineligible for <Constant name="fusion" /> or have an unknown eligibility status. If you don't see eligibility messaging, ask an account admin to enable **dbt v2 readiness & upgrade features** in [Account settings](/docs/platform/account-settings). For setup steps, refer to [Enable dbt v2 readiness features](/guides/prepare-v2-upgrade?step=3).
+Панель готовности показывает количество заданий, которые не готовы к <Constant name="fusion" /> или имеют неизвестный статус готовности. Если сообщения о готовности не отображаются, попросите администратора учетной записи включить **dbt v2 readiness & upgrade features** в [настройках учетной записи](/docs/platform/account-settings). Инструкции по настройке см. в разделе [Включение функций проверки готовности к dbt v2](/guides/prepare-v2-upgrade?step=3).
 
 :::note
-If a job has not run in the last 7 days, you must run it once for the debugging options to be available.
+Если задание не запускалось в течение последних 7 дней, его нужно запустить один раз, чтобы стали доступны варианты отладки.
 :::
 
-1. Open the jobs list using either path:
-   - From the main menu, go to **Orchestration** → **Jobs**.
-   - From the readiness panel, click **Review jobs**.
-   <Lightbox src="/img/v2/review-jobs.png" width="60%" title="Shortcut to review your jobs from the readiness panel"/>
-2. Find the <Constant name="fusion" /> eligibility icon to the right of your jobs. Click **Review job** for  any job that is ineligible or has an unknown eligibility status.
-   <Lightbox src="/img/v2/job-eligibility.png" width="60%" title="Take action on your jobs to make them v2 eligible."/>
-3. Click **Debug on <Constant name="fusion" />** and choose one of the following:
-   - [Debug in Studio](#debug-in-studio)
-   - [Debug in Studio with <Constant name="wizard" />](#debug-in-studio-with-dbt-wizard-)
-   - [Run once on <Constant name="fusion" />](#run-once-on-)
+1. Откройте список заданий одним из следующих способов:
+   - В главном меню перейдите в **Orchestration** → **Jobs**.
+   - На панели готовности нажмите **Review jobs**.
+   <Lightbox src="/img/v2/review-jobs.png" width="60%" title="Быстрый переход к проверке заданий с панели готовности"/>
+2. Найдите значок готовности к <Constant name="fusion" /> справа от заданий. Нажмите **Review job** для любого задания, которое не готово или имеет неизвестный статус готовности.
+   <Lightbox src="/img/v2/job-eligibility.png" width="60%" title="Выполните необходимые действия, чтобы подготовить задания к v2."/>
+3. Нажмите **Debug on <Constant name="fusion" />** и выберите один из следующих вариантов:
+   - [Отладка в Studio](#debug-in-studio)
+   - [Отладка в Studio с <Constant name="wizard" />](#debug-in-studio-with-dbt-wizard)
+   - [Однократный запуск на <Constant name="fusion" />](#run-once-on-fusion)
 
-#### Debug in Studio
+#### Отладка в Studio {#debug-in-studio}
 
-In the <Constant name="studio_ide" />, run <Constant name="fusion" /> in your development environment to review project warnings and errors:
+В <Constant name="studio_ide" /> запустите <Constant name="fusion" /> в среде разработки, чтобы просмотреть предупреждения и ошибки проекта:
 
-1. Click **Debug in Studio**. dbt sets your user-level `DBT_DEVELOP_CORE_VERSION` environment variable to `v2-stable`, then opens the <Constant name="studio_ide" /> with the **Problems** tab selected.
+1. Нажмите **Debug in Studio**. dbt задаст для вашей пользовательской переменной среды `DBT_DEVELOP_CORE_VERSION` значение `v2-stable`, а затем откроет <Constant name="studio_ide" /> с выбранной вкладкой **Problems**.
 
-<Lightbox src="/img/v2/v2-ide.png" width="60%" title="Running v2 in development"/>
+<Lightbox src="/img/v2/v2-ide.png" width="60%" title="Запуск v2 в среде разработки"/>
 
-2. Review the warnings or errors in the **Problems** tab.
-3. Fix the issues directly or run the [autofix tool](/docs/platform/studio-ide/autofix-deprecations).
-4. When the project runs with no warnings or errors, commit and publish your changes.
-5. After you merge the changes, wait for the job to run again or run it manually.
+2. Просмотрите предупреждения и ошибки на вкладке **Problems**.
+3. Исправьте проблемы вручную или запустите [инструмент автоматического исправления](/docs/platform/studio-ide/autofix-deprecations).
+4. Когда проект будет выполняться без предупреждений и ошибок, создайте коммит и опубликуйте изменения.
+5. После слияния изменений дождитесь повторного запуска задания или запустите его вручную.
 
-To revert the `latest-fusion` override, use the dbt version control in <Constant name="studio_ide" /> or update the **dbt version** under **User development settings** in [Account settings](/docs/platform/account-settings) → **Credentials**. For more details, refer to [Override dbt version](/docs/dbt-versions/upgrade-dbt-platform-version#override-dbt-version).
+Чтобы отменить переопределение `latest-fusion`, используйте элемент выбора версии dbt в <Constant name="studio_ide" /> или измените **dbt version** в разделе **User development settings** по пути [Account settings](/docs/platform/account-settings) → **Credentials**. Подробнее см. в разделе [Переопределение версии dbt](/docs/dbt-versions/upgrade-dbt-platform-version#override-dbt-version).
 
-#### Debug in Studio with dbt Wizard <Lifecycle status="beta" size="80%" />
+#### Отладка в Studio с dbt Wizard <Lifecycle status="beta" size="80%" /> {#debug-in-studio-with-dbt-wizard}
 
 import FusionMigrationWorkflow from '/snippets/_v2-migration-workflow.md';
 
 <FusionMigrationWorkflow />
 
-#### Run once on <Constant name="fusion" />
+#### Однократный запуск на <Constant name="fusion" /> {#run-once-on-fusion}
 
-When you are confident a job is ready for <Constant name="fusion" />, you can run it once on the engine without changing environment-wide settings. **Run once on <Constant name="fusion" />** can be temporarily unavailable while a <Constant name="fusion" /> run request is already pending.
+Когда вы уверены, что задание готово к <Constant name="fusion" />, можно запустить его один раз на этом движке, не меняя настройки всей среды. Функция **Run once on <Constant name="fusion" />** может быть временно недоступна, пока уже отправленный запрос на запуск на <Constant name="fusion" /> ожидает выполнения.
 
-1. Click **Run once on <Constant name="fusion" />**.
-2. The job window opens and dbt runs the job on <Constant name="fusion" /> without changing other jobs or environment settings.
-3. When the job succeeds, click **Override eligibility status** to update the eligibility status.
-   <Lightbox src="/img/v2/eligibility-status.png" width="60%" title="Override the eligibility status of a successful job."/>
+1. Нажмите **Run once on <Constant name="fusion" />**.
+2. Откроется окно задания, и dbt запустит его на <Constant name="fusion" />, не меняя другие задания или настройки среды.
+3. После успешного выполнения задания нажмите **Override eligibility status**, чтобы обновить статус готовности.
+   <Lightbox src="/img/v2/eligibility-status.png" width="60%" title="Переопределение статуса готовности успешно выполненного задания."/>
 
-Congratulations! You have validated <Constant name="fusion" /> eligibility for your jobs.
+Поздравляем! Вы подтвердили готовность заданий к <Constant name="fusion" />.
 
-<Lightbox src="/img/v2/v2-eligible.png" width="60%" title="Your job is now ready for v2!"/>
+<Lightbox src="/img/v2/v2-eligible.png" width="60%" title="Теперь ваше задание готово к v2!"/>
 
-## What's next? 
+## Что дальше? 
 
-With limitations identified and addressed, you've completed all the preparation steps. Your project is now ready to upgrade to <Constant name="fusion" />!
+Вы выявили и устранили ограничения и выполнили все шаги подготовки. Теперь ваш проект готов к обновлению до <Constant name="fusion" />!
 
-Check out [Part 2: Making the move](/guides/upgrade-to-v2)
+Перейдите к [части 2: выполнение перехода](/guides/upgrade-to-v2)
 
 </div>

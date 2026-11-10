@@ -26,7 +26,7 @@ import MCPRemoteReadOnlyCredentials from '/snippets/_mcp-remote-read-only-creden
 
 <Tabs>
 
-<TabItem value="CLI only (dbt v1 and dbt v2)">
+<TabItem value="CLI only (dbt v1 and dbt v2)" label="Только CLI (dbt v1 и dbt v2)">
 
 Конфигурация с самостоятельным размещением для пользователей, которым нужны только команды dbt с <Constant name="core" /> или <Constant name="fusion_engine" /> (без функций <Constant name="dbt_platform" />).
 

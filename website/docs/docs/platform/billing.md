@@ -1,8 +1,8 @@
 ---
-title: "About billing"
+title: "Об оплате"
 id: billing 
-description: "dbt billing information." 
-sidebar_label: About billing
+description: "Информация об оплате dbt." 
+sidebar_label: Об оплате
 pagination_next: null
 pagination_prev: null
 availability:
@@ -13,15 +13,15 @@ availability:
 import DbtStatePricing from '/snippets/_dbt-state-pricing.md';
 import DbtStateTrialHowItWorks from '/snippets/_dbt-state-trial-how-it-works.md';
 
-<Constant name="dbt" /> offers a variety of [plans and pricing](https://www.getdbt.com/pricing/) to fit your organization’s needs. With flexible billing options that appeal to large enterprises and small businesses and [server availability](/docs/platform/about-platform/access-regions-ip-addresses) worldwide, <Constant name="dbt_platform" /> is the fastest and easiest way to begin transforming your data.
+<Constant name="dbt" /> предлагает различные [тарифные планы и варианты оплаты](https://www.getdbt.com/pricing/) с учётом потребностей вашей организации. Благодаря гибким вариантам оплаты, подходящим как крупным предприятиям, так и малому бизнесу, и [доступности серверов](/docs/platform/about-platform/access-regions-ip-addresses) по всему миру <Constant name="dbt_platform" /> — это самый быстрый и простой способ начать преобразование ваших данных.
 
-Use the following pages to understand how billing, usage, and cost optimization work:
+На следующих страницах описаны принципы оплаты, учёта использования и оптимизации затрат:
 
-- [Plans](/docs/platform/billing/plans-and-billing) &mdash; How billing works for the Developer, Starter, Enterprise, and legacy plans.
-- [How does dbt pricing work?](/docs/platform/billing/how-pricing-works) &mdash; How seats and usage are billed, what counts as a Successful Model Built and a Queried Metric, and how to view usage.
-- [dbt State usage](/docs/platform/billing/dbt-state-usage) &mdash; Usage-based pricing for dbt State, including daily active target tables (DATT).
-- [dbt AI: Usage metering and limiting](/docs/platform/billing/dbt-ai-usage) &mdash; How dbt AI (dbt Copilot) usage is metered and limited by plan.
-- [Managing usage](/docs/platform/billing/managing-usage) &mdash; Usage notifications and how to stop usage from accruing.
-- [Optimize costs in dbt](/docs/platform/billing/optimize-costs) &mdash; Best practices for reducing model build usage and warehouse costs.
+- [Тарифные планы](/docs/platform/billing/plans-and-billing) &mdash; Как устроена оплата в планах Developer, Starter, Enterprise и устаревших тарифных планах.
+- [Как формируется стоимость dbt?](/docs/platform/billing/how-pricing-works) &mdash; Как оплачиваются пользовательские места и использование, что считается Successful Model Built (успешно построенной моделью) и Queried Metric (запрошенной метрикой), а также как просматривать данные об использовании.
+- [Использование dbt State](/docs/platform/billing/dbt-state-usage) &mdash; Оплата dbt State на основе использования, включая ежедневные активные целевые таблицы (DATT).
+- [dbt AI: учёт и ограничение использования](/docs/platform/billing/dbt-ai-usage) &mdash; Как учитывается и ограничивается использование dbt AI (dbt Copilot) в зависимости от тарифного плана.
+- [Управление использованием](/docs/platform/billing/managing-usage) &mdash; Уведомления об использовании и способы остановить его дальнейшее накопление.
+- [Оптимизация затрат в dbt](/docs/platform/billing/optimize-costs) &mdash; Рекомендации по снижению объёма использования при построении моделей и затрат на хранилище данных.
 
-For answers to common plan and billing questions, refer to [Billing FAQs](/docs/platform/billing-faqs).
+Ответы на распространённые вопросы о тарифных планах и оплате приведены в разделе [Часто задаваемые вопросы об оплате](/docs/platform/billing-faqs).

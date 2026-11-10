@@ -1,20 +1,20 @@
 ---
-title: "OAuth login not initiating"
-sidebar_label: "OAuth login not initiating"
-description: "Troubleshooting: OAuth login not initiating"
+title: "Вход через OAuth не запускается"
+sidebar_label: "Вход через OAuth не запускается"
+description: "Устранение неполадок: вход через OAuth не запускается"
 id: mcp-troubleshoot-oauth
 ---
 
-**Symptoms:** The OAuth browser window never opens, or authentication appears to hang.
+**Симптомы:** Окно браузера для входа через OAuth не открывается или процесс аутентификации зависает.
 
-**Cause:** dbt MCP uses a lock file to avoid repeated authentication. If a previous session left the lock file in place, it can block new authentication attempts.
+**Причина:** dbt MCP использует файл блокировки, чтобы избежать повторной аутентификации. Если после предыдущего сеанса остался файл блокировки, он может блокировать новые попытки аутентификации.
 
-**Solution:**
+**Решение:**
 
-1. Close your MCP client (Claude Desktop, Cursor, VS Code, etc.).
-2. Delete the self-hosted dbt MCP config files:
+1. Закройте клиент MCP (Claude Desktop, Cursor, VS Code и т. д.).
+2. Удалите файлы конфигурации локально развернутого dbt MCP:
    - macOS/Linux: `rm -f ~/.dbt/mcp.yml ~/.dbt/mcp.lock`
    - Windows: `Remove-Item -Force $env:USERPROFILE\.dbt\mcp.yml, $env:USERPROFILE\.dbt\mcp.lock`
-3. Restart your client and try connecting again.
+3. Перезапустите клиент и попробуйте подключиться снова.
 
-If these steps don't resolve the issue, confirm that AI features are enabled on your account. An account admin can enable them in **Account settings** → **Edit** → toggle on **Enable account access to dbt Wizard features**. Refer to [Enable dbt Wizard](/docs/platform/manage-dbt-ai).
+Если эти действия не помогли устранить проблему, убедитесь, что для вашего аккаунта включены функции ИИ. Администратор аккаунта может включить их в разделе **Account settings** → **Edit** → включить переключатель **Enable account access to dbt Wizard features**. См. [Включение dbt Wizard](/docs/platform/manage-dbt-ai).

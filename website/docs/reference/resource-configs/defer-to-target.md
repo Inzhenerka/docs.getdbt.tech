@@ -1,17 +1,17 @@
 ---
 title: defer_to_target
-description: "Configure which target environment dbt State defers to for self-managed deployments."
+description: "Настройте целевое окружение, на которое dbt State ссылается при отложенном разрешении ссылок в самостоятельно управляемых развертываниях."
 id: "defer-to-target"
 tags: ['dbt State']
 ---
 
 # defer_to_target
 
-:::note Self-managed deployments only
-This configuration applies to self-managed dbt deployments. If you're using the <Constant name="dbt_platform" />, deferral is configured through your environment settings in the UI.
+:::note Только для самостоятельно управляемых развертываний
+Эта настройка применяется к самостоятельно управляемым развертываниям dbt. Если вы используете <Constant name="dbt_platform" />, отложенное разрешение ссылок настраивается в параметрах окружения в пользовательском интерфейсе.
 :::
 
-`defer_to_target` is part of [dbt State](/docs/deploy/dbt-state-setup), which manages model caching and deferral across environments.
+`defer_to_target` — часть [dbt State](/docs/deploy/dbt-state-setup), который управляет кешированием моделей и отложенным разрешением ссылок между окружениями.
 
 <File name="profiles.yml">
 
@@ -36,21 +36,21 @@ my_project:
 
 </File>
 
-## Definition
+## Определение
 
-`defer_to_target` specifies which target environment dbt State should defer to when resolving unselected upstream nodes and evaluating whether models need to be rebuilt.
+`defer_to_target` указывает, какое целевое окружение dbt State должен использовать при разрешении ссылок на невыбранные вышестоящие узлы и определении необходимости пересборки моделей.
 
-In self-managed deployments with multiple environments, you can configure each target to defer to a different upstream environment. For example, a `uat` environment can defer to `staging`, while `prod` manages its own state independently.
+В самостоятельно управляемых развертываниях с несколькими окружениями можно настроить каждое целевое окружение так, чтобы оно ссылалось на другое вышестоящее окружение. Например, окружение `uat` может ссылаться на `staging`, а `prod` — управлять своим состоянием независимо.
 
-## Default
+## Значение по умолчанию
 
-`prod`. When omitted, all targets defer to the target named `prod`. Use this config if you want to defer to a different target (for example, `staging`), or if your production target is named something other than `prod` (for example, `production`).
+`prod`. Если параметр не указан, все целевые окружения ссылаются на целевое окружение с именем `prod`. Используйте эту настройку, если хотите ссылаться на другое целевое окружение (например, `staging`) или если ваше производственное целевое окружение называется иначе, чем `prod` (например, `production`).
 
-## Example
+## Пример
 
-### Multi-environment deferral chain
+### Цепочка отложенного разрешения ссылок между окружениями
 
-Configure a pipeline where `uat` defers to `staging`:
+Настройте конвейер, в котором `uat` ссылается на `staging`:
 
 <File name="profiles.yml">
 
@@ -83,20 +83,20 @@ my_project:
 
 </File>
 
-## Caveats to dbt State without a manifest
+## Особенности работы dbt State без манифеста {#caveats-to-dbt-state-without-a-manifest}
 
-When dbt State tries to guess where the production version of a relation was built, it re-renders the database and schema names using the configured target from `defer_to_target`.
+Когда dbt State пытается определить, где была создана производственная версия объекта базы данных, он повторно формирует имена базы данных и схемы, используя целевое окружение, заданное в `defer_to_target`.
 
-If either of the generated names depend on dynamic data that has changed since the production run, or the node's alias depends on any target-specific logic, then:
+Если любое из сформированных имен зависит от динамических данных, изменившихся с момента запуска в производственном окружении, или псевдоним узла зависит от логики, специфичной для целевого окружения, то:
 
-- The guessed location may not exist, forcing an unnecessary rebuild from scratch.
-- The guessed location may point to the wrong object, resulting in invalid data.
+- Предполагаемое расположение может не существовать, что приведет к ненужной пересборке с нуля.
+- Предполагаемое расположение может указывать на неверный объект, что приведет к некорректным данным.
 
-The following examples show scenarios that will cause issues with an `orders` node. Assume the dev profile sets `schema: dbt_developer` and the prod profile sets `schema: analytics`.
+Следующие примеры показывают сценарии, которые вызывают проблемы с узлом `orders`. Предположим, что в профиле dev задано `schema: dbt_developer`, а в профиле prod — `schema: analytics`.
 
-### Environment variables and CLI vars
+### Переменные окружения и переменные CLI
 
-If your schema name depends on an environment variable or a CLI var, dbt State may guess the wrong location because those values differ between production and local runs.
+Если имя схемы зависит от переменной окружения или переменной CLI, dbt State может неверно определить расположение, поскольку значения этих переменных различаются при производственных и локальных запусках.
 
 ```sql
 {% macro generate_schema_name(custom_schema_name, node) %}
@@ -104,11 +104,11 @@ If your schema name depends on an environment variable or a CLI var, dbt State m
 {% endmacro %}
 ```
 
-- Production runs with `DBT_BRANCH=main`, so the relation is built at `analytics_main.orders`.
-- When a developer runs with `DBT_BRANCH=feature/x`, dbt State swaps `target.schema` to the prod value (`analytics`) but reads `DBT_BRANCH` from the developer's shell, producing the guess `analytics_feature_x.orders`.
-- That relation does not exist in production, so no clone is performed and the node rebuilds from scratch.
+- В производственном окружении запуск выполняется с `DBT_BRANCH=main`, поэтому объект создается в `analytics_main.orders`.
+- Когда разработчик выполняет запуск с `DBT_BRANCH=feature/x`, dbt State подставляет в `target.schema` значение из производственного окружения (`analytics`), но считывает `DBT_BRANCH` из оболочки разработчика, получая предполагаемое расположение `analytics_feature_x.orders`.
+- Этот объект не существует в производственном окружении, поэтому клонирование не выполняется и узел пересобирается с нуля.
 
-The same issue occurs with CLI vars:
+Та же проблема возникает с переменными CLI:
 
 ```sql
 {% macro generate_schema_name(custom_schema_name, node) %}
@@ -116,13 +116,13 @@ The same issue occurs with CLI vars:
 {% endmacro %}
 ```
 
-- Production runs `dbt run --vars '{environment: prod}'`, so the relation is built at `analytics_prod.orders`.
-- When a developer runs `dbt run` with no `--vars`, `var('environment')` falls back to its default (`dev`), so dbt State guesses `analytics_dev.orders`.
-- That relation does not exist in production. Vars passed at the original prod invocation are not stored anywhere dbt State can recover them.
+- В производственном окружении выполняется `dbt run --vars '{environment: prod}'`, поэтому объект создается в `analytics_prod.orders`.
+- Когда разработчик выполняет `dbt run` без `--vars`, `var('environment')` возвращает значение по умолчанию (`dev`), поэтому dbt State определяет предполагаемое расположение как `analytics_dev.orders`.
+- Этот объект не существует в производственном окружении. Переменные, переданные при исходном запуске в prod, нигде не сохраняются в доступном для dbt State виде.
 
-### Path-derived names when files move
+### Имена на основе пути при перемещении файлов
 
-A common pattern is to use a node's directory as its schema:
+Распространенный подход — использовать каталог узла для формирования имени его схемы:
 
 ```sql
 {% macro generate_schema_name(custom_schema_name, node) %}
@@ -130,13 +130,13 @@ A common pattern is to use a node's directory as its schema:
 {% endmacro %}
 ```
 
-- Production builds `models/finance/orders.sql` into `analytics_finance.orders`.
-- If a developer reorganizes the project and renames the directory to `models/accounting/`, then runs `dbt run -s orders`, their local manifest records the node's parent directory as `accounting`. dbt State then guesses `analytics_accounting.orders`.
-- Production is still at `analytics_finance.orders`, the clone misses, and the node rebuilds from scratch.
+- В производственном окружении `models/finance/orders.sql` собирается в `analytics_finance.orders`.
+- Если разработчик реорганизует проект и переименует каталог в `models/accounting/`, а затем выполнит `dbt run -s orders`, в его локальном манифесте родительский каталог узла будет указан как `accounting`. Тогда dbt State определит предполагаемое расположение как `analytics_accounting.orders`.
+- В производственном окружении объект по-прежнему находится в `analytics_finance.orders`, объект для клонирования не находится, и узел пересобирается с нуля.
 
-### Target-specific `generate_alias_name` logic
+### Логика `generate_alias_name`, зависящая от целевого окружения
 
-Unlike database and schema, dbt State currently does not re-render aliases. An override on `generate_alias_name` that varies by target or environment breaks the guess.
+В отличие от имен базы данных и схемы, dbt State в настоящее время не формирует псевдонимы повторно. Переопределение `generate_alias_name`, результат которого зависит от целевого окружения или окружения выполнения, нарушает определение предполагаемого расположения.
 
 ```sql
 {% macro generate_alias_name(custom_alias_name=none, node=none) %}
@@ -148,14 +148,14 @@ Unlike database and schema, dbt State currently does not re-render aliases. An o
 {% endmacro %}
 ```
 
-- When `target.name == 'prod'`, production builds `analytics.orders_prod`.
-- When a developer runs with `target.name == 'dev'`, dbt State swaps the schema component to `analytics` but leaves the alias as-is, producing the guess `analytics.orders_dev`.
+- При `target.name == 'prod'` в производственном окружении создается `analytics.orders_prod`.
+- Когда разработчик выполняет запуск с `target.name == 'dev'`, dbt State заменяет компонент схемы на `analytics`, но оставляет псевдоним без изменений, получая предполагаемое расположение `analytics.orders_dev`.
 
 :::caution
-This scenario is the most likely to cause data corruption. If you have custom `generate_alias_name` logic, provide a `manifest.json` to guarantee accurate results.
+Этот сценарий с наибольшей вероятностью может привести к повреждению данных. Если вы используете собственную логику `generate_alias_name`, предоставьте `manifest.json`, чтобы гарантировать корректные результаты.
 :::
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)

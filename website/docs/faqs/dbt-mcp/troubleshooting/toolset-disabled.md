@@ -1,17 +1,17 @@
 ---
-title: "Toolset unavailable or showing as disabled"
-sidebar_label: "Toolset unavailable or showing as disabled"
-description: "Troubleshooting: Toolset unavailable or showing as disabled"
+title: "Набор инструментов недоступен или отображается как отключённый"
+sidebar_label: "Набор инструментов недоступен или отображается как отключённый"
+description: "Устранение неполадок: набор инструментов недоступен или отображается как отключённый"
 id: mcp-troubleshoot-toolset-disabled
 ---
 
-**Symptoms:** A toolset (Semantic Layer, Discovery, Admin API) is not available in your AI client even though you've configured credentials.
+**Симптомы:** Набор инструментов (Semantic Layer, Discovery, Admin API) недоступен в вашем ИИ-клиенте, хотя учётные данные настроены.
 
-**Cause:** Either the required variables are missing, or the toolset has been explicitly disabled.
+**Причина:** Отсутствуют обязательные переменные либо набор инструментов явно отключён.
 
-**Solution:**
+**Решение:**
 
-1. Check that all required variables for the toolset are set — see [Tool requirements](/docs/dbt-ai/setup-local-mcp#tool-requirements-at-a-glance).
-2. Check whether you have any `DISABLE_*` variables set to `true` that might be turning off the toolset.
-3. If you're using enable mode (`DBT_MCP_ENABLE_*`), make sure the toolset you need is listed.
-4. Set `DBT_MCP_LOG_LEVEL=DEBUG` to see which toolsets are active at startup.
+1. Проверьте, что все обязательные переменные для набора инструментов заданы — см. [Требования к инструментам](/docs/dbt-ai/setup-local-mcp#tool-requirements-at-a-glance).
+2. Проверьте, нет ли у вас переменных `DISABLE_*` со значением `true`, которые могут отключать набор инструментов.
+3. Если вы используете режим явного включения (`DBT_MCP_ENABLE_*`), убедитесь, что нужный набор инструментов указан среди включённых.
+4. Задайте `DBT_MCP_LOG_LEVEL=DEBUG`, чтобы увидеть, какие наборы инструментов активны при запуске.

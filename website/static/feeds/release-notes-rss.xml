@@ -1,8 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
-  <channel>
-    <title>dbt platform release notes</title>
-    <link>https://docs.getdbt.com/docs/dbt-versions/release-notes</link>
-    <description>dbt provides release notes for the dbt platform so you can see recent and historical changes.</description>
-  </channel>
+    <channel>
+        <title>dbt platform release notes</title>
+        <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes</link>
+        <description>dbt provides release notes for the dbt platform so you can see recent and historical changes.</description>
+        <lastBuildDate>Sat, 31 Oct 2026 23:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>ru</language>
+        <image>
+            <title>dbt platform release notes</title>
+            <url>https://www.getdbt.com/ui/img/blog/dbt-card.jpg</url>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes</link>
+        </image>
+        <copyright>Copyright © 2026 dbt Labs™, Inc. All Rights Reserved.</copyright>
+        <item>
+            <title><![CDATA[dbt platform release notes — Ноябрь 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#ноябрь-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#ноябрь-2026</guid>
+            <pubDate>Sat, 31 Oct 2026 23:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Ноябрь 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Октябрь 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#октябрь-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#октябрь-2026</guid>
+            <pubDate>Wed, 30 Sep 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Октябрь 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Сентябрь 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#сентябрь-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#сентябрь-2026</guid>
+            <pubDate>Mon, 31 Aug 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Сентябрь 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Анонсы dbt Summit 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-dbt-summit-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-dbt-summit-2026</guid>
+            <pubDate>Mon, 31 Aug 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes: Анонсы dbt Summit 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — До dbt Summit]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#до-dbt-summit</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#до-dbt-summit</guid>
+            <pubDate>Mon, 31 Aug 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes: До dbt Summit. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Август 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#август-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#август-2026</guid>
+            <pubDate>Fri, 31 Jul 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Август 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Июль 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#июль-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#июль-2026</guid>
+            <pubDate>Tue, 30 Jun 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Июль 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Июнь 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#июнь-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#июнь-2026</guid>
+            <pubDate>Sun, 31 May 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Июнь 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Анонсы Snowflake Summit 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-snowflake-summit-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-snowflake-summit-2026</guid>
+            <pubDate>Sun, 31 May 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes: Анонсы Snowflake Summit 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Май 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#май-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#май-2026</guid>
+            <pubDate>Thu, 30 Apr 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Май 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Апрель 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#апрель-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#апрель-2026</guid>
+            <pubDate>Tue, 31 Mar 2026 22:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Апрель 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Март 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#март-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#март-2026</guid>
+            <pubDate>Sat, 28 Feb 2026 23:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Март 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Февраль 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#февраль-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#февраль-2026</guid>
+            <pubDate>Sat, 31 Jan 2026 23:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Февраль 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[dbt platform release notes — Январь 2026]]></title>
+            <link>https://docs.getdbt.tech/docs/dbt-versions/release-notes#январь-2026</link>
+            <guid>https://docs.getdbt.tech/docs/dbt-versions/release-notes#январь-2026</guid>
+            <pubDate>Wed, 31 Dec 2025 23:00:00 GMT</pubDate>
+            <description><![CDATA[New dbt platform release notes for Январь 2026. Visit the page to see what's new, updated, and fixed.]]></description>
+        </item>
+    </channel>
 </rss>

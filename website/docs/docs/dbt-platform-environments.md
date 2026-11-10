@@ -1,62 +1,64 @@
 ---
-title: "dbt environments"
+title: "Окружения dbt"
 id: "dbt-platform-environments"
-description: "Learn about dbt's development environment to execute your project in the IDE"
+description: "Узнайте об окружении разработки dbt для выполнения проекта в IDE"
 pagination_next: "docs/platform/migration"
 availability: platform_login
 ---
 
-An environment determines how <Constant name="dbt" /> will execute your project in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) or [<Constant name="dbt" /> CLI](/docs/platform/dbt-cli-installation) (for development) and scheduled jobs (for deployment).
+Окружение определяет, как <Constant name="dbt" /> будет выполнять ваш проект в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) или [<Constant name="dbt" /> CLI](/docs/platform/dbt-cli-installation) (для разработки), а также в заданиях, запускаемых по расписанию (для развертывания).
 
-Critically, in order to execute dbt, environments define three variables:
+Для выполнения dbt окружения определяют три ключевых параметра:
 
-1. The version of <Constant name="dbt" /> that will be used to run your project
-2. The warehouse connection information (including the target database/schema settings)
-3. The version of your code to execute
+1. Версию <Constant name="dbt" />, которая будет использоваться для выполнения проекта
+2. Данные подключения к хранилищу (включая настройки целевой базы данных/схемы)
+3. Версию кода, которая будет выполняться
 
-Each <Constant name="dbt" /> project can have only one [development environment](#create-a-development-environment), but there is no limit to the number of [deployment environments](/docs/deploy/deploy-environments), providing you the flexibility and customization to tailor the execution of scheduled jobs. 
+В каждом проекте <Constant name="dbt" /> может быть только одно [окружение разработки](#create-a-development-environment), но количество [окружений развертывания](/docs/deploy/deploy-environments) не ограничено, что позволяет гибко настраивать выполнение заданий по расписанию. 
 
-Use environments to customize settings for different stages of your project and streamline the execution process by using software engineering principles. 
+Используйте окружения, чтобы адаптировать настройки к различным этапам работы над проектом и оптимизировать процесс выполнения, применяя принципы разработки программного обеспечения. 
 
-<Lightbox src="/img/dbt-env.png" width="90%" title="dbt environment hierarchy showing projects, environments, connections, and orchestration jobs." />
+<Lightbox src="/img/dbt-env.png" width="90%" title="Иерархия окружений dbt: проекты, окружения, подключения и задания оркестрации." />
 
-The following sections detail the different types of environments and how to intuitively configure your development environment in <Constant name="dbt" />. 
+В следующих разделах подробно описаны различные типы окружений и порядок настройки окружения разработки в <Constant name="dbt" />. 
 
 import CloudEnvInfo from '/snippets/_cloud-environments-info.md';
 
 <CloudEnvInfo setup={'/snippets/_cloud-environments-info.md'} />
 
-## Create a development environment
+## Создание окружения разработки {#create-a-development-environment}
 
-To create a new <Constant name="dbt" /> development environment:
+Чтобы создать новое окружение разработки <Constant name="dbt" />:
 
-1. Navigate to **Orchestration** > **Environments**.
-2. Click **+ Create Environment**.
-3. Select **Development** as the environment type. You can only create one Development environment for a project.
-4. Fill in the fields under **Environment settings** and **User credentials**.
-5. (Optional) If dbt State is enabled on your account, the **Enable dbt State** option appears. Enable it to reduce unnecessary node rebuilds. For details, refer to [Enabling dbt State in Studio](/docs/deploy/dbt-state-enable-studio#enabling-dbt-state-on-a-development-environment).
-6. Click **Save** to create the environment.
+1. Перейдите в **Orchestration** > **Environments**.
+2. Нажмите **+ Create Environment**.
+3. Выберите **Development** в качестве типа окружения. Для одного проекта можно создать только одно окружение Development.
+4. Заполните поля в разделах **Environment settings** и **User credentials**.
+5. (Необязательно) Если в вашем аккаунте включена функция dbt State, появится параметр **Enable dbt State**. Включите его, чтобы сократить количество ненужных повторных сборок узлов. Подробнее см. в разделе [Включение dbt State в Studio](/docs/deploy/dbt-state-enable-studio#enabling-dbt-state-on-a-development-environment).
+6. Нажмите **Save**, чтобы создать окружение.
 
-<Lightbox src="/img/docs/dbt-platform/refresh-ide/new-development-environment-fields.png" width="85%" height="200" title="Creating a development environment"/>
+<Lightbox src="/img/docs/dbt-platform/refresh-ide/new-development-environment-fields.png" width="85%" height="200" title="Создание окружения разработки"/>
 
-### Set user credentials
+<a id="set-developer-credentials" />
 
-To use the dbt <Constant name="studio_ide" /> or <Constant name="platform_cli" />, each developer will need to set up [personal user credentials](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) to your warehouse connection. Click your account name in the bottom left, select **Your profile**, then go to **Credentials**. This allows you to set separate target information and maintain individual credentials to connect to your warehouse.
-## Deployment environment
+### Настройка учетных данных пользователя {#set-user-credentials}
 
-Deployment environments in <Constant name="dbt" /> are necessary to execute scheduled jobs and use other features (like different workspaces for different tasks). You can have many environments in a single <Constant name="dbt" /> project, enabling you to set up each space in a way that suits different needs (such as experimenting or testing).
+Для работы с dbt <Constant name="studio_ide" /> или <Constant name="platform_cli" /> каждому разработчику необходимо настроить [личные учетные данные](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) для подключения к хранилищу. Нажмите на имя своего аккаунта в левом нижнем углу, выберите **Your profile**, затем перейдите в раздел **Credentials**. Это позволяет отдельно настроить целевую базу данных и схему и использовать индивидуальные учетные данные для подключения к хранилищу.
+## Окружение развертывания {#deployment-environment}
 
-Even though you can have many environments, only one of them can be the "main" deployment environment. This would be considered your "production" environment and represents your project's "source of truth", meaning it's where your most reliable and final data transformations live.
+Окружения развертывания в <Constant name="dbt" /> необходимы для выполнения заданий по расписанию и использования других возможностей (например, отдельных рабочих пространств для разных задач). В одном проекте <Constant name="dbt" /> может быть несколько окружений, что позволяет настроить каждое из них под определенные потребности (например, для экспериментов или тестирования).
 
-To learn more about <Constant name="dbt" /> deployment environments and how to configure them, refer to the [Deployment environments](/docs/deploy/deploy-environments) page. For our best practices guide, read [<Constant name="dbt" /> environment best practices](/guides/set-up-ci) for more info.
+Несмотря на возможность иметь несколько окружений, только одно из них может быть «основным» окружением развертывания. Оно считается вашим «производственным» окружением и представляет собой «источник истины» проекта: именно в нем находятся наиболее надежные и окончательные преобразования данных.
 
-## Change environment settings
+Подробнее об окружениях развертывания <Constant name="dbt" /> и их настройке см. на странице [Окружения развертывания](/docs/deploy/deploy-environments). Рекомендации по их использованию приведены в руководстве [Рекомендации по работе с окружениями <Constant name="dbt" />](/guides/set-up-ci).
+
+## Изменение настроек окружения {#change-environment-settings}
 
 import ChangeEnvironment from '/snippets/_change-environment.md';
 
 <ChangeEnvironment />
 
-## Delete an environment
+## Удаление окружения {#delete-an-environment}
 
 import DeleteEnvironment from '/snippets/_delete-environment.md';
 
@@ -66,14 +68,14 @@ import JobMonitoring from '/snippets/_in-progress-top-jobs.md';
 
 <JobMonitoring />
 
-## Environment settings history
+## История настроек окружения {#environment-settings-history}
 
-You can view historical environment settings changes over the last 90 days.
+Вы можете просмотреть историю изменений настроек окружения за последние 90 дней.
 
-To view the change history: 
-1. Navigate to **Orchestration** from the main menu and click **Environments**. 
-2. Click an **environment name**.
-3. Click **Settings**. 
-4. Click **History**. 
+Чтобы просмотреть историю изменений: 
+1. В главном меню перейдите в **Orchestration** и нажмите **Environments**. 
+2. Нажмите на **название окружения**.
+3. Нажмите **Settings**. 
+4. Нажмите **History**. 
 
-<Lightbox src="/img/docs/deploy/environment-history.png" width="85%" title="Example of the environment history option." />
+<Lightbox src="/img/docs/deploy/environment-history.png" width="85%" title="Пример элемента интерфейса для просмотра истории окружения." />

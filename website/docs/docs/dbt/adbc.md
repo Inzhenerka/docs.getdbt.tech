@@ -1,118 +1,118 @@
 ---
-title: "Arrow ADBC and dbt v2"
+title: "Arrow ADBC и dbt v2"
 id: "adbc"
 unlisted: true
 
 ---
 
-# Arrow ADBC and <Constant name="fusion" />
+# Arrow ADBC и <Constant name="fusion" />
 
-This document provides technical guidance for dbt partners and vendors on how to design, build, and maintain ADBC (Apache Arrow Database Connectivity) drivers for <Constant name="fusion" />, the new dbt engine.
+Этот документ содержит технические рекомендации для партнёров и поставщиков dbt по проектированию, разработке и сопровождению драйверов ADBC (Apache Arrow Database Connectivity) для <Constant name="fusion" /> — нового движка dbt.
 
-<Constant name="fusion" /> leverages ADBC as a unified driver layer for seamless, high-performance integration with data platforms. Building an ADBC driver is the first step to connecting <Constant name="fusion" /> with a new platform.
+<Constant name="fusion" /> использует ADBC как единый слой драйверов для бесшовной высокопроизводительной интеграции с платформами данных. Разработка драйвера ADBC — первый шаг к подключению <Constant name="fusion" /> к новой платформе.
 
-## Why <Constant name="fusion" /> uses ADBC
+## Почему <Constant name="fusion" /> использует ADBC
 
-<Constant name="fusion_engine" /> represents a major evolution in the dbt engine with minimal changes to the authoring layer. Built in Rust, <Constant name="fusion" /> delivers speed, language understanding, and seamless integration with numerous data warehouses. A key aspect of the new engine is its adoption of ADBC &mdash; a modern, open standard from the Apache Arrow project that simplifies columnar data interchange across platforms.
+<Constant name="fusion_engine" /> представляет собой значительный шаг в развитии движка dbt с минимальными изменениями в подходе к написанию кода. Написанный на Rust, <Constant name="fusion" /> обеспечивает высокую скорость, понимание языка и бесшовную интеграцию со множеством хранилищ данных. Ключевая особенность нового движка — использование ADBC &mdash; современного открытого стандарта проекта Apache Arrow, который упрощает обмен данными в колоночном формате между платформами.
 
-Historically, <Constant name="core" />  adapters required bespoke connection logic for each data platform. <Constant name="fusion" /> improves on this model with a unified ADBC driver layer that offers several key advantages:
+Ранее адаптерам <Constant name="core" /> требовалась собственная логика подключения для каждой платформы данных. <Constant name="fusion" /> совершенствует эту модель за счёт единого слоя драйверов ADBC, который предлагает несколько ключевых преимуществ:
 
-- **Standardization**: ADBC standardizes common platform features across a single interface.
-- **Performance**: Drivers leverage Arrow's columnar memory format for efficient query execution with minimal transformations.
-- **Maintainability**: ADBC drivers follow a shared specification, reducing the complexity of implementing new adapters.
+- **Стандартизация**: ADBC стандартизирует общие возможности платформ в рамках единого интерфейса.
+- **Производительность**: драйверы используют колоночный формат представления данных в памяти Arrow для эффективного выполнения запросов с минимальным количеством преобразований.
+- **Удобство сопровождения**: драйверы ADBC следуют общей спецификации, что снижает сложность реализации новых адаптеров.
 
-## Technical overview
+## Технический обзор
 
-This technical specification covers the ADBC specification. The specification maintains backwards compatibility, so guidance here remains valid as the spec evolves. For the latest information and detailed documentation, refer to the [ADBC documentation](https://arrow.apache.org/adbc/current/), which is the source of truth.
+В этом техническом описании рассматривается спецификация ADBC. Спецификация сохраняет обратную совместимость, поэтому приведённые здесь рекомендации остаются актуальными по мере её развития. За актуальной информацией и подробной документацией обращайтесь к [документации ADBC](https://arrow.apache.org/adbc/current/), которая является основным достоверным источником.
 
-The ADBC API provides a powerful array of features, but you don't need to implement all of them. This section covers the API surface required for <Constant name="fusion" /> compatibility.
+API ADBC предоставляет широкий набор возможностей, но реализовывать их все необязательно. В этом разделе рассматривается набор интерфейсов API, необходимый для совместимости с <Constant name="fusion" />.
 
-### Programming language
+### Язык программирования
 
-**tl;dr: Use Go.**
+**Кратко: используйте Go.**
 
-One distinct advantage of Arrow ADBC is portability. You can write drivers in various languages and load them via driver managers. This portability allows <Constant name="fusion" /> (written in Rust) to leverage drivers written in other languages.
+Одно из явных преимуществ Arrow ADBC — переносимость. Вы можете писать драйверы на разных языках и загружать их через менеджеры драйверов. Такая переносимость позволяет <Constant name="fusion" /> (написанному на Rust) использовать драйверы, написанные на других языках.
 
-For <Constant name="fusion" /> compatibility, drivers must:
-- Compile into shared libraries that can be loaded from any program
-- Produce a platform-specific, standalone binary
+Для совместимости с <Constant name="fusion" /> драйверы должны:
+- Компилироваться в разделяемые библиотеки, которые можно загрузить из любой программы
+- Поставляться в виде самодостаточного бинарного файла для конкретной платформы
 
-We recommend **Go** as the language of choice, though Rust or C++ also work. Go has a runtime and garbage collector, but it's engineered to compile into well-behaved shared libraries&mdash;unlike languages like C# or Java. A standalone binary allows users to download and run the driver out of the box without setting up an interpreter. Compiled languages like Go also enable <Constant name="fusion" /> and its drivers to share memory directly over FFI without external dependencies.
+Мы рекомендуем использовать **Go**, хотя Rust и C++ тоже подходят. У Go есть среда выполнения и сборщик мусора, но он спроектирован так, чтобы компилироваться в корректно работающие разделяемые библиотеки&mdash;в отличие от таких языков, как C# или Java. Самодостаточный бинарный файл позволяет пользователям скачать драйвер и сразу запустить его без настройки интерпретатора. Компилируемые языки, такие как Go, также позволяют <Constant name="fusion" /> и его драйверам напрямую совместно использовать память через FFI без внешних зависимостей.
 
-### ADBC specifications
+### Спецификации ADBC
 
-This section covers the minimum requirements for a <Constant name="fusion" />-compatible ADBC driver. For complete details on the ADBC specification and driver development, refer to the [ADBC driver authoring guide](https://arrow.apache.org/adbc/current/driver/authoring.html).
+В этом разделе рассматриваются минимальные требования к драйверу ADBC, совместимому с <Constant name="fusion" />. Подробную информацию о спецификации ADBC и разработке драйверов см. в [руководстве по разработке драйверов ADBC](https://arrow.apache.org/adbc/current/driver/authoring.html).
 
-Drivers consist of several key abstractions:
+Драйверы состоят из нескольких ключевых абстракций:
 
-1. **Driver**: Load a driver to create databases.
-2. **Database**: Create databases and set configuration options (including authentication). Use databases to open connections.
-3. **Connection**: Establish connections to the warehouse. Connections create statements.
-4. **Statement**: Set options and SQL queries on statements, then execute them against the warehouse.
+1. **Driver**: загрузите драйвер для создания объектов Database.
+2. **Database**: создавайте объекты Database и задавайте параметры конфигурации (включая аутентификацию). Используйте объекты Database для открытия соединений.
+3. **Connection**: устанавливайте соединения с хранилищем данных. Соединения создают объекты Statement.
+4. **Statement**: задавайте параметры и SQL-запросы для объектов Statement, а затем выполняйте их в хранилище данных.
 
-<Constant name="fusion" /> achieves high performance through aggressive parallelism, so expect many simultaneous connections during project execution.
+<Constant name="fusion" /> достигает высокой производительности за счёт интенсивного параллелизма, поэтому во время выполнения проекта следует ожидать большого количества одновременных соединений.
 
-### Authentication
+### Аутентификация
 
-Drivers handle authentication through key-value options set on the database. <Constant name="fusion" /> translates options from user-authored `profiles.yml` files before passing them to the driver. For example, what dbt calls `client_secret` in a Snowflake profile gets set on the driver as `adbc.snowflake.sql.client_option.client_secret`. 
+Драйверы выполняют аутентификацию с помощью параметров в формате «ключ — значение», заданных для объекта Database. <Constant name="fusion" /> преобразует параметры из файлов `profiles.yml`, созданных пользователями, перед их передачей драйверу. Например, параметр, который dbt называет `client_secret` в профиле Snowflake, задаётся в драйвере как `adbc.snowflake.sql.client_option.client_secret`. 
 
-For a complete example of how <Constant name="fusion" /> translates profile options, see the [Snowflake authentication source code](https://github.com/dbt-labs/dbt-fusion/blob/main/crates/dbt-auth/src/snowflake/mod.rs).
+Полный пример того, как <Constant name="fusion" /> преобразует параметры профиля, см. в [исходном коде аутентификации Snowflake](https://github.com/dbt-labs/dbt-fusion/blob/main/crates/dbt-auth/src/snowflake/mod.rs).
 
-For more information on profile configuration, refer to [dbt profiles](/docs/local/profiles.yml).
+Дополнительную информацию о настройке профилей см. в разделе [Профили dbt](/docs/local/profiles.yml).
 
-#### Credential caching
+#### Кэширование учётных данных
 
-Simple authentication methods (like username/password stored in `profiles.yml`) support fully parallel connection creation with no special handling required.
+Простые методы аутентификации (например, имя пользователя и пароль, сохранённые в `profiles.yml`) поддерживают полностью параллельное создание соединений без специальной обработки.
 
-For authentication methods that require browser interaction (user-to-machine OAuth, SSO, or MFA), implement credential caching. Due to <Constant name="fusion" />'s highly parallel execution, without caching, every new connection prompts the user for authentication repeatedly.
+Для методов аутентификации, требующих взаимодействия с браузером (OAuth типа user-to-machine, SSO или MFA), реализуйте кэширование учётных данных. Из-за высокой степени параллелизма в <Constant name="fusion" /> без кэширования каждое новое соединение будет снова запрашивать у пользователя аутентификацию.
 
-Your credential cache for browser-based authentication must:
+Кэш учётных данных для аутентификации через браузер должен:
 
-- Block new connections until an initial connection establishes and stores a token in memory (avoiding the thundering herd problem).
-- Handle token refresh using the same blocking principle when invalidation occurs.
-- Use interprocess, file-system-based storage to support the LSP, which runs in a separate process.
+- Блокировать новые соединения до тех пор, пока первое соединение не будет установлено и не сохранит токен в памяти (чтобы избежать проблемы «громового стада»).
+- Обновлять токен при его аннулировании, используя тот же принцип блокировки.
+- Использовать общее для процессов хранилище на основе файловой системы для поддержки LSP, который работает в отдельном процессе.
 
-This caching is critical for any browser-based or MFA authentication option, but is not needed for simple credential-based authentication.
+Такое кэширование критически важно для любого варианта аутентификации через браузер или с использованием MFA, но не требуется для простой аутентификации по учётным данным.
 
-## Required APIs
+## Обязательные API
 
-This section covers the minimum API set for <Constant name="fusion" /> compatibility. The requirements are:
+В этом разделе рассматривается минимальный набор API для совместимости с <Constant name="fusion" />. Требования включают:
 
-- Authentication via options.
-- SQL query execution.
-- Metadata queries to understand remote warehouse state (certain connection-level metadata functions can use cheaper or more performant APIs to pull table schemas).
+- Аутентификацию через параметры.
+- Выполнение SQL-запросов.
+- Запросы метаданных для определения состояния удалённого хранилища данных (некоторые функции получения метаданных на уровне соединения могут использовать менее затратные или более производительные API для получения схем таблиц).
 
-These requirements are not exhaustive. dbt Labs encourages implementing the full ADBC specification to benefit both <Constant name="fusion" /> and the broader ADBC community.
+Эти требования не являются исчерпывающими. dbt Labs рекомендует реализовать спецификацию ADBC полностью, чтобы принести пользу как <Constant name="fusion" />, так и сообществу ADBC в целом.
 
 #### Driver
 
-| Method | Description |
+| Метод | Описание |
 |--------|-------------|
-| `NewDatabase` | Create a new database instance. |
+| `NewDatabase` | Создать новый экземпляр Database. |
 
 #### Database
 
-| Method | Description |
+| Метод | Описание |
 |--------|-------------|
-| `SetOptions` | Set configuration options (including authentication). |
-| `Open` | Open a connection. |
-| `Close` | Close the database. |
+| `SetOptions` | Задать параметры конфигурации (включая аутентификацию). |
+| `Open` | Открыть соединение. |
+| `Close` | Закрыть объект Database. |
 
 #### Connection
 
-| Method | Description |
+| Метод | Описание |
 |--------|-------------|
-| `GetObjects` | Pull metadata from the warehouse. |
-| `GetTableSchema` | Pull schema metadata for tables. |
-| `NewStatement` | Create a statement for query execution. |
-| `Close` | Close the connection. |
+| `GetObjects` | Получить метаданные из хранилища данных. |
+| `GetTableSchema` | Получить метаданные схем таблиц. |
+| `NewStatement` | Создать объект Statement для выполнения запроса. |
+| `Close` | Закрыть соединение. |
 
 #### Statement
 
-| Method | Description |
+| Метод | Описание |
 |--------|-------------|
-| `SetOption` | Set options on queries. |
-| `SetSqlQuery` | Set the SQL query text. |
-| `ExecuteQuery` | Execute a query and return results. |
-| `ExecuteUpdate` | Execute DML queries. |
-| `Close` | Close the statement. |
+| `SetOption` | Задать параметры запросов. |
+| `SetSqlQuery` | Задать текст SQL-запроса. |
+| `ExecuteQuery` | Выполнить запрос и вернуть результаты. |
+| `ExecuteUpdate` | Выполнить DML-запросы. |
+| `Close` | Закрыть объект Statement. |

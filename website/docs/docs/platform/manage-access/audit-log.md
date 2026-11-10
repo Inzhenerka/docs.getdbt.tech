@@ -1,8 +1,8 @@
 ---
-title: "The audit log for dbt Enterprise"
+title: "Журнал аудита для dbt Enterprise"
 id: audit-log
-description: "You can troubleshoot possible issues and provide security audits by reviewing event activity in your account."
-sidebar_label: "Audit log"
+description: "Как отслеживать события в аккаунте, устранять неполадки и проводить аудит безопасности."
+sidebar_label: "Журнал аудита"
 pagination_next: null
 pagination_prev: "docs/platform/manage-access/about-user-access"
 availability:
@@ -11,270 +11,270 @@ availability:
   minPlan: enterprise
 ---
 
-# dbt audit log
+# Журнал аудита dbt {#dbt-audit-log}
 
-To review actions performed by people in your account, <Constant name="dbt" /> provides logs of audited user and system events in real time. The audit log appears as events happen and includes details such as who performed the action, what the action was, and when it was performed. You can use these details to troubleshoot access issues, perform security audits, or analyze specific events. You can also [query and export audit log events through the API](#using-the-api).
+Для просмотра действий, выполняемых пользователями в вашем аккаунте, <Constant name="dbt" /> предоставляет журналы аудируемых пользовательских и системных событий в реальном времени. Журнал аудита пополняется по мере возникновения событий и содержит такие сведения, как кто выполнил действие, что это было за действие и когда оно было выполнено. Вы можете использовать эти сведения для устранения проблем с доступом, проведения аудита безопасности или анализа конкретных событий. Вы также можете [запрашивать и экспортировать события журнала аудита через API](#using-the-api).
 
-You must be an **Account admin**, **Account viewer**, or **Security admin** to access the audit log, and this feature is only available on Enterprise plans.
+Для доступа к журналу аудита необходимо иметь роль **Администратор аккаунта**, **Наблюдатель аккаунта** или **Администратор безопасности**, а сама функция доступна только на тарифных планах Enterprise.
 
-The <Constant name="dbt" /> audit log stores all the events that occurred in your account in real time, including:
+Журнал аудита <Constant name="dbt" /> хранит все события, произошедшие в вашем аккаунте, в реальном времени, включая:
 
-- For events within 90 days, the <Constant name="dbt" /> audit log has a selectable date range that lists events triggered.
-- For events beyond 90 days, **Account admins**, **Account viewers**, and **Security admins** can [export all events](#exporting-logs) by using **Export All**.
+- Для событий за последние 90 дней журнал аудита <Constant name="dbt" /> предоставляет выбираемый диапазон дат со списком сработавших событий.
+- Для событий старше 90 дней **Администраторы аккаунта**, **Наблюдатели аккаунта** и **Администраторы безопасности** могут [экспортировать все события](#exporting-logs) с помощью **Экспортировать все**.
 
-Note that the retention period for events in the audit log is at least 12 months.
+Обратите внимание, что срок хранения событий в журнале аудита составляет не менее 12 месяцев.
 
-## Accessing the audit log
+## Доступ к журналу аудита {#accessing-the-audit-log}
 
-To access the audit log, click on your account name in the left-side menu and select **Account settings**. Click **Audit log** in the left sidebar.
+Чтобы открыть журнал аудита, нажмите на имя вашей учетной записи в левом меню и выберите **Account settings**. Затем нажмите **Audit log** в левой боковой панели.
 
-## Understanding the audit log
+## Понимание журнала аудита {#understanding-the-audit-log}
 
-On the audit log page, you will see a list of various events and their associated event data. Each of these events shows the following information in <Constant name="dbt" />:
+На странице журнала аудита вы увидите список различных событий и связанных с ними данных. Для каждого из этих событий в <Constant name="dbt" /> отображается следующая информация:
 
-- **Event name**: Action that was triggered
-- **Agent**: User who triggered that action/event
-- **Timestamp**: Local timestamp of when the event occurred
+- **Название события**: Действие, которое было инициировано
+- **Инициатор**: Пользователь, инициировавший это действие/событие
+- **Метка времени**: Локальная метка времени возникновения события
 
-### Event details
+### Детали события {#event-details}
 
-Click the event card to see the details about the activity that triggered the event. This view provides important details, including when it happened and what type of event was triggered. For example, if someone changes the settings for a job, you can use the event details to see which job was changed (type of event: `job_definition.changed`), by whom (person who triggered the event: `actor`), and when (time it was triggered: `created_at`). For types of events and their descriptions, refer to [Events in audit log](#audit-log-events).
+Нажмите на карточку события, чтобы просмотреть сведения о действии, вызвавшем событие. В этом представлении содержатся важные сведения, в том числе о том, когда это произошло и какой тип события был инициирован. Например, если кто-то изменит настройки задания, вы можете использовать сведения о событии, чтобы узнать, какое задание было изменено (тип события: `job_definition.changed`), кем (пользователь, инициировавший событие: `actor`) и когда (время возникновения события: `created_at`). Типы событий и их описания приведены в разделе [События в журнале аудита](#audit-log-events).
 
-The event details provide the key factors of an event:
+Детали события включают ключевые параметры события:
 
-| Name                 | Description                                   |
+| Название                 | Описание                                   |
 | -------------------- | --------------------------------------------- |
-| account_id           | Account ID of where the event occurred        |
-| actor                | Actor that carried out the event - User or Service    |
-| actor_id             | Unique ID of the actor                        |
-| actor_ip             | IP address of the actor                       |
-| actor_name           | Identifying name of the actor                 |
-| actor_type           | Whether the action was done by a user or an API request |
-| created_at           | UTC timestamp of when the event occurred      |
-| event_type           | Unique key identifying the event              |
-| event_context        | This key will be different for each event and will match the event_type. This data will include all the details about the object(s) that was changed. |
-| id                   | Unique ID of the event                        |
-| service              | Service that carried out the action           |
-| source               | Source of the event - <Constant name="dbt" /> UI or API     |
+| account_id           | ID учетной записи, в которой произошло событие                              |
+| actor                | Исполнитель события — пользователь или сервис                               |
+| actor_id             | Уникальный ID исполнителя                                                   |
+| actor_ip             | IP-адрес исполнителя                                                        |
+| actor_name           | Идентифицирующее имя исполнителя                                            |
+| actor_type           | Было ли действие выполнено пользователем или API-запросом                   |
+| created_at           | Временная метка UTC, когда произошло событие                                |
+| event_type           | Уникальный ключ, идентифицирующий событие                                   |
+| event_context        | Значение этого ключа отличается для каждого события и соответствует event_type. Эти данные содержат все детали об объекте (или объектах), которые были изменены |
+| id                   | Уникальный ID события                                                       |
+| service              | Сервис, который выполнил действие                                            |
+| source               | Источник события — UI <Constant name="dbt" /> или API                     |
 
-## Audit log events
+## События журнала аудита {#audit-log-events}
 
-The audit log supports various events for different objects in <Constant name="dbt" />. You will find events for authentication, environment, jobs, service tokens, groups, user, project, permissions, license, connection, repository, and credentials.
+Журнал аудита поддерживает различные события для разных объектов в <Constant name="dbt" />. Здесь вы найдете события, связанные с аутентификацией, окружениями, заданиями, сервисными токенами, группами, пользователями, проектами, правами доступа, лицензиями, подключениями, репозиториями и учетными данными.
 
-### Authentication
+### Аутентификация {#authentication}
 
-| Event name                 | Event type                     | Description                                            |
+| Название события                 | Тип события                     | Описание                                            |
 | -------------------------- | ------------------------------ | ------------------------------------------------------ |
-| Access Token Issued        | access_token.issued            | dbt issued an access token after OAuth sign-in (for example, VS Code extension or Model Context Protocol (MCP) server). |
-| Auth Provider Changed      | auth_provider.changed          | Authentication provider settings changed               |
-| Credential Login Succeeded | login.password.succeeded       | User successfully logged in with username and password |
-| Refresh Token Issued       | refresh_token.issued           | dbt issued a refresh token after OAuth sign-in (for example, VS Code extension or MCP server). |
-| SSO Login Failed           | login.sso.failed               | User sign-in through SSO failed                        |
-| SSO Login Succeeded        | login.sso.succeeded            | User successfully signed in through SSO                |
+| Токен доступа выдан        | access_token.issued            | dbt выдал токен доступа после входа через OAuth (например, расширение VS Code или сервер Model Context Protocol (MCP)). |
+| Auth Provider Changed      | auth_provider.changed          | Изменены настройки провайдера аутентификации           |
+| Credential Login Succeeded | login.password.succeeded       | Пользователь успешно вошел с логином и паролем         |
+| Токен обновления выдан       | refresh_token.issued           | dbt выдал токен обновления после входа через OAuth (например, расширение VS Code или сервер MCP). |
+| Ошибка входа через SSO           | login.sso.failed               | Пользователю не удалось войти через SSO                        |
+| Успешный вход через SSO        | login.sso.succeeded            | Пользователь успешно вошел через SSO                |
 
-### OAuth clients
+### Клиенты OAuth {#oauth-clients}
 
-These events cover the lifecycle of OAuth clients registered in **Account settings** &rarr; **Integrations** &rarr; **App integrations** (refer to [Connect apps with OAuth](/docs/platform/manage-access/connect-apps-oauth)). Actions a user performs through an OAuth-connected client (for example, creating a job) are logged under the relevant event (such as `job_definition.added`) with the user as the actor.
+Эти события охватывают жизненный цикл клиентов OAuth, зарегистрированных в разделе **Настройки аккаунта** &rarr; **Интеграции** &rarr; **Интеграции приложений** (см. [Подключение приложений с помощью OAuth](/docs/platform/manage-access/connect-apps-oauth)). Действия, которые пользователь выполняет через клиент, подключенный по OAuth (например, создание задания), регистрируются как соответствующее событие (например, `job_definition.added`), а пользователь указывается в качестве инициатора.
 
-| Event name                    | Event type                              | Description                                                                                                                                       |
+| Название события                    | Тип события                              | Описание                                                                                                                                       |
 | ----------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Client Authorization Approved | oauth_client.authorization_approved     | A user approved an OAuth consent request for a client.                                                                                            |
-| Client Authorization Denied   | oauth_client.authorization_denied       | A user denied an OAuth consent request for a client.                                                                                              |
-| Client Authorized             | oauth_client.authorized                 | A user completed the OAuth consent flow and authorized a client to access dbt on their behalf.                                                    |
-| Client Registered             | oauth_client.registered                 | An OAuth client was registered, either manually by an admin or dynamically through [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591).      |
-| Client Removed                | oauth_client.removed                    | An OAuth client was removed from **Account settings** &rarr; **Integrations** &rarr; **App integrations**.                                                 |
+| Авторизация клиента одобрена | oauth_client.authorization_approved     | Пользователь одобрил запрос согласия OAuth для клиента.                                                                                            |
+| Авторизация клиента отклонена   | oauth_client.authorization_denied       | Пользователь отклонил запрос согласия OAuth для клиента.                                                                                              |
+| Клиент авторизован             | oauth_client.authorized                 | Пользователь завершил процедуру предоставления согласия OAuth и разрешил клиенту доступ к dbt от своего имени.                                                    |
+| Клиент зарегистрирован             | oauth_client.registered                 | Клиент OAuth был зарегистрирован вручную администратором или динамически через [RFC 7591](https://datatracker.ietf.org/doc/html/rfc7591).      |
+| Клиент удален                | oauth_client.removed                    | Клиент OAuth был удален из раздела **Настройки аккаунта** &rarr; **Интеграции** &rarr; **Интеграции приложений**.                                                 |
 
-### Environment
+### Среда {#environment}
 
-| Event name          | Event type          | Description                          |
+| Название события          | Тип события          | Описание                          |
 | ------------------- | ------------------- | ------------------------------------ |
-| Environment Added   | environment.added   | New environment successfully created |
-| Environment Changed | environment.changed | Environment settings changed         |
-| Environment Removed | environment.removed | Environment successfully removed     |
+| Environment Added   | environment.added   | Новое окружение успешно создано      |
+| Environment Changed | environment.changed | Изменены настройки окружения         |
+| Environment Removed | environment.removed | Окружение успешно удалено            |
 
-### Jobs
+### Задания {#jobs}
 
-| Event name  | Event type             | Description                  |
+| Название события  | Тип события             | Описание                  |
 | ----------- | ---------------------- | ---------------------------- |
-| Job Added   | job_definition.added   | New Job successfully created |
-| Job Changed | job_definition.changed | Job settings changed         |
-| Job Removed | job_definition.removed | Job definition removed       |
+| Job Added   | job_definition.added   | Новое задание успешно создано |
+| Job Changed | job_definition.changed | Изменены настройки задания   |
+| Job Removed | job_definition.removed | Определение задания удалено  |
 
-### Service Token
+### Сервисный токен {#service-token}
 
-| Event name            | Event type            | Description                                |
+| Название события            | Тип события            | Описание                                |
 | --------------------- | --------------------- | ------------------------------------------ |
-| Service Token Created | service_token.created | New Service Token was successfully created |
-| Service Token Revoked | service_token.revoked | Service Token was revoked                  |
+| Service Token Created | service_token.created | Новый Service Token успешно создан               |
+| Service Token Revoked | service_token.revoked | Service Token был отозван                        |
 
-### Group
+### Группа {#group}
 
-| Event name    | Event type    | Description                    |
+| Название события    | Тип события    | Описание                    |
 | ------------- | ------------- | ------------------------------ |
-| Group Added   | group.added   | New Group successfully created |
-| Group Changed | group.changed | Group settings changed         |
-| Group Removed | group.removed | Group successfully removed     |
+| Group Added   | group.added   | Новая группа успешно создана         |
+| Group Changed | group.changed | Изменены настройки группы            |
+| Group Removed | group.removed | Группа успешно удалена               |
 
-### User
+### Пользователь {#user}
 
-| Event name                   | Event type                | Description                                     |
+| Название события                   | Тип события                | Описание                                     |
 | ---------------------------- | ------------------------- | ----------------------------------------------- |
-| Invite Added                 | user.invite.added         | User invitation added and sent to the user      |
-| Invite Redeemed              | user.invite.redeemed      | User redeemed invitation                        |
-| User Added to Account        | user.added                | New user added to the account                   |
-| User Added to Group          | group.user.added          | An existing user was added to a group           |
-| User Removed from Account    | user.removed              | User removed from the account                   |
-| User Removed from Group      | group.user.removed        | An existing user was removed from a group       |
-| User License Created         | user_license.added        | A new user license was consumed                 |
-| User License Removed         | user_license.removed      | A user license was removed from the seat count  |
-| Verification Email Confirmed | user.jit.email.confirmed  | Email verification confirmed by user            |
-| Verification Email Sent      | user.jit.email.sent       | Email verification sent to user created through JIT |
+| Invite Added                 | user.invite.added         | Приглашение пользователя добавлено и отправлено             |
+| Invite Redeemed              | user.invite.redeemed      | Пользователь принял приглашение                              |
+| User Added to Account        | user.added                | Новый пользователь добавлен в учетную запись                 |
+| User Added to Group          | group.user.added          | Существующий пользователь добавлен в группу                 |
+| User Removed from Account    | user.removed              | Пользователь удален из учетной записи                        |
+| User Removed from Group      | group.user.removed        | Существующий пользователь удален из группы                  |
+| User License Created         | user_license.added        | Использована новая пользовательская лицензия                 |
+| User License Removed         | user_license.removed      | Пользовательская лицензия удалена из количества мест         |
+| Verification Email Confirmed | user.jit.email.confirmed  | Пользователь подтвердил адрес электронной почты              |
+| Письмо для подтверждения отправлено      | user.jit.email.sent       | Письмо для подтверждения адреса электронной почты отправлено пользователю, созданному через JIT |
 
-### Project
+### Проект {#project}
 
-| Event name      | Event type      | Description              |
+| Название события      | Тип события      | Описание              |
 | --------------- | --------------- | ------------------------ |
-| Project Added   | project.added   | New project added        |
-| Project Changed | project.changed | Project settings changed |
-| Project Removed | project.removed | Project is removed       |
+| Project Added   | project.added   | Добавлен новый проект          |
+| Project Changed | project.changed | Изменены настройки проекта     |
+| Project Removed | project.removed | Проект удален                  |
 
-### Permissions
+### Разрешения {#permissions}
 
-| Event name              | Event type         | Description                    |
+| Название события              | Тип события         | Описание                    |
 | ----------------------- | ------------------ | ------------------------------ |
-| User Permission Added   | permission.added   | New user permissions are added |
-| User Permission Removed | permission.removed | User permissions are removed   |
+| User Permission Added   | permission.added   | Добавлены новые права пользователя  |
+| User Permission Removed | permission.removed | Права пользователя удалены          |
 
-### License
+### Лицензия {#license}
 
-| Event name              | Event type           | Description                               |
+| Название события              | Тип события           | Описание                               |
 | ----------------------- | -------------------- | ----------------------------------------- |
-| License Mapping Added   | license\_map.added   | New user license mapping is added         |
-| License Mapping Changed | license\_map.changed | User license mapping settings are changed |
-| License Mapping Removed | license\_map.removed | User license mapping is removed           |
+| License Mapping Added   | license_map.added    | Добавлено новое сопоставление пользовательской лицензии |
+| License Mapping Changed | license_map.changed  | Изменены настройки сопоставления лицензии           |
+| License Mapping Removed | license_map.removed  | Сопоставление лицензии удалено                      |
 
-### Connection
+### Подключение {#connection}
 
-| Event name         | Event type         | Description                                |
+| Название события         | Тип события         | Описание                                |
 | ------------------ | ------------------ | ------------------------------------------ |
-| Connection Added   | connection.added   | New Data Warehouse connection added        |
-| Connection Changed | connection.changed | Data Warehouse Connection settings changed |
-| Connection Removed | connection.removed | Data Warehouse connection removed          |
+| Connection Added   | connection.added   | Добавлено новое подключение к хранилищу данных   |
+| Connection Changed | connection.changed | Изменены настройки подключения к хранилищу данных |
+| Connection Removed | connection.removed | Подключение к хранилищу данных удалено           |
 
-### Repository
+### Репозиторий {#repository}
 
-| Event name         | Event type         | Description                 |
+| Название события         | Тип события         | Описание                 |
 | ------------------ | ------------------ | --------------------------- |
-| Repository Added   | repository.added   | New repository added        |
-| Repository Changed | repository.changed | Repository settings changed |
-| Repository Removed | repository.removed | Repository removed          |
+| Repository Added   | repository.added   | Добавлен новый репозиторий          |
+| Repository Changed | repository.changed | Изменены настройки репозитория      |
+| Repository Removed | repository.removed | Репозиторий удален                  |
 
-### Credentials
+### Учётные данные {#credentials}
 
-| Event name                       | Event type          | Description                      |
+| Название события                       | Тип события          | Описание                      |
 | -------------------------------- | ------------------- | -------------------------------- |
-| Credentials Added to Project     | credentials.added   | Project credentials added        |
-| Credentials Changed in Project   | credentials.changed | Credentials changed in project   |
-| Credentials Removed from Project | credentials.removed | Credentials removed from project |
+| Credentials Added to Project     | credentials.added   | Учетные данные добавлены в проект           |
+| Credentials Changed in Project   | credentials.changed | Учетные данные изменены в проекте           |
+| Credentials Removed from Project | credentials.removed | Учетные данные удалены из проекта           |
 
-### Git integration
+### Интеграция с Git {#git-integration}
 
-| Event name                 | Event type                 | Description                                             |
+| Название события                 | Тип события                 | Описание                                             |
 | -------------------------- | -------------------------- | ------------------------------------------------------- |
-| GitLab Application Changed | gitlab_application.changed | GitLab configuration in <Constant name="dbt" /> changed |
+| GitLab Application Changed| gitlab_application.changed | Изменена конфигурация GitLab в <Constant name="dbt" /> |
 
-### Webhooks
+### Вебхуки {#webhooks}
 
-| Event name                    | Event type                   | Description                            |
+| Название события                    | Тип события                   | Описание                            |
 | -------------------------------- | ----------------------------- | -------------------------------------- |
-| Webhook Subscriptions Added      | webhook_subscription.added    | New webhook configured in settings     |
-| Webhook Subscriptions Changed    | webhook_subscription.changed  | Existing webhook configuration altered |
-| Webhook Subscriptions Removed    | webhook_subscription.removed  | Existing webhook deleted               |
+| Webhook Subscriptions Added   | webhook_subscription.added   | Новый webhook настроен в параметрах                 |
+| Webhook Subscriptions Changed | webhook_subscription.changed | Изменена существующая конфигурация webhook         |
+| Webhook Subscriptions Removed | webhook_subscription.removed | Существующий webhook удален                         |
 
-### Semantic Layer
+### Семантический слой {#semantic-layer}
 
-| Event name                         | Event type                         | Description                                                                 |
+| Название события                         | Тип события                         | Описание                                                                 |
 | ---------------------------------- | ---------------------------------- | --------------------------------------------------------------------------- |
-| <Constant name="semantic_layer" /> Config Added        | semantic_layer_config.added        | <Constant name="semantic_layer" /> config added |
-| <Constant name="semantic_layer" /> Config Changed        | semantic_layer_config.changed      | <Constant name="semantic_layer" /> config (not related to credentials) changed |
-| <Constant name="semantic_layer" /> Config Removed        | semantic_layer_config.removed      | <Constant name="semantic_layer" /> config removed |
-| <Constant name="semantic_layer" /> Credentials Added     | semantic_layer_credentials.added   | <Constant name="semantic_layer" /> credentials added |
-| <Constant name="semantic_layer" /> Credentials Changed   | semantic_layer_credentials.changed | <Constant name="semantic_layer" /> credentials changed. Does not trigger `semantic_layer_config.changed` |
-| <Constant name="semantic_layer" /> Credentials Removed   | semantic_layer_credentials.removed | <Constant name="semantic_layer" /> credentials removed |
+| Конфигурация <Constant name="semantic_layer" /> добавлена        | semantic_layer_config.added        | Конфигурация <Constant name="semantic_layer" /> добавлена |
+| Конфигурация <Constant name="semantic_layer" /> изменена        | semantic_layer_config.changed      | Конфигурация <Constant name="semantic_layer" /> (не связанная с учетными данными) изменена |
+| Конфигурация <Constant name="semantic_layer" /> удалена        | semantic_layer_config.removed      | Конфигурация <Constant name="semantic_layer" /> удалена |
+| Учетные данные <Constant name="semantic_layer" /> добавлены     | semantic_layer_credentials.added   | Учетные данные <Constant name="semantic_layer" /> добавлены |
+| Учетные данные <Constant name="semantic_layer" /> изменены   | semantic_layer_credentials.changed | Учетные данные <Constant name="semantic_layer" /> изменены. Не вызывает `semantic_layer_config.changed` |
+| Учетные данные <Constant name="semantic_layer" /> удалены   | semantic_layer_credentials.removed | Учетные данные <Constant name="semantic_layer" /> удалены |
 
-### Extended attributes
+### Расширенные атрибуты {#extended-attributes}
 
-| Event name                 | Event type                  | Description                           |
+| Название события                 | Тип события                  | Описание                           |
 | -------------------------- | --------------------------- | ------------------------------------- |
-| Extended Attribute Added   | extended_attributes.added   | Extended attribute added to a project |
-| Extended Attribute Changed | extended_attributes.changed | Extended attribute changed or removed |
+| Extended Attribute Added   | extended_attributes.added   | Расширенный атрибут добавлен в проект            |
+| Extended Attribute Changed | extended_attributes.changed | Расширенный атрибут изменен или удален           |
 
-### Account-scoped personal access token
+### Персональный токен доступа на уровне аккаунта {#account-scoped-personal-access-token}
 
-| Event name                                   | Event type                 | Description                       |
+| Название события                                   | Тип события                 | Описание                       |
 | -------------------------------------------- | -------------------------- | --------------------------------- |
-| Account Scoped Personal Access Token Created | account_scoped_pat.created | An account-scoped PAT was created |
-| Account Scoped Personal Access Token Deleted | account_scoped_pat.deleted | An account-scoped PAT was deleted |
+| Account Scoped Personal Access Token Created | account_scoped_pat.created | Создан PAT с областью действия на уровне аккаунта |
+| Account Scoped Personal Access Token Deleted | account_scoped_pat.deleted | PAT с областью действия на уровне аккаунта удален |
 
-### IP restrictions
+### Ограничения по IP {#ip-restrictions}
 
-| Event name                   | Event type                   | Description                                 |
+| Название события                   | Тип события                   | Описание                                 |
 | ---------------------------- | ---------------------------- | ------------------------------------------- |
-| IP Restrictions Toggled      | ip_restrictions.toggled      | IP restrictions feature enabled or disabled |
-| IP Restrictions Rule Added   | ip_restrictions.rule.added   | IP restriction rule created                 |
-| IP Restrictions Rule Changed | ip_restrictions.rule.changed | IP restriction rule edited                  |
-| IP Restrictions Rule Removed | ip_restrictions.rule.removed | IP restriction rule deleted                 |
+| IP Restrictions Toggled      | ip_restrictions.toggled      | Функция IP-ограничений включена или отключена       |
+| IP Restrictions Rule Added   | ip_restrictions.rule.added   | Создано правило IP-ограничений                      |
+| IP Restrictions Rule Changed | ip_restrictions.rule.changed | Отредактировано правило IP-ограничений              |
+| IP Restrictions Rule Removed | ip_restrictions.rule.removed | Правило IP-ограничений удалено                      |
 
-### SCIM
+### SCIM {#scim}
 
-| Event name     | Event type                        | Description                                  |
+| Название события     | Тип события                        | Описание                                  |
 | -------------- | --------------------------------- | -------------------------------------------- |
-| User Creation  | v1.events.account.UserAdded       | New user created by SCIM service             |
-| User Update    | v1.events.account.UserUpdated     | User record updated by SCIM service          |
-| User Removal   | v1.events.account.UserRemoved     | User deleted by the SCIM service             |
-| Group Creation | v1.events.user_group.Added        | New group created by SCIM service            |
-| Group Update   | v1.events.user_group_user.Changed | Group membership was updated by SCIM service |
-| Group Removal  | v1.events.user_group.Removed      | Group removed by SCIM service                |
+| User Creation    | v1.events.account.UserAdded         | Новый пользователь создан сервисом SCIM         |
+| Обновление пользователя    | v1.events.account.UserUpdated     | Запись пользователя обновлена службой SCIM          |
+| Удаление пользователя   | v1.events.account.UserRemoved     | Пользователь удален службой SCIM             |
+| Group Creation   | v1.events.user_group.Added          | Новая группа создана сервисом SCIM               |
+| Group Update     | v1.events.user_group_user.Changed   | Состав группы обновлен сервисом SCIM             |
+| Group Removal    | v1.events.user_group.Removed        | Группа удалена сервисом SCIM                     |
 
-## Searching the audit log
+## Поиск в журнале аудита {#searching-the-audit-log}
 
-You can search the audit log to find a specific event or actor, which is limited to the ones listed in [Events in audit log](#audit-log-events). The audit log lists historical events from the last 90 days. You can search for an actor or event using the search bar, and then narrow your results using the time window.
-
-
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/audit-log-search.png" width="95%" title="Use search bar to find content in the audit log"/>
+Вы можете искать в журнале аудита конкретное событие или инициатора, при этом поиск ограничен событиями и инициаторами, перечисленными в разделе [События в журнале аудита](#audit-log-events). Журнал аудита содержит историю событий за последние 90 дней. Вы можете найти инициатора или событие с помощью строки поиска, а затем сузить результаты, указав временной интервал.
 
 
-## Exporting logs
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/audit-log-search.png" width="95%" title="Используйте строку поиска для поиска содержимого в журнале аудита"/>
 
-You can use the audit log to export all historical audit results for security, compliance, and analysis purposes. Events in the audit log are retained for at least 12 months.
 
-- **For events within 90 days:** <Constant name="dbt" /> will automatically display the 90-day selectable date range. Select **Export Selection** to download a CSV file of all the events that occurred in your account within 90 days.
+## Экспорт журналов {#exporting-logs}
 
-- **For events beyond 90 days:** Select **Export All**. An **Account admin**, **Account viewer**, or **Security admin** receives an email link to download a CSV file of all the events that occurred in your account.
+Вы можете использовать журнал аудита для экспорта всех исторических результатов аудита в целях безопасности, соответствия требованиям и анализа. События в журнале аудита хранятся не менее 12 месяцев.
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/audit-log-section.png" width="95%" title="View audit log export options"/>
+- **Для событий за последние 90 дней:** <Constant name="dbt" /> автоматически отобразит доступный для выбора диапазон дат за 90 дней. Выберите **Экспортировать выбранное**, чтобы скачать CSV-файл со всеми событиями, произошедшими в вашем аккаунте за последние 90 дней.
 
-## Using the API
+- **Для событий старше 90 дней:** Выберите **Экспортировать все**. **Администратор аккаунта**, **Наблюдатель аккаунта** или **Администратор безопасности** получит по электронной почте ссылку для скачивания CSV-файла со всеми событиями, произошедшими в вашем аккаунте.
 
-You can also query and export audit log events with the [Administrative API v3](/dbt-cloud/api-v3). Use the API when you want to pull audit data into a script, a scheduled job, or security monitoring or log aggregation tooling. The same access requirements at the top of this page apply to the API. For common automation approaches, refer to [Common automation patterns](#common-automation-patterns).
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/audit-log-section.png" width="95%" title="Просмотр вариантов экспорта журнала аудита"/>
 
-| If you want to… | Refer to |
+## Использование API {#using-the-api}
+
+Вы также можете запрашивать и экспортировать события журнала аудита с помощью [API администрирования v3](/dbt-cloud/api-v3). Используйте API, если вам нужно получать данные аудита для скрипта, задания по расписанию или инструментов мониторинга безопасности или агрегации журналов. К API применяются те же требования к доступу, которые указаны в начале этой страницы. Типовые подходы к автоматизации описаны в разделе [Типовые сценарии автоматизации](#common-automation-patterns).
+
+| Если вы хотите… | См. раздел |
 | --- | --- |
-| Pull recent events into a script or SIEM | [Query events](#query-events) |
-| Export a date range as CSV | [Download a CSV](#download-a-csv) |
-| Export full history | [Bulk export](#bulk-export) |
+| Получать недавние события для скрипта или SIEM | [Запрос событий](#query-events) |
+| Экспортировать диапазон дат в CSV | [Скачивание CSV](#download-a-csv) |
+| Экспортировать всю историю | [Массовый экспорт](#bulk-export) |
 
-Authenticate with a [service token](/docs/dbt-apis/service-tokens) or [personal access token](/docs/dbt-apis/user-tokens), passed as `Authorization: Bearer YOUR_TOKEN` or `Token YOUR_TOKEN`.
+Для аутентификации используйте [сервисный токен](/docs/dbt-apis/service-tokens) или [персональный токен доступа](/docs/dbt-apis/user-tokens), передаваемый как `Authorization: Bearer YOUR_TOKEN` или `Token YOUR_TOKEN`.
 
-Bulk exports require a [personal access token](/docs/dbt-apis/user-tokens) as service tokens aren't supported for that step.
+Для массового экспорта требуется [персональный токен доступа](/docs/dbt-apis/user-tokens), поскольку сервисные токены на этом этапе не поддерживаются.
 
-Without date parameters, list and CSV download requests default to the last 90 days.
+Если параметры дат не указаны, запросы на получение списка и скачивание CSV по умолчанию охватывают последние 90 дней.
 
-In the following examples, replace `YOUR_ACCESS_URL` with your <Constant name="dbt" /> access URL, `ACCOUNT_ID` with your account ID, and `YOUR_TOKEN` with your token. You can find your account ID in **Account settings**, or refer to [Finding your user and account IDs](/faqs/Accounts/find-user-id) for more information.
+В следующих примерах замените `YOUR_ACCESS_URL` на ваш URL доступа к <Constant name="dbt" />, `ACCOUNT_ID` на идентификатор вашего аккаунта, а `YOUR_TOKEN` на ваш токен. Идентификатор аккаунта можно найти в разделе **Настройки аккаунта**, а дополнительную информацию — в разделе [Поиск идентификаторов пользователя и аккаунта](/faqs/Accounts/find-user-id).
 
-### Query events
+### Запрос событий {#query-events}
 
-To fetch audit log events as JSON, send a `GET` request to `/api/v3/accounts/ACCOUNT_ID/audit-logs/`:
+Чтобы получить события журнала аудита в формате JSON, отправьте запрос `GET` на `/api/v3/accounts/ACCOUNT_ID/audit-logs/`:
 
 ```shell
 curl --request GET \
@@ -283,11 +283,11 @@ curl --request GET \
   --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
-The response includes a `data` array of events with details such as `event_type`, `event_label`, `actor`, `created_at`, and `event_context`. Use `logged_at_start` and `logged_at_end` to filter by date range, and `limit` and `offset` to paginate through results. For more options, refer to [List Recent Audit Log Events](/dbt-cloud/api-v3#/operations/List%20Recent%20Audit%20Log%20Events) in the API reference.
+Ответ содержит массив событий `data` с такими сведениями, как `event_type`, `event_label`, `actor`, `created_at` и `event_context`. Используйте `logged_at_start` и `logged_at_end` для фильтрации по диапазону дат, а `limit` и `offset` для постраничного просмотра результатов. Дополнительные параметры приведены в разделе [Список недавних событий журнала аудита](/dbt-cloud/api-v3#/operations/List%20Recent%20Audit%20Log%20Events) справочника API.
 
-### Download a CSV
+### Скачивание CSV {#download-a-csv}
 
-To download audit log events as a CSV file, send a `GET` request to `/api/v3/accounts/ACCOUNT_ID/audit-logs/download/`. This is the API equivalent of **Export Selection** in the UI:
+Чтобы скачать события журнала аудита в виде CSV-файла, отправьте запрос `GET` на `/api/v3/accounts/ACCOUNT_ID/audit-logs/download/`. Это эквивалент действия **Экспортировать выбранное** в пользовательском интерфейсе через API:
 
 ```shell
 curl --request GET \
@@ -296,13 +296,13 @@ curl --request GET \
   --output audit-log.csv
 ```
 
-You can use the same `logged_at_start` and `logged_at_end` query parameters as the list endpoint.
+Вы можете использовать те же параметры запроса `logged_at_start` и `logged_at_end`, что и для конечной точки получения списка.
 
-### Bulk export
+### Массовый экспорт {#bulk-export}
 
-To export your full audit log history through the API, use the same workflow as **Export All** in the UI:
+Чтобы экспортировать всю историю журнала аудита через API, используйте ту же последовательность действий, что и для **Экспортировать все** в пользовательском интерфейсе:
 
-1. Submit an export request with `POST` to `/api/v3/accounts/ACCOUNT_ID/audit-logs/export/`. The response returns a `job_id` in the `data` object (`data.job_id`). Use a [personal access token](/docs/dbt-apis/user-tokens) for this step.
+1. Отправьте запрос на экспорт методом `POST` на `/api/v3/accounts/ACCOUNT_ID/audit-logs/export/`. В ответе возвращается `job_id` в объекте `data` (`data.job_id`). На этом этапе используйте [персональный токен доступа](/docs/dbt-apis/user-tokens).
 
 ```shell
 curl --request POST \
@@ -310,7 +310,7 @@ curl --request POST \
   --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
-2. Check the export status with `GET` on `/api/v3/accounts/ACCOUNT_ID/audit-logs/export/`. Repeat this request until `is_running` in the `data` object is `false`.
+2. Проверьте статус экспорта с помощью `GET` на `/api/v3/accounts/ACCOUNT_ID/audit-logs/export/`. Повторяйте этот запрос, пока значение `is_running` в объекте `data` не станет `false`.
 
 ```shell
 curl --request GET \
@@ -319,7 +319,7 @@ curl --request GET \
   --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
-3. Get a download URL with `GET` on `/api/v3/accounts/ACCOUNT_ID/audit-logs/export/JOB_ID/download/`. The response includes a `download_url` in the `data` object (`data.download_url`). Use the `job_id` from step 1 as `JOB_ID` in the URL.
+3. Получите URL для скачивания с помощью `GET` на `/api/v3/accounts/ACCOUNT_ID/audit-logs/export/JOB_ID/download/`. Ответ содержит `download_url` в объекте `data` (`data.download_url`). Используйте `job_id` из шага 1 в качестве `JOB_ID` в URL.
 
 ```shell
 curl --request GET \
@@ -328,7 +328,7 @@ curl --request GET \
   --header 'Authorization: Bearer YOUR_TOKEN'
 ```
 
-4. Download the CSV file from the `download_url` returned in step 3 (`data.download_url`):
+4. Скачайте CSV-файл по адресу `download_url`, полученному на шаге 3 (`data.download_url`):
 
 ```shell
 curl --request GET \
@@ -336,13 +336,13 @@ curl --request GET \
   --output audit-log-full.csv
 ```
 
-### Common automation patterns
+### Типовые сценарии автоматизации {#common-automation-patterns}
 
-Teams often automate audit log access in a few ways:
+Команды часто автоматизируют доступ к журналу аудита несколькими способами:
 
-- **Scheduled incremental pulls:** Call the list endpoint on a schedule with `logged_at_start` and `logged_at_end` to fetch new events since the last run, then load the JSON into your security monitoring or log aggregation tooling.
-- **Periodic CSV exports:** Use the download endpoint to export a date range as CSV for compliance archival or analysis.
-- **Full history exports:** Use the bulk export workflow when you need your complete audit log history programmatically, similar to **Export All** in the UI.
+- **Получение новых событий по расписанию:** Вызывайте конечную точку получения списка по расписанию с параметрами `logged_at_start` и `logged_at_end`, чтобы получать новые события с момента последнего запуска, а затем загружайте JSON в инструменты мониторинга безопасности или агрегации журналов.
+- **Периодический экспорт CSV:** Используйте конечную точку скачивания для экспорта диапазона дат в CSV для архивирования в целях соблюдения нормативных требований или анализа.
+- **Экспорт всей истории:** Используйте процедуру массового экспорта, когда требуется программно получить всю историю журнала аудита, аналогично действию **Экспортировать все** в пользовательском интерфейсе.
 
-For endpoint details, refer to the [Administrative API v3 reference](/dbt-cloud/api-v3#/operations/List%20Recent%20Audit%20Log%20Events).
+Подробные сведения о конечных точках приведены в [справочнике API администрирования v3](/dbt-cloud/api-v3#/operations/List%20Recent%20Audit%20Log%20Events).
 

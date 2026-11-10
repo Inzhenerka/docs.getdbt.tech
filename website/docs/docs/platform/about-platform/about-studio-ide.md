@@ -23,7 +23,7 @@ availability:
     * В настоящее время вы не можете предварительно просматривать модели на Python
 - Визуализировать ориентированный ациклический граф (DAG) и многое другое.
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/cloud-ide-v2.png" width="85%" title="The Studio IDE in dark mode"/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/cloud-ide-v2.png" width="85%" title="Studio IDE в тёмной теме"/>
 
 Для получения дополнительной информации прочитайте полное [руководство по Cloud <Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio).
 

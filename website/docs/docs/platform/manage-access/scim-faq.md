@@ -1,8 +1,8 @@
 ---
-title: "SCIM FAQs and troubleshooting"
-description: "Common questions and troubleshooting for SCIM provisioning in dbt platform"
+title: "Часто задаваемые вопросы и устранение неполадок SCIM"
+description: "Часто задаваемые вопросы и устранение неполадок при подготовке пользователей через SCIM в dbt platform"
 id: "scim-faq"
-sidebar: "SCIM FAQ and troubleshooting"
+sidebar: "Вопросы о SCIM и устранение неполадок"
 availability:
   surface: platform
   access: paid_plan
@@ -12,166 +12,166 @@ availability:
 
 import ScimAdminGroupPrereq from '/snippets/_scim-admin-group-prereq.md';
 
-# SCIM FAQs and troubleshooting
+# Часто задаваемые вопросы и устранение неполадок SCIM
 
-Find answers to common questions about configuring and using SCIM provisioning in <Constant name="dbt_platform" />, plus guidance for resolving common issues.
+Здесь вы найдете ответы на распространенные вопросы о настройке и использовании подготовки пользователей через SCIM в <Constant name="dbt_platform" />, а также рекомендации по устранению типичных неполадок.
 
-## FAQs
+## Часто задаваемые вопросы
 
-<Expandable alt_header="Do I need an Account Admin group before enabling SCIM?">
+<Expandable alt_header="Нужна ли группа Account Admin перед включением SCIM?">
 
 <ScimAdminGroupPrereq />
 
 </Expandable>
 
-<Expandable alt_header="Do the userName and email.value fields have to be the same value for SCIM to work?">
+<Expandable alt_header="Должны ли поля userName и email.value иметь одинаковое значение для работы SCIM?">
 
-Yes. Both must match the email address the user uses to sign in to <Constant name="dbt_platform" /> (email value on the user object in your IdP that's used to sign in). If they don't match, a validation error will occur during provisioning.
+Да. Оба значения должны совпадать с адресом электронной почты, который пользователь использует для входа в <Constant name="dbt_platform" /> (значение email в объекте пользователя в вашем IdP, используемое для входа). Если они не совпадают, при подготовке пользователя возникнет ошибка валидации.
 
 </Expandable>
 
-<Expandable alt_header="What is the recommended workflow for onboarding new users through SCIM?">
+<Expandable alt_header="Каков рекомендуемый порядок добавления новых пользователей через SCIM?">
 
 #### Entra ID
 
-Once SCIM provisioning is configured in Entra ID according to the schema requirements, provisioning begins automatically. Entra ID will sync users and groups assigned to the Entra app with <Constant name="dbt_platform" />.
+После настройки подготовки пользователей через SCIM в Entra ID в соответствии с требованиями схемы процесс запускается автоматически. Entra ID синхронизирует пользователей и группы, назначенные приложению Entra, с <Constant name="dbt_platform" />.
 
-**For users:**
-- Matching is based on the `userName` (and `email.value`) field, which should be set to the user's email — the same email used in <Constant name="dbt_platform" /> and expected at sign-in.
-- If a user with that email already exists in <Constant name="dbt_platform" />, they will be linked and become SCIM-managed.
-- If no matching user exists, a new user will be provisioned and invited through email.
+**Для пользователей:**
+- Сопоставление выполняется по полю `userName` (и `email.value`), в котором должен быть указан адрес электронной почты пользователя — тот же адрес, который используется в <Constant name="dbt_platform" /> и ожидается при входе.
+- Если пользователь с таким адресом уже существует в <Constant name="dbt_platform" />, он будет связан с учетной записью в IdP и перейдет под управление SCIM.
+- Если соответствующий пользователь не найден, будет создан новый пользователь, которому отправят приглашение по электронной почте.
 
-**For groups:**
-- Matching is based on the group name.
-- If a group with the same name exists in <Constant name="dbt_platform" />, it will be linked and become SCIM-managed.
-- If no match exists, a new group will be created through SCIM.
+**Для групп:**
+- Сопоставление выполняется по имени группы.
+- Если группа с таким именем существует в <Constant name="dbt_platform" />, она будет связана с группой в IdP и перейдет под управление SCIM.
+- Если соответствующая группа не найдена, через SCIM будет создана новая группа.
 
-**Important considerations:**
-- Entra ID does not support importing existing users or groups into the app for SCIM — users and groups must already exist in Entra ID and be assigned to the app.
-- To ensure users and groups become SCIM-managed, they must exist in both Entra and <Constant name="dbt_platform" /> with matching identifiers (email for users, name for groups).
-- After setup, ongoing syncs automatically provision and manage any newly assigned users or groups in Entra.
+**Важные замечания:**
+- Entra ID не поддерживает импорт существующих пользователей или групп в приложение для SCIM — пользователи и группы должны уже существовать в Entra ID и быть назначены приложению.
+- Чтобы пользователи и группы перешли под управление SCIM, они должны существовать и в Entra, и в <Constant name="dbt_platform" /> с совпадающими идентификаторами (адрес электронной почты для пользователей, имя для групп).
+- После настройки последующие синхронизации автоматически создают всех новых пользователей и группы, назначенных приложению в Entra, и управляют ими.
 
 #### Okta
 
-Unlike Entra ID, Okta does not run continuous full syncs. You trigger initial provisioning manually, then Okta continues provisioning incrementally as changes are made.
+В отличие от Entra ID, Okta не выполняет постоянную полную синхронизацию. Первоначальную подготовку пользователей вы запускаете вручную, после чего Okta обрабатывает изменения по мере их внесения.
 
-When you enable SCIM on an existing Okta SSO app, trigger the initial sync (if there are existing users in the Okta app) using the **Provision Users** button in the Okta Assignments tab. This runs a one-time sync of users to <Constant name="dbt_platform" />. Okta doesn't provide a native way to re-run this full sync &mdash; which means reprocessing typically requires removing and re-adding users.
+При включении SCIM в существующем приложении Okta SSO запустите первоначальную синхронизацию (если в приложении Okta уже есть пользователи) с помощью кнопки **Provision Users** на вкладке Assignments в Okta. Это выполнит однократную синхронизацию пользователей с <Constant name="dbt_platform" />. В Okta нет встроенного способа повторно запустить такую полную синхронизацию &mdash; поэтому для повторной обработки обычно требуется удалить пользователей и добавить их заново.
 
-**For users:**
-User matching is based on the `userName` (email) field, which must match the email used in <Constant name="dbt_platform"/>:
+**Для пользователей:**
+Сопоставление пользователей выполняется по полю `userName` (адрес электронной почты), которое должно совпадать с адресом, используемым в <Constant name="dbt_platform"/>:
 
-- If a match is found, Okta links the user and marks them as SCIM-managed.
-- If no match is found, Okta provisions a new user.
-- If users exist in <Constant name="dbt_platform"/> but not in Okta, you can import them into Okta to keep both systems aligned.
+- Если совпадение найдено, Okta связывает пользователя с учетной записью и помечает его как управляемого через SCIM.
+- Если совпадение не найдено, Okta создает нового пользователя.
+- Если пользователи существуют в <Constant name="dbt_platform"/>, но отсутствуют в Okta, их можно импортировать в Okta, чтобы согласовать данные в обеих системах.
 
-**For groups:**
-- After initial user sync, assign new users to the Okta app to provision them automatically into <Constant name="dbt_platform" />.
-- Manage group memberships with Okta's Push Groups feature, which pushes groups and memberships into <Constant name="dbt_platform" />.
+**Для групп:**
+- После первоначальной синхронизации пользователей назначайте новых пользователей приложению Okta, чтобы автоматически создавать их в <Constant name="dbt_platform" />.
+- Управляйте участием в группах с помощью функции Push Groups в Okta, которая передает группы и сведения об их участниках в <Constant name="dbt_platform" />.
 
-For new Okta SSO applications with no assigned users, either manually assign users to the app to trigger provisioning, or import users from <Constant name="dbt_platform" /> into Okta first. Users must exist in both systems with matching emails to link correctly and avoid duplicates.
+Для новых приложений Okta SSO без назначенных пользователей либо назначьте пользователей приложению вручную, чтобы запустить их подготовку, либо сначала импортируйте пользователей из <Constant name="dbt_platform" /> в Okta. Пользователи должны существовать в обеих системах с совпадающими адресами электронной почты, чтобы связывание выполнялось корректно и не возникали дубликаты.
 
-For larger rollouts, consider working with your IdP admin to plan based on your setup and [SCIM license mapping](/docs/platform/manage-access/scim-manage-user-licenses) to reduce manual steps.
-
-</Expandable>
-
-<Expandable alt_header="Do SSO group mappings still apply when SCIM is enabled?">
-
-No. SSO group mappings do not apply to SCIM-managed users. For SCIM-managed users, group membership is controlled by your IdP.
-
-SSO group mappings only apply to users who authenticate with SSO and are not SCIM-managed.
-
-This means that if you have a dbt group with SSO mappings, those mappings will not be applied to users who have been provisioned through SCIM.
+При масштабном внедрении рекомендуем совместно с администратором IdP спланировать процесс с учетом вашей конфигурации и [сопоставления лицензий SCIM](/docs/platform/manage-access/scim-manage-user-licenses), чтобы сократить количество ручных действий.
 
 </Expandable>
 
-<Expandable alt_header='What does "Allow manual updates" mean?'>
+<Expandable alt_header="Продолжают ли действовать сопоставления групп SSO при включенном SCIM?">
 
-The **Allow manual updates** toggle determines whether admins can manually modify SCIM-managed users and groups in <Constant name="dbt_platform" />, including sending invites.
+Нет. Сопоставления групп SSO не применяются к пользователям, управляемым через SCIM. Для таких пользователей участие в группах контролируется вашим IdP.
 
+Сопоставления групп SSO применяются только к пользователям, которые проходят аутентификацию через SSO и не управляются через SCIM.
 
-- **Disabled (default)**: Your IdP remains the source of truth for SCIM-managed users and groups. Manual changes to SCIM-managed users in <Constant name="dbt_platform"/> are blocked. This is the recommended setting because any manual changes made while enabled can be overwritten by later SCIM updates.
-- **Enabled:** Admins can make manual changes to users in <Constant name="dbt_platform" /> alongside SCIM. This can be useful during initial setup and testing, but manual changes do not prevent SCIM from overriding them.
-
-</Expandable>
-
-<Expandable alt_header="What happens to existing users and groups when I enable SCIM?">
-
-Enabling SCIM does not automatically convert existing users and groups to SCIM-managed status. Your IdP only manages users who have been explicitly assigned to the app and provisioned through SCIM.
-
-To bring existing users and groups under SCIM management, assign them to the <Constant name="dbt_platform" /> app in your IdP and trigger a sync. Until a user is provisioned through SCIM, they remain unmanaged and are unaffected by SCIM sync operations.
+Это означает, что если у вас есть группа dbt с сопоставлениями SSO, эти сопоставления не будут применяться к пользователям, созданным через SCIM.
 
 </Expandable>
 
-<Expandable alt_header="What happens when a user's email address changes in my IdP when SCIM is enabled?">
+<Expandable anchor_id="what-does-allow-manual-updates-mean" alt_header='Что означает "Allow manual updates"?'>
 
-When a SCIM-managed user's email is updated in the IdP, <Constant name="dbt_platform" /> receives a SCIM request to update it. A confirmation email is sent to the new address, and once accepted, the change takes effect in <Constant name="dbt_platform" />.
+Переключатель **Allow manual updates** определяет, могут ли администраторы вручную изменять пользователей и группы, управляемые через SCIM, в <Constant name="dbt_platform" />, в том числе отправлять приглашения.
 
-</Expandable>
 
-<Expandable alt_header="Does SCIM support automatic license assignment?">
-
-SCIM-native license mapping (using a SCIM attribute) is supported for Okta only. For Okta license mapping setup, refer to [Manage user licenses with SCIM](/docs/platform/manage-access/scim-manage-user-licenses).
-
-SCIM license mapping with Entra ID _may_ be possible using [custom attributes](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-overview), depending on your Entra ID configuration. Because this setup varies by environment, we don't provide a standard configuration or troubleshooting guidance for it. **Use this approach at your own risk.**
-
-For a simpler, supported approach, use SSO-based Active Directory group → license mapping alongside your Entra ID SCIM setup. This works so long as the **Ignore dbt license mapping** toggle (found in **Account settings > SSO & SCIM**) stays disabled. 
-
-- **Disabled (recommended)**: <Constant name="dbt_platform" /> honors your [SSO license mappings](/docs/platform/manage-access/seats-and-users#mapped-configuration-) based on Entra ID group membership.
-- **Enabled:** <Constant name="dbt_platform" /> ignores your SSO license mappings. Because SCIM-native license mapping isn't a supported configuration for Entra ID, enabling this toggle effectively removes license mapping entirely for Entra ID users.
+- **Выключен (по умолчанию)**: ваш IdP остается источником достоверных данных для пользователей и групп, управляемых через SCIM. Ручные изменения пользователей, управляемых через SCIM, в <Constant name="dbt_platform"/> заблокированы. Это рекомендуемая настройка, поскольку любые ручные изменения, внесенные при включенном переключателе, могут быть перезаписаны последующими обновлениями SCIM.
+- **Включен:** администраторы могут вручную изменять пользователей в <Constant name="dbt_platform" /> параллельно с SCIM. Это может быть полезно при первоначальной настройке и тестировании, но ручные изменения не мешают SCIM перезаписывать их.
 
 </Expandable>
 
-<Expandable alt_header="Can I use Okta for SSO and Entra ID for SCIM (or vice versa)?">
+<Expandable alt_header="Что происходит с существующими пользователями и группами при включении SCIM?" anchor_id="scim-details-2">
 
-SSO and SCIM should be configured using the same IdP. Using different providers — for example, Okta for SSO and Entra ID for SCIM &mdash; can cause discrepancies in user state and unintended behavior.
+Включение SCIM не переводит существующих пользователей и группы под управление SCIM автоматически. Ваш IdP управляет только пользователями, которые были явно назначены приложению и подготовлены через SCIM.
 
-If your organization uses separate IdPs for authentication and directory management, contact your account team to discuss your options.
+Чтобы перевести существующих пользователей и группы под управление SCIM, назначьте их приложению <Constant name="dbt_platform" /> в вашем IdP и запустите синхронизацию. Пока пользователь не подготовлен через SCIM, он остается вне управления SCIM, и операции синхронизации SCIM на него не влияют.
+
+</Expandable>
+
+<Expandable alt_header="Что происходит при изменении адреса электронной почты пользователя в IdP, если SCIM включен?">
+
+При обновлении адреса электронной почты пользователя, управляемого через SCIM, в IdP платформа <Constant name="dbt_platform" /> получает SCIM-запрос на его обновление. На новый адрес отправляется письмо с подтверждением, и после подтверждения изменение вступает в силу в <Constant name="dbt_platform" />.
+
+</Expandable>
+
+<Expandable anchor_id="does-scim-support-automatic-license-assignment" alt_header="Поддерживает ли SCIM автоматическое назначение лицензий?">
+
+Встроенное сопоставление лицензий SCIM (с использованием атрибута SCIM) поддерживается только для Okta. Инструкции по настройке сопоставления лицензий в Okta см. в разделе [Управление лицензиями пользователей с помощью SCIM](/docs/platform/manage-access/scim-manage-user-licenses).
+
+Сопоставление лицензий SCIM с Entra ID _может_ быть реализовано с помощью [пользовательских атрибутов](https://learn.microsoft.com/en-us/entra/fundamentals/custom-security-attributes-overview) в зависимости от конфигурации Entra ID. Поскольку такая настройка зависит от конкретной среды, мы не предоставляем для нее стандартную конфигурацию или рекомендации по устранению неполадок. **Используйте этот подход на свой страх и риск.**
+
+В качестве более простого и поддерживаемого подхода используйте сопоставление групп Active Directory с лицензиями на основе SSO вместе с настройкой SCIM в Entra ID. Это работает, пока переключатель **Ignore dbt license mapping** (в разделе **Account settings > SSO & SCIM**) остается выключенным. 
+
+- **Выключен (рекомендуется)**: <Constant name="dbt_platform" /> учитывает ваши [сопоставления лицензий SSO](/docs/platform/manage-access/seats-and-users#mapped-configuration) на основе участия в группах Entra ID.
+- **Включен:** <Constant name="dbt_platform" /> игнорирует ваши сопоставления лицензий SSO. Поскольку встроенное сопоставление лицензий SCIM не является поддерживаемой конфигурацией для Entra ID, включение этого переключателя фактически полностью отключает сопоставление лицензий для пользователей Entra ID.
+
+</Expandable>
+
+<Expandable alt_header="Можно ли использовать Okta для SSO, а Entra ID для SCIM (или наоборот)?">
+
+SSO и SCIM следует настраивать с использованием одного и того же IdP. Использование разных поставщиков — например, Okta для SSO и Entra ID для SCIM &mdash; может привести к расхождениям в состоянии пользователей и непредвиденному поведению.
+
+Если ваша организация использует разные IdP для аутентификации и управления каталогом, свяжитесь с командой по работе с вашим аккаунтом, чтобы обсудить возможные варианты.
 
 </Expandable>
 
 ---
 
-## Troubleshooting
+## Устранение неполадок
 
-<Expandable alt_header='There is a "All users must have licenses on the account" error'>
+<Expandable alt_header='Возникает ошибка "All users must have licenses on the account"'>
 
-This error occurs when a SCIM group push includes a user who hasn't been licensed in <Constant name="dbt_platform" /> yet &mdash; typically because they haven't accepted their invitation.
+Эта ошибка возникает, когда при передаче группы через SCIM в ней оказывается пользователь, которому еще не назначена лицензия в <Constant name="dbt_platform" /> &mdash; обычно потому, что он еще не принял приглашение.
 
-**Steps to resolve:**
+**Действия для устранения:**
 
-1. Identify the user(s) causing the error from your IdP's provisioning logs.
-2. Check whether those users have accepted their <Constant name="dbt_platform" /> invitation. Users are not licensed until they complete this step.
-3. Once the user accepts and signs in, retry the group push from your IdP.
-4. If the invitation has expired, remove the user from the push group temporarily, re-invite them using <Constant name="dbt_platform" />, have them accept, then re-add them to the group.
+1. Определите пользователей, вызывающих ошибку, по журналам подготовки пользователей в вашем IdP.
+2. Проверьте, приняли ли эти пользователи приглашение в <Constant name="dbt_platform" />. Лицензии не назначаются пользователям, пока они не выполнят этот шаг.
+3. После того как пользователь примет приглашение и войдет в систему, повторите передачу группы из вашего IdP.
+4. Если срок действия приглашения истек, временно удалите пользователя из передаваемой группы, отправьте ему повторное приглашение из <Constant name="dbt_platform" />, попросите его принять приглашение, а затем снова добавьте его в группу.
 
 </Expandable>
 
-<Expandable alt_header="Existing users and groups are not becoming SCIM-managed after enabling SCIM">
+<Expandable alt_header="Существующие пользователи и группы не переходят под управление SCIM после его включения" anchor_id="scim-details-3">
 
-After enabling SCIM and completing the initial sync, pre-existing <Constant name="dbt_platform" /> users and groups do not show as SCIM-managed.
+После включения SCIM и завершения первоначальной синхронизации ранее существовавшие пользователи и группы <Constant name="dbt_platform" /> не отображаются как управляемые через SCIM.
 
-**Why this happens:** SCIM provisioning links an IdP identity to a <Constant name="dbt_platform" /> user record. Users created before SCIM was enabled don't have this link unless the IdP explicitly provisions them through SCIM.
+**Почему это происходит:** подготовка пользователей через SCIM связывает удостоверение в IdP с записью пользователя в <Constant name="dbt_platform" />. У пользователей, созданных до включения SCIM, этой связи нет, если IdP явно не выполнил их подготовку через SCIM.
 
-**Steps to resolve:**
+**Действия для устранения:**
 
-1. In your IdP, assign existing users to the <Constant name="dbt_platform" /> SCIM application.
-2. Trigger a provisioning sync. The IdP will attempt to match users by their `userName` (typically their email address) and establish the SCIM-managed link.
-    :::info Entra ID note
-    For Entra ID, note that the provisioning sync is one-way (push only) — there is no import option to pull existing dbt users into Entra as a managed identity.
+1. В вашем IdP назначьте существующих пользователей приложению SCIM для <Constant name="dbt_platform" />.
+2. Запустите синхронизацию для подготовки пользователей. IdP попытается сопоставить пользователей по их `userName` (обычно это адрес электронной почты) и установить связь для управления через SCIM.
+    :::info Примечание об Entra ID
+    Для Entra ID учитывайте, что синхронизация для подготовки пользователей является односторонней (только отправка) — возможности импортировать существующих пользователей dbt в Entra в качестве управляемых удостоверений нет.
     :::
-4. If users aren't being matched correctly after a sync, confirm that the `userName` and `email.value` attributes in your IdP exactly match the email on the user's <Constant name="dbt_platform" /> account, including case.
+4. Если после синхронизации пользователи сопоставляются некорректно, убедитесь, что атрибуты `userName` и `email.value` в вашем IdP в точности совпадают с адресом электронной почты в учетной записи пользователя в <Constant name="dbt_platform" />, включая регистр.
 
 </Expandable>
 
-<Expandable alt_header="Entra SCIM provisioning fails due to IP allowlisting">
+<Expandable alt_header="Подготовка пользователей через Entra SCIM завершается с ошибкой из-за списка разрешенных IP-адресов">
 
-If your <Constant name="dbt_platform" /> account has **IP restrictions** enabled, Entra's SCIM provisioning requests may be blocked. Azure's provisioning service IPs rotate approximately every two weeks and can't be statically allowlisted.
+Если в вашем аккаунте <Constant name="dbt_platform" /> включены **ограничения по IP-адресам**, запросы Entra на подготовку пользователей через SCIM могут блокироваться. IP-адреса службы подготовки пользователей Azure меняются примерно каждые две недели, поэтому их нельзя внести в статический список разрешенных адресов.
 
-**Recommended approach:**
+**Рекомендуемый подход:**
 
-1. Filter to the `AzureActiveDirectory` service tag in [Azure's published IP ranges JSON](https://www.microsoft.com/en-us/download/details.aspx?id=56519) rather than allowlisting all Azure IPs.
-2. Use the <Constant name="dbt_platform" /> Admin API with a service token to update your IP allowlist on a schedule &mdash; for example, a weekly script that pulls the current `AzureActiveDirectory` ranges and updates your allowlist through the API.
+1. Отфильтруйте диапазоны по тегу службы `AzureActiveDirectory` в [опубликованном Azure JSON-файле с диапазонами IP-адресов](https://www.microsoft.com/en-us/download/details.aspx?id=56519), вместо того чтобы разрешать все IP-адреса Azure.
+2. Используйте Admin API <Constant name="dbt_platform" /> с сервисным токеном, чтобы обновлять список разрешенных IP-адресов по расписанию &mdash; например, с помощью еженедельного скрипта, который получает актуальные диапазоны `AzureActiveDirectory` и обновляет список разрешенных адресов через API.
 
-Contact [support@getdbt.com](mailto:support@getdbt.com) for guidance on using the Admin API for allowlist management.
+Обратитесь по адресу [support@getdbt.com](mailto:support@getdbt.com) за рекомендациями по использованию Admin API для управления списком разрешенных адресов.
 
 </Expandable>

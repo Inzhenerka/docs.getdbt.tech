@@ -1,97 +1,97 @@
 ---
-title: "Available tools"
-sidebar_label: "Available tools"
-description: "Complete list of tools available in the dbt MCP server."
+title: "Доступные инструменты"
+sidebar_label: "Доступные инструменты"
+description: "Полный список инструментов, доступных на сервере dbt MCP."
 id: "mcp-available-tools"
 availability: all_users
 ---
 import McpToolsFromReadme from '/snippets/_mcp-tools-from-readme.md';
 
-The dbt MCP server has access to many parts of the dbt experience related to development, deployment, and discovery. This page lists the tools available in the dbt MCP server and how to configure them.
+Сервер dbt MCP предоставляет доступ ко многим возможностям dbt, связанным с разработкой, развертыванием и поиском данных. На этой странице перечислены инструменты, доступные на сервере dbt MCP, и описана их настройка.
 
-## Supported tools by MCP server type
+## Поддерживаемые инструменты по типам серверов MCP
 
-The following sections list every tool by category, along with which server type (local or remote) supports it.
+В следующих разделах перечислены все инструменты по категориям с указанием того, какой тип сервера (локальный или удаленный) их поддерживает.
 
-| Tools | Local | Remote |
+| Инструменты | Локальный | Удаленный |
 | --- | --- | --- |
-| [dbt commands](#dbt-cli)  | ✅ | ❌ |
-| [Semantic Layer (Semantic Layer API)](#semantic-layer) | ✅ | ✅ |
+| [Команды dbt](#dbt-cli)  | ✅ | ❌ |
+| [Семантический слой (Semantic Layer API)](#semantic-layer) | ✅ | ✅ |
 | [SQL](#sql)  | ✅ | ✅ |
-| [Metadata Discovery (Discovery API)](#discovery) | ✅ | ✅ |
-| [Administrative API (Admin API)](#admin-api) | ✅ | ✅ |
-| [Codegen Tools](#dbt-codegen) | ✅ | ❌ |
-| [dbt v2 Tools](#dbt-lsp) | ✅ | ✅ |
-| [Product Docs Tools](#product-docs) |  ✅ | ✅ |
-| [MCP Server Metadata Tools](#mcp-server-metadata) | ✅ | ✅ |
+| [Поиск метаданных (Discovery API)](#discovery) | ✅ | ✅ |
+| [Административный API (Admin API)](#admin-api) | ✅ | ✅ |
+| [Инструменты генерации кода](#dbt-codegen) | ✅ | ❌ |
+| [Инструменты dbt v2](#dbt-lsp) | ✅ | ✅ |
+| [Инструменты документации продукта](#product-docs) |  ✅ | ✅ |
+| [Инструменты метаданных сервера MCP](#mcp-server-metadata) | ✅ | ✅ |
 
-Note that access to the Discovery API and the <Constant name="semantic_layer" /> API is limited depending on your [plan type](https://www.getdbt.com/pricing).
+Обратите внимание: доступ к Discovery API и API <Constant name="semantic_layer" /> ограничен в зависимости от вашего [тарифного плана](https://www.getdbt.com/pricing).
 
-Remote MCP tools can change without notice or a deprecation period. Refer to [Tool changes on the remote MCP server](#tool-changes-on-the-remote-mcp-server).
+Инструменты удаленного сервера MCP могут изменяться без предварительного уведомления или переходного периода. Подробнее см. в разделе [Изменения инструментов на удаленном сервере MCP](#tool-changes-on-the-remote-mcp-server).
 
-### Tools that require AI features
+### Инструменты, требующие функций ИИ {#tools-that-require-ai-features}
 
-`text_to_sql` is the only tool that depends on [AI features](/docs/platform/manage-dbt-ai) being enabled for your account.
+`text_to_sql` — единственный инструмент, для работы которого в вашем аккаунте должны быть включены [функции ИИ](/docs/platform/manage-dbt-ai).
 
-If an admin turns AI features off, `text_to_sql` doesn't appear in the tool list for the remote MCP server. Every other tool keeps working. Turning off AI features doesn't disable remote MCP.
+Если администратор отключает функции ИИ, `text_to_sql` не отображается в списке инструментов удаленного сервера MCP. Все остальные инструменты продолжают работать. Отключение функций ИИ не отключает удаленный MCP.
 
-## dbt MCP server tool list
+## Список инструментов сервера dbt MCP
 
-The following tool list is available for your MCP server and is auto-fetched from the [dbt MCP server README on GitHub](https://github.com/dbt-labs/dbt-mcp#tools) when the docs are built, so it stays in sync with each release.
+Приведенный ниже список инструментов доступен для вашего сервера MCP и автоматически загружается из [README сервера dbt MCP на GitHub](https://github.com/dbt-labs/dbt-mcp#tools) при сборке документации, поэтому он остается актуальным с каждым выпуском.
 
 <McpToolsFromReadme />
 
-### Find jobs across project environments
+### Поиск заданий в разных средах проекта
 
-You can find jobs outside production, including staging, CI, or UAT (user acceptance testing), without changing your MCP config. Use the `list_jobs` tool to list jobs. Use `trigger_job_run` to start a run.
+Вы можете находить задания за пределами производственной среды, в том числе в средах staging, CI или UAT (пользовательского приемочного тестирования), не меняя конфигурацию MCP. Используйте инструмент `list_jobs`, чтобы получить список заданий. Используйте `trigger_job_run`, чтобы запустить выполнение.
 
-By default, if your MCP config includes a production environment, `list_jobs` only returns jobs from that environment: `x-dbt-prod-environment-id` for token-based [remote MCP](/docs/dbt-ai/setup-remote-mcp), or `DBT_PROD_ENV_ID` for [self-hosted MCP](/docs/dbt-ai/setup-local-mcp). Refer to [How to find your dbt MCP IDs](/docs/dbt-ai/mcp-find-ids#dbt-prod-env-id) for details. If no production environment is configured, `list_jobs` can return jobs across the account. Staging, CI, or UAT jobs often don't appear when a production environment is set.
+По умолчанию, если в конфигурации MCP указана производственная среда, `list_jobs` возвращает задания только из этой среды: `x-dbt-prod-environment-id` для [удаленного MCP](/docs/dbt-ai/setup-remote-mcp) с аутентификацией по токену или `DBT_PROD_ENV_ID` для [самостоятельно размещаемого MCP](/docs/dbt-ai/setup-local-mcp). Подробнее см. в разделе [Как найти идентификаторы dbt MCP](/docs/dbt-ai/mcp-find-ids#dbt-prod-env-id). Если производственная среда не настроена, `list_jobs` может возвращать задания из всего аккаунта. Задания из сред staging, CI или UAT часто не отображаются, когда указана производственная среда.
 
-You can pass a `project_id` (from `list_projects`) to return jobs from every environment in that project.
+Вы можете передать `project_id` (полученный через `list_projects`), чтобы получить задания из всех сред этого проекта.
 
-Once you query your assistant, it will typically:
+После вашего запроса ассистент обычно выполняет следующие действия:
 
-1. Look up your project ID with `list_projects` (if you don't already have it)
-2. List the jobs with that `project_id`
-3. Pick the UAT, staging, or CI job you requested
-4. Start it with `trigger_job_run` and the job's ID
+1. Находит идентификатор проекта с помощью `list_projects` (если он вам еще неизвестен)
+2. Получает список заданий с этим `project_id`
+3. Выбирает запрошенное вами задание UAT, staging или CI
+4. Запускает его с помощью `trigger_job_run` и идентификатора задания
 
-You don't have to call the tools yourself. Try a prompt like: "List jobs in this project, find the UAT, staging, or CI job, and trigger it."
+Вам не нужно вызывать инструменты самостоятельно. Попробуйте такой запрос: «Выведи список заданий этого проекта, найди задание UAT, staging или CI и запусти его».
 
-## Tool changes on the remote MCP server
+## Изменения инструментов на удаленном сервере MCP {#tool-changes-on-the-remote-mcp-server}
 
-dbt MCP tools are generally built for AI agents, so their structure can change without notice or a deprecation period. Don't treat them as a contract.
+Инструменты dbt MCP в основном предназначены для ИИ-агентов, поэтому их структура может меняться без предварительного уведомления или переходного периода. Не считайте их фиксированным контрактом.
 
-- We aim not to remove existing features or rename tools, because some clients use tool names for auto-approve or allow/reject lists.
-- If you need a frozen set of tools and inputs/outputs, we recommend pinning a version of the [self-hosted MCP server](/docs/dbt-ai/setup-local-mcp) and running it yourself. Refer to the [dbt-mcp examples](https://github.com/dbt-labs/dbt-mcp/tree/main/examples).
+- Мы стремимся не удалять существующие возможности и не переименовывать инструменты, поскольку некоторые клиенты используют имена инструментов для автоматического одобрения или в списках разрешений и запретов.
+- Если вам нужен неизменный набор инструментов, входных и выходных данных, рекомендуем закрепить версию [самостоятельно размещаемого сервера MCP](/docs/dbt-ai/setup-local-mcp) и запускать его самостоятельно. См. [примеры dbt-mcp](https://github.com/dbt-labs/dbt-mcp/tree/main/examples).
 
-## FAQs
+## Часто задаваемые вопросы
 
-<Expandable alt_header="What does execute_sql do?">
+<Expandable alt_header="Что делает execute_sql?">
 
-`execute_sql` lets your AI assistant run a SQL query against your data warehouse and read the results. It's part of the SQL toolset and runs on <Constant name="dbt_platform" />, so you don't need dbt installed locally.
+`execute_sql` позволяет вашему ИИ-ассистенту выполнять SQL-запросы к вашему хранилищу данных и читать результаты. Он входит в набор инструментов SQL и выполняется на <Constant name="dbt_platform" />, поэтому устанавливать dbt локально не требуется.
 
-Here's what happens when your assistant calls it:
+Вот что происходит, когда ассистент вызывает этот инструмент:
 
-1. The assistant writes a SQL query and calls `execute_sql`.
-2. The dbt MCP server forwards the request to <Constant name="dbt_platform" />, along with your token, development environment ID, and user ID.
-3. <Constant name="dbt_platform" /> compiles the SQL (including any Jinja, such as `ref()`) and runs it in your warehouse using your development credentials.
-4. The results come back to your assistant as a table.
+1. Ассистент пишет SQL-запрос и вызывает `execute_sql`.
+2. Сервер dbt MCP перенаправляет запрос на <Constant name="dbt_platform" /> вместе с вашим токеном, идентификатором среды разработки и идентификатором пользователя.
+3. <Constant name="dbt_platform" /> компилирует SQL (включая любой код Jinja, например `ref()`) и выполняет его в вашем хранилище, используя ваши учетные данные для разработки.
+4. Результаты возвращаются ассистенту в виде таблицы.
 
-<Lightbox src="/img/docs/dbt-ai/mcp-execute-sql-flow.svg" title="The AI assistant calls execute_sql. The dbt MCP server forwards the request to dbt platform, which compiles the SQL, runs it in the warehouse with your development credentials, and returns the results to the assistant." />
-
-</Expandable>
-
-<Expandable alt_header="Is execute_sql read-only?">
-
-No. `execute_sql` doesn't block write statements. What a query can do depends on the permissions of the warehouse credentials it runs with. Use least-privilege warehouse roles for each user's development credentials.
+<Lightbox src="/img/docs/dbt-ai/mcp-execute-sql-flow.svg" title="ИИ-ассистент вызывает execute_sql. Сервер dbt MCP перенаправляет запрос на dbt platform, где SQL компилируется, выполняется в хранилище с вашими учетными данными для разработки, а результаты возвращаются ассистенту." />
 
 </Expandable>
 
-<Expandable alt_header="Whose warehouse credentials does execute_sql use?">
+<Expandable alt_header="Работает ли execute_sql только в режиме чтения?" anchor_id="execute_sql-details-2">
 
-Your personal development credentials for the project's development environment, not your production deployment credentials.
+Нет. `execute_sql` не блокирует инструкции записи. Возможности запроса зависят от прав учетных данных хранилища, с которыми он выполняется. Для учетных данных каждого пользователя, применяемых при разработке, используйте роли хранилища с минимально необходимыми правами.
 
 </Expandable>
 
-For more answers about `execute_sql` or troubleshooting help, refer to [dbt MCP FAQs and troubleshooting](/docs/dbt-ai/mcp-troubleshooting).
+<Expandable alt_header="Чьи учетные данные хранилища использует execute_sql?" anchor_id="execute_sql-details-3">
+
+Ваши личные учетные данные для разработки в среде разработки проекта, а не учетные данные для развертывания в производственной среде.
+
+</Expandable>
+
+Дополнительные ответы на вопросы об `execute_sql` и помощь в устранении неполадок см. в разделе [Часто задаваемые вопросы о dbt MCP и устранение неполадок](/docs/dbt-ai/mcp-troubleshooting).

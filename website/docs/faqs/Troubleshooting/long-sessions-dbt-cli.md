@@ -1,7 +1,7 @@
 ---
-title: "I'm getting a \"Session occupied\" error in dbt platform CLI?"
-description: "How to debug long-running sessions in dbt platform CLI"
-sidebar_label: 'Debug long-running sessions in dbt platform CLI'
+title: "Что делать при ошибке \"Session occupied\" в dbt platform CLI?"
+description: "Как диагностировать длительные сеансы в dbt platform CLI"
+sidebar_label: 'Диагностика длительных сеансов в dbt platform CLI'
 id: long-sessions-dbt-cli
 ---
 

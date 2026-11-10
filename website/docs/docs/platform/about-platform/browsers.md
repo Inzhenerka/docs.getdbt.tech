@@ -1,33 +1,33 @@
 ---
-title: "Supported browsers"
+title: "Поддерживаемые браузеры"
 id: "browsers"
-description: "dbt supports the latest browsers like Chrome and Firefox."
+description: "dbt поддерживает последние версии браузеров, таких как Chrome и Firefox."
 pagination_next: null
 availability:
   surface: platform
   access: login_required
 ---
 
-To have the best experience with <Constant name="dbt" />, we recommend using the latest versions of the following browsers:
+Чтобы получить наилучший опыт работы с <Constant name="dbt" />, мы рекомендуем использовать последние версии следующих браузеров:
 
-- [Google Chrome](https://www.google.com/chrome/) &mdash; Latest version is fully supported in <Constant name="dbt" />
-- [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/) &mdash; Latest version is fully supported in <Constant name="dbt" />
-- [Apple Safari](https://www.apple.com/safari/) &mdash; Latest version support provided on a best-effort basis
-- [Microsoft Edge](https://www.microsoft.com/en-us/edge?form=MA13FJ&exp=e00) &mdash; Latest version support provided on a best-effort basis
+- [Google Chrome](https://www.google.com/chrome/) &mdash; последняя версия полностью поддерживается в <Constant name="dbt" />
+- [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/) &mdash; последняя версия полностью поддерживается в <Constant name="dbt" />
+- [Apple Safari](https://www.apple.com/safari/) &mdash; поддержка последней версии предоставляется по принципу *best effort*
+- [Microsoft Edge](https://www.microsoft.com/en-us/edge?form=MA13FJ&exp=e00) &mdash; поддержка последней версии предоставляется по принципу *best effort*
 
-<Constant name="dbt" /> provides two types of browser support:
+<Constant name="dbt" /> поддерживает браузеры на двух уровнях:
 
-- Fully supported &mdash; <Constant name="dbt" /> is fully tested and supported on these browsers. Features display and work as intended.
-- Best effort &mdash; You can access <Constant name="dbt" /> on these browsers. Features may not display or work as intended.
+- **Fully supported** &mdash; <Constant name="dbt" /> полностью протестирован и поддерживается в этих браузерах. Функции отображаются и работают так, как задумано.
+- **Best effort** &mdash; вы можете получить доступ к <Constant name="dbt" /> в этих браузерах, однако некоторые функции могут отображаться или работать некорректно.
 
-You may still be able to access and use <Constant name="dbt" /> even without using the latest recommended browser or an unlisted browser. However, some features might not display as intended.
+Вы по-прежнему можете получить доступ к <Constant name="dbt" /> и использовать его, даже если у вас не установлена последняя рекомендуемая версия браузера или если вы используете браузер, не указанный в списке. Однако в этом случае некоторые функции могут работать не так, как ожидается.
 
 :::note
-To improve your experience using <Constant name="dbt" />, we suggest that you turn off ad blockers.
+Чтобы улучшить работу с <Constant name="dbt" />, мы рекомендуем отключить блокировщики рекламы.
 :::
 
-### Browser sessions
+### Сеансы браузера {#browser-sessions}
 
-A session is a period of time during which you’re signed in to a <Constant name="dbt" /> account from a browser. If you close your browser, it will end your session and log you out. You'll need to log in again the next time you try to access <Constant name="dbt" />. 
+Сессия — это период времени, в течение которого вы вошли в аккаунт <Constant name="dbt" /> через браузер. Если вы закроете браузер, сессия завершится, и вы будете автоматически выведены из системы. При следующей попытке получить доступ к <Constant name="dbt" /> вам потребуется снова войти в систему.
 
-If you've logged in using [SSO](/docs/platform/manage-access/sso-overview), you can customize your maximum session duration, which might vary depending on your identity provider (IdP).
+Если вы вошли через [SSO](/docs/platform/manage-access/sso-overview), максимальную продолжительность сеанса можно настроить. Доступные значения зависят от поставщика удостоверений (IdP).

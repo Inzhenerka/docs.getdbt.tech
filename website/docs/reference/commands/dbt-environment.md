@@ -64,29 +64,6 @@ Snowflake Connection Details:
 
 Обратите внимание: <Constant name="dbt" /> не выводит секретные ключи и возвращает 'NA' для любого поля, которое не настроено.
 
-Конфигурация Cloud:
-  ID аккаунта                    185854
-  ID проекта                     271692
-  Имя проекта                    Snowflake
-  ID среды                       243762
-  Имя среды                      Development
-  ID отложенной среды            [N/A]
-  Версия dbt                     1.6.0-latest
-  Имя цели                       default
-  Тип подключения                snowflake
-
-Детали подключения Snowflake:
-  Аккаунт                        ska67070
-  Склад                          DBT_TESTING_ALT
-  База данных                    DBT_TEST
-  Схема                          CLOUD_CLI_TESTING
-  Роль                           SYSADMIN
-  Пользователь                   dbt_cloud_user
-  Поддержка сессии клиента       false 
-```
-
-Обратите внимание, что `<Constant name="cloud" />` не вернёт никаких значений, являющихся секретными ключами, и вернёт `'NA'` для любого поля, которое не настроено.
-
 ### Флаги dbt environment {#dbt-environment-flags}
 
 Используйте следующие флаги (или опции) с командой `dbt environment`:

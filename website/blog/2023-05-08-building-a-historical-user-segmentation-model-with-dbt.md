@@ -12,7 +12,16 @@ date: 2023-06-13
 is_featured: true
 ---
 
-## Введение {#introduction}
+import {useBlogPost} from '@docusaurus/plugin-content-blog/client';
+
+export function IntroductionAnchor() {
+  const {isBlogPostPage} = useBlogPost();
+  return isBlogPostPage ? <span id="introduction" /> : null;
+}
+
+<IntroductionAnchor />
+
+## Введение {#segmentation-introduction}
 
 Большинство подходов к моделированию данных для сегментации клиентов основаны на широкой таблице с атрибутами пользователей. Эта таблица хранит только текущие атрибуты для каждого пользователя и затем загружается в различные SaaS платформы с помощью инструментов обратного ETL.
 

@@ -20,7 +20,7 @@ dbt Labs стремится создать лучшую версию dbt, и в�
 
 В <Constant name="core" /> телеметрия включена по умолчанию. Для полной прозрачности все определения событий доступны в файле [`tracking.py`](https://github.com/dbt-labs/dbt/blob/1.latest/core/dbt/tracking.py).
 
-You can opt out of event tracking at any time by adding the following configuration to your `dbt_project.yml` file:
+Сбор событий можно отключить в любой момент, добавив следующую настройку в `dbt_project.yml`:
 
 <File name="dbt_project.yml">
 

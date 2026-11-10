@@ -1,38 +1,38 @@
 ---
-title: "Lambda views for near real-time dashboards"
+title: "Лямбда-представления для дашбордов с данными почти в реальном времени"
 id: "4-lambda-views"
-description: Combine batch and real-time data in a single view for operational dashboards
-hoverSnippet: Learn the lambda view pattern for near real-time operational dashboards
+description: Объединение пакетных данных и данных реального времени в одном представлении для оперативных дашбордов
+hoverSnippet: Узнайте о паттерне лямбда-представлений для оперативных дашбордов с данными почти в реальном времени
 ---
 
-:::info Snowflake examples ahead
-This page uses Snowflake for code examples, but you can adapt the lambda view pattern to other warehouses.
+:::info Далее — примеры для Snowflake
+На этой странице в примерах кода используется Snowflake, но вы можете адаптировать паттерн лямбда-представлений для других хранилищ данных.
 :::
 
-A lambda view pattern combines a batch / incremental fact table with a small near real-time (NRT) slice of very recent data and exposes them through a single view. This is a legacy-but-still-useful pattern some teams have used to deliver near real‑time operational dashboards on top of dbt and a warehouse.
+Паттерн лямбда-представлений объединяет таблицу фактов, обновляемую пакетно или инкрементально, с небольшим срезом самых свежих данных, поступающих почти в реальном времени (near real-time, NRT), и предоставляет доступ к ним через единое представление. Это устаревший, но всё ещё полезный паттерн, который некоторые команды использовали для создания оперативных дашбордов с данными почти в реальном времени на базе dbt и хранилища данных.
 
-## When to use lambda views
+## Когда использовать лямбда-представления
 
-- You need fresher reads than your normal incremental schedule, but
-- You can't (or don't want to) use [dynamic tables](/reference/resource-configs/snowflake-configs#dynamic-tables) or [materialized views](/docs/build/materializations#materialized-view), or you want to keep logic entirely in dbt SQL.
-The examples used in this page assume the following setup:
-### Assumptions
-The examples used in this page assume the following setup:
-- Raw events land continuously into `raw.events` using your warehouse's streaming ingestion feature (like Snowpipe, Databricks Auto Loader, Kafka, or a similar ingestion mechanism).
-- You already maintain an [incremental fact table](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#incremental-merge-from-append-only-tables) that is rebuilt every few minutes using `incremental_strategy='merge'`.
-- Most dashboards are fine reading from that incremental table, but a small set of operational dashboards want "as‑of‑now" data (for example, the last few minutes of events).
+- Вам нужны более свежие данные, чем позволяет обычное расписание инкрементального обновления, но
+- Вы не можете (или не хотите) использовать [динамические таблицы](/reference/resource-configs/snowflake-configs#dynamic-tables) или [материализованные представления](/docs/build/materializations#materialized-view) либо хотите полностью сохранить логику в SQL-коде dbt.
+Примеры на этой странице предполагают следующую конфигурацию:
+### Исходные условия
+Примеры на этой странице предполагают следующую конфигурацию:
+- Необработанные события непрерывно поступают в `raw.events` с помощью механизма потоковой загрузки вашего хранилища данных (например, Snowpipe, Databricks Auto Loader, Kafka или аналогичного механизма загрузки).
+- У вас уже есть [инкрементальная таблица фактов](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#incremental-merge-from-append-only-tables), которая обновляется каждые несколько минут с использованием `incremental_strategy='merge'`.
+- Большинству дашбордов достаточно данных из этой инкрементальной таблицы, но небольшой группе оперативных дашбордов нужны данные «на текущий момент» (например, события за последние несколько минут).
 
-### How this pattern works
+### Как работает этот паттерн
 
-- The base incremental table is rebuilt every few minutes using `incremental_strategy='merge'`.
-- The NRT view is a view that selects only events newer than the max `event_ts` already persisted in the base incremental table.
-- The lambda view `UNION ALL`s the base table and the NRT view, de-duplicating rows based on primary key semantics.
+- Базовая инкрементальная таблица обновляется каждые несколько минут с использованием `incremental_strategy='merge'`.
+- NRT-представление выбирает только события новее максимального значения `event_ts`, уже сохранённого в базовой инкрементальной таблице.
+- Лямбда-представление объединяет базовую таблицу и NRT-представление с помощью `UNION ALL`, устраняя дубликаты строк на основе семантики первичного ключа.
 
-Downstream BI or dashboards query only the lambda view.
+Нижележащие BI-инструменты и дашборды обращаются только к лямбда-представлению.
 
-## Base incremental table
+## Базовая инкрементальная таблица
 
-You can reuse the incremental `merge` from [Snowflake pattern 1](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#incremental-merge-from-append-only-tables) as your base table; for completeness:
+В качестве базовой таблицы можно использовать инкрементальную модель с `merge` из [паттерна 1 для Snowflake](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#incremental-merge-from-append-only-tables); для полноты приведём её здесь:
 
 ```sql
 -- models/fct_events.sql
@@ -67,11 +67,11 @@ select *
 from source_events;
 ```
 
-Schedule this model to run, for example, every 5–15 minutes as part of your near real‑time job.
+Настройте запуск этой модели, например, каждые 5–15 минут в составе задания для обработки данных почти в реальном времени.
 
-## NRT view: rows more recent than the base table
+## NRT-представление: строки новее данных в базовой таблице
 
-The NRT view returns only events with `event_ts` greater than the maximum timestamp in the base table, so there is no overlap or double counting:
+NRT-представление возвращает только события со значением `event_ts`, превышающим максимальную временную метку в базовой таблице, поэтому пересечения данных и двойного учёта не возникает:
 
 ```sql
 -- models/fct_events_nrt.sql
@@ -101,14 +101,14 @@ select *
 from fresh_events;
 ```
 
-Characteristics:
+Особенности:
 
-- No scheduling required &mdash; it's just a view over `raw.events` filtered by `max(event_ts)` from `fct_events`.
-- Every query against `fct_events_nrt` scans only "since last batch" data, which should be a small time window (for example, a few minutes or hours, depending on your job cadence).
+- Расписание не требуется &mdash; это обычное представление над `raw.events` с фильтрацией по `max(event_ts)` из `fct_events`.
+- Каждый запрос к `fct_events_nrt` сканирует только данные, поступившие «с момента последнего пакетного обновления»: это должен быть небольшой временной интервал (например, несколько минут или часов в зависимости от частоты запуска задания).
 
-### Lambda view: single read path for BI
+### Лямбда-представление: единая точка чтения данных для BI
 
-The lambda view combines historical data from the base incremental table with the most recent events from the NRT view.
+Лямбда-представление объединяет исторические данные из базовой инкрементальной таблицы с самыми свежими событиями из NRT-представления.
 
 ```sql
 -- models/fct_events_lambda.sql
@@ -137,23 +137,23 @@ select
 from {{ ref('fct_events_nrt') }};
 ```
 
-Point your BI tools and dashboards to `analytics.fct_events_lambda`. Most data comes from the pre-computed incremental table, while the most recent events (since the last dbt run) come from a live query against `raw.events`.
+Настройте BI-инструменты и дашборды на чтение из `analytics.fct_events_lambda`. Большая часть данных поступает из предварительно рассчитанной инкрементальной таблицы, а самые свежие события (с момента последнего запуска dbt) — из запроса к `raw.events`, выполняемого в момент обращения.
 
-This approach is outlined in [this original dbt lambda view blog post](https://discourse.getdbt.com/t/how-to-create-near-real-time-models-with-just-dbt-sql/1457) which describes how teams like JetBlue wired near real‑time operational dashboards on Snowflake and dbt.
+Этот подход изложен в [исходной публикации о лямбда-представлениях в dbt](https://discourse.getdbt.com/t/how-to-create-near-real-time-models-with-just-dbt-sql/1457), где описано, как команды, в том числе JetBlue, создавали оперативные дашборды с данными почти в реальном времени на базе Snowflake и dbt.
 
-## Considerations
-Take the following into consideration when using this pattern:
+## Что следует учитывать
+При использовании этого паттерна учитывайте следующее:
 
-- **Cost profile**
-    - Every query against `fct_events_lambda` must read the NRT slice from `raw.events` in addition to the base table.
-    - Use this pattern only for truly operational dashboards that justify the extra per‑query cost.
-- **Freshness**
-    - Freshness is bounded by:
-        - Your dbt incremental job frequency (age of `fct_events`), plus
-        - Ingestion latency into `raw.events` (Snowpipe / streaming layer).
-- **Complexity vs alternatives**
-    - For many modern Snowflake implementations, a [dynamic table](/reference/resource-configs/snowflake-configs#dynamic-tables) or [materialized view](/docs/build/materializations#materialized-view) with a small `target_lag` can provide similar "always within X minutes" service level agreements with less custom SQL and warehouse‑managed incremental logic.
-    - Lambda views are best positioned as an _advanced / legacy pattern_ you can still use for when you:
-        - Want all logic in dbt SQL
-        - Lack the right warehouse feature in your environment
-        - Are extending an existing implementation already built this way
+- **Структура затрат**
+    - Каждый запрос к `fct_events_lambda` должен читать NRT-срез из `raw.events` в дополнение к базовой таблице.
+    - Используйте этот паттерн только для действительно оперативных дашбордов, потребности которых оправдывают дополнительные затраты на каждый запрос.
+- **Свежесть данных**
+    - Свежесть данных ограничена:
+        - Частотой запуска инкрементального задания dbt (давностью обновления `fct_events`), а также
+        - Задержкой загрузки в `raw.events` (Snowpipe / слой потоковой загрузки).
+- **Сложность в сравнении с альтернативами**
+    - Во многих современных реализациях на Snowflake [динамическая таблица](/reference/resource-configs/snowflake-configs#dynamic-tables) или [материализованное представление](/docs/build/materializations#materialized-view) с небольшим значением `target_lag` могут обеспечить аналогичные соглашения об уровне обслуживания по принципу «данные всегда не старше X минут», при этом требуя меньше собственного SQL-кода и передавая управление инкрементальной логикой хранилищу данных.
+    - Лямбда-представления лучше рассматривать как _продвинутый / устаревший паттерн_, который по-прежнему можно использовать, если вы:
+        - Хотите сохранить всю логику в SQL-коде dbt
+        - Не располагаете нужной возможностью хранилища данных в своей среде
+        - Расширяете существующую реализацию, уже построенную таким образом

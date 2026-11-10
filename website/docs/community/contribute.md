@@ -24,7 +24,7 @@ id: contribute
 />
 
 <Card
-    title="Coding contributions"
+    title="Вклад в код"
     body="Сообщество dbt поддерживает широкий спектр проектов с открытым исходным кодом и доступным исходным кодом, и это программное обеспечение лежит в основе всего, что мы делаем. Узнайте, как принять участие в проектах экосистемы dbt."
     link="community/contributing/contributing-coding"
     icon="folder"

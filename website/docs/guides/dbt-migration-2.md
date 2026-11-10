@@ -1,8 +1,8 @@
 ---
-title: 'Move to the dbt platform: What you need to know'
+title: "Переход на платформу dbt: что нужно знать"
 id: dbt-migration-2
-description: "Use this guide to understand the considerations and methods you need to move to the dbt platform."
-hoverSnippet: "Use this guide to understand the considerations and methods you need to move to the dbt platform."
+description: "Что учесть при переходе на платформу dbt и какие способы миграции доступны."
+hoverSnippet: "Что учесть при переходе на платформу dbt и какие способы миграции доступны."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Migration', 'dbt platform']
@@ -10,204 +10,204 @@ keywords: ['dbt v1','dbt platform','Migration', 'Move dbt', 'Migrate dbt']
 level: 'Intermediate'
 ---
 
-## Introduction
+## Введение {#introduction}
 
-Moving from self-hosted dbt to the <Constant name="dbt_platform" /> streamlines analytics engineering workflows by allowing teams to develop, test, deploy, and explore data products using a single, fully managed software service. It's not just better tooling &mdash; it's about lowering total cost of ownership, powering AI with trusted data, and scaling with governed self-service.
+Переход с самостоятельно размещённого dbt на <Constant name="dbt_platform" /> упрощает рабочие процессы аналитической инженерии, позволяя командам разрабатывать, тестировать, развёртывать и исследовать продукты данных с помощью единого, полностью управляемого программного сервиса. Речь не только об улучшенных инструментах &mdash; но и о снижении совокупной стоимости владения, обеспечении ИИ надёжными данными и масштабировании с контролируемым самообслуживанием.
 
-Explore our 3-part-guide series on moving from self-hosted dbt to the <Constant name="dbt_platform" />. The series is ideal for users aiming for streamlined workflows and enhanced analytics:
+Изучите нашу серию руководств из 3 частей о переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" />. Эта серия идеально подходит пользователям, которые стремятся упростить рабочие процессы и улучшить аналитику:
 
 import CoreMigrationTable from '/snippets/_core-migration-table.md';
 
 <CoreMigrationTable/>
 
-<Expandable alt_header="What are dbt and dbt v1?">
+<Expandable alt_header="Что такое dbt и dbt v1?">
 
-   - The <Constant name="dbt_platform" /> is the fastest and most reliable way to deploy dbt. It enables you to develop, test, deploy, and explore data products using a single, fully managed service. It also supports:
-     - Development experiences tailored to multiple personas ([<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) or [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation))
-     - Out-of-the-box [CI/CD workflows](/docs/deploy/ci-jobs)
-     - The [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) for consistent metrics
-     - Domain ownership of data with multi-project [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro) setups
-     - [<Constant name="catalog" />](/docs/explore/explore-projects) for easier data discovery and understanding
+   - <Constant name="dbt_platform" /> — самый быстрый и надёжный способ развёртывания dbt. Платформа позволяет разрабатывать, тестировать, развёртывать и исследовать продукты данных с помощью единого, полностью управляемого сервиса. Она также поддерживает:
+     - Средства разработки, адаптированные для разных категорий пользователей ([<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) или [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation))
+     - готовые [CI/CD workflows](/docs/deploy/ci-jobs)
+     - [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) для консистентных метрик
+     - доменное владение данными с multi-project настройкой [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro)
+     - [<Constant name="catalog" />](/docs/explore/explore-projects) для более простого поиска и понимания данных
 
-   Learn more about [<Constant name="dbt_platform" /> features](/docs/platform/about-platform/dbt-platform-features).
-- <Constant name="dbt" /> is an open-source tool that enables data teams to define and execute data transformations in a cloud data warehouse following analytics engineering best practices. While this can work well for 'single players' and small technical teams, all development happens on a command-line interface, and production deployments must be self-hosted and maintained. This requires significant, costly work that adds up over time to maintain and scale.
-
-</Expandable>
-
-## What you'll learn
-Today thousands of companies, with data teams ranging in size from 2 to 2,000, rely on the <Constant name="dbt_platform" /> to accelerate data work, increase collaboration, and win the trust of the business. Understanding what you'll need to do in order to move between the <Constant name="dbt_platform" /> and your current self-hosted dbt deployment will help you strategize and plan for your move.
-
-The guide outlines the following steps:
-
-- [Considerations](/guides/dbt-migration-2?step=3): Learn about the most important things you need to think about when moving from self-hosted dbt to the <Constant name="dbt_platform" />.
-- [Plan your move](/guides/dbt-migration-2?step=4): Considerations you need to make, such as user roles and permissions, onboarding order, current workflows, and more.
-- [Move to the <Constant name="dbt_platform" />](/guides/dbt-migration-2?step=5): Review the steps to move your <Constant name="dbt" /> project to the <Constant name="dbt_platform" />, including setting up your account, data platform, and <Constant name="git" /> repository.
-- [Test and validate](/guides/dbt-migration-2?step=6): Discover how to ensure model accuracy and performance post-move.
-- [Transition and training](/guides/dbt-migration-2?step=7): Learn how to fully transition to the <Constant name="dbt_platform" /> and what training and support you may need. 
-- [Summary](/guides/dbt-migration-2?step=8): Summarizes key takeaways and what you've learned in this guide.
-- [What's next?](/guides/dbt-migration-2?step=9): Introduces what to expect in the following guides.
-
-## Considerations
-
-If your team is using self-hosted dbt today, you could be reading this guide because:
-- You've realized the burden of maintaining that deployment.
-- The person who set it up has since left.
-- You're interested in what the <Constant name="dbt_platform" /> could do to better manage the complexity of your dbt deployment, democratize access to more contributors, or improve security and governance practices.
-
-This guide shares the technical adjustments and team collaboration strategies you'll need to know to move your project from self-hosted dbt to the <Constant name="dbt_platform" />.  Each "build your own" deployment of <Constant name="dbt" /> will look a little different, but after seeing hundreds of teams make the migration, there are many things in common.
-
-The most important things you need to think about when moving from self-hosted dbt to the <Constant name="dbt_platform" />:
-
-- How is your team structured? Are there natural divisions of domain?
-- Should you have one project or multiple? Which dbt resources do you want to standardize & keep central?
-- Who should have permission to view, develop, and administer?
-- How are you scheduling your dbt models to run in production?
-- How are you currently managing Continuous integration/Continuous deployment (CI/CD) of logical changes (if at all)?
-- How do your data developers prefer to work?
-- How do you manage different data environments and the different behaviors in those environments?
-
-The <Constant name="dbt_platform" /> provides standard mechanisms for tackling these considerations, all of which deliver long-term benefits to your organization:
-- Cross-team collaboration
-- Access control
-- Orchestration
-- Isolated data environments
-
-If you have rolled out your own self-hosted dbt deployment, you have probably come up with different answers.
-
-## Plan your move
-
-As you plan your move, consider your workflow and team layout to ensure a smooth transition. Here are some key considerations to keep in mind:
-
-<Expandable alt_header="Start small to minimize risk and maximize learning">
-
-You don't need to move every team and every developer's workflow all at once. Many customers with large dbt deployments start by moving one team and one project.
-
-Once the benefits of a consolidated platform are clear, move the rest of your teams and workflows. While long-term 'hybrid' deployments can be challenging, it may make sense as a temporary on-ramp.
-</Expandable>
-
-<Expandable alt_header="User roles and responsibilities"> 
-
-Assess the users or personas involved in the pre-move, during the move, and post-move.
-- **Administrators**: Plan for new [access controls](/docs/platform/manage-access/about-user-access) in the <Constant name="dbt_platform" />, such as deciding what teams can manage themselves and what should be standardized. Determine who will be responsible for setting up and maintaining projects, data platform connections, and environments.
-- **Data developers** (data analysts, data engineers, analytics engineers, business analysts): Determine onboarding order, workflow adaptation in the <Constant name="dbt_platform" />, training on [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) or [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) usage, and role changes.
-- **Data consumers:** Discover data insights by using [<Constant name="catalog" />](/docs/explore/explore-projects) to view your project's resources (such as models, tests, and metrics) and their lineage to gain a better understanding of its latest production state. <Lifecycle status="self_service,managed" />
+   Подробнее о [возможностях <Constant name="dbt_platform" />](/docs/platform/about-platform/dbt-platform-features).
+- <Constant name="dbt" /> — инструмент с открытым исходным кодом, позволяющий командам по работе с данными определять и выполнять преобразования данных в облачном хранилище данных в соответствии с лучшими практиками аналитической инженерии. Хотя это может хорошо подходить для 'одиночных пользователей' и небольших технических команд, вся разработка ведётся через интерфейс командной строки, а развёртывание и обслуживание производственной среды необходимо выполнять самостоятельно. Это требует значительных и дорогостоящих усилий по обслуживанию и масштабированию, объём которых со временем растёт.
 
 </Expandable>
 
-<Expandable alt_header="Onboarding order"> 
+## Чему вы научитесь {#what-youll-learn}
+Сегодня тысячи компаний с командами по работе с данными численностью от 2 до 2,000 человек полагаются на <Constant name="dbt_platform" />, чтобы ускорить работу с данными, улучшить совместную работу и завоевать доверие бизнеса. Понимание того, что потребуется для перехода между <Constant name="dbt_platform" /> и вашим текущим самостоятельно размещённым развёртыванием dbt, поможет выработать стратегию и спланировать переход.
 
-If you have multiple teams of dbt developers, think about how to start your onboarding sequence for the <Constant name="dbt_platform" />:
-- Start with downstream (like business-embedded teams) who may benefit from the <Constant name="studio_ide" /> as dev experience (less technical users) and sharing features (like auto-deferral and <Constant name="catalog" />) to share with their stakeholders, moving to more technical teams later.
-- Consider setting up a [CI job](/docs/deploy/ci-jobs) in the <Constant name="dbt_platform" /> (even before development or production jobs) to streamline development workflows. This is especially beneficial if there's no existing CI process.
+В руководстве описаны следующие шаги:
+
+- [Что следует учитывать](/guides/dbt-migration-2?step=3): Узнайте о наиболее важных аспектах, которые необходимо учитывать при переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" />.
+- [Спланируйте переход](/guides/dbt-migration-2?step=4): учитывайте такие вопросы, как роли и права пользователей, порядок онбординга, текущие workflows и т. д.
+- [Переход на <Constant name="dbt_platform" />](/guides/dbt-migration-2?step=5): Ознакомьтесь с шагами по переносу проекта <Constant name="dbt" /> на <Constant name="dbt_platform" />, включая настройку учётной записи, платформы данных и репозитория <Constant name="git" />.
+- [Тестирование и валидация](/guides/dbt-migration-2?step=6): узнайте, как обеспечить корректность моделей и производительность после перехода.
+- [Переход и обучение](/guides/dbt-migration-2?step=7): Узнайте, как полностью перейти на <Constant name="dbt_platform" /> и какое обучение и поддержка могут вам понадобиться. 
+- [Итоги](/guides/dbt-migration-2?step=8): краткое резюме ключевых выводов и того, чему вы научились в этом руководстве.
+- [Что дальше?](/guides/dbt-migration-2?step=9): что ожидать в следующих руководствах.
+
+## Важные аспекты {#considerations}
+
+Если ваша команда сейчас использует самостоятельно размещённый dbt, возможно, вы читаете это руководство, потому что:
+- Вы осознали, насколько обременительно обслуживать такое развёртывание.
+- человек, который его настраивал, уже ушел;
+- Вас интересует, как <Constant name="dbt_platform" /> может помочь лучше управлять сложностью вашего развёртывания dbt, расширить доступ для большего числа участников или улучшить практики безопасности и управления.
+
+В этом руководстве описаны технические изменения и стратегии совместной работы команды, которые необходимо знать для переноса проекта с самостоятельно размещённого dbt на <Constant name="dbt_platform" />.  Каждое "самостоятельно созданное" развёртывание <Constant name="dbt" /> немного отличается от других, но опыт миграции сотен команд позволяет выявить много общего.
+
+Наиболее важные аспекты, которые необходимо учитывать при переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" />:
+
+- Как устроена ваша команда? Есть ли естественное разделение по доменам?
+- Должен быть один проект или несколько? Какие dbt-ресурсы вы хотите стандартизировать и держать централизованно?
+- У кого должны быть права на просмотр, разработку и администрирование?
+- Как вы планируете запуск dbt-моделей в production?
+- Как сейчас вы управляете Continuous integration/Continuous deployment (CI/CD) логических изменений (если вообще управляете)?
+- Как вашим разработчикам данных удобнее работать?
+- Как вы управляете разными data environments и разным поведением в этих окружениях?
+
+<Constant name="dbt_platform" /> предоставляет стандартные механизмы для решения этих задач, каждый из которых приносит вашей организации долгосрочные преимущества:
+- коллаборация между командами
+- контроль доступа
+- оркестрация
+- изолированные data environments
+
+Если вы самостоятельно развернули dbt на собственной инфраструктуре, вы, вероятно, нашли другие решения.
+
+## Спланируйте переход {#plan-your-move}
+
+Планируя переход, оцените ваш workflow и структуру команды, чтобы обеспечить плавный процесс. Ниже — ключевые моменты, которые стоит учесть:
+
+<Expandable alt_header="Начните с малого, чтобы минимизировать риски и получить максимум опыта">
+
+Необязательно переносить все команды и рабочие процессы всех разработчиков одновременно. Многие клиенты с крупными развёртываниями dbt начинают с переноса одной команды и одного проекта.
+
+Когда преимущества единой платформы станут очевидны, перенесите остальные команды и рабочие процессы. Хотя долгосрочные 'гибридные' развёртывания могут вызывать сложности, такой подход может быть оправдан как временный этап перехода.
+</Expandable>
+
+<Expandable alt_header="Роли и обязанности пользователей"> 
+
+Оцените пользователей и роли (personas) до перехода, во время и после него.
+- **Администраторы**: Спланируйте новые [механизмы управления доступом](/docs/platform/manage-access/about-user-access) в <Constant name="dbt_platform" />, например решите, чем команды смогут управлять самостоятельно, а что следует стандартизировать. Определите, кто будет отвечать за настройку и обслуживание проектов, подключений к платформе данных и сред.
+- **Разработчики данных** (аналитики данных, инженеры данных, инженеры аналитики, бизнес-аналитики): Определите порядок подключения пользователей, адаптацию рабочих процессов в <Constant name="dbt_platform" />, обучение использованию [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) или [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) и изменения ролей.
+- **Потребители данных:** исследуйте данные с помощью [<Constant name="catalog" />](/docs/explore/explore-projects), чтобы просматривать ресурсы проекта (например модели, тесты и метрики) и их lineage, лучше понимая текущее production-состояние. <Lifecycle status="self_service,managed" />
 
 </Expandable>
 
-<Expandable alt_header="Analyze current workflows, review processes, and team structures">
+<Expandable alt_header="Порядок подключения пользователей"> 
 
-Discover how the <Constant name="dbt_platform" /> can help simplify development, orchestration, and testing:
-- **Development**: Develop dbt models, allowing you to build, test, run, and version control your dbt projects using the <Constant name="platform_cli" /> (command line interface or code editor) or <Constant name="studio_ide" /> (browser-based).
-- **Orchestration**: Create custom schedules to run your production jobs. Schedule jobs by day of the week, time of day, or a recurring interval.
-  - Set up [a CI job](/docs/deploy/ci-jobs) to ensure developer effectiveness, and CD jobs to deploy changes as soon as they're merged.
-  - Link deploy jobs together by [triggering a job](/docs/deploy/deploy-jobs#trigger-on-job-completion) when another one is completed. 
-  - For the most flexibility, use the [<Constant name="dbt_platform" /> API](/dbt-cloud/api-v2#/) to trigger jobs. This makes sense when you want to integrate dbt execution with other data workflows.
-- **Continuous integration (CI)**: Use [CI jobs](/docs/deploy/ci-jobs) to run your dbt projects in a temporary schema when new commits are pushed to open pull requests. This build-on-PR functionality is a great way to catch bugs before deploying to production.
-  - For many teams, <Constant name="dbt_platform" /> CI represents a major improvement compared to their previous development workflows.
-- **How are you defining tests today?**: While testing production data is important, it's not the most efficient way to catch logical errors introduced by developers You can use [unit testing](/docs/build/unit-tests) to allow you to validate your SQL modeling logic on a small set of static inputs *before* you materialize your full model in production.
+Если у вас несколько команд разработчиков dbt, продумайте, с чего начать их последовательное подключение к <Constant name="dbt_platform" />:
+- Начните с downstream‑команд (например, команд внутри бизнеса), которым может быть удобнее разрабатывать в <Constant name="studio_ide" /> (менее техническим пользователям) и использовать функции шеринга (например auto‑deferral и <Constant name="catalog" />) для стейкхолдеров; а затем переходите к более техническим командам.
+- Рассмотрите возможность настройки [задания CI](/docs/deploy/ci-jobs) в <Constant name="dbt_platform" /> (ещё до заданий разработки или производственной среды), чтобы упростить рабочие процессы разработки. Это особенно полезно, если процесс CI пока отсутствует.
 
 </Expandable>
 
-<Expandable alt_header="Understand access control">
+<Expandable alt_header="Проанализируйте текущие рабочие процессы, процессы проверки и структуру команд">
 
-Transition to the <Constant name="dbt_platform" />'s [access control](/docs/platform/manage-access/about-user-access) mechanisms to ensure security and proper access management. <Constant name="dbt_platform" /> administrators can use the <Constant name="dbt_platform" />'s permission model to control user-level access in a <Constant name="dbt_platform" /> account:
-- **License-based access controls:** Users are configured with account-wide license types. These licenses control the things a user can do within the application: view project metadata, develop changes within those projects, or administer access to those projects.
-- **Role-based Access Control (RBAC):** Users are assigned to *groups* with specific permissions on specific projects or all projects in the account. A user may be a member of multiple groups, and those groups may have permissions on multiple projects. <Lifecycle status="managed,managed_plus" />
-
-</Expandable>
-
-<Expandable alt_header="Manage environments"> 
-
-If you require isolation between production and pre-production data environments due to sensitive data, the <Constant name="dbt_platform" /> can support Development, Staging, and Production data [environments](/docs/dbt-platform-environments).
-
-This provides developers with the benefits of an enhanced workflow while ensuring isolation between Staging and Production data, and locking down permissions on Prod.
+Узнайте, как <Constant name="dbt_platform" /> может помочь упростить разработку, оркестрацию и тестирование:
+- **Разработка**: разрабатывайте dbt‑модели, собирайте, тестируйте, запускайте и ведите version control, используя <Constant name="platform_cli" /> (CLI или code editor) или <Constant name="studio_ide" /> (в браузере).
+- **Оркестрация**: создавайте кастомные расписания для production jobs — по дням недели, времени суток или с заданным интервалом.
+  - Настройте [задание CI](/docs/deploy/ci-jobs), чтобы обеспечить эффективность работы разработчиков, и задания CD, чтобы развёртывать изменения сразу после их слияния.
+  - Связывайте deploy jobs, [триггеря job](/docs/deploy/deploy-jobs#trigger-on-job-completion), когда другой завершился.
+  - Для максимальной гибкости используйте [<Constant name="dbt_platform" /> API](/dbt-cloud/api-v2#/), чтобы триггерить jobs. Это уместно, когда вы хотите интегрировать выполнение dbt с другими data workflows.
+- **Continuous integration (CI)**: используйте [CI jobs](/docs/deploy/ci-jobs), чтобы запускать dbt‑проект во временной схеме, когда новые коммиты пушатся в открытые pull requests. Такой build‑on‑PR отлично помогает ловить баги до деплоя в production.
+  - Для многих команд CI в <Constant name="dbt_platform" /> — большое улучшение по сравнению с прежними workflows разработки.
+- **Как вы определяете тесты сейчас?**: Хотя тестирование производственных данных важно, это не самый эффективный способ выявления логических ошибок, допущенных разработчиками Вы можете использовать [модульное тестирование](/docs/build/unit-tests), чтобы проверять логику SQL-моделей на небольшом наборе статических входных данных *до* материализации полной модели в производственной среде.
 
 </Expandable>
 
-## Move to dbt
+<Expandable alt_header="Разберитесь в управлении доступом">
 
-This guide is your roadmap to help you think about migration strategies and what moving from self-hosted dbt to the <Constant name="dbt_platform" /> could look like.
+Перейдите на механизмы [управления доступом](/docs/platform/manage-access/about-user-access) в <Constant name="dbt_platform" />, чтобы обеспечить безопасность и надлежащее управление доступом. Администраторы <Constant name="dbt_platform" /> могут использовать модель разрешений <Constant name="dbt_platform" /> для управления доступом на уровне пользователей в учётной записи <Constant name="dbt_platform" />:
+- **License-based access controls:** пользователям назначаются типы лицензий на уровне аккаунта. Эти лицензии определяют, что пользователь может делать в приложении: просматривать метаданные проекта, разрабатывать изменения в проектах или администрировать доступ к проектам.
+- **Role-based Access Control (RBAC):** пользователи добавляются в *groups* с конкретными правами на конкретные проекты или на все проекты в аккаунте. Пользователь может состоять в нескольких groups, и эти groups могут иметь права на несколько проектов. <Lifecycle status="managed,managed_plus" />
 
-After reviewing the considerations and planning your move, you may want to start moving your <Constant name="dbt" /> project to the <Constant name="dbt_platform" />:
-- Check out the detailed [Move to the <Constant name="dbt_platform" />: Get started](/guides/dbt-migration-1?step=1) guide for useful tasks and insights for a smooth transition from self-hosted dbt to the <Constant name="dbt_platform" />.
+</Expandable>
 
-For a more detailed comparison of self-hosted dbt and the <Constant name="dbt_platform" />, check out [How the <Constant name="dbt_platform" /> compares with self-hosted dbt](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud).
+<Expandable alt_header="Управление средами"> 
 
-## Test and validate
+Если из-за конфиденциальных данных вам требуется изоляция производственной и предпроизводственной сред данных, <Constant name="dbt_platform" /> поддерживает [среды](/docs/dbt-platform-environments) данных для разработки, подготовки к эксплуатации и эксплуатации.
 
-After [setting the foundations of the <Constant name="dbt_platform" />](/guides/dbt-migration-1?step=1), it's important to validate your migration to ensure seamless functionality and data integrity:
+Это дает разработчикам преимущества улучшенного workflow и при этом обеспечивает изоляцию между Staging и Production, а также блокирует права на Prod.
 
-- **Review your dbt project:** Ensure your project compiles correctly and that you can run commands. Make sure your models are accurate and monitor performance post-move.
-- **Start cutover:** You can start the cutover to the <Constant name="dbt_platform" /> by creating a <Constant name="dbt_platform" /> job with commands that only run a small subset of the DAG. Validate the tables are being populated in the proper database/schemas as expected. Then continue to expand the scope of the job to include more sections of the DAG as you gain confidence in the results.
-- **Precision testing:** Use [unit testing](/docs/build/unit-tests) to allow you to validate your SQL modeling logic on a small set of static inputs *before* you materialize your full model in production.
-- **Access and permissions**: Review and adjust [access controls and permissions](/docs/platform/manage-access/about-user-access) within the <Constant name="dbt_platform" /> to maintain security protocols and safeguard your data.
+</Expandable>
 
-## Transition and training
+## Переход на dbt {#move-to-dbt}
 
-Once you've confirmed that <Constant name="dbt_platform" /> orchestration and CI/CD are working as expected, you should pause your current orchestration tool and stop or update your current CI/CD process. This is not relevant if you're still using an external orchestrator (such as Airflow), and you've swapped out local dbt execution for <Constant name="dbt_platform" /> execution (through the [API](/docs/dbt-apis/overview)).
+Это руководство — ваша дорожная карта, которая поможет продумать стратегии миграции и представить, как может выглядеть переход с самостоятельно размещённого dbt на <Constant name="dbt_platform" />.
 
-Familiarize your team with the <Constant name="dbt_platform" />'s [features](/docs/platform/about-platform/dbt-platform-features) and optimize development and deployment processes. Some key features to consider include:
-- **Release tracks:** Choose a [release track](/docs/dbt-versions/dbt-release-tracks) for automatic dbt version upgrades, at the cadence appropriate for your team — removing the hassle of manual updates and the risk of version discrepancies. You can also get early access to new functionality, ahead of self-hosted dbt.
-- **Development tools**: Use the [<Constant name="dbt_platform" /> CLI](/docs/platform/dbt-cli-installation) or [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) to build, test, run, and version control your dbt projects.
-- **Documentation and Source freshness:**  Automate storage of [documentation](/docs/build/documentation) and track [source freshness](/docs/deploy/source-freshness) in the <Constant name="dbt_platform" />, which streamlines project maintenance.
-- **Notifications and logs:** Receive immediate [notifications](/docs/deploy/monitor-jobs) for job failures, with direct links to the job details. Access comprehensive logs for all job runs to help with troubleshooting.
-- **CI/CD:** Use the <Constant name="dbt_platform" />'s [CI/CD](/docs/deploy/ci-jobs) feature to run your dbt projects in a temporary schema whenever new commits are pushed to open pull requests. This helps with catching bugs before deploying to production.
+Рассмотрев важные аспекты и спланировав переход, вы можете начать перенос проекта <Constant name="dbt" /> на <Constant name="dbt_platform" />:
+- Ознакомьтесь с подробным руководством [Переход на <Constant name="dbt_platform" />: Начало работы](/guides/dbt-migration-1?step=1), в котором приведены полезные задачи и рекомендации для плавного перехода с самостоятельно размещённого dbt на <Constant name="dbt_platform" />.
 
-### Beyond your move
+Более подробное сравнение самостоятельно размещённого dbt и <Constant name="dbt_platform" /> приведено в статье [Сравнение <Constant name="dbt_platform" /> с самостоятельно размещённым dbt](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud).
 
-Now that you've chosen the <Constant name="dbt_platform" /> as your platform, you've unlocked the power of streamlining collaboration, enhancing workflow efficiency, and leveraging powerful [features](/docs/platform/about-platform/dbt-platform-features) for analytics engineering teams. Here are some additional features you can use to unlock the full potential of the <Constant name="dbt_platform" />:
+## Тестирование и валидация {#test-and-validate}
 
-- **Audit logs:** Use [audit logs](/docs/platform/manage-access/audit-log) to review actions performed by people in your organization. Audit logs contain audited user and system events in real time. You can even [export](/docs/platform/manage-access/audit-log#exporting-logs) *all* the activity (beyond the 90 days you can view in the <Constant name="dbt_platform" />). <Lifecycle status="managed,managed_plus" />
-- **<Constant name="dbt_platform" /> APIs:** Use the <Constant name="dbt_platform" />'s robust [APIs](/docs/dbt-apis/overview) to create, read, update, and delete (CRUD) projects/jobs/environments project. The [<Constant name="dbt_platform" /> Administrative API](/docs/dbt-apis/admin-api) and [Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job) facilitate programmatic access and configuration storage. While the [Discovery API](/docs/dbt-apis/discovery-api) offers extensive metadata querying capabilities, such as job data, model configurations, usage, and overall project health. <Lifecycle status="self_service,managed" />
-- **<Constant name="catalog" />**: Use [<Constant name="catalog" />](/docs/explore/explore-projects) to view your project's [resources](/docs/build/projects) (such as models, tests, and metrics) and their [lineage](https://docs.getdbt.com/terms/data-lineage) to gain a better understanding of its latest production state. (Once you have a successful job in a Production environment). <Lifecycle status="self_service,managed" />
-- **dbt Semantic Layer:** The [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) allows you to define universal metrics on top of your models that can then be queried in your [business intelligence (BI) tool](/docs/platform-integrations/avail-sl-integrations). This means no more inconsistent metrics — there's now a centralized way to define these metrics and create visibility in every component of the data flow. <Lifecycle status="self_service,managed" />
-- **dbt Mesh:** Use [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro) to share data models across organizations, enabling data teams to collaborate on shared data models and leverage the work of other teams. <Lifecycle status="managed,managed_plus" />
+После [базовой настройки <Constant name="dbt_platform" />](/guides/dbt-migration-1?step=1) важно проверить результаты миграции, чтобы обеспечить бесперебойную работу и целостность данных:
 
-### Additional help
+- **Проверьте dbt‑проект:** убедитесь, что проект компилируется корректно и вы можете запускать команды. Проверьте корректность моделей и мониторьте производительность после перехода.
+- **Начните переключение:** Вы можете начать переключение на <Constant name="dbt_platform" />, создав в <Constant name="dbt_platform" /> задание с командами, которые выполняют лишь небольшую часть DAG. Убедитесь, что таблицы заполняются в нужной базе данных/схемах, как и ожидалось. Затем, по мере роста уверенности в результатах, расширяйте охват задания, включая в него дополнительные части DAG.
+- **Точное тестирование:** используйте [unit testing](/docs/build/unit-tests), чтобы валидировать логику SQL‑моделей на небольшом наборе статических входных данных *до* материализации полной модели в production.
+- **Доступ и разрешения**: Проверьте и скорректируйте [механизмы управления доступом и разрешения](/docs/platform/manage-access/about-user-access) в <Constant name="dbt_platform" />, чтобы соблюдать протоколы безопасности и защищать данные.
 
-- **dbt Learn courses**: Access our free [Learn <Constant name="dbt" />](https://learn.getdbt.com) video courses for on-demand training.
-- **dbt Community:** Join the [dbt Community](https://community.getdbt.com/) to connect with other dbt users, ask questions, and share best practices.
-- **dbt Support team:** Our [dbt Support team](/docs/dbt-support) is always available to help you troubleshoot your <Constant name="dbt" /> issues. Create a support ticket in the <Constant name="dbt_platform" /> and we'll be happy to help!
-- **Account management** Enterprise accounts have an account management team available to help troubleshoot solutions and account management assistance. [Book a demo](https://www.getdbt.com/contact) to learn more. <Lifecycle status="managed,managed_plus" />
+## Переход и обучение {#transition-and-training}
 
-## Summary
+Убедившись, что оркестрация и CI/CD в <Constant name="dbt_platform" /> работают должным образом, приостановите текущий инструмент оркестрации и остановите или обновите текущий процесс CI/CD. Это не относится к случаям, когда вы продолжаете использовать внешний оркестратор (например Airflow) и заменили локальное выполнение dbt выполнением в <Constant name="dbt_platform" /> (через [API](/docs/dbt-apis/overview)).
 
-This guide should now have given you some insight and equipped you with a framework for moving from self-hosted dbt to the <Constant name="dbt_platform" />. This guide has covered the following key areas:
+Познакомьте команду с [возможностями](/docs/platform/about-platform/dbt-platform-features) <Constant name="dbt_platform" /> и оптимизируйте процессы разработки и развёртывания. Вот некоторые ключевые возможности, на которые стоит обратить внимание:
+- **Каналы выпусков:** Выберите [канал выпусков](/docs/dbt-versions/dbt-release-tracks) для автоматического обновления версии dbt с подходящей для вашей команды периодичностью — это избавит от хлопот с ручными обновлениями и риска расхождения версий. Вы также сможете получать ранний доступ к новым функциям, ещё до их появления в самостоятельно размещённом dbt.
+- **Инструменты разработки**: Используйте [CLI <Constant name="dbt_platform" />](/docs/platform/dbt-cli-installation) или [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) для сборки, тестирования, выполнения и контроля версий ваших проектов dbt.
+- **Документация и актуальность источников:**  Автоматизируйте хранение [документации](/docs/build/documentation) и отслеживайте [актуальность источников](/docs/deploy/source-freshness) в <Constant name="dbt_platform" />, чтобы упростить обслуживание проекта.
+- **Уведомления и логи:** получайте мгновенные [уведомления](/docs/deploy/monitor-jobs) о падениях jobs со ссылками на детали job. Используйте подробные логи всех запусков для диагностики.
+- **CI/CD:** Используйте функцию [CI/CD](/docs/deploy/ci-jobs) в <Constant name="dbt_platform" /> для выполнения проектов dbt во временной схеме при каждой отправке новых коммитов в открытые запросы на слияние. Это помогает выявлять ошибки до развёртывания в производственной среде.
 
-- **Considerations:** Understanding the foundational steps required for a successful migration, including evaluating your current setup and identifying key considerations unique to your team's structure and workflow needs.
+### После перехода {#beyond-your-move}
 
-- **Plan you move**: Highlighting the importance of workflow redesign, role-specific responsibilities, and the adoption of new processes to harness the <Constant name="dbt_platform" />'s collaborative and efficient environment.
+Выбрав <Constant name="dbt_platform" /> в качестве платформы, вы получили возможность упростить совместную работу, повысить эффективность рабочих процессов и использовать мощные [возможности](/docs/platform/about-platform/dbt-platform-features) для команд аналитической инженерии. Вот дополнительные функции, которые помогут раскрыть весь потенциал <Constant name="dbt_platform" />:
 
-- **Move to the <Constant name="dbt_platform" />**: Linking to [the guide](/guides/dbt-migration-1?step=1) that outlines technical steps required to transition your <Constant name="dbt" /> project to the <Constant name="dbt_platform" />, including setting up your account, data platform, and <Constant name="git" /> repository.
+- **Журналы аудита:** Используйте [журналы аудита](/docs/platform/manage-access/audit-log) для просмотра действий сотрудников вашей организации. Журналы аудита содержат регистрируемые события пользователей и системы в реальном времени. Вы даже можете [экспортировать](/docs/platform/manage-access/audit-log#exporting-logs) *всю* историю действий (в том числе за пределами 90 дней, доступных для просмотра в <Constant name="dbt_platform" />). <Lifecycle status="managed,managed_plus" />
+- **API <Constant name="dbt_platform" />:** Используйте мощные [API](/docs/dbt-apis/overview) <Constant name="dbt_platform" /> для создания, чтения, обновления и удаления (CRUD) проектов/заданий/сред проекта. [Административный API <Constant name="dbt_platform" />](/docs/dbt-apis/admin-api) и [провайдер Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job) упрощают программный доступ и хранение конфигурации. При этом [Discovery API](/docs/dbt-apis/discovery-api) предоставляет широкие возможности запросов к метаданным, таким как данные заданий, конфигурации моделей, использование и общее состояние проекта. <Lifecycle status="self_service,managed" />
+- **<Constant name="catalog" />**: используйте [<Constant name="catalog" />](/docs/explore/explore-projects), чтобы смотреть [resources](/docs/build/projects) проекта (например модели, тесты и метрики) и их [lineage](https://docs.getdbt.com/terms/data-lineage), чтобы лучше понимать текущее production‑состояние (после успешного job в Production environment). <Lifecycle status="self_service,managed" />
+- **dbt Semantic Layer:** [dbt Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl) позволяет определять универсальные метрики на основе ваших моделей, которые затем можно запрашивать в [инструменте бизнес-аналитики (BI)](/docs/platform-integrations/avail-sl-integrations). Это означает конец несогласованным метрикам — теперь есть централизованный способ определять эти метрики и обеспечивать их видимость в каждом компоненте потока данных. <Lifecycle status="self_service,managed" />
+- **dbt Mesh:** используйте [dbt Mesh](/best-practices/how-we-mesh/mesh-1-intro), чтобы шарить data models внутри организации, позволяя командам данных сотрудничать над общими моделями и переиспользовать работу других команд. <Lifecycle status="managed,managed_plus" />
 
-- **Test and validate**: Emphasizing technical transitions, including testing and validating your dbt projects within the <Constant name="dbt_platform" /> ecosystem to ensure data integrity and performance.
+### Дополнительная помощь {#additional-help}
 
-- **Transition and training**: Share useful transition, training, and onboarding information for your team. Fully leverage the <Constant name="dbt_platform" />'s capabilities, from development tools (<Constant name="dbt_platform" /> CLI and <Constant name="studio_ide" />) to advanced features such as <Constant name="catalog" />, the <Constant name="semantic_layer" />, and <Constant name="mesh" />.
+- **Курсы dbt Learn**: получите доступ к бесплатным видео‑курсам [Learn <Constant name="dbt" />](https://learn.getdbt.com) для обучения в удобном темпе.
+- **dbt Community:** присоединяйтесь к [dbt Community](https://community.getdbt.com/), чтобы общаться с другими пользователями dbt, задавать вопросы и делиться best practices.
+- **Служба поддержки dbt:** Наша [служба поддержки dbt](/docs/dbt-support) всегда готова помочь вам решить проблемы с <Constant name="dbt" />. Создайте обращение в службу поддержки в <Constant name="dbt_platform" />, и мы будем рады помочь!
+- **Account management:** для Enterprise‑аккаунтов доступна команда account management, которая помогает с troubleshooting и поддержкой управления аккаунтом. [Book a demo](https://www.getdbt.com/contact), чтобы узнать больше. <Lifecycle status="managed,managed_plus" />
 
-## What's next?
+## Итоги {#summary}
+
+Это руководство должно было помочь вам разобраться в переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" /> и дать основу для его организации. В руководстве были рассмотрены следующие ключевые области:
+
+- **Важные аспекты:** понимание базовых шагов для успешной миграции, включая оценку текущей настройки и выявление ключевых факторов, связанных со структурой команды и потребностями workflow.
+
+- **Планирование перехода**: Подчёркивается важность пересмотра рабочих процессов, распределения обязанностей по ролям и внедрения новых процессов, чтобы использовать преимущества совместной и эффективной работы в <Constant name="dbt_platform" />.
+
+- **Переход на <Constant name="dbt_platform" />**: Приводится ссылка на [руководство](/guides/dbt-migration-1?step=1), описывающее технические шаги для переноса проекта <Constant name="dbt" /> на <Constant name="dbt_platform" />, включая настройку учётной записи, платформы данных и репозитория <Constant name="git" />.
+
+- **Тестирование и валидация**: акцент на технической стороне перехода, включая тестирование и валидацию dbt‑проектов в экосистеме <Constant name="dbt_platform" />, чтобы обеспечить целостность данных и производительность.
+
+- **Переход и обучение**: Поделитесь с командой полезной информацией о переходе, обучении и подключении пользователей. В полной мере используйте возможности <Constant name="dbt_platform" />, от инструментов разработки (CLI <Constant name="dbt_platform" /> и <Constant name="studio_ide" />) до расширенных функций, таких как <Constant name="catalog" />, <Constant name="semantic_layer" /> и <Constant name="mesh" />.
+
+## Что дальше? {#whats-next}
 
 <ConfettiTrigger>
 
 
-Congratulations on finishing this guide, we hope it's given you insight into the considerations you need to take to best plan your move to the <Constant name="dbt_platform" />.
+Поздравляем с завершением этого руководства, надеемся, оно помогло вам понять, какие аспекты необходимо учитывать, чтобы наилучшим образом спланировать переход на <Constant name="dbt_platform" />.
 
-For the next steps, you can continue exploring our 3-part-guide series on moving from self-hosted dbt to the <Constant name="dbt_platform" />:
+В качестве следующих шагов вы можете продолжить изучение нашей серии руководств из 3 частей о переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" />:
 
-<CoreMigrationTable/>
+<CoreMigrationTable anchorId="why-move-to-the-dbt-platform-recap" />
 
-### Related content
-- [Learn <Constant name="dbt" />](https://learn.getdbt.com) courses
-- Book [expert-led demos](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) and insights
-- Work with the [dbt Labs' Professional Services](https://www.getdbt.com/dbt-labs/services) team to support your data organization and migration.
-- [How the <Constant name="dbt_platform" /> compares with self-hosted dbt](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) for a detailed comparison of self-hosted dbt and the <Constant name="dbt_platform" />.
-- Subscribe to the [<Constant name="dbt_platform" /> RSS alerts](https://status.getdbt.com/)
+### Связанные материалы {#related-content}
+- Курсы [Learn <Constant name="dbt" />](https://learn.getdbt.com)
+- Запишитесь на [демо от экспертов](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите инсайты
+- Сотрудничайте с командой [профессиональных услуг dbt Labs](https://www.getdbt.com/dbt-labs/services), чтобы получить поддержку для вашего подразделения по работе с данными и миграции.
+- [Сравнение <Constant name="dbt_platform" /> с самостоятельно размещённым dbt](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) содержит подробное сравнение самостоятельно размещённого dbt и <Constant name="dbt_platform" />.
+- Подпишитесь на [RSS‑уведомления <Constant name="dbt_platform" />](https://status.getdbt.com/)
 
 </ConfettiTrigger>

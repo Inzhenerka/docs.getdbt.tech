@@ -56,7 +56,7 @@ description: "Переменная Jinja `modules` предоставляет д
 ```
 
 ## itertools {#itertools}
-:::info Note
+:::info Примечание
 Начиная с версии `dbt-core==1.10.6`, использование `modules.itertools` вызывает предупреждение об устаревании. Для получения дополнительной информации и рекомендуемых обходных решений см. [документацию по `ModulesItertoolsUsageDeprecation`](/reference/deprecations.md#modulesitertoolsusagedeprecation).
 :::
 

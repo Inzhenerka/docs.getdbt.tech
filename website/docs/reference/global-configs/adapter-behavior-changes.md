@@ -14,7 +14,7 @@ pagination_prev: null
 
 <Card
     title="BigQuery"
-    body="Behavior changes for the BigQuery adapter."
+    body="Изменения поведения адаптера BigQuery."
     link="reference/global-configs/bigquery-changes"
     icon="bigquery"/>
 

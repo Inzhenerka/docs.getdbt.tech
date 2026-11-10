@@ -1,30 +1,30 @@
 --- 
-title: "Build with dbt Copilot" 
-sidebar_label: "Build with dbt Copilot" 
-description: "Use dbt Copilot to build visual models in Canvas with natural language prompts"
+title: "Создание моделей с dbt Copilot" 
+sidebar_label: "Создание моделей с dbt Copilot" 
+description: "Используйте dbt Copilot для создания визуальных моделей в Canvas с помощью запросов на естественном языке"
 availability:
   surface: platform
   access: paid_plan
   minPlan: enterprise
 ---
 
-# Build with dbt Copilot
+# Создание моделей с dbt Copilot
 
 <IntroText>
-Use dbt Copilot to build visual models in the <Constant name="canvas" /> with natural language prompts.
+Используйте dbt Copilot для создания визуальных моделей в <Constant name="canvas" /> с помощью запросов на естественном языке.
 
 </IntroText>
 
-dbt Copilot integrates with [<Constant name="canvas" />](/docs/platform/canvas), a drag-and-drop experience for building visual models with natural language prompts.
+dbt Copilot интегрируется с [<Constant name="canvas" />](/docs/platform/canvas) — средой с интерфейсом перетаскивания для создания визуальных моделей с помощью запросов на естественном языке.
 
-## Considerations
+## Что нужно учесть
 
-dbt Copilot in <Constant name="canvas" /> has setup and AI requirements. Confirm the following before you begin.
+Для использования dbt Copilot в <Constant name="canvas" /> необходимо выполнить требования к настройке и использованию ИИ. Прежде чем начать, проверьте следующее.
 
-- dbt Copilot is available in the <Constant name="canvas" /> interface. Refer to [About Canvas](/docs/platform/canvas) for setup instructions.
-- Natural language prompts in <Constant name="canvas" /> are available on [Enterprise and Enterprise+](https://www.getdbt.com/pricing) plans.
-- Your development environment must be on a supported [release track](/docs/dbt-versions/dbt-release-tracks).
-- Refer to [Billing](/docs/platform/billing) for dbt Copilot usage limits.
+- dbt Copilot доступен в интерфейсе <Constant name="canvas" />. Инструкции по настройке см. в разделе [О Canvas](/docs/platform/canvas).
+- Запросы на естественном языке в <Constant name="canvas" /> доступны на тарифных планах [Enterprise и Enterprise+](https://www.getdbt.com/pricing).
+- Ваша среда разработки должна использовать поддерживаемый [канал выпуска](/docs/dbt-versions/dbt-release-tracks).
+- Сведения о лимитах использования dbt Copilot см. в разделе [Оплата](/docs/platform/billing).
 
 import CopilotVE from '/snippets/_use-copilot-ve.md';
 

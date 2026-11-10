@@ -1,5 +1,5 @@
 ---
-description: "Customize how a data test calculates the number of failing records instead of using the default count of failing rows."
+description: "Настройте, как тест данных подсчитывает записи с ошибками, вместо подсчёта строк по умолчанию."
 resource_types: [tests]
 datatype: string
 ---

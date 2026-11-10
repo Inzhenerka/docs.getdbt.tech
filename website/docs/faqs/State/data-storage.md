@@ -1,15 +1,15 @@
 ---
-title: How is data stored in dbt State?
-description: "Learn what data dbt State sends to dbt Labs servers and how it is stored."
-sidebar_label: 'How is data stored?'
+title: Как хранятся данные в dbt State?
+description: "Узнайте, какие данные dbt State отправляет на серверы dbt Labs и как они хранятся."
+sidebar_label: 'Как хранятся данные?'
 id: data-storage
 ---
 
-dbt State sends the following metadata to dbt Labs servers:
+dbt State отправляет на серверы dbt Labs следующие метаданные:
 
-- **Last-modified timestamps**: Used to determine whether upstream data has changed since the last run
-- **SQL statement hashes**: SQL statements are processed to detect and classify changes, then hashed. Only the hash is persisted for future comparisons.
+- **Временные метки последнего изменения**: используются, чтобы определить, изменились ли данные вышестоящих источников с момента последнего запуска.
+- **Хеши SQL-выражений**: SQL-выражения обрабатываются для обнаружения и классификации изменений, а затем хешируются. Для последующих сравнений сохраняется только хеш.
 
-No actual data from your warehouse is transmitted.
+Сами данные из вашего хранилища не передаются.
 
-The dbt State service runs in a single US multi-tenant (MT) instance. The service never connects to your data warehouse. No actual data from your warehouse is transmitted. The only connection is to your running dbt process (CLI or platform) in order to exchange the metadata described above. For data retention details, refer to the [dbt Labs privacy policy](https://www.getdbt.com/cloud/privacy-policy).
+Сервис dbt State работает в единственном многопользовательском (MT) экземпляре, размещённом в США. Сервис никогда не подключается к вашему хранилищу данных. Сами данные из вашего хранилища не передаются. Единственное подключение — к вашему работающему процессу dbt (CLI или платформа) для обмена описанными выше метаданными. Подробную информацию о сроках хранения данных см. в [политике конфиденциальности dbt Labs](https://www.getdbt.com/cloud/privacy-policy).

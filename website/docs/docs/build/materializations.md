@@ -23,7 +23,7 @@ import CourseCallout from '/snippets/_materialization-video-callout.md';
 
 <CourseCallout resource="Materializations" 
 url="https://learn.getdbt.com/courses/materializations-fundamentals" 
-course="Materializations fundamentals" 
+course="Основы материализаций"
 />
 
 ## Настройка материализаций {#configuring-materializations}

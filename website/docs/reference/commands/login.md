@@ -1,119 +1,119 @@
 ---
-title: "About dbt login"
+title: "О команде dbt login"
 sidebar_label: "login"
 id: "login"
-description: "Use dbt login to authenticate and access dbt platform-based capabilities across dbt tools."
-intro_text: "Use dbt login to authenticate once and access dbt platform-based capabilities across dbt tools."
+description: "Используйте dbt login для аутентификации и доступа к возможностям платформы dbt в различных инструментах dbt."
+intro_text: "Используйте dbt login, чтобы пройти аутентификацию один раз и получить доступ к возможностям платформы dbt в различных инструментах dbt."
 availability: local_free
 ---
 
 :::info
-Available in <Constant name="dbt" /> v1.13 and later.
+Доступно в <Constant name="dbt" /> v1.13 и более поздних версиях.
 :::
 
-Run `dbt login` from the command line to access dbt platform-based capabilities. It'll open browser-based authentication where you can sign in to your existing <Constant name="dbt_platform" /> account or create a free one &mdash; no credit card required!
+Выполните `dbt login` в командной строке, чтобы получить доступ к возможностям платформы dbt. Откроется страница аутентификации в браузере, где вы сможете войти в существующую учетную запись <Constant name="dbt_platform" /> или создать бесплатную &mdash; банковская карта не требуется!
 
-Run [`dbt login status`](#dbt-login-status) to view your current authentication status.
+Выполните [`dbt login status`](#dbt-login-status), чтобы просмотреть текущий статус аутентификации.
 
-## When to use dbt login
+## Когда использовать dbt login
 
-`dbt login` is an interactive, browser-based sign-in flow for development on macOS, Linux, and Windows. Use `dbt login` to access dbt platform-based capabilities including:
+`dbt login` — это интерактивная процедура входа через браузер для разработки в macOS, Linux и Windows. Используйте `dbt login` для доступа к возможностям платформы dbt, включая:
 
-- <Constant name="dbt_platform" /> capabilities in the [dbt VS Code extension](/docs/about-dbt-extension), such as the **Catalog** tab
-- [dbt State](/docs/deploy/dbt-state-setup#setting-up-dbt-state-1) in supported versions
+- Возможности <Constant name="dbt_platform" /> в [расширении dbt для VS Code](/docs/about-dbt-extension), например вкладку **Catalog**
+- [dbt State](/docs/deploy/dbt-state-setup#setting-up-dbt-state) в поддерживаемых версиях
 
-Refer to [VS Code extension features](/docs/dbt-extension-features#feature-availability) for the full list of features and their availability.
+Полный список функций и сведения об их доступности см. в разделе [Возможности расширения для VS Code](/docs/dbt-extension-features#feature-availability).
 
-`dbt login` doesn't support non-interactive authentication. For [non-interactive](#non-interactive-environments) environments, such as CI/CD jobs, scheduled jobs, or external orchestrators, use a service token instead.
+`dbt login` не поддерживает неинтерактивную аутентификацию. Для [неинтерактивных](#non-interactive-environments) сред, например заданий CI/CD, заданий по расписанию или внешних оркестраторов, используйте сервисный токен.
 
-## Before you log in
+## Перед входом в систему
 
-A free <Constant name="dbt_platform" /> account carries your access across all your dbt tools &mdash; the CLI, the VS Code extension, and dbt State &mdash; so you only log in once. No credit card required.
+Бесплатная учетная запись <Constant name="dbt_platform" /> обеспечивает доступ во всех ваших инструментах dbt &mdash; CLI, расширении для VS Code и dbt State, &mdash; поэтому достаточно войти один раз. Банковская карта не требуется.
 
-Run `dbt login` to create a free account, or log in to an existing one. Logging in is simply how dbt confirms your access to dbt platform-based capabilities in your local development environment.
+Выполните `dbt login`, чтобы создать бесплатную учетную запись или войти в существующую. Вход в систему — это способ, с помощью которого dbt подтверждает ваш доступ к возможностям платформы dbt в локальной среде разработки.
 
-Note that this is separate from [<Constant name="dbt_platform"/> user license types](/docs/platform/manage-access/seats-and-users?version=2.0) (such as Developer or Analyst), which controls what you can do _inside_ <Constant name="dbt_platform" />.
+Обратите внимание: это не связано с [типами пользовательских лицензий <Constant name="dbt_platform"/>](/docs/platform/manage-access/seats-and-users?version=2.0) (например, Developer или Analyst), которые определяют, какие действия вы можете выполнять _внутри_ <Constant name="dbt_platform" />.
 
-Refer to [VS Code extension features](/docs/dbt-extension-features#feature-availability) for the full list of features and their availability.
+Полный список функций и сведения об их доступности см. в разделе [Возможности расширения для VS Code](/docs/dbt-extension-features#feature-availability).
 
 <VersionBlock firstVersion="1.13">
 
-## `dbt login` with dbt State
+## `dbt login` при работе с dbt State {#dbt-login-with-dbt-state}
 
-[`dbt login`](/reference/commands/login?version=2.0#dbt-login---help) is also used for dbt State authentication. Running this command opens a browser window where you can:
+[`dbt login`](/reference/commands/login?version=2.0#dbt-login---help) также используется для аутентификации в dbt State. При выполнении этой команды открывается окно браузера, где вы можете:
 
-- Log in with your <Constant name="dbt_platform" /> account.
-- Create a <Constant name="dbt_platform" /> account:
-  1. Enter your email address and click **Continue**.
-  2. Enter you name, password, and agree to the Terms of Service. 
-  3. Click **Continue**.
-  4. Verify your e-mail address. 
+- Войти с помощью своей учетной записи <Constant name="dbt_platform" />.
+- Создать учетную запись <Constant name="dbt_platform" />:
+  1. Введите адрес электронной почты и нажмите **Continue**.
+  2. Введите имя и пароль и примите Условия использования. 
+  3. Нажмите **Continue**.
+  4. Подтвердите адрес электронной почты. 
 
-In <Constant name="fusion_engine" />, after platform authentication, the CLI checks your configuration and responds accordingly:
+В <Constant name="fusion_engine" /> после аутентификации на платформе CLI проверяет вашу конфигурацию и выполняет соответствующие действия:
 
 <SimpleTable>
 
-| dbt State enabled in <Constant name="dbt_platform" />? | dbt State enabled locally? | Behavior |
+| dbt State включен в <Constant name="dbt_platform" />? | dbt State включен локально? | Поведение |
 |---|---|---|
-| ✅ | ✅ | dbt State is ready to use. |
-| ✅ | ❌ | CLI prompts you to enable dbt State locally. If you confirm, [`user_settings.yml`](/reference/global-configs/user-settings) is updated automatically. |
-| ❌ | ✅ | CLI prompts you to enable dbt State in your platform account. |
+| ✅ | ✅ | dbt State готов к использованию. |
+| ✅ | ❌ | CLI предлагает включить dbt State локально. Если вы согласитесь, файл [`user_settings.yml`](/reference/global-configs/user-settings) будет обновлен автоматически. |
+| ❌ | ✅ | CLI предлагает включить dbt State в вашей учетной записи на платформе. |
 
 </SimpleTable>
 
-In <Constant name="dbt" /> v1.13, `dbt login` automatically sets `manage_state: true` in [`user_settings.yml`](/reference/global-configs/user-settings) after platform authentication. If you previously set `manage_state: false`, the CLI prompts you before overwriting it.
+В <Constant name="dbt" /> v1.13 команда `dbt login` автоматически устанавливает `manage_state: true` в [`user_settings.yml`](/reference/global-configs/user-settings) после аутентификации на платформе. Если ранее вы установили `manage_state: false`, CLI запросит подтверждение перед перезаписью этого значения.
 
 </VersionBlock>
 
-## Authentication methods
+## Способы аутентификации
 
-`dbt login` is interactive only. It opens a browser-based sign-in flow and stores your session locally.
+`dbt login` работает только в интерактивном режиме. Команда запускает процедуру входа через браузер и сохраняет ваш сеанс локально.
 
-You can log into dbt either using [interactive](#interactive-authentication) or [non-interactive](#non-interactive-environments) methods.
+Вы можете войти в dbt с помощью [интерактивных](#interactive-authentication) или [неинтерактивных](#non-interactive-environments) способов.
 
-### Interactive authentication
+### Интерактивная аутентификация {#interactive-authentication}
 
-Use `dbt login` when you're developing locally in a terminal or IDE and can complete sign-in in a browser.
+Используйте `dbt login`, если вы разрабатываете локально в терминале или IDE и можете завершить вход в браузере.
 
-- When you run `dbt login`, dbt opens a browser-based authentication flow. After you complete authentication, dbt stores your login state locally and confirms that you're signed in.
-- After you sign in, dbt can use your login state to access dbt platform-based capabilities across the dbt CLI, VS Code extension, and dbt State.
-- Your session stays active across terminal sessions, and dbt refreshes it automatically while you're active. As long as you use dbt at least once every 7 days, you stay signed in. If you're inactive for longer, dbt prompts you to run `dbt login` again. Refer to [Staying signed in](#staying-signed-in) for details.
+- При выполнении `dbt login` dbt запускает процедуру аутентификации в браузере. После ее завершения dbt сохраняет состояние входа локально и подтверждает, что вы вошли в систему.
+- После входа dbt может использовать сохраненное состояние входа для доступа к возможностям платформы dbt в dbt CLI, расширении для VS Code и dbt State.
+- Ваш сеанс остается активным между сеансами терминала, а dbt автоматически обновляет его, пока вы работаете. Вы остаетесь в системе, если используете dbt хотя бы раз в 7 дней. Если период неактивности превышает этот срок, dbt предложит снова выполнить `dbt login`. Подробнее см. в разделе [Сохранение сеанса входа](#staying-signed-in).
 
-Run `dbt login` from your **local terminal** (not in the <Constant name="dbt_platform" /> UI).
+Выполняйте `dbt login` в **локальном терминале** (а не в интерфейсе <Constant name="dbt_platform" />).
 
-**Example (interactive):**
+**Пример (интерактивный режим):**
 
 ```shell
 dbt login
 dbt login status
 ```
 
-Complete the browser prompts to sign in or register for a <Constant name="dbt_platform" /> account.
+Следуйте инструкциям в браузере, чтобы войти в учетную запись <Constant name="dbt_platform" /> или зарегистрироваться.
 
-### Non-interactive environments
+### Неинтерактивные среды {#non-interactive-environments}
 
-Non-interactive means dbt runs without a person at a keyboard to open a browser — for example, a GitHub Actions workflow, a cron job, or a scheduled <Constant name="dbt_platform" /> job. There is no separate "non-interactive login" command. You do not run `dbt login` in these environments.
+Неинтерактивный режим означает, что dbt выполняется без участия пользователя, который мог бы открыть браузер, — например, в рабочем процессе GitHub Actions, задании cron или задании <Constant name="dbt_platform" /> по расписанию. Отдельной команды для «неинтерактивного входа» нет. В таких средах не следует выполнять `dbt login`.
 
-If you are new to dbt, start with [interactive authentication](#interactive-authentication). You only need the guidance in this section when you automate dbt runs.
+Если вы только начинаете работать с dbt, начните с [интерактивной аутентификации](#interactive-authentication). Рекомендации в этом разделе понадобятся только при автоматизации запусков dbt.
 
-#### Authenticate with a service token
+#### Аутентификация с помощью сервисного токена {#authenticate-with-a-service-token}
 
-In non-interactive environments (such as CI/CD jobs, scheduled jobs, or external orchestrators like Airflow), use a [service token](/docs/dbt-apis/service-tokens) instead of `dbt login`. The service token does two jobs:
-- authenticates the run 
-- gives access to dbt platform-based capabilities, so they work in your pipeline the same way they do locally.
+В неинтерактивных средах (например, в заданиях CI/CD, заданиях по расписанию или внешних оркестраторах, таких как Airflow) используйте [сервисный токен](/docs/dbt-apis/service-tokens) вместо `dbt login`. Сервисный токен выполняет две задачи:
+- обеспечивает аутентификацию запуска 
+- предоставляет доступ к возможностям платформы dbt, чтобы они работали в вашем конвейере так же, как и локально.
 
-Unlike interactive `dbt login`, service tokens don't expire, so there's nothing to refresh. Rotate them yourself in <Constant name="dbt_platform" /> when you need to.
+В отличие от интерактивного входа через `dbt login`, сервисные токены не имеют срока действия, поэтому обновлять их не нужно. При необходимости выполняйте их ротацию самостоятельно в <Constant name="dbt_platform" />.
 
-Set the following [environment variables](/docs/build/environment-variables#special-environment-variables) so dbt can authenticate and provide that access:
+Задайте следующие [переменные среды](/docs/build/environment-variables#special-environment-variables), чтобы dbt мог пройти аутентификацию и предоставить этот доступ:
 
 <SimpleTable>
 
-| Environment variable | Description |
+| Переменная среды | Описание |
 |---|---|
-| `DBT_CLOUD_ACCOUNT_HOST` | Your <Constant name="dbt_platform" /> [access URL](/docs/platform/about-platform/access-regions-ip-addresses) (for example, `abc123.us1.dbt.com`). |
-| `DBT_CLOUD_ACCOUNT_ID` | Your <Constant name="dbt_platform" /> account ID. |
-| `DBT_CLOUD_TOKEN` | The service token value. Create a service token with a permission set that includes feature licensing access, such as `Job Runner`, `Job Creator`, `Job Admin`, `Developer`, or `Account Admin`. |
-| `DBT_CLOUD_PROJECT_ID` | Your <Constant name="dbt_platform" /> project ID. |
+| `DBT_CLOUD_ACCOUNT_HOST` | [URL для доступа](/docs/platform/about-platform/access-regions-ip-addresses) к вашей учетной записи <Constant name="dbt_platform" /> (например, `abc123.us1.dbt.com`). |
+| `DBT_CLOUD_ACCOUNT_ID` | Идентификатор вашей учетной записи <Constant name="dbt_platform" />. |
+| `DBT_CLOUD_TOKEN` | Значение сервисного токена. Создайте сервисный токен с набором разрешений, который включает доступ к лицензируемым функциям, например `Job Runner`, `Job Creator`, `Job Admin`, `Developer` или `Account Admin`. |
+| `DBT_CLOUD_PROJECT_ID` | Идентификатор вашего проекта <Constant name="dbt_platform" />. |
 
 </SimpleTable>
 
@@ -124,66 +124,66 @@ export DBT_CLOUD_TOKEN=dbtc_xxxxxxxx
 export DBT_CLOUD_PROJECT_ID=67890
 ```
 
-<Expandable title="What to do in common scenarios">
+<Expandable title="Что делать в распространенных ситуациях">
 
-**I develop on my laptop (VS Code, Cursor, or a local terminal)**
+**Я разрабатываю на ноутбуке (в VS Code, Cursor или локальном терминале)**
 
-1. Run `dbt login` once in your terminal, or [sign in](/docs/sign-in-dbt-extension) from the dbt VS Code extension.
-2. Use dbt normally. Your login applies across the CLI, extension, and other tools on that machine.
+1. Выполните `dbt login` один раз в терминале или [войдите](/docs/sign-in-dbt-extension) через расширение dbt для VS Code.
+2. Используйте dbt как обычно. Вход действует для CLI, расширения и других инструментов на этом компьютере.
 
-**I run jobs in <Constant name="dbt_platform" /> (scheduled deploys, CI jobs in the product)**
+**Я запускаю задания в <Constant name="dbt_platform" /> (развертывания по расписанию, задания CI в продукте)**
 
-1. Do not run `dbt login` in the job. <Constant name="dbt_platform" /> runs dbt for you using credentials from the deployment environment.
-2. In <Constant name="dbt_platform" />, go to **Orchestration** → **Environments** and configure [environment variables](/docs/build/environment-variables#setting-and-overriding-environment-variables) and deployment credentials for that environment.
-3. Use the `DBT_ENV_SECRET_` prefix for sensitive values referenced in your project with `env_var()`. Refer to [Handling secrets](/docs/build/environment-variables#handling-secrets).
+1. Не выполняйте `dbt login` в задании. <Constant name="dbt_platform" /> запускает dbt за вас, используя учетные данные из среды развертывания.
+2. В <Constant name="dbt_platform" /> перейдите в **Orchestration** → **Environments** и настройте [переменные среды](/docs/build/environment-variables#setting-and-overriding-environment-variables) и учетные данные развертывания для этой среды.
+3. Используйте префикс `DBT_ENV_SECRET_` для конфиденциальных значений, к которым вы обращаетесь в проекте через `env_var()`. См. раздел [Работа с секретами](/docs/build/environment-variables#handling-secrets).
 
-**I need a token for an API integration (not for `dbt login`)**
+**Мне нужен токен для интеграции с API (не для `dbt login`)**
 
-1. In <Constant name="dbt_platform" />, go to **Account settings** → **Service tokens** and create a token. Refer to [Service account tokens](/docs/dbt-apis/service-tokens).
-2. Store the token wherever that integration's documentation tells you to (for example, your CI secret store or MCP server config). That path is separate from `dbt login`.
-
-</Expandable>
-
-## How shared login works across dbt tools
-
-- Use `dbt login` to authenticate with [dbt State](/docs/deploy/dbt-state-about).
-You can start the sign-in flow from the [dbt VS Code extension](/docs/about-dbt-extension):
-- If you run `dbt login` from the CLI, the dbt VS Code extension uses that login in your next extension session.
-- If you sign in from the dbt VS Code extension, you can use that login the next time you run a command that requires authentication.
-
-
-When you run a command or use a feature that requires authentication, dbt checks your current login state. If you're signed in, the feature runs. If you're not signed in, dbt tells you which feature requires authentication and prompts you to run `dbt login`.
-
-For the VS Code extension sign-in flow, refer to [Sign in](/docs/sign-in-dbt-extension).
-
-## Staying signed in
-
-Once you log in, dbt keeps you signed in automatically &mdash; you usually won't notice it at all.
-
-You stay signed in as long as you use dbt at least once every 7 days. If you're inactive for longer than that, dbt might ask you to log in again in your next session to ensure security.
-
-If your access expires, run `dbt login` to sign back in.
-- No dbt account yet? Create a free one with `dbt login` &mdash; it's the best way to use the [full set of features](/docs/dbt-extension-features#feature-availability) and get the most out of the extension. 
-- Not ready to run `dbt login`? No worries &mdash; continue using the vast majority of features.
-
-If you're not sure where you stand, run [`dbt license info`](#troubleshooting) to check your status.
-
-<Expandable title="How staying signed in works under the hood">
-
-The only number that matters to you is 7 days: use dbt at least once a week and you stay signed in. Here's what happens behind the scenes to make that work.
-
-Once you've logged in, dbt keeps two short-lived credentials fresh for you, automatically and in the background &mdash; you don't need to do anything:
-
-- A 24-hour access token validates your access to dbt platform-based capabilities. dbt renews it about once an hour whenever it can reach <Constant name="dbt_platform" />, so it never actually runs out while you're working &mdash; you won't hit the 24-hour limit in practice.
-- A 7-day sign-in backs those renewals. Any dbt activity resets the 7-day clock, so the only way to get signed out is to not use dbt for more than 7 days straight.
-
-If you go offline, your current access keeps working until it expires, and dbt retries the next time you run a command.
+1. В <Constant name="dbt_platform" /> перейдите в **Account settings** → **Service tokens** и создайте токен. См. раздел [Токены сервисных учетных записей](/docs/dbt-apis/service-tokens).
+2. Сохраните токен там, где указано в документации этой интеграции (например, в хранилище секретов CI или конфигурации MCP-сервера). Этот способ не связан с `dbt login`.
 
 </Expandable>
 
-## Usage
+## Как работает единый вход в инструментах dbt
 
-This page lists the commands and output you can use with `dbt login`:
+- Используйте `dbt login` для аутентификации в [dbt State](/docs/deploy/dbt-state-about).
+Вы можете начать процедуру входа из [расширения dbt для VS Code](/docs/about-dbt-extension):
+- Если вы выполните `dbt login` в CLI, расширение dbt для VS Code использует этот вход при следующем сеансе работы с расширением.
+- Если вы войдете через расширение dbt для VS Code, этот вход можно будет использовать при следующем выполнении команды, требующей аутентификации.
+
+
+Когда вы выполняете команду или используете функцию, требующую аутентификации, dbt проверяет текущее состояние входа. Если вы вошли в систему, функция выполняется. Если нет, dbt сообщает, для какой функции требуется аутентификация, и предлагает выполнить `dbt login`.
+
+Процедура входа через расширение для VS Code описана в разделе [Вход в систему](/docs/sign-in-dbt-extension).
+
+## Сохранение сеанса входа {#staying-signed-in}
+
+После входа dbt автоматически поддерживает ваш сеанс &mdash; обычно это происходит совершенно незаметно.
+
+Вы остаетесь в системе, если используете dbt хотя бы раз в 7 дней. Если период неактивности превышает этот срок, dbt может попросить вас войти снова при следующем сеансе, чтобы обеспечить безопасность.
+
+Если срок действия доступа истек, выполните `dbt login`, чтобы войти снова.
+- Еще нет учетной записи dbt? Создайте бесплатную с помощью `dbt login` &mdash; это лучший способ использовать [полный набор функций](/docs/dbt-extension-features#feature-availability) и получить максимум от расширения. 
+- Пока не готовы выполнить `dbt login`? Ничего страшного &mdash; продолжайте пользоваться подавляющим большинством функций.
+
+Если вы не уверены в текущем состоянии доступа, выполните [`dbt license info`](#troubleshooting), чтобы проверить его.
+
+<Expandable title="Как устроено сохранение сеанса входа">
+
+Вам важно помнить только один срок — 7 дней: используйте dbt хотя бы раз в неделю, и вы останетесь в системе. Ниже описано, какие внутренние механизмы это обеспечивают.
+
+После входа dbt автоматически поддерживает актуальность двух краткосрочных учетных данных в фоновом режиме &mdash; вам ничего не нужно делать:
+
+- Токен доступа со сроком действия 24 часа подтверждает ваш доступ к возможностям платформы dbt. dbt обновляет его примерно раз в час, когда есть соединение с <Constant name="dbt_platform" />, поэтому во время работы срок его действия фактически не истекает &mdash; на практике вы не столкнетесь с 24-часовым ограничением.
+- Сеанс входа со сроком действия 7 дней обеспечивает эти обновления. Любая активность в dbt начинает отсчет 7 дней заново, поэтому выход из системы произойдет только в том случае, если вы не будете использовать dbt более 7 дней подряд.
+
+Если вы перейдете в автономный режим, текущий доступ продолжит работать до истечения срока действия, а dbt повторит попытку обновления при следующем выполнении команды.
+
+</Expandable>
+
+## Использование
+
+На этой странице перечислены команды, которые можно использовать с `dbt login`, и их вывод:
 - [`dbt login`](#dbt-login)
 - [`dbt login --help`](#dbt-login---help)
 - [`dbt login status`](#dbt-login-status)
@@ -191,13 +191,13 @@ This page lists the commands and output you can use with `dbt login`:
 
 ### dbt login
 
-Run `dbt login` from your terminal to open browser-based authentication:
+Выполните `dbt login` в терминале, чтобы открыть страницу аутентификации в браузере:
 
 ```shell
 dbt login
 ```
 
-The CLI opens your default browser and shows the authentication URL:
+CLI открывает браузер по умолчанию и показывает URL для аутентификации:
 
 ```text
 Opening your browser to complete login...
@@ -207,20 +207,20 @@ If you need to reset your password, complete the reset, then re-run dbt login to
 Waiting for authentication…
 ```
 
-After you sign in or register, dbt saves your credentials to your local dbt configuration directory:
+После входа или регистрации dbt сохраняет ваши учетные данные в локальном каталоге конфигурации dbt:
 
-- macOS and Linux: `~/.dbt/`
+- macOS и Linux: `~/.dbt/`
 - Windows: `C:\Users\[username]\.dbt\`
 
-Refer to [Staying signed in](#staying-signed-in) for details on how long you stay signed in.
+Подробнее о продолжительности сеанса входа см. в разделе [Сохранение сеанса входа](#staying-signed-in).
 
-When authentication completes successfully, the CLI shows:
+При успешном завершении аутентификации CLI выводит:
 
 ```text
 Congratulations! You are now signed in.
 ```
 
-When authentication fails, the CLI shows:
+Если аутентификация не удалась, CLI выводит:
 
 ```text
 Authentication failed. Re-run dbt login to try again.
@@ -228,8 +228,8 @@ Authentication failed. Re-run dbt login to try again.
 [Placeholder for user-facing error message on failure reason]
 ```
 
-:::note dbt State and dbt login
-If you have a <Constant name="dbt_platform" /> account, you can use the same account to authenticate with dbt State — no separate sign-in required. For full dbt State setup, refer to [Setting up dbt State](/docs/deploy/dbt-state-setup).
+:::note dbt State и dbt login
+Если у вас есть учетная запись <Constant name="dbt_platform" />, вы можете использовать ее для аутентификации в dbt State — отдельный вход не требуется. Полные инструкции по настройке dbt State см. в разделе [Настройка dbt State](/docs/deploy/dbt-state-setup).
 :::
 
 ### dbt login --help
@@ -243,19 +243,19 @@ Commands:
 
 ### dbt login status
 
-Run `dbt login status` to show whether dbt is authenticated:
+Выполните `dbt login status`, чтобы узнать, прошел ли dbt аутентификацию:
 
 ```shell
 dbt login status
 ```
 
-If dbt is authenticated, the CLI shows the authentication method:
+Если dbt прошел аутентификацию, CLI показывает способ аутентификации:
 
 ```text
 Status: authenticated (via METHOD)
 ```
 
-If dbt is not authenticated, the CLI shows:
+Если dbt не прошел аутентификацию, CLI выводит:
 
 ```text
 Status: unauthenticated
@@ -263,13 +263,13 @@ Status: unauthenticated
 
 ### dbt license info
 
-dbt uses local licenses to cache your logged-in state and give you access to dbt platform-based capabilities. Run `dbt license info` as an additional check to verify the status of the license used by <Constant name="fusion" />. This is useful when a dbt platform-based capability isn't working and `dbt login status` tells you you're authenticated:
+dbt использует локальные лицензии, чтобы кэшировать состояние входа и предоставлять доступ к возможностям платформы dbt. Выполните `dbt license info` для дополнительной проверки статуса лицензии, используемой <Constant name="fusion" />. Это полезно, если какая-либо возможность платформы dbt не работает, а `dbt login status` сообщает, что аутентификация выполнена:
 
 ```shell
 dbt license info
 ```
 
-The output should look like this:
+Вывод должен выглядеть следующим образом:
 ```shell
 dbtf license info
 ...
@@ -281,50 +281,50 @@ issued_at: June 17, 2026 10:55 UTC
 expires_at: June 18, 2026 10:55 UTC
 ```
 
-Add `--json` for machine-readable output:
+Добавьте `--json`, чтобы получить вывод в машиночитаемом формате:
 
 ```shell
 dbt license info --json
 ```
 
-For how to interpret each status, refer to [Troubleshooting](#troubleshooting).
+Пояснения к каждому статусу см. в разделе [Устранение неполадок](#troubleshooting).
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
-If a dbt platform-based capability isn't working, or you're not sure whether you're still signed in, run `dbt license info` to check your access:
+Если какая-либо возможность платформы dbt не работает или вы не уверены, что все еще вошли в систему, выполните `dbt license info`, чтобы проверить доступ:
 
 ```shell
 dbt license info
 ```
 
-Add `--json` for machine-readable output:
+Добавьте `--json`, чтобы получить вывод в машиночитаемом формате:
 
 ```shell
 dbt license info --json
 ```
 
-The output shows your current status. Use the following table to interpret it:
+В выводе отображается текущий статус. Используйте следующую таблицу для его интерпретации:
 
-| Status | What it means | What to do |
+| Статус | Что означает | Что делать |
 |---|---|---|
-| `valid` | You're signed in and your features are available. | Nothing &mdash; you're all set. |
-| `expired` | Your access has expired. | Run `dbt login` to sign in again. |
-| `not_found` | dbt couldn't find any sign-in for you. | Run `dbt login`, or set a [service token](#authenticate-with-a-service-token) for orchestrated runs. |
-| `invalid` | Your access failed validation. | Run `dbt login` to refresh it. |
-| `transient_error` | A temporary network or server issue. | Retry &mdash; your cached access stays active in the meantime. |
+| `valid` | Вы вошли в систему, и функции доступны. | Ничего &mdash; все готово к работе. |
+| `expired` | Срок действия доступа истек. | Выполните `dbt login`, чтобы войти снова. |
+| `not_found` | dbt не удалось найти данные о вашем входе. | Выполните `dbt login` или задайте [сервисный токен](#authenticate-with-a-service-token) для запусков через оркестратор. |
+| `invalid` | Ваш доступ не прошел проверку. | Выполните `dbt login`, чтобы обновить его. |
+| `transient_error` | Временная проблема с сетью или сервером. | Повторите попытку &mdash; до тех пор кэшированный доступ остается активным. |
 
-:::note If you just registered a new account
-If you created a new <Constant name="dbt_platform" /> account but haven't verified your email yet, dbt warns you on each run during a short grace period.
+:::note Если вы только что зарегистрировали новую учетную запись
+Если вы создали новую учетную запись <Constant name="dbt_platform" />, но еще не подтвердили адрес электронной почты, dbt будет предупреждать вас при каждом запуске в течение короткого льготного периода.
 
-After the grace period ends, dbt platform-based capabilities stop working until you verify. You can still use the vast majority of features like code error diagnostics and Jinja LSP go-to ref definition, [and more](/docs/dbt-extension-features#feature-availability).
+После окончания льготного периода возможности платформы dbt перестанут работать, пока вы не подтвердите адрес. Вы по-прежнему сможете использовать подавляющее большинство функций, таких как диагностика ошибок в коде, переход к определению ref через Jinja LSP [и другие](/docs/dbt-extension-features#feature-availability).
 
-Check your inbox for the verification email, or [contact dbt Support](/docs/dbt-support) if you need it resent.
+Проверьте входящие письма и найдите письмо для подтверждения адреса или [обратитесь в службу поддержки dbt](/docs/dbt-support), если вам нужно отправить его повторно.
 :::
 
-## Related commands
+## Связанные команды
 
-- [`dbt login status`](#dbt-login-status) &mdash; Shows your current dbt authentication status.
-- [`dbt license info`](#dbt-license-info) &mdash; Shows your current access status and helps diagnose feature availability.
-- [`dbt init`](/reference/commands/init) &mdash; Use during first-time project setup; prompts you to run `dbt login` to access authenticated dbt platform-based capabilities.
-- [`dbt deps`](/reference/commands/deps) &mdash; Installs packages for a dbt project.
-- [`dbt debug`](/reference/commands/debug) &mdash; Tests your dbt project and connection configuration.
+- [`dbt login status`](#dbt-login-status) &mdash; Показывает текущий статус аутентификации в dbt.
+- [`dbt license info`](#dbt-license-info) &mdash; Показывает текущий статус доступа и помогает диагностировать доступность функций.
+- [`dbt init`](/reference/commands/init) &mdash; Используется при первоначальной настройке проекта; предлагает выполнить `dbt login`, чтобы получить доступ к возможностям платформы dbt, требующим аутентификации.
+- [`dbt deps`](/reference/commands/deps) &mdash; Устанавливает пакеты для проекта dbt.
+- [`dbt debug`](/reference/commands/debug) &mdash; Проверяет проект dbt и конфигурацию подключения.

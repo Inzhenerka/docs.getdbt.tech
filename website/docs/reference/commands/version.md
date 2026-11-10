@@ -45,14 +45,14 @@ Cloud CLI - 0.35.7 (fae78a6f5f6f2d7dff3cab3305fe7f99bd2a36f3 2024-01-18T22:34:52
 
 </File>
 
-<Constant name="fusion_engine" /> example:
+Пример для <Constant name="fusion_engine" />:
 
 ```shell
 $ dbt --version
 dbt 2.0.1
 ```
 
-For a machine-readable version, add the `--format json` flag. This is useful when filing a bug report or when tooling needs to parse the installed version:
+Чтобы получить версию в машиночитаемом формате, добавьте флаг `--format json`. Это удобно для отчёта об ошибке или для инструмента, который считывает установленную версию:
 
 ```shell
 dbt --version --format json

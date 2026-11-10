@@ -1,5 +1,5 @@
 ---
-title: "dbt Administrative API"
+title: "Административный API dbt"
 id: "admin-api"
 pagination_next: "docs/dbt-apis/discovery-api"
 availability:
@@ -10,18 +10,18 @@ availability:
 
 import ApiRateLimitsCallout from '/snippets/_api-rate-limits-callout.md';
 
-# dbt Administrative API
+# Административный API dbt
 
-The <Constant name="dbt" /> Administrative API is enabled by default for [Starter, Enterprise, and Enterprise+ plans](https://www.getdbt.com/pricing/). It can be used to:
+Административный API <Constant name="dbt" /> включён по умолчанию в [тарифных планах Starter, Enterprise и Enterprise+](https://www.getdbt.com/pricing/). Его можно использовать, чтобы:
 
-- Download artifacts after a job has completed
-- Kick off a job run from an orchestration tool
-- Manage your <Constant name="dbt" /> account
-- and more
+- Скачивать артефакты после завершения задания
+- Запускать задание из инструмента оркестрации
+- Управлять своим аккаунтом <Constant name="dbt" />
+- И многое другое
 
-<Constant name="dbt" /> currently supports two versions of the Administrative API: v2 and v3. In general, v3 is the recommended version to use, but we don't yet have all our v2 routes upgraded to v3. We're currently working on this. If you can't find something in our v3 docs, check out the shorter list of v2 endpoints because you might find it there. 
+В настоящее время <Constant name="dbt" /> поддерживает две версии административного API: v2 и v3. Как правило, рекомендуется использовать v3, однако ещё не все маршруты v2 перенесены в v3. Сейчас мы работаем над этим. Если вы не можете найти что-то в документации v3, загляните в более короткий список конечных точек v2 — возможно, нужная конечная точка есть там. 
 
-Many endpoints of the Administrative API can also be called through the [<Constant name="dbt" /> Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest). The built-in documentation on the Terraform registry contains [a guide on how to get started with the provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/1_getting_started) as well as [a page showing all the Terraform resources available](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/99_list_resources) to configure.
+Многие конечные точки административного API также можно вызывать через [провайдер Terraform для <Constant name="dbt" />](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest). Документация в реестре Terraform содержит [руководство по началу работы с провайдером](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/1_getting_started), а также [страницу со всеми ресурсами Terraform, доступными для настройки](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/guides/99_list_resources).
 
 <ApiRateLimitsCallout />
 
@@ -29,21 +29,21 @@ Many endpoints of the Administrative API can also be called through the [<Consta
 
 <Card
     title="API v2"
-    body="Our legacy API version, with limited endpoints and features. Contains information not available in v3."
+    body="Устаревшая версия нашего API с ограниченным набором конечных точек и возможностей. Содержит информацию, недоступную в v3."
 link="/dbt-cloud/api-v2"
     icon="pencil-paper"/>
 
 <Card
     title="API v3"
-    body="Our latest API version, with new endpoints and features."
+    body="Последняя версия нашего API с новыми конечными точками и возможностями."
 link="/dbt-cloud/api-v3"
     icon="pencil-paper"/>
 
 <div className="card-container">
  <Card
-    title="dbt Terraform provider"
+    title="Провайдер Terraform для dbt"
     link="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
-    body="The Terraform provider maintained by dbt Labs which can be used to manage a dbt account."
+    body="Провайдер Terraform, поддерживаемый dbt Labs, который можно использовать для управления аккаунтом dbt."
     icon="pencil-paper"/>
     <a href="https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest"
     className="external-link"

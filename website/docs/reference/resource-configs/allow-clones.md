@@ -1,6 +1,6 @@
 ---
 title: allow_clones
-description: "Configure whether dbt State makes clone decisions when running against a target."
+description: "Настройте, может ли dbt State принимать решения о клонировании при запуске для целевого окружения."
 id: "allow-clones"
 tags: ['dbt State']
 ---
@@ -22,36 +22,36 @@ my_project:
 </File>
 
 
-## Definition
+## Определение
 
-`allow_clones` is a profile-level setting that controls whether dbt State is allowed to clone tables into a target environment. By default, dbt State can clone a table from any environment &mdash; including cloning a dev table into prod when the data and logic match. This behavior is intentional: if you built a model in dev and nothing changed, cloning it to prod saves compute compared to rebuilding.
+`allow_clones` — это настройка уровня профиля, которая определяет, разрешено ли dbt State клонировать таблицы в целевое окружение. По умолчанию dbt State может клонировать таблицу из любого окружения &mdash; в том числе из dev в prod, если данные и логика совпадают. Такое поведение предусмотрено намеренно: если вы построили модель в dev и ничего не изменилось, клонирование в prod экономит вычислительные ресурсы по сравнению с повторным построением.
 
-Setting `allow_clones: false` on a target tells dbt State to skip clone candidates and run full builds instead, even if a matching table exists in another target.
+Настройка `allow_clones: false` для целевого окружения указывает dbt State пропускать кандидатов на клонирование и вместо этого выполнять полное построение, даже если в другом целевом окружении существует подходящая таблица.
 
-This setting affects only the target it is set on. Other targets in the same profile are unaffected.
+Эта настройка влияет только на то целевое окружение, для которого она задана. Другие целевые окружения в том же профиле не затрагиваются.
 
-For <Constant name="dbt_platform" /> users, set `allow_clones` as an [extended attribute](/docs/dbt-platform-environments#extended-attributes) on the [connection profile](/docs/platform/about-profiles) for a deployment environment:
+Пользователям <Constant name="dbt_platform" /> следует задать `allow_clones` как [расширенный атрибут](/docs/dbt-platform-environments#extended-attributes) в [профиле подключения](/docs/platform/about-profiles) для окружения развертывания:
 
 ```yaml
 allow_clones: true | false
 ```
 
-## Default
+## Значение по умолчанию
 
-`true`. When omitted, cloning is enabled and dbt State clones from any environment where a matching table exists.
+`true`. Если настройка не указана, клонирование включено, и dbt State клонирует таблицы из любого окружения, где существует подходящая таблица.
 
-## When to disable
+## Когда следует отключать
 
 :::caution
-Setting `allow_clones: false` reduces the efficiency gains from dbt State. Nodes that dbt State would otherwise clone instead run as full builds. Consider whether this restriction is necessary for your environment.
+Настройка `allow_clones: false` снижает выигрыш в эффективности от использования dbt State. Для узлов, которые dbt State в противном случае клонировал бы, вместо этого выполняется полное построение. Оцените, необходимо ли такое ограничение для вашего окружения.
 :::
 
-You typically don't need to set `allow_clones: false`. dbt State only clones when the source table's SQL logic matches and the table's data is newer. Because this is based on the table's modification date (not by directly comparing table contents), manually editing a table outside of dbt can give it a newer modification date without actually matching what a full build would produce. It is safe to leave `allow_clones` enabled as long as you always change table contents through dbt, rather than editing tables manually
+Как правило, задавать `allow_clones: false` не требуется. dbt State выполняет клонирование только тогда, когда SQL-логика исходной таблицы совпадает, а данные в ней новее. Поскольку это определяется по дате изменения таблицы (а не путем прямого сравнения ее содержимого), ручное изменение таблицы вне dbt может обновить дату ее изменения, хотя ее содержимое фактически не будет соответствовать результату полного построения. Оставлять `allow_clones` включенным безопасно, если вы всегда изменяете содержимое таблиц через dbt, а не редактируете таблицы вручную
 
-Disabling `allow_clones` is useful in regulated environments where policy prohibits any data from a development schema being written to production, regardless of correctness (for example, environments subject to data governance or audit requirements where the origin of a production table must be a warehouse-executed SQL statement rather than a clone).
+Отключение `allow_clones` полезно в окружениях с нормативными ограничениями, где политика запрещает запись любых данных из схемы разработки в продакшен независимо от их корректности (например, в окружениях с требованиями к управлению данными или аудиту, где источником создания таблицы в продакшене должен быть SQL-запрос, выполненный в хранилище данных, а не клонирование).
 
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройки dbt State](/reference/resource-configs/dbt-state-configs)

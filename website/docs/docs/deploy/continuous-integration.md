@@ -1,18 +1,18 @@
 ---
-title: "Continuous integration in dbt"
-sidebar_label: "Continuous integration"
-description: "Learn how CI checks validate changes before you deploy code to production."
+title: "Непрерывная интеграция в dbt"
+sidebar_label: "Непрерывная интеграция"
+description: "Как проверки CI проверяют изменения перед развёртыванием кода в рабочей среде."
 pagination_next: "docs/deploy/advanced-ci"
 availability: platform_login
 ---
 
 Чтобы реализовать рабочий процесс непрерывной интеграции (CI) в <Constant name="dbt" />, можно настроить автоматическую проверку изменений кода с помощью [заданий CI](/docs/deploy/ci-jobs) перед слиянием изменений для развертывания в производственной среде. <Constant name="dbt" /> отслеживает состояние объектов, работающих в вашей производственной среде. При запуске задания CI в промежуточной схеме создаются и тестируются только те объекты данных, которые были изменены в вашем pull request (PR), а также зависящие от них объекты.
 
-You can also view the status of the CI checks (tests) directly from within the PR; this information is posted to your <Constant name="git" /> provider as soon as a CI job completes. Additionally, you can enable settings in your <Constant name="git" /> provider that allow PRs only with successful CI checks to be approved for merging.
+Статус проверок CI виден прямо в PR. После завершения задания CI dbt отправляет результаты провайдеру <Constant name="git" />. У провайдера можно настроить правила, разрешающие слияние только после успешного прохождения проверок CI.
 
-For workflows that promote changes after a PR merges (merge jobs or other deployment triggers, including triggering jobs manually or through APIs), refer to [Continuous deployment in <Constant name="dbt" />](/docs/deploy/continuous-deployment), including [merge jobs](/docs/deploy/merge-jobs).
+О том, как развернуть изменения после слияния PR, см. [Непрерывное развёртывание в <Constant name="dbt" />](/docs/deploy/continuous-deployment). Можно использовать [задания слияния](/docs/deploy/merge-jobs) или запускать задания другими способами, в том числе вручную и через API.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/ci-workflow.png" width="90%" title="Workflow of continuous integration in dbt"/>
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/ci-workflow.png" width="90%" title="Схема непрерывной интеграции в dbt"/>
 
 Использование CI помогает:
 

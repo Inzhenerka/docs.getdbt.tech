@@ -1,5 +1,5 @@
 ---
-description: "Specify how a data test stores its failures in the database: as a table, a view, or ephemerally."
+description: "Укажите, как тест данных сохраняет ошибки: в таблице, представлении или только на время выполнения."
 resource_types: [tests]
 id: "store_failures_as"
 ---
@@ -18,7 +18,7 @@ id: "store_failures_as"
 
 #### Одиночный тест {#singular-test}
 
-[Singular test](/docs/build/data-tests#singular-data-tests) в файле `tests/singular/check_something.sql`
+[Одиночный тест](/docs/build/data-tests#singular-data-tests) в файле `tests/singular/check_something.sql`
 
 ```sql
 {{ config(store_failures_as="table") }}
@@ -30,7 +30,7 @@ where 1=0
 
 #### Общий тест {#generic-test}
 
-[Generic tests](/docs/build/data-tests#generic-data-tests) в файле `models/_models.yml`
+[Универсальные тесты](/docs/build/data-tests#generic-data-tests) в файле `models/_models.yml`
 
 ```yaml
 models:

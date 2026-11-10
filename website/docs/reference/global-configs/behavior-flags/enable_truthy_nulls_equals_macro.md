@@ -1,22 +1,22 @@
 ---
-title: "Null-safe equality (equals macro)"
+title: "Сравнение на равенство с учетом NULL (макрос equals)"
 id: "enable_truthy_nulls_equals_macro"
-sidebar_label: "enable truthy nulls equals macro"
+sidebar_label: "Включение сравнения NULL в макросе equals"
 ---
 
 | enable_truthy_nulls_equals_macro | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2025.02 | 1.9.0 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Добавлен | 2025.02 | 1.9.0 |
+| Стабилизирован (значение по умолчанию → `true`) | — | — |
+| Удален | — | — |
 
-The `enable_truthy_nulls_equals_macro` flag is `false` by default. Setting it to `true` in your `dbt_project.yml` enables null-safe equality in the dbt [equals](/reference/dbt-jinja-functions/cross-database-macros#equals) macro, which is used in incremental and snapshot materializations.
+По умолчанию флаг `enable_truthy_nulls_equals_macro` имеет значение `false`. Если установить для него значение `true` в файле `dbt_project.yml`, макрос dbt [equals](/reference/dbt-jinja-functions/cross-database-macros#equals), используемый в инкрементальных материализациях и материализациях снимков, будет выполнять сравнение на равенство с учетом NULL.
 
-By default, the `equals()` macro follows SQL's [three-valued logic (3VL)](https://modern-sql.com/concept/three-valued-logic), so `NULL = NULL` evaluates to `UNKNOWN` rather than `TRUE`.
+По умолчанию макрос `equals()` следует [трехзначной логике (3VL)](https://modern-sql.com/concept/three-valued-logic) SQL, поэтому выражение `NULL = NULL` возвращает `UNKNOWN`, а не `TRUE`.
 
-When the `enable_truthy_nulls_equals_macro` flag is enabled, the `equals()` macro uses the semantics of the [`IS NOT DISTINCT FROM`](https://modern-sql.com/feature/is-distinct-from) operator with two `NULL` values treated as equal.
+Когда флаг `enable_truthy_nulls_equals_macro` включен, макрос `equals()` использует семантику оператора [`IS NOT DISTINCT FROM`](https://modern-sql.com/feature/is-distinct-from), при которой два значения `NULL` считаются равными.
 
-To enable the flag, add it under `flags` in `dbt_project.yml`:
+Чтобы включить флаг, добавьте его в раздел `flags` файла `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 

@@ -1,8 +1,8 @@
 ---
-title: "Weekly dbt single-tenant release notes"
-description: "Release notes for weekly single-tenant updates."
+title: "Примечания к еженедельным выпускам dbt для одноарендных сред"
+description: "Примечания к еженедельным обновлениям одноарендных сред."
 id: "dbt-platform-release-notes-gen"
-sidebar: "dbt single-tenant release notes"
+sidebar: "Примечания к выпускам dbt для одноарендных сред"
 pagination_next: null
 pagination_prev: null
 unlisted: true
@@ -11,2237 +11,2237 @@ availability:
   access: free
 ---
 
-<Constant name="dbt" /> Single-tenant release notes for weekly updates. Release notes fall into one of these categories:
+<Constant name="dbt" /> Примечания к еженедельным обновлениям одноарендных сред. Примечания к выпускам относятся к одной из следующих категорий:
 
-- **New:** New products and features
-- **Enhancement:** Performance improvements and feature enhancements
-- **Fix:** Bug and security fixes
-- **Behavior change:** A change to existing behavior that doesn't fit into the other categories, such as feature deprecations or changes to default settings
+- **Новое:** Новые продукты и функции
+- **Улучшение:** Повышение производительности и совершенствование функций
+- **Исправление:** Исправления ошибок и уязвимостей безопасности
+- **Изменение поведения:** Изменение существующего поведения, не относящееся к другим категориям, например прекращение поддержки функций или изменение настроек по умолчанию
 
-Release notes are grouped by date for single-tenant environments.
+Примечания к выпускам для одноарендных сред сгруппированы по дате.
 
-<span><img src="/img/fontawesome/rss.svg" alt="RSS" className="rss-icon" />Subscribe to release note updates via [RSS](https://docs.getdbt.com/feeds/release-notes-st-rss.xml), [Atom](https://docs.getdbt.com/feeds/release-notes-st-atom.xml), or [JSON Feed](https://docs.getdbt.com/feeds/release-notes-st-rss.json).</span>
+<span><img src="/img/fontawesome/rss.svg" alt="RSS" className="rss-icon" />Подпишитесь на обновления примечаний к выпускам через [RSS](/feeds/release-notes-st-rss.xml), [Atom](/feeds/release-notes-st-atom.xml) или [JSON Feed](/feeds/release-notes-st-rss.json).</span>
 
-## November 4, 2026
+## 4 ноября 2026 г. {#november-4-2026}
 
-## Enhancements
-
-### Catalog
-
-- **More rows in the Marts table**: The [**Marts**](/docs/explore/explore-projects#catalog-overview) table on the Catalog project landing page now shows 20 rows per page by default, up from 5. The page size dropdown includes a **20 Rows** option, so you move through the list with fewer page turns.
-
-### APIs, Identity, and Administration
-
-- **Add or remove a user from specific groups**: The [Assign User to Groups API](/dbt-cloud/api-v3?version=2#/operations/Assign%20User%20to%20Groups) (`POST /api/v3/accounts/{account_id}/assign-groups/`) now accepts `add_group_ids` and `remove_group_ids`. Use these fields to add a user to groups, or remove them from groups, without replacing every group they belong to. Sending `desired_group_ids` still replaces the full list.
-
-## Fixes
+## Улучшения
 
 ### Catalog
 
-- **Parent models in another project show in the Discovery API**: In the [Discovery API](/docs/dbt-apis/discovery-api), a model's parents used to leave out models that live in another project ([Mesh](/docs/mesh/about-mesh)). Those parent models are included now. Lineage already listed these parents.
+- **Больше строк в таблице Marts**: Таблица [**Marts**](/docs/explore/explore-projects#catalog-overview) на главной странице проекта в Catalog теперь по умолчанию показывает 20 строк на странице вместо 5. В раскрывающемся списке размера страницы появился вариант **20 Rows**, поэтому для просмотра списка требуется меньше переходов между страницами.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **All assigned groups show for accounts with many groups**: When an account had more than 1,000 groups, some of a user's assigned [groups](/docs/platform/manage-access/about-user-access#groups) were missing from the user details view. All assigned groups now appear checked. Saving with `POST /api/v3/accounts/{id}/assign-groups/` also keeps the full list of groups.
+- **Добавление пользователя в определённые группы и удаление из них**: [API Assign User to Groups](/dbt-cloud/api-v3?version=2#/operations/Assign%20User%20to%20Groups) (`POST /api/v3/accounts/{account_id}/assign-groups/`) теперь принимает `add_group_ids` и `remove_group_ids`. Используйте эти поля, чтобы добавлять пользователя в группы или удалять его из групп, не заменяя весь список групп, в которые он входит. Передача `desired_group_ids` по-прежнему заменяет полный список.
 
-- **Clearer errors for an invalid IP restriction**: Creating or updating an [IP restriction](/docs/platform/secure/ip-restrictions) with a missing or invalid `type` now returns a 400 error (the request was invalid) and a message that describes the problem, instead of a 500 server error. A missing `name` is rejected with a 400 error too. Before this fix, dbt saved that missing name as the word None.
+## Исправления
 
-## Behavior changes
+### Catalog
 
-### dbt platform
+- **Родительские модели из другого проекта отображаются в Discovery API**: Ранее в [Discovery API](/docs/dbt-apis/discovery-api) список родительских моделей не включал модели из другого проекта ([Mesh](/docs/mesh/about-mesh)). Теперь эти родительские модели включены в список. В графе зависимостей они уже отображались.
 
-- **dbt v2 runs in Studio IDE use your thread count**: These runs now follow the [`threads`](/docs/running-a-dbt-project/using-threads) value in your [user credentials](/docs/dbt-platform-environments#set-user-credentials) instead of the dbt v2 default (for example, 48 on Snowflake). The same change also applies to Canvas runs. Jobs, dbt v1 runs, and editor features such as autocomplete are unchanged.
+### API, управление идентификацией и администрирование
 
-## October 28, 2026
+- **Все назначенные группы отображаются в аккаунтах с большим количеством групп**: Если в аккаунте было более 1000 групп, некоторые назначенные пользователю [группы](/docs/platform/manage-access/about-user-access#groups) отсутствовали в представлении сведений о пользователе. Теперь все назначенные группы отображаются как отмеченные. При сохранении через `POST /api/v3/accounts/{id}/assign-groups/` также сохраняется полный список групп.
 
-## New
+- **Более понятные ошибки при некорректном ограничении по IP**: Создание или обновление [ограничения по IP](/docs/platform/secure/ip-restrictions) с отсутствующим или некорректным `type` теперь возвращает ошибку 400 (некорректный запрос) и сообщение с описанием проблемы вместо серверной ошибки 500. Отсутствующее `name` также приводит к ошибке 400. До этого исправления dbt сохранял отсутствующее имя как слово None.
 
-### dbt platform
+## Изменения поведения
 
-- **Private connection for a GitHub Enterprise Server app you manage**: If your GitHub Enterprise Server can only be reached over a private connection (PrivateLink), you can now save that connection on the GitHub app. Set `private_link_endpoint_id` when you create or update the app through the API, and dbt routes the connection over your private network.
+### Платформа dbt
 
-### Orchestration and run status
+- **Запуски dbt v2 в Studio IDE используют заданное вами количество потоков**: Теперь такие запуски учитывают значение [`threads`](/docs/running-a-dbt-project/using-threads) в ваших [учётных данных пользователя](/docs/dbt-platform-environments#set-user-credentials) вместо значения dbt v2 по умолчанию (например, 48 для Snowflake). Это изменение также распространяется на запуски в Canvas. Задания, запуски dbt v1 и функции редактора, такие как автодополнение, не изменились.
 
-- **Filter the Model timing table:** On the Model timing tab, you can now filter [Resource details](/docs/deploy/run-visibility#resource-details) to find what's slowing a run down. Use the **Est. critical path** filter to show only the resources on the longest chain of dependent resources, which sets the minimum run time (Yes), or everything else (No). Use the resource type filter to narrow the list to **Model**, **Test**, **Snapshot**, or **Exposure**. You can still search by name.
+## 28 октября 2026 г. {#october-28-2026}
+
+## Новое
+
+### Платформа dbt
+
+- **Частное подключение для управляемого вами приложения GitHub Enterprise Server**: Если ваш GitHub Enterprise Server доступен только через частное подключение (PrivateLink), теперь это подключение можно сохранить в настройках приложения GitHub. Задайте `private_link_endpoint_id` при создании или обновлении приложения через API, и dbt направит подключение через вашу частную сеть.
+
+### Оркестрация и состояние запусков
+
+- **Фильтрация таблицы Model timing:** На вкладке Model timing теперь можно фильтровать [Resource details](/docs/deploy/run-visibility#resource-details), чтобы находить причины замедления запуска. Используйте фильтр **Est. critical path**, чтобы показать только ресурсы в самой длинной цепочке зависимых ресурсов, определяющей минимальное время выполнения (Yes), или все остальные ресурсы (No). Используйте фильтр типа ресурса, чтобы ограничить список значениями **Model**, **Test**, **Snapshot** или **Exposure**. Поиск по имени по-прежнему доступен.
 
 ### dbt v2
 
-- **Set the environment for a Mesh dependency**: You can now route cross-project refs to a specific upstream environment, such as Staging, instead of only the default Production or Staging environment.
+- **Выбор среды для зависимости Mesh**: Теперь межпроектные ссылки ref можно направлять в определённую вышестоящую среду, например Staging, а не только в среду Production или Staging по умолчанию.
 
-- **Files that end with a Jinja suffix**: Set [`allow_jinja_file_extensions`](/reference/global-configs/behavior-flags/allow_jinja_file_extensions) in your project config so dbt reads files with an extra Jinja ending, such as `model.sql.j2` or `doc.md.j2`. Jinja is the templating language dbt already uses inside SQL and Markdown files.
+- **Файлы с суффиксом Jinja**: Задайте [`allow_jinja_file_extensions`](/reference/global-configs/behavior-flags/allow_jinja_file_extensions) в конфигурации проекта, чтобы dbt читал файлы с дополнительным расширением Jinja, например `model.sql.j2` или `doc.md.j2`. Jinja — язык шаблонов, который dbt уже использует в файлах SQL и Markdown.
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Bookmarkable dbt Wizard home conversations**: In the dbt Wizard [home tab](/docs/platform/wizard-home), the conversation you have open appears in the browser URL. You can bookmark that conversation and open it again from the URL.
+- **Сохранение бесед с главной вкладки dbt Wizard в закладках**: На [главной вкладке](/docs/platform/wizard-home) dbt Wizard открытая беседа отражается в URL браузера. Вы можете добавить эту беседу в закладки и снова открыть её по URL.
 
-## Enhancements
+## Улучшения
 
-### dbt platform
+### Платформа dbt
 
-- **Clearer message when you cannot select dbt v2**: If a project can use dbt v2 but you do not have permission to select it, the dbt v2 choices stay visible and disabled in the environment, job, and development version menus. The tooltip says that an Account Admin or a [v2 Migration Admin](/docs/platform/manage-access/enterprise-permissions#v2-migration-admin) has to select dbt v2.
+- **Более понятное сообщение, когда невозможно выбрать dbt v2**: Если проект может использовать dbt v2, но у вас нет разрешения на его выбор, варианты dbt v2 остаются видимыми, но недоступными в меню версий среды, задания и среды разработки. В подсказке указано, что выбрать dbt v2 должен Account Admin или [v2 Migration Admin](/docs/platform/manage-access/enterprise-permissions#v2-migration-admin).
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Definitions on the Model timing tiles**: The six [summary tiles](/docs/deploy/run-visibility#metric-tiles) on the Model timing tab now have a question-mark icon: **Est. critical path**, **Peak concurrency**, **Avg active models**, **Longest model**, **Wall clock**, and **Latest start**. Select the icon to read what that number means.
+- **Определения на карточках Model timing**: На шести [карточках сводных показателей](/docs/deploy/run-visibility#metric-tiles) вкладки Model timing теперь есть значок вопросительного знака: **Est. critical path**, **Peak concurrency**, **Avg active models**, **Longest model**, **Wall clock** и **Latest start**. Нажмите значок, чтобы узнать, что означает соответствующее значение.
 
-- **Retry when a usage chart does not load**: If a [usage chart](/docs/platform/billing/how-pricing-works#viewing-usage-in-the-product) fails to load or refresh, you see a message and a **Retry** button. This applies to the monthly models built chart on **Project home** and the top jobs chart on an **Environment** page. A chart that loaded earlier keeps its last numbers and shows when they were updated while the retry runs.
+- **Повторная попытка, если диаграмма использования не загружается**: Если [диаграмма использования](/docs/platform/billing/how-pricing-works#viewing-usage-in-the-product) не загружается или не обновляется, отображаются сообщение и кнопка **Retry**. Это относится к диаграмме количества построенных моделей за месяц на странице **Project home** и диаграмме основных заданий на странице **Environment**. Если диаграмма уже загружалась ранее, во время повторной попытки она сохраняет последние значения и показывает время их обновления.
 
 ### Studio IDE
 
-- **dbt v2 Stable no longer shows Preview**: In Studio [User development settings](/docs/dbt-versions/upgrade-dbt-platform-version#override-dbt-version), the **v2 Stable** option no longer shows a **Preview** label. dbt v2 is generally available.
+- **dbt v2 Stable больше не помечен как Preview**: В [User development settings](/docs/dbt-versions/upgrade-dbt-platform-version#override-dbt-version) Studio у варианта **v2 Stable** больше нет метки **Preview**. dbt v2 общедоступен.
 
 ### dbt v2
 
-- **Resize columns in query results**: In the dbt VS Code extension, drag the edge of a column header in the query results panel to make that column wider or narrower.
+- **Изменение ширины столбцов в результатах запросов**: В расширении dbt для VS Code перетащите край заголовка столбца на панели результатов запроса, чтобы сделать столбец шире или уже.
 
-## Fixes
+## Исправления
 
-### dbt platform
+### Платформа dbt
 
-- **Signup tells you when an email is already taken**: If a signup uses an email address that already has an account, including when two signups use that email at the same time, dbt shows a page that says the email is already taken. You no longer get a generic error page.
+- **При регистрации отображается сообщение, если адрес электронной почты уже занят**: Если при регистрации используется адрес электронной почты, для которого уже существует аккаунт, в том числе при двух одновременных регистрациях с одним адресом, dbt показывает страницу с сообщением о том, что адрес уже занят. Общая страница ошибки больше не отображается.
 
-### Identity, APIs, and Administration
+### Управление идентификацией, API и администрирование
 
-- **Clearer errors for an invalid API request**: A request with a bad value now returns a clear error instead of a server error. An unsupported `order_by` value on version 3 list endpoints, and a negative or too-large `limit` or `offset` on version 2 list endpoints, return a 400 error (the request was invalid). Creating a project with `POST /api/v2/accounts/{id}/projects/` also returns a 400 error when `type` is not text. Getting run timing with `GET /api/v3/accounts/:id/projects/:id/runs/:id/timing/` returns a 404 (not found) when that run is not in the account or project in the URL.
+- **Более понятные ошибки при некорректном запросе к API**: Запрос с некорректным значением теперь возвращает понятную ошибку вместо серверной ошибки. Неподдерживаемое значение `order_by` в эндпоинтах получения списков версии 3, а также отрицательное или слишком большое значение `limit` или `offset` в эндпоинтах получения списков версии 2 возвращают ошибку 400 (некорректный запрос). Создание проекта через `POST /api/v2/accounts/{id}/projects/` также возвращает ошибку 400, если `type` не является текстом. Получение временных показателей запуска через `GET /api/v3/accounts/:id/projects/:id/runs/:id/timing/` возвращает ошибку 404 (не найдено), если запуск не относится к аккаунту или проекту, указанному в URL.
 
 ### Studio IDE
 
-- **Ephemeral models show in command results**: In Studio IDE, an [ephemeral](/docs/build/materializations#ephemeral) model is a model that is not built as its own table or view. Those models were missing from the command result list, so a tab such as **Error**, **Warn**, **Skip**, **Reused**, or **Pass** could show a count and no rows. They now appear on the matching tab with the other models.
+- **Эфемерные модели отображаются в результатах команд**: В Studio IDE [эфемерная](/docs/build/materializations#ephemeral) модель — это модель, которая не создаётся как отдельная таблица или представление. Такие модели отсутствовали в списке результатов команды, из-за чего вкладки **Error**, **Warn**, **Skip**, **Reused** или **Pass** могли показывать количество результатов без строк. Теперь они отображаются на соответствующей вкладке вместе с другими моделями.
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Model logs on the System logs tab**: Open a job run, select a step, and open **System logs**. That tab now includes the logs from your models, so you can troubleshoot a failed run in one place.
-
-### dbt v2
-
-- **`dbt fmt` keeps a stable indentation**: [`dbt fmt`](/reference/commands/lint#dbt-format) no longer shifts a Jinja tag to the left when that same line ends with a SQL comment. It also settles on one indentation for Jinja tags inside a `for` loop, and for an `{% if %}...{%- else -%}` block whose condition looks up warehouse information, such as the columns on a table. Running `dbt fmt` again does not keep changing those lines.
-
-## Behavior changes
-
-### Orchestration and run status
-
-- **System logs now include model logs**: The **System logs** tab on a run step used to show only system messages. It now shows every log for that step, including logs from your models. If you used this tab for system messages only, you will see more lines there.
+- **Логи моделей на вкладке System logs**: Откройте запуск задания, выберите шаг и откройте **System logs**. Теперь эта вкладка содержит логи ваших моделей, поэтому искать причины сбоя запуска можно в одном месте.
 
 ### dbt v2
 
-- **New names for three environment variables**: dbt v2 renamed the variable that selects an AI provider, and the two variables that write the [information schema](/docs/build/dbt-information-schema#generating-the-information-schema) (a local copy of project metadata you can query). If you set `DBT_AI_PROVIDER`, change it to [`DBT_ENGINE_AI_PROVIDER`](/docs/dbt-ai/package-skills#set-the-ai_provider-flag). If you set `DBT_GENERATE_INFO_SCHEMA` or `DBT_INFO_SCHEMA_DIR`, change them to `DBT_ENGINE_GENERATE_INFO_SCHEMA` and `DBT_ENGINE_INFO_SCHEMA_DIR`. The command-line flags for these options are unchanged. Update the variables anywhere you set them, including continuous integration (CI).
+- **`dbt fmt` сохраняет стабильные отступы**: [`dbt fmt`](/reference/commands/lint#dbt-format) больше не сдвигает тег Jinja влево, если та же строка заканчивается комментарием SQL. Также теперь сохраняется единообразный отступ для тегов Jinja внутри цикла `for` и для блока `{% if %}...{%- else -%}`, условие которого запрашивает сведения из хранилища, например о столбцах таблицы. Повторный запуск `dbt fmt` больше не меняет эти строки.
 
-## October 21, 2026
+## Изменения поведения
 
-## New
+### Оркестрация и состояние запусков
 
-### dbt platform
+- **System logs теперь включает логи моделей**: Ранее вкладка **System logs** шага запуска показывала только системные сообщения. Теперь она показывает все логи этого шага, включая логи ваших моделей. Если вы использовали эту вкладку только для системных сообщений, теперь в ней будет больше строк.
 
-- **dbt State allowance and trial email notifications**: Billing admins now receive proactive email notifications about dbt State usage, including a warning at 80% of the monthly allowance (with a projected run-out date), a notification when the allowance is fully used and State is paused, and a reminder 7 days before a trial expires. All emails include plan-specific messaging and calls to action.
+### dbt v2
+
+- **Новые имена трёх переменных среды**: В dbt v2 переименованы переменная выбора поставщика ИИ и две переменные для записи [информационной схемы](/docs/build/dbt-information-schema#generating-the-information-schema) (локальной копии метаданных проекта, к которой можно выполнять запросы). Если вы задаёте `DBT_AI_PROVIDER`, замените её на [`DBT_ENGINE_AI_PROVIDER`](/docs/dbt-ai/package-skills#set-the-ai_provider-flag). Если вы задаёте `DBT_GENERATE_INFO_SCHEMA` или `DBT_INFO_SCHEMA_DIR`, замените их на `DBT_ENGINE_GENERATE_INFO_SCHEMA` и `DBT_ENGINE_INFO_SCHEMA_DIR`. Флаги командной строки для этих параметров не изменились. Обновите переменные везде, где они заданы, включая системы непрерывной интеграции (CI).
+
+## 21 октября 2026 г. {#october-21-2026}
+
+## Новое
+
+### Платформа dbt
+
+- **Уведомления по электронной почте о лимите dbt State и пробном периоде**: Администраторы биллинга теперь заранее получают уведомления об использовании dbt State: предупреждение при достижении 80% месячного лимита (с прогнозируемой датой его исчерпания), уведомление о полном исчерпании лимита и приостановке State, а также напоминание за 7 дней до окончания пробного периода. Все письма содержат информацию с учётом тарифного плана и рекомендации по дальнейшим действиям.
 
 ### Insights
 
-- **Cost Insights ingestion failure email alerts**: Account admins now receive an email when Cost Insights ingestion has been failing for 3 or more cycles, with follow-up emails at 14 and 28 days if it continues.
+- **Оповещения по электронной почте о сбоях загрузки данных Cost Insights**: Администраторы аккаунта теперь получают письмо, если загрузка данных Cost Insights завершается сбоем в течение 3 и более циклов, с повторными письмами через 14 и 28 дней, если проблема сохраняется.
 
-## Enhancements
+## Улучшения
 
-### dbt platform
+### Платформа dbt
 
-- **dbt State usage graph period selector**: The dbt State usage graph now includes a dropdown to select the reporting period: this month, previous month, last 30 days, last 60 days, or last 90 days. The chart x-axis also shows month abbreviations when the selected range spans multiple months.
+- **Выбор периода на графике использования dbt State**: График использования dbt State теперь содержит раскрывающийся список для выбора отчётного периода: текущий месяц, предыдущий месяц, последние 30 дней, последние 60 дней или последние 90 дней. Если выбранный диапазон охватывает несколько месяцев, на оси X диаграммы также отображаются сокращённые названия месяцев.
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Turn duration visible in Wizard conversations**: dbt Wizard now displays how long each turn took at the bottom of every completed turn. For previously loaded conversations, the completion timestamp is also shown.
+- **Длительность ходов в беседах Wizard**: dbt Wizard теперь показывает длительность каждого завершённого хода внизу этого хода. Для ранее загруженных бесед также отображается время завершения.
 
-## Fixes
+## Исправления
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **SCIM `licenseType` updates applied to pending invites**: If you manage access through SCIM (your identity provider, like Okta or Microsoft Entra ID), you can change the user's license type before they even log in. Previously this only worked for active users, but now it works for pending and not-yet-fully-signed-in users too. dbt still checks that you have an available seat of that license type before applying any change.
+- **Обновления SCIM `licenseType` применяются к ожидающим приглашениям**: Если вы управляете доступом через SCIM (с помощью поставщика удостоверений, например Okta или Microsoft Entra ID), вы можете изменить тип лицензии пользователя ещё до его входа в систему. Ранее это работало только для активных пользователей, а теперь работает и для пользователей с ожидающими приглашениями и ещё не завершивших вход. Перед применением любого изменения dbt по-прежнему проверяет наличие свободного места с лицензией этого типа.
 
-- **Clearer API validation errors**: API requests with an invalid permission value or a malformed body now return a descriptive error instead of a server error.
+- **Более понятные ошибки валидации API**: Запросы к API с некорректным значением разрешения или неправильно сформированным телом теперь возвращают содержательную ошибку вместо серверной ошибки.
 
-## October 19, 2026
+## 19 октября 2026 г. {#october-19-2026}
 
-## New
+## Новое
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Default license for new users**: Admins can now set the [default license](/docs/platform/manage-access/seats-and-users#default-license-for-new-users-) for new users who aren't assigned a license through SSO, SCIM, or license mapping. Choose Developer, Read-Only, or Analyst. Admins should check their settings and update the default as needed. This is available for all single-tenant accounts.
+- **Лицензия по умолчанию для новых пользователей**: Администраторы теперь могут задать [лицензию по умолчанию](/docs/platform/manage-access/seats-and-users#default-license-for-new-users) для новых пользователей, которым лицензия не назначена через SSO, SCIM или сопоставление лицензий. Доступны варианты Developer, Read-Only и Analyst. Администраторам следует проверить настройки и при необходимости обновить значение по умолчанию. Возможность доступна для всех одноарендных аккаунтов.
 
-## October 14, 2026
+## 14 октября 2026 г. {#october-14-2026}
 
-## Enhancements
+## Улучшения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Account connections page**: You can now sort columns, search by connection name, and filter by connection type, credentials, and connection method (private link or OAuth).
+- **Страница подключений аккаунта**: Теперь можно сортировать столбцы, искать по имени подключения и фильтровать по типу подключения, учётным данным и способу подключения (private link или OAuth).
 
 ### dbt State
 
-- **dbt State trial email**: When a dbt State trial ends, you'll get an email that communicates your Consumption or Enterprise plan and includes the allowance end date when your plan has one.
+- **Письмо об окончании пробного периода dbt State**: Когда пробный период dbt State заканчивается, вы получаете письмо с информацией о вашем тарифном плане Consumption или Enterprise и датой окончания действия включённого лимита, если она предусмотрена планом.
 
-## Fixes
+## Исправления
 
 ### Insights
 
-- **Dates on Insights charts**: Charts now show dates such as `2026-01` or `2026-01-15` from oldest to newest. Tables keep your query's row order until you sort a column.
+- **Даты на диаграммах Insights**: Теперь диаграммы показывают даты, например `2026-01` или `2026-01-15`, от более ранних к более поздним. Таблицы сохраняют порядок строк из запроса, пока вы не отсортируете столбец.
 
-## Behavior change
+## Изменение поведения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **SCIM tokens require a signed-in user**: You can no longer create a System for Cross-domain Identity Management (SCIM) token with a personal access token or a service token. Sign in to dbt and [create a SCIM token](/docs/platform/manage-access/scim#set-up-dbt).
+- **Для токенов SCIM требуется вход пользователя в систему**: Больше нельзя создать токен System for Cross-domain Identity Management (SCIM) с помощью персонального токена доступа или служебного токена. Войдите в dbt и [создайте токен SCIM](/docs/platform/manage-access/scim#set-up-dbt).
 
-## October 7, 2026
+## 7 октября 2026 г. {#october-7-2026}
 
-## New
+## Новое
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Explore mode**: [Explore mode](/docs/platform/wizard-home#ask-questions-in-explore-mode) is now available in preview in the dbt Wizard [home tab](/docs/platform/wizard-home#ask-questions-in-explore-mode) and [Studio IDE](/docs/dbt-ai/wizard-ide#ask-questions-in-explore-mode). Ask questions of governed production data in plain language, with the SQL or metric definition behind every answer.
+- **Режим Explore**: [Режим Explore](/docs/platform/wizard-home#ask-questions-in-explore-mode) теперь доступен в предварительной версии на [главной вкладке](/docs/platform/wizard-home#ask-questions-in-explore-mode) dbt Wizard и в [Studio IDE](/docs/dbt-ai/wizard-ide#ask-questions-in-explore-mode). Задавайте вопросы об управляемых производственных данных на естественном языке; каждый ответ сопровождается SQL или определением метрики, на котором он основан.
 
-- **Invite read-only users to the Wizard home tab**: You can now [invite](/docs/platform/wizard-read-only-users) read-only users to ask questions about your data in the Wizard home tab without a developer license.
+- **Приглашение пользователей с доступом только для чтения на главную вкладку Wizard**: Теперь вы можете [приглашать](/docs/platform/wizard-read-only-users) пользователей с доступом только для чтения, чтобы они задавали вопросы о ваших данных на главной вкладке Wizard без лицензии разработчика.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Filter jobs by ID list**: The jobs list API endpoint (`GET /api/v2/accounts/{account_id}/jobs/`) now accepts a `pk__in` query parameter, letting you retrieve up to 500 specific jobs by ID in a single request.
+- **Фильтрация заданий по списку ID**: Эндпоинт API списка заданий (`GET /api/v2/accounts/{account_id}/jobs/`) теперь принимает параметр запроса `pk__in`, позволяя получить до 500 определённых заданий по ID в одном запросе.
 
-- **ClickHouse available in the Administrative API (private beta)**: You can now specify `clickhouse_v0` as the adapter_version when creating connections and credentials, filtering connections, and retrieving adapter schemas in the Administrative API v3. Contact your account representative to enable.
+- **ClickHouse доступен в Administrative API (закрытая бета-версия)**: Теперь можно указывать `clickhouse_v0` в качестве adapter_version при создании подключений и учётных данных, фильтрации подключений и получении схем адаптеров в Administrative API v3. Для включения обратитесь к представителю, обслуживающему ваш аккаунт.
 
 ### Semantic Layer
 
-- **Multi-term metric search**: The `metrics` and `metricsPaginated` GraphQL queries now accept a `searchTerms` argument, letting you filter metrics by multiple terms in a single request with correct pagination. Note: `search` and `searchTerms` cannot be combined, and a maximum of 20 terms is allowed.
+- **Поиск метрик по нескольким терминам**: GraphQL-запросы `metrics` и `metricsPaginated` теперь принимают аргумент `searchTerms`, позволяя фильтровать метрики по нескольким терминам в одном запросе с корректной пагинацией. Примечание: `search` и `searchTerms` нельзя использовать вместе; допускается не более 20 терминов.
 
-## Enhancements
+## Улучшения
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Better file search for Wizard @-mentions**: Workspace @-mention queries now use server-side fuzzy matching instead of filtering a local list, returning better-ranked results for large repositories. The context file picker also prevents selecting stale results while a search is still in flight.
+- **Улучшенный поиск файлов для @-упоминаний в Wizard**: Запросы @-упоминаний в рабочем пространстве теперь используют нечёткое сопоставление на стороне сервера вместо фильтрации локального списка, что улучшает ранжирование результатов для больших репозиториев. Средство выбора файлов контекста также не позволяет выбирать устаревшие результаты, пока поиск ещё выполняется.
 
-- **Table blocks in reports**: You can now add a `table` block type to `compose_report` reports to render query results as formatted, scrollable tables. Columns can be narrowed and reordered using the `columns` field, and the display caps at 50 rows on screen with a truncation notice for clipped results.
+- **Табличные блоки в отчётах**: Теперь в отчёты `compose_report` можно добавлять блок типа `table`, чтобы отображать результаты запросов в виде форматированных таблиц с прокруткой. С помощью поля `columns` можно ограничить набор столбцов и изменить их порядок; на экране отображается не более 50 строк с уведомлением об усечении результатов.
 
 ### Catalog
 
-- **Column transformation type in lineage drawer**: You can use the new transformation type badge on column cards to see how each column is derived.
+- **Тип преобразования столбца на панели графа зависимостей**: Новый значок типа преобразования на карточках столбцов позволяет увидеть, как получен каждый столбец.
 
 ### Webhooks
 
-- **Faster webhook job picker on large accounts**: The webhook subscription job picker now searches and paginates server-side. You see a search box with debounced filtering and scroll-to-load pagination instead of a slow or frozen dropdown when your account has many jobs.
+- **Более быстрый выбор заданий вебхука в больших аккаунтах**: Поиск и пагинация в средстве выбора заданий подписки на вебхук теперь выполняются на стороне сервера. Вместо медленного или зависающего раскрывающегося списка в аккаунтах с большим количеством заданий отображаются поле поиска с отложенной фильтрацией и подгрузка страниц при прокрутке.
 
-### dbt platform
+### Платформа dbt
 
-- **dbt State no longer in preview**: The dbt State navigation option no longer carries a "Preview" badge. Incomplete projects (those without a repository or skipped setup) are also excluded from automatic project selection on the dbt State home page.
+- **dbt State больше не находится в предварительной версии**: Пункт навигации dbt State больше не помечен значком "Preview". Незавершённые проекты (без репозитория или с пропущенной настройкой) также исключены из автоматического выбора проекта на главной странице dbt State.
 
-- **Microsoft Entra Application API exposes `client_id` and `tenant_id`**: The GET, POST, and PATCH endpoints for Microsoft Entra applications now return `client_id` and `tenant_id` in their responses, giving you visibility into your Azure DevOps (ADO) integration configuration.
+- **API Microsoft Entra Application предоставляет `client_id` и `tenant_id`**: Эндпоинты GET, POST и PATCH для приложений Microsoft Entra теперь возвращают `client_id` и `tenant_id` в ответах, позволяя просматривать конфигурацию интеграции с Azure DevOps (ADO).
 
-## Fixes
+## Исправления
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Wizard diff card no longer crashes on malformed patches**: When the Wizard receives a malformed diff patch, it now displays a "Couldn't parse diff" error badge instead of crashing.
+- **Карточка diff в Wizard больше не вызывает сбой при некорректных патчах**: При получении некорректного патча diff Wizard теперь показывает значок ошибки "Couldn't parse diff" вместо аварийного завершения.
 
-- **Correct chart axis labels for decimal data**: Charts with decimal data values (for example, 25.43 minutes) no longer push the y-axis name outside the visible canvas area. The axis gap is now calculated from rounded tick values.
+- **Корректные подписи осей диаграмм с десятичными данными**: На диаграммах с десятичными значениями данных (например, 25,43 минуты) название оси Y больше не выходит за пределы видимой области. Отступ оси теперь рассчитывается на основе округлённых значений делений.
 
-- **Horizontal bar chart axis name no longer overlaps the legend**: The x-axis name, grid bottom margin, and legend centering on horizontal bar charts are now computed correctly so the axis label no longer overlaps the legend.
+- **Название оси горизонтальной столбчатой диаграммы больше не перекрывает легенду**: Название оси X, нижний отступ сетки и центрирование легенды на горизонтальных столбчатых диаграммах теперь рассчитываются правильно, поэтому подпись оси больше не перекрывает легенду.
 
 ### Cost Insights
 
-- **Cost Insights no longer stuck on "Preparing"**: The Cost Insights dashboard no longer shows a perpetual loading spinner when partial cost data exists. You now see available cost data even when some rows have not been fully processed.
+- **Cost Insights больше не зависает в состоянии "Preparing"**: Панель Cost Insights больше не показывает бесконечный индикатор загрузки при наличии частичных данных о затратах. Теперь доступные данные о затратах отображаются, даже если некоторые строки ещё не полностью обработаны.
 
-## September 30, 2026
+## 30 сентября 2026 г. {#september-30-2026}
 
-## New
+## Новое
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **State Explain tab available for all dbt State runs**: The job run details page now shows an [**Explain** tab](/docs/deploy/run-visibility#explain-tab) for every dbt State run. The tab is available while a run is in progress and updates as resources finish.
+- **Вкладка State Explain доступна для всех запусков dbt State**: На странице сведений о запуске задания теперь отображается [вкладка **Explain**](/docs/deploy/run-visibility#explain-tab) для каждого запуска dbt State. Вкладка доступна во время выполнения запуска и обновляется по мере завершения обработки ресурсов.
 
-## Enhancements
+## Улучшения
 
 ### Catalog
 
-- **SQL transformation expressions in column lineage**: The [column lineage](/docs/explore/column-level-lineage#column-lens) panel now shows SQL transformation expressions for all users. You can see how columns are derived across your lineage without any additional configuration.
+- **SQL-выражения преобразований в графе зависимостей столбцов**: Панель [графа зависимостей столбцов](/docs/explore/column-level-lineage#column-lens) теперь показывает SQL-выражения преобразований всем пользователям. Вы можете видеть, как формируются столбцы по всему графу зависимостей, без дополнительной настройки.
 
 ### Insights
 
-- **UTC timestamps in account Insights table**: The "last run finished at" column in the account Insights table now displays times in UTC, giving you a consistent reference regardless of your local timezone.
+- **Временные метки UTC в таблице Insights аккаунта**: Столбец "last run finished at" в таблице Insights аккаунта теперь отображает время в UTC, обеспечивая единую точку отсчёта независимо от вашего местного часового пояса.
 
-**Accurate Cost Insights build counts**: Cost Insights no longer counts nodes that never executed as builds (for example, from a cancelled or failed run), aligning that count with dbt State. You may see lower build counts for affected run dates after this change.
+**Точное количество построений в Cost Insights**: Cost Insights больше не учитывает узлы, которые не выполнялись, как построения (например, из отменённого или неудачного запуска), приводя этот показатель в соответствие с dbt State. После этого изменения количество построений за затронутые даты запусков может уменьшиться.
 
-- **Snowflake Adaptive warehouse cost tracking for all users**: Per-query Snowflake Adaptive warehouse costs are now tracked automatically for all accounts in [Cost Insights](/docs/explore/cost-insights) when `QUERY_METERING_HISTORY` is accessible, with no additional configuration required.
+- **Отслеживание затрат Snowflake Adaptive warehouse для всех пользователей**: Затраты Snowflake Adaptive warehouse на каждый запрос теперь автоматически отслеживаются для всех аккаунтов в [Cost Insights](/docs/explore/cost-insights), если доступна `QUERY_METERING_HISTORY`, без дополнительной настройки.
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **dbt State mode in job settings**: Job settings now always show a dbt State mode dropdown with inherit, on, or off. This replaces the previous per-job checkbox. You can also set dbt State as the default for a deployment environment.
+- **Режим dbt State в настройках задания**: В настройках задания теперь всегда отображается раскрывающийся список режима dbt State с вариантами наследования, включения и выключения. Он заменяет прежний флажок для отдельных заданий. Также можно включить dbt State по умолчанию для среды развёртывания.
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Correct reasoning block order after conversation reload**: AI reasoning blocks in agent chat now render in the correct order relative to answer text, both during live streaming and after you reload the conversation.
+- **Правильный порядок блоков рассуждений после перезагрузки беседы**: Блоки рассуждений ИИ в чате агента теперь отображаются в правильном порядке относительно текста ответа как во время потоковой передачи, так и после перезагрузки беседы.
 
 ### Semantic Layer
 
-- **More actionable BigQuery connection errors**: BigQuery authentication failures now surface as distinct 401 errors, and access-denied failures surface as 403 permission errors, instead of generic data platform errors. You get a more specific message to help diagnose credential and permission issues.
+- **Более полезные ошибки подключения к BigQuery**: Сбои аутентификации BigQuery теперь отображаются как отдельные ошибки 401, а отказы в доступе — как ошибки разрешений 403 вместо общих ошибок платформы данных. Более конкретное сообщение помогает диагностировать проблемы с учётными данными и разрешениями.
 
-- **Clearer Redshift connection errors**: When a Redshift connection fails because the credentials are wrong, or a role does not have the required permissions, you now see a specific error message instead of a generic failure.
+- **Более понятные ошибки подключения к Redshift**: Если подключение к Redshift не удаётся из-за неверных учётных данных или отсутствия у роли необходимых разрешений, теперь отображается конкретное сообщение об ошибке вместо общего сообщения о сбое.
 
-### dbt platform
+### Платформа dbt
 
-- **External metadata ingestion toggle shown only when enabled**: The external metadata ingestion checkbox in connection settings is now hidden unless it is already enabled for that connection. The toggle has also been removed from the account-level settings page.
+- **Переключатель загрузки внешних метаданных отображается только при включённой функции**: Флажок загрузки внешних метаданных в настройках подключения теперь скрыт, если эта функция ещё не включена для данного подключения. Переключатель также удалён со страницы настроек аккаунта.
 
-## Fixes
+## Исправления
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Warned models included in Model Timing tab**: Models with a "Warned" status now appear correctly in the [Execution timeline](/docs/deploy/run-visibility#execution-timeline) Gantt chart. The [critical path, peak concurrency, average active, and longest model](/docs/deploy/run-visibility#metric-tiles) summary tiles now include warned models in their calculations.
+- **Модели с предупреждениями включены во вкладку Model Timing**: Модели со статусом "Warned" теперь корректно отображаются на диаграмме Ганта [Execution timeline](/docs/deploy/run-visibility#execution-timeline). Карточки сводных показателей [критического пути, пиковой параллельности, среднего количества активных моделей и самой долгой модели](/docs/deploy/run-visibility#metric-tiles) теперь учитывают модели с предупреждениями при расчётах.
 
-## September 23, 2026
+## 23 сентября 2026 г. {#september-23-2026}
 
-## Enhancements
+## Улучшения
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Monthly spend limit of $0 for dbt Wizard**: You can now set a $0 monthly [spend limit](/docs/dbt-ai/pricing-billing/trial-and-billing#manage-your-spend-limit) for dbt Wizard, which stops all paid usage account-wide immediately. Selecting a limit below your current period's accrued spend no longer blocks submission. dbt platform displays a warning instead, and the limit takes effect right away.
+- **Месячный лимит расходов $0 для dbt Wizard**: Теперь для dbt Wizard можно установить месячный [лимит расходов](/docs/dbt-ai/pricing-billing/trial-and-billing#manage-your-spend-limit) $0, который немедленно прекращает всё платное использование в аккаунте. Выбор лимита ниже уже начисленных расходов за текущий период больше не блокирует сохранение. Вместо этого платформа dbt показывает предупреждение, а лимит вступает в силу сразу.
 
-### dbt platform
+### Платформа dbt
 
-- **Committed spend breakdown by product**: The committed spend card on the dbt State and AI Usage tabs now shows a per-product breakdown of how much committed spend has been drawn by dbt State and dbt Wizard respectively.
+- **Разбивка использования согласованного бюджета по продуктам**: Карточка согласованного бюджета на вкладках dbt State и AI Usage теперь показывает разбивку по продуктам: сколько средств из него использовали dbt State и dbt Wizard соответственно.
 
-- **Billing period day counter**: The billing period card in workspace settings now shows a "Day X of Y" counter instead of "X days left." The total days are calculated from the actual billing window length, so the counter stays accurate for billing periods shorter or longer than 30 days.
+- **Счётчик дней расчётного периода**: Карточка расчётного периода в настройках рабочего пространства теперь показывает счётчик "Day X of Y" вместо "X days left". Общее количество дней рассчитывается по фактической продолжительности расчётного периода, поэтому счётчик остаётся точным для периодов короче или длиннее 30 дней.
 
-- **Rolling 12-month window in Models built chart**: The Models built (Enterprise Usage by Month) chart now always displays a rolling 12-month window ending at the current month. Expired or completed billing plans no longer anchor the window to the plan end date.
+- **Скользящее 12-месячное окно на диаграмме Models built**: Диаграмма Models built (Enterprise Usage by Month) теперь всегда отображает скользящее 12-месячное окно, заканчивающееся текущим месяцем. Истёкшие или завершённые тарифные планы больше не привязывают окно к дате окончания плана.
 
-- **Clearer GitHub outage errors**: GitHub integration flows now return a consistent HTTP 503 response with a human-readable message ("GitHub is temporarily unavailable. Please try again in a few minutes.") during GitHub outages, timeouts, and upstream 5xx errors, instead of raw or generic failures.
+- **Более понятные ошибки при сбоях GitHub**: Во время сбоев GitHub, тайм-аутов и ошибок 5xx вышестоящего сервиса процессы интеграции с GitHub теперь возвращают единообразный ответ HTTP 503 с понятным сообщением ("GitHub is temporarily unavailable. Please try again in a few minutes.") вместо необработанных или общих ошибок.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Pagination for List Service Tokens API**: The `GET /api/v3/accounts/{id}/service-tokens/` endpoint now accepts `limit` and `offset` query parameters. Query with no parameters specified will continue to return all service tokens to preserve backwards-compatibility for existing callers.
+- **Пагинация в API List Service Tokens**: Эндпоинт `GET /api/v3/accounts/{id}/service-tokens/` теперь принимает параметры запроса `limit` и `offset`. Запрос без параметров по-прежнему возвращает все служебные токены для сохранения обратной совместимости с существующими клиентами.
 
-## Fixes
+## Исправления
 
-### dbt platform
+### Платформа dbt
 
-- **Email addresses stay in the invite panel**: Email addresses you type in the invite panel stay in place when the list of available groups reloads.
+- **Адреса электронной почты сохраняются на панели приглашений**: Адреса электронной почты, введённые на панели приглашений, остаются на месте при перезагрузке списка доступных групп.
 
-- **Actionable error for adapter version incompatibility**: When a connection test fails because an adapter requires a higher dbt version than the environment provides, you now see a clear HTTP 400 error message instead of a generic HTTP 500 server error.
+- **Понятная ошибка при несовместимости версии адаптера**: Если проверка подключения завершается сбоем из-за того, что адаптер требует более новую версию dbt, чем доступна в среде, теперь отображается понятное сообщение об ошибке HTTP 400 вместо общей серверной ошибки HTTP 500.
 
-- **Actionable error for managed repository download failures**: When a managed repository cannot be downloaded due to a GitHub App permissions issue, you now see the message "This managed repository couldn't be downloaded due to a dbt Labs configuration issue. Please contact support." instead of a silent or generic failure.
+- **Понятная ошибка при сбоях скачивания управляемого репозитория**: Если управляемый репозиторий невозможно скачать из-за проблемы с разрешениями GitHub App, теперь отображается сообщение "This managed repository couldn't be downloaded due to a dbt Labs configuration issue. Please contact support." вместо отсутствия сообщения или общей ошибки.
 
-- **Correct dbt version when an adapter does not support dbt v2**: When you select an adapter that is not compatible with dbt v2 during new project setup, a warning banner appears and the development environment is created with the latest compatible dbt version.
+- **Правильная версия dbt, если адаптер не поддерживает dbt v2**: Если при настройке нового проекта вы выбираете адаптер, несовместимый с dbt v2, появляется предупреждающий баннер, а среда разработки создаётся с последней совместимой версией dbt.
 
-## September 9, 2026
+## 9 сентября 2026 г. {#september-9-2026}
 
-## New
+## Новое
 
 ### Catalog
 
-- **Column counts in the models table**: The models table in Catalog navigation now shows a column count for each model.
+- **Количество столбцов в таблице моделей**: Таблица моделей в навигации Catalog теперь показывает количество столбцов для каждой модели.
 
-## Enhancements
+## Улучшения
 
 ### Studio IDE
 
-- **Clearer missing credentials prompt**: Studio IDE now detects missing development credentials at startup and shows a **Development Credentials Required** modal with a direct link to add credentials, instead of failing silently.
+- **Более понятное уведомление об отсутствующих учётных данных**: Studio IDE теперь обнаруживает отсутствие учётных данных для разработки при запуске и показывает модальное окно **Development Credentials Required** с прямой ссылкой для добавления учётных данных вместо сбоя без сообщения.
 
 ### Catalog
 
-- **Upstream sources sorted by freshness severity**: The **Upstream Sources** table on the model detail pages now sorts by freshness severity by default (Error first, Pass last). Click **Name** or **Status** to change the sort order. The **Status** column also no longer overflows on wide screens.
+- **Вышестоящие источники сортируются по серьёзности проблем свежести**: Таблица **Upstream Sources** на страницах сведений о модели теперь по умолчанию сортируется по серьёзности проблем свежести (сначала Error, в конце Pass). Нажмите **Name** или **Status**, чтобы изменить порядок сортировки. Столбец **Status** также больше не выходит за границы на широких экранах.
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Full model timing view for large runs**: The model timing Gantt chart no longer limits groups to 2,000 rows. You can now see all models in the timing view for large runs.
+- **Полное представление временных показателей моделей для больших запусков**: На диаграмме Ганта временных показателей моделей больше нет ограничения в 2000 строк на группу. Теперь в этом представлении можно увидеть все модели больших запусков.
 
-### dbt platform
+### Платформа dbt
 
-- **Analytics connection visible to read-only users**: Read-only users can now see their assigned analytics connection in project settings instead of **Not configured**.
+- **Аналитическое подключение видно пользователям с доступом только для чтения**: Пользователи с доступом только для чтения теперь видят назначенное им аналитическое подключение в настройках проекта вместо **Not configured**.
 
-- **dbt Wizard overage email notifications**: Account admins now receive email when dbt Wizard usage credits are exhausted, with separate notices for accounts that have no usage commitment and accounts that have used their full commitment.
+- **Уведомления по электронной почте об исчерпании лимита dbt Wizard**: Администраторы аккаунта теперь получают письма, когда кредиты использования dbt Wizard исчерпаны, с отдельными уведомлениями для аккаунтов без обязательства по потреблению и для аккаунтов, полностью использовавших согласованный объём.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Clearer GitLab unavailability errors**: When a GitLab host is unreachable, affected API endpoints now return HTTP 503 with the message "GitLab is unavailable, please try again." instead of an unclear failure. This applies when you create a repository or list GitLab groups.
+- **Более понятные ошибки недоступности GitLab**: Если хост GitLab недоступен, затронутые эндпоинты API теперь возвращают HTTP 503 с сообщением "GitLab is unavailable, please try again." вместо неясной ошибки. Это применяется при создании репозитория или получении списка групп GitLab.
 
-## Fixes
+## Исправления
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Pinned model names in context card**: Pinned models in the dbt Wizard context card now display the model name (for example, `customers`) instead of the raw metadata unique ID (for example, `model.jaffle_shop.customers`).
+- **Имена закреплённых моделей в карточке контекста**: Закреплённые модели в карточке контекста dbt Wizard теперь отображают имя модели (например, `customers`) вместо исходного уникального ID метаданных (например, `model.jaffle_shop.customers`).
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Correct error for cross-account write attempts**: Cross-account write attempts now return HTTP 403 Forbidden instead of a generic 500 Internal Server Error, so you get a clear rejection when the account doesn't match.
+- **Правильная ошибка при попытках записи в другой аккаунт**: Попытки записи в другой аккаунт теперь возвращают HTTP 403 Forbidden вместо общей ошибки 500 Internal Server Error, обеспечивая явный отказ при несовпадении аккаунта.
 
-- **Corrected Azure DevOps account linking error**: The error for a missing Azure DevOps account link now shows the correct message: "Missing Azure user; link your Azure DevOps account in your personal profile."
+- **Исправлено сообщение об ошибке привязки аккаунта Azure DevOps**: При отсутствии привязки аккаунта Azure DevOps теперь отображается правильное сообщение: "Missing Azure user; link your Azure DevOps account in your personal profile."
 
-## Behavior change
+## Изменение поведения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Account creation blocked for service tokens and OAuth tokens**: Creating accounts via `POST /api/v2/accounts/` is now blocked for service tokens, account-scoped personal access tokens (PATs), and OAuth access tokens. Service tokens and account-scoped user API tokens receive HTTP 400; OAuth access tokens receive HTTP 403, with explicit error messages in each case.
+- **Создание аккаунтов заблокировано для служебных токенов и токенов OAuth**: Создание аккаунтов через `POST /api/v2/accounts/` теперь заблокировано для служебных токенов, персональных токенов доступа (PAT), ограниченных аккаунтом, и токенов доступа OAuth. Служебные токены и пользовательские токены API, ограниченные аккаунтом, получают HTTP 400; токены доступа OAuth получают HTTP 403. В каждом случае возвращается явное сообщение об ошибке.
 
 ### Insights
 
-- **Cost Insights test counts now include unit tests**: Cost Insights aggregates now include unit tests when you filter by the Test resource type. Previously, unit tests were silently excluded, causing lower-than-expected execution counts.
+- **Количество тестов в Cost Insights теперь включает модульные тесты**: Агрегированные показатели Cost Insights теперь включают модульные тесты при фильтрации по типу ресурса Test. Ранее модульные тесты исключались без уведомления, из-за чего количество выполнений было ниже ожидаемого.
 
-## September 2, 2026
+## 2 сентября 2026 г. {#september-2-2026}
 
-## Enhancements
+## Улучшения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Analyst Read permission set available to all accounts**: The [Analyst Read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set is now available to all accounts without requiring a feature flag. You can assign it to groups so read-only users can view Catalog and project configuration such as connections, environments, and Semantic Layer settings.
-
-### Semantic Layer
-
-- **Clearer Snowflake authentication and permission errors**: When you connect to Snowflake through the Semantic Layer, authentication failures and permission errors now return distinct messages prefixed with `[WAREHOUSE_AUTHENTICATION_FAILED]` or `[WAREHOUSE_PERMISSION_DENIED]`, so you can tell credential issues apart from missing grants.
-
-## Fixes
-
-### Orchestration and run status
-
-- **Clearer invalid cron expression errors**: Saving a job with an invalid day-of-month value such as `*,L` now shows a validation error and prevents the broken schedule from being saved. Use either `*` or `L` in the day-of-month field, not both.
-
-## Behavior change
-
-### APIs, Identity, and Administration
-
-- **Unscoped group and service token permissions rejected**: When you assign a project-scoped permission set to a group or service token, you must now specify either all projects or a specific project. Requests that leave project scope unset return a `400` error. Account-level permission sets such as Billing Admin and Notification Manager are not affected. Existing legacy assignments continue to work until you change them.
-
-## August 26, 2026
-
-## New
-
-### Orchestration and run status
-
-- **dbt State explain tab on run details**: A new "State explain" tab on the run details page shows dbt State's decision for each model in a run (rebuilt, reused, or cloned), with expandable details, search, and Comma-Separated Values (CSV) download. You can use this tab to investigate why each model was rebuilt or reused. Contact your account manager to enable.
-
-## Enhancements
-
-### dbt platform
-
-- **Clearer billing admin guidance for non-admins**: Non-admin users now see an "Ask an admin to enable" message on the dbt Wizard and dbt State cards in Billing & Usage when a trial is available but they lack permission to start it, instead of a blank space. The same message appears if a non-admin tries to start a trial from a dbt State or dbt Wizard link.
-
-### Orchestration and run status
-
-- **dbt State available on more release tracks**: dbt State is now available for jobs running on the Compatible, Fusion Extended, and Fusion Fallback release tracks, in addition to previously supported tracks.
-
-- **Corrected Fusion release track names**: The display names for dbt Fusion release tracks are now "Fusion Stable" and "Fusion Nightly" instead of the previous reversed labels "Stable Fusion" and "Nightly Fusion".
-
-- **Large compare results in pull request comments**: When compare results are larger than 50 MB, pull request comments now show a "too large to summarize" notice with a link to the full compare report, instead of failing with no message.
-
-### Studio IDE
-
-- **Correct browser tab title**: The Studio IDE browser tab now displays "dbt Studio" instead of a generic editor title.
-
-### Integrations
-
-- **More reliable MCP OAuth sign-in**: When you connect an MCP client with OAuth, more clients can now complete sign-in successfully.
-
-## August 19, 2026
-
-## Enhancements
-
-### Studio IDE
-
-- **Console tab persists across sessions**: New sessions open on the Wizard tab when available, and the Studio IDE remembers your last-used tab for each project so you can pick up where you left off.
-
-### Catalog
-
-- **Exact model relation name in the Discovery API**: A new `relationName` field on the `ModelAppliedStateNode` and `ModelAppliedStateNestedNode` GraphQL types exposes the fully-qualified, adapter-rendered relation name (for example, `"database"."schema"."model_name"`) from the last successful model build.
-
-## August 12, 2026
-
-## Enhancements
-
-### dbt AI and agents
-
-- **Auto-expanding Wizard chat input**: The Wizard chat input grows vertically as you type or paste text, and shrinks back when content is removed.
-
-### APIs, Identity, and Administration
-
-- **Job read access is now included in the `account:read` OAuth scope**: Applications authorized with `account:read` can now read job data without also requesting the `jobs:run` scope.
-
-## August 5, 2026
-
-## New
-
-### dbt AI and agents
-
-- **dbt Wizard home tab**: [The <Constant name="wizard"/> home tab in <Constant name="dbt_platform"/>](/docs/platform/wizard-home) is now available in public preview. You can build and change dbt projects through natural language, with inline diffs, DAG previews, and validation built in.
-
-## Enhancements
-
-### dbt AI and agents
-
-- **Auto-open diff preview in edit-automatically mode**: When dbt Wizard edits files automatically, the diff preview side pane now opens immediately so you can review changes without an extra click. When the side pane is not available, for example in non-fullscreen Studio IDE, the diff falls back to an inline card.
-
-### Orchestration and run status
-
-- **Run history refreshes automatically after a trigger**: After you trigger a run or rerun, the run history list now polls every 2.5 seconds until the new run appears, eliminating the need for a manual page reload. Polling stops automatically once the run is visible or after 45 seconds.
-
-## Behavior change
-
-### Catalog
-
-- **30-day model staleness removed from health criteria**: Models are no longer flagged as unhealthy solely because they have not been rebuilt in the past 30 days. The "Stale state" warning banner no longer appears on resource detail pages, and models whose only health issue was staleness now show as healthy in the Trust Signals badge. Source staleness is unchanged and continues to surface as a health issue for sources.
-
-## July 29, 2026
-
-## New
+- **Набор разрешений Analyst Read доступен всем аккаунтам**: Набор разрешений [Analyst Read](/docs/platform/manage-access/enterprise-permissions#analyst-read) теперь доступен всем аккаунтам без включения флага функции. Его можно назначать группам, чтобы пользователи с доступом только для чтения могли просматривать Catalog и конфигурацию проекта, включая подключения, среды и настройки Semantic Layer.
 
 ### Semantic Layer
 
-- **External OAuth for Redshift with AWS IAM Identity Center**: Semantic Layer development connections to Redshift now support external OAuth using Okta or Microsoft Entra with AWS IAM Identity Center, in addition to username and password.
+- **Более понятные ошибки аутентификации и разрешений Snowflake**: При подключении к Snowflake через Semantic Layer сбои аутентификации и ошибки разрешений теперь возвращают разные сообщения с префиксами `[WAREHOUSE_AUTHENTICATION_FAILED]` или `[WAREHOUSE_PERMISSION_DENIED]`, позволяя отличить проблемы с учётными данными от отсутствующих прав.
 
-## Enhancements
+## Исправления
 
-### APIs, Identity, and Administration
+### Оркестрация и состояние запусков
 
-- **Clearer SCIM error messages**: System for Cross-domain Identity Management (SCIM) API errors now include the user email addresses that caused seat or license failures, so you can identify which users blocked provisioning.
+- **Более понятные ошибки некорректных cron-выражений**: При сохранении задания с некорректным значением дня месяца, например `*,L`, теперь отображается ошибка валидации, предотвращающая сохранение неработающего расписания. Используйте в поле дня месяца либо `*`, либо `L`, но не оба значения одновременно.
 
-## Behavior change
+## Изменение поведения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **GraphQL complexity limit now enforced**: Semantic Layer GraphQL queries that exceed the complexity limit of 200,000 now return an error instead of completing with a warning. If you hit this error, request fewer fields, use pagination, narrow your filters, or split the query into smaller ones.
+- **Разрешения групп и служебных токенов без области действия отклоняются**: При назначении группе или служебному токену набора разрешений уровня проекта теперь необходимо указать либо все проекты, либо конкретный проект. Запросы без заданной области проектов возвращают ошибку `400`. Наборы разрешений уровня аккаунта, такие как Billing Admin и Notification Manager, не затронуты. Существующие устаревшие назначения продолжают работать, пока вы их не измените.
 
-## July 22, 2026
+## 26 августа 2026 г. {#august-26-2026}
 
-## New
+## Новое
 
-### dbt AI and agents
+### Оркестрация и состояние запусков
 
-- **Unified `get_node_details` MCP tool**: The [dbt MCP server](/docs/dbt-ai/mcp-available-tools#discovery) now uses one `get_node_details` tool for all resource types. The older type-specific tools are deprecated and will be removed in a future release.
+- **Вкладка объяснений dbt State в сведениях о запуске**: Новая вкладка "State explain" на странице сведений о запуске показывает решение dbt State для каждой модели в запуске (повторное построение, повторное использование или клонирование), с разворачиваемыми подробностями, поиском и скачиванием в формате Comma-Separated Values (CSV). Эта вкладка позволяет выяснить, почему каждая модель была построена заново или использована повторно. Для включения обратитесь к менеджеру вашего аккаунта.
 
-### Orchestration and run status
+## Улучшения
 
-- **Job deactivation reason in banners**: When a job is deactivated, the banner now shows a specific reason — repeated run failures, account inactivity, or a generic fallback — with tailored reactivation instructions for each case.
+### Платформа dbt
 
-## Enhancements
+- **Более понятные инструкции по биллингу для пользователей без прав администратора**: Пользователи без прав администратора теперь видят сообщение "Ask an admin to enable" на карточках dbt Wizard и dbt State в Billing & Usage, если пробный период доступен, но у них нет разрешения на его запуск, вместо пустого места. Это же сообщение появляется, если такой пользователь пытается начать пробный период по ссылке dbt State или dbt Wizard.
 
-### dbt AI and agents
+### Оркестрация и состояние запусков
 
-- **Reliability improvements for wizard platform**: The agent now automatically retries transient LLM provider failures — network timeouts, rate limits, and server errors — with exponential backoff, so brief provider blips are less likely to surface as errors during your session.
+- **dbt State доступен в большем количестве каналов выпусков**: dbt State теперь доступен для заданий в каналах выпусков Compatible, Fusion Extended и Fusion Fallback в дополнение к ранее поддерживаемым каналам.
 
-- **Unlimited client tool loop iterations**: Client tool loops now run until the agent finishes rather than stopping after 50 iterations, eliminating premature termination of long-running agentic workflows.
+- **Исправлены названия каналов выпусков Fusion**: Отображаемые названия каналов выпусков dbt Fusion теперь — "Fusion Stable" и "Fusion Nightly" вместо прежних названий с обратным порядком слов "Stable Fusion" и "Nightly Fusion".
 
-- **Copy button on code blocks in dbt Wizard**: Code blocks in dbt Wizard responses now include a Copy button on hover, so you can reuse generated SQL or YAML more easily.
+- **Большие результаты сравнения в комментариях к pull request**: Если размер результатов сравнения превышает 50 МБ, в комментариях к pull request теперь отображается уведомление "too large to summarize" со ссылкой на полный отчёт сравнения вместо сбоя без сообщения.
 
-- **Clearer error for Bring-Your-Own-Key models that don't support embeddings**: When a Bring-Your-Own-Key (BYOK) OpenAI model is configured with a deployment that does not support embeddings (for example, a `gpt-4o` Azure deployment), the similar models feature now returns an actionable error message prompting you to use a text-embedding model instead of a generic internal error.
+### Studio IDE
+
+- **Правильный заголовок вкладки браузера**: Вкладка браузера Studio IDE теперь отображает "dbt Studio" вместо общего заголовка редактора.
+
+### Интеграции
+
+- **Более надёжный вход MCP через OAuth**: При подключении клиента MCP с помощью OAuth теперь больше клиентов могут успешно завершить вход.
+
+## 19 августа 2026 г. {#august-19-2026}
+
+## Улучшения
+
+### Studio IDE
+
+- **Выбранная вкладка консоли сохраняется между сеансами**: Новые сеансы открываются на вкладке Wizard, если она доступна, а Studio IDE запоминает последнюю использованную вкладку для каждого проекта, чтобы вы могли продолжить с того места, где остановились.
 
 ### Catalog
 
-- **Directional lineage filtering in `get_lineage`**: The `get_lineage` tool now accepts a `direction` parameter (`upstream`, `downstream`, or `both`) to narrow results to only ancestors or only descendants of a target node, reducing response size for large graphs. The response also now includes a `description` field on each returned node.
+- **Точное имя отношения модели в Discovery API**: Новое поле `relationName` в GraphQL-типах `ModelAppliedStateNode` и `ModelAppliedStateNestedNode` предоставляет полное имя отношения в формате адаптера (например, `"database"."schema"."model_name"`) из последнего успешного построения модели.
 
-- **Metric filtering by metadata in `list_metrics`**: The `list_metrics` tool now accepts a `meta_filter` parameter to restrict results to metrics whose `config.meta` contains specified key-value pairs (for example, `{"agent_accessible": true}`), keeping result sets small enough to preserve description and metadata in the response.
+## 12 августа 2026 г. {#august-12-2026}
 
-- **Health status filtering for applied models**: The `ModelAppliedFilter` input type now includes a `health` field, letting you filter applied models by health status (`unknown`, `degraded`, `caution`, or `healthy`) directly in the Discovery API.
+## Улучшения
 
-- **`warn` run status surfaced in model execution info**: The `RunStatus` enum and the `lastRunStatus` field on model execution information now include `warn`, so models whose last run completed with warnings correctly reflect that status.
+### dbt AI и агенты
 
-- **Warn run status available as a filter**: The run status filter panel now includes a **Warn** option alongside **Success**, **Error**, **Skipped**, and **Reused**.
+- **Автоматическое расширение поля ввода чата Wizard**: Поле ввода чата Wizard увеличивается по вертикали при вводе или вставке текста и уменьшается при удалении содержимого.
 
-- **Default search environment matches page context**: When searching from within a project environment route (for example, a Staging page), the Catalog search now defaults the environment filter to that environment type rather than always defaulting to Production.
+### API, управление идентификацией и администрирование
 
-- **Redesigned search result cards**: A redesigned search result card replaces tooltip-based match pills with inline expandable snippets for columns, tags, descriptions, and code matches. Please contact your account manager to enable.
+- **Доступ на чтение заданий теперь включён в область OAuth `account:read`**: Приложения, авторизованные с областью `account:read`, теперь могут читать данные заданий без дополнительного запроса области `jobs:run`.
+
+## 5 августа 2026 г. {#august-5-2026}
+
+## Новое
+
+### dbt AI и агенты
+
+- **Главная вкладка dbt Wizard**: [Главная вкладка <Constant name="wizard"/> в <Constant name="dbt_platform"/>](/docs/platform/wizard-home) теперь доступна в общедоступной предварительной версии. Вы можете создавать и изменять проекты dbt на естественном языке со встроенными diff-представлениями, предварительным просмотром DAG и валидацией.
+
+## Улучшения
+
+### dbt AI и агенты
+
+- **Автоматическое открытие предварительного просмотра diff в режиме автоматического редактирования**: Когда dbt Wizard автоматически редактирует файлы, боковая панель предварительного просмотра diff теперь открывается сразу, чтобы вы могли просматривать изменения без дополнительного нажатия. Если боковая панель недоступна, например в неполноэкранном режиме Studio IDE, diff отображается во встроенной карточке.
+
+### Оркестрация и состояние запусков
+
+- **История запусков автоматически обновляется после запуска**: После инициирования запуска или повторного запуска список истории теперь опрашивается каждые 2,5 секунды, пока не появится новый запуск, устраняя необходимость вручную перезагружать страницу. Опрос автоматически прекращается, когда запуск становится видимым, либо через 45 секунд.
+
+## Изменение поведения
+
+### Catalog
+
+- **Отсутствие обновлений модели в течение 30 дней исключено из критериев состояния**: Модели больше не отмечаются как проблемные только потому, что не перестраивались в течение последних 30 дней. Предупреждающий баннер "Stale state" больше не появляется на страницах сведений о ресурсах, а модели, единственной проблемой которых было устаревание, теперь отображаются как исправные в значке Trust Signals. Устаревание источников не изменилось и по-прежнему отображается как проблема состояния источника.
+
+## 29 июля 2026 г. {#july-29-2026}
+
+## Новое
+
+### Semantic Layer
+
+- **Внешний OAuth для Redshift с AWS IAM Identity Center**: Подключения Semantic Layer к Redshift для разработки теперь поддерживают внешний OAuth с использованием Okta или Microsoft Entra совместно с AWS IAM Identity Center в дополнение к имени пользователя и паролю.
+
+## Улучшения
+
+### API, управление идентификацией и администрирование
+
+- **Более понятные сообщения об ошибках SCIM**: Ошибки API System for Cross-domain Identity Management (SCIM) теперь включают адреса электронной почты пользователей, вызвавших проблемы с местами или лицензиями, чтобы вы могли определить, какие пользователи заблокировали предоставление доступа.
+
+## Изменение поведения
+
+### API, управление идентификацией и администрирование
+
+- **Ограничение сложности GraphQL теперь применяется принудительно**: GraphQL-запросы Semantic Layer, превышающие лимит сложности 200 000, теперь возвращают ошибку вместо завершения с предупреждением. Если вы столкнулись с этой ошибкой, запрашивайте меньше полей, используйте пагинацию, сужайте фильтры или разбивайте запрос на более мелкие.
+
+## 22 июля 2026 г. {#july-22-2026}
+
+## Новое
+
+### dbt AI и агенты
+
+- **Единый инструмент MCP `get_node_details`**: [Сервер dbt MCP](/docs/dbt-ai/mcp-available-tools#discovery) теперь использует один инструмент `get_node_details` для всех типов ресурсов. Старые инструменты для отдельных типов объявлены устаревшими и будут удалены в одном из будущих выпусков.
+
+### Оркестрация и состояние запусков
+
+- **Причина деактивации задания в баннерах**: При деактивации задания баннер теперь показывает конкретную причину — повторяющиеся сбои запусков, неактивность аккаунта или общее резервное сообщение — с соответствующими инструкциями по повторной активации для каждого случая.
+
+## Улучшения
+
+### dbt AI и агенты
+
+- **Повышение надёжности платформы Wizard**: Агент теперь автоматически повторяет запросы при временных сбоях поставщика LLM — сетевых тайм-аутах, ограничениях частоты запросов и серверных ошибках — с экспоненциальным увеличением задержки, поэтому кратковременные неполадки поставщика реже приводят к ошибкам во время сеанса.
+
+- **Неограниченное количество итераций циклов клиентских инструментов**: Циклы клиентских инструментов теперь выполняются до завершения работы агента, а не останавливаются после 50 итераций, устраняя преждевременное завершение длительных агентных процессов.
+
+- **Кнопка копирования в блоках кода dbt Wizard**: В блоках кода ответов dbt Wizard теперь при наведении отображается кнопка Copy, упрощающая повторное использование сгенерированного SQL или YAML.
+
+- **Более понятная ошибка для моделей Bring-Your-Own-Key без поддержки эмбеддингов**: Если модель OpenAI с Bring-Your-Own-Key (BYOK) настроена на развёртывание, не поддерживающее эмбеддинги (например, развёртывание `gpt-4o` в Azure), функция поиска похожих моделей теперь возвращает понятное сообщение с предложением использовать модель текстовых эмбеддингов вместо общей внутренней ошибки.
+
+### Catalog
+
+- **Фильтрация графа зависимостей по направлению в `get_lineage`**: Инструмент `get_lineage` теперь принимает параметр `direction` (`upstream`, `downstream` или `both`), чтобы ограничить результаты только предками или только потомками целевого узла, уменьшая размер ответа для больших графов. Ответ также теперь включает поле `description` для каждого возвращаемого узла.
+
+- **Фильтрация метрик по метаданным в `list_metrics`**: Инструмент `list_metrics` теперь принимает параметр `meta_filter`, чтобы ограничить результаты метриками, у которых `config.meta` содержит заданные пары ключ — значение (например, `{"agent_accessible": true}`), сохраняя набор результатов достаточно небольшим для включения описаний и метаданных в ответ.
+
+- **Фильтрация применённых моделей по состоянию**: Входной тип `ModelAppliedFilter` теперь включает поле `health`, позволяя фильтровать применённые модели по состоянию (`unknown`, `degraded`, `caution` или `healthy`) непосредственно в Discovery API.
+
+- **Статус запуска `warn` отображается в сведениях о выполнении модели**: Перечисление `RunStatus` и поле `lastRunStatus` в сведениях о выполнении модели теперь включают `warn`, поэтому у моделей, последний запуск которых завершился с предупреждениями, корректно отражается этот статус.
+
+- **Статус запуска Warn доступен как фильтр**: Панель фильтра статуса запуска теперь включает вариант **Warn** наряду с **Success**, **Error**, **Skipped** и **Reused**.
+
+- **Среда поиска по умолчанию соответствует контексту страницы**: При поиске со страницы среды проекта (например, страницы Staging) поиск Catalog теперь по умолчанию задаёт в фильтре среды соответствующий тип среды вместо постоянного выбора Production.
+
+- **Обновлённые карточки результатов поиска**: В обновлённой карточке результатов поиска индикаторы совпадений со всплывающими подсказками заменены встроенными разворачиваемыми фрагментами для совпадений в столбцах, тегах, описаниях и коде. Для включения обратитесь к менеджеру вашего аккаунта.
 
 ### Insights
 
-- **Snowflake Adaptive warehouse cost support**: Cost Insights can now attribute query costs to models run on Snowflake Adaptive warehouses using the `QUERY_METERING_HISTORY` table. Without access to this table, Adaptive warehouse queries were previously recorded as $0. The connection test now also checks and reports on `QUERY_METERING_HISTORY` access so you can diagnose missing attribution before it affects cost data. Please contact your account manager to enable.
+- **Поддержка затрат Snowflake Adaptive warehouse**: Cost Insights теперь может относить затраты на запросы к моделям, выполняемым в Snowflake Adaptive warehouse, с помощью таблицы `QUERY_METERING_HISTORY`. Без доступа к этой таблице запросы Adaptive warehouse ранее учитывались с затратами $0. Проверка подключения теперь также проверяет доступ к `QUERY_METERING_HISTORY` и сообщает о нём, чтобы вы могли диагностировать отсутствие атрибуции до того, как это повлияет на данные о затратах. Для включения обратитесь к менеджеру вашего аккаунта.
 
 ### Studio IDE
 
-- **Fusion Stable is now the default track**: The `latest-fusion` release track is now Fusion Stable across all settings. Existing configurations have been updated automatically. No action is needed.
+- **Fusion Stable теперь является каналом по умолчанию**: Канал выпусков `latest-fusion` теперь называется Fusion Stable во всех настройках. Существующие конфигурации обновлены автоматически. Никаких действий не требуется.
 
-- **Environments already on Fusion no longer see upgrade checkbox**: On the Enable Fusion Environments page, environments already running Fusion now show a disabled checkbox, preventing unnecessary saves.
+- **Для сред, уже использующих Fusion, больше не отображается флажок обновления**: На странице Enable Fusion Environments у сред, уже работающих на Fusion, теперь отображается недоступный флажок, предотвращающий ненужные сохранения.
 
-- **More specific error messages on failed Fusion environment upgrades**: When saving a Fusion upgrade fails, the platform now displays the top-level user message from the API instead of internal field-level error details.
+- **Более конкретные сообщения об ошибках при неудачном обновлении сред до Fusion**: Если сохранить обновление до Fusion не удаётся, платформа теперь отображает сообщение API верхнего уровня, предназначенное для пользователя, вместо внутренних подробностей ошибок отдельных полей.
 
-- **Faster command status updates in Studio IDE**: The command panel now shows live status updates as commands run, so you see progress sooner without waiting for a refresh.
+- **Более быстрые обновления состояния команд в Studio IDE**: Панель команд теперь показывает обновления состояния в реальном времени по мере выполнения команд, поэтому вы видите прогресс раньше, не дожидаясь обновления.
 
-### dbt platform
+### Платформа dbt
 
-- **Consumption pool card renamed and repositioned**: The "Committed spend" card is now labeled "Consumption pool" with copy explaining that usage-based features like dbt State draw from it. The card now appears between the current plan metric tiles and the product-specific sections on billing Overview and usage tab pages.
+- **Карточка пула потребления переименована и перемещена**: Карточка "Committed spend" теперь называется "Consumption pool" и содержит пояснение о том, что функции с оплатой по использованию, такие как dbt State, расходуют средства из этого пула. Теперь карточка отображается между карточками показателей текущего плана и разделами отдельных продуктов на странице Overview биллинга и страницах вкладок использования.
 
-- **dbt State DATT chart shows billable and free usage separately**: The Daily Active Target Tables (DATTs) chart now stacks billable and free series, so trial users whose usage is entirely free see real bars instead of an empty chart.
+- **Диаграмма DATT в dbt State отдельно показывает платное и бесплатное использование**: Диаграмма Daily Active Target Tables (DATTs) теперь показывает платное и бесплатное использование как серии с накоплением, поэтому пользователи пробного периода, у которых всё использование бесплатно, видят реальные столбцы вместо пустой диаграммы.
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Reduced out-of-memory rates in Fusion**: Memory-tuning optimizations are now applied automatically to all Fusion runs, reducing out-of-memory kill rates and improving overall uptime.
+- **Снижение частоты нехватки памяти в Fusion**: Оптимизации настройки памяти теперь автоматически применяются ко всем запускам Fusion, снижая частоту принудительного завершения из-за нехватки памяти и повышая общую доступность.
 
-## Fixes
+## Исправления
 
-- **More reliable Claude responses**: Claude-backed agents can return longer answers and handle some previously broken interactions more reliably.
+- **Более надёжные ответы Claude**: Агенты на базе Claude могут возвращать более длинные ответы и надёжнее обрабатывать некоторые взаимодействия, ранее приводившие к сбоям.
 
-## July 15, 2026
+## 15 июля 2026 г. {#july-15-2026}
 
-## New
+## Новое
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Hybrid job type**: You can now create hybrid jobs to track runs triggered by an external orchestrator. Hybrid jobs have a simplified setup that omits execution steps, triggers, advanced settings, and cost-optimization controls. They display **Externally triggered** as their next-run schedule and are available only for projects configured as [Hybrid projects](/docs/deploy/hybrid-projects).
+- **Гибридный тип задания**: Теперь можно создавать гибридные задания для отслеживания запусков, инициированных внешним оркестратором. Гибридные задания имеют упрощённую настройку без шагов выполнения, триггеров, расширенных настроек и элементов управления оптимизацией затрат. В качестве расписания следующего запуска у них отображается **Externally triggered**, и они доступны только для проектов, настроенных как [гибридные проекты](/docs/deploy/hybrid-projects).
 
-## Enhancements
+## Улучшения
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Faster linting for Fusion-version runs**: Runs using a Fusion dbt version now invoke the built-in [`dbt lint`](/reference/commands/lint?version=2.0) command instead of SQLFluff. Fusion virtual environments do not include SQLFluff, so linting now works for all Fusion-version runs and runs faster.
+- **Более быстрый линтинг для запусков на версии Fusion**: Запуски с версией dbt Fusion теперь вызывают встроенную команду [`dbt lint`](/reference/commands/lint?version=2.0) вместо SQLFluff. Виртуальные окружения Fusion не включают SQLFluff, поэтому линтинг теперь работает для всех запусков на версии Fusion и выполняется быстрее.
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Compaction indicator during context optimization**: When the agent compresses conversation context in the background, a spinner labeled **Optimizing conversation context…** now appears in the chat area. Submitting new messages and stopping the agent are disabled while compaction is in progress to prevent conflicts.
+- **Индикатор сжатия при оптимизации контекста**: Когда агент сжимает контекст беседы в фоновом режиме, в области чата теперь появляется индикатор с надписью **Optimizing conversation context…**. Отправка новых сообщений и остановка агента недоступны во время сжатия, чтобы предотвратить конфликты.
 
-- **Wizard unavailable screen replaces generic "not enabled" message**: When [dbt Wizard](/docs/platform/wizard-platform) is unavailable (not activated, trial expired, or spend limit reached), Studio IDE now shows a dedicated screen with the specific reason and an appropriate action instead of a generic message.
+- **Экран недоступности Wizard заменяет общее сообщение "not enabled"**: Когда [dbt Wizard](/docs/platform/wizard-platform) недоступен (не активирован, пробный период истёк или достигнут лимит расходов), Studio IDE теперь показывает отдельный экран с конкретной причиной и соответствующим действием вместо общего сообщения.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Server-side user search and pagination in account settings**: The users table, group member lists, and user edit drawer now search, filter, sort, and paginate server-side. On large accounts, all users are findable by name, email, or license type, group member search no longer misses results beyond the first page, and users beyond the first page can be opened and edited in the user edit drawer.
+- **Поиск пользователей и пагинация на стороне сервера в настройках аккаунта**: Поиск, фильтрация, сортировка и пагинация в таблице пользователей, списках участников групп и боковой панели редактирования пользователя теперь выполняются на стороне сервера. В больших аккаунтах всех пользователей можно найти по имени, адресу электронной почты или типу лицензии; поиск участников групп больше не пропускает результаты за пределами первой страницы, а пользователей с последующих страниц можно открывать и редактировать на боковой панели редактирования.
 
-### dbt platform
+### Платформа dbt
 
-- **Global account discovery generally available**: The **Enable global account discovery** setting on the **Account settings** page is now visible to all entitled accounts without requiring a feature flag. You can allow or restrict account discovery from [Account settings](/docs/platform/account-settings#enable-global-account-discovery).
+- **Глобальное обнаружение аккаунтов общедоступно**: Настройка **Enable global account discovery** на странице **Account settings** теперь видна всем аккаунтам с соответствующим правом без включения флага функции. Разрешить или ограничить обнаружение аккаунта можно в [Account settings](/docs/platform/account-settings#enable-global-account-discovery).
 
-- **Connection overrides visible in profile view mode**: Credential-level [connection overrides](/docs/dbt-platform-environments#extended-attributes) (such as Databricks catalog, Snowflake warehouse, role, and database) are now surfaced as a read-only **Connection overrides** section in the profile details view, without requiring you to open the edit form.
+- **Переопределения подключения видны в режиме просмотра профиля**: [Переопределения подключения](/docs/dbt-platform-environments#extended-attributes) на уровне учётных данных (например, каталог Databricks, warehouse, роль и база данных Snowflake) теперь отображаются в разделе **Connection overrides**, доступном только для чтения, в представлении сведений о профиле без необходимости открывать форму редактирования.
 
-## Fixes
+## Исправления
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Runs no longer stuck in "running" after OOM kill**: When a run pod is Out of Memory (OOM)-killed and restarted, the platform now passes the correct status code and message to the config API so the run transitions to a failed state in the dbt platform UI instead of remaining **running** indefinitely.
+- **Запуски больше не зависают в состоянии "running" после завершения из-за OOM**: Когда под запуска принудительно завершается из-за нехватки памяти (Out of Memory, OOM) и перезапускается, платформа теперь передаёт правильный код состояния и сообщение в config API, поэтому запуск переходит в состояние сбоя в интерфейсе платформы dbt, а не остаётся в состоянии **running** бесконечно.
 
 ### Semantic Layer
 
-- **More reliable SSH tunnel connections**: The Secure Shell (SSH) connection and authentication timeouts for Semantic Layer data platform connections are now 30 seconds (previously 1 second). If your bastion host or network path has higher latency, you will no longer experience deterministic connection failures. Refer to [Set up the Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl) for more information.
+- **Более надёжные подключения через SSH-туннель**: Тайм-ауты подключения и аутентификации Secure Shell (SSH) для подключений Semantic Layer к платформе данных теперь составляют 30 секунд (ранее 1 секунду). Если у вашего бастионного хоста или сетевого маршрута повышенная задержка, это больше не будет приводить к неизбежным сбоям подключения. Подробнее см. в разделе [Настройка Semantic Layer](/docs/use-dbt-semantic-layer/setup-sl).
 
-- **Compile SQL rejects oversized query shapes**: Some types of Compile SQL queries are now rejected if they are too complex. If a request fails with a validation error, try reducing the number of metrics or group-by dimensions in the query.
+- **Compile SQL отклоняет чрезмерно сложные структуры запросов**: Некоторые типы запросов Compile SQL теперь отклоняются, если они слишком сложны. Если запрос завершается ошибкой валидации, попробуйте уменьшить количество метрик или измерений группировки в запросе.
 
-## Behavior change
+## Изменение поведения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Service token creation now requires service token authentication**: You can no longer create a [service token](/docs/dbt-apis/service-tokens) using an account-scoped [personal access token](/docs/dbt-apis/user-tokens) (PAT). Requests authenticated with a PAT now return a `400` error. Use a service token to create new ones instead.
+- **Для создания служебного токена теперь требуется аутентификация служебным токеном**: Больше нельзя создать [служебный токен](/docs/dbt-apis/service-tokens) с помощью ограниченного аккаунтом [персонального токена доступа](/docs/dbt-apis/user-tokens) (PAT). Запросы, аутентифицированные с помощью PAT, теперь возвращают ошибку `400`. Вместо этого используйте служебный токен для создания новых токенов.
 
-## July 13, 2026
+## 13 июля 2026 г. {#july-13-2026}
 
-## Behavior change
+## Изменение поведения
 
-### Billing
-- **Improved billing email alerts**: You’ll now receive email alerts when you’re drawing down on your consumption &mdash; whether that’s from models built or newer consumption features like dbt State.
+### Биллинг
+- **Улучшенные оповещения по электронной почте о биллинге**: Теперь вы будете получать оповещения по электронной почте при расходовании доступного объёма потребления &mdash; как на построение моделей, так и на новые функции с оплатой по потреблению, такие как dbt State.
 
-## July 8, 2026
+## 8 июля 2026 г. {#july-8-2026}
 
-## Enhancements
+## Улучшения
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **User list search and group filtering**: The user listing API now supports a `search` parameter (case-insensitive substring match across email and name) and a `group_id` parameter to retrieve only members of a specific group, enabling paginated group-member lookups for large accounts.
+- **Поиск в списке пользователей и фильтрация по группам**: API списка пользователей теперь поддерживает параметр `search` (поиск подстроки без учёта регистра в адресе электронной почты и имени) и параметр `group_id` для получения только участников определённой группы, обеспечивая постраничный поиск участников групп в больших аккаунтах.
 
-- **Expanded Analyst Read permission set**: The [Analyst Read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set now includes the project and account read permissions analysts need to browse catalog and configuration without write access.
+- **Расширенный набор разрешений Analyst Read**: Набор разрешений [Analyst Read](/docs/platform/manage-access/enterprise-permissions#analyst-read) теперь включает разрешения на чтение проекта и аккаунта, необходимые аналитикам для просмотра каталога и конфигурации без доступа на запись.
 
-## Fixes
+## Исправления
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Clearer errors for malformed dbt commands**: A dbt step with invalid command syntax, such as an unclosed quote, now returns a user-facing syntax error instead of a generic unhandled exception.
+- **Более понятные ошибки некорректных команд dbt**: Шаг dbt с некорректным синтаксисом команды, например с незакрытой кавычкой, теперь возвращает понятную пользователю синтаксическую ошибку вместо общего необработанного исключения.
 
-## July 1, 2026
+## 1 июля 2026 г. {#july-1-2026}
 
-## Enhancements
+## Улучшения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **SCIM user responses include standard group fields**: User responses from SCIM endpoints now include the standard `value` (group ID) and `display` (group display name) fields alongside the existing `id` and `displayName` fields, improving compatibility with SCIM spec consumers.
+- **Ответы SCIM о пользователях включают стандартные поля групп**: Ответы о пользователях из эндпоинтов SCIM теперь включают стандартные поля `value` (ID группы) и `display` (отображаемое имя группы) наряду с существующими полями `id` и `displayName`, улучшая совместимость с клиентами, использующими спецификацию SCIM.
 
-- **Credentials page accessible with `user_credential_write` permission**: The credentials list and detail pages are now accessible to users who have `user_credential_write` permission even without `credentials_read`, supporting credential self-service flows.
+- **Страница учётных данных доступна с разрешением `user_credential_write`**: Страницы списка учётных данных и сведений о них теперь доступны пользователям с разрешением `user_credential_write` даже без `credentials_read`, поддерживая самостоятельное управление учётными данными.
 
-## Fixes
+## Исправления
 
-### dbt platform
+### Платформа dbt
 
-- **Email notifications accept addresses with special characters**: External email notification addresses with valid but non-standard local-part characters (for example, ampersands in `ops&alerts@example.com`) are now accepted instead of being rejected by the validator.
+- **Уведомления по электронной почте принимают адреса со специальными символами**: Внешние адреса для уведомлений по электронной почте с допустимыми, но нестандартными символами в локальной части (например, амперсандом в `ops&alerts@example.com`) теперь принимаются, а не отклоняются валидатором.
 
-### Orchestration and run status
+### Оркестрация и состояние запусков
 
-- **Clearer errors for oversized environment variable payloads**: Oversized custom environment variables now fail at run start with a clear error that names the largest offender, instead of crashing mid-run. Reduce the variable size and retry.
+- **Более понятные ошибки при слишком больших переменных среды**: Слишком большие пользовательские переменные среды теперь приводят к сбою в начале запуска с понятной ошибкой, указывающей самую большую переменную, вместо аварийного завершения в середине запуска. Уменьшите размер переменной и повторите попытку.
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **More reliable dbt Wizard conversations**: dbt Wizard now recovers automatically from transient errors that could previously interrupt a conversation, so long threads keep working.
+- **Более надёжные беседы dbt Wizard**: dbt Wizard теперь автоматически восстанавливается после временных ошибок, которые ранее могли прерывать беседу, поэтому длинные цепочки сообщений продолжают работать.
 
-- **Accurate job and run scoping in dbt Wizard**: dbt Wizard now correctly scopes job and run investigations to your current project instead of returning results across your entire account. You no longer see unrelated jobs from other projects when asking dbt Wizard to investigate a run.
+- **Правильное ограничение заданий и запусков в dbt Wizard**: dbt Wizard теперь корректно ограничивает исследования заданий и запусков текущим проектом вместо возврата результатов по всему аккаунту. Когда вы просите dbt Wizard исследовать запуск, несвязанные задания из других проектов больше не отображаются.
 
-## Behavior change
+## Изменение поведения
 
-### dbt platform
+### Платформа dbt
 
-- **"Development credentials" renamed to "User credentials"**: All user-facing labels, section headings, tooltip text, and in-app messages that previously referred to "development credentials" now use "user credentials."
+- **"Development credentials" переименованы в "User credentials"**: Все пользовательские подписи, заголовки разделов, тексты подсказок и сообщения в приложении, которые ранее использовали "development credentials", теперь используют "user credentials".
 
-- **Versionless migration banner removed**: The banner notifying users about migration to versionless dbt has been removed from the notification stack.
+- **Удалён баннер миграции на dbt без привязки к версии**: Баннер, уведомлявший пользователей о миграции на dbt без привязки к версии, удалён из списка уведомлений.
 
-## June 24, 2026
+## 24 июня 2026 г. {#june-24-2026}
 
-## New
+## Новое
 
 ### Insights
 
-- **Cost breakdown by job**: Cost Insights now includes a Jobs table view alongside the existing all-models view. Use the **All**/**Jobs** toggle to switch between a per-model breakdown and a per-job summary, and select **Download** to export the active view as a comma-separated values (CSV) file.
+- **Разбивка затрат по заданиям**: Cost Insights теперь включает табличное представление Jobs в дополнение к существующему представлению всех моделей. Используйте переключатель **All**/**Jobs**, чтобы переключаться между разбивкой по моделям и сводкой по заданиям, и выберите **Download**, чтобы экспортировать активное представление в файл значений, разделённых запятыми (CSV).
 
-### Run Logs
+### Логи запусков
 
-- **Download OpenTelemetry logs**: You can download OpenTelemetry (OTel) logs for individual dbt command steps in Fusion job runs.
+- **Скачивание логов OpenTelemetry**: Вы можете скачивать логи OpenTelemetry (OTel) для отдельных шагов команд dbt в запусках заданий Fusion.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Run history now scoped to projects**: You can now view live run, step, and log data scoped to a specific project. Results support filtering by step status and log type, with consistent pagination across all views.
+- **История запусков теперь ограничена проектами**: Теперь можно просматривать актуальные данные запусков, шагов и логов в рамках определённого проекта. Результаты поддерживают фильтрацию по статусу шага и типу лога с единообразной пагинацией во всех представлениях.
 
-- **Presigned log download URLs**: Logs for completed run steps are now downloaded directly from storage rather than streamed through the service, improving download reliability and performance. Download links expire after 15 minutes.
+- **Предварительно подписанные URL для скачивания логов**: Логи завершённых шагов запуска теперь скачиваются непосредственно из хранилища, а не передаются потоком через сервис, что повышает надёжность и скорость скачивания. Срок действия ссылок на скачивание — 15 минут.
 
-## Enhancements
+## Улучшения
 
 ### Studio IDE
 
-- **Find in files**: The [Studio IDE](/docs/platform/studio-ide/ide-user-interface#search-and-replace) now includes search and replace functionality and a command palette, enabling you to quickly find and replace text across your project, navigate files, jump to symbols, and run IDE configuration commands.
+- **Поиск в файлах**: [Studio IDE](/docs/platform/studio-ide/ide-user-interface#search-your-project) теперь включает поиск и замену, а также палитру команд, позволяя быстро находить и заменять текст во всём проекте, переходить между файлами, переходить к символам и выполнять команды настройки IDE.
 
 ### Catalog
 
-- **Filter assets by run status**: You can now filter Catalog search results by the most recent run status of an asset — success, error, or skipped — making it easier to spot and investigate assets that may need attention.
+- **Фильтрация объектов по статусу запуска**: Теперь можно фильтровать результаты поиска Catalog по статусу последнего запуска объекта — успешный, с ошибкой или пропущенный, — чтобы было проще находить и исследовать объекты, которым может требоваться внимание.
 
-- **Model metadata preserved after failed or skipped runs:** Lineage, tests, descriptions, and other model metadata now persist correctly even when a run fails, is skipped, or reuses a prior result. Previously, these runs could overwrite stored metadata, causing tests to detach from their models and lineage to disappear.
+- **Метаданные моделей сохраняются после неудачных или пропущенных запусков:** Граф зависимостей, тесты, описания и другие метаданные модели теперь корректно сохраняются, даже если запуск завершается сбоем, пропускается или повторно использует предыдущий результат. Ранее такие запуски могли перезаписывать сохранённые метаданные, из-за чего тесты теряли связь со своими моделями, а граф зависимостей исчезал.
 
 ### dbt State
 
-- **dbt State now works on CI and merge jobs**: You can now enable the dbt State cost-optimization option on CI and merge jobs, not just deploy jobs. Previously this returned a validation error.
-- **dbt State credential management simplified**: Studio IDE now uses account-level dbt State credentials, removing the per-user provisioning step that previously ran on first use.
+- **dbt State теперь работает с заданиями CI и слияния**: Теперь можно включать оптимизацию затрат dbt State в заданиях CI и слияния, а не только в заданиях развёртывания. Ранее это возвращало ошибку валидации.
+- **Упрощено управление учётными данными dbt State**: Studio IDE теперь использует учётные данные dbt State уровня аккаунта, устраняя этап предоставления доступа для каждого пользователя, который ранее выполнялся при первом использовании.
 
 ### Semantic Layer
 
-- **Longer query timeout for Semantic Layer**: The query timeout has been doubled from 10 minutes to 20 minutes, reducing timeout errors for long-running queries.
+- **Увеличен тайм-аут запросов Semantic Layer**: Тайм-аут запросов удвоен с 10 до 20 минут, что уменьшает количество ошибок тайм-аута для длительных запросов.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **[Administrative API v3](/dbt-cloud/api-v3) now supports private endpoints**: [`list`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/List%20Private%20Endpoints), [`create`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Create%20Private%20Endpoint), [`retrieve`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Retrieve%20Private%20Endpoint), [`update`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Update%20Private%20Endpoint), and [`delete`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Delete%20Private%20Endpoint). Use these endpoints to manage private connectivity programmatically.
+- **[Administrative API v3](/dbt-cloud/api-v3) теперь поддерживает частные эндпоинты**: [`list`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/List%20Private%20Endpoints), [`create`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Create%20Private%20Endpoint), [`retrieve`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Retrieve%20Private%20Endpoint), [`update`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Update%20Private%20Endpoint) и [`delete`](https://docs.getdbt.com/dbt-cloud/api-v3?version=2.0#/operations/Delete%20Private%20Endpoint). Используйте эти эндпоинты для программного управления частными подключениями.
 
-- **Clearer error messages for service outages**: When a third-party service, such as a data warehouse, is temporarily unavailable, the dbt platform now returns a descriptive error message instead of a generic one, making it easier to diagnose connection issues.
+- **Более понятные сообщения об ошибках при сбоях сервисов**: Когда сторонний сервис, например хранилище данных, временно недоступен, платформа dbt теперь возвращает содержательное сообщение об ошибке вместо общего, упрощая диагностику проблем с подключением.
 
-### Integrations
+### Интеграции
 
-- **BigQuery Workload Identity Federation falls back to connection impersonation**: When a BigQuery Workload Identity Federation (WIF) credential has no explicit `service_account_impersonation_url`, the platform now derives the URL from the connection-level `impersonate_service_account` field. This supports the Terraform `dbtcloud_global_connection` configuration pattern where impersonation is defined on the connection rather than the credential.
+- **BigQuery Workload Identity Federation использует олицетворение из настроек подключения как резервный вариант**: Если в учётных данных BigQuery Workload Identity Federation (WIF) явно не задан `service_account_impersonation_url`, платформа теперь формирует URL из поля `impersonate_service_account` уровня подключения. Это поддерживает схему конфигурации Terraform `dbtcloud_global_connection`, в которой олицетворение задано на уровне подключения, а не учётных данных.
 
-- **Snowflake connection hostname normalized for TLS**: Snowflake account identifiers containing underscores (for example, `fdr_apac_dev`) are now hyphenated when building connection hostnames and OAuth URLs, preventing Transport Layer Security (TLS) hostname verification failures against Snowflake's wildcard certificate.
+- **Нормализация имени хоста подключения Snowflake для TLS**: В идентификаторах аккаунтов Snowflake, содержащих подчёркивания (например, `fdr_apac_dev`), при формировании имён хостов подключения и URL OAuth подчёркивания теперь заменяются дефисами, предотвращая ошибки проверки имени хоста Transport Layer Security (TLS) по wildcard-сертификату Snowflake.
 
-- **Google SSO retries on transient token endpoint errors**: Google Workspace Single Sign-On (SSO) group refresh now retries once on 5xx responses from the Google token endpoint before surfacing an authentication error, reducing sign-in failures caused by transient Google API outages.
+- **Google SSO повторяет запросы при временных ошибках эндпоинта токенов**: Обновление групп Google Workspace Single Sign-On (SSO) теперь выполняет одну повторную попытку при ответах 5xx от эндпоинта токенов Google, прежде чем сообщать об ошибке аутентификации, что уменьшает число сбоев входа из-за временных неполадок Google API.
 
-- **Databricks OAuth retries on transient token endpoint errors**: The Databricks OAuth token refresh path now retries once on 5xx responses before surfacing a retryable error, making profile generation for Databricks OAuth connections more resilient to short Databricks outages.
+- **Databricks OAuth повторяет запросы при временных ошибках эндпоинта токенов**: Процесс обновления токена Databricks OAuth теперь выполняет одну повторную попытку при ответах 5xx, прежде чем сообщать об ошибке, допускающей повторную попытку, делая создание профилей для подключений Databricks OAuth устойчивее к кратковременным сбоям Databricks.
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **dbt Model Context Protocol (MCP) semantic search for related models**: The `get_related_models` tool is now available in multi-project agent contexts, allowing the agent to search for semantically similar models across projects by resolving each project's production environment automatically.
+- **Семантический поиск связанных моделей через dbt Model Context Protocol (MCP)**: Инструмент `get_related_models` теперь доступен в многопроектных контекстах агента, позволяя агенту искать семантически похожие модели в разных проектах с автоматическим определением производственной среды каждого проекта.
 
-## Fixes
+## Исправления
 
 ### Studio IDE
 
-- **Clearer errors for unconfigured development credentials**: Studio IDE now returns an actionable error when development credentials are not configured for an environment.
+- **Более понятные ошибки при ненастроенных учётных данных для разработки**: Studio IDE теперь возвращает ошибку с указанием необходимых действий, если для среды не настроены учётные данные для разработки.
 
-- **More precise error responses for development environment setup**: The development environment endpoint now returns distinct HTTP status codes for missing project configuration (400), unconfigured development credentials (412), permission errors (401), and retrieval timeouts (504), rather than mapping multiple failure modes to the same error response.
+- **Более точные ответы об ошибках настройки среды разработки**: Эндпоинт среды разработки теперь возвращает отдельные коды состояния HTTP для отсутствующей конфигурации проекта (400), ненастроенных учётных данных для разработки (412), ошибок разрешений (401) и тайм-аутов получения данных (504), вместо того чтобы сводить несколько видов сбоев к одному ответу об ошибке.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Connection test restricted to authorized environments**: The connection test endpoint now validates that the environment ID in the request belongs to the account and project, returning a 404 for unrecognized environment IDs instead of silently proceeding.
+- **Проверка подключения ограничена разрешёнными средами**: Эндпоинт проверки подключения теперь проверяет, принадлежит ли ID среды в запросе соответствующим аккаунту и проекту, возвращая 404 для неизвестных ID сред вместо продолжения без уведомления.
 
-- **SSO redirect preserved after session expiry on logout**: When an unauthenticated user visits the logout endpoint on a multi-tenant cell, the platform now resolves the correct Single Sign-On (SSO)-mandatory provider from the request host and redirects to `/enterprise-login/<slug>` instead of stranding them on `/login/`.
+- **Перенаправление SSO сохраняется после истечения сеанса при выходе**: Когда неаутентифицированный пользователь посещает эндпоинт выхода в многоарендной ячейке, платформа теперь определяет правильного обязательного поставщика Single Sign-On (SSO) по хосту запроса и перенаправляет на `/enterprise-login/<slug>`, вместо того чтобы оставлять пользователя на `/login/`.
 
-- **Publications handler handles cloud-config timeouts gracefully**: When a `GetCrossProjectEnvironment` or `ListEnvironments` call to cloud-config exceeds its deadline, the publications handler now returns an `UNAVAILABLE` status to the caller instead of propagating an unhandled error. You can retry the request after a short delay.
+- **Обработчик публикаций корректно обрабатывает тайм-ауты cloud-config**: Когда вызов `GetCrossProjectEnvironment` или `ListEnvironments` к cloud-config превышает установленный срок, обработчик публикаций теперь возвращает вызывающей стороне статус `UNAVAILABLE` вместо передачи необработанной ошибки. Вы можете повторить запрос после небольшой задержки.
 
 ### Semantic Layer
 
-- **More reliable Semantic Layer job result retrieval**: Semantic Layer job and paginated query results now deserialize more reliably, reducing failures when retrieving query results.
+- **Более надёжное получение результатов заданий Semantic Layer**: Результаты заданий Semantic Layer и постраничные результаты запросов теперь десериализуются надёжнее, что уменьшает количество сбоев при получении результатов запросов.
 
-- **Fixed database write errors for cache timestamps**: Resolves an issue where the cache engine could fail to persist timestamps because timezone-aware datetimes cannot be encoded into `TIMESTAMP WITHOUT TIME ZONE` columns by `asyncpg`. The fix ensures timezone-naive UTC timestamps are used for all database writes.
+- **Исправлены ошибки записи временных меток кеша в базу данных**: Устранена проблема, из-за которой механизм кеширования мог не сохранять временные метки, поскольку `asyncpg` не может кодировать значения даты и времени с часовым поясом в столбцы `TIMESTAMP WITHOUT TIME ZONE`. Исправление обеспечивает использование временных меток UTC без информации о часовом поясе для всех операций записи в базу данных.
 
-- **Result-too-large Semantic Layer errors now return HTTP 400**: Semantic Layer queries that exceed the result size limit now return a bad request error instead of an internal server error.
+- **Ошибки Semantic Layer из-за слишком большого результата теперь возвращают HTTP 400**: Запросы Semantic Layer, превышающие ограничение размера результата, теперь возвращают ошибку некорректного запроса вместо внутренней серверной ошибки.
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Safer handling of non-JSON OpenAI error responses**: Error handling for OpenAI `BadRequestError` now gracefully handles responses with non-JSON bodies, preventing an unhandled exception when parsing the error code. You should see a proper error rather than an internal server error in these cases.
+- **Более безопасная обработка ответов OpenAI об ошибках не в формате JSON**: Обработка OpenAI `BadRequestError` теперь корректно работает с ответами, тело которых не является JSON, предотвращая необработанное исключение при разборе кода ошибки. В таких случаях теперь должна отображаться корректная ошибка вместо внутренней серверной ошибки.
 
-## Behavior change
+## Изменение поведения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Account-scoped credential reads enforced for Personal Access Tokens**: The user credentials endpoints now enforce account scoping consistently when a request uses an account-scoped Personal Access Token (PAT). Requests that previously returned credentials outside the token's account now return a 404.
+- **Для персональных токенов доступа принудительно применяется ограничение чтения учётных данных аккаунтом**: Эндпоинты учётных данных пользователя теперь последовательно применяют ограничение аккаунтом, если запрос использует ограниченный аккаунтом персональный токен доступа (PAT). Запросы, которые ранее возвращали учётные данные за пределами аккаунта токена, теперь возвращают 404.
 
-## June 17, 2026
+## 17 июня 2026 г. {#june-17-2026}
 
-## Enhancements
+## Улучшения
 
-### dbt AI and agents
+### dbt AI и агенты
 
-- **Live streaming for Wizard dbt command output**: [dbt Wizard](/docs/platform/wizard-platform) tool calls for dbt command invocations now stream their output live in chat, in both the Studio IDE and [Wizard home](/docs/platform/wizard-home).
-- **OAuth scopes declared in Model Context Protocol resource metadata**: The Model Context Protocol (MCP) protected resource metadata endpoint now advertises the OAuth scopes it supports (`offline_access`, `account:read`, `projects:query`, `catalog:read`, `projects:develop`, and `jobs:run`). MCP clients that perform dynamic capability discovery can now request the correct scopes automatically.
+- **Потоковая передача вывода команд dbt в Wizard в реальном времени**: Вызовы инструментов [dbt Wizard](/docs/platform/wizard-platform) для выполнения команд dbt теперь передают вывод в чат в реальном времени как в Studio IDE, так и на [главной вкладке Wizard](/docs/platform/wizard-home).
+- **Области OAuth объявлены в метаданных ресурсов Model Context Protocol**: Эндпоинт метаданных защищённого ресурса Model Context Protocol (MCP) теперь сообщает о поддерживаемых областях OAuth (`offline_access`, `account:read`, `projects:query`, `catalog:read`, `projects:develop` и `jobs:run`). Клиенты MCP, выполняющие динамическое обнаружение возможностей, теперь могут автоматически запрашивать правильные области.
 
-### dbt platform
+### Платформа dbt
 
-- **dbt State in development**: [Enable dbt State](/docs/deploy/dbt-state-setup#setting-up-dbt-state-1) in development environments, or override it per user in **User development settings**. Requires dbt State to be enabled on the account by an admin.
-- **dbt State disabled for unsupported warehouse adapters on jobs**: The dbt State checkbox in job settings is now disabled when the job's environment uses an unsupported warehouse adapter. A help icon displays a tooltip explaining the limitation, and the feature is automatically removed from the job payload on save.
+- **dbt State в разработке**: [Включите dbt State](/docs/deploy/dbt-state-enable-studio) в средах разработки или переопределите настройку для отдельного пользователя в **User development settings**. Требуется, чтобы администратор включил dbt State для аккаунта.
+- **dbt State отключён в заданиях с неподдерживаемыми адаптерами хранилищ**: Флажок dbt State в настройках задания теперь недоступен, если среда задания использует неподдерживаемый адаптер хранилища. Значок справки показывает подсказку с объяснением ограничения, а при сохранении функция автоматически удаляется из передаваемых данных задания.
 
-## June 10, 2026
+## 10 июня 2026 г. {#june-10-2026}
 
-## New
+## Новое
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **dbt documentation search and retrieval tools**: The [remote dbt MCP server](/docs/dbt-ai/mcp-quickstart-remote) now includes `search_product_docs` and `get_product_doc_pages`. Available in <Constant name="copilot" /> and in agent clients connected to remote dbt MCP. Refer to the [product docs toolset](/docs/dbt-ai/mcp-available-tools?version=2.0#product-docs).
-- **Dimension values lookup tool**: A new `get_dimension_values` MCP tool lets agents retrieve distinct values for a given Semantic Layer dimension, optionally scoped to specific metrics. Use this to discover valid filter values (for example, available regions or order statuses) before building a `where` clause in a `query_metrics` call.
+- **Инструменты поиска и получения документации dbt**: [Удалённый сервер dbt MCP](/docs/dbt-ai/mcp-quickstart-remote) теперь включает `search_product_docs` и `get_product_doc_pages`. Они доступны в <Constant name="copilot" /> и в клиентах агентов, подключённых к удалённому dbt MCP. См. [набор инструментов документации продукта](/docs/dbt-ai/mcp-available-tools?version=2.0#product-docs).
+- **Инструмент поиска значений измерений**: Новый инструмент MCP `get_dimension_values` позволяет агентам получать уникальные значения заданного измерения Semantic Layer с необязательным ограничением определёнными метриками. Используйте его, чтобы находить допустимые значения фильтров (например, доступные регионы или статусы заказов) перед составлением условия `where` в вызове `query_metrics`.
 
-## Enhancements
+## Улучшения
 
 ### Studio IDE
 
-- **Workspace file operations API**: Adds public Studio file operation endpoints for `stat`, `get`, `put`, `list directory`, `delete`, `mkdir`, and `rename` under `/api/ide/v3/{environment_id}/files/`. File paths are passed as query parameters to avoid user paths appearing in traces.
-- **Environment status endpoint**: Adds a `/api/ide/v3/{environment_id}/status` endpoint that returns the dbt version and Fusion status for a development environment, allowing Studio to display version information without additional API calls.
+- **API операций с файлами рабочего пространства**: Добавлены публичные эндпоинты файловых операций Studio для `stat`, `get`, `put`, `list directory`, `delete`, `mkdir` и `rename` по пути `/api/ide/v3/{environment_id}/files/`. Пути к файлам передаются как параметры запроса, чтобы пользовательские пути не попадали в трассировки.
+- **Эндпоинт состояния среды**: Добавлен эндпоинт `/api/ide/v3/{environment_id}/status`, возвращающий версию dbt и состояние Fusion для среды разработки, что позволяет Studio отображать информацию о версии без дополнительных вызовов API.
 
-## Behavior change
+## Изменение поведения
 
-### dbt platform
+### Платформа dbt
 
-- **Password management updates**: The in-page password change form has been removed from profile security settings, and the "Forgot password?" link no longer appears on the sign-in page. Password resets are now handled through the email-based reset flow, which can be initiated from your profile settings.
+- **Обновления управления паролями**: Встроенная форма изменения пароля удалена из настроек безопасности профиля, а ссылка «Забыли пароль?» больше не отображается на странице входа. Теперь сброс пароля выполняется по электронной почте; запустить эту процедуру можно в настройках профиля.
 
-## June 3, 2026
+## 3 июня 2026 г. {#june-3-2026}
 
-## New
+## Новые возможности
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Debug with Copilot from run and job surfaces**: A new "Debug with Copilot" button appears on failed run detail pages, runs lists, job details, environment runs, and the project home activity feed. Clicking it opens dbt Copilot or the full-page Wizard to investigate and debug the failed run. Please contact your account manager to enable.
+- **Отладка с Copilot со страниц запусков и заданий**: Новая кнопка «Отладить с Copilot» отображается на страницах сведений о неудачных запусках, в списках запусков, в сведениях о заданиях, в запусках окружения и в ленте активности на главной странице проекта. При нажатии открывается dbt Copilot или полноэкранный Wizard для анализа и отладки неудачного запуска. Для включения обратитесь к менеджеру вашего аккаунта.
 
-### dbt platform
+### Платформа dbt
 
-- **dbt State trial progress, stats, and usage on settings page**: The dbt State settings page now shows a trial progress bar (days elapsed of 30), monthly model reuse stats (models reused, build reduction percentage, and query run time reduction), and a model build chart. These sections appear when an account has an active dbt State subscription.
-- **Delete private link endpoint**: You can now delete private link endpoints from the endpoint details page. A confirmation modal requires you to type `DELETE` before the deletion proceeds. Please contact your account manager to enable.
+- **Ход пробного периода, статистика и использование dbt State на странице настроек**: На странице настроек dbt State теперь отображаются индикатор хода пробного периода (количество прошедших дней из 30), ежемесячная статистика повторного использования моделей (количество повторно использованных моделей, процент сокращения сборок и сокращение времени выполнения запросов), а также график сборок моделей. Эти разделы отображаются, если у аккаунта есть активная подписка dbt State.
+- **Удаление конечной точки частного подключения**: Теперь конечные точки частных подключений можно удалять со страницы сведений о конечной точке. Для подтверждения удаления необходимо ввести `DELETE` в модальном окне. Для включения обратитесь к менеджеру вашего аккаунта.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **OAuth consent improvements**: OAuth consent now recognizes the `identity:read` scope, displaying a "Read user details" label and description. Scopes limited to `identity:read` and `offline_access` no longer show the project access selector.
+- **Улучшения согласия OAuth**: Страница согласия OAuth теперь распознаёт область доступа `identity:read` и отображает для неё название «Чтение сведений о пользователе» и описание. Если области доступа ограничены `identity:read` и `offline_access`, выбор проектов больше не отображается.
 
-## Enhancements
+## Улучшения
 
-### dbt platform
+### Платформа dbt
 
-- **AI providers settings page consolidated**: The Copilot and Wizard settings pages are unified under a single "AI providers" page at `/settings/accounts/{id}/pages/ai`. The previous `/pages/copilot` URL redirects automatically, and the sidebar item and page title now use "AI providers."
-- **"Enable dbt State" checked by default on job create**: When creating a new job, the **Enable dbt State** checkbox is now checked by default on all environments when dbt State is available and an active subscription is present.
-- **dbt State model build chart adds "Reused (cloned)" series**: The dbt State model build chart now tracks three series — Built, Reused (no-op), and Reused (cloned) — giving a more detailed breakdown of model reuse.
-- **Teams notifications generally available**: Microsoft Teams notifications no longer require a feature flag. The Teams integration now appears in the OAuth integrations card and notification settings for all accounts.
-- **Private endpoints page shows Beta badge and updated info banner**: The private endpoints list and create pages now display a "Beta" badge in the header. The info banner on the create page is no longer dismissible and has updated copy clarifying that self-serve creation is available only for Snowflake AWS.
+- **Объединение страниц настроек поставщиков ИИ**: Страницы настроек Copilot и Wizard объединены в одну страницу «Поставщики ИИ» по адресу `/settings/accounts/{id}/pages/ai`. Со старого URL `/pages/copilot` выполняется автоматическое перенаправление, а пункт бокового меню и заголовок страницы теперь называются «Поставщики ИИ».
+- **Флажок «Включить dbt State» установлен по умолчанию при создании задания**: При создании нового задания флажок **Включить dbt State** теперь установлен по умолчанию для всех окружений, если dbt State доступен и есть активная подписка.
+- **На график сборок моделей dbt State добавлен ряд «Повторно использованы (клонирование)»**: График сборок моделей dbt State теперь отображает три ряда — «Собраны», «Повторно использованы (без выполнения)» и «Повторно использованы (клонирование)», предоставляя более подробную разбивку повторного использования моделей.
+- **Уведомления Teams стали общедоступными**: Для уведомлений Microsoft Teams больше не требуется флаг функции. Интеграция Teams теперь отображается в карточке интеграций OAuth и настройках уведомлений для всех аккаунтов.
+- **Значок Beta и обновлённый информационный баннер на страницах частных конечных точек**: В заголовке страниц списка и создания частных конечных точек теперь отображается значок «Beta». Информационный баннер на странице создания больше нельзя скрыть; его текст уточняет, что самостоятельное создание доступно только для Snowflake AWS.
 
-### Orchestration and run status
+### Оркестрация и статус запусков
 
-- **Reused node status in run results**: Studio IDE now recognizes and surfaces the `reused` node status in run results and metadata counts, giving you a more accurate picture of what ran during a dbt invocation.
+- **Статус повторного использования узла в результатах запуска**: Studio IDE теперь распознаёт и отображает статус узла `reused` в результатах запуска и счётчиках метаданных, позволяя точнее понять, что выполнялось при вызове dbt.
 
-## Fixes
+## Исправления
 
-### Orchestration and Run Status
+### Оркестрация и статус запусков
 
-- **Run list action buttons fixed and clickable**: Action buttons on the runs list (for example, "Debug with Copilot") no longer silently navigate to the run detail page instead of triggering the intended action.
+- **Исправлена работа кнопок действий в списке запусков**: Кнопки действий в списке запусков (например, «Отладить с Copilot») больше не перенаправляют без предупреждения на страницу сведений о запуске вместо выполнения нужного действия.
 
 ### Catalog
 
-- **Accurate health status filtering for stale assets**: The Catalog health filter now correctly classifies assets with a healthy bitmask but a last successful run older than 30 days as "Caution" instead of "Healthy." Assets whose last run was marked `reused` continue to be treated as healthy.
+- **Точная фильтрация состояния устаревших ресурсов**: Фильтр состояния в Catalog теперь правильно относит ресурсы с битовой маской исправного состояния, но с последним успешным запуском более 30 дней назад, к категории «Требуют внимания», а не «Исправны». Ресурсы, последний запуск которых имеет статус `reused`, по-прежнему считаются исправными.
 
-## Behavior change
+## Изменение поведения
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Agent validates autofix with `dbt build` instead of `dbt compile`**: dbt Wizard autofix and model change validation is improved by defaulting to broader `dbt build` commands.
+- **Агент проверяет автоматические исправления с помощью `dbt build` вместо `dbt compile`**: Проверка автоматических исправлений и изменений моделей в dbt Wizard улучшена: теперь по умолчанию используются команды `dbt build`, охватывающие более широкий набор проверок.
 
-## May 27, 2026
+## 27 мая 2026 г. {#may-27-2026}
 
-## New
+## Новые возможности
 
-### Webhooks
+### Вебхуки
 
-- **Disabled webhook subscriptions banner**: The webhooks settings page now shows a dismissible warning banner when one or more webhook subscriptions have been automatically disabled due to repeated failures. Disabled subscriptions now display an "Archived" badge with a tooltip explaining how to reactivate them.
+- **Баннер отключённых подписок на вебхуки**: На странице настроек вебхуков теперь отображается скрываемый предупреждающий баннер, если одна или несколько подписок на вебхуки были автоматически отключены из-за повторяющихся сбоев. У отключённых подписок теперь отображается значок «В архиве» с подсказкой о том, как их повторно активировать.
 
 ### Studio IDE
 
-- **Directory listing API**: The file browser now supports streaming directory listings in Newline-Delimited JSON (NDJSON) format, returning each file's name and type. The endpoint supports an optional `limit` parameter and `ETag` and `Last-Modified` headers to avoid re-fetching unchanged directory contents.
+- **API получения списка содержимого каталога**: Файловый браузер теперь поддерживает потоковую передачу списка содержимого каталога в формате Newline-Delimited JSON (NDJSON), возвращая имя и тип каждого файла. Конечная точка поддерживает необязательный параметр `limit`, а также заголовки `ETag` и `Last-Modified`, позволяющие избежать повторного получения неизменившегося содержимого каталога.
 
-- **File and directory deletion API**: You can now delete individual files or entire directory trees from the workspace. Recursive deletion requires `recursive=true` to be set explicitly, preventing accidental data loss.
+- **API удаления файлов и каталогов**: Теперь из рабочего пространства можно удалять отдельные файлы и целые деревья каталогов. Для рекурсивного удаления необходимо явно задать `recursive=true`, что предотвращает случайную потерю данных.
 
-- **File and directory rename and move API**: You can now move files and directories within the workspace. An `overwrite` parameter controls whether an existing destination is replaced. The endpoint surfaces clear errors for missing sources, path traversal, name-too-long conditions, and directory conflicts.
+- **API переименования и перемещения файлов и каталогов**: Теперь файлы и каталоги можно перемещать внутри рабочего пространства. Параметр `overwrite` определяет, будет ли заменён существующий объект в месте назначения. Конечная точка возвращает понятные ошибки при отсутствии исходного объекта, попытке выхода за пределы пути, слишком длинном имени и конфликтах каталогов.
 
-## Enhancements
+## Улучшения
 
-### Webhooks
+### Вебхуки
 
-- **Bounded webhook delivery history fetches**: Webhook delivery history reads are now capped at 1,000 records and limited to a 7-day lookback window, preventing unbounded memory growth from high-volume subscriptions. You should see more consistent performance for webhook history lookups on active subscriptions.
+- **Ограничение выборки истории доставки вебхуков**: Чтение истории доставки вебхуков теперь ограничено 1000 записями и периодом в 7 дней, что предотвращает неограниченный рост потребления памяти для подписок с большим объёмом событий. Это обеспечивает более стабильную производительность при просмотре истории активных подписок.
 
-### Integrations
+### Интеграции
 
-- **Smoother token refresh flow in OAuth consent page**: To provide a smoother experience with fewer steps, you only see the project selector for scopes that require project-level access.
+- **Упрощённое обновление токенов на странице согласия OAuth**: Чтобы сократить количество шагов и упростить работу, выбор проектов теперь отображается только для областей доступа, которым необходим доступ на уровне проекта.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Create account button shown for existing users**: The **Create account** button in the account switcher is now also shown to users who already have accounts, making it easier to create additional accounts. Please contact your account manager to enable.
+- **Кнопка создания аккаунта для существующих пользователей**: Кнопка **Создать аккаунт** в переключателе аккаунтов теперь отображается и у пользователей, у которых уже есть аккаунты, упрощая создание дополнительных аккаунтов. Для включения обратитесь к менеджеру вашего аккаунта.
 
-- **Private endpoint edit**: The private endpoint detail page now supports editing the endpoint name and port. An "Edit" button opens an inline form with validation, a confirmation modal, and clear error messaging. Please contact your account manager to enable.
+- **Редактирование частной конечной точки**: На странице сведений о частной конечной точке теперь можно редактировать её имя и порт. Кнопка «Изменить» открывает встроенную форму с проверкой данных, модальным окном подтверждения и понятными сообщениями об ошибках. Для включения обратитесь к менеджеру вашего аккаунта.
 
-- **Private endpoint status badges with icons**: Connectivity status and endpoint state badges on the private endpoint list and detail pages now include status icon variants (success, error, in-progress, waiting, canceled, and health-unknown) for clearer at-a-glance status.
+- **Значки состояния частных конечных точек с иконками**: Индикаторы состояния подключения и конечной точки на страницах списка и сведений о частных конечных точках теперь включают иконки состояний (успех, ошибка, выполнение, ожидание, отмена и неизвестное состояние), позволяющие быстрее оценить ситуацию.
 
-## Fixes
+## Исправления
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Protected edits to generated files**: dbt Copilot is now instructed not to edit files in `dbt_packages/`, `target/`, or `logs/`, directing fixes to source-controlled files instead.
+- **Защита сгенерированных файлов от изменений**: dbt Copilot теперь получает указание не изменять файлы в `dbt_packages/`, `target/` и `logs/`, а вносить исправления в файлы под контролем версий.
 
-- **Build validation after column changes**: dbt Copilot now runs `dbt build` (not just `dbt compile`) after edits that add, rename, or alias columns, or change `ref` or `source` references, catching runtime errors that compilation alone would miss.
+- **Проверка сборки после изменений столбцов**: dbt Copilot теперь выполняет `dbt build` (а не только `dbt compile`) после изменений, добавляющих или переименовывающих столбцы, задающих им псевдонимы либо изменяющих ссылки `ref` или `source`. Это позволяет обнаруживать ошибки времени выполнения, которые одна лишь компиляция не выявляет.
 
-### Webhooks
+### Вебхуки
 
-- **Skipped invalid email addresses in model notifications**: Model-level notifications now validates email addresses before attempting delivery, skipping any invalid entries with a warning rather than proceeding with an invalid address. This ensures dispatching model notifications to correct email addresses.
+- **Пропуск некорректных адресов электронной почты в уведомлениях моделей**: Уведомления на уровне моделей теперь проверяют адреса электронной почты перед отправкой, пропуская некорректные записи с предупреждением, а не пытаясь отправить письмо на неверный адрес. Это обеспечивает отправку уведомлений моделей на корректные адреса электронной почты.
 
-## May 20, 2026
+## 20 мая 2026 г. {#may-20-2026}
 
-## New
+## Новые возможности
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Notification Manager permission set**: A new `notification_manager` account-level role grants read and write access to job notification settings, Slack integration status, and member listings without requiring broader admin permissions. Refer to [Notification Manager](/docs/platform/manage-access/enterprise-permissions#notification-manager) for more information.
+- **Набор разрешений Notification Manager**: Новая роль уровня аккаунта `notification_manager` предоставляет доступ на чтение и запись к настройкам уведомлений заданий, статусу интеграции Slack и спискам участников без необходимости выдавать более широкие административные права. Подробнее см. в разделе [Notification Manager](/docs/platform/manage-access/enterprise-permissions#notification-manager).
 
-## Enhancements
+## Улучшения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Cursor-based pagination for Discovery API job queries**: Job-based Discovery API queries now support cursor pagination with `first` and `after` arguments. Supported queries include `models`, `sources`, `seeds`, `snapshots`, `tests`, `macros`, `metrics`, and `exposures`. Use the returned `paginationCursor` value as `after` to fetch the next page. Page size defaults to and caps at 100.
+- **Пагинация на основе курсора для запросов Discovery API по заданиям**: Запросы Discovery API на основе заданий теперь поддерживают курсорную пагинацию с аргументами `first` и `after`. Поддерживаются запросы `models`, `sources`, `seeds`, `snapshots`, `tests`, `macros`, `metrics` и `exposures`. Для получения следующей страницы используйте возвращённое значение `paginationCursor` в качестве `after`. Размер страницы по умолчанию и максимальный размер — 100.
 
-- **Support for the`lastKnownResults` filter accepting `null` values**: The `lastKnownResults` filter on `TestAppliedFilter` now accepts `null` as a value, allowing you to match tests that have no recorded result status.
+- **Поддержка значения `null` в фильтре `lastKnownResults`**: Фильтр `lastKnownResults` в `TestAppliedFilter` теперь принимает значение `null`, позволяя находить тесты, для которых не записан статус результата.
 
-- **OAuth client audit log entries include registration type**: Audit log entries for OAuth client registration now append `(manual)` or `(dynamic)` to the description, making it clear whether a client was registered via dynamic client registration or manually — for example, "ChatGPT was registered for this account (manual)".
+- **Записи журнала аудита клиентов OAuth включают тип регистрации**: В описание записей журнала аудита о регистрации клиентов OAuth теперь добавляется `(manual)` или `(dynamic)`, чтобы было понятно, зарегистрирован ли клиент вручную или через динамическую регистрацию клиентов. Например: «ChatGPT зарегистрирован для этого аккаунта (manual)».
 
-### Orchestration and run status
+### Оркестрация и статус запусков
 
-- **Clearer Fusion eligibility message for migrated jobs**: The Fusion eligibility surface now maps the `job_on_fusion` reason code to "This job is already running on Fusion." with no call-to-action, giving clearer feedback for jobs that are already migrated.
+- **Более понятное сообщение о совместимости с Fusion для перенесённых заданий**: В интерфейсе проверки совместимости с Fusion код причины `job_on_fusion` теперь отображается как «Это задание уже выполняется на Fusion.» без предложения выполнить действие, что делает информацию об уже перенесённых заданиях понятнее.
 
-- **Fusion job warning notifications enabled by default**: Warning notifications for Fusion runs are now always active and no longer require a feature flag, so you will see run-level warning statuses without any additional configuration.
+- **Предупреждающие уведомления заданий Fusion включены по умолчанию**: Предупреждающие уведомления для запусков Fusion теперь всегда активны и больше не требуют флага функции, поэтому статусы предупреждений на уровне запуска отображаются без дополнительной настройки.
 
-- **OpenTelemetry log format always on for Fusion runs**: Fusion runs now always use the OpenTelemetry (OTel) structured log format (except in shadow mode), removing the feature-flag requirement and ensuring consistent log output.
+- **Формат журналов OpenTelemetry всегда включён для запусков Fusion**: Запуски Fusion теперь всегда используют структурированный формат журналов OpenTelemetry (OTel), кроме теневого режима. Флаг функции больше не требуется, а вывод журналов становится единообразным.
 
 ### Insights
 
-- **Builds-only view when Cost Insights connection is disabled**: When your deployment environment's warehouse connection has Cost Insights disabled, the Insights page now shows a "Cost Insights is not enabled for this connection" banner and a Builds tab with the model build chart and environment and period selectors, instead of no chart content.
+- **Представление только со сборками при отключённом Cost Insights для подключения**: Если Cost Insights отключён для подключения к хранилищу данных в окружении развёртывания, на странице Insights теперь отображаются баннер «Cost Insights не включён для этого подключения» и вкладка «Сборки» с графиком сборок моделей и выбором окружения и периода вместо отсутствующего содержимого графиков.
 
 ### Catalog
 
-- **Connection-aware Cost Insights enablement**: Cost Insights now checks the environment connection and platform metadata credentials to confirm `cost_insights_enabled` is configured. If credentials are missing or disabled, cost metrics and tabs are hidden and a banner prompts you to configure platform metadata credentials.
+- **Включение Cost Insights с учётом подключения**: Cost Insights теперь проверяет подключение окружения и учётные данные метаданных платформы, чтобы убедиться, что параметр `cost_insights_enabled` настроен. Если учётные данные отсутствуют или отключены, метрики затрат и соответствующие вкладки скрываются, а баннер предлагает настроить учётные данные метаданных платформы.
 
 ### Studio IDE
 
-- **Faster command history loading**: Command history now loads more quickly because the API returns only the data needed for the history view.
+- **Ускоренная загрузка истории команд**: История команд теперь загружается быстрее, поскольку API возвращает только данные, необходимые для её отображения.
 
-### Deployment and configuration
+### Развёртывание и конфигурация
 
-- **Environment permission elevation for the `job creator` role**: The `job_creator` role is now included in the set of roles that allow environment-level permission elevation, consistent with other development roles such as `developer` and `git_admin`. Refer to [Job creator](/docs/platform/manage-access/enterprise-permissions#job-creator) for more information.
+- **Повышение разрешений на уровне окружения для роли `job creator`**: Роль `job_creator` теперь включена в набор ролей, допускающих повышение разрешений на уровне окружения, наряду с другими ролями разработки, такими как `developer` и `git_admin`. Подробнее см. в разделе [Job creator](/docs/platform/manage-access/enterprise-permissions#job-creator).
 
-## May 13, 2026
+## 13 мая 2026 г. {#may-13-2026}
 
-## New
+## Новые возможности
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Job creator permission set**: Adds a new [Job creator permission set](/docs/platform/manage-access/enterprise-permissions#job-creator) for users who need to create, edit, and run jobs within assigned projects and environments. Job creators have read-only access to environments and environment variables and cannot edit environment settings.
+- **Набор разрешений Job creator**: Добавлен новый [набор разрешений Job creator](/docs/platform/manage-access/enterprise-permissions#job-creator) для пользователей, которым необходимо создавать, редактировать и запускать задания в назначенных проектах и окружениях. Пользователи с этим набором разрешений имеют доступ только на чтение к окружениям и переменным окружения и не могут изменять настройки окружений.
 
 ### Studio IDE
 
-- **Hidden file support in file search**: You can optionally include dotfiles in file search results; search remains limited to your project tree.
+- **Поддержка скрытых файлов в поиске**: В результаты поиска файлов теперь можно включать файлы, имена которых начинаются с точки; поиск по-прежнему ограничен деревом проекта.
 
-## Enhancements
+## Улучшения
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Admin API tools enabled by default**: The admin API toolset (job management and run operations) is now always available in the dbt Copilot dev agent and no longer requires a feature flag. You no longer need to contact your account manager to enable these tools.
+- **Инструменты Admin API включены по умолчанию**: Набор инструментов Admin API для управления заданиями и операциями с запусками теперь всегда доступен агенту разработки dbt Copilot и больше не требует флага функции. Для включения этих инструментов больше не нужно обращаться к менеджеру вашего аккаунта.
 
-- **Improved Studio IDE agent prompt**: The Developer agent in Studio now uses dbt commands more efficiently (including fewer redundant `dbt ls calls` and correct `dbt show` limits), runs independent reads in parallel when appropriate, surfaces clear next-step choices instead of ending mid-action, stays within local git capabilities (no PR/GitHub promises), and formats SQL and YAML in copy-ready code blocks.
+- **Улучшенные инструкции агента Studio IDE**: Агент Developer в Studio теперь эффективнее использует команды dbt (включая меньшее число избыточных вызовов `dbt ls` и корректные ограничения `dbt show`), при необходимости параллельно выполняет независимые операции чтения, предлагает понятные варианты следующих действий вместо остановки посреди операции, ограничивается локальными возможностями git (не обещает действий с PR/GitHub) и оформляет SQL и YAML в готовых к копированию блоках кода.
 
-### Orchestration and run status
+### Оркестрация и статус запусков
 
-- **Fusion upgrade available banner on environment settings**: A new banner appears on the environment settings page when Fusion is available for a project but not yet enabled. Admins can click **Enable Fusion access** directly from the banner to open the upgrade confirmation modal. Users without the required permissions see a read-only message directing them to contact an admin.
+- **Баннер доступности перехода на Fusion в настройках окружения**: На странице настроек окружения появляется новый баннер, если Fusion доступен для проекта, но ещё не включён. Администраторы могут нажать **Включить доступ к Fusion** прямо в баннере, чтобы открыть модальное окно подтверждения перехода. Пользователи без необходимых разрешений видят информационное сообщение с предложением обратиться к администратору.
 
-### Deployment and configuration
+### Развёртывание и конфигурация
 
-- **Snowflake password authentication blocked for new credentials**: Password authentication is no longer available when creating new Snowflake development or deployment credentials. New credentials default to key-pair authentication. Existing credentials that still use password authentication display a warning banner and cannot be saved until you migrate to key-pair or OAuth.
+- **Парольная аутентификация Snowflake недоступна для новых учётных данных**: При создании новых учётных данных Snowflake для разработки или развёртывания аутентификация по паролю больше недоступна. Для новых учётных данных по умолчанию используется аутентификация по паре ключей. Для существующих учётных данных, которые всё ещё используют парольную аутентификацию, отображается предупреждающий баннер; сохранить их нельзя до перехода на пару ключей или OAuth.
 
-### Integrations
+### Интеграции
 
-- **Paginated OAuth client registration tables**: The App Integrations settings card now loads manually registered and dynamically registered OAuth clients from separate paginated queries (10 rows per page). Each table has independent pagination controls, and deleting the last row on a non-first page automatically returns you to the previous page.
+- **Пагинация таблиц регистрации клиентов OAuth**: Карточка настроек App Integrations теперь загружает зарегистрированные вручную и динамически зарегистрированные клиенты OAuth отдельными запросами с пагинацией (по 10 строк на странице). У каждой таблицы свои элементы управления страницами; при удалении последней строки на странице, отличной от первой, автоматически открывается предыдущая страница.
 
-- **MCP endpoint URL displayed in account settings and App Integrations**: When the dbt Model Context Protocol (MCP) feature is enabled, your account's MCP endpoint URL is now shown in the Account settings page and in the App Integrations card with a copy button, making it easier to connect external AI tools to your dbt account. Contact your account manager to enable.
+- **URL конечной точки MCP в настройках аккаунта и App Integrations**: Если включена функция dbt Model Context Protocol (MCP), URL конечной точки MCP вашего аккаунта теперь отображается на странице настроек аккаунта и в карточке App Integrations с кнопкой копирования, упрощая подключение внешних инструментов ИИ к аккаунту dbt. Для включения обратитесь к менеджеру вашего аккаунта.
 
 ### Catalog
 
-- **Multi-value test result status filtering**: The `TestAppliedFilter` input now supports a `lastKnownResults` field that accepts an array of test statuses, allowing you to filter applied tests by multiple result states in a single query. You can include `null` in the array to match tests with no known result. The previous scalar field `lastKnownResult` is deprecated; use `lastKnownResults` instead. For more information, refer to [Filter tests by last-known result](/docs/dbt-apis/discovery-schema-environment-applied-tests#filter-tests-by-last-known-result)
+- **Фильтрация по нескольким статусам результатов тестов**: Входной тип `TestAppliedFilter` теперь поддерживает поле `lastKnownResults`, принимающее массив статусов тестов. Это позволяет фильтровать применённые тесты по нескольким состояниям результата в одном запросе. В массив можно включить `null`, чтобы найти тесты без известного результата. Прежнее скалярное поле `lastKnownResult` устарело; используйте вместо него `lastKnownResults`. Подробнее см. в разделе [Фильтрация тестов по последнему известному результату](/docs/dbt-apis/discovery-schema-environment-applied-tests#filter-tests-by-last-known-result)
 
-## Fixes
+## Исправления
 
-### Orchestration and run status
+### Оркестрация и статус запусков
 
-- **Repo cache hard reset applied unconditionally**: The git hard reset performed after restoring a repository cache is now always executed, removing a feature flag that previously controlled this behavior and ensuring a clean working directory after every cache restoration.
+- **Безусловный жёсткий сброс после восстановления кеша репозитория**: Жёсткий сброс git после восстановления кеша репозитория теперь выполняется всегда. Флаг функции, ранее управлявший этим поведением, удалён, что обеспечивает чистый рабочий каталог после каждого восстановления кеша.
 
-- **Clearer error message for missing repository URL**: When a job cannot clone its repository because no remote URL is configured, the error message now explains the most likely causes — an invalid Git remote URL, a Git provider outage, or a deprecated HTTPS connection — and directs you to verify the URL, confirm your provider is operational, and ensure the repository uses SSH with deploy keys before retrying.
+- **Более понятная ошибка при отсутствии URL репозитория**: Если задание не может клонировать репозиторий из-за отсутствия настроенного удалённого URL, сообщение об ошибке теперь объясняет наиболее вероятные причины — некорректный удалённый URL Git, сбой провайдера Git или устаревшее HTTPS-подключение — и предлагает перед повторной попыткой проверить URL, убедиться в работоспособности провайдера и проверить, что репозиторий использует SSH с ключами развёртывания.
 
 ### Studio IDE
 
-- **Accurate node status during runs**: During dbt runs in Studio, node status in run logs now updates correctly when evaluation events arrive, so in-progress state matches what's actually happening.
+- **Точный статус узлов во время запусков**: Во время запусков dbt в Studio статус узлов в журналах теперь корректно обновляется при поступлении событий вычисления, поэтому состояние выполнения соответствует фактическому ходу работы.
 
-- **Clearer git ref lock errors**: A few failure paths that used to surface as unclear errors now show messages that explain what happened and what to try next.
+- **Более понятные ошибки блокировки ссылок git**: Для нескольких сценариев сбоев, ранее выдававших непонятные ошибки, теперь отображаются сообщения, объясняющие произошедшее и предлагающие дальнейшие действия.
 
-### Deployment and configuration
+### Развёртывание и конфигурация
 
-- **Clearer connection test error messages**: The connection test failure message now prompts you to verify your connection details and confirm that your credentials have access to the data warehouse, rather than showing a generic failure message.
+- **Более понятные ошибки проверки подключения**: Сообщение о неудачной проверке подключения теперь предлагает проверить параметры подключения и убедиться, что учётные данные предоставляют доступ к хранилищу данных, вместо общего сообщения о сбое.
 
-### Run logs
+### Журналы запусков
 
-- **Structured run logs enabled by default**: Structured run step logs are now always used when available, without requiring a feature flag. Runs that already have structured logs continue to display them; runs with only plaintext logs fall back to the legacy view automatically.
+- **Структурированные журналы запусков включены по умолчанию**: Структурированные журналы шагов запуска теперь используются всегда, когда они доступны, без флага функции. Запуски, у которых уже есть структурированные журналы, продолжают отображать их; для запусков только с обычными текстовыми журналами автоматически используется прежнее представление.
 
-## May 6, 2026
+## 6 мая 2026 г. {#may-6-2026}
 
-## New
+## Новые возможности
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Project instruction files in agent system prompt**: dbt Copilot now reads `AGENTS.md` and `CLAUDE.md` files at the root of your dbt project and injects their contents into the agent system prompt on every turn. Combined content must not exceed 64 KB.
+- **Файлы инструкций проекта в системном промпте агента**: dbt Copilot теперь читает файлы `AGENTS.md` и `CLAUDE.md` в корне проекта dbt и добавляет их содержимое в системный промпт агента на каждом шаге диалога. Общий размер содержимого не должен превышать 64 КБ.
 
-- **Subdirectory instruction file discovery**: The agent now surfaces a manifest of `AGENTS.md` and `CLAUDE.md` files found in project subdirectories and reads them on demand when working in the relevant subtree, keeping context loading efficient for large projects.
+- **Обнаружение файлов инструкций в подкаталогах**: Агент теперь предоставляет список файлов `AGENTS.md` и `CLAUDE.md`, найденных в подкаталогах проекта, и читает их по мере необходимости при работе в соответствующем поддереве, обеспечивая эффективную загрузку контекста для крупных проектов.
 
-### dbt platform
+### Платформа dbt
 
-- **Create account for unlicensed users**: Users with zero accounts can now create a new account directly from the regional account switcher. When enabled and a `create_account_url` is available, a "Create account" button appears on the account switcher for users with no accounts. Contact your account manager to enable.
+- **Создание аккаунта для пользователей без лицензии**: Пользователи, у которых нет аккаунтов, теперь могут создать новый аккаунт прямо из регионального переключателя аккаунтов. Если функция включена и доступен `create_account_url`, в переключателе аккаунтов для таких пользователей отображается кнопка «Создать аккаунт». Для включения обратитесь к менеджеру вашего аккаунта.
 
-## Enhancements
+## Улучшения
 
-### Packages
+### Пакеты
 
-- **New:** [Native private packages](/docs/build/packages#native-private-packages) are now generally available (GA).
+- **Новое:** [Нативные приватные пакеты](/docs/build/packages#native-private-packages) теперь общедоступны (GA).
 
 ### Discovery API
 
-- **Enhancement:** In the Discovery API [Tests object schema](/docs/dbt-apis/discovery-schema-environment-applied-tests), you can now filter `environment.applied.tests` by multiple test result statuses in a single query using the new `lastKnownResults: [TestStatus]` filter field on `TestAppliedFilter`. The single-value `lastKnownResult` filter field is still supported but deprecated. Update your queries to use `lastKnownResults` going forward.
+- **Улучшение:** В [схеме объекта Tests](/docs/dbt-apis/discovery-schema-environment-applied-tests) Discovery API теперь можно фильтровать `environment.applied.tests` по нескольким статусам результатов тестов в одном запросе с помощью нового поля фильтра `lastKnownResults: [TestStatus]` в `TestAppliedFilter`. Поле фильтра с одним значением `lastKnownResult` по-прежнему поддерживается, но считается устаревшим. Обновите запросы для дальнейшего использования `lastKnownResults`.
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Preview**: The [Developer agent](/docs/platform/wizard-platform) is now in preview. Use natural language prompts to build or refactor models, and generate SQL, tests, documentation, and semantic models from scratch. For more information, refer to the [Developer agent](/docs/platform/wizard-platform).
-- **Enhancement:** Delete individual [<Constant name="copilot" /> chat conversations](/docs/platform/wizard-platform#what-you-can-do) from the conversation list (**More actions** menu (three dots) > **Delete**). Deleting the open conversation clears the panel.
-- **Enhancement:** Commands run by <Constant name="copilot" /> and the [<Constant name="dev_agent" />](/docs/platform/wizard-platform) now appear in the <Constant name="studio_ide" /> **Commands** tab with a <Constant name="copilot" /> icon and **Run by Copilot** tooltip, so you can tell agent-run commands apart from manually run ones.
+- **Предварительная версия**: [Агент Developer](/docs/platform/wizard-platform) теперь доступен в предварительной версии. Используйте запросы на естественном языке для создания или рефакторинга моделей, а также генерации SQL, тестов, документации и семантических моделей с нуля. Подробнее см. в разделе [Агент Developer](/docs/platform/wizard-platform).
+- **Улучшение:** Удаляйте отдельные [диалоги <Constant name="copilot" />](/docs/platform/wizard-home) из списка диалогов (меню **Дополнительные действия** (три точки) > **Удалить**). При удалении открытого диалога панель очищается.
+- **Улучшение:** Команды, выполняемые <Constant name="copilot" /> и [<Constant name="dev_agent" />](/docs/platform/wizard-platform), теперь отображаются на вкладке **Команды** в <Constant name="studio_ide" /> со значком <Constant name="copilot" /> и подсказкой **Выполнено Copilot**, чтобы их можно было отличить от команд, запущенных вручную.
 
-### dbt platform
+### Платформа dbt
 
-- **Clearer message when account creation is disabled**: The `/accounts/new` page now renders an inline "Account creation is disabled" message instead of silently redirecting to the home page, preventing a redirect loop for users with zero accounts.
+- **Более понятное сообщение при отключённом создании аккаунтов**: На странице `/accounts/new` теперь отображается встроенное сообщение «Создание аккаунтов отключено» вместо перенаправления на главную страницу без объяснений, что предотвращает цикл перенаправлений для пользователей без аккаунтов.
 
-- **Account feature changes emit audit log events**: When an account feature opt-in is toggled (for example, enabling catalog ingestion or advanced CI), an audit log event is now published recording the previous and new values.
+- **Изменения функций аккаунта создают события журнала аудита**: При изменении состояния включения функции аккаунта (например, при включении загрузки данных в каталог или расширенного CI) теперь публикуется событие журнала аудита с предыдущим и новым значениями.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Notification Manager permission set**: A new account-level **Notification Manager** [permission set](/docs/platform/manage-access/enterprise-permissions) is now available for Enterprise accounts. Assign it to users who need to manage Slack, Microsoft Teams, and email job notifications across all projects without requiring full Account Admin access.
+- **Набор разрешений Notification Manager**: Новый [набор разрешений](/docs/platform/manage-access/enterprise-permissions) уровня аккаунта **Notification Manager** теперь доступен для аккаунтов Enterprise. Назначайте его пользователям, которым необходимо управлять уведомлениями заданий в Slack, Microsoft Teams и по электронной почте во всех проектах, не предоставляя полный доступ Account Admin.
 
-- **Credentials page access with `user_credential_write` permission**: Users with the `user_credential_write` permission on any project can now access the Credentials settings page and edit their user credentials, even without a Developer-tier license or `develop_access`.
+- **Доступ к странице учётных данных с разрешением `user_credential_write`**: Пользователи с разрешением `user_credential_write` хотя бы в одном проекте теперь могут открывать страницу настроек учётных данных и редактировать свои учётные данные даже без лицензии уровня Developer или разрешения `develop_access`.
 
-## Fixes
+## Исправления
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Correct handling of `tool_call_chunk` content blocks**: Fixed a bug in single tenant environments that would occasionally block conversations from being able to be continued.
+- **Корректная обработка блоков содержимого `tool_call_chunk`**: Исправлена ошибка в однопользовательских окружениях single-tenant, которая иногда не позволяла продолжать диалоги.
 
-## Behavior change
+## Изменение поведения
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Single Sign-On configuration uses auto-generated slugs only**: The Single Sign-On (SSO) settings card now always uses server-assigned slugs. The manual slug input has been removed. All SSO configurations are created as drafts with an auto-generated slug before you fill in connection details.
+- **В конфигурации единого входа используются только автоматически сгенерированные идентификаторы slug**: Карточка настроек единого входа (SSO) теперь всегда использует идентификаторы slug, назначенные сервером. Поле ручного ввода slug удалено. Все конфигурации SSO создаются как черновики с автоматически сгенерированным slug до заполнения параметров подключения.
 
-### Deployment and Configuration
+### Развёртывание и конфигурация
 
-- **Fusion version detection uses strict catalog membership**: `isFusionDbtVersion` now only returns `true` for version strings that are explicit members of the known Fusion versions catalog (`latest-fusion`, `fusion-stable`, and so on). Previously, any string containing the word "fusion" was treated as a Fusion version. Custom or unknown version strings that happen to include "fusion" are no longer treated as Fusion versions.
+- **Определение версии Fusion по строгому соответствию каталогу**: `isFusionDbtVersion` теперь возвращает `true` только для строк версий, явно включённых в каталог известных версий Fusion (`latest-fusion`, `fusion-stable` и т. д.). Ранее любая строка, содержащая слово «fusion», считалась версией Fusion. Пользовательские или неизвестные строки версий, случайно содержащие «fusion», больше не считаются версиями Fusion.
 
-## April 29, 2026
+## 29 апреля 2026 г. {#april-29-2026}
 
-## Enhancements
+## Улучшения
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Job investigation support in Studio agent**: The Studio IDE dev agent can now help you investigate and troubleshoot dbt job and run failures using the `troubleshooting-dbt-job-errors` skill. The agent notes when your local project state may differ from the job (for example, a different branch or uncommitted changes). This feature is currently in beta. Refer to [Debug job failures](/docs/dbt-ai/wizard-ide#debug-job-failures) for more information.
-
-### Semantic Layer
-
-- **Semantic Layer MCP request size limit**: Semantic Layer requests through MCP are now capped at 10 MiB (previously unlimited) to improve infrastructure stability.
-
-### Orchestration and run status
-
-- **Finer-grained permissions on the Debug on Fusion menu**: The "Debug in Studio" and "Run once on Fusion" menu items are now independently disabled based on your permissions. If you lack the required permission for an action, that item shows a tooltip explaining why, while the other item remains available.
-
-- **Automatic dbt version override before "Debug in Studio"**: When you click "Debug in Studio," dbt platform now automatically sets your user-level `DBT_DEVELOP_CORE_VERSION` environment variable to `latest-fusion` before opening the Studio IDE, so you no longer need to configure this manually.
-
-- **Clearer failure state for "Debug in Studio"**: If the preparation step before opening the Studio IDE fails, the button temporarily shows "Debug failed" in a red state for 5 seconds before resetting, so you know to try again rather than seeing a silent failure.
-
-- **Fusion upgrade eligibility for projects with no jobs**: Projects with no jobs configured are now treated as eligible for Fusion. The upgrade card no longer requires a successful job run for such projects and instead shows "No jobs configured yet" under job eligibility.
-
-- **Confirmation pop-up before overriding Fusion eligibility**: Clicking "Override eligibility status" on the run details page now opens a confirmation pop-up before applying the override, preventing accidental changes.
-
-- **Fusion eligibility review button visible to all users**: The review button on the jobs list for jobs with unknown Fusion eligibility is now shown to all users regardless of run write permissions, so anyone can view the eligibility details modal.
-
-- **Model execution notifications for dbt Fusion runs**: The orchestrator now publishes model execution events for grouped models and tests when running with dbt Fusion's OpenTelemetry (OTel) log format, extending model notification support to Fusion-based runs.
-
-- **Structured logs available for externally ingested runs**: The run ingestion pipeline now detects and signals when structured dbt logs are present for a step, so logs appear correctly in the dbt platform for runs ingested from external executors.
-
-### Deployment and configuration
-
-- **Sticky submit bar on the create private endpoint form**: The Cancel and Save buttons on the create private endpoint page now stick to the bottom of the viewport so they remain accessible when scrolling through the form.
-
-- **Docs generation deprecation scoped to Fusion jobs only**: The "Generate docs on run" deprecation notice is now only shown for jobs running on a Fusion dbt version. Non-Fusion jobs continue to show the standard checkbox.
-
-## Fixes
+- **Поддержка анализа заданий в агенте Studio**: Агент разработки Studio IDE теперь помогает анализировать и устранять сбои заданий и запусков dbt с помощью навыка `troubleshooting-dbt-job-errors`. Агент отмечает, когда состояние локального проекта может отличаться от состояния задания (например, другая ветка или незафиксированные изменения). Эта функция сейчас находится в бета-версии. Подробнее см. в разделе [Отладка сбоев заданий](/docs/dbt-ai/wizard-ide#debug-job-failures).
 
 ### Semantic Layer
 
-- **Custom metric granularities no longer rejected**: Metric manifest fields `granularity` and `offset_to_grain` now accept arbitrary string values instead of only a fixed enum. Projects using custom granularities such as `fiscal_year` will no longer fail ingestion.
+- **Ограничение размера запросов Semantic Layer через MCP**: Размер запросов Semantic Layer через MCP теперь ограничен 10 МиБ (ранее ограничений не было) для повышения стабильности инфраструктуры.
+
+### Оркестрация и статус запусков
+
+- **Более детальные разрешения в меню отладки на Fusion**: Пункты меню «Отладить в Studio» и «Запустить один раз на Fusion» теперь отключаются независимо друг от друга в зависимости от ваших разрешений. Если для действия не хватает разрешений, соответствующий пункт показывает подсказку с объяснением причины, а другой пункт остаётся доступным.
+
+- **Автоматическое переопределение версии dbt перед отладкой в Studio**: При нажатии «Отладить в Studio» платформа dbt теперь автоматически устанавливает пользовательскую переменную окружения `DBT_DEVELOP_CORE_VERSION` в `latest-fusion` перед открытием Studio IDE, поэтому настраивать её вручную больше не требуется.
+
+- **Более понятное состояние ошибки при отладке в Studio**: Если подготовка к открытию Studio IDE завершается неудачей, кнопка на 5 секунд становится красной и показывает «Не удалось запустить отладку», а затем возвращается в исходное состояние. Это даёт понять, что нужно повторить попытку, вместо сбоя без уведомления.
+
+- **Возможность перехода на Fusion для проектов без заданий**: Проекты без настроенных заданий теперь считаются подходящими для перехода на Fusion. Карточка перехода больше не требует успешного запуска задания для таких проектов и вместо этого показывает «Задания ещё не настроены» в разделе совместимости заданий.
+
+- **Подтверждение перед переопределением совместимости с Fusion**: Нажатие «Переопределить статус совместимости» на странице сведений о запуске теперь открывает окно подтверждения перед применением переопределения, предотвращая случайные изменения.
+
+- **Кнопка просмотра совместимости с Fusion видна всем пользователям**: Кнопка проверки в списке заданий с неизвестной совместимостью с Fusion теперь отображается для всех пользователей независимо от разрешений на запись запусков, чтобы любой пользователь мог открыть модальное окно со сведениями о совместимости.
+
+- **Уведомления о выполнении моделей для запусков dbt Fusion**: Оркестратор теперь публикует события выполнения для сгруппированных моделей и тестов при использовании формата журналов OpenTelemetry (OTel) dbt Fusion, расширяя поддержку уведомлений моделей на запуски Fusion.
+
+- **Структурированные журналы для запусков, загруженных извне**: Конвейер загрузки запусков теперь определяет наличие структурированных журналов dbt для шага и передаёт эту информацию, чтобы журналы корректно отображались на платформе dbt для запусков, загруженных из внешних исполнителей.
+
+### Развёртывание и конфигурация
+
+- **Закреплённая панель отправки формы создания частной конечной точки**: Кнопки «Отмена» и «Сохранить» на странице создания частной конечной точки теперь закреплены внизу области просмотра и остаются доступными при прокрутке формы.
+
+- **Уведомление об устаревании генерации документации только для заданий Fusion**: Уведомление об устаревании параметра «Генерировать документацию при запуске» теперь отображается только для заданий, использующих версию dbt Fusion. Для остальных заданий по-прежнему отображается стандартный флажок.
+
+## Исправления
+
+### Semantic Layer
+
+- **Пользовательские уровни детализации метрик больше не отклоняются**: Поля манифеста метрик `granularity` и `offset_to_grain` теперь принимают произвольные строковые значения вместо фиксированного перечисления. Загрузка проектов с пользовательскими уровнями детализации, такими как `fiscal_year`, больше не завершается ошибкой.
 
 ### Catalog
 
-- **Tag search field**: Tags are now a searchable field in the advanced search panel. You can filter results by tag matches. Filtering uses OR logic, returning assets that match any of the specified tags rather than requiring all tags to be present.
+- **Поле поиска по тегам**: Теги теперь доступны для поиска на панели расширенного поиска. Результаты можно фильтровать по совпадениям тегов. Фильтрация использует логику OR: возвращаются ресурсы, соответствующие любому из указанных тегов, без требования наличия всех тегов.
 
-## April 22, 2026
+## 22 апреля 2026 г. {#april-22-2026}
 
-## New
+## Новые возможности
 
 ### Catalog
 
-- **Health and run status filters in catalog search**: The catalog search sidebar now includes Health and Last Run Status filter sections. You can filter dbt resources (models, sources, and exposures) by health status (healthy, caution, degraded, unknown) and by last run status (success, error, skipped, reused).
+- **Фильтры состояния и статуса запуска в поиске каталога**: Боковая панель поиска каталога теперь включает разделы фильтров «Состояние» и «Статус последнего запуска». Ресурсы dbt (модели, источники и exposures) можно фильтровать по состоянию (исправны, требуют внимания, нарушена работоспособность, неизвестно) и по статусу последнего запуска (успех, ошибка, пропущен, повторно использован).
 
-- **Tag search field**: Tag is now a searchable field in the advanced search panel. You can filter results by tag matches
+- **Поле поиска по тегам**: Тег теперь доступен для поиска на панели расширенного поиска. Результаты можно фильтровать по совпадениям тегов
 
-## Enhancements
+## Улучшения
 
 ### Studio IDE
 
-- **More reliable dark mode on initial load**: Added additional layers of theme preference fallbacks, including the user's OS theme preferences, to aid in incorrect theming when user-preferences is slow to respond.
+- **Более надёжное применение тёмной темы при начальной загрузке**: Добавлены дополнительные резервные способы определения предпочитаемой темы, включая настройки темы ОС пользователя, чтобы избежать неверного оформления при медленном ответе сервиса пользовательских настроек.
 
-- **Deep-linking to console tabs**: You can now navigate directly to a specific Studio IDE console tab (for example, Commands or Lineage) using a `consoleTab` URL query parameter. Invalid tab identifiers are removed from the URL automatically.
+- **Прямые ссылки на вкладки консоли**: Теперь можно переходить непосредственно на определённую вкладку консоли Studio IDE (например, «Команды» или «Линейность») с помощью параметра запроса URL `consoleTab`. Некорректные идентификаторы вкладок автоматически удаляются из URL.
 
-- **Compile button after deprecation autofix in Fusion**: After the deprecation autofix workflow completes in Fusion environments, a **Compile** button now appears in the autofix results panel so you can immediately verify the updated project without manually triggering a compile.
+- **Кнопка компиляции после автоматического исправления устаревших конструкций в Fusion**: После завершения автоматического исправления устаревших конструкций в окружениях Fusion на панели результатов теперь появляется кнопка **Компилировать**, позволяющая сразу проверить обновлённый проект без ручного запуска компиляции.
 
-### Orchestration and run status
+### Оркестрация и статус запусков
 
-- **Fusion eligibility toggle replaces dropdown filter**: The jobs list Fusion eligibility dropdown filter has been replaced with a toggle and help icon. When enabled, each job displays its current Fusion eligibility badge, and a persistent info banner explains how eligibility is recalculated. The toggle state is saved per-project in your browser.
+- **Переключатель совместимости с Fusion вместо раскрывающегося фильтра**: Раскрывающийся фильтр совместимости с Fusion в списке заданий заменён переключателем и значком справки. Если переключатель включён, у каждого задания отображается значок текущей совместимости с Fusion, а постоянный информационный баннер объясняет порядок её пересчёта. Состояние переключателя сохраняется в браузере отдельно для каждого проекта.
 
-- **Debug on Fusion menu**: The single "Run once on Fusion" button on the job details page and job list has been replaced with a "Debug on Fusion" menu that offers "Debug in Studio," "Run once on Fusion," and (when dbt Copilot is enabled) "Debug in Studio with Copilot" options.
+- **Меню отладки на Fusion**: Единственная кнопка «Запустить один раз на Fusion» на странице сведений о задании и в списке заданий заменена меню «Отладка на Fusion» с вариантами «Отладить в Studio», «Запустить один раз на Fusion» и, если включён dbt Copilot, «Отладить в Studio с Copilot».
 
-- **Simplified Fusion run error banner**: The Fusion run error banner on run details now uses the same "Debug on Fusion" menu as the jobs page. The banner no longer requires setting a personal dbt version override before navigating to Studio.
+- **Упрощённый баннер ошибки запуска Fusion**: Баннер ошибки запуска Fusion в сведениях о запуске теперь использует то же меню «Отладка на Fusion», что и страница заданий. Баннер больше не требует устанавливать персональное переопределение версии dbt перед переходом в Studio.
 
-### Webhooks
+### Вебхуки
 
-- **Webhook test flow uses receipt polling**: Testing a webhook subscription now triggers a test event and polls for the delivery receipt, showing the actual HTTP status code and error from the endpoint response. A 60-second timeout is applied, with a clear timeout message if the endpoint does not respond in time.
+- **Проверка вебхука с опросом квитанции доставки**: Проверка подписки на вебхук теперь инициирует тестовое событие и опрашивает квитанцию доставки, показывая фактический HTTP-код состояния и ошибку из ответа конечной точки. Применяется тайм-аут в 60 секунд; если конечная точка не отвечает вовремя, отображается понятное сообщение об истечении времени ожидания.
 
-- **Webhook receipt endpoint returns 404 for pending events**: The webhook event receipt endpoint now returns a `404` response when a delivery record has not yet been written (for example, when the notification system has not yet processed the event), rather than returning an incomplete record.
+- **Конечная точка квитанций вебхуков возвращает 404 для ожидающих событий**: Конечная точка получения квитанции события вебхука теперь возвращает ответ `404`, если запись о доставке ещё не создана (например, система уведомлений ещё не обработала событие), вместо возврата неполной записи.
 
-- **Corrected status code for timed-out webhook deliveries**: Webhook delivery history records now show `504` as the HTTP status code when a delivery timed out (previously stored as `0`), improving accuracy in the delivery history view.
+- **Исправлен код состояния для доставки вебхуков с истёкшим временем ожидания**: Записи истории доставки вебхуков теперь показывают HTTP-код состояния `504`, если время ожидания доставки истекло (ранее сохранялся `0`), повышая точность представления истории доставки.
 
-- **Webhook event history note always visible**: The note that event history is limited to the past 7 days now appears on the webhook events history page unconditionally.
+- **Примечание об истории событий вебхуков всегда видно**: Примечание о том, что история событий ограничена последними 7 днями, теперь отображается на странице истории событий вебхуков без дополнительных условий.
 
-### Integrations
+### Интеграции
 
-- **Slack notification settings migration banner**: A migration banner now appears on the Slack notification settings page when you have notification settings from a previous Slack integration. You can migrate them to the new Slack app in one click or dismiss the banner. After migration, you are shown which private channels need the dbt Cloud bot invited for notifications to be delivered. Contact your account manager to enable.
+- **Баннер переноса настроек уведомлений Slack**: На странице настроек уведомлений Slack теперь появляется баннер переноса, если у вас есть настройки уведомлений от предыдущей интеграции Slack. Их можно перенести в новое приложение Slack одним нажатием или скрыть баннер. После переноса отображается список приватных каналов, в которые необходимо пригласить бота dbt Cloud для доставки уведомлений. Для включения обратитесь к менеджеру вашего аккаунта.
 
-### dbt platform
+### Платформа dbt
 
-- **`account:read` scope on OAuth consent page**: The OAuth consent page now displays a "View account information" scope option, which grants view-only access to account details including project and environment information.
+- **Область доступа `account:read` на странице согласия OAuth**: На странице согласия OAuth теперь отображается область доступа «Просмотр информации об аккаунте», предоставляющая доступ только на просмотр к сведениям об аккаунте, включая информацию о проектах и окружениях.
 
-- **PrivateLink endpoint pending status**: A new `pending` connectivity status is available for PrivateLink endpoints, in addition to the existing `success` and `failed` states.
+- **Статус ожидания конечной точки PrivateLink**: Для конечных точек PrivateLink доступен новый статус подключения `pending` в дополнение к существующим состояниям `success` и `failed`.
 
-- **`fusion_readiness_read` permission added to Member role**: The Member permission set now includes `fusion_readiness_read`, allowing members to view Fusion readiness information for projects without requiring elevated permissions.
+- **Разрешение `fusion_readiness_read` добавлено роли Member**: Набор разрешений Member теперь включает `fusion_readiness_read`, позволяя участникам просматривать информацию о готовности проектов к Fusion без повышенных разрешений.
 
-## Fixes
+## Исправления
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Correct model routing for Azure OpenAI Responses API (BYOK customers)**: Azure OpenAI deployments now correctly pass the deployment name as the `model` field when using the Responses API, preventing misrouted requests when the deployment name differs from the model name.
+- **Корректная маршрутизация моделей для Azure OpenAI Responses API (клиенты BYOK)**: Развёртывания Azure OpenAI теперь корректно передают имя развёртывания в поле `model` при использовании Responses API, предотвращая неверную маршрутизацию запросов, когда имя развёртывания отличается от имени модели.
 
-## April 15, 2026
+## 15 апреля 2026 г. {#april-15-2026}
 
-## Enhancements
-
-### Catalog
-
-- **Health and run status search filters**: The `AccountSearchQueryFilter` input now accepts `health` and `runStatus` filter arrays. Use `health` to narrow results by health status (`healthy`, `caution`, `degraded`, or `unknown`) and `runStatus` to filter by last run outcome (`success`, `error`, `skipped`, or `reused`). Multiple values within each filter are combined with `OR` logic.
-
-- **Health-aware search ranking**: Healthy dbt resources (those with no detected issues) now rank higher in search results than resources with unresolved issues when text relevance is otherwise equivalent.
-
-### Studio IDE
-
-- **Keyboard shortcut to open Commands tab**: Press `Ctrl+\`` to open the Commands tab directly from the editor.
-
-### Orchestration and run status
-
-- **Clearer Fusion job eligibility messages**: Fusion eligibility reason messages are rewritten to be shorter and more actionable. For example, unsupported adapters now read "This job uses an adapter that's not currently available on the Fusion engine" and jobs not on Latest now read "This job uses a dbt version that's not tested for Fusion eligibility."
-
-- **Fusion eligibility confirmation modal**: Clicking "Run once on Fusion" on a job now opens a confirmation modal before triggering the run, showing the environment name and a warning that job commands will execute in that environment.
-
-- **Improved `dbt ls` and `dbt list` run log status (dbt Fusion engine only):**: Run steps that execute `dbt ls` or `dbt list` now show node results with a no-op status instead of "unknown," reducing confusion in run logs for list operations.
-
-### dbt platform
-
-- **More descriptive Fusion readiness toggle**: The account-level setting to enable Fusion readiness and upgrade features now has an updated label ("Enable Fusion readiness & upgrade features") and a more detailed description explaining what the setting allows administrators and developers to do.
-
-- **Debug on Fusion navigates with version override**: The "Debug on Fusion" button (previously "Debug manually") on failed Fusion run banners now sets your personal `DBT_DEVELOP_CORE_VERSION` override to `latest-fusion` before opening Studio IDE, ensuring you open the IDE on the Fusion engine. A loading state is shown while the override saves, and an inline error is displayed if the save fails.
-
-### Deployment and configuration
-
-- **Private endpoint connectivity status column renamed**: The "Status" column in the private endpoints list is renamed to "Connectivity status" for clarity.
-
-- **Snowflake private endpoint validation shows specific missing fields**: When pasting Snowflake Private Link configuration output, the validation error now lists the specific required fields that are missing (for example, `privatelink-account-url`) rather than a generic message. Valid output now also shows a success indicator.
-
-- **YAML credential fields now accept array values**: Environment credential and connection forms that accept YAML Extended Attributes (for example, Redshift `db_groups`) now correctly validate arrays as values. Previously, array values were incorrectly rejected during client-side validation.
-
-### Integrations
-
-- **Snowflake PrivateLink supports reusing existing interface endpoints**: When creating a Snowflake PrivateLink connection, you can now supply an optional `interface_endpoint_id` to attach a new profile to an existing interface endpoint rather than always creating a new one. The endpoint must be in `Available` status; a `409 Conflict` is returned otherwise. Contact your account manager to enable.
-
-## Fixes
-
-### Studio IDE
-
-- **New folders in Git Controls now expand correctly**: Files inside a newly created folder are now listed individually in the Git Controls panel. Previously, a new folder appeared as a single unexpanded entry rather than showing the files it contained.
-
--  **Parent folder hint shown for all new files**: Files created inside a new folder now always display the parent folder name as a hint in the Git Controls panel, even when the file name is unique across all changed files.
-
-## April 8, 2026
-
-## New
-
-### dbt Copilot and agents
-
-- **Admin API tools for MCP remote server**: The dbt MCP remote server now includes Admin API tools, including `list_jobs`, `list_projects`, `get_job_details`, `trigger_job_run`, `cancel_job_run`, `retry_job_run`, `get_job_run_details`, `get_job_run_error`, `list_job_run_artifacts`, and `get_job_run_artifact`. These tools let MCP clients list, inspect, trigger, cancel, and retry dbt jobs and runs directly from connected AI assistants. Contact your account manager to enable.
-
-### dbt platform
-
-- **OAuth consent page**: A new OAuth consent page lets you authorize third-party applications (for example, dbt MCP) to access your dbt platform account. You can select which permissions and projects to grant, then approve or deny the request.
+## Улучшения
 
 ### Catalog
 
-- **Performance tab on test and snapshot detail pages**: Test and snapshot detail pages now include a Performance tab showing cost insights data — including cost, usage, build time, and build count charts — matching the existing model performance experience.
+- **Фильтры поиска по состоянию и статусу запуска**: Входной тип `AccountSearchQueryFilter` теперь принимает массивы фильтров `health` и `runStatus`. Используйте `health` для ограничения результатов по состоянию (`healthy`, `caution`, `degraded` или `unknown`), а `runStatus` — для фильтрации по результату последнего запуска (`success`, `error`, `skipped` или `reused`). Несколько значений внутри каждого фильтра объединяются по логике `OR`.
 
-### Orchestration and run status
-
-
-## Enhancements
-
-### dbt Copilot and agents
-
-- **Smarter validation after file edits**: The Studio DevAgent now selects the lightest appropriate validation check after each change — for example, skipping compilation for description-only edits and running `dbt parse` for project config changes — instead of always running a full `dbt compile`. This reduces unnecessary round-trips and keeps iteration faster.
+- **Ранжирование поиска с учётом состояния**: Исправные ресурсы dbt (без обнаруженных проблем) теперь располагаются выше ресурсов с нерешёнными проблемами в результатах поиска при одинаковой текстовой релевантности.
 
 ### Studio IDE
 
-- **Deferral environment selector**: Replaces the simple defer-to-production toggle with a popover that lets you choose between your development environment, dbt's default deferral behavior (staging if available, otherwise production), or a specific custom environment. A badge in the command bar shows your current deferral target at a glance.
+- **Сочетание клавиш для открытия вкладки «Команды»**: Нажмите `Ctrl+\``, чтобы открыть вкладку «Команды» прямо из редактора.
 
-- **Revert personal dbt version override**: Adds an "Edit / Revert" action to the version override option in the environment popover. Clicking "Revert" opens a confirmation modal that removes your personal dbt version override and restarts the session.
+### Оркестрация и статус запусков
 
-- **Improved file context pill in dbt Copilot**: Moves the active-file context pill to above the text input for greater visibility. When you remove the file context, a "Use current file as context" affordance appears so you can restore it without switching tabs.
+- **Более понятные сообщения о совместимости заданий с Fusion**: Сообщения о причинах несовместимости с Fusion стали короче и содержат более конкретные рекомендации. Например, для неподдерживаемых адаптеров теперь отображается «Это задание использует адаптер, который пока недоступен в движке Fusion», а для заданий не на Latest — «Это задание использует версию dbt, которая не проверяется на совместимость с Fusion».
+
+- **Модальное окно подтверждения запуска на Fusion**: Нажатие «Запустить один раз на Fusion» для задания теперь открывает окно подтверждения перед запуском с именем окружения и предупреждением о том, что команды задания будут выполнены в этом окружении.
+
+- **Улучшенный статус в журналах запусков `dbt ls` и `dbt list` (только для движка dbt Fusion):**: Шаги запуска, выполняющие `dbt ls` или `dbt list`, теперь показывают результаты узлов со статусом отсутствия выполнения вместо «неизвестно», уменьшая неоднозначность в журналах операций получения списков.
+
+### Платформа dbt
+
+- **Более информативный переключатель готовности к Fusion**: Настройка уровня аккаунта для включения функций готовности к Fusion и перехода на него теперь имеет обновлённое название («Включить функции готовности к Fusion и перехода на него») и более подробное описание возможностей для администраторов и разработчиков.
+
+- **Переход к отладке на Fusion с переопределением версии**: Кнопка «Отладка на Fusion» (ранее «Отладить вручную») в баннерах неудачных запусков Fusion теперь устанавливает персональное переопределение `DBT_DEVELOP_CORE_VERSION` в `latest-fusion` перед открытием Studio IDE, обеспечивая запуск IDE на движке Fusion. Во время сохранения отображается состояние загрузки, а при неудачном сохранении — встроенное сообщение об ошибке.
+
+### Развёртывание и конфигурация
+
+- **Переименование столбца состояния подключения частной конечной точки**: Столбец «Статус» в списке частных конечных точек переименован в «Статус подключения» для большей ясности.
+
+- **Проверка частной конечной точки Snowflake указывает конкретные отсутствующие поля**: При вставке вывода конфигурации Snowflake Private Link ошибка проверки теперь перечисляет конкретные отсутствующие обязательные поля (например, `privatelink-account-url`) вместо общего сообщения. Для корректного вывода теперь также отображается индикатор успешной проверки.
+
+- **Поля учётных данных YAML теперь принимают массивы**: Формы учётных данных окружения и подключений, принимающие расширенные атрибуты YAML (например, Redshift `db_groups`), теперь корректно проверяют массивы в качестве значений. Ранее массивы ошибочно отклонялись при проверке на стороне клиента.
+
+### Интеграции
+
+- **Snowflake PrivateLink поддерживает повторное использование существующих интерфейсных конечных точек**: При создании подключения Snowflake PrivateLink теперь можно указать необязательный `interface_endpoint_id`, чтобы связать новый профиль с существующей интерфейсной конечной точкой вместо обязательного создания новой. Конечная точка должна иметь статус `Available`; в противном случае возвращается `409 Conflict`. Для включения обратитесь к менеджеру вашего аккаунта.
+
+## Исправления
+
+### Studio IDE
+
+- **Новые папки в Git Controls теперь корректно раскрываются**: Файлы внутри новой папки теперь отображаются по отдельности на панели Git Controls. Ранее новая папка отображалась как одна нераскрытая запись без списка содержащихся в ней файлов.
+
+-  **Подсказка с родительской папкой для всех новых файлов**: Для файлов, созданных внутри новой папки, на панели Git Controls теперь всегда отображается имя родительской папки в качестве подсказки, даже если имя файла уникально среди всех изменённых файлов.
+
+## 8 апреля 2026 г. {#april-8-2026}
+
+## Новые возможности
+
+### dbt Copilot и агенты
+
+- **Инструменты Admin API для удалённого сервера MCP**: Удалённый сервер dbt MCP теперь включает инструменты Admin API: `list_jobs`, `list_projects`, `get_job_details`, `trigger_job_run`, `cancel_job_run`, `retry_job_run`, `get_job_run_details`, `get_job_run_error`, `list_job_run_artifacts` и `get_job_run_artifact`. Эти инструменты позволяют клиентам MCP получать списки заданий и запусков dbt, просматривать их сведения, запускать, отменять и повторять их прямо из подключённых ИИ-ассистентов. Для включения обратитесь к менеджеру вашего аккаунта.
+
+### Платформа dbt
+
+- **Страница согласия OAuth**: Новая страница согласия OAuth позволяет разрешать сторонним приложениям (например, dbt MCP) доступ к аккаунту платформы dbt. Вы можете выбрать предоставляемые разрешения и проекты, а затем одобрить или отклонить запрос.
 
 ### Catalog
 
-- **Reused test status in DAG lens**: State-Aware Orchestration (SAO) test runs that reuse prior results now display with a "reused" icon in the DAG test status lens, matching the existing model run status behavior.
+- **Вкладка производительности на страницах сведений о тестах и снимках**: Страницы сведений о тестах и снимках теперь включают вкладку «Производительность» с данными анализа затрат — графиками стоимости, использования, времени и количества сборок — аналогично существующему представлению производительности моделей.
 
-- **Function resource type support in selectors**: The `function` resource type is now recognized in dbt selectors and the resource node type map, enabling correct filtering and navigation for function resources in Catalog.
+### Оркестрация и статус запусков
+
+
+## Улучшения
+
+### dbt Copilot и агенты
+
+- **Более разумная проверка после изменения файлов**: Studio DevAgent теперь выбирает наиболее лёгкую подходящую проверку после каждого изменения — например, пропускает компиляцию при изменении только описаний и выполняет `dbt parse` при изменении конфигурации проекта — вместо постоянного выполнения полного `dbt compile`. Это сокращает количество лишних обращений и ускоряет итерации.
+
+### Studio IDE
+
+- **Выбор окружения для deferral**: Простой переключатель перенаправления на production заменён всплывающей панелью, позволяющей выбрать окружение разработки, стандартное поведение deferral в dbt (staging, если доступно, иначе production) или конкретное пользовательское окружение. Значок на панели команд наглядно показывает текущую цель deferral.
+
+- **Отмена персонального переопределения версии dbt**: В параметр переопределения версии на всплывающей панели окружения добавлено действие «Изменить / Отменить». Нажатие «Отменить» открывает окно подтверждения, которое удаляет персональное переопределение версии dbt и перезапускает сеанс.
+
+- **Улучшенный элемент контекста файла в dbt Copilot**: Элемент контекста активного файла перенесён над полем ввода для лучшей видимости. После удаления контекста файла появляется действие «Использовать текущий файл как контекст», позволяющее восстановить его без переключения вкладок.
+
+### Catalog
+
+- **Статус повторного использования тестов в представлении DAG**: Запуски тестов State-Aware Orchestration (SAO), повторно использующие предыдущие результаты, теперь отображаются со значком «reused» в представлении статусов тестов DAG, аналогично существующему отображению статусов запусков моделей.
+
+- **Поддержка типа ресурса function в селекторах**: Тип ресурса `function` теперь распознаётся в селекторах dbt и карте типов узлов ресурсов, обеспечивая корректную фильтрацию и навигацию по ресурсам функций в Catalog.
 
 ### Insights
 
-- **Fusion status column in account insights table**: Look for a "Fusion status" column in your account insights table when the Fusion readiness flow is available for your account. You'll see one of four states: On Fusion, Start upgrade, Partial-Fusion, or Non-Fusion — based on each project's readiness and migration progress. Projects that are ready to upgrade show a "Start upgrade" button that navigates directly to the project home page. Contact your account manager to enable.
+- **Столбец статуса Fusion в таблице аналитики аккаунта**: Если процесс проверки готовности к Fusion доступен для вашего аккаунта, в таблице аналитики аккаунта отображается столбец «Статус Fusion». В нём показывается одно из четырёх состояний: «На Fusion», «Начать переход», «Частично на Fusion» или «Не на Fusion» — в зависимости от готовности проекта и хода миграции. Для готовых к переходу проектов отображается кнопка «Начать переход», ведущая прямо на главную страницу проекта. Для включения обратитесь к менеджеру вашего аккаунта.
 
-## Fixes
+## Исправления
 
 ### Studio IDE
 
-- **Parse status no longer shows error badge during Fusion compilation**: In Fusion mode, the parse status badge no longer switches to an error state solely because diagnostic errors are present. The badge now correctly reflects compilation progress and completion independent of diagnostic counts.
+- **Статус разбора больше не показывает ошибку во время компиляции Fusion**: В режиме Fusion значок статуса разбора больше не переходит в состояние ошибки только из-за наличия диагностических ошибок. Теперь значок корректно отражает ход и завершение компиляции независимо от количества диагностических сообщений.
 
-- **Clearer authentication errors for rejected git connections**: Adds "remote rejected authentication" as a recognized, non-retryable git authentication error. You will now see a clear authentication failure message instead of a misleading retry loop when your git provider rejects your credentials.
+- **Более понятные ошибки аутентификации при отклонении подключений git**: Сообщение «remote rejected authentication» теперь распознаётся как ошибка аутентификации git, не требующая повторных попыток. Если провайдер git отклоняет учётные данные, отображается понятное сообщение об ошибке аутентификации вместо вводящего в заблуждение цикла повторных попыток.
 
 ### Catalog
 
-- **Reused models no longer flagged as stale**: Models with a `last_run_status` of `reused` are no longer marked stale even when their last execution date exceeds 30 days. This prevents false health issue warnings for models that were intentionally reused rather than re-executed.
+- **Повторно использованные модели больше не помечаются как устаревшие**: Модели со значением `last_run_status`, равным `reused`, больше не помечаются как устаревшие, даже если с момента их последнего выполнения прошло более 30 дней. Это предотвращает ложные предупреждения о состоянии моделей, которые были намеренно использованы повторно, а не выполнены заново.
 
-- **Resource counts refresh on environment switch**: Fixes a bug where resource counts on the project landing page were not updated when switching environments.
+- **Обновление количества ресурсов при смене окружения**: Исправлена ошибка, из-за которой количество ресурсов на главной странице проекта не обновлялось при переключении окружений.
 
-## April 1, 2026
+## 1 апреля 2026 г. {#april-1-2026}
 
-## New
-
-### Studio IDE
-
-- **Fuzzy file path search**: Studio IDE now supports fuzzy file path search that finds files in your project using partial name matching. You can filter by glob patterns, set a result limit, and receive ordered results with a total match count, making it faster to navigate large projects.
-
-### dbt platform
-
-- **OAuth consent endpoint for Connected Auth**: A new `/oauth/consent` endpoint enables the Connected Auth OAuth flow, supporting user consent decisions (approve and deny), project-level resource boundaries, and authorization code issuance. This feature is in private beta. To request access, contact your account manager.
-
-## Enhancements
-
-### dbt Copilot and agents
-
-- **Persistent agent mode across sessions**: The Studio agent now remembers your last-used mode (Ask or Code) across browser sessions, so you no longer need to reselect it each time you open the IDE.
+## Новые возможности
 
 ### Studio IDE
 
-- **More accurate file search results**: File search now validates each result against the filesystem before returning matches. Files that have been deleted locally but not yet staged are no longer included in search results.
+- **Нечёткий поиск по путям файлов**: Studio IDE теперь поддерживает нечёткий поиск по путям файлов, находя файлы проекта по частичному совпадению имён. Можно фильтровать по glob-шаблонам, задавать ограничение числа результатов и получать упорядоченные результаты с общим количеством совпадений, что ускоряет навигацию по крупным проектам.
 
-- **No unexpected git pulls on the primary branch**: Removes behavior where the IDE server automatically pulled changes from your primary branch during git status checks, which could cause unintended overwrites for projects using trunk-based development.
+### Платформа dbt
 
-### Orchestration and run status
+- **Конечная точка согласия OAuth для Connected Auth**: Новая конечная точка `/oauth/consent` обеспечивает процесс OAuth Connected Auth, поддерживая решения пользователя о согласии (одобрение и отказ), ограничения ресурсов на уровне проекта и выдачу кодов авторизации. Эта функция находится в закрытой бета-версии. Чтобы запросить доступ, обратитесь к менеджеру вашего аккаунта.
 
-- **Teradata column-level lineage support**: Adds Teradata to the SQL dialect adapter map, enabling column-level lineage parsing for dbt projects using the Teradata adapter.
+## Улучшения
 
-### APIs, Identity, and Administration
+### dbt Copilot и агенты
 
-- **Fusion status includes readiness and migration availability**: Adds fields indicating availability of readiness and migration features.
-
-- **Faster account feature flag propagation**: Account feature flag changes now take effect within 60 seconds instead of up to one hour. You should see feature toggles apply more promptly across your account.
-
-### Webhooks
-
-- **Notification delivery reliability improvements**: Reduced the likelihood of delayed notifications (webhooks, email, Slack, and Teams) in certain third-party/system disruption scenarios.
-
-## Fixes
-
-### APIs, Identity, and Administration
-
-- **GitHub webhook secret null check before signature validation**: The GitHub webhook endpoint now correctly checks for a null webhook secret before attempting to validate the request signature, preventing a crash when a repository's webhook secret is not set.
-
-- **`github_installation_id` and `github_webhook_id` support large values**: These repository fields have been promoted from 32-bit to 64-bit integers (`BigIntegerField`) to accommodate GitHub installation and webhook IDs that exceed the 32-bit integer range.
-
-## Behavior change
-
-### APIs, Identity, and Administration
-
-- **Fusion migration gated by API availability**: The Fusion migration checklist, the Enable Fusion Environments page, and the "Enable Fusion" button in Studio IDE now use the `is_migration_available` field from the Fusion status API instead of the legacy `orc2609ShowFusionToggle` feature flag. Fusion migration UI is shown only when the backend has marked the project as ready for migration.
-
-## March 25, 2026
-
-## New
-
-### Orchestration and Run Status
-
-- **Fusion run error banner**: When a run using the dbt Fusion engine fails, a banner now appears on the run details page with options to debug the failure in Studio IDE. If dbt Copilot is enabled, you can also open a guided fix-with-Copilot workflow directly from the banner. Contact your account manager to enable.
-
-## Enhancements
+- **Сохранение режима агента между сеансами**: Агент Studio теперь запоминает последний использованный режим (Ask или Code) между сеансами браузера, поэтому больше не нужно выбирать его заново при каждом открытии IDE.
 
 ### Studio IDE
 
-- **Consistent console pane default size**: The bottom console pane now opens at a preferred size of 33% of the available space, providing a more consistent default layout.
+- **Более точные результаты поиска файлов**: Поиск файлов теперь проверяет каждый результат по файловой системе перед возвратом совпадений. Файлы, удалённые локально, но ещё не добавленные в индекс git, больше не включаются в результаты поиска.
 
-- **Faster text search results**: File search now reports results incrementally on a per-file basis rather than per-match line, reducing memory pressure and improving perceived responsiveness during large searches.
+- **Отсутствие неожиданных git pull в основной ветке**: Удалено поведение, при котором сервер IDE автоматически получал изменения основной ветки во время проверки статуса git, что могло приводить к непреднамеренной перезаписи в проектах с trunk-based development.
 
-- **Smarter bulk-edit file handling**: When Studio IDE applies multi-file edits (for example, from dbt Copilot agent tasks), it now only updates editor models for files that are already open. Previously, every edited file was opened in a new tab, which cluttered the editor.
+### Оркестрация и статус запусков
 
-### Deployment and Configuration
+- **Поддержка линейности на уровне столбцов для Teradata**: Teradata добавлен в карту адаптеров диалектов SQL, что позволяет разбирать линейность на уровне столбцов для проектов dbt, использующих адаптер Teradata.
 
-- **Fusion migration enablement via project API**: You can now set `fusion_migration_enabled` on a project via the project update API. Enabling it requires the `fusion_readiness_write` permission, and the project must meet all readiness prerequisites (supported adapter, supported dbt version, a successful run, and eligible jobs).
+### API, управление идентификацией и администрирование
 
-- **Filter jobs by Fusion readiness**: The jobs list endpoint (`GET /api/v2/accounts/{account_id}/jobs/`) now accepts an `is_fusion_ready` boolean query parameter. When `true`, it returns only conformant or override-ready jobs; when `false`, it returns only non-ready jobs. You can also include `fusion_readiness` in the `include_related` parameter to surface Fusion readiness details alongside the job response.
+- **Статус Fusion включает доступность проверки готовности и миграции**: Добавлены поля, указывающие доступность функций проверки готовности и миграции.
 
-- **Platform metadata credentials form opens immediately**: When adding platform metadata credentials for a connection, the credential form is now shown immediately instead of requiring you to click an "Add credentials" button first.
+- **Более быстрое применение флагов функций аккаунта**: Изменения флагов функций аккаунта теперь вступают в силу в течение 60 секунд вместо периода до одного часа. Переключение функций должно быстрее применяться во всём аккаунте.
 
-## Fixes
+### Вебхуки
+
+- **Повышение надёжности доставки уведомлений**: Снижена вероятность задержек уведомлений (вебхуки, электронная почта, Slack и Teams) при некоторых сбоях сторонних сервисов или системы.
+
+## Исправления
+
+### API, управление идентификацией и администрирование
+
+- **Проверка секрета вебхука GitHub на null перед проверкой подписи**: Конечная точка вебхука GitHub теперь корректно проверяет секрет вебхука на null перед проверкой подписи запроса, предотвращая сбой, если секрет вебхука репозитория не задан.
+
+- **`github_installation_id` и `github_webhook_id` поддерживают большие значения**: Эти поля репозитория переведены с 32-битных на 64-битные целые числа (`BigIntegerField`) для поддержки идентификаторов установок и вебхуков GitHub, превышающих диапазон 32-битного целого числа.
+
+## Изменение поведения
+
+### API, управление идентификацией и администрирование
+
+- **Доступность миграции на Fusion определяется API**: Контрольный список миграции на Fusion, страница включения окружений Fusion и кнопка «Включить Fusion» в Studio IDE теперь используют поле `is_migration_available` из API статуса Fusion вместо устаревшего флага функции `orc2609ShowFusionToggle`. Интерфейс миграции на Fusion отображается только тогда, когда серверная часть пометила проект как готовый к миграции.
+
+## 25 марта 2026 г. {#march-25-2026}
+
+## Новые возможности
+
+### Оркестрация и статус запусков
+
+- **Баннер ошибки запуска Fusion**: Если запуск с движком dbt Fusion завершается неудачей, на странице сведений о запуске теперь появляется баннер с вариантами отладки в Studio IDE. Если dbt Copilot включён, прямо из баннера также можно открыть пошаговый процесс исправления с Copilot. Для включения обратитесь к менеджеру вашего аккаунта.
+
+## Улучшения
+
+### Studio IDE
+
+- **Единообразный размер панели консоли по умолчанию**: Нижняя панель консоли теперь открывается с предпочтительным размером 33% доступного пространства, обеспечивая более единообразный начальный вид.
+
+- **Более быстрые результаты текстового поиска**: Поиск файлов теперь выдаёт результаты постепенно по каждому файлу, а не по каждой строке с совпадением, снижая нагрузку на память и повышая воспринимаемую отзывчивость при масштабном поиске.
+
+- **Более разумная обработка массовых изменений файлов**: Когда Studio IDE применяет изменения к нескольким файлам (например, в рамках задач агента dbt Copilot), теперь обновляются модели редактора только для уже открытых файлов. Ранее каждый изменённый файл открывался в новой вкладке, загромождая редактор.
+
+### Развёртывание и конфигурация
+
+- **Включение миграции на Fusion через API проекта**: Теперь можно задать `fusion_migration_enabled` для проекта через API обновления проекта. Для включения требуется разрешение `fusion_readiness_write`, а проект должен соответствовать всем требованиям готовности (поддерживаемый адаптер, поддерживаемая версия dbt, успешный запуск и совместимые задания).
+
+- **Фильтрация заданий по готовности к Fusion**: Конечная точка списка заданий (`GET /api/v2/accounts/{account_id}/jobs/`) теперь принимает логический параметр запроса `is_fusion_ready`. При значении `true` возвращаются только соответствующие требованиям задания или задания, готовность которых разрешено переопределить; при `false` — только неготовые задания. Также можно включить `fusion_readiness` в параметр `include_related`, чтобы получить сведения о готовности к Fusion вместе с данными задания.
+
+- **Форма учётных данных метаданных платформы открывается сразу**: При добавлении учётных данных метаданных платформы для подключения форма теперь отображается сразу, без предварительного нажатия кнопки «Добавить учётные данные».
+
+## Исправления
 
 ### Catalog
 
-- **Accurate resource counts on environment switch**: Fixes a bug where resource counts in the navigation tree were not refreshed when switching environments. You should now see up-to-date counts after changing the active environment.
+- **Точное количество ресурсов при смене окружения**: Исправлена ошибка, из-за которой количество ресурсов в дереве навигации не обновлялось при переключении окружений. Теперь после смены активного окружения отображаются актуальные значения.
 
-### Orchestration and Run Status
+### Оркестрация и статус запусков
 
-- **Stuck runs are now cancelled**: A new cleanup job detects runs and run steps that have exceeded the maximum allowed duration and marks them as `CANCELLED`, preventing stale in-progress states from accumulating
+- **Зависшие запуски теперь отменяются**: Новое задание очистки обнаруживает запуски и шаги запусков, превысившие максимально допустимую продолжительность, и помечает их как `CANCELLED`, предотвращая накопление устаревших состояний выполнения
 
 ### Semantic Layer
 
-- **More reliable Snowflake connections after warehouse auto-resume**: The Semantic Layer Gateway now retries the initial connection when a Snowflake warehouse is waking up from auto-suspend, instead of failing immediately. You should see fewer connection errors when querying the Semantic Layer after a period of inactivity.
+- **Более надёжные подключения Snowflake после автоматического возобновления работы хранилища**: Semantic Layer Gateway теперь повторяет первоначальное подключение, если вычислительный ресурс Snowflake выходит из автоматической приостановки, вместо немедленного завершения с ошибкой. Это сокращает количество ошибок подключения при запросах к Semantic Layer после периода бездействия.
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Large group permission sync no longer silently truncated**: Fixed an issue where group permission sync could miss updates for groups with many permissions.
+- **Синхронизация разрешений больших групп больше не обрезается без предупреждения**: Исправлена проблема, из-за которой синхронизация разрешений групп могла пропускать обновления для групп с большим количеством разрешений.
 
-## Behavior change
-
-### Studio IDE
-
-- **Fusion OpenTelemetry log rendering always enabled**: Studio IDE now enables Fusion OpenTelemetry (OTel) log rendering for all invocations running on a Fusion core version, removing the previous feature flag requirement. If you are running a Fusion core version, you automatically receive OTel-based log output without any additional configuration.
-
-## March 18, 2026
-
-## Enhancements
+## Изменение поведения
 
 ### Studio IDE
 
-- **Faster file search:** Studio IDE now reuses its file-search index across searches, so repeated searches return results faster.
+- **Отображение журналов OpenTelemetry Fusion всегда включено**: Studio IDE теперь включает отображение журналов OpenTelemetry (OTel) Fusion для всех вызовов, выполняемых на версии ядра Fusion, без прежнего требования флага функции. Если вы используете версию ядра Fusion, вывод журналов на основе OTel предоставляется автоматически без дополнительной настройки.
 
-- **More responsive Git status decorations:** Studio IDE debounces rapid file change events and avoids applying stale responses, so Git status badges update more reliably during bulk edits and saves.
+## 18 марта 2026 г. {#march-18-2026}
 
-- **Clearer server status details:** The server status popover uses a clearer grouped layout and action buttons to help you troubleshoot user credentials and server health. Please contact your account manager to enable.
+## Улучшения
 
-### dbt Copilot and agents
+### Studio IDE
 
-- **More accurate product guidance:** Copilot and agents can use a product documentation toolset to answer product and workflow questions more reliably.
+- **Более быстрый поиск файлов:** Studio IDE теперь повторно использует индекс поиска файлов между поисковыми запросами, поэтому повторные поиски возвращают результаты быстрее.
 
-- **Full-screen Copilot view:** You can open Copilot in a dedicated full-screen view for a more focused chat and coding workflow. Please contact your account manager to enable.
+- **Более отзывчивые индикаторы статуса Git:** Studio IDE объединяет частые события изменения файлов и не применяет устаревшие ответы, поэтому значки статуса Git обновляются надёжнее при массовом редактировании и сохранении.
 
-- **Lighter default file context:** Copilot now references your active file by path instead of automatically attaching the file contents, which reduces message size and improves chat reliability.
+- **Более понятные сведения о состоянии сервера:** Всплывающая панель состояния сервера использует более понятную группировку и кнопки действий, помогая устранять проблемы с пользовательскими учётными данными и работоспособностью сервера. Для включения обратитесь к менеджеру вашего аккаунта.
 
-- **Run `dbt-autofix` from Copilot and agents:** Copilot can run `dbt-autofix` commands (with confirmation) and stream the output into chat, and Studio IDE agents can run `dbt-autofix` using `run_autofix` for bulk deprecation fixes and migrations.
+### dbt Copilot и агенты
+
+- **Более точные рекомендации по продукту:** Copilot и агенты могут использовать набор инструментов работы с документацией продукта, чтобы надёжнее отвечать на вопросы о продукте и рабочих процессах.
+
+- **Полноэкранное представление Copilot:** Copilot можно открыть в отдельном полноэкранном представлении для более сосредоточенной работы с чатом и кодом. Для включения обратитесь к менеджеру вашего аккаунта.
+
+- **Облегчённый контекст файла по умолчанию:** Copilot теперь ссылается на активный файл по пути вместо автоматического прикрепления его содержимого, что уменьшает размер сообщений и повышает надёжность чата.
+
+- **Запуск `dbt-autofix` из Copilot и агентов:** Copilot может выполнять команды `dbt-autofix` (с подтверждением) и передавать их вывод в чат в потоковом режиме, а агенты Studio IDE могут запускать `dbt-autofix` через `run_autofix` для массового исправления устаревших конструкций и миграций.
 
 ### Catalog
 
-- **Custom materialization filter:** Catalog search now groups non-standard materializations under a single "Custom" filter, so you can narrow results without picking each materialization type.
+- **Фильтр пользовательских материализаций:** Поиск Catalog теперь объединяет нестандартные материализации в один фильтр «Пользовательские», позволяя сузить результаты без выбора каждого типа материализации.
 
 ### Insights
 
-- **More complete Redshift query attribution:** Insights can resolve missing Redshift query IDs from warehouse query history when artifacts do not include them, improving cost coverage for runs with executions.
+- **Более полная атрибуция запросов Redshift:** Insights может восстанавливать отсутствующие идентификаторы запросов Redshift из истории запросов хранилища данных, если их нет в артефактах, повышая полноту учёта затрат для запусков с выполненными операциями.
 
-- **Copilot entry stays available during lockouts:** If dbt Copilot is temporarily locked for your account, you can still open Copilot from Insights to see lock details.
+- **Доступ к Copilot сохраняется при блокировке:** Если dbt Copilot временно заблокирован для вашего аккаунта, его по-прежнему можно открыть из Insights, чтобы посмотреть сведения о блокировке.
 
-### Orchestration and Run Status
+### Оркестрация и статус запусков
 
-- **Run metadata includes triggering and canceling actors:** Run details now include who triggered or canceled a run (user or service token), which helps you audit run activity.
+- **Метаданные запуска включают инициатора и отменившего запуск:** В сведениях о запуске теперь указывается, кто инициировал или отменил запуск (пользователь или сервисный токен), что помогает проводить аудит активности запусков.
 
-- **Custom branch preserved for runs and reruns:** When an environment uses a custom branch, dbt platform now carries that branch through run triggers, retries, and reruns more consistently.
+- **Пользовательская ветка сохраняется для запусков и повторных запусков:** Если окружение использует пользовательскую ветку, платформа dbt теперь более последовательно сохраняет её при инициировании запусков, повторных попытках и повторных запусках.
 
-- **Fusion readiness metadata for jobs and environments:** You can now retrieve Fusion readiness signals for projects, environments, and jobs to support Fusion migration planning. Please contact your account manager to enable.
+- **Метаданные готовности к Fusion для заданий и окружений:** Теперь можно получать показатели готовности к Fusion для проектов, окружений и заданий, чтобы планировать миграцию на Fusion. Для включения обратитесь к менеджеру вашего аккаунта.
 
-- **More accurate command names for dbt Fusion runs:** Orchestration now reads the invocation name from `run_results.json` using `command` when `invocation_command` is missing, so you see the correct dbt command in run details.
+- **Более точные имена команд для запусков dbt Fusion:** Оркестрация теперь считывает имя вызова из `run_results.json`, используя `command`, если `invocation_command` отсутствует, поэтому в сведениях о запуске отображается корректная команда dbt.
 
-### Run Logs
+### Журналы запусков
 
-- **More resilient run step history ingestion:** Run step history ingestion now drops invalid events and de-duplicates redundant step-start events before writing step data, improving step-level accuracy. Please contact your account manager to enable.
+- **Более устойчивая загрузка истории шагов запуска:** При загрузке истории шагов запуска теперь отбрасываются некорректные события и удаляются повторяющиеся события начала шага перед записью данных, повышая точность на уровне шагов. Для включения обратитесь к менеджеру вашего аккаунта.
 
-### Deployment and Configuration
+### Развёртывание и конфигурация
 
-- **Longer project descriptions:** You can now add project descriptions of up to 1,024 characters.
+- **Более длинные описания проектов:** Теперь можно добавлять описания проектов длиной до 1024 символов.
 
-- **Connection links in profiles:** You can now open a connection directly from the connection profile table in a new tab.
+- **Ссылки на подключения в профилях:** Теперь подключение можно открыть в новой вкладке прямо из таблицы профилей подключения.
 
-- **Clearer YAML validation for extended attributes:** You now get more consistent validation and clearer error messages for invalid YAML syntax, null values, and non-object YAML content when you edit extended attributes.
+- **Более понятная проверка YAML для расширенных атрибутов:** При редактировании расширенных атрибутов теперь обеспечиваются более последовательная проверка и понятные сообщения об ошибках при некорректном синтаксисе YAML, значениях null и содержимом YAML, не являющемся объектом.
 
 ### Semantic Layer
 
-- **Improved filtered-query cache matching:** Cached query results can now be matched and reused more reliably when your query includes filters, which can reduce repeated compilation and improve response times.
+- **Улучшенное сопоставление кеша для запросов с фильтрами:** Кешированные результаты запросов теперь надёжнее сопоставляются и используются повторно, если запрос содержит фильтры, что сокращает повторную компиляцию и улучшает время отклика.
 
-## Fixes
+## Исправления
 
-### APIs, Identity, and Administration
+### API, управление идентификацией и администрирование
 
-- **Fewer transient Cloud Config failures:** Retries now only apply to transient errors during Cloud Config lookups, so you should see fewer intermittent failures without added delay for permission, authentication, or not-found responses.
+- **Меньше временных сбоев Cloud Config:** Повторные попытки теперь выполняются только при временных ошибках поиска в Cloud Config, сокращая число периодических сбоев без дополнительных задержек для ответов об ошибках разрешений, аутентификации или отсутствии ресурса.
 
-- **More reliable sign in redirects from `current_email`:** If you are already authenticated and land on `/login` with `current_email`, dbt platform now redirects you to `/api/auth/auth-login/` so the email is forwarded during sign in.
+- **Более надёжные перенаправления при входе с `current_email`:** Если вы уже аутентифицированы и попадаете на `/login` с `current_email`, платформа dbt теперь перенаправляет вас на `/api/auth/auth-login/`, чтобы адрес электронной почты передавался при входе.
 
-- **IP restrictions toggle saves reliably:** Turning IP restrictions on or off now updates form state correctly, so your changes save as expected.
+- **Надёжное сохранение переключателя IP-ограничений:** Включение и отключение IP-ограничений теперь корректно обновляет состояние формы, поэтому изменения сохраняются ожидаемым образом.
 
-- **More consistent audit log date filtering:** The audit log date range defaults no longer shift during re-renders, so your filters stay stable while you review results.
+- **Более последовательная фильтрация журнала аудита по датам:** Значения диапазона дат журнала аудита по умолчанию больше не меняются при повторном отображении, поэтому фильтры остаются стабильными во время просмотра результатов.
 
-- **More reliable Single Sign-On (SSO) migration domain updates:** Domain updates during Single Sign-On (SSO) migration no longer rely on mutating existing provider data, which improves save reliability.
+- **Более надёжное обновление доменов при миграции единого входа (SSO):** Обновление доменов при миграции единого входа (SSO) больше не зависит от изменения существующих данных провайдера, что повышает надёжность сохранения.
 
-### Deployment and Configuration
+### Развёртывание и конфигурация
 
-- **Clearer Bring Your Own Key (BYOK) credential errors:** If your OpenAI credentials include invalid characters, you now get a clearer error message so you can correct the configuration.
+- **Более понятные ошибки учётных данных Bring Your Own Key (BYOK):** Если учётные данные OpenAI содержат недопустимые символы, теперь отображается более понятное сообщение об ошибке, помогающее исправить конфигурацию.
 
-- **More reliable credential edits:** Encrypted credential fields now stay optional when you edit credentials, which reduces unexpected validation failures.
+- **Более надёжное редактирование учётных данных:** Зашифрованные поля учётных данных теперь остаются необязательными при редактировании, что сокращает число неожиданных ошибок проверки.
 
-- **Correct connection details while editing environments:** You now see the correct connection details more consistently when you edit an environment that uses global connections and connection profiles.
+- **Корректные сведения о подключении при редактировании окружений:** При редактировании окружения, использующего глобальные подключения и профили подключений, теперь стабильнее отображаются корректные сведения о подключении.
 
-### Orchestration and Run Status
+### Оркестрация и статус запусков
 
-- **Run steps are available for ingestion runs:** You can now open and review run steps for ingestion-triggered runs.
+- **Шаги доступны для запусков загрузки данных:** Теперь можно открывать и просматривать шаги запусков, инициированных загрузкой данных.
 
-- **Cleaner run error fields:** Run results no longer populate an error string with `None` when dbt does not provide a message or failure count, so you see clearer run error details.
+- **Более чистые поля ошибок запуска:** Результаты запуска больше не заполняют строку ошибки значением `None`, если dbt не предоставляет сообщение или количество сбоев, поэтому сведения об ошибках стали понятнее.
 
-- **Clearer errors for invalid dbt projects:** When Orchestration cannot restore the repository cache because the dbt project is missing or malformed, it now returns an invalid project error so you get a more actionable message in run results.
+- **Более понятные ошибки некорректных проектов dbt:** Если оркестрация не может восстановить кеш репозитория из-за отсутствующего или некорректного проекта dbt, теперь возвращается ошибка некорректного проекта, предоставляющая более полезное сообщение в результатах запуска.
 
 ### Catalog
 
-- **Skipped snapshots show as skipped:** Snapshots selected but not executed in multi-step runs now appear with a skipped status instead of missing run status fields.
+- **Пропущенные снимки отображаются как пропущенные:** Снимки, выбранные, но не выполненные в многошаговых запусках, теперь отображаются со статусом пропуска вместо отсутствующих полей статуса запуска.
 
 ### Insights
 
-- **Copilot chat no longer gets stuck loading:** Insights now clears the Copilot chat loading state reliably after responses complete or error, so you can keep chatting without refreshing the page.
+- **Чат Copilot больше не зависает в состоянии загрузки:** Insights теперь надёжно сбрасывает состояние загрузки чата Copilot после завершения ответа или ошибки, позволяя продолжать общение без обновления страницы.
 
-- **More reliable Copilot handoff starts:** When you arrive in Insights with a Copilot handoff message, Insights now starts the handoff once and clears stale handoff state when you navigate directly.
+- **Более надёжный запуск передачи контекста Copilot:** При переходе в Insights с сообщением передачи контекста Copilot передача теперь запускается один раз, а при прямом переходе устаревшее состояние передачи очищается.
 
-### Integrations
+### Интеграции
 
-- **More consistent JDBC typing for Tableau and Power BI:** Semantic Layer now derives explicit string conversions from returned result metadata, so categorical dimensions and entities are more consistently typed as strings in Tableau and Power BI queries.
+- **Более последовательная типизация JDBC для Tableau и Power BI:** Semantic Layer теперь определяет явные преобразования в строки на основе метаданных возвращаемых результатов, поэтому категориальные измерения и сущности более последовательно получают строковый тип в запросах Tableau и Power BI.
 
 ### Semantic Layer
 
-- **More reliable cache key deletion:** Cache invalidation no longer fails when an in-memory cache key is already missing, which reduces intermittent errors during cache cleanup.
+- **Более надёжное удаление ключей кеша:** Инвалидация кеша больше не завершается ошибкой, если ключ уже отсутствует в кеше в памяти, что сокращает периодические ошибки при очистке кеша.
 
-- **More accurate run ID validation:** Semantic Layer now requests and caches run details scoped to your account, which reduces incorrect run validation results.
+- **Более точная проверка идентификаторов запусков:** Semantic Layer теперь запрашивает и кеширует сведения о запусках в пределах вашего аккаунта, уменьшая число некорректных результатов проверки запусков.
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **More reliable cancellations during tool use:** If you cancel a request while an agent is running tools, the agent now recovers cleanly instead of getting stuck on incomplete tool-call history.
+- **Более надёжная отмена при использовании инструментов:** Если отменить запрос во время выполнения инструментов агентом, агент теперь корректно восстанавливается вместо зависания из-за неполной истории вызовов инструментов.
 
-- **Cleaner AI diff overlays:** Studio IDE now removes the accept and reject overlay when you leave an artificial intelligence (AI) diff view to prevent stale UI controls.
+- **Корректная очистка элементов управления сравнением ИИ:** Studio IDE теперь удаляет наложенные элементы принятия и отклонения изменений при выходе из представления различий искусственного интеллекта (ИИ), предотвращая сохранение неактуальных элементов интерфейса.
 
-## Behavior change
-
-### Studio IDE
-
-- **Updated file search and command shortcuts:** Studio IDE now uses VS Code Quick Open for file search (`Cmd+P` or `Ctrl+P`) and the VS Code Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`) instead of the legacy Studio dialogs.
-
-### Integrations
-
-- **Disallowed `MIN()` and `MAX()` for metrics and dimensions:** Tableau and Power BI queries can no longer request `MIN()` or `MAX()` for a metric or dimension (except time min-max queries), and you now receive a clear error if you attempt it.
-
-## March 11, 2026
-
-## New
-
-### Deployment and Configuration
-
-- **Self-serve Snowflake private endpoint requests:** You can request a new Snowflake private endpoint from account settings by pasting the output from `SELECT SYSTEM$GET_PRIVATELINK_CONFIG();`, then track request status in the private endpoints table. This is available for Enterprise Business Critical accounts only, and please contact your account manager to enable. For other connection types, contact support@dbtlabs.com.
-
-## Enhancements
-
-### Orchestration and Run Status
-
-- **Run retries support dbt Fusion runs:** You can now retry failed runs as long as your environment is on dbt Core version `1.6` or higher or dbt Fusion.
-
-### Integrations
-
-- **More reliable Slack notifications:** Slack channel discovery and notifications now retry on Slack rate limits to reduce dropped messages during busy periods.
-
-### APIs, Identity, and Administration
-
-- **Improved OpenAPI typing for large integers:** OpenAPI schemas now mark 64-bit integer fields as `format: int64` to improve generated client types.
-
-- **Clearer credentials schemas:** Credentials OpenAPI docs now use a `type` discriminator (`postgres`, `redshift`, `snowflake`, `bigquery`, and `adapter`) to improve code generation and request validation.
-
-## Fixes
-
-### Orchestration and Run Status
-
-- **More reliable job search:** Searching jobs with numeric terms (for example, `12`) no longer triggers API validation errors, so you can load job lists reliably.
-
-- **Clearer cross-project publication errors:** When dbt platform cannot fetch a publication artifact for an upstream project declared in `dependencies.yml`, you now see which project is missing an artifact and guidance to run the upstream environment at least once.
-
-### Integrations
-
-- **More accurate Microsoft Teams notification triggers:** Microsoft Teams notifications now use the correct trigger event type for each notification, so you see the expected run outcome context in the message.
-
-### APIs, Identity, and Administration
-
-- **More accurate error responses during permission checks:** You now receive more accurate errors from permission checks, and underlying service errors surface instead of being reported as authorization failures.
-
-### Deployment and Configuration
-
-- **Clearer private endpoint validation errors:** Creating a private endpoint now returns a `400` error with a clear message when `snowflake_output` is malformed or not valid JSON.
-
-## Behavior change
-
-### Orchestration and Run Status
-
-- **Model timing unavailable for dbt Fusion runs:** You now see an informational notice instead of the Model timing chart for dbt Fusion runs because dbt Fusion handles threading differently.
-
-### APIs, Identity, and Administration
-
-- **System for Cross-domain Identity Management (SCIM) `id` fields are now strings:** SCIM schema discovery now reports `id` fields as strings for users and groups.
-
-## March 4, 2026
-
-## Enhancements
-
-### Orchestration and Run Status
-
-- **Clearer SAO description**: Job settings now describe state-aware orchestration (SAO) as only building models when data or code changes are detected.
-- **Direct links for cost optimization setup**: Fusion cost optimization settings now link to account-level Cost Insights settings and setup documentation so you can validate cost data and savings.
-
-### APIs, Identity, and Administration
-
-- **Confirmation when enabling manual SCIM updates**: When you enable manual updates for System for Cross-domain Identity Management (SCIM), dbt platform now asks you to confirm so you do not accidentally allow changes outside your identity provider.
-- **More reliable SCIM group provisioning**: SCIM has been updated so that when a SCIM-provisioned user with an expired invite is added to a SCIM-managed group through a SCIM request, the invite is automatically resent during group assignment. This helps prevent errors caused by unaccepted invites.
-
-### dbt platform
-
-- **Project names and descriptions handle empty values better**: Projects with missing names now show as "Untitled Project," and you can save project descriptions as empty.
+## Изменение поведения
 
 ### Studio IDE
 
-- **Removed non-functional "Open Settings" actions**: Studio IDE no longer shows "Open Settings" buttons in editor notifications because Studio IDE does not expose VS Code settings, and the action would not help you resolve issues.
+- **Обновлённые сочетания клавиш для поиска файлов и команд:** Studio IDE теперь использует VS Code Quick Open для поиска файлов (`Cmd+P` или `Ctrl+P`) и палитру команд VS Code (`Cmd+Shift+P` или `Ctrl+Shift+P`) вместо прежних диалоговых окон Studio.
 
-## Fixes
+### Интеграции
+
+- **Запрет `MIN()` и `MAX()` для метрик и измерений:** Запросы Tableau и Power BI больше не могут запрашивать `MIN()` или `MAX()` для метрики или измерения (кроме запросов минимального и максимального времени); при такой попытке теперь возвращается понятная ошибка.
+
+## 11 марта 2026 г. {#march-11-2026}
+
+## Новые возможности
+
+### Развёртывание и конфигурация
+
+- **Самостоятельная отправка запросов на частные конечные точки Snowflake:** Вы можете запросить новую частную конечную точку Snowflake в настройках аккаунта, вставив результат `SELECT SYSTEM$GET_PRIVATELINK_CONFIG();`, а затем отслеживать статус запроса в таблице частных конечных точек. Эта возможность доступна только для аккаунтов Enterprise Business Critical; для включения обратитесь к менеджеру вашего аккаунта. Для других типов подключений обращайтесь по адресу support@dbtlabs.com.
+
+## Улучшения
+
+### Оркестрация и статус запусков
+
+- **Повторные попытки поддерживают запуски dbt Fusion:** Теперь можно повторять неудачные запуски, если окружение использует dbt Core версии `1.6` или выше либо dbt Fusion.
+
+### Интеграции
+
+- **Более надёжные уведомления Slack:** Поиск каналов Slack и отправка уведомлений теперь повторяются при достижении ограничений частоты запросов Slack, чтобы уменьшить потери сообщений в периоды высокой нагрузки.
+
+### API, управление идентификацией и администрирование
+
+- **Улучшенная типизация больших целых чисел в OpenAPI:** Схемы OpenAPI теперь помечают 64-битные целочисленные поля как `format: int64`, улучшая типы генерируемых клиентов.
+
+- **Более понятные схемы учётных данных:** Документация OpenAPI для учётных данных теперь использует дискриминатор `type` (`postgres`, `redshift`, `snowflake`, `bigquery` и `adapter`), улучшая генерацию кода и проверку запросов.
+
+## Исправления
+
+### Оркестрация и статус запусков
+
+- **Более надёжный поиск заданий:** Поиск заданий по числовым значениям (например, `12`) больше не вызывает ошибок проверки API, обеспечивая надёжную загрузку списков заданий.
+
+- **Более понятные ошибки межпроектных публикаций:** Если платформа dbt не может получить артефакт публикации для вышестоящего проекта, объявленного в `dependencies.yml`, теперь указывается, у какого проекта отсутствует артефакт, и рекомендуется хотя бы один раз выполнить запуск в вышестоящем окружении.
+
+### Интеграции
+
+- **Более точные события срабатывания уведомлений Microsoft Teams:** Уведомления Microsoft Teams теперь используют правильный тип события для каждого уведомления, поэтому сообщения содержат ожидаемый контекст результата запуска.
+
+### API, управление идентификацией и администрирование
+
+- **Более точные ответы об ошибках при проверке разрешений:** Проверки разрешений теперь возвращают более точные ошибки, а ошибки базовых сервисов передаются напрямую вместо представления их как отказов в авторизации.
+
+### Развёртывание и конфигурация
+
+- **Более понятные ошибки проверки частных конечных точек:** Создание частной конечной точки теперь возвращает ошибку `400` с понятным сообщением, если `snowflake_output` имеет некорректную структуру или не является допустимым JSON.
+
+## Изменение поведения
+
+### Оркестрация и статус запусков
+
+- **Временные показатели моделей недоступны для запусков dbt Fusion:** Для запусков dbt Fusion теперь отображается информационное уведомление вместо графика времени выполнения моделей, поскольку dbt Fusion иначе управляет потоками.
+
+### API, управление идентификацией и администрирование
+
+- **Поля `id` в System for Cross-domain Identity Management (SCIM) теперь строковые:** Обнаружение схем SCIM теперь сообщает строковый тип для полей `id` пользователей и групп.
+
+## 4 марта 2026 г. {#march-4-2026}
+
+## Улучшения
+
+### Оркестрация и статус запусков
+
+- **Более понятное описание SAO**: Настройки заданий теперь описывают оркестрацию с учётом состояния (SAO) как сборку моделей только при обнаружении изменений данных или кода.
+- **Прямые ссылки для настройки оптимизации затрат**: Настройки оптимизации затрат Fusion теперь содержат ссылки на настройки Cost Insights уровня аккаунта и документацию по настройке, чтобы можно было проверить данные о затратах и экономии.
+
+### API, управление идентификацией и администрирование
+
+- **Подтверждение включения ручных обновлений SCIM**: При включении ручных обновлений для System for Cross-domain Identity Management (SCIM) платформа dbt теперь запрашивает подтверждение, чтобы случайно не разрешить изменения вне вашего провайдера идентификации.
+- **Более надёжное предоставление доступа группам SCIM**: SCIM обновлён: если пользователь, созданный через SCIM и имеющий просроченное приглашение, добавляется SCIM-запросом в группу под управлением SCIM, приглашение автоматически отправляется повторно при назначении группы. Это помогает предотвращать ошибки из-за непринятых приглашений.
+
+### Платформа dbt
+
+- **Улучшенная обработка пустых названий и описаний проектов**: Проекты без названия теперь отображаются как «Проект без названия», а описания проектов можно сохранять пустыми.
+
+### Studio IDE
+
+- **Удалены неработающие действия «Открыть настройки»**: Studio IDE больше не показывает кнопки «Открыть настройки» в уведомлениях редактора, поскольку настройки VS Code в Studio IDE недоступны и это действие не помогало устранить проблемы.
+
+## Исправления
 
 ### Catalog
 
-- **More reliable file tree loading**: Catalog no longer gets stuck loading the file tree on initial page load.
-- **Clearer trust signals**: Trust signals now suppress less-severe upstream-source issues when a more severe issue is present, so badges and messages are easier to interpret.
+- **Более надёжная загрузка дерева файлов**: Catalog больше не зависает при загрузке дерева файлов во время первоначального открытия страницы.
+- **Более понятные индикаторы доверия**: Индикаторы доверия теперь скрывают менее серьёзные проблемы вышестоящих источников при наличии более серьёзной проблемы, поэтому значки и сообщения проще интерпретировать.
 
-### Integrations
+### Интеграции
 
-- **Clearer deploy key decryption errors**: When dbt platform cannot decrypt a deploy key, you now get a clearer failure instead of a generic git credentials error.
+- **Более понятные ошибки расшифровки ключей развёртывания**: Если платформа dbt не может расшифровать ключ развёртывания, теперь отображается более понятная ошибка вместо общего сообщения об ошибке учётных данных git.
 
 ### Studio IDE
 
-- **Cleaner LSP disconnects**: If authentication fails when you connect to the Language Server Protocol (LSP) WebSocket, the connection now closes cleanly instead of failing with an internal server error, so you should see fewer unexpected disconnects.
-- **Improved timeout handling and authentication stability**: Reduced environment setup timeouts and resolved intermittent authentication failures during busy periods.
-- **Clearer invalid credentials error**: If your development connection credentials are invalid, you now see a clearer error message to help you diagnose the issue faster.
+- **Корректное закрытие подключений LSP**: Если аутентификация при подключении к WebSocket Language Server Protocol (LSP) завершается неудачей, соединение теперь корректно закрывается вместо внутренней ошибки сервера, что сокращает число неожиданных разрывов подключения.
+- **Улучшенная обработка тайм-аутов и стабильность аутентификации**: Сокращено число тайм-аутов при подготовке окружения и устранены периодические сбои аутентификации в периоды высокой нагрузки.
+- **Более понятная ошибка некорректных учётных данных**: Если учётные данные подключения для разработки некорректны, теперь отображается более понятное сообщение, помогающее быстрее выявить причину проблемы.
 
-## Behavior change
+## Изменение поведения
 
-### Orchestration and Run Status
+### Оркестрация и статус запусков
 
-- **`versionless` dbt version is no longer accepted**: dbt platform now treats `versionless` as deprecated and updates existing environments and jobs to use `latest`. If you set `dbt_version` in an API integration or automation, update it to send `latest` instead.
+- **Версия dbt `versionless` больше не принимается**: Платформа dbt теперь считает `versionless` устаревшей и переводит существующие окружения и задания на `latest`. Если вы задаёте `dbt_version` в интеграции API или автоматизации, обновите её для передачи `latest`.
 
-### Webhooks
+### Вебхуки
 
-- **Account identifier required for run-based notifications**: If you send events that include a `run_id`, you must also provide an `account_identifier` so the service can validate and resolve the correct account before dispatch. If `account_identifier` is missing, the event fails instead of falling back to a `run_id`-only lookup.
+- **Идентификатор аккаунта обязателен для уведомлений на основе запусков**: Если вы отправляете события, содержащие `run_id`, необходимо также указать `account_identifier`, чтобы сервис мог проверить и определить нужный аккаунт перед отправкой. Если `account_identifier` отсутствует, событие завершается ошибкой вместо перехода к поиску только по `run_id`.
 
-## February 25, 2026
+## 25 февраля 2026 г. {#february-25-2026}
 
-## New
+## Новые возможности
 
 ### Catalog
 
-- **Saved queries now ingested for lineage and governance**: Saved query definitions (including tags, exports, parameters, and lineage relationships) are now captured during ingestion so they can participate in Catalog lineage and governance workflows.
+- **Сохранённые запросы теперь загружаются для линейности и управления данными**: Определения сохранённых запросов (включая теги, экспорты, параметры и связи линейности) теперь фиксируются при загрузке, чтобы их можно было использовать в процессах анализа линейности и управления данными в Catalog.
 
-## Enhancements
+## Улучшения
 
-### dbt platform
+### Платформа dbt
 
-- **System logs now surface warnings and errors**: Run step structured logs now show an indicator when system warnings or errors are present, making issues easier to spot during run triage.
+- **Системные журналы теперь выделяют предупреждения и ошибки**: В структурированных журналах шагов запуска теперь отображается индикатор наличия системных предупреждений или ошибок, что упрощает выявление проблем при анализе запусков.
 
-- **Region labels now use backend display names**: Account Settings now shows the backend-provided region display name for clearer, more accurate region labeling.
+- **Метки регионов теперь используют отображаемые имена из бэкенда**: В настройках аккаунта теперь отображается имя региона, предоставленное бэкендом, что делает обозначения регионов понятнее и точнее.
 
-- **SCIM create group UI change**: Changes to our UI to improve the experience of managing groups with SCIM enabled.
+- **Изменение интерфейса создания групп SCIM**: Изменения интерфейса упрощают управление группами при включенном SCIM.
 
-- **Updated the post-invite message for SSO accounts**:  After a user accepts an invite, the UI now explains that they must log in using SSO to fully redeem the invite and access the account. This replaces the previous "Joined successfully" message and helps avoid confusion when users accept an invite but do not complete the SSO login flow.
+- **Обновлено сообщение после принятия приглашения для аккаунтов с SSO**:  После принятия приглашения интерфейс теперь поясняет, что пользователю необходимо войти через SSO, чтобы завершить принятие приглашения и получить доступ к аккаунту. Это сообщение заменяет прежнее «Joined successfully» и помогает избежать путаницы, когда пользователи принимают приглашение, но не завершают вход через SSO.
 
-### Studio IDE and Copilot
+### Studio IDE и Copilot
 
-- **Improved crash recovery and not-found routing**: Studio IDE now catches unexpected render failures with a top-level error boundary and shows Not Found more reliably for unknown in-project routes.
+- **Улучшено восстановление после сбоев и отображение страницы «Не найдено»**: Studio IDE теперь перехватывает непредвиденные сбои рендеринга с помощью обработчика ошибок верхнего уровня и надежнее отображает страницу «Не найдено» для неизвестных маршрутов внутри проекта.
 
-- **Improved navigation accessibility and semantics in Studio IDE**: The main navigation trigger area is now a navigation element with improved focus and labeling.
+- **Улучшены доступность и семантика навигации в Studio IDE**: Область вызова основного меню теперь является элементом навигации с улучшенной обработкой фокуса и метками.
 
-- **Reduced shortcut conflicts with VS Code search**: When Visual Studio Code (VS Code) search is enabled, Studio IDE avoids unregistering Quick Open and suppresses conflicting command palette shortcuts.
+- **Сокращены конфликты сочетаний клавиш с поиском VS Code**: При включенном поиске Visual Studio Code (VS Code) Studio IDE не отменяет регистрацию Quick Open и подавляет конфликтующие сочетания клавиш палитры команд.
 
-### Catalog and Insights Data
+### Catalog и данные Insights
 
-- **More accurate source freshness outdated status in Catalog**: Source freshness Outdated status can now be computed at query time, improving freshness status filtering consistency.
+- **Более точное определение статуса Outdated для актуальности источников в Catalog**: Статус актуальности источников Outdated теперь может вычисляться во время выполнения запроса, что повышает согласованность фильтрации по статусу актуальности.
 
-- **Improved search and lineage usability in Catalog**: Search results better support column-level navigation and very long queries show a clear validation error, and lineage visuals have improved alignment and reduced edge clutter.
+- **Улучшено удобство поиска и работы с графом зависимостей в Catalog**: Результаты поиска лучше поддерживают переходы на уровень столбцов, для слишком длинных запросов отображается понятная ошибка валидации, а в визуализации графа зависимостей улучшено выравнивание и уменьшено нагромождение связей.
 
-- **Improved cross-project lineage and function awareness in Catalog**: Lineage graph building now includes cross-project dependencies and supports function nodes as first-class lineage entities.
+- **Улучшены межпроектные зависимости и поддержка функций в Catalog**: Построение графа зависимостей теперь учитывает межпроектные зависимости и поддерживает узлы функций как полноценные сущности графа.
 
-### APIs, Identity, and Administration
+### API, идентификация и администрирование
 
-- **Project deletion now supported in Admin v2 and v3 Projects APIs**: Projects APIs now explicitly support DELETE with stricter permission checks.
+- **Удаление проектов теперь поддерживается в Projects API Admin v2 и v3**: Projects API теперь явно поддерживают DELETE с более строгими проверками разрешений.
 
-## Behavior change
+## Изменения поведения
 
-### Webhooks
+### Вебхуки
 
-- **Updated job run event field presence and status normalization**: Webhook payloads now include `runFinishedAt` only for completed events and `runErroredAt` only for errored events; canceled runs no longer include `runCanceledAt`, and run status is normalized from Cancelled to Canceled. Also note that enabling JSON preserve order can change key ordering, so consumers should parse JSON rather than string-compare payloads.
+- **Обновлены правила включения полей событий запуска и нормализация статусов**: Полезная нагрузка вебхуков теперь включает `runFinishedAt` только для событий завершения и `runErroredAt` только для событий с ошибкой; отмененные запуски больше не включают `runCanceledAt`, а статус запуска нормализуется из Cancelled в Canceled. Также обратите внимание: включение сохранения порядка в JSON может изменить порядок ключей, поэтому получателям следует разбирать JSON, а не сравнивать полезные нагрузки как строки.
 
-### Insights APIs
+### API Insights
 
-- **Optional source freshness expiration windows**: Source freshness expiration windows can optionally derive from each source's freshness criteria rather than a fixed window. You must enable in your deployment.
+- **Необязательные интервалы истечения актуальности источников**: Интервалы истечения актуальности источников могут определяться на основе критериев актуальности каждого источника, а не фиксированного интервала. Эту возможность необходимо включить в вашем развертывании.
 
-### Deployment and Configuration
+### Развертывание и конфигурация
 
-- **Source ingestion may skip sources for extremely large manifests in Catalog**: For very large `manifest.json` files, ingestion may strip sources above a configurable threshold to prevent out of memory failures. Set `SOURCE_INGESTION_THRESHOLD=0` if you must always ingest sources regardless of size.
+- **При загрузке очень больших манифестов в Catalog источники могут пропускаться**: Для очень больших файлов `manifest.json` процесс загрузки может исключать источники при превышении настраиваемого порога, чтобы предотвратить сбои из-за нехватки памяти. Установите `SOURCE_INGESTION_THRESHOLD=0`, если необходимо всегда загружать источники независимо от размера.
 
-- **Removed deprecated object storage settings in Studio IDE**: Deprecated settings `project_storage_bucket_name` and `project_storage_object_prefix` have been removed. Migrate to `object_storage_bucket_name` and `object_storage_object_prefix`.
+- **Удалены устаревшие настройки объектного хранилища в Studio IDE**: Устаревшие настройки `project_storage_bucket_name` и `project_storage_object_prefix` удалены. Перейдите на `object_storage_bucket_name` и `object_storage_object_prefix`.
 
-## February 18, 2026
+## 18 февраля 2026 г. {#february-18-2026}
 
-## New
+## Новые возможности
 
 ### Cost Insights
 
-- **Estimated warehouse compute costs**: Cost Insights shows estimated warehouse compute costs and run times for your dbt projects and models, directly in the dbt platform. It highlights cost reductions and efficiency gains from optimizations like state-aware orchestration across your project dashboard, model pages, and job details. This feature is in private beta. To request access, contact your account manager.
+- **Оценка затрат на вычисления в хранилище данных**: Cost Insights показывает оценочные затраты на вычисления в хранилище данных и время выполнения ваших проектов и моделей dbt непосредственно на платформе dbt. На панели проекта, страницах моделей и в сведениях о заданиях отображаются сокращение затрат и повышение эффективности благодаря таким оптимизациям, как оркестрация с учетом состояния. Эта возможность находится на этапе закрытого бета-тестирования. Чтобы запросить доступ, обратитесь к менеджеру вашего аккаунта.
 
-## Enhancements
+## Улучшения
 
 ### Studio IDE
 
-- **Reduced conflicts across multiple tabs**: Studio IDE can pause the Language Server Protocol (LSP) in background tabs and resume on return to improve stability when the editor is open in more than one tab.
+- **Сокращены конфликты между несколькими вкладками**: Studio IDE может приостанавливать работу Language Server Protocol (LSP) в фоновых вкладках и возобновлять ее при возвращении, повышая стабильность при открытии редактора в нескольких вкладках.
 
-- **More informative header and more editor space**: Adds a Visual Studio Code-style header showing a dbt badge and current project name, with an option to hide surrounding chrome for more editor space. Please contact your account manager to enable.
+- **Более информативный заголовок и больше места для редактора**: Добавлен заголовок в стиле Visual Studio Code со значком dbt и названием текущего проекта, а также возможностью скрыть окружающие элементы интерфейса, чтобы освободить больше места для редактора. Для включения обратитесь к менеджеру вашего аккаунта.
 
-- **Clearer file and folder creation errors**: Surfaces more actionable filesystem errors (for example, name too long and file-is-a-directory) instead of generic failures.
+- **Более понятные ошибки создания файлов и папок**: Вместо общих сообщений о сбоях отображаются более конкретные ошибки файловой системы с указанием причины, например слишком длинное имя или попытка использовать каталог как файл.
 
-- **Copy relative path**: Adds a Copy Relative Path action that respects `dbt_project_subdirectory` for quicker navigation and sharing.
+- **Копирование относительного пути**: Добавлено действие Copy Relative Path, учитывающее `dbt_project_subdirectory`, для более быстрой навигации и обмена путями.
 
-- **Friendlier lineage error messages**: Improves user-facing errors for lineage failures (including server errors and cases where upstream returns HTML instead of JSON).
+- **Более понятные сообщения об ошибках графа зависимостей**: Улучшены сообщения для пользователей при сбоях графа зависимостей, включая ошибки сервера и случаи, когда вышестоящий сервис возвращает HTML вместо JSON.
 
-- **More reliable private connectivity selection**: Improves private endpoint filtering by adapter type and updates Studio IDE to use the correct version 3 private endpoints endpoint.
+- **Более надежный выбор частных подключений**: Улучшена фильтрация частных конечных точек по типу адаптера, а Studio IDE обновлена для использования корректной конечной точки API версии 3 для частных конечных точек.
 
 ### Canvas
 
-- **More reliable Add Sources CSV uploads**: Improves Comma-Separated Values (CSV) upload progress, resume behavior, and common error handling during Add Sources.
+- **Более надежная загрузка CSV в Add Sources**: Улучшены отображение хода загрузки файлов со значениями, разделенными запятыми (CSV), возобновление загрузки и обработка распространенных ошибок при добавлении источников через Add Sources.
 
 ### Catalog
 
-- **Faster and more usable lineage for large projects**: Improves directed acyclic graph (DAG) performance by rendering only visible elements and improving layout for disconnected nodes.
+- **Более быстрый и удобный граф зависимостей для больших проектов**: Повышена производительность направленного ациклического графа (DAG) за счет отрисовки только видимых элементов и улучшения расположения несвязанных узлов.
 
-- **Safer search result interactions**: Improves keyboard and hover behavior in the search dropdown and avoids showing stale results while searches are loading.
+- **Более безопасное взаимодействие с результатами поиска**: Улучшена обработка клавиатурного ввода и наведения указателя в раскрывающемся списке поиска; устаревшие результаты больше не отображаются во время загрузки новых.
 
-### dbt platform
+### Платформа dbt
 
-- **More informative user invite statuses**: This change shows clearer invite status (invitation sent and invitation accepted) and supports accepted, login pending for Single Sign-On (SSO).
+- **Более информативные статусы приглашений пользователей**: Теперь отображаются более понятные статусы приглашений — приглашение отправлено и приглашение принято, а также поддерживается статус «принято, ожидается вход» для единого входа (SSO).
 
-- **Unpaid billing banner enabled by default**: The unpaid billing banner is no longer feature-flagged and will display when applicable, while billing link visibility remains permission-based.
+- **Баннер о неоплате включен по умолчанию**: Баннер о неоплате больше не управляется флагом функциональности и отображается в соответствующих случаях; видимость ссылки на оплату по-прежнему зависит от разрешений.
 
-- **System for cross-domain identity management (SCIM)**: Bug fixes and improvements related to managed invites for easier processing.
+- **Система междоменного управления идентификацией (SCIM)**: Исправлены ошибки и внесены улучшения в управляемые приглашения для упрощения их обработки.
 
-### dbt Copilot and agents
+### dbt Copilot и агенты
 
-- **Streaming control for server-sent events**: Adds Server-Sent Events (SSE) streaming control so clients can choose chunk streaming or message streaming. This enables more responsive Copilot experiences in environments that support streaming.
+- **Управление потоковой передачей событий сервера**: Добавлено управление потоковой передачей Server-Sent Events (SSE), позволяющее клиентам выбирать передачу фрагментами или сообщениями. Это повышает отзывчивость Copilot в средах с поддержкой потоковой передачи.
 
-- **More reliable similar models requests**: Improves responsiveness for AI Similar Models and Similar Sources requests by enforcing tighter embedding and database timeouts aligned to request deadlines.  Users should see faster, more consistent results when exploring related models.
+- **Более надежные запросы похожих моделей**: Повышена отзывчивость запросов AI Similar Models и Similar Sources благодаря более строгим тайм-аутам для эмбеддингов и базы данных, согласованным с предельным временем выполнения запросов.  При поиске связанных моделей пользователи должны получать результаты быстрее и стабильнее.
 
-- **dbt Copilot: Improved bring your own key error handling**: Categorizes OpenAI failures with Bring Your Own Key (BYOK) awareness so BYOK failures return the expected 424-class behavior instead of generic 500-series errors.  This makes it easier to diagnose and resolve key or configuration issues.
+- **dbt Copilot: улучшена обработка ошибок при использовании собственного ключа**: Ошибки OpenAI классифицируются с учетом Bring Your Own Key (BYOK), поэтому сбои BYOK возвращают ожидаемые ошибки класса 424 вместо общих ошибок серии 500.  Это упрощает диагностику и устранение проблем с ключами или конфигурацией.
 
-- **Expanded dbt Model Context Protocol tooling**: Updates dbt Model Context Protocol (MCP) tooling, including adding `get_all_macros` and improving error categorization, enabling more accurate responses.
+- **Расширены инструменты dbt Model Context Protocol**: Обновлены инструменты dbt Model Context Protocol (MCP), в том числе добавлен `get_all_macros` и улучшена классификация ошибок, что позволяет получать более точные ответы.
 
-## Fixes
+## Исправления
 
-### Studio IDE and Catalog
+### Studio IDE и Catalog
 
-- **More reliable search and replace**: Ensures bulk edits stay in sync after server-side edits to prevent stale content from overwriting changes.
+- **Более надежный поиск и замена**: Массовые правки остаются синхронизированными после изменений на стороне сервера, чтобы устаревшее содержимое не перезаписывало изменения.
 
-- **Correct search preview highlighting**: Fixes preview and match highlighting assembly so match ranges align correctly in multi-line previews.
+- **Корректная подсветка в предварительном просмотре поиска**: Исправлено формирование предварительного просмотра и подсветки совпадений, чтобы диапазоны совпадений правильно отображались в многострочном предварительном просмотре.
 
-- **Improved startup failure experience**: Shows a proper error layout and notification on unrecoverable initialization failures.
+- **Улучшена обработка сбоев при запуске**: При невосстановимых ошибках инициализации отображаются корректный экран ошибки и уведомление.
 
 ### Canvas
 
-- **Fewer Add Sources UI interruptions**: Prevents incorrect tab closing after uploads complete and avoids showing the floating node panel when not on a file tab.
+- **Меньше помех в интерфейсе Add Sources**: Предотвращено ошибочное закрытие вкладок после завершения загрузок, а плавающая панель узла больше не отображается вне файловой вкладки.
 
 ### Catalog
 
-- **Public model lineage across environments**: Fixes lineage resolution for public model parents when the producer model lives in a non-default environment.
+- **Граф зависимостей публичных моделей между средами**: Исправлено определение зависимостей от родительских публичных моделей, когда модель-производитель находится в среде, отличной от среды по умолчанию.
 
-### dbt Copilot And Agents
+### dbt Copilot и агенты
 
-- **Reduced resource growth under load**: Fixes an OpenAI connection pool leak that could lead to out-of-memory (OOM) conditions under sustained load. Users should see fewer slowdowns during high-traffic periods.
+- **Снижено нарастание потребления ресурсов под нагрузкой**: Исправлена утечка в пуле подключений OpenAI, которая могла приводить к нехватке памяти (OOM) при длительной нагрузке. Пользователи должны реже сталкиваться с замедлениями в периоды высокой активности.
 
-- **Fewer related models timeouts**: Reduces intermittent failures when attaching related models by increasing internal timeouts for related-model fetching. Users should experience fewer timeout errors when working with related models.
+- **Меньше тайм-аутов при работе со связанными моделями**: Снижена частота периодических сбоев при прикреплении связанных моделей за счет увеличения внутренних тайм-аутов их получения. Пользователи должны реже сталкиваться с ошибками тайм-аута при работе со связанными моделями.
 
-## Behavior change
+## Изменения поведения
 
 ### Studio IDE
 
-- **Prevent destructive root operations**: Prevents rename and delete operations on the repository root and shows clearer warnings.
+- **Предотвращение разрушительных операций с корневым каталогом**: Запрещены переименование и удаление корневого каталога репозитория, а предупреждения стали понятнее.
 
-- **Resumable dbt command log streaming**: Improves dbt command log streaming reliability by resuming from the last known Command Line Interface (CLI) event offset. Contact your account manager to enable.
+- **Возобновляемая потоковая передача журналов команд dbt**: Повышена надежность потоковой передачи журналов команд dbt за счет возобновления с последнего известного смещения событий интерфейса командной строки (CLI). Для включения обратитесь к менеджеру вашего аккаунта.
 
-### Admin And APIs
+### Администрирование и API
 
-- **Job Admin gains write access in Profiles API**: Job Admin now includes `profiles_write`, which can change what Job Admin users can do where Profiles are enabled.
+- **Job Admin получает доступ на запись в Profiles API**: Роль Job Admin теперь включает `profiles_write`, что может изменить доступные пользователям Job Admin действия там, где включены профили.
 
-- **Search parameter renamed**: Version 3 Private Endpoints query parameter `name_search` is renamed to `search`, and search matches endpoint name and endpoint value.
+- **Переименован параметр поиска**: Параметр запроса `name_search` в Private Endpoints версии 3 переименован в `search`; поиск выполняется по имени и значению конечной точки.
 
-- **Connections: Postgres database name required**: Postgres connection validation now requires a non-empty database name.
+- **Подключения: имя базы данных Postgres обязательно**: Валидация подключений Postgres теперь требует непустого имени базы данных.
 
-- **User credentials: Prevent sharing credentials across users**: Prevents associating the same active credentials object to multiple users, returning a conflict instead of silently duplicating associations.
+- **Учетные данные пользователей: предотвращено совместное использование учетных данных разными пользователями**: Один и тот же активный объект учетных данных нельзя связать с несколькими пользователями; вместо незаметного дублирования связей возвращается ошибка конфликта.
 
-### Integrations
+### Интеграции
 
-- **GitHub: More flexible repository URL schemes**: GitHub shared webhooks now accept repository URLs using https, git, and Secure Shell (SSH) formats.
+- **GitHub: более гибкие схемы URL репозиториев**: Общие вебхуки GitHub теперь принимают URL репозиториев в форматах https, git и Secure Shell (SSH).
 
-- **Slack: Tighter permission gating for settings**: Slack linking and notification settings are more strictly gated by the relevant permissions.
+- **Slack: более строгий контроль разрешений для настроек**: Привязка Slack и настройки уведомлений теперь строже контролируются соответствующими разрешениями.
 
-- **Slack: Permission check aligned to job notification access**: Slack integration listing now uses job notifications read permission, reducing incorrect permission-denied scenarios.
+- **Slack: проверка разрешений согласована с доступом к уведомлениям заданий**: Для получения списка интеграций Slack теперь используется разрешение на чтение уведомлений заданий, что сокращает число ошибочных отказов в доступе.
 
-### CLI Runtime
+### Среда выполнения CLI
 
-- **Shorter default request timeouts**: Reduces default timeouts from 60 seconds to 5 seconds for Cloud Config and Cloud Artifact calls, causing requests to fail faster in high-latency environments unless overridden.
+- **Сокращены тайм-ауты запросов по умолчанию**: Тайм-ауты по умолчанию для вызовов Cloud Config и Cloud Artifact уменьшены с 60 до 5 секунд, поэтому в средах с высокой задержкой запросы завершаются ошибкой быстрее, если эти значения не переопределены.
 
-- **OpenTelemetry logs: Corrected JSON field name**: Corrects the OpenTelemetry (OTel) log payload field name to `additional_message` (from the misspelled `addtional_message`), which may require updates to downstream parsing.
+- **Журналы OpenTelemetry: исправлено имя поля JSON**: Имя поля полезной нагрузки журнала OpenTelemetry (OTel) исправлено на `additional_message` вместо ошибочного `addtional_message`, что может потребовать обновления последующей обработки.
 
-## February 11, 2026
+## 11 февраля 2026 г. {#february-11-2026}
 
-## Enhancements
+## Улучшения
 
 ### Catalog
 
-- **Faster model graph rendering for large projects**: Improved model graph layout performance to reduce load time in larger projects.
+- **Ускорена отрисовка графа моделей для больших проектов**: Повышена производительность построения расположения элементов графа моделей, что сокращает время загрузки больших проектов.
 
-- **Faster similar models results**: Similar Models lookup now uses an optimized vector search strategy to reduce timeouts on large projects.
+- **Ускорено получение похожих моделей**: Поиск Similar Models теперь использует оптимизированную стратегию векторного поиска, сокращающую число тайм-аутов в больших проектах.
 
 ### Studio IDE
 
-- **Clearer project root in Catalog file tree**: When your dbt project is in a subdirectory, the project root is highlighted in the Catalog file tree.
+- **Более четкое обозначение корня проекта в дереве файлов Catalog**: Если проект dbt находится в подкаталоге, корень проекта выделяется в дереве файлов Catalog.
 
-- **More native rename and delete in Catalog file tree**: Rename and delete actions now use native editor behaviors when using the Catalog file tree.
+- **Более нативное переименование и удаление в дереве файлов Catalog**: При использовании дерева файлов Catalog действия переименования и удаления теперь используют встроенные механизмы редактора.
 
-- **More reliable in-browser formatting**: Formatting updates now apply directly to the active editor buffer to reduce prompts and inconsistent results.
+- **Более надежное форматирование в браузере**: Изменения форматирования теперь применяются непосредственно к буферу активного редактора, что уменьшает число запросов подтверждения и несогласованных результатов.
 
-- **Cleaner code generation workflow**: Code generation no longer creates a temporary file in your repository during generation.
+- **Упрощен процесс генерации кода**: При генерации кода в репозитории больше не создается временный файл.
 
-### dbt platform
+### Платформа dbt
 
-- **Fusion compatibility validation on environments**: Environment settings now prevent saving a Fusion dbt version with an incompatible connection and surface field level validation errors.
+- **Проверка совместимости Fusion в средах**: Настройки среды теперь не позволяют сохранить версию dbt Fusion с несовместимым подключением и отображают ошибки валидации на уровне полей.
 
-- **Smarter Fusion defaults during connection setup**: When setting up a new connection, Fusion eligible adapters now default to the latest Fusion version to reduce misconfiguration during setup.
+- **Более подходящие настройки Fusion по умолчанию при создании подключения**: При настройке нового подключения для адаптеров, поддерживающих Fusion, теперь по умолчанию выбирается последняя версия Fusion, что снижает риск неправильной настройки.
 
-- **Improved Private Link endpoint management**: Private Endpoints can be sorted by status and connections, and endpoint details now show associated connections and environments.
+- **Улучшено управление конечными точками Private Link**: Частные конечные точки можно сортировать по статусу и подключениям, а в сведениях о конечной точке теперь отображаются связанные подключения и среды.
 
-### Run Logs
+### Журналы запусков
 
-- **More reliable invocation event streaming**: Invocation event streaming is more reliable for long running jobs by deriving totals from the latest stream event identifier.
+- **Более надежная потоковая передача событий вызовов**: Потоковая передача событий вызовов стала надежнее для длительных заданий благодаря вычислению итоговых значений на основе идентификатора последнего события потока.
 
-- **Reduced Redis usage after log streams complete**: Log streaming now cleans up Redis keys after a stream completes, reducing stale keys and Redis memory pressure for high volume runs.
+- **Снижено использование Redis после завершения потоков журналов**: После завершения потока журналов соответствующие ключи Redis теперь удаляются, что уменьшает количество устаревших ключей и нагрузку на память Redis при большом числе запусков.
 
-## Fixes
+## Исправления
 
 ### dbt Copilot
 
-- **Consistent usage limit messaging in Insights and Studio IDE**: When users hit the usage limit, dbt disables Copilot and shows a clear message, including the reset date when available.
+- **Согласованные сообщения о лимитах использования в Insights и Studio IDE**: Когда пользователи достигают лимита использования, dbt отключает Copilot и показывает понятное сообщение, включая дату сброса лимита, если она доступна.
 
 ### Studio IDE
 
-- **Git status decorations registered once**: Fixed duplicate Git status decorations in the file tree that could cause visual issues and performance impact.
+- **Индикаторы статуса Git регистрируются один раз**: Исправлено дублирование индикаторов статуса Git в дереве файлов, которое могло приводить к визуальным проблемам и снижению производительности.
 
-- **Avoid automatic pull on primary branch**: Studio IDE no longer runs an automatic pull on the primary branch to reduce unexpected changes during development.
+- **Отключен автоматический pull в основной ветке**: Studio IDE больше не выполняет автоматический pull в основной ветке, что сокращает число неожиданных изменений во время разработки.
 
-- **Clearer file operation validation errors**: File operations now return structured validation errors and explicitly reject names that exceed operating system limits.
+- **Более понятные ошибки валидации файловых операций**: Файловые операции теперь возвращают структурированные ошибки валидации и явно отклоняют имена, превышающие ограничения операционной системы.
 
-- **More reliable command log refresh and finalization**: Command logs for the dbt Cloud Command Line Interface (CLI) are refreshed and finalized more reliably.
+- **Более надежное обновление и завершение журналов команд**: Журналы команд интерфейса командной строки dbt Cloud (CLI) теперь надежнее обновляются и завершаются.
 
-### Run Automation
+### Автоматизация запусков
 
-- **Correct account attribution for automatically triggered runs**: Scheduler triggered runs now include account context, improving run attribution and preventing some downstream triggers from running without proper context.
+- **Корректная привязка автоматически инициированных запусков к аккаунтам**: Запуски, инициированные планировщиком, теперь включают контекст аккаунта, что улучшает их атрибуцию и предотвращает выполнение некоторых последующих триггеров без необходимого контекста.
 
-- **Reject malformed account identifiers for exposure events**: Exposure generated events now validate that account identifiers are numeric before triggering follow on automation.
+- **Отклонение некорректных идентификаторов аккаунтов в событиях exposures**: Для событий, создаваемых exposures, перед запуском последующей автоматизации теперь проверяется, что идентификаторы аккаунтов являются числовыми.
 
-### Webhooks
+### Вебхуки
 
-- **More compatible run completion payload for canceled and errored runs**: Webhook payloads now include consistent completion and error timestamps, and canceled runs include a canceled timestamp and normalized status.
+- **Более совместимая полезная нагрузка завершения для отмененных запусков и запусков с ошибками**: Полезная нагрузка вебхуков теперь включает согласованные временные метки завершения и ошибок, а отмененные запуски включают временную метку отмены и нормализованный статус.
 
-- **Restored dual dispatch for some failure and completion triggers**: When both failure and completion triggers are configured, errored runs may generate two webhook deliveries to match legacy behavior.
+- **Восстановлена двойная отправка для некоторых триггеров ошибок и завершения**: Если настроены и триггер ошибки, и триггер завершения, запуски с ошибками могут приводить к двум отправкам вебхуков в соответствии с прежним поведением.
 
-### dbt Project Metadata
+### Метаданные проектов dbt
 
-- **Manifest Ingestion: Accept functions section in manifest.json**: Ingestion now accepts the `functions` section (for example, Snowflake user defined functions (UDF)) to prevent parse failures on newer manifest schemas.
+- **Загрузка манифеста: поддерживается раздел functions в manifest.json**: Загрузка теперь принимает раздел `functions`, например пользовательские функции Snowflake (UDF), чтобы предотвратить ошибки разбора новых схем манифеста.
 
-- **Macro Metadata: More consistent timestamps and argument comparison**: Macro metadata persistence now uses more consistent Coordinated Universal Time (UTC) timestamps and improves argument comparison to reduce noisy or incorrect macro updates.
+- **Метаданные макросов: более согласованные временные метки и сравнение аргументов**: При сохранении метаданных макросов теперь используются более согласованные временные метки всемирного координированного времени (UTC) и улучшенное сравнение аргументов, что сокращает число лишних или некорректных обновлений макросов.
 
-## Behavior change
+## Изменения поведения
 
-### dbt platform APIs
+### API платформы dbt
 
-- **Removed credential configuration fields from responses**: Profiles API responses no longer include credential configuration and extended attributes; use the appropriate credentials and configuration endpoints instead.
+- **Из ответов удалены поля конфигурации учетных данных**: Ответы Profiles API больше не включают конфигурацию учетных данных и расширенные атрибуты; вместо этого используйте соответствующие конечные точки учетных данных и конфигурации.
 
-- **Filter connections by Private Endpoint**: Account Connections list supports filtering by Private Endpoint identifier for easier management.
+- **Фильтрация подключений по частной конечной точке**: Список подключений аккаунта поддерживает фильтрацию по идентификатору частной конечной точки для упрощения управления.
 
-- **Additional ordering options**: Private Endpoints list now supports ordering by endpoint state and connection count.
+- **Дополнительные варианты сортировки**: Список частных конечных точек теперь поддерживает сортировку по состоянию конечной точки и количеству подключений.
 
-- **Private Link: Updated license permission defaults**: User licenses now include read access for Private Link resources, which may change who can view Private Link related settings.
-
-### Studio IDE
-
-- **Metric generation writes directly to active file**: Generated metrics are now written directly into the active model file instead of using an accept and reject diff flow.
-
-## February 4, 2026
-
-## New
+- **Private Link: обновлены разрешения лицензий по умолчанию**: Пользовательские лицензии теперь включают доступ на чтение ресурсов Private Link, что может изменить круг пользователей, которым доступны настройки Private Link.
 
 ### Studio IDE
 
-- **Studio IDE: Copilot link in console toolbar**: Adds a link that opens Copilot from the console toolbar. You can use Copilot to read files and list directories for better context.
+- **Генерация метрик записывает результат непосредственно в активный файл**: Сгенерированные метрики теперь записываются прямо в активный файл модели вместо процесса принятия или отклонения различий.
 
-- **Studio IDE: Copy repo-relative path command**: Adds a command to copy a file path relative to your dbt project subdirectory, making it easier to share paths in runbooks and support tickets.
+## 4 февраля 2026 г. {#february-4-2026}
 
-## Enhancements
-
-### dbt platform
-
-- **dbt platform: Fusion eligibility and compatibility indicators in setup flows**: Improves Fusion setup by showing "Fusion compatible" indicators during connection setup.
-
-- **dbt platform: Compare Changes shows partial success warnings**: When Compare Changes subqueries fail, the experience now surfaces a partial success state with expandable warning details to make troubleshooting faster.
-
-- **dbt platform: In-progress run logs preserve text selection**: Improves log usability during in-progress runs by preserving text selection while logs auto-refresh and rerender.
-
-- **dbt platform: Job completion trigger job picker search**: Adds server-side search and clearer loading and empty states to the job picker for job-completion triggers.
-
-- **dbt platform: Job artifacts content types and downloads**: Improves artifact handling for job documentation and run artifacts by strengthening HTML detection, defaulting empty paths to `index.html`, and returning clearer `Content-Type` and download filenames.
-
-- **dbt platform: Private Endpoints API listing and pagination improvements**: Improves Private Endpoints API v3 list behavior with validated query parameters, filtering, limit and offset pagination, and `connection_count` in responses.
+## Новые возможности
 
 ### Studio IDE
 
-- **Studio IDE: Format file more reliable in subdirectories**: Improves formatting reliability by consistently using the active editor content and a stable repo-relative path when invoking formatting.
+- **Studio IDE: ссылка на Copilot на панели инструментов консоли**: Добавлена ссылка для открытия Copilot с панели инструментов консоли. Copilot можно использовать для чтения файлов и просмотра списков каталогов, чтобы получить больше контекста.
 
-- **Studio IDE: Better stability for tabs and Git operations**: Reduces errors when working with non-file tabs and improves robustness around tab-close and Git checkout flows.
+- **Studio IDE: команда копирования пути относительно репозитория**: Добавлена команда для копирования пути к файлу относительно подкаталога проекта dbt, что упрощает передачу путей в инструкциях по эксплуатации и обращениях в поддержку.
 
-- **Studio IDE: Sidebar layout improvements for embedded panels**: Improves embedded panel sizing to reduce clipping and scrolling issues in the sidebar.
+## Улучшения
 
-- **Studio IDE: Fusion prompts reflect actual eligibility**: Improves Fusion banners and prompts by checking project eligibility via a Fusion status endpoint to reduce confusing prompts for ineligible projects.
+### Платформа dbt
 
-### Catalog and Discovery
+- **Платформа dbt: индикаторы доступности и совместимости Fusion в процессе настройки**: Настройка Fusion улучшена благодаря отображению индикаторов «Fusion compatible» при настройке подключения.
 
-- **Catalog: Improved cross-project lineage for dbt Mesh**: Improves cross-project lineage ("public ancestors") computation to better match expected external lineage boundaries in dbt Mesh experiences.
+- **Платформа dbt: Compare Changes показывает предупреждения о частичном успехе**: При сбоях подзапросов Compare Changes теперь отображается состояние частичного успеха с раскрываемыми сведениями о предупреждениях, что ускоряет устранение неполадок.
+
+- **Платформа dbt: журналы выполняющихся запусков сохраняют выделение текста**: Повышено удобство работы с журналами выполняющихся запусков: выделение текста сохраняется при автоматическом обновлении и перерисовке журналов.
+
+- **Платформа dbt: поиск в списке заданий для триггеров завершения задания**: В список выбора заданий для триггеров завершения добавлен серверный поиск, а также более понятные состояния загрузки и отсутствия результатов.
+
+- **Платформа dbt: типы содержимого и скачивание артефактов заданий**: Улучшена обработка артефактов документации заданий и запусков: усилено распознавание HTML, для пустых путей по умолчанию используется `index.html`, возвращаются более корректные `Content-Type` и имена скачиваемых файлов.
+
+- **Платформа dbt: улучшены получение списков и пагинация в Private Endpoints API**: Улучшено получение списков в Private Endpoints API v3: добавлены проверка параметров запроса, фильтрация, пагинация с limit и offset, а также `connection_count` в ответах.
+
+### Studio IDE
+
+- **Studio IDE: более надежное форматирование файлов в подкаталогах**: Повышена надежность форматирования благодаря последовательному использованию содержимого активного редактора и стабильного пути относительно репозитория при вызове форматирования.
+
+- **Studio IDE: повышена стабильность вкладок и операций Git**: Сокращено число ошибок при работе с нефайловыми вкладками и повышена надежность закрытия вкладок и переключения веток Git.
+
+- **Studio IDE: улучшено расположение встроенных панелей на боковой панели**: Улучшен расчет размеров встроенных панелей, что уменьшает проблемы с обрезкой содержимого и прокруткой на боковой панели.
+
+- **Studio IDE: предложения Fusion учитывают фактическую доступность**: Баннеры и предложения Fusion улучшены благодаря проверке доступности для проекта через конечную точку статуса Fusion, что сокращает число вводящих в заблуждение предложений для неподходящих проектов.
+
+### Catalog и Discovery
+
+- **Catalog: улучшены межпроектные зависимости для dbt Mesh**: Улучшено вычисление межпроектных зависимостей («публичных предков»), чтобы оно точнее соответствовало ожидаемым границам внешних зависимостей в dbt Mesh.
 
 ### Insights
 
-- **Insights: More reliable Copilot Agent requests and context handoff**: Standardizes Copilot Agent requests to the API and includes active tab content as context to improve reliability of agent runs and handoff.
+- **Insights: более надежные запросы Copilot Agent и передача контекста**: Стандартизированы запросы Copilot Agent к API, а содержимое активной вкладки включается в контекст, что повышает надежность запусков агентов и передачи контекста.
 
-## Fixes
+## Исправления
 
-### dbt platform
+### Платформа dbt
 
-- **dbt platform: Webhook form editing more resilient**: Improves webhook subscription editing reliability with asynchronous data and fixes a multiselect focus issue that could cause accidental option selection.
+- **Платформа dbt: более устойчивое редактирование форм вебхуков**: Повышена надежность редактирования подписок на вебхуки при асинхронной загрузке данных и исправлена проблема с фокусом в списке множественного выбора, которая могла приводить к случайному выбору вариантов.
 
-- **dbt platform: Run warning emails render correctly**: Fixes HTML email markup that could break rendering for run warning notifications.
+- **Платформа dbt: письма с предупреждениями о запусках отображаются корректно**: Исправлена HTML-разметка писем, которая могла нарушать отображение уведомлений с предупреждениями о запусках.
 
-- **dbt platform: Profiles URLs moved under project dashboard**: Profile create and view routes now live under `/dashboard/:accountId/projects/:projectId/profiles/...`, which may affect bookmarks and direct links.
+- **Платформа dbt: URL профилей перенесены в раздел панели проекта**: Маршруты создания и просмотра профилей теперь находятся по адресу `/dashboard/:accountId/projects/:projectId/profiles/...`, что может повлиять на закладки и прямые ссылки.
 
 ### Studio IDE
 
-- **Studio IDE: Cleaner command history list**: Removes hidden background commands (such as listing and parsing commands) from command history to reduce noise for users.
+- **Studio IDE: более упорядоченная история команд**: Скрытые фоновые команды, например команды получения списков и разбора, удалены из истории команд, чтобы уменьшить количество лишней информации.
 
-- **Studio IDE: More reliable inline compile and show output**: Improves robustness of inline compile and show output attachment, including cases with tricky quoting and newlines, reducing missing results during interactive use.
+- **Studio IDE: более надежный вывод результатов inline compile и show**: Повышена надежность прикрепления результатов inline compile и show, включая случаи со сложным экранированием кавычек и переносами строк, что сокращает число пропущенных результатов при интерактивной работе.
 
-- **Studio IDE: More reliable log downloads for dbt commands**: Fixes log download behavior so downloads correctly serve either the active `dbt.log` or the finalized compressed log.
+- **Studio IDE: более надежное скачивание журналов команд dbt**: Исправлено скачивание журналов: теперь корректно предоставляется либо активный `dbt.log`, либо окончательный сжатый журнал.
 
-- **Studio IDE: More reliable artifact uploads to Microsoft Azure Blob Storage**: Fixes edge cases where gzipped artifacts (such as manifests) could fail to upload due to upload stream handling, improving upload reliability.
+- **Studio IDE: более надежная загрузка артефактов в Microsoft Azure Blob Storage**: Исправлены пограничные случаи, когда артефакты, сжатые gzip, например манифесты, не загружались из-за обработки потока загрузки; надежность загрузки повышена.
 
-- **Studio IDE: More stable language server protocol (LSP) sessions in workers**: Reduces noisy disconnect and cleanup errors when multiple websocket connections and processes map to the same invocation, improving session stability.
+- **Studio IDE: более стабильные сеансы Language Server Protocol (LSP) в рабочих процессах**: Сокращено число лишних ошибок отключения и очистки, когда несколько websocket-подключений и процессов соответствуют одному вызову, что повышает стабильность сеансов.
 
 ### Catalog
 
-- **Catalog: Search highlighting displays correctly with multiple matches**: Fixes search result highlighting when the backend returns multiple highlights per field, improving readability of matches. Updates search highlights to display as compact badges with counts for easier scanning of results.
+- **Catalog: подсветка поиска корректно отображается при нескольких совпадениях**: Исправлена подсветка результатов поиска, когда бэкенд возвращает несколько выделенных фрагментов для одного поля, что улучшает читаемость совпадений. Подсветка поиска обновлена: теперь она отображается в виде компактных значков со счетчиками для более быстрого просмотра результатов.
 
-- **Catalog: Environment filtering more accurate in search results**: Improves environment-scoped Catalog search filtering by using merged environment identifiers and preserving warehouse-only assets via a dedicated sentinel value.
+- **Catalog: более точная фильтрация результатов поиска по среде**: Улучшена фильтрация поиска Catalog в пределах среды за счет использования объединенных идентификаторов сред и сохранения ресурсов, существующих только в хранилище данных, с помощью специального значения-маркера.
 
-- **Catalog: Public models return empty list when none exist**: Improves behavior for environments with no public models by returning an empty list instead of falling into follow-on query logic.
+- **Catalog: при отсутствии публичных моделей возвращается пустой список**: Улучшено поведение для сред без публичных моделей: возвращается пустой список вместо перехода к логике последующих запросов.
 
 ### Copilot
 
-- **Copilot: More reliable model context protocol (MCP) connections during long tool calls**: Improves keep-alive behavior so connections shut down cleanly when the client disconnects, reducing noisy failures.
+- **Copilot: более надежные подключения Model Context Protocol (MCP) при длительных вызовах инструментов**: Улучшен механизм поддержания активности соединений, чтобы они корректно закрывались при отключении клиента, что сокращает число лишних ошибок.
 
-- **Copilot: Semantic Layer tools only offered when available**: Prevents failing tool calls by hiding Semantic Layer tools when the Semantic Layer is not available for the user or environment.
+- **Copilot: инструменты Semantic Layer предлагаются только при их доступности**: Чтобы предотвратить неудачные вызовы, инструменты Semantic Layer скрываются, если Semantic Layer недоступен пользователю или среде.
 
-- **Copilot: More accurate HTTP error responses**: Improves error reporting by walking wrapped exceptions and exception groups to return the most specific status code and detail available.
+- **Copilot: более точные ответы об ошибках HTTP**: Улучшена обработка ошибок: выполняется обход обернутых исключений и групп исключений для возврата наиболее конкретного доступного кода статуса и описания.
 
-- **Copilot: Empty Tool Outputs No Longer Cause Failures**: Treats empty tool outputs as valid results (for example, "no matches") to reduce unnecessary "tool call failed" errors.
+- **Copilot: пустые результаты инструментов больше не вызывают сбои**: Пустые результаты инструментов считаются допустимыми, например «совпадений нет», что сокращает число ненужных ошибок «tool call failed».
 
-## Behavior change
+## Изменения поведения
 
-### dbt platform
+### Платформа dbt
 
-- **dbt platform: Fusion default dbt version selection more restrictive**: During connection setup, the default dbt version now only defaults to `latest-fusion` when the selected adapter is Fusion-compatible and the project and account are eligible.
+- **Платформа dbt: более строгий выбор Fusion в качестве версии dbt по умолчанию**: При настройке подключения `latest-fusion` теперь выбирается по умолчанию только в том случае, если выбранный адаптер совместим с Fusion, а проект и аккаунт соответствуют требованиям.
 
-- **dbt platform: dbt version enforcement now project-aware**: dbt version "allowed version" checks now account for `project_id` across jobs and environments, including Application Programming Interface (API)-triggered runs, improving correctness for overrides and automatic mapping to allowed equivalents when possible.
+- **Платформа dbt: контроль версии dbt теперь учитывает проект**: Проверки допустимых версий dbt теперь учитывают `project_id` для заданий и сред, включая запуски через программный интерфейс приложения (API), что повышает корректность переопределений и автоматического сопоставления с допустимыми эквивалентами, когда это возможно.
 
-- **dbt platform: Connected app refresh tokens now last 7 days**: Refresh token expiration for connected app OAuth flows increased from 8 hours to 7 days, reducing re-authorization frequency.
+- **Платформа dbt: токены обновления подключенных приложений теперь действуют 7 дней**: Срок действия токенов обновления для OAuth-процессов подключенных приложений увеличен с 8 часов до 7 дней, что снижает частоту повторной авторизации.
 
 ### Studio IDE
 
-- **Studio IDE: File stat timestamps now milliseconds**: File stat responses now return modified time and created time as integer milliseconds since epoch instead of float seconds; integrations consuming these endpoints may need to adjust.
+- **Studio IDE: временные метки файлов теперь в миллисекундах**: Ответы с информацией о файлах теперь возвращают время изменения и создания в виде целого числа миллисекунд с начала эпохи вместо дробного числа секунд; интеграциям, использующим эти конечные точки, может потребоваться адаптация.
 
-- **Studio IDE: Language Server Protocol deferral controls expanded**: The Language Server Protocol (LSP) websocket now supports `defer_env_id` to defer against a specific environment and `no_defer=true` to explicitly disable deferral.
+- **Studio IDE: расширены средства управления отсрочкой для Language Server Protocol**: Websocket Language Server Protocol (LSP) теперь поддерживает `defer_env_id` для отсрочки с использованием определенной среды и `no_defer=true` для явного отключения отсрочки.
 
-- **Studio IDE: Deferral toggle applied more consistently to Language Server Protocol connections**: When "defer to production" is turned off, the Studio Integrated Development Environment (IDE) now passes `no_defer=true` to align editor intelligence with the selected deferral behavior. (Language Server Protocol (LSP))
+- **Studio IDE: переключатель отсрочки применяется к подключениям Language Server Protocol более последовательно**: Когда параметр «defer to production» выключен, интегрированная среда разработки Studio (IDE) теперь передает `no_defer=true`, чтобы интеллектуальные функции редактора соответствовали выбранному поведению отсрочки. (Language Server Protocol (LSP))
 
 ### Catalog
 
-- **Catalog: Source freshness outdated status removed**: The freshness status value `outdated` was removed; unconfigured freshness is now handled explicitly as `unconfigured`, and sources will no longer report `outdated`.
+- **Catalog: удален статус актуальности источников outdated**: Значение статуса актуальности `outdated` удалено; ненастроенная актуальность теперь явно обозначается как `unconfigured`, а источники больше не будут возвращать статус `outdated`.
 
-- **Catalog: Rows per page selector removed from tables**: The rows-per-page selector was removed, and pagination now uses a fixed page size.
+- **Catalog: из таблиц удален выбор количества строк на странице**: Элемент выбора количества строк на странице удален; теперь пагинация использует фиксированный размер страницы.
 
-### Orchestration and Run Status
+### Оркестрация и статусы запусков
 
-- **Orchestration: Cached and stale outcome status mapping updated**: Cached nodes are now consistently surfaced as Reused with clearer reasons, and stale outcomes are treated as errors, which can change the statuses operators see in run output and telemetry.
+- **Оркестрация: обновлено сопоставление статусов кэшированных и устаревших результатов**: Кэшированные узлы теперь последовательно отображаются как Reused с более понятными причинами, а устаревшие результаты считаются ошибками, что может изменить статусы, отображаемые операторам в результатах запусков и телеметрии.
 
-## January 28, 2026
+## 28 января 2026 г. {#january-28-2026}
 
-### New
-
-- **Canvas**
-  - **New two-step "upload source" API for more resilient uploads**: Use `POST /v1/workspaces/{workspace_id}/upload-source` to create an upload, then `PATCH /v1/workspaces/{workspace_id}/upload-source/{file_id}/process` to stream processing progress (SSE).
-
-### Enhancements
-
-- **Catalog & Search**
-  - **Improved search relevance and highlighting**: Ranking now boosts results by modeling layer, and highlighting is more consistent (including support for multiple highlight snippets per field).
-- **dbt platform**
-  - **Private endpoints details page**: The dbt platform now includes a Private Endpoint details view with endpoint properties, connectivity status, and associated projects.
-  - **Fusion-aware default dbt version during setup**: Connection setup and environment creation can now default to `latest-fusion` for eligible projects.
-- **Studio IDE**
-  - **Search and replace in files**: Adds a dedicated sidebar search experience. Please contact your account manager to enable.
-  - **Autofix now includes package upgrades**: Upgrade flows can proceed from fixing deprecations into package upgrades in the same guided run.
-  - **Editor UI polish**: Fixed multiple layout/styling issues for a more consistent editor experience.
-
-### Fixes
-
-- **dbt platform**
-  - **Run logs render ANSI/structured output more reliably**: Improved rendering and cleanup of escape sequences in step logs.
-  - **More accurate source freshness status in multi-job environments**: Freshness status is preserved when a run lacks freshness results but freshness remains configured.
-  - **More robust seed artifact ingestion**: Ingestion now tolerates missing/null `schema` fields in the manifest to avoid failures.
-
-- **Studio IDE**
-  - **CLI project sync no longer fails on broken symlinks**: Sync skips missing symlink targets instead of failing the whole sync.
-  - **IDE abort is clearer when a command is missing**: Aborting a command that no longer exists returns a specific "no-command-found" response.
-  - **More robust inline command results**: Malformed inline commands no longer break result processing; `show --inline` with an empty result returns an empty preview table.
+### Новые возможности
 
 - **Canvas**
-  - **Clearer errors for duplicate uploaded-source names**: Creating an uploaded-source model with a duplicate name now returns HTTP 409 with an actionable message.
-  - **Failed uploads are now visible via file state**: Uploaded-source processing records failure state instead of deleting the file record, improving retry/resume workflows.
-  - **Invocation status streaming reliability**: The invocation status SSE endpoint now correctly awaits the status stream.
+  - **Новый двухэтапный API загрузки источников для более устойчивой загрузки**: Используйте `POST /v1/workspaces/{workspace_id}/upload-source` для создания загрузки, а затем `PATCH /v1/workspaces/{workspace_id}/upload-source/{file_id}/process` для потоковой передачи хода обработки (SSE).
 
-### Behavior changes
+### Улучшения
 
-- **Catalog & Search**
-  - **Search highlight fields deprecated and highlights shape expanded**: `AccountSearchHit.highlight` and `AccountSearchHit.matchedField` are deprecated. `AccountSearchHit.highlights` now supports multiple highlight snippets per field (arrays).
+- **Catalog и поиск**
+  - **Улучшены релевантность поиска и подсветка**: При ранжировании теперь повышается приоритет результатов с учетом слоя моделирования, а подсветка стала более согласованной, включая поддержку нескольких выделенных фрагментов для одного поля.
+- **Платформа dbt**
+  - **Страница сведений о частных конечных точках**: Платформа dbt теперь включает страницу сведений о частной конечной точке с ее свойствами, статусом подключения и связанными проектами.
+  - **Выбор версии dbt по умолчанию с учетом Fusion при настройке**: При настройке подключения и создании среды теперь может по умолчанию выбираться `latest-fusion` для подходящих проектов.
+- **Studio IDE**
+  - **Поиск и замена в файлах**: Добавлен отдельный интерфейс поиска на боковой панели. Для включения обратитесь к менеджеру вашего аккаунта.
+  - **Autofix теперь включает обновления пакетов**: Процесс обновления может переходить от исправления устаревших возможностей к обновлению пакетов в рамках одного пошагового запуска.
+  - **Доработки интерфейса редактора**: Исправлены различные проблемы расположения и оформления элементов, чтобы сделать работу с редактором более единообразной.
 
-- **dbt platform**
-  - **Deprecations**: The "Adaptive" job type is deprecated. `last_checked_at` is deprecated and no longer populated in run responses.
+### Исправления
+
+- **Платформа dbt**
+  - **Журналы запусков надежнее отображают ANSI и структурированный вывод**: Улучшены отображение и очистка управляющих последовательностей в журналах шагов.
+  - **Более точный статус актуальности источников в средах с несколькими заданиями**: Статус актуальности сохраняется, если запуск не содержит результатов проверки актуальности, но сама проверка остается настроенной.
+  - **Более устойчивая загрузка артефактов seed**: Загрузка теперь допускает отсутствующие поля `schema` или их значения null в манифесте, предотвращая сбои.
+
+- **Studio IDE**
+  - **Синхронизация проекта CLI больше не завершается сбоем из-за поврежденных символических ссылок**: Синхронизация пропускает отсутствующие цели символических ссылок вместо прерывания всего процесса.
+  - **Более понятное прерывание в IDE при отсутствии команды**: Прерывание команды, которая больше не существует, возвращает специальный ответ «no-command-found».
+  - **Более устойчивая обработка результатов inline-команд**: Некорректные inline-команды больше не нарушают обработку результатов; `show --inline` с пустым результатом возвращает пустую таблицу предварительного просмотра.
 
 - **Canvas**
-  - **Existing CSV upload SSE endpoint deprecated**: Migrate to the new two-step [upload source](/docs/platform/use-canvas#upload-data-to-canvas) flow.
+  - **Более понятные ошибки при дублировании имен загруженных источников**: Создание модели загруженного источника с дублирующимся именем теперь возвращает HTTP 409 с сообщением, помогающим устранить проблему.
+  - **Неудачные загрузки теперь видны в состоянии файла**: При обработке загруженного источника теперь сохраняется состояние ошибки вместо удаления записи файла, что улучшает повторные попытки и возобновление.
+  - **Надежность потоковой передачи статуса вызова**: Конечная точка SSE для статуса вызова теперь корректно ожидает поток статусов.
 
-## January 21, 2026
+### Изменения поведения
 
-### New
+- **Catalog и поиск**
+  - **Поля подсветки поиска объявлены устаревшими, структура highlights расширена**: `AccountSearchHit.highlight` и `AccountSearchHit.matchedField` объявлены устаревшими. `AccountSearchHit.highlights` теперь поддерживает несколько выделенных фрагментов для каждого поля в виде массивов.
 
-- **dbt platform**
-  - **Favorites are now available in Catalog**: Add resources to favorites and organize your frequently accessed resources in the Catalog navigation.
-
-- **Connectivity / private networking**
-  - **New v3 API endpoint to fetch a specific PrivateLink endpoint**: You can now retrieve individual PrivateLink endpoints by ID, enabling better automation and troubleshooting workflows.
-
-### Enhancements
-
-- **dbt platform**
-  - **Run artifacts are now searchable**: Find specific artifacts faster in run history with the new artifacts search box and improved empty states.
-  - **Webhooks editor is more stable**: The webhook form no longer resets while job options are loading, and server-generated fields now display reliably after creation.
-  - **Fusion onboarding completion card can be dismissed**: After completing the Fusion onboarding checklist, you can now dismiss the card and it will stay dismissed.
-  - **Cross-project lineage is now generally available**: Cross-project lineage is now enabled for all applicable accounts.
-
-- **Catalog & Search**
-  - **Improved Catalog search relevance and performance**: Enhanced search scoring and matching provides more accurate results, with better column matching and highlighting for large catalogs.
-  - **Search results are refreshed when column metadata changes**: Column name and description updates now automatically trigger re-indexing, ensuring search results stay current.
-  - **Search typeahead includes "View all results"**: Quickly access full search results from the typeahead dropdown with the new footer link.
-  - **Cleaner environment dropdown behavior**: The environment selector now only shows "Staging" when your account has projects with a staging environment configured.
-
-- **Studio IDE**
-  - **Clearer error messages when fetching dev credentials and defer state**: IDE-related endpoints now return more specific and helpful error messages for common configuration issues and timeouts.
-  - **Studio console and command log viewer improvements**: Enhanced command log viewer with improved download capabilities and more consistent error log viewing.
-
-### Fixes
-
-- **AI-assisted workflows**
-  - **Enhancement:** [dbt <Constant name="copilot" />](/docs/platform/wizard-platform) adds missing column descriptions more accurately. <Constant name="copilot" /> generated documentation now correctly detects column names across various `schema.yml` files, adds only missing descriptions, and preserves existing ones.
-
-- **Catalog & lineage**
-  - **Fixes missing auto-generated exposures in model lineage**: Auto-generated exposures now appear correctly in lineage views.
-  - **Catalog search no longer errors when a warehouse connection name is missing**: Search now handles missing connection names gracefully without causing errors.
-  - **Improved security: malformed identity headers are rejected cleanly**: Requests with invalid authentication tokens now fail safely with clear error messages.
-
-- **Studio IDE**
-  - **Command status is more reliable when Cloud CLI invocation data expires**: Commands that can't be fetched are now properly marked as failed instead of staying in a "running" state.
-
-- **APIs**
-  - **Jobs API deferral validation is stricter and clearer**: Job deferral settings are now validated to ensure the deferring job and environment exist within the same account, with improved error messages.
-
-### Behavior changes
-
-- **dbt platform**
-  - **Account Insights default page size changed to 5 rows**: Tables in Account Insights now display 5 rows per page by default (previously 10).
-
-- **Webhooks**
-  - **Webhook timestamps are now consistently UTC RFC3339 with `Z`**: All webhook timestamp fields (`run_started_at`, `run_finished_at`, `timestamp`) now use UTC with `Z` suffix and higher precision. Missing/invalid timestamps emit `1970-01-01T00:00:00Z` instead of empty strings. Update webhook consumers if needed.
-  - **Webhook `run_status` string changed from `Error` to `Errored`**: Update webhook consumers that parse this status value strictly.
-
-- **Runs / ingestion**
-  - **Very large exposure sets are now limited during ingestion**: Projects with more than 5,000 exposures will skip exposure ingestion to prevent performance issues. All other artifact ingestion continues normally. Contact support if you need to increase this limit.
-
-## January 14, 2026
-
-### New
-
-- **dbt platform**
-  - **Fusion migration readiness endpoint**: Added an API endpoint to determine whether a project is eligible for Fusion migration.
-
-### Enhancements
-
-- **Copilot and AI**
-  - **More resilient agent runs**: Agent tool execution errors now return structured responses instead of failing the entire run.
-  - **Better project context retrieval**: Agent toolsets include additional retrieval and search capabilities for more relevant responses.
-  - **Improved Azure OpenAI verification**: Azure OpenAI connection verification now uses GPT-5-compatible parameters for GPT-5 deployments.
-  - **BYOK for Azure OpenAI**: Added support for Azure Foundry URLs with automatic endpoint parsing to reduce setup friction.
-
-- **Insights and Catalog**
-  - **Semantic Layer querying now generally available (GA)**: Build SQL queries against the Semantic Layer without writing SQL code.
-  - **Improved search relevance**: Search scoring prioritizes exact and multi-term matches more strongly, with better highlighting and column-description matching.
-  - **Catalog UX improvements**: Search labels are more consistent, and the embedded lineage view loads more responsively.
-
-- **Studio IDE**
-  - **Unified Studio IDE**: Studio now loads a single unified IDE package.
-  - **Defer-to-production honors `defer-env-id` override**: Studio now respects `dbt-cloud.defer-env-id` settings when Cloud CLI runtime is supported.
-  - **Improved log exporting**: Download and copy behavior for command logs is more consistent, including debug logs.
-  - **Enhanced multi-edit support**: The IDE now supports multiple explicit edits in one request with safer validation.
-  - **Clearer Cloud CLI session errors**: Session creation returns clearer error messages and guidance for setup issues.
-
-- **dbt platform**
-  - **Settings detail pages in resizable drawer**: Settings detail experiences now use an improved drawer-based UI.
-  - **More resilient profile creation**: Profile creation now handles dependencies and failures more gracefully.
-  - **Enhanced logging limits for in-progress runs**: Logs for in-progress runs are also limited by memory usage, in addition to the existing 1,000-line limit.
-
-### Fixes
-
-- **dbt platform**
-  - **Profiles API clearing extended attributes**: The Profiles API now allows unsetting extended attributes by setting `extended_attributes_id` to null.
-  - **Recently viewed more reliable**: Recently viewed entries now update atomically and retain the 5 most recent items.
-  - **Run log tailing improvements**: Debug logs for completed runs now consistently fetch only the tail of the log.
-
-- **Studio IDE**
-  - **More reliable `show` and `compile`**: CLI flags to disable caching are now positioned correctly to avoid parsing issues.
-  - **Canvas preview improvements**: Fixed argument ordering so `--no-defer` is interpreted consistently.
-
-### Behavior changes
-
-- **dbt platform**
-  - **dbt v1.7 end-of-life**: dbt v1.7 is now labeled as end-of-life in version lifecycle messaging.
-
-## January 7, 2026
-
-No changes of note this week.
-
-## December 24, 2025
-
-### New
-
-- **AI Codegen**
-  - **File-aware LangGraph agents**: Analysts can now drop `@path` references in the bundled CLI to stream local files into `/private/v1/agents/run`, which are auto-rendered as text inside the run so copilots have the exact config or SQL snippet you referenced.
-
-- **dbt platform**
-  - **Slack Copilot feedback loops**: Copilot replies now carry inline "Did that answer your question?" buttons, so you can rate answers without leaving Slack.
-
-- **Codex workflows**
-  - **Databricks cost tracking for Model Cost Over Time**: A Databricks history provider and DBU-based cost query now surface daily model cost alongside Snowflake coverage, so Databricks tenants get unified FinOps reporting.
+- **Платформа dbt**
+  - **Устаревшие возможности**: Тип задания «Adaptive» объявлен устаревшим. `last_checked_at` объявлен устаревшим и больше не заполняется в ответах о запусках.
 
 - **Canvas**
-  - **CSV upload GA**: The CSV upload endpoint is now generally available.
+  - **Существующая конечная точка SSE для загрузки CSV объявлена устаревшей**: Перейдите на новый двухэтапный процесс [загрузки источника](/docs/platform/use-canvas#upload-data-to-canvas).
 
-### Enhancements
+## 21 января 2026 г. {#january-21-2026}
 
-- **Cloud artifacts**
-  - **Better similar-model suggestions**: Attachment workflows now only recommend meaningfully related models.
+### Новые возможности
 
-- **dbt platform**
-  - **Unified SSO & SCIM admin**: Settings consolidate SSO + SCIM, add an empty state for auto-generated slugs, and render read-only login URLs so admins can start configuration without touching slug fields.
-  - **SCIM token management polish**: Token tables gain fixed pagination, inline search, consistent iconography, and clearer deletion warnings to avoid accidental cuts to live integrations.
-  - **Twice the per-environment custom variables**: The v3 API/UI now allow up to 20 scoped environment variables before enforcing limits, giving larger projects more room for secrets.
+- **Платформа dbt**
+  - **Избранное теперь доступно в Catalog**: Добавляйте ресурсы в избранное и упорядочивайте часто используемые ресурсы в навигации Catalog.
+
+- **Подключения / частные сети**
+  - **Новая конечная точка API v3 для получения отдельной конечной точки PrivateLink**: Теперь можно получать отдельные конечные точки PrivateLink по идентификатору, что расширяет возможности автоматизации и устранения неполадок.
+
+### Улучшения
+
+- **Платформа dbt**
+  - **Теперь доступен поиск артефактов запусков**: Быстрее находите нужные артефакты в истории запусков благодаря новой строке поиска артефактов и улучшенному отображению пустых состояний.
+  - **Редактор вебхуков стал стабильнее**: Форма вебхука больше не сбрасывается при загрузке вариантов заданий, а поля, сформированные сервером, надежно отображаются после создания.
+  - **Карточку завершения начальной настройки Fusion можно скрыть**: После выполнения контрольного списка начальной настройки Fusion карточку теперь можно скрыть, и она останется скрытой.
+  - **Межпроектные зависимости теперь общедоступны**: Отображение межпроектных зависимостей теперь включено для всех подходящих аккаунтов.
+
+- **Catalog и поиск**
+  - **Улучшены релевантность и производительность поиска Catalog**: Улучшенные оценка и сопоставление результатов обеспечивают более точный поиск, включая более качественное сопоставление и подсветку столбцов в больших каталогах.
+  - **Результаты поиска обновляются при изменении метаданных столбцов**: Изменения имен и описаний столбцов теперь автоматически запускают повторную индексацию, поддерживая актуальность результатов поиска.
+  - **В подсказках поиска появилась ссылка «View all results»**: Быстро переходите к полным результатам поиска из раскрывающегося списка подсказок с помощью новой ссылки внизу списка.
+  - **Улучшено поведение раскрывающегося списка сред**: В селекторе сред теперь отображается «Staging» только в том случае, если в аккаунте есть проекты с настроенной staging-средой.
+
+- **Studio IDE**
+  - **Более понятные сообщения об ошибках получения учетных данных разработки и состояния отсрочки**: Конечные точки IDE теперь возвращают более конкретные и полезные сообщения об ошибках для распространенных проблем конфигурации и тайм-аутов.
+  - **Улучшены консоль Studio и просмотр журналов команд**: Средство просмотра журналов команд получило улучшенные возможности скачивания и более согласованное отображение журналов ошибок.
+
+### Исправления
+
+- **Рабочие процессы с помощью ИИ**
+  - **Улучшение:** [dbt <Constant name="copilot" />](/docs/platform/wizard-platform) точнее добавляет отсутствующие описания столбцов. При генерации документации <Constant name="copilot" /> теперь корректно определяет имена столбцов в различных файлах `schema.yml`, добавляет только отсутствующие описания и сохраняет существующие.
+
+- **Catalog и граф зависимостей**
+  - **Исправлено отсутствие автоматически созданных exposures в графе зависимостей моделей**: Автоматически созданные exposures теперь корректно отображаются в представлениях графа зависимостей.
+  - **Поиск Catalog больше не вызывает ошибок при отсутствии имени подключения к хранилищу данных**: Поиск теперь корректно обрабатывает отсутствие имен подключений без возникновения ошибок.
+  - **Повышена безопасность: некорректные заголовки идентификации корректно отклоняются**: Запросы с недопустимыми токенами аутентификации теперь безопасно отклоняются с понятными сообщениями об ошибках.
+
+- **Studio IDE**
+  - **Более надежный статус команды при истечении срока хранения данных вызова Cloud CLI**: Команды, данные которых невозможно получить, теперь корректно помечаются как неудачные вместо сохранения статуса «выполняется».
+
+- **API**
+  - **Более строгая и понятная валидация отсрочки в Jobs API**: Настройки отсрочки задания теперь проверяются, чтобы убедиться, что задание, использующее отсрочку, и среда находятся в одном аккаунте; сообщения об ошибках также улучшены.
+
+### Изменения поведения
+
+- **Платформа dbt**
+  - **Размер страницы по умолчанию в Account Insights изменен на 5 строк**: Таблицы в Account Insights теперь по умолчанию отображают 5 строк на странице вместо 10.
+
+- **Вебхуки**
+  - **Временные метки вебхуков теперь единообразно используют UTC RFC3339 с `Z`**: Все поля временных меток вебхуков (`run_started_at`, `run_finished_at`, `timestamp`) теперь используют UTC с суффиксом `Z` и повышенной точностью. При отсутствии или недопустимости временных меток возвращается `1970-01-01T00:00:00Z` вместо пустых строк. При необходимости обновите обработчики вебхуков.
+  - **Строковое значение `run_status` вебхука изменено с `Error` на `Errored`**: Обновите обработчики вебхуков, которые строго разбирают это значение статуса.
+
+- **Запуски / загрузка**
+  - **При загрузке теперь ограничиваются очень большие наборы exposures**: В проектах с более чем 5 000 exposures их загрузка пропускается для предотвращения проблем с производительностью. Загрузка всех остальных артефактов продолжается в обычном режиме. Если необходимо увеличить этот лимит, обратитесь в службу поддержки.
+
+## 14 января 2026 г. {#january-14-2026}
+
+### Новые возможности
+
+- **Платформа dbt**
+  - **Конечная точка проверки готовности к миграции на Fusion**: Добавлена конечная точка API для определения возможности миграции проекта на Fusion.
+
+### Улучшения
+
+- **Copilot и ИИ**
+  - **Более устойчивые запуски агентов**: Ошибки выполнения инструментов агентов теперь возвращают структурированные ответы вместо прерывания всего запуска.
+  - **Улучшено получение контекста проекта**: Наборы инструментов агентов включают дополнительные возможности получения данных и поиска для более релевантных ответов.
+  - **Улучшена проверка Azure OpenAI**: При проверке подключения Azure OpenAI теперь используются параметры, совместимые с GPT-5, для развертываний GPT-5.
+  - **BYOK для Azure OpenAI**: Добавлена поддержка URL Azure Foundry с автоматическим разбором конечных точек для упрощения настройки.
+
+- **Insights и Catalog**
+  - **Запросы к Semantic Layer теперь общедоступны (GA)**: Создавайте SQL-запросы к Semantic Layer без написания SQL-кода.
+  - **Улучшена релевантность поиска**: Оценка результатов поиска сильнее отдает приоритет точным совпадениям и совпадениям по нескольким терминам; улучшены подсветка и сопоставление с описаниями столбцов.
+  - **Улучшено удобство работы с Catalog**: Метки поиска стали более единообразными, а встроенное представление графа зависимостей загружается быстрее.
+
+- **Studio IDE**
+  - **Единая Studio IDE**: Studio теперь загружает один унифицированный пакет IDE.
+  - **Отсрочка на production учитывает переопределение `defer-env-id`**: Studio теперь учитывает настройки `dbt-cloud.defer-env-id`, когда поддерживается среда выполнения Cloud CLI.
+  - **Улучшен экспорт журналов**: Скачивание и копирование журналов команд стало более согласованным, в том числе для отладочных журналов.
+  - **Расширена поддержка нескольких правок**: IDE теперь поддерживает несколько явно заданных правок в одном запросе с более безопасной валидацией.
+  - **Более понятные ошибки сеансов Cloud CLI**: При создании сеанса возвращаются более понятные сообщения об ошибках и рекомендации по устранению проблем настройки.
+
+- **Платформа dbt**
+  - **Страницы сведений о настройках в панели изменяемого размера**: Для отображения сведений о настройках теперь используется улучшенный интерфейс выдвижной панели.
+  - **Более устойчивое создание профилей**: Создание профилей теперь корректнее обрабатывает зависимости и сбои.
+  - **Расширены ограничения журналов для выполняющихся запусков**: Помимо существующего ограничения в 1 000 строк, журналы выполняющихся запусков теперь также ограничиваются по использованию памяти.
+
+### Исправления
+
+- **Платформа dbt**
+  - **Очистка расширенных атрибутов в Profiles API**: Profiles API теперь позволяет удалять расширенные атрибуты, устанавливая `extended_attributes_id` в null.
+  - **Более надежный список недавно просмотренного**: Записи недавно просмотренных элементов теперь обновляются атомарно, сохраняя 5 последних элементов.
+  - **Улучшено получение конца журнала запуска**: Для отладочных журналов завершенных запусков теперь последовательно загружается только конец журнала.
+
+- **Studio IDE**
+  - **Более надежные `show` и `compile`**: Флаги CLI для отключения кэширования теперь размещаются корректно, что позволяет избежать проблем разбора.
+  - **Улучшен предварительный просмотр Canvas**: Исправлен порядок аргументов, чтобы `--no-defer` интерпретировался корректно.
+
+### Изменения поведения
+
+- **Платформа dbt**
+  - **Завершение поддержки dbt v1.7**: В сообщениях о жизненном цикле версий dbt v1.7 теперь обозначается как версия с завершенной поддержкой.
+
+## 7 января 2026 г. {#january-7-2026}
+
+На этой неделе значимых изменений нет.
+
+## 24 декабря 2025 г. {#december-24-2025}
+
+### Новые возможности
+
+- **Генерация кода с помощью ИИ**
+  - **Агенты LangGraph с поддержкой файлов**: Аналитики теперь могут добавлять ссылки `@path` в поставляемом CLI для потоковой передачи локальных файлов в `/private/v1/agents/run`. Файлы автоматически отображаются как текст внутри запуска, чтобы помощники получали именно ту конфигурацию или фрагмент SQL, на которые вы сослались.
+
+- **Платформа dbt**
+  - **Обратная связь для Slack Copilot**: Ответы Copilot теперь содержат встроенные кнопки «Did that answer your question?», позволяющие оценивать ответы, не покидая Slack.
+
+- **Рабочие процессы Codex**
+  - **Отслеживание затрат Databricks в Model Cost Over Time**: Провайдер истории Databricks и запрос затрат на основе DBU теперь показывают ежедневную стоимость моделей наряду с поддержкой Snowflake, обеспечивая пользователям Databricks единую отчетность FinOps.
 
 - **Canvas**
-  - **Dialect-aware projection SQL**: SELECT * RENAME/EXCEPT support now respects each warehouse's syntax using schema metadata, so SQL previews and column metadata stay accurate across Snowflake, Databricks, BigQuery, and Redshift.
+  - **Загрузка CSV стала общедоступной**: Конечная точка загрузки CSV теперь общедоступна.
 
-### Fixes
+### Улучшения
 
-- **dbt platform**
-  - **Webhook editor keeps job selections**: Default values are cached after the first render and stop resetting once the user edits the form, eliminating accidental job-list clearing while tabbing through fields.
+- **Облачные артефакты**
+  - **Улучшены рекомендации похожих моделей**: При прикреплении теперь рекомендуются только действительно связанные модели.
+
+- **Платформа dbt**
+  - **Единое администрирование SSO и SCIM**: Настройки объединяют SSO и SCIM, добавляют пустое состояние для автоматически создаваемых slug и отображают URL входа только для чтения, чтобы администраторы могли начать настройку без изменения полей slug.
+  - **Доработки управления токенами SCIM**: В таблицах токенов появились пагинация с фиксированным размером страницы, встроенный поиск, единообразные значки и более понятные предупреждения об удалении, помогающие избежать случайного отключения действующих интеграций.
+  - **Вдвое больше пользовательских переменных на среду**: API v3 и интерфейс теперь допускают до 20 переменных окружения с ограниченной областью действия, предоставляя большим проектам больше места для секретов.
+
+- **Canvas**
+  - **SQL проекций с учетом диалекта**: Поддержка SELECT * RENAME/EXCEPT теперь учитывает синтаксис каждого хранилища данных с помощью метаданных схемы, поэтому предварительный просмотр SQL и метаданные столбцов остаются точными для Snowflake, Databricks, BigQuery и Redshift.
+
+### Исправления
+
+- **Платформа dbt**
+  - **Редактор вебхуков сохраняет выбранные задания**: Значения по умолчанию кэшируются после первой отрисовки и перестают сбрасываться после редактирования формы пользователем, что устраняет случайную очистку списка заданий при переходе между полями клавишей Tab.
 
 - **Codex GraphQL**
-  - **Exposure parents mirror the manifest**: `parentsModels` and `parentsSources` now derive from the manifest's `parents` list, so exposures with mixed upstreams display complete lineage in both the GraphQL API and UI.
+  - **Родительские элементы exposures соответствуют манифесту**: `parentsModels` и `parentsSources` теперь формируются из списка `parents` манифеста, поэтому exposures со смешанными вышестоящими зависимостями отображают полный граф зависимостей как в GraphQL API, так и в интерфейсе.
 
-### Behavior changes
+### Изменения поведения
 
-- **dbt platform**
-  - **Legacy Cost Management UI retired**: All cost management pages and hooks were removed, and platform metadata credentials now only expose catalog ingestion and Cost Insights toggles, eliminating dead-end controls.
+- **Платформа dbt**
+  - **Устаревший интерфейс Cost Management выведен из эксплуатации**: Все страницы и хуки управления затратами удалены, а учетные данные метаданных платформы теперь предоставляют только переключатели загрузки каталога и Cost Insights, устраняя неработающие элементы управления.
 
-## December 17, 2025
+## 17 декабря 2025 г. {#december-17-2025}
 
-### New
+### Новые возможности
 
-- **dbt platform**
-  - **Feature licensing service**: A new `/accounts/<id>/feature-licenses` endpoint issues short-lived JWTs that encode entitled features, and service/PAT authentication now checks that a caller holds an active license on the target account before any Fusion-enabled workflow runs.
-  - **Databricks platform metadata credentials**: Databricks warehouses can register platform metadata credentials (token plus optional catalog), enabling catalog ingestion, metadata sharing, and Cost Insights pipelines without custom adapters.
+- **Платформа dbt**
+  - **Сервис лицензирования возможностей**: Новая конечная точка `/accounts/<id>/feature-licenses` выдает краткосрочные JWT с информацией о доступных возможностях, а аутентификация сервисов и PAT теперь проверяет наличие у вызывающей стороны активной лицензии в целевом аккаунте перед запуском любого рабочего процесса с Fusion.
+  - **Учетные данные метаданных платформы для Databricks**: Хранилища Databricks могут регистрировать учетные данные метаданных платформы — токен и необязательный каталог, — обеспечивая загрузку каталога, обмен метаданными и конвейеры Cost Insights без пользовательских адаптеров.
 
-### Enhancements
+### Улучшения
 
-- **dbt platform**
-  - **Large list pagination**: Settings's Projects and Credentials now paginate after 25 rows (with search boxes and skeleton states), keeping navigation responsive for large deployments.
+- **Платформа dbt**
+  - **Пагинация больших списков**: В разделах Projects и Credentials настроек теперь используется пагинация по 25 строк с полями поиска и индикаторами-заглушками загрузки, что сохраняет отзывчивость навигации в крупных развертываниях.
 - **Metadata Explorer**
-  - **Model context & lineage polish**: Model panels now show materialization type, lineage renders metadata strips only when content exists, and upstream public-model columns load automatically for better cross-project visibility.
-  - **Freshness clarity & Studio navigation**: Source tiles respect the `meta5161ExpiredUnconfiguredSources` flag (showing warn/error thresholds) and "Open in IDE" links now point at `/studio/{accountId}/projects/{projectId}` to drop users directly into dbt Studio.
+  - **Доработки контекста моделей и графа зависимостей**: Панели моделей теперь показывают тип материализации, полосы метаданных в графе зависимостей отображаются только при наличии содержимого, а столбцы вышестоящих публичных моделей загружаются автоматически для лучшей видимости межпроектных связей.
+  - **Более понятная актуальность и навигация в Studio**: Карточки источников учитывают флаг `meta5161ExpiredUnconfiguredSources`, отображая пороги предупреждений и ошибок, а ссылки «Open in IDE» теперь ведут на `/studio/{accountId}/projects/{projectId}`, открывая пользователям непосредственно dbt Studio.
 
-- **Insights UI**
-  - **Copilot guardrails**: The Copilot listener now hydrates builder tabs only when a semantic-layer payload arrives, preventing plain-SQL replies from overwriting editor state.
+- **Интерфейс Insights**
+  - **Защитные механизмы Copilot**: Обработчик Copilot теперь заполняет вкладки конструктора только при получении полезной нагрузки Semantic Layer, не позволяя ответам с обычным SQL перезаписывать состояние редактора.
 - **dbt CLI**
-  - **Improved monorepo support for file sync and the IDE**:
-    - File sync now anchors itself to the invocation directory, making monorepo structures behave more predictably.
-    - Nested `dependencies.yml` files correctly trigger dependency installs.
-    - The IDE's LSP and file sync now recognize dbt subdirectories properly.
-    - Exclusion lists remain accurate even in multi-project repositories.
-- **Notifications system**
-  - **Webhook auditability**: Outbound calls now persist the exact JSON body in webhook history, making allowlisting and troubleshooting easier.
+  - **Улучшена поддержка монорепозиториев при синхронизации файлов и работе с IDE**:
+    - Синхронизация файлов теперь привязана к каталогу вызова, что делает поведение структур монорепозиториев более предсказуемым.
+    - Вложенные файлы `dependencies.yml` корректно запускают установку зависимостей.
+    - LSP и синхронизация файлов IDE теперь правильно распознают подкаталоги dbt.
+    - Списки исключений остаются корректными даже в репозиториях с несколькими проектами.
+- **Система уведомлений**
+  - **Аудит вебхуков**: Для исходящих вызовов теперь сохраняется точное тело JSON в истории вебхуков, что упрощает настройку списков разрешений и устранение неполадок.
 
 - **Studio**
-  - **Git sidebar & file refresh parity**: The file tree now mirrors Cloud VCS statuses (including conflicts) and automatically invalidates caches after `dbt deps`/`dbt clean`, so new or removed files appear without a reload.
-  - **Log viewers & Autofix UX**: Command and interactive query logs adopt the new accordion-based viewer, and Autofix sessions in Fusion treat plain `parse` commands as the trigger for deprecation summaries, keeping remediation flows consistent.
+  - **Согласованность боковой панели Git и обновления файлов**: Дерево файлов теперь отражает статусы Cloud VCS, включая конфликты, и автоматически сбрасывает кэши после `dbt deps`/`dbt clean`, поэтому новые или удаленные файлы отображаются без перезагрузки.
+  - **Просмотр журналов и удобство Autofix**: Журналы команд и интерактивных запросов используют новое средство просмотра с раскрывающимися секциями, а сеансы Autofix в Fusion рассматривают обычные команды `parse` как триггер сводок об устаревших возможностях, сохраняя согласованность процессов исправления.
 
-### Fixes
+### Исправления
 
-- **dbt platform**
-  - **Environment variable editor stability**: Editing one variable no longer backfills blank cells with previously edited values, preventing accidental overrides.
-  - **Cost optimization indicator accuracy**: Job pages once again display "Cost optimization features" whenever Fusion actually runs (and gating conditions are met), so users see the right coverage status regardless of feature-flag permutations.
+- **Платформа dbt**
+  - **Стабильность редактора переменных окружения**: Редактирование одной переменной больше не заполняет пустые ячейки ранее измененными значениями, предотвращая случайные переопределения.
+  - **Точность индикатора оптимизации затрат**: Страницы заданий снова отображают «Cost optimization features», когда Fusion действительно выполняется и соблюдены условия доступности, поэтому пользователи видят корректный статус охвата независимо от сочетания флагов функциональности.
 
-### Behavior changes
+### Изменения поведения
 
-- **dbt platform**
-  - **Stronger tenant identity enforcement**: Service/PAT calls without an active license now fail authentication, Slack Copilot sessions build a scoped identity JWT for the invoking user, and SSO providers enforce auto-generated slugs (draft configs can't be targeted), reducing misconfiguration risk.
+- **Платформа dbt**
+  - **Усилен контроль идентификации арендаторов**: Вызовы сервисов и PAT без активной лицензии теперь не проходят аутентификацию, сеансы Slack Copilot создают JWT идентификации с ограниченной областью действия для вызывающего пользователя, а провайдеры SSO требуют автоматически созданные slug — черновые конфигурации нельзя использовать как целевые, — что снижает риск ошибок настройки.
 
 - **dbt CLI**
-  - **User-isolated invocation history**: Every invocation lookup validates the caller's user ID, preventing admins from accidentally reading another developer's runs when multiple accounts share a CLI server.
-- **IDE server**
-  - **Enhanced security for support-assisted sessions:** Support impersonation sessions now restrict the execution of `show`, `run`, `build`, and `test` commands. Artifacts generated by `dbt show` are also short-lived and will automatically expire after 15 minutes to limit unintended data retention.
+  - **История вызовов изолирована по пользователям**: При каждом поиске вызова проверяется идентификатор вызывающего пользователя, что предотвращает случайное чтение администраторами запусков другого разработчика, когда несколько аккаунтов используют один сервер CLI.
+- **Сервер IDE**
+  - **Повышена безопасность сеансов с участием службы поддержки:** В сеансах входа от имени пользователя для службы поддержки теперь ограничено выполнение команд `show`, `run`, `build` и `test`. Артефакты, созданные `dbt show`, также имеют короткий срок хранения и автоматически удаляются через 15 минут, чтобы ограничить непреднамеренное хранение данных.
 
-- **dbt Orchestration**
-  - **Fusion compare support & new dependency**: Fusion tracks now treat `dbt compare` as a supported command (no more target-path hacks).
+- **Оркестрация dbt**
+  - **Поддержка compare в Fusion и новая зависимость**: Ветки Fusion теперь считают `dbt compare` поддерживаемой командой — обходные решения с target-path больше не нужны.
 
-## December 10, 2025
+## 10 декабря 2025 г. {#december-10-2025}
 
-### Enhancements
+### Улучшения
 
-- **AI codegen API**: Streaming middleware enforces request-scoped instrumentation across every AI endpoint, offload warehouse calls via threads, and expose human-readable tool names while gating keyword search behind feature flag for approved tenants.
+- **API генерации кода с помощью ИИ**: Промежуточный слой потоковой передачи обеспечивает инструментирование в рамках запроса для каждой конечной точки ИИ, переносит вызовы хранилища данных в отдельные потоки и предоставляет понятные названия инструментов; поиск по ключевым словам доступен только одобренным арендаторам через флаг функциональности.
 
-- **dbt platform**
-  - **Operations clarity**: Environment profile drawers link directly to connection settings and treat Snowflake fields as optional, while Compare Changes and run-step drawers now explain whether steps failed or were skipped so troubleshooting is faster.
-  - **Collaboration & notifications**: Slack Copilot mentions are now more reliable, with hardened workers, support for CSV attachments, and improved logging. Webhook channels now accept longer URLs, handle "warning-only" subscriptions correctly, and automatically clean up corrupted job IDs.
-  - **Profile & credential management**: Environment APIs accept `secondary_profile_ids`, run acquisition favors profile-backed credentials, and whoami/auth metrics are scrubbed so cross-platform profiles stay in sync.
+- **Платформа dbt**
+  - **Более понятные операции**: Выдвижные панели профилей сред содержат прямые ссылки на настройки подключения и считают поля Snowflake необязательными, а панели Compare Changes и шагов запуска теперь объясняют, завершились ли шаги ошибкой или были пропущены, ускоряя устранение неполадок.
+  - **Совместная работа и уведомления**: Упоминания Slack Copilot стали надежнее благодаря усиленным рабочим процессам, поддержке CSV-вложений и улучшенному журналированию. Каналы вебхуков теперь принимают более длинные URL, корректно обрабатывают подписки только на предупреждения и автоматически удаляют поврежденные идентификаторы заданий.
+  - **Управление профилями и учетными данными**: API сред принимают `secondary_profile_ids`, при получении ресурсов для запуска предпочтение отдается учетным данным из профилей, а метрики whoami/auth очищаются, чтобы межплатформенные профили оставались синхронизированными.
 
-- **dbt CLI server**: Improved stability and performance for large projects.
-- **Studio IDE**: For dbt Fusion logging, node start and end times will now properly be displayed in command output.
-- **Studio IDE**: Copilot Chat automatically appears anywhere AI entitlements exist, preview runs auto-cancel when nodes change, and keyboard shortcuts respect native keymaps with clear UI labels.
-- **Studio IDE**: Tab view, console pane, and command drawer have been redesigned to enhance efficiency and multitasking.
+- **Сервер dbt CLI**: Повышены стабильность и производительность для больших проектов.
+- **Studio IDE**: При журналировании dbt Fusion время начала и завершения узлов теперь корректно отображается в выводе команд.
+- **Studio IDE**: Чат Copilot автоматически появляется везде, где есть права на ИИ, предварительные запуски автоматически отменяются при изменении узлов, а сочетания клавиш учитывают нативные раскладки и имеют понятные обозначения в интерфейсе.
+- **Studio IDE**: Представление вкладок, панель консоли и выдвижная панель команд переработаны для повышения эффективности и удобства многозадачной работы.
 
-### Fixes
+### Исправления
 
-- **Studio IDE server**: Branch creation now returns explicit feedback for bad branch names/SHAs and detects unauthorized Git errors earlier, making automation failures actionable.
+- **Сервер Studio IDE**: При создании ветки теперь возвращаются явные сообщения о некорректных именах веток или SHA, а ошибки Git, связанные с отсутствием авторизации, обнаруживаются раньше, что помогает устранять сбои автоматизации.
 
-## December 3, 2025
+## 3 декабря 2025 г. {#december-3-2025}
 
-### New
+### Новые возможности
 
-- **dbt platform**
-  - **Autofix deprecation warnings**: When deprecations are detected, you now see "Autofix deprecation warnings."
-  - **Autofix Packages detailed results**: After running Autofix, you see a results panel with upgraded packages (with links), packages left unchanged and why, and quick access to `packages.yml` to help assess Fusion readiness and next steps.
+- **Платформа dbt**
+  - **Автоматическое исправление предупреждений об устаревших возможностях**: При обнаружении устаревших возможностей теперь отображается «Autofix deprecation warnings».
+  - **Подробные результаты Autofix Packages**: После выполнения Autofix отображается панель результатов с обновленными пакетами и ссылками на них, пакетами, оставленными без изменений, с указанием причин, а также быстрым доступом к `packages.yml` для оценки готовности к Fusion и определения следующих шагов.
 
-### Enhancements
+### Улучшения
 
-- **dbt platform**
-  - **Code Quality tab improvements**
-    - Clearer lint/format actions (SQLFluff, Prettier), better empty states, visible Config button when applicable, and simplified logs retrieval.
-    - Applies to SQL, JSON, YAML, and Markdown workflows.
-  - **Editor experience**
-    - Upgraded editor for stability.
-    - Improved container sizing/overflow.
-    - "Save" overlay only appears when tabs are open.
-    - Minor action‑bar refinements.
+- **Платформа dbt**
+  - **Улучшения вкладки Code Quality**
+    - Более понятные действия проверки и форматирования (SQLFluff, Prettier), улучшенные пустые состояния, видимая кнопка Config в соответствующих случаях и упрощенное получение журналов.
+    - Применяется к рабочим процессам с SQL, JSON, YAML и Markdown.
+  - **Удобство работы с редактором**
+    - Редактор обновлен для повышения стабильности.
+    - Улучшены размеры контейнеров и обработка переполнения.
+    - Наложение «Save» появляется только при наличии открытых вкладок.
+    - Небольшие доработки панели действий.
 
-### Fixes
+### Исправления
 
-- **dbt platform lineage and command pane stability**: Reliability improved by aligning with updated IDE and VS Code command APIs; eliminates intermittent skips.
+- **Стабильность графа зависимостей и панели команд платформы dbt**: Надежность повышена благодаря согласованию с обновленными API команд IDE и VS Code; устранены периодические пропуски.
 
-### Behavior changes
+### Изменения поведения
 
-- **dbt platform:** dbt Core "versionless" renamed to "latest" so it's consistent and clear across tenants.
+- **Платформа dbt:** dbt Core «versionless» переименован в «latest» для единообразия и ясности у всех арендаторов.

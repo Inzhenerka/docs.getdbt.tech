@@ -1,38 +1,38 @@
 ---
-title: "Upgrading to v1.13"
+title: "Обновление до v1.13"
 id: upgrading-to-v1.13
-description: New features and changes in dbt v1.13
+description: Новые возможности и изменения в dbt v1.13
 displayed_sidebar: "docs"
 availability:
   engine: v1
   access: free
 ---
 
-# Upgrading to v1.13 <Lifecycle status="beta" />
+# Обновление до v1.13 <Lifecycle status="beta" />
 
-## Resources
-- [dbt v1.13 changelog](https://github.com/dbt-labs/dbt/blob/1.13.latest/CHANGELOG.md)
-- [<Constant name="core" /> CLI Installation guide](/docs/local/install-dbt)
-- [dbt platform upgrade guide](/docs/dbt-versions/upgrade-dbt-platform-version)
+## Ресурсы
+- [Список изменений dbt v1.13](https://github.com/dbt-labs/dbt/blob/1.13.latest/CHANGELOG.md)
+- [Руководство по установке CLI <Constant name="core" />](/docs/local/install-dbt)
+- [Руководство по обновлению платформы dbt](/docs/dbt-versions/upgrade-dbt-platform-version)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
 :::info
-dbt v1.13 requires Python 3.11 or later. Python 3.10 is no longer supported. Refer to [What version of Python can I use?](/faqs/Core/install-python-compatibility) for the full compatibility matrix.
+Для dbt v1.13 требуется Python 3.11 или более поздней версии. Python 3.10 больше не поддерживается. Полную матрицу совместимости см. в разделе [Какую версию Python можно использовать?](/faqs/Core/install-python-compatibility).
 :::
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x. Any behavior changes will be accompanied by a [behavior change flag](/reference/global-configs/behavior-changes#behavior-change-flags) to provide a migration window for existing projects. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt/issues/new).
+dbt Labs стремится обеспечивать обратную совместимость для всех версий 1.x. Любые изменения поведения будут сопровождаться [флагом изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags), чтобы предоставить время для миграции существующих проектов. Если при обновлении возникнет ошибка, сообщите нам об этом, [создав issue](https://github.com/dbt-labs/dbt/issues/new).
 
-<Constant name="dbt" /> provides the functionality from new versions of <Constant name="core" /> via [release tracks](/docs/dbt-versions/dbt-release-tracks) with automatic upgrades. If you have selected the **v1 Latest** release track in <Constant name="dbt" />, you already have access to all the features, fixes, and other functionality included in the latest <Constant name="core" /> version! If you have selected the **v1 Compatible** release track, you will have access to the next monthly **v1 Compatible** release after the dbt v1.13 final release.
+<Constant name="dbt" /> предоставляет функциональность новых версий <Constant name="core" /> через [каналы выпуска](/docs/dbt-versions/dbt-release-tracks) с автоматическими обновлениями. Если в <Constant name="dbt" /> выбран канал выпуска **v1 Latest**, вам уже доступны все возможности, исправления и другая функциональность последней версии <Constant name="core" />! Если выбран канал выпуска **v1 Compatible**, они станут доступны в следующем ежемесячном выпуске **v1 Compatible** после выхода финальной версии dbt v1.13.
 
-## New and changed features and functionality
+## Новые и изменённые возможности и функциональность
 
 ### dbt State
 
-[dbt State](/docs/deploy/dbt-state-about) makes dbt smarter about what to build &mdash; instead of rebuilding every node on every run, dbt reuses nodes by cloning from another location or skipping a rebuild when the logic and data haven't changed. dbt State is natively available in dbt v1.13. To get started, refer to [Setting up dbt State](/docs/deploy/dbt-state-setup).
+[dbt State](/docs/deploy/dbt-state-about) помогает dbt более обоснованно определять, какие узлы нужно перестраивать: вместо перестроения каждого узла при каждом запуске dbt повторно использует узлы, клонируя их из другого расположения или пропуская перестроение, если логика и данные не изменились. dbt State встроен в dbt v1.13. Чтобы начать работу, см. раздел [Настройка dbt State](/docs/deploy/dbt-state-setup).
 
-## Adapter-specific features and functionalities
+## Возможности и функциональность отдельных адаптеров
 
 ### Snowflake
 
-- When [`copy_grants`](/reference/resource-configs/snowflake-configs#copying-grants) is `false` or unset, `dbt-snowflake` adds `IGNORE GRANTS` on `CREATE OR REPLACE` for tables, views, and clones. That keeps the previous no-copy default after Snowflake's [CREATE OR REPLACE grant change](https://docs.snowflake.com/en/release-notes/bcr-bundles/2026_08/bcr-2433). Set `copy_grants: true` when you want `COPY GRANTS` instead. Dynamic tables are unchanged.
+- Если [`copy_grants`](/reference/resource-configs/snowflake-configs#copying-grants) имеет значение `false` или не задан, `dbt-snowflake` добавляет `IGNORE GRANTS` в команды `CREATE OR REPLACE` для таблиц, представлений и клонов. Это сохраняет прежнее поведение по умолчанию без копирования прав доступа после [изменения обработки прав доступа в CREATE OR REPLACE в Snowflake](https://docs.snowflake.com/en/release-notes/bcr-bundles/2026_08/bcr-2433). Установите `copy_grants: true`, если вместо этого требуется использовать `COPY GRANTS`. Поведение динамических таблиц не изменилось.

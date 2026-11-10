@@ -1,7 +1,7 @@
 ---
-title: "Connect dbt MCP server to dbt platform"
-sidebar_label: "Connect to dbt platform"
-description: "Set up dbt MCP server with your dbt platform account using OAuth or token-based authentication."
+title: "Подключение сервера dbt MCP к платформе dbt"
+sidebar_label: "Подключение к платформе dbt"
+description: "Настройте сервер dbt MCP для работы с вашей учетной записью на платформе dbt, используя OAuth или аутентификацию на основе токенов."
 id: "mcp-quickstart-oauth"
 availability:
   surface: platform

@@ -24,7 +24,7 @@ macros:
 
 ## Определение {#definition}
 
-The `arguments` property is used to define the parameters that a resource can accept. Each argument can have a `name`, a `type` field, and an optional `description`.
+Свойство `arguments` определяет параметры, которые принимает ресурс. Для каждого аргумента можно задать `name`, `type` и необязательное `description`.
 
 Для **макросов** вы можете добавить секцию `arguments` в [свойства макроса](/reference/macro-properties). Это помогает документировать макрос и понимать, какие входные параметры он ожидает.
 

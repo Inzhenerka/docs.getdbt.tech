@@ -1,94 +1,94 @@
 ---
-title: "About dbt versions"
+title: "О версиях dbt"
 id: "dbt-versions"
-description: "Learn about semantic versioning for dbt engines, and how long those versions are supported."
+description: "Узнайте о семантическом версионировании движков dbt и сроках поддержки их версий."
 pagination_next: "docs/dbt-versions/upgrade-dbt-platform-version"
 pagination_prev: null
 availability: all_users
 ---
 
-dbt v2 is the current generation of dbt and uses the 2.x release series. dbt v1 is the Python-based generation and stays on the 1.x series. Both follow semantic versioning. This page covers versioning for local dbt installations.
+dbt v2 — это текущее поколение dbt, использующее серию выпусков 2.x. dbt v1 — поколение на основе Python, которое остается в серии 1.x. Оба поколения следуют семантическому версионированию. На этой странице рассматривается версионирование локальных установок dbt.
 
-v2 ships in two distributions. Install dbt v2 for the full, recommended experience. If your organization has a strict requirement for an Apache 2.0 licensed runtime, install dbt OSS instead. For more information, refer to [dbt licensing](/docs/dbt-licensing).
+v2 поставляется в двух дистрибутивах. Установите dbt v2, чтобы получить полный, рекомендуемый набор возможностей. Если в вашей организации действует строгое требование использовать среду выполнения с лицензией Apache 2.0, установите dbt OSS. Дополнительную информацию см. в разделе [Лицензирование dbt](/docs/dbt-licensing).
 
-If you're using the <Constant name="dbt_platform" /> (including the <Constant name="platform_cli"/>), you don't need to manage dbt versions yourself. [Release tracks](/docs/dbt-versions/dbt-release-tracks) automatically keep you up to date and provide early access to new features.
+Если вы используете <Constant name="dbt_platform" /> (включая <Constant name="platform_cli"/>), вам не нужно самостоятельно управлять версиями dbt. [Каналы выпусков](/docs/dbt-versions/dbt-release-tracks) автоматически поддерживают актуальность вашей версии и предоставляют ранний доступ к новым возможностям.
 
-## <Constant name="fusion_engine" /> versioning
+## Версионирование <Constant name="fusion_engine" />
 
-<Constant name="fusion_engine"/> uses semantic versioning starting with version 2.0. To install or update <Constant name="fusion"/>, see [Install dbt](/docs/local/install-dbt?version=2).
+<Constant name="fusion_engine"/> использует семантическое версионирование начиная с версии 2.0. Чтобы установить или обновить <Constant name="fusion"/>, см. раздел [Установка dbt](/docs/local/install-dbt?version=2).
 
-### Latest release
+### Последний выпуск
 
-| dbt v2 | Initial release | Support level and end date |
+| dbt v2 | Первоначальный выпуск | Уровень поддержки и дата ее окончания |
 |:---:|:---:|:---:|
-| [**v2.0**](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) | Sept 14, 2026 | **Active support &mdash; Sept 13, 2027** |
+| [**v2.0**](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) | 14 сентября 2026 г. | **Активная поддержка &mdash; до 13 сентября 2027 г.** |
 
-### Semantic versioning
+### Семантическое версионирование
 
-<Constant name="fusion" /> follows [semantic versioning](https://semver.org/):
+<Constant name="fusion" /> следует [семантическому версионированию](https://semver.org/):
 
-- **Major versions** (for example, v2 to v3) may include breaking changes. Deprecated functionality will stop working.
-- **Minor versions** (for example, v2.0 to v2.1) add features and are backwards compatible. They will not break project code that relies on documented functionality.
-- **Patch versions** (for example, v2.0.0 to v2.0.1) include fixes only: bug fixes, security fixes, or installation fixes.
+- **Мажорные версии** (например, переход с v2 на v3) могут включать изменения, нарушающие обратную совместимость. Устаревшая функциональность перестанет работать.
+- **Минорные версии** (например, переход с v2.0 на v2.1) добавляют новые возможности и сохраняют обратную совместимость. Они не нарушают работу кода проекта, который использует документированную функциональность.
+- **Патч-версии** (например, переход с v2.0.0 на v2.0.1) содержат только исправления: ошибок, уязвимостей безопасности или проблем с установкой.
 
-### Release channels
+### Каналы распространения
 
-<Constant name="fusion" /> is distributed through release channels:
+<Constant name="fusion" /> распространяется через следующие каналы:
 
-| Channel | Description | Stability |
+| Канал | Описание | Стабильность |
 |---------|-------------|-----------|
-| `latest` | The stable, "known good" version | ✅ Recommended for most users |
-| `canary` | The latest officially released version | ⚠️ Most recent stable version but still undergoing thorough testing |
-| `dev` | The latest development build | ❌ May not have passed all tests |
+| `latest` | Стабильная, проверенная версия | ✅ Рекомендуется большинству пользователей |
+| `canary` | Последняя официально выпущенная версия | ⚠️ Самая новая стабильная версия, которая еще проходит тщательное тестирование |
+| `dev` | Последняя сборка в процессе разработки | ❌ Может не пройти все тесты |
 
-Run `dbt system update` to get the latest stable release, or specify a channel with `dbt system update --version canary`.
+Выполните `dbt system update`, чтобы получить последний стабильный выпуск, или укажите канал с помощью `dbt system update --version canary`.
 
-For current versions and release history, see [<Constant name="fusion"/> releases](/docs/dbt/dbt-releases).
+Текущие версии и историю выпусков см. в разделе [Выпуски <Constant name="fusion"/>](/docs/dbt/dbt-releases).
 
-### Checking your version
+### Проверка версии
 
-Run `dbt --version` to check your installed version:
+Выполните `dbt --version`, чтобы проверить установленную версию:
 
 ```
 $ dbt --version
 dbt v2 2.0.0
 ```
 
-### Further reading
+### Дополнительные материалы
 
-- [Install <Constant name="fusion"/>](/docs/local/install-dbt?version=2): Install or update <Constant name="fusion_engine" />.
-- [<Constant name="fusion"/> releases](/docs/dbt/dbt-releases): View current versions and release history.
-- [Get started with <Constant name="fusion"/>](/docs/dbt/get-started-dbt): Learn about <Constant name="fusion" /> features and migration.
+- [Установка <Constant name="fusion"/>](/docs/local/install-dbt?version=2): установите или обновите <Constant name="fusion_engine" />.
+- [Выпуски <Constant name="fusion"/>](/docs/dbt/dbt-releases): ознакомьтесь с текущими версиями и историей выпусков.
+- [Начало работы с <Constant name="fusion"/>](/docs/dbt/get-started-dbt): узнайте о возможностях <Constant name="fusion" /> и переходе на этот движок.
 
-## <Constant name="core" /> versioning
+## Версионирование <Constant name="core" /> {#-versioning-1}
 
-The <Constant name="core"/> engine uses semantic versioning for the 1.x release series. To install or update <Constant name="core"/>, see [Install dbt](/docs/local/install-dbt?version=1).
+Движок <Constant name="core"/> использует семантическое версионирование для серии выпусков 1.x. Чтобы установить или обновить <Constant name="core"/>, см. раздел [Установка dbt](/docs/local/install-dbt?version=1).
 
 <Snippet path="core-version-support" />
 
 <Snippet path="core-versions-table" />
 
-### How <Constant name="core" /> uses semantic versioning {#how-dbt-v1-uses-semantic-versioning}
+### Как <Constant name="core" /> использует семантическое версионирование {#how-dbt-v1-uses-semantic-versioning}
 
-dbt follows [semantic versioning](https://semver.org/):
+dbt следует [семантическому версионированию](https://semver.org/):
 
-- **Major versions** (for example, v1 to v2) may include breaking changes. Deprecated functionality will stop working.
-- **Minor versions** (for example, v1.8 to v1.9) add features and are backwards compatible. They will not break project code that relies on documented functionality.
-- **Patch versions** (for example, v1.8.0 to v1.8.1) include fixes only: bug fixes, security fixes, or installation fixes.
+- **Мажорные версии** (например, переход с v1 на v2) могут включать изменения, нарушающие обратную совместимость. Устаревшая функциональность перестанет работать.
+- **Минорные версии** (например, переход с v1.8 на v1.9) добавляют новые возможности и сохраняют обратную совместимость. Они не нарушают работу кода проекта, который использует документированную функциональность.
+- **Патч-версии** (например, переход с v1.8.0 на v1.8.1) содержат только исправления: ошибок, уязвимостей безопасности или проблем с установкой.
 
-We are committed to avoiding breaking changes in minor versions for end users of dbt. There are two types of breaking changes that may be included in minor versions:
+Мы стремимся не допускать в минорных версиях изменений, нарушающих обратную совместимость для конечных пользователей dbt. В минорные версии могут включаться два типа изменений, нарушающих обратную совместимость:
 
-- Changes to the Python interface for adapter plugins. These changes are relevant only to adapter maintainers, and they will be clearly communicated in documentation and release notes. For more information, refer to [Build, test, document, and promote adapters guide](/guides/adapter-creation).
+- Изменения интерфейса Python для плагинов адаптеров. Эти изменения касаются только разработчиков, сопровождающих адаптеры; о них будет явно сообщаться в документации и примечаниях к выпуску. Дополнительную информацию см. в [руководстве по разработке, тестированию, документированию и продвижению адаптеров](/guides/adapter-creation).
 
-- Changes to metadata interfaces, including [artifacts](/docs/deploy/artifacts) and [logging](/reference/events-logging), signalled by a version bump. Those version upgrades may require you to update external code that depends on these interfaces, or to coordinate upgrades between dbt orchestrations that share metadata, such as [state-powered selection](/reference/node-selection/syntax#how-does-selection-work).
+- Изменения интерфейсов метаданных, включая [артефакты](/docs/deploy/artifacts) и [ведение журналов](/reference/events-logging), обозначаемые повышением номера версии. Такие обновления версий могут потребовать обновления внешнего кода, зависящего от этих интерфейсов, или согласования обновлений между процессами оркестрации dbt, которые используют общие метаданные, например при [выборе на основе состояния](/reference/node-selection/syntax#about-node-selection).
 
-### Adapter plugin versions
+### Версии плагинов адаптеров
 
-dbt releases `dbt-core` and adapter plugins (such as `dbt-snowflake`) independently. Their minor and patch version numbers may not match, but they coordinate through the `dbt-adapters` interface so you won't get a broken experience. For example, `dbt-core==1.8.0` can work with `dbt-snowflake==1.9.0`.
+dbt выпускает `dbt-core` и плагины адаптеров (например, `dbt-snowflake`) независимо друг от друга. Номера их минорных и патч-версий могут не совпадать, но взаимодействие согласуется через интерфейс `dbt-adapters`, поэтому это не нарушает их совместную работу. Например, `dbt-core==1.8.0` может работать с `dbt-snowflake==1.9.0`.
 
-If you're building or maintaining an adapter, refer to the [adapter creation guide](/guides/adapter-creation) for details on the `dbt-adapters` interface.
+Если вы разрабатываете или сопровождаете адаптер, сведения об интерфейсе `dbt-adapters` см. в [руководстве по созданию адаптеров](/guides/adapter-creation).
 
-Run `dbt --version` to check your installed versions:
+Выполните `dbt --version`, чтобы проверить установленные версии:
 
 ```
 $ dbt --version
@@ -100,45 +100,43 @@ Plugins:
   - snowflake: 1.9.0 - Up to date!
 ```
 
-You can also find the registered adapter version in [logs](/reference/global-configs/logs). For example, in `logs/dbt.log`:
+Версию зарегистрированного адаптера также можно найти в [журналах](/reference/global-configs/logs). Например, в `logs/dbt.log`:
 
 ```
 [0m13:13:48.572182 [info ] [MainThread]: Registered adapter: snowflake=1.9.0
 ```
 
-Refer to [Supported data platforms](/docs/supported-data-platforms) for the full list of adapters.
+Полный список адаптеров см. в разделе [Поддерживаемые платформы данных](/docs/supported-data-platforms).
 
 
-### Further reading
+### Дополнительные материалы
 
-- [Choosing a <Constant name="core" /> version in <Constant name="dbt" />](/docs/dbt-versions/upgrade-dbt-platform-version): Learn how to use <Constant name="core" /> versions in <Constant name="dbt" />.
-- [Install <Constant name="core" />](/docs/local/install-dbt?version=1): Install or update <Constant name="core" />.
-- [`require-dbt-version`](/reference/project-configs/require-dbt-version) and [`dbt_version`](/reference/dbt-jinja-functions/dbt_version): Restrict your project to work with a specific range of versions.
+- [Выбор версии <Constant name="core" /> в <Constant name="db" />](/docs/dbt-versions/upgrade-dbt-platform-version): узнайте, как использовать версии <Constant name="core" /> в <Constant name="dbt" />.
+- [Установка <Constant name="core" />](/docs/local/install-dbt?version=1): установите или обновите <Constant name="core" />.
+- [`require-dbt-version`](/reference/project-configs/require-dbt-version) и [`dbt_version`](/reference/dbt-jinja-functions/dbt_version): ограничьте работу проекта определенным диапазоном версий.
 
-## End-of-life versions
+## Версии с завершенным сроком поддержки {#end-of-life-versions}
 
 :::info
 
-On <Constant name="legacy_deprecation_date" />, <Constant name="dbt" /> versions v1.3-v1.7 will be deprecated and removed from availability in <Constant name="dbt_platform" />. Upgrade any environments still on these versions to a supported version or a [release track](/docs/dbt-versions/dbt-release-tracks) before then.
+С <Constant name="legacy_deprecation_date" /> версии <Constant name="dbt" /> v1.3–v1.7 будут объявлены устаревшими и станут недоступны в <Constant name="dbt_platform" />. До этой даты обновите все среды, которые еще используют эти версии, до поддерживаемой версии или переведите их на [канал выпусков](/docs/dbt-versions/dbt-release-tracks).
 
 :::
 
-Once a dbt version reaches end-of-life (EOL), it no longer receives patches, including for known bugs. We recommend upgrading to a newer version in [<Constant name="dbt" />](/docs/dbt-versions/upgrade-dbt-platform-version), [<Constant name="fusion" />](/docs/local/install-dbt?version=2), or [<Constant name="core" />](/docs/local/install-dbt). All versions prior to v1.0 have been deprecated.
+Когда версия dbt достигает конца срока поддержки (EOL), для нее больше не выпускаются патчи, в том числе исправления известных ошибок. Рекомендуем перейти на более новую версию в [<Constant name="dbt" />](/docs/dbt-versions/upgrade-dbt-platform-version), [<Constant name="fusion" />](/docs/local/install-dbt?version=2) или [<Constant name="core" />](/docs/local/install-dbt). Все версии до v1.0 объявлены устаревшими.
 
-## Current version support
+## Поддержка текущих версий {#current-version-support}
 
-dbt supports each minor version (for example, v1.8) for _one year_ from its initial release. During that window, we release patches with bug fixes and security updates. When we refer to a minor version, we mean its latest available patch (v1.8.x).
+dbt поддерживает каждую минорную версию (например, v1.8) в течение _одного года_ с момента ее первоначального выпуска. В этот период мы выпускаем патчи с исправлениями ошибок и обновлениями безопасности. Когда мы упоминаем минорную версию, мы подразумеваем ее последнюю доступную патч-версию (v1.8.x).
 
-After a newer minor version ships, the previous one transitions to **critical support** (security and installation fixes only) for the remainder of its one-year window. After the one-year window ends, the version reaches **end of life** and no longer receives patches.
+После выхода новой минорной версии предыдущая переходит в режим **поддержки только критических исправлений** (исправлений безопасности и проблем с установкой) на оставшуюся часть своего годового срока поддержки. По истечении года версия достигает **конца срока поддержки** и больше не получает патчи.
 
-While a minor version is officially supported:
-- You can use it in <Constant name="dbt" />. For more on <Constant name="dbt" /> versioning, see [Choosing a dbt version](/docs/dbt-versions/upgrade-dbt-platform-version).
-- You can select it from the version dropdown on this website to see documentation that is accurate for use with that minor version.
+Пока минорная версия официально поддерживается:
+- Вы можете использовать ее в <Constant name="dbt" />. Подробнее о версионировании <Constant name="dbt" /> см. в разделе [Выбор версии dbt](/docs/dbt-versions/upgrade-dbt-platform-version).
+- Вы можете выбрать ее в раскрывающемся списке версий на этом сайте, чтобы просмотреть документацию, соответствующую этой минорной версии.
 
-## Upgrading
+## Обновление
 
-Upgrade to new patch versions as soon as they're available. Upgrade to new minor versions when you're ready because you can only get some features and fixes on the latest minor version.
+Обновляйтесь до новых патч-версий сразу после их появления. Переходите на новые минорные версии, когда будете готовы, поскольку некоторые возможности и исправления доступны только в последней минорной версии.
 
-dbt makes all versions available as prereleases before the final release. For minor versions, we aim to release one or more betas 4+ weeks before the final release so you can try new features and share feedback. Release candidates are available about two weeks before the final release for testing in production-like environments. Refer to the [`dbt-labs/dbt` milestones](https://github.com/dbt-labs/dbt/milestones) for details.
-
-
+dbt предоставляет все версии в виде предварительных выпусков до выхода окончательного выпуска. Для минорных версий мы стремимся выпустить одну или несколько бета-версий не менее чем за 4 недели до окончательного выпуска, чтобы вы могли опробовать новые возможности и поделиться отзывами. Релиз-кандидаты становятся доступны примерно за две недели до окончательного выпуска для тестирования в средах, приближенных к рабочим. Подробности см. в [планах выпусков `dbt-labs/dbt`](https://github.com/dbt-labs/dbt/milestones).

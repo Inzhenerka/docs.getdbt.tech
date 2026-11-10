@@ -1,8 +1,8 @@
 ---
-title: "Wizard slash command reference"
+title: "Справочник по слеш-командам Wizard"
 id: "wizard-slash-commands"
-description: "Full reference for Wizard interactive TUI slash commands."
-sidebar_label: "Slash command reference"
+description: "Полный справочник по слеш-командам интерактивного текстового интерфейса Wizard."
+sidebar_label: "Справочник по слеш-командам"
 tags: [AI, Wizard, Reference]
 availability: local_all
 ---
@@ -11,26 +11,26 @@ availability: local_all
 import SlashGenerated from './_wizard-slash-commands-generated.md';
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# <Constant name="wizard" /> slash command reference <Lifecycle status="beta"/>
+# Справочник по слеш-командам <Constant name="wizard" /> <Lifecycle status="beta"/>
 
 <IntroText>
-Full reference for <Constant name="wizard" /> interactive TUI slash commands.
+Полный справочник по слеш-командам интерактивного текстового интерфейса <Constant name="wizard" />.
 </IntroText>
 
-:::info Auto-generated page
-This page is auto-generated. If you see any issues, please [file an issue](https://github.com/dbt-labs/docs.getdbt.com/issues) and we'll be happy to sort it out.
+:::info Автоматически сгенерированная страница
+Эта страница сгенерирована автоматически. Если вы заметите какие-либо проблемы, [сообщите о них](https://github.com/dbt-labs/docs.getdbt.com/issues), и мы с радостью поможем их устранить.
 :::
 
-This page covers the slash commands supported by <Constant name="wizard" />. These are `/commands` typed inside the interactive text based user interface (TUI) session to control <Constant name="wizard" />'s behavior mid-session.
+На этой странице описаны слеш-команды, поддерживаемые <Constant name="wizard" />. Это команды вида `/commands`, которые вводятся в сеансе интерактивного текстового пользовательского интерфейса (TUI) для управления поведением <Constant name="wizard" /> во время сеанса.
 
 <WizardFeedbackCallout />
 
 <SlashGenerated />
 
-## Related docs
+## Связанная документация
 
-- [Wizard CLI command reference](/docs/dbt-ai/wizard-cli-reference) for flags and subcommands
-- [Use subagents](/docs/dbt-ai/wizard-subagents) for the `/agent` and `/subagents` commands
-- [Headless mode](/docs/dbt-ai/wizard-headless) for using `wizard exec` in scripts and CI
-- [Configuration reference](/docs/dbt-ai/wizard-config) for `config.toml` keys and precedence
-- [dbt command reference](/reference/dbt-commands) for `dbt run`, `dbt build`, and other dbt commands
+- [Справочник по командам CLI Wizard](/docs/dbt-ai/wizard-cli-reference) — флаги и подкоманды
+- [Использование субагентов](/docs/dbt-ai/wizard-subagents) — команды `/agent` и `/subagents`
+- [Режим без интерактивного интерфейса](/docs/dbt-ai/wizard-headless) — использование `wizard exec` в скриптах и CI
+- [Справочник по конфигурации](/docs/dbt-ai/wizard-config) — ключи `config.toml` и порядок приоритета настроек
+- [Справочник по командам dbt](/reference/dbt-commands) — `dbt run`, `dbt build` и другие команды dbt

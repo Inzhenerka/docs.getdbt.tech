@@ -1,5 +1,5 @@
 ---
-description: "Set a deprecation_date on a model to tell consumers when it will stop being supported."
+description: "Укажите deprecation_date для модели, чтобы сообщить пользователям дату окончания её поддержки."
 resource_types: [models]
 datatype: дата_устаревания
 required: нет

@@ -38,7 +38,7 @@ import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
 </Expandable>
 
-<Expandable alt_header="Расширение dbt не активируется">
+<Expandable alt_header="Расширение dbt не активируется" anchor_id="dbt-details-2">
 
 Если расширение dbt успешно активировано, в строке состояния в левом нижнем углу редактора появится надпись **dbt Extension**. Чтобы просмотреть диагностическую информацию о расширении dbt, нажмите кнопку **dbt Extension**.
 
@@ -65,7 +65,7 @@ import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
 </Expandable>
 
-<Expandable alt_header="Неподдерживаемая версия dbt">
+<Expandable alt_header="Неподдерживаемая версия dbt" anchor_id="dbt-details-3">
 
 Если вы видите сообщение об ошибке, указывающее, что ваша версия dbt не поддерживается, вероятно, проблема связана с вашим окружением.
 
@@ -83,7 +83,7 @@ import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 - Для установки вручную следуйте инструкциям в разделе [Установка CLI <Constant name="fusion" />](/docs/local/install-dbt?version=2).
 </Expandable>
 
-<Expandable alt_header="Версия dbt v2 несовместима с этим расширением">
+<Expandable alt_header="Версия dbt v2 несовместима с этим расширением" anchor_id="dbt-v2-details-2">
 
 Если расширение сообщает, что установленная версия <Constant name="fusion" /> несовместима с вашей версией расширения dbt для VS Code, сочетание этих версий выходит за пределы поддерживаемого диапазона.
 
@@ -93,7 +93,7 @@ import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
 </Expandable>
 
-<Expandable alt_header="dbt v2 аварийно завершается при запуске">
+<Expandable alt_header="dbt v2 аварийно завершается при запуске" anchor_id="dbt-v2-details-3">
 
 Если расширение сообщает, что <Constant name="fusion" /> аварийно завершился при запуске, убедитесь, что исполняемый файл запускается самостоятельно:
 
@@ -101,7 +101,7 @@ import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 2. Воспользуйтесь действием **Show Logs** в уведомлении (или откройте вкладку **Output**), чтобы изучить ошибку запуска.
 </Expandable>
 
-<Expandable alt_header="Установлена версия dbt v2 с известными проблемами">
+<Expandable alt_header="Установлена версия dbt v2 с известными проблемами" anchor_id="dbt-v2-details-4">
 
 Если расширение предупреждает, что в установленной версии <Constant name="fusion" /> есть известная регрессия, значит, dbt Labs пометила этот выпуск как [выпуск с известными проблемами](/docs/dbt-versions/dbt-version-compatibility#known-bad-releases). Обновитесь до версии, указанной в уведомлении.
 
@@ -126,7 +126,7 @@ dbt system update
 Это должно устранить ошибку и позволить открыть проект dbt, открыв рабочую область, к которой он относится. Дополнительные сведения о рабочих областях см. в разделе [Что такое рабочая область VS Code?](https://code.visualstudio.com/docs/editing/workspaces/workspaces).
 </Expandable>
 
-<Expandable alt_header="Не удается скачать манифест с платформы dbt">
+<Expandable alt_header="Не удается скачать манифест с платформы dbt" anchor_id="dbt-details-4">
 
 Если расширение dbt для VS Code не может скачать манифест с <Constant name="dbt_platform" /> или при локальном использовании <Constant name="fusion" /> вы получаете сообщение `warning: dbt1200: Failed to download manifest`, вероятно, у вас возникли проблемы с DNS.
 

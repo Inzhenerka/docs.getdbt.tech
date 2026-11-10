@@ -1,9 +1,9 @@
 ---
-title: "Clone the Jaffle Shop sample project"
+title: "Клонирование примера проекта Jaffle Shop"
 id: clone-jaffle-shop
-description: "Clone the Jaffle Shop sample dbt project from GitHub or GitLab."
-displayText: Clone the Jaffle Shop sample project
-hoverSnippet: "Get the Jaffle Shop sample dbt project on your machine using Git."
+description: "Клонируйте пример проекта dbt Jaffle Shop из GitHub или GitLab."
+displayText: Клонирование примера проекта Jaffle Shop
+hoverSnippet: "Скачайте пример проекта dbt Jaffle Shop на свой компьютер с помощью Git."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['dbt', 'Beginner']
@@ -12,50 +12,50 @@ level: 'Beginner'
 
 <div style={{maxWidth: '900px'}}>
 
-## What is Jaffle Shop?
+## Что такое Jaffle Shop?
 
-[Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) is dbt Labs' canonical sample dbt project for a fictional cafe business. This guide shows you how to clone the project using Git from GitHub or GitLab.
+[Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) — эталонный пример проекта dbt от dbt Labs для вымышленного кафе. В этом руководстве показано, как клонировать проект из GitHub или GitLab с помощью Git.
 
-Cloning downloads the dbt project files to your machine: models, seeds, tests, and configuration. It doesn't install dbt or set up a database. If you only need the project files, follow the [Clone the repository](#clone-the-repository) and [Verify the clone](#verify-the-clone) sections.
+При клонировании на ваш компьютер загружаются файлы проекта dbt: модели, seed-файлы, тесты и конфигурация. При этом dbt не устанавливается и база данных не настраивается. Если вам нужны только файлы проекта, следуйте инструкциям в разделах [Клонирование репозитория](#clone-the-repository) и [Проверка клонирования](#verify-the-clone).
 
-To run dbt commands like `dbt seed`, `dbt run`, and `dbt test`, you also need dbt installed and a database to connect to. Refer to [Next steps](#next-steps) for links to warehouse quickstarts.
+Для выполнения команд dbt, таких как `dbt seed`, `dbt run` и `dbt test`, также необходимо установить dbt и подключиться к базе данных. Ссылки на руководства по быстрому старту для хранилищ данных приведены в разделе [Дальнейшие шаги](#next-steps).
 
-### Related content
+### Связанные материалы
 
-- [Install <Constant name="core" />](/docs/local/install-dbt)
-- [About dbt projects](/docs/build/projects)
-- [Example dbt projects](/faqs/Project/example-projects)
+- [Установка <Constant name="core" />](/docs/local/install-dbt)
+- [О проектах dbt](/docs/build/projects)
+- [Примеры проектов dbt](/faqs/Project/example-projects)
 
-## Prerequisites
+## Предварительные требования
 
-- [Git](https://git-scm.com/downloads) installed
-- A terminal
-- A [GitHub](https://github.com/join) or [GitLab](https://gitlab.com/users/sign_up) account (only if you plan to fork the repo, push changes, or clone from a private repository)
+- Установленный [Git](https://git-scm.com/downloads)
+- Терминал
+- Учетная запись [GitHub](https://github.com/join) или [GitLab](https://gitlab.com/users/sign_up) (только если вы планируете создать форк репозитория, отправлять изменения или клонировать закрытый репозиторий)
 
-Verify Git is installed:
+Убедитесь, что Git установлен:
 
 ```bash
 git --version
 ```
 
-## Clone the repository
+## Клонирование репозитория {#clone-the-repository}
 
 <Tabs>
   <TabItem value="github" label="GitHub">
 
-1. Open your terminal and navigate to where you keep projects:
+1. Откройте терминал и перейдите в каталог, в котором вы храните проекты:
 
     ```bash
     cd ~/Documents/Github
     ```
 
-2. Clone the repository:
+2. Клонируйте репозиторий:
 
     ```bash
     git clone https://github.com/dbt-labs/jaffle-shop.git
     ```
 
-3. Change into the project directory:
+3. Перейдите в каталог проекта:
 
     ```bash
     cd jaffle-shop
@@ -64,44 +64,44 @@ git --version
   </TabItem>
   <TabItem value="gitlab" label="GitLab">
 
-If your organization hosts Jaffle Shop on GitLab, or you've forked the repo there, clone from your GitLab URL instead:
+Если ваша организация размещает Jaffle Shop в GitLab или вы создали там форк репозитория, используйте для клонирования свой URL в GitLab:
 
-1. Open your terminal and navigate to where you keep projects:
+1. Откройте терминал и перейдите в каталог, в котором вы храните проекты:
 
     ```bash
     cd ~/Documents/Github
     ```
 
-2. Clone the repository (replace `YOUR_USERNAME` with your GitLab username or group):
+2. Клонируйте репозиторий (замените `YOUR_USERNAME` на свое имя пользователя или название группы в GitLab):
 
     ```bash
     git clone https://gitlab.com/YOUR_USERNAME/jaffle-shop.git
     ```
 
-3. Change into the project directory:
+3. Перейдите в каталог проекта:
 
     ```bash
     cd jaffle-shop
     ```
 
   </TabItem>
-  <TabItem value="other" label="Other platforms">
+  <TabItem value="other" label="Другие платформы">
 
-If your organization has mirrored or forked Jaffle Shop on Bitbucket, Azure DevOps, or another Git host, use the clone URL from that platform. The `git clone` command works the same way:
+Если ваша организация создала зеркало или форк Jaffle Shop в Bitbucket, Azure DevOps или на другой платформе для размещения Git-репозиториев, используйте URL для клонирования с этой платформы. Команда `git clone` работает точно так же:
 
-1. Open your terminal and navigate to where you keep projects:
+1. Откройте терминал и перейдите в каталог, в котором вы храните проекты:
 
     ```bash
     cd ~/Documents/Github
     ```
 
-2. Clone the repository:
+2. Клонируйте репозиторий:
 
     ```bash
     git clone <your-repo-clone-url>
     ```
 
-3. Change into the project directory:
+3. Перейдите в каталог проекта:
 
     ```bash
     cd jaffle-shop
@@ -110,35 +110,35 @@ If your organization has mirrored or forked Jaffle Shop on Bitbucket, Azure DevO
   </TabItem>
 </Tabs>
 
-## Verify the clone
+## Проверка клонирования {#verify-the-clone}
 
-Confirm the project files are present:
+Убедитесь, что файлы проекта на месте:
 
 ```bash
 ls
 ```
 
-You should see files and folders including:
+Среди файлов и папок должны быть:
 
 - `dbt_project.yml`
 - `models/`
 - `seeds/`
 - `packages.yml`
 
-Cloning is complete! 🎉 You now have the Jaffle Shop project files on your machine.
+Клонирование завершено! 🎉 Теперь файлы проекта Jaffle Shop находятся на вашем компьютере.
 
-## Explore the project structure
+## Изучение структуры проекта
 
-Before you install dbt or connect a database, take a quick look at what you cloned. Jaffle Shop is a fictional cafe business. The project contains 13 models that transform cafe data about customers, locations (stores), products, supplies, and orders.
+Прежде чем устанавливать dbt или подключать базу данных, кратко ознакомьтесь с содержимым клонированного проекта. Jaffle Shop — вымышленное кафе. Проект содержит 13 моделей, которые преобразуют данные кафе о клиентах, заведениях (точках продаж), продуктах, расходных материалах и заказах.
 
-It also includes:
+В проект также входят:
 
-- **Seeds:** Six CSV files under `seeds/jaffle-data/` that provide the raw sample data.
-- **Data tests and unit tests:** YAML alongside the models that check uniqueness, not-null values, and a few unit-test cases.
-- **Macros:** Small helper macros in `macros/`.
-- **Packages:** Dependencies listed in `packages.yml` (install later with `dbt deps`).
+- **Seed-файлы:** шесть CSV-файлов в `seeds/jaffle-data/`, содержащих исходные данные для примера.
+- **Тесты данных и модульные тесты:** YAML-файлы рядом с моделями, содержащие проверки уникальности, отсутствия значений null и несколько сценариев модульного тестирования.
+- **Макросы:** небольшие вспомогательные макросы в `macros/`.
+- **Пакеты:** зависимости, перечисленные в `packages.yml` (их можно установить позже с помощью `dbt deps`).
 
-A simplified view of the project looks like this:
+Упрощенная структура проекта выглядит так:
 
 ```text
 jaffle-shop/
@@ -168,38 +168,38 @@ jaffle-shop/
 └── data-tests/
 ```
 
-Staging models sit closest to the raw seed data. Marts models join and shape that data into the tables you use for analysis. You don't need to read every file yet. This layout follows a standard [dbt project](/docs/build/projects) pattern that appears in many real-world projects.
+Модели слоя staging ближе всего к исходным данным из seed-файлов. Модели слоя marts объединяют и преобразуют эти данные в таблицы, используемые для анализа. Пока не обязательно читать каждый файл. Такая структура соответствует стандартному шаблону [проекта dbt](/docs/build/projects), который встречается во многих реальных проектах.
 
-## Next steps
+## Дальнейшие шаги {#next-steps}
 
-To run or develop the project, you need dbt installed and a database connected. These links can help:
+Для запуска проекта или работы над ним необходимо установить dbt и настроить подключение к базе данных. Вам могут пригодиться следующие ссылки:
 
-- **[Install self-hosted dbt](/docs/local/install-dbt):** Cloning doesn't install dbt. You need it to run commands.
-- **[Set up a virtual environment](/docs/local/install-dbt):** Keeps dbt separate from other Python projects on your machine.
-- **[About dbt deps command](/reference/commands/deps):** The repo lists packages in `packages.yml`. Run `dbt deps` after you install dbt.
-- **[About dbt projects](/docs/build/projects):** Learn the project structure before editing models.
-- **[dbt Learn](https://learn.getdbt.com/):** Interactive courses for new users.
+- **[Установка dbt в собственной среде](/docs/local/install-dbt):** при клонировании dbt не устанавливается. Он необходим для выполнения команд.
+- **[Настройка виртуального окружения](/docs/local/install-dbt):** позволяет изолировать dbt от других Python-проектов на вашем компьютере.
+- **[О команде dbt deps](/reference/commands/deps):** пакеты проекта перечислены в `packages.yml`. После установки dbt выполните `dbt deps`.
+- **[О проектах dbt](/docs/build/projects):** изучите структуру проекта, прежде чем редактировать модели.
+- **[dbt Learn](https://learn.getdbt.com/):** интерактивные курсы для новых пользователей.
 
-### Warehouse quickstarts
+### Быстрый старт для хранилищ данных
 
-To run the project, you need a database and adapter configured in `profiles.yml`. Choose the quickstart for your warehouse or local setup:
+Для запуска проекта необходимо настроить базу данных и адаптер в `profiles.yml`. Выберите руководство по быстрому старту для своего хранилища данных или локальной среды:
 
-- [Quickstart for dbt and Snowflake](/guides/snowflake)
-- [Quickstart for dbt and BigQuery](/guides/bigquery)
-- [Quickstart for dbt and Databricks](/guides/databricks)
-- [Quickstart for dbt and Redshift](/guides/redshift)
-- [Quickstart for <Constant name="core" /> using DuckDB](/guides/duckdb): Clone [`jaffle_shop_duckdb`](https://github.com/dbt-labs/jaffle_shop_duckdb) and follow the guide.
+- [Быстрый старт с dbt и Snowflake](/guides/snowflake)
+- [Быстрый старт с dbt и BigQuery](/guides/bigquery)
+- [Быстрый старт с dbt и Databricks](/guides/databricks)
+- [Быстрый старт с dbt и Redshift](/guides/redshift)
+- [Быстрый старт с <Constant name="core" /> и DuckDB](/guides/duckdb): клонируйте [`jaffle_shop_duckdb`](https://github.com/dbt-labs/jaffle_shop_duckdb) и следуйте руководству.
 
-You can also browse [all guides](/guides) or other [example dbt projects](/faqs/Project/example-projects).
+Вы также можете просмотреть [все руководства](/guides) или другие [примеры проектов dbt](/faqs/Project/example-projects).
 
-## Optional cleanup
+## Удаление проекта (необязательно)
 
-If you cloned the repo only to test these steps and don't need the project anymore, you can remove the folder:
+Если вы клонировали репозиторий только для проверки этих шагов и проект вам больше не нужен, можно удалить папку:
 
 ```bash
 rm -rf ~/Documents/Github/jaffle-shop
 ```
 
-This deletes the cloned project from your machine. It doesn't affect the GitHub or GitLab repository.
+Эта команда удаляет клонированный проект с вашего компьютера. Она не затрагивает репозиторий в GitHub или GitLab.
 
 </div>

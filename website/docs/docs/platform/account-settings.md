@@ -1,95 +1,97 @@
 ---
-title: "Account settings in dbt"
-sidebar_label: "Account settings" 
-description: "Learn how to enable account settings for your dbt users."
+title: "Настройки аккаунта в dbt"
+sidebar_label: "Настройки аккаунта" 
+description: "Узнайте, как включить и настроить параметры аккаунта для пользователей dbt."
 availability:
   surface: platform
   access: login_required
 ---
 
-The following sections describe the different **Account settings** available from your <Constant name="dbt" /> account in the sidebar (under your account name on the lower left-hand side). 
+В следующих разделах описаны различные **настройки аккаунта**, доступные в вашем аккаунте <Constant name="dbt" /> в боковой панели (под именем вашего аккаунта в нижней левой части интерфейса).
 
-<Lightbox src="/img/docs/dbt-platform/example-sidebar-account-settings.png" title="Example of Account settings from the sidebar" /> 
+<Lightbox src="/img/docs/dbt-platform/example-sidebar-account-settings.png" title="Пример настроек аккаунта на боковой панели" /> 
 
-## Git repository caching <Lifecycle status="managed,managed_plus" />
+<a id="git-repository-caching" />
+
+## Кэширование Git-репозитория <Lifecycle status="managed,managed_plus" /> {#git-repository-caching-}
  
-:::important repo caching enabled by default
+:::important Кеширование репозитория включено по умолчанию
 
-<Constant name="git" /> repository caching is enabled by default for all new Enterprise and Enterprise+ accounts, improving reliability by allowing <Constant name="dbt" /> to use a cached copy of your repo if cloning fails. 
+Кэширование репозитория <Constant name="git" /> включено по умолчанию для всех новых аккаунтов Enterprise и Enterprise+, повышая надежность за счет возможности для <Constant name="dbt" /> использовать кэшированную копию вашего репозитория при сбое клонирования. 
 
-See the next section for more details on repo caching, retention, and more.
+Подробнее о кэшировании репозитория, сроках хранения и других деталях см. в следующем разделе.
 :::
 
-At the start of every [job](/docs/deploy/jobs) run, <Constant name="dbt" /> clones the project's Git repository so it has the latest versions of your project's code and runs `dbt deps` to install your dependencies. 
+В начале каждого запуска [job](/docs/deploy/jobs) <Constant name="dbt" /> клонирует Git‑репозиторий проекта, чтобы получить самые актуальные версии кода проекта, а затем выполняет `dbt deps` для установки зависимостей.
 
-For improved reliability and performance on your job runs, you can enable <Constant name="dbt" /> to keep a cache of the project's <Constant name="git" /> repository. So, if there's a third-party outage that causes the cloning operation to fail, <Constant name="dbt" /> will instead use the cached copy of the repo so your jobs can continue running as scheduled. 
+Для повышения надежности и производительности запусков вы можете включить сохранение кэша <Constant name="dbt" /> для <Constant name="git" />‑репозитория проекта. В этом случае, если из‑за сбоя у стороннего сервиса операция клонирования не удастся, <Constant name="dbt" /> вместо этого использует кэшированную копию репозитория, и ваши задания продолжат выполняться по расписанию.
 
-<Constant name="dbt" /> caches your project's <Constant name="git" /> repo after each successful run and retains it for 8 days if there are no repo updates. It caches all packages regardless of installation method and does not fetch code outside of the job runs. 
+<Constant name="dbt" /> кэширует репозиторий <Constant name="git" /> вашего проекта после каждого успешного запуска и хранит его в течение 8 дней, если в репозитории нет обновлений. Кэшируются все пакеты независимо от способа установки, а получение кода вне запусков заданий не выполняется. 
 
-<Constant name="dbt" /> will use the cached copy of your project's <Constant name="git" /> repo under these circumstances:
+<Constant name="dbt" /> будет использовать кэшированную копию репозитория <Constant name="git" /> вашего проекта в следующих случаях:
 
-- Outages from third-party services (for example, the [dbt package hub](https://hub.getdbt.com/)).
-- <Constant name="git" /> authentication fails.
-- There are syntax errors in the `packages.yml` file. You can set up and use [continuous integration (CI)](/docs/deploy/continuous-integration) to find these errors sooner.
-- If a package doesn't work with the current dbt version. You can set up and use [continuous integration (CI)](/docs/deploy/continuous-integration) to identify this issue sooner.
+- Сбои у сторонних сервисов (например, [dbt package hub](https://hub.getdbt.com/)).
+- Сбой аутентификации <Constant name="git" />.
+- Наличие синтаксических ошибок в файле `packages.yml`. Вы можете настроить и использовать [continuous integration (CI)](/docs/deploy/continuous-integration), чтобы выявлять такие ошибки раньше.
+- Если пакет несовместим с текущей версией dbt. Вы можете настроить и использовать [continuous integration (CI)](/docs/deploy/continuous-integration), чтобы обнаруживать эту проблему раньше.
 
-Repository caching is a single account-level setting, which means you don't need to configure it per job or environment. dbt automatically skips the cache for CI jobs, so they always test the latest code in your pull request.
+Кэширование репозитория — это единая настройка на уровне аккаунта, поэтому ее не нужно настраивать для каждого задания или окружения. dbt автоматически пропускает кэш для заданий CI, поэтому они всегда проверяют последнюю версию кода в вашем pull request.
 
-To use, select the **Enable repository caching** option from your account settings. 
+Чтобы использовать, выберите опцию **Enable repository caching** в настройках вашего аккаунта.
 
-<Lightbox src="/img/docs/deploy/account-settings-repository-caching.png" width="85%" title="Example of the Enable repository caching option" />
+<Lightbox src="/img/docs/deploy/account-settings-repository-caching.png" width="85%" title="Пример параметра включения кэширования репозитория" />
 
-## Partial parsing
+## Частичный парсинг {#partial-parsing}
 
-At the start of every dbt invocation, dbt reads all the files in your project, extracts information, and constructs an internal manifest containing every object (model, source, macro, and so on). Among other things, it uses the `ref()`, `source()`, and `config()` macro calls within models to set properties, infer dependencies, and construct your project's DAG. When dbt finishes parsing your project, it stores the internal manifest in a file called `partial_parse.msgpack`. 
+В начале каждого вызова dbt читает все файлы в вашем проекте, извлекает информацию и создает внутренний манифест, содержащий каждый объект (модель, источник, макрос и так далее). Среди прочего, он использует вызовы макросов `ref()`, `source()` и `config()` внутри моделей для установки свойств, определения зависимостей и построения DAG вашего проекта. Когда dbt завершает парсинг вашего проекта, он сохраняет внутренний манифест в файле под названием `partial_parse.msgpack`.
 
-Parsing projects can be time-consuming, especially for large projects with hundreds of models and thousands of files. To reduce the time it takes dbt to parse your project, use the partial parsing feature in <Constant name="dbt" /> for your environment. When enabled, <Constant name="dbt" /> uses the `partial_parse.msgpack` file to determine which files have changed (if any) since the project was last parsed, and then it parses _only_ the changed files and the files related to those changes.
+Парсинг проектов может занимать значительное время, особенно для крупных проектов с сотнями моделей и тысячами файлов. Чтобы сократить время, которое dbt тратит на парсинг вашего проекта, используйте функцию частичного парсинга в <Constant name="dbt" /> для вашего окружения. Когда она включена, <Constant name="dbt" /> использует файл `partial_parse.msgpack`, чтобы определить, какие файлы изменились (если изменились) с момента последнего парсинга проекта, и затем парсит **только** изменённые файлы и файлы, связанные с этими изменениями.
 
-Partial parsing in <Constant name="dbt" /> requires dbt version 1.4 or newer. The feature does have some known limitations. Refer to [Known limitations](/reference/parsing#known-limitations) to learn more about them.
+Частичный парсинг в <Constant name="dbt" /> требует dbt версии 1.4 или новее. У этой функции есть некоторые известные ограничения. Подробнее о них см. в разделе [Known limitations](/reference/parsing#known-limitations).
 
-To use, select the **Enable partial parsing between deployment runs** option from your account settings.
+Чтобы использовать, выберите опцию **Enable partial parsing between deployment runs** в настройках вашего аккаунта.
 
-<Lightbox src="/img/docs/deploy/account-settings-partial-parsing.png" width="85%" title="Example of the Enable partial parsing between deployment runs option" />
+<Lightbox src="/img/docs/deploy/account-settings-partial-parsing.png" width="85%" title="Пример параметра включения частичного разбора между запусками развертывания" />
 
-## Account access and enablement
+## Доступ к аккаунту и включение функций {#account-access-and-enablement}
 
-Enable access to features in your account by selecting the appropriate option from your account settings.
+Включите доступ к функциям в вашем аккаунте, выбрав соответствующий параметр в настройках аккаунта.
 
-### Enabling AI features
+### Включение функций ИИ {#enabling-ai-features}
 
-Admins can enable access to both <Constant name="wizard" /> (dbt Labs’ AI agent layer, available on the <Constant name="dbt_platform" /> and CLI) and dbt Copilot for authorized users across the <Constant name="dbt_platform" />. 
+Администраторы могут включить доступ как к <Constant name="wizard" /> (уровню ИИ-агентов dbt Labs, доступному на <Constant name="dbt_platform" /> и в CLI), так и к dbt Copilot для авторизованных пользователей на <Constant name="dbt_platform" />. 
 
-### Enabling Advanced CI features <Lifecycle status="managed,managed_plus" />
+### Включение функций Advanced CI <Lifecycle status="managed,managed_plus" /> {#enabling-advanced-ci-features-}
 
-[Advanced CI](/docs/deploy/advanced-ci) features, such as [compare changes](/docs/deploy/advanced-ci#compare-changes), allow <Constant name="dbt" /> account members to view details about the changes between what's in the production environment and the pull request.
+Функции [Advanced CI](/docs/deploy/advanced-ci), такие как [compare changes](/docs/deploy/advanced-ci#compare-changes), позволяют участникам аккаунта <Constant name="dbt" /> просматривать подробную информацию об изменениях между продакшн‑окружением и pull request.
 
-To use Advanced CI features, your <Constant name="dbt" /> account must have access to them. Ask your <Constant name="dbt" /> administrator to enable Advanced CI features on your account, which they can do by choosing the **Enable account access to Advanced CI** option from the account settings.
+Чтобы использовать функции Advanced CI, ваш аккаунт <Constant name="dbt" /> должен иметь к ним доступ. Попросите администратора вашего аккаунта <Constant name="dbt" /> включить функции Advanced CI — это можно сделать, выбрав опцию **Enable account access to Advanced CI** в настройках аккаунта.
 
-Once enabled, the **dbt compare** option becomes available in the CI job settings for you to select.
+После включения опция **dbt compare** становится доступной в настройках CI задания для выбора.
 
-<Lightbox src="/img/docs/deploy/account-settings-advanced-ci.png" width="85%" title="The Enable account access to Advanced CI option" />
+<Lightbox src="/img/docs/deploy/account-settings-advanced-ci.png" width="85%" title="Параметр включения доступа аккаунта к Advanced CI" />
 
-### Enable global account discovery
+### Включение глобального обнаружения аккаунтов {#enable-global-account-discovery}
 
-When **Enable global account discovery** is on, users can discover all accounts associated with their email address at login. Users still access accounts using their credentials or the account's designated auth method (for example, SSO). Refer to [Log in to dbt platform](/docs/platform/about-platform/login) for more info.
+Когда параметр **Включить глобальное обнаружение аккаунтов** включен, пользователи могут при входе находить все аккаунты, связанные с их адресом электронной почты. Пользователи по-прежнему получают доступ к аккаунтам с помощью своих учетных данных или назначенного для аккаунта метода аутентификации (например, SSO). Подробнее см. в разделе [Вход на платформу dbt](/docs/platform/about-platform/login).
 
 import UniversalLoginST from '/snippets/_universal-login-st.md';
 
 <UniversalLoginST />
 
-Disabling this setting means users must know their [account URL](/docs/platform/about-platform/access-regions-ip-addresses#accessing-your-account) to log in; they will not see a list of accounts at login.
+Если эта настройка отключена, пользователи должны знать [URL своего аккаунта](/docs/platform/about-platform/access-regions-ip-addresses#accessing-your-account) для входа; список аккаунтов при входе отображаться не будет.
 
-To change this setting, select or clear the **Enable global account discovery** option in your account settings. If you disable it, a confirmation pop-up box explains that users will need the account URL to log in and access the account.
+Чтобы изменить эту настройку, установите или снимите флажок **Включить глобальное обнаружение аккаунтов** в настройках аккаунта. При отключении появится всплывающее окно подтверждения с пояснением, что пользователям потребуется URL аккаунта для входа и доступа к нему.
 
-## Project settings history
+## История настроек проекта {#project-settings-history}
 
-You can view historical project settings changes over the last 90 days.
+Вы можете просматривать историю изменений настроек проекта за последние 90 дней.
 
-To view the change history: 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**.
-2. Click **Projects**. 
-3. Click a **project name**.
-4. Click **History**. 
+Чтобы посмотреть историю изменений:
+1. Нажмите на имя своей учетной записи внизу левого меню и выберите **Account settings**.
+2. Нажмите **Projects**.
+3. Выберите **project name**.
+4. Нажмите **History**.
 
 
-<Lightbox src="/img/docs/deploy/project-history.png" width="85%" title="Example of the project history option. " />
+<Lightbox src="/img/docs/deploy/project-history.png" width="85%" title="Пример параметра истории проекта. " />

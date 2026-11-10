@@ -1,28 +1,28 @@
 ---
-title: "Схема объекта Packages"
-sidebar_label: "Packages"
+title: "Схема объекта packages"
+sidebar_label: "Пакеты"
 id: "discovery-schema-environment-applied-packages"
 availability:
   surface: platform
   access: paid_plan
   minPlan: starter
 ---
-
+ 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[dbt packages](/docs/build/packages) — это библиотеки с моделями, макросами и другими ресурсами, которые решают определённую область задач и используются в проектах dbt. Вы можете запрашивать пакеты проекта через Discovery API.
+[Пакеты dbt](/docs/build/packages) — это библиотеки с моделями, макросами и другими ресурсами для решения задач в определённой предметной области, которые используются в проектах dbt. Вы можете запрашивать пакеты проекта через Discovery API.
 
-В разделе [Example query](#example-query) показаны некоторые поля, которые можно запрашивать с помощью объекта `packages`. Обратитесь к разделу [Fields](/docs/dbt-apis/discovery-schema-environment-applied#fields), чтобы просмотреть полную схему, содержащую все возможные поля, доступные для запроса.
+В [примере запроса](#example-query) показаны некоторые поля, которые можно запрашивать у объекта `packages`.
 
-### Аргументы {#arguments}
+### Аргументы
 
-При выполнении запроса к `packages` вы можете использовать следующие аргументы:
+При запросе `packages` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="packages" />
 
 ### Пример запроса {#example-query}
 
-Вы можете указать `environmentId` и `"model"` в качестве типа ресурса, чтобы увидеть все dbt‑пакеты в этом окружении, которые содержат ресурсы моделей:
+Вы можете указать `environmentId` и "model" в качестве типа ресурса, чтобы просмотреть все пакеты dbt в этой среде, содержащие ресурсы моделей:
 
 ```graphql
 query {

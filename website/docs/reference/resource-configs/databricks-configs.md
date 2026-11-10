@@ -32,9 +32,9 @@ dbt-databricks v1.9 добавляет поддержку конфигураци
 
 <sup>1</sup> `use_uniform` применяется только к <Constant name="fusion" />. `dbt-databricks` пока не поддерживает этот параметр &mdash; адаптер записывает предупреждение в журнал и игнорирует значение. В `dbt-databricks` вместо него используйте флаг поведения [`use_managed_iceberg`](/reference/global-configs/databricks-changes#use-managed-iceberg).
 
-<sup>2</sup> When `table_format` is `iceberg`, `file_format` must be `delta`. This requirement applies to `dbt-databricks` only. In <Constant name="fusion" />, managed Iceberg tables use `parquet`.
+<sup>2</sup> Если `table_format` равен `iceberg`, в `dbt-databricks` укажите `file_format: delta`. Это требование относится только к `dbt-databricks`. Управляемые Iceberg-таблицы в <Constant name="fusion" /> используют `parquet`.
 
-<sup>3</sup> When `liquid_clustered_by` is enabled, dbt-databricks issues an `OPTIMIZE` (Liquid Clustering) operation after each run. To disable this behavior, set the variable `DATABRICKS_SKIP_OPTIMIZE=true`, which can be passed into the dbt run command (`dbt run --vars "{'databricks_skip_optimize': true}"`) or set as an environment variable. See [issue #802](https://github.com/databricks/dbt-databricks/issues/802).
+<sup>3</sup> При настройке `liquid_clustered_by` адаптер dbt-databricks выполняет `OPTIMIZE` (Liquid Clustering) после каждого запуска. Чтобы отключить операцию, задайте переменную окружения `DATABRICKS_SKIP_OPTIMIZE=true` или передайте параметр в команду `dbt run --vars "{'databricks_skip_optimize': true}"`. См. [задачу #802](https://github.com/databricks/dbt-databricks/issues/802).
 
 <sup>4</sup>  Не используйте `liquid_clustered_by` и `auto_liquid_cluster` в одной модели.
 
@@ -162,17 +162,17 @@ _Доступно в версиях 1.10 и выше_
 
 При материализации моделей различных типов вы можете указывать несколько необязательных конфигураций на уровне колонок, которые специфичны для плагина dbt-databricks, в дополнение к стандартным [настройкам колонок](/reference/resource-properties/columns). Поддержка тегов колонок и масок колонок была добавлена в dbt-databricks версии 1.10.4.
 
-| Option    | Description   | Required?| Model support | Materialization support | Example  |
+| Параметр | Описание | Обязательный? | Поддерживаемые модели | Поддерживаемые материализации | Пример |
 |-----------|---------------|----------|---------------|----------------------------|----------|
-| databricks_tags     | [Tags](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html) to be set on individual columns    | Optional    |  SQL†, Python† | Table, Incremental, Materialized View, Streaming Table  | `{'data_classification': 'pii'}`  |
-| column_mask   | [Column mask](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-column-mask) configuration for dynamic data masking. Accepts `function` and optional `using_columns` properties*  | Optional     | SQL, Python   | Table, Incremental, Streaming Table | `{'function': 'my_catalog.my_schema.mask_email'}`   |
+| databricks_tags | [Теги](https://docs.databricks.com/en/data-governance/unity-catalog/tags.html) для отдельных столбцов | Нет | SQL†, Python† | Table, Incremental, Materialized View, Streaming Table | `{'data_classification': 'pii'}` |
+| column_mask | [Маска столбца](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-column-mask) для динамического маскирования. Принимает `function` и необязательное поле `using_columns`* | Нет | SQL, Python | Table, Incremental, Streaming Table | `{'function': 'my_catalog.my_schema.mask_email'}` |
 
-\* `using_columns` supports all parameter types listed in [Databricks column mask parameters](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-column-mask#parameters).
+\* В `using_columns` поддерживаются все типы параметров из раздела [Параметры маски столбца Databricks](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-ddl-column-mask#parameters).
 
 
-† `databricks_tags` are applied via `ALTER` statements. Tags cannot be removed via dbt-databricks once applied. To remove tags, use Databricks directly or a post-hook. Starting in `dbt-databricks` v1.12, `databricks_tags` set at multiple config hierarchy levels [merge additively](#databricks_tags) instead of the lower (more specific) level fully replacing the higher one.
+† Теги `databricks_tags` применяются через инструкции `ALTER`. После применения их нельзя удалить средствами dbt-databricks. Удалите теги в Databricks или через post-hook. Начиная с `dbt-databricks` v1.12, теги с разных уровней конфигурации [объединяются](#databricks_tags), а более конкретный уровень больше не заменяет весь набор вышестоящего.
 
-This example uses the column-level configurations in the previous table:
+В примере используются настройки столбцов из таблицы выше:
 
 <File name='schema.yml'>
 
@@ -696,15 +696,15 @@ _Доступно в версиях 1.11 или выше_
 - Обязательной конфигурации `unique_key`
 - Databricks Runtime 12.2 LTS или выше
 
-The `delete+insert` strategy is a simpler alternative to the `merge` strategy for cases where you want to replace matching records without the complexity of updating specific columns. This strategy works in two steps:
+Стратегия `delete+insert` проще, чем `merge`, когда нужно заменить целые записи вместо обновления отдельных столбцов. Она работает в два шага:
 
-1. **Delete**: Remove all rows from the target table where the `unique_key` matches rows in the new data.
-2. **Insert**: Insert all new rows from the staging data.
+1. **Удаление**: из целевой таблицы удаляются все строки, чей `unique_key` совпадает с ключом в новых данных.
+2. **Вставка**: все новые строки из промежуточных данных вставляются в целевую таблицу.
 
-This strategy is particularly useful when:
-- You want to replace entire records rather than update specific columns
-- Your business logic requires a clean "remove and replace" approach
-- You need a simpler incremental strategy than `merge` for full record replacement
+Эта стратегия полезна, если:
+- Нужно заменить целые записи, не обновляя отдельные столбцы.
+- Бизнес-логика требует сначала удалить, а затем заново вставить запись.
+- Для полной замены записей нужна более простая инкрементальная стратегия, чем `merge`.
 
 При использовании Databricks Runtime версии 17.1 или выше dbt применяет эффективный синтаксис [`INSERT INTO ... REPLACE ON`](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-dml-insert-into#replace-on) для атомарного выполнения этой операции. Для более старых версий runtime dbt выполняет отдельные операторы `DELETE` и `INSERT`.
 
@@ -713,9 +713,9 @@ This strategy is particularly useful when:
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code (DBR 17.1+)', value: 'run_new', },
-    { label: 'Run code (DBR < 17.1)', value: 'run_legacy', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Выполнение (DBR 17.1+)', value: 'run_new', },
+    { label: 'Выполнение (DBR < 17.1)', value: 'run_legacy', },
 ]
 }>
 <TabItem value="source">
@@ -901,7 +901,7 @@ insert into analytics.replace_where_incremental
 </TabItem>
 </Tabs>
 
-## Python model configuration {#python-model-configuration}
+## Настройка моделей Python {#python-model-configuration}
 
 Адаптер Databricks поддерживает Python-модели. Databricks использует PySpark в качестве фреймворка обработки для этих моделей.
 
@@ -944,9 +944,9 @@ models:
 
 Если конфигурация не задана, `dbt-spark` будет использовать встроенные значения по умолчанию: all-purpose кластер (на основе `cluster` в вашем профиле подключения) без создания ноутбука. Адаптер `dbt-databricks` по умолчанию будет использовать кластер, настроенный в `http_path`. Мы рекомендуем явно настраивать кластеры для Python-моделей в проектах Databricks.
  
-**Installing packages:** When using all-purpose clusters, we recommend installing packages which you will be using to run your Python models.
+**Установка пакетов:** если используются универсальные кластеры, установите на них пакеты, нужные для выполнения моделей Python.
 
-**Related docs:**
+**Связанная документация:**
 - [Синтаксис PySpark DataFrame](https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.html)
 - [Databricks: Введение в DataFrames — Python](https://docs.databricks.com/spark/latest/dataframes-datasets/introduction-to-dataframes-python.html)
  
@@ -1144,39 +1144,39 @@ def model(dbt, session):
 увидеть описания моделей в поле `Comment` команды `describe [table] extended`
 или `show table extended in [database] like '*'`.
 
-## Query tags
-_Available in versions 1.11 or higher_
+## Теги запросов {#query-tags}
+_Доступно в версиях 1.11 и выше_
 
-[Query tags](https://docs.databricks.com/aws/en/sql/user/queries/query-tags) are a Databricks feature that allows you to attach custom key-value metadata to SQL queries. This metadata appears in system tables and query history, making it useful for tracking query costs, debugging, and auditing.
+[Теги запросов](https://docs.databricks.com/aws/en/sql/user/queries/query-tags) позволяют добавлять к SQL-запросам в Databricks собственные метаданные в виде пар ключ–значение. Они видны в системных таблицах и истории запросов, где помогают отслеживать расходы, отлаживать запросы и проводить аудит.
 
-:::note Feature availability
+:::note Доступность функции
 
-Query tags may not yet be available in all Databricks workspaces. Check the [Databricks documentation](https://docs.databricks.com/aws/en/sql/user/queries/query-tags) for the latest information on feature availability.
+Теги запросов могут быть доступны не во всех рабочих областях Databricks. Актуальные сведения см. в [документации Databricks](https://docs.databricks.com/aws/en/sql/user/queries/query-tags).
 
 :::
 
-dbt-databricks supports setting query tags at both the connection level (in your profile) and the model level (in model configs). When you run dbt, it automatically includes default tags containing dbt metadata, such as the model name and dbt version.
+В dbt-databricks теги запросов можно задать на уровне подключения в профиле и на уровне отдельной модели. При запуске dbt автоматически добавляет теги с метаданными, например именем модели и версией dbt.
 
-### Default query tags
+### Теги запросов по умолчанию {#default-query-tags}
 
-dbt-databricks automatically adds the following tags to every query:
+dbt-databricks автоматически добавляет к каждому запросу следующие теги:
 
-| Tag key | Description |
+| Ключ тега | Описание |
 |---------|-------------|
-| `@@dbt_model_name` | The name of the model being executed |
-| `@@dbt_core_version` | The version of dbt being used |
-| `@@dbt_databricks_version` | The version of dbt-databricks being used |
-| `@@dbt_materialized` | The materialization type (table, view, incremental, and so on.) |
+| `@@dbt_model_name` | Имя выполняемой модели |
+| `@@dbt_core_version` | Версия dbt |
+| `@@dbt_databricks_version` | Версия dbt-databricks |
+| `@@dbt_materialized` | Тип материализации: таблица, представление, инкрементальная и т. д. |
 
-These reserved keys cannot be overridden by user-defined tags.
+Пользовательские теги не могут переопределить эти зарезервированные ключи.
 
-### Configuring query tags
+### Настройка тегов запросов {#configuring-query-tags}
 
-You can set query tags at the connection level in your profile or at the model level in your model config. Model-level tags take precedence over connection-level tags.
+Теги задаются на уровне подключения в профиле или на уровне модели в её настройках. Теги модели имеют приоритет над тегами подключения.
 
-#### Connection-level query tags
+#### Теги запросов на уровне подключения {#connection-level-query-tags}
 
-To set query tags for all queries in a connection, add the `query_tags` parameter to your `profiles.yml` file as a JSON string:
+Чтобы задать теги для всех запросов подключения, добавьте в `profiles.yml` параметр `query_tags` в виде строки JSON:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -1196,9 +1196,9 @@ your_profile_name:
 
 </File>
 
-#### Model-level query tags
+#### Теги запросов на уровне модели {#model-level-query-tags}
 
-To set query tags for a specific model, use the `query_tags` config:
+Чтобы задать теги для отдельной модели, используйте настройку `query_tags`:
 
 <File name='models/my_model.sql'>
 
@@ -1212,7 +1212,7 @@ select * from {{ ref('upstream_model') }}
 
 </File>
 
-You can also configure query tags in your `dbt_project.yml` for groups of models:
+Теги для групп моделей можно задать в `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -1227,38 +1227,38 @@ models:
 
 </File>
 
-### Tag precedence and merging
+### Приоритет и объединение тегов {#tag-precedence-and-merging}
 
-When query tags are defined at multiple levels, they are merged with the following precedence (highest to lowest):
+Если теги заданы на нескольких уровнях, они объединяются в следующем порядке приоритета:
 
-1. Model-level tags (from `config()` or schema.yml)
-2. Connection-level tags (from `profiles.yml`)
-3. Default dbt tags (automatically added)
+1. Теги модели из `config()` или `schema.yml`.
+2. Теги подключения из `profiles.yml`.
+3. Теги по умолчанию, добавленные dbt автоматически.
 
-If the same key appears at multiple levels, the higher-precedence value wins.
+Если один ключ задан на нескольких уровнях, используется значение с наивысшим приоритетом.
 
-:::note Why connection-level tags?
+:::note Зачем задавать теги на уровне подключения?
 
-Due to how dbt merges configs, specifying `query_tags` at the model level in `config()` or `schema.yml` will **replace** any `query_tags` you defined in `dbt_project.yml` rather than merging them. This is standard dbt behavior for dictionary configs.
+Если задать `query_tags` на уровне модели в `config()` или `schema.yml`, они **заменят** настройки `query_tags` из `dbt_project.yml` целиком. Так dbt обрабатывает параметры конфигурации типа «словарь».
 
-To work around this limitation, dbt-databricks accepts `query_tags` in your connection profile (`profiles.yml`). Connection-level tags are always merged with model-level tags, allowing you to define common tags once in your profile and selectively add or override specific keys at the model level.
+Чтобы обойти это ограничение, задайте `query_tags` в профиле подключения (`profiles.yml`). dbt-databricks объединяет теги подключения с тегами модели. Общие теги можно задать один раз в профиле, а в модели добавить или переопределить нужные ключи.
 
-**Recommended pattern:**
-- Define shared tags (team, project, environment) in your profile's `query_tags`
-- Use model-level `query_tags` when you need to add model-specific tags
+**Рекомендуемый подход:**
+- Задайте общие теги, например команду, проект и среду, в `query_tags` профиля.
+- Для тегов отдельной модели используйте `query_tags` на уровне модели.
 
 :::
 
-### Limitations
+### Ограничения {#limitations}
 
-- **Maximum 20 tags**: The total number of query tags (including default tags) cannot exceed 20.
-- **Value length**: Tag values must be at most 128 characters. Default tag values that exceed this limit are automatically truncated.
-- **Special characters**: Backslash (`\`), comma (`,`), and colon (`:`) characters in tag values are automatically escaped. A warning is logged when escaping occurs.
-- **Reserved keys**: The keys `@@dbt_model_name`, `@@dbt_core_version`, `@@dbt_databricks_version`, and `@@dbt_materialized` are reserved and cannot be used in user-defined tags.
+- **Не более 20 тегов:** учитываются все теги запросов, включая добавленные по умолчанию.
+- **Длина значения:** не более 128 символов. Более длинные значения тегов по умолчанию автоматически обрезаются.
+- **Специальные символы:** обратная косая черта (`\`), запятая (`,`) и двоеточие (`:`) в значениях экранируются автоматически. При этом в журнал пишется предупреждение.
+- **Зарезервированные ключи:** `@@dbt_model_name`, `@@dbt_core_version`, `@@dbt_databricks_version` и `@@dbt_materialized` нельзя использовать в пользовательских тегах.
 
-### Viewing query tags
+### Просмотр тегов запросов {#viewing-query-tags}
 
-Query tags appear in Databricks system tables and query history. For information on how to query and analyze query tags, see the [Databricks query tags documentation](https://docs.databricks.com/aws/en/sql/user/queries/query-tags).
+Теги запросов отображаются в системных таблицах и истории запросов Databricks. Как запрашивать и анализировать их, описано в [документации Databricks](https://docs.databricks.com/aws/en/sql/user/queries/query-tags).
 
 ## Конфигурации формата файлов по умолчанию {#default-file-format-configurations}
 

@@ -1,35 +1,35 @@
 ---
-title: "dbt_cloud.yml file"
+title: "Файл dbt_cloud.yml"
 id: dbt_cloud.yml
 sidebar_label: "dbt_cloud.yml"
-description: "Reference for the dbt_cloud.yml credentials file used by the dbt platform CLI and dbt VS Code extension to connect to the dbt platform."
+description: "Справочная информация о файле учётных данных dbt_cloud.yml, который используется CLI платформы dbt и расширением dbt для VS Code для подключения к платформе dbt."
 pagination_next: null
 availability: platform_login
 ---
 
-The `dbt_cloud.yml` file stores the credentials that dbt tools &mdash; like the [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation), the [dbt VS Code extension](/docs/about-dbt-extension), and more &mdash; use to authenticate with <Constant name="dbt_platform" />. You can download it from <Constant name="dbt_platform" /> and save it locally to your `.dbt` directory.
+Файл `dbt_cloud.yml` хранит учётные данные, которые инструменты dbt &mdash; такие как [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation), [расширение dbt для VS Code](/docs/about-dbt-extension) и другие &mdash; используют для аутентификации в <Constant name="dbt_platform" />. Вы можете скачать его из <Constant name="dbt_platform" /> и сохранить локально в каталоге `.dbt`.
 
-This page covers:
+На этой странице описаны:
 
-- [How to download it and set up the `.dbt` directory](#download-dbt_cloudyml) for the <Constant name="platform_cli" /> or the VS Code extension
-- [Update or switch projects](#update-or-switch-projects)
-- [The file structure](#file-structure) and field reference
-- [The companion `dbt-cloud` block](#the-dbt-cloud-block-in-dbt_projectyml) in `dbt_project.yml`
+- [Скачивание файла и настройка каталога `.dbt`](#download-dbt_cloudyml) для <Constant name="platform_cli" /> или расширения для VS Code
+- [Обновление или переключение проектов](#update-or-switch-projects)
+- [Структура файла](#file-structure) и справочник полей
+- [Сопутствующий блок `dbt-cloud`](#the-dbt-cloud-block-in-dbt_projectyml) в `dbt_project.yml`
 
-:::tip Keep this file safe
-The `dbt_cloud.yml` file contains API keys. Store it securely and make sure you _do not_ commit it to version control.
+:::tip Храните этот файл в безопасности
+Файл `dbt_cloud.yml` содержит ключи API. Храните его в безопасном месте и убедитесь, что вы _не добавляете_ его в систему контроля версий.
 :::
 
-## Download dbt_cloud.yml
+## Скачивание dbt_cloud.yml {#download-dbt_cloudyml}
 import DbtDirectoryFaq from '/snippets/_dbt-directory-faq.md';
 
-How you download the file depends on whether you're configuring the [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) or the [dbt VS Code extension](/docs/about-dbt-extension). The downloaded `dbt_cloud.yml` includes your [personal access token (PAT)](/docs/dbt-apis/user-tokens).
+Способ скачивания файла зависит от того, настраиваете ли вы [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) или [расширение dbt для VS Code](/docs/about-dbt-extension). Скачанный файл `dbt_cloud.yml` содержит ваш [персональный токен доступа (PAT)](/docs/dbt-apis/user-tokens).
 
-1. In <Constant name="dbt_platform" />, select the project you want to work on. The project must already have a [development environment](/docs/dbt-platform-environments#create-a-development-environment) set up.
-2. Go to **Account settings** → **Your profile**, then follow the steps for your tool:
-  - <Constant name="platform_cli" />: Navigate to **CLI** → **Configure Cloud authentication** and click **Download CLI configuration file**.
-  - dbt VS Code extension: Navigate to **VS Code Extension** → **Set up your credentials** and click **Download credentials**.
-3. Move the file to your `.dbt` directory. If you don't have one yet, try one of these quick setup (one command) options:
+1. В <Constant name="dbt_platform" /> выберите проект, с которым хотите работать. Для проекта уже должна быть настроена [среда разработки](/docs/dbt-platform-environments#create-a-development-environment).
+2. Перейдите в **Account settings** → **Your profile**, затем выполните действия для своего инструмента:
+  - <Constant name="platform_cli" />: перейдите в **CLI** → **Configure Cloud authentication** и нажмите **Download CLI configuration file**.
+  - Расширение dbt для VS Code: перейдите в **VS Code Extension** → **Set up your credentials** и нажмите **Download credentials**.
+3. Переместите файл в каталог `.dbt`. Если у вас ещё нет такого каталога, воспользуйтесь одним из следующих вариантов быстрой настройки (одной командой):
     <Tabs>
     <TabItem value="mac-linux" label="Mac / Linux">
 
@@ -47,32 +47,32 @@ How you download the file depends on whether you're configuring the [<Constant n
     </TabItem>
     </Tabs>
 
-   <Expandable alt_header="Manually create and move your .dbt directory">
+   <Expandable alt_header="Создание и перемещение каталога .dbt вручную">
 
    <DbtDirectoryFaq />
     
    </Expandable>
 
-    If your downloaded file has a numerical suffix (for example, `dbt_cloud(2).yml`), rename it to `dbt_cloud.yml` before moving it. The <Constant name="platform_cli" /> and extension only look for the exact filename.
+    Если имя скачанного файла содержит числовой суффикс (например, `dbt_cloud(2).yml`), переименуйте его в `dbt_cloud.yml` перед перемещением. <Constant name="platform_cli" /> и расширение ищут файл только с этим точным именем.
 
-4. Confirm that the `project-id` in your [`dbt_project.yml` `dbt-cloud` block](#the-dbt-cloud-block-in-dbt_projectyml) matches the project you're working on. This registers and connects your tool to <Constant name="dbt_platform" /> and enables platform features such as <Constant name="mesh" /> and deferral.
+4. Убедитесь, что `project-id` в [блоке `dbt-cloud` файла `dbt_project.yml`](#the-dbt-cloud-block-in-dbt_projectyml) соответствует проекту, с которым вы работаете. Это регистрирует ваш инструмент, подключает его к <Constant name="dbt_platform" /> и позволяет использовать такие возможности платформы, как <Constant name="mesh" /> и отложенное разрешение ссылок (deferral).
 
-## Update or switch projects
+## Обновление или переключение проектов {#update-or-switch-projects}
 
-The `dbt_cloud.yml` file is local to your machine and doesn't update automatically. Make sure to re-download it when:
+Файл `dbt_cloud.yml` хранится локально на вашем компьютере и не обновляется автоматически. Обязательно скачивайте его заново в следующих случаях:
 
-- You get access to a new project and want to work on it locally
-- A project is removed from your account or your project access changes
-- Your token changes or is rotated
-- Your account host changes, such as when your account moves regions
+- Вы получили доступ к новому проекту и хотите работать с ним локально
+- Проект удалён из вашей учётной записи или ваши права доступа к проекту изменились
+- Ваш токен изменён или заменён в рамках ротации
+- Хост вашей учётной записи изменился, например при переносе учётной записи в другой регион
 
-The file can include multiple projects from the same <Constant name="dbt_platform" /> account. To switch projects, update `context.active-project` to the `project-id` for the project you want to use. The active project must match one of the projects listed under `projects`.
+Файл может содержать несколько проектов из одной учётной записи <Constant name="dbt_platform" />. Чтобы переключиться на другой проект, укажите в `context.active-project` значение `project-id` нужного проекта. Активный проект должен соответствовать одному из проектов, перечисленных в `projects`.
 
-If you work in multiple <Constant name="dbt_platform" /> accounts, keep a separate `dbt_cloud.yml` file for each account and move the file you want to use into your `.dbt` directory.
+Если вы работаете с несколькими учётными записями <Constant name="dbt_platform" />, храните отдельный файл `dbt_cloud.yml` для каждой учётной записи и перемещайте нужный файл в каталог `.dbt`.
 
-## File structure
+## Структура файла {#file-structure}
 
-Your `dbt_cloud.yml` file has the following structure:
+Файл `dbt_cloud.yml` имеет следующую структуру:
 
 <File name="dbt_cloud.yml">
 
@@ -101,7 +101,7 @@ projects:
 
 </File>
 
-For example, if you have a Jaffle and wizard shop account, here's what your `dbt_cloud.yml` file would look like:
+Например, если у вас есть учётная запись Jaffle and wizard shop, ваш файл `dbt_cloud.yml` будет выглядеть следующим образом:
 
 <File name="dbt_cloud.yml">
 
@@ -135,29 +135,29 @@ projects:
 ```
 </File>
 
-### Field reference
+### Справочник полей
 
 <SimpleTable>
   
-| Field | Required | Description |
+| Поле | Обязательное | Описание |
 |-------|----------|-------------|
-| `version` | Yes | The schema version of the file. Currently `"1"`. |
-| `context.active-host` | Yes | The `account-host` to use by default. You can find it in the **Account settings** page. |
-| `context.active-project` | Yes | The `project-id` of the project to use by default when running commands. Must match a `project-id` listed under `projects`. |
-| `context.defer-env-id` | No | The environment ID to defer to for build artifacts. Optional override of the project's default deferral environment. <Constant name="platform_cli" /> only. Refer to [Configure deferral](/docs/platform/about-defer#configure-deferral-environment-id). |
-| `projects.project-name` | Yes | A human-readable name for the project. |
-| `projects.project-id` | Yes | The <Constant name="dbt_platform" /> project ID. Find it in the URL when viewing your project (for example, `…/projects/123456`). |
-| `projects.account-name` | Yes | A human-readable name for the account. |
-| `projects.account-id` | Yes | The <Constant name="dbt_platform" /> account ID. |
-| `projects.account-host` | Yes | The host for your account, for example `cloud.getdbt.com`, `emea.dbt.com`, or your single-tenant access URL. |
-| `projects.token-name` | Yes | A name for the [Personal access token (PAT)](/docs/dbt-apis/user-tokens). |
-| `projects.token-value` | Yes | The PAT value. Treat this as a secret. |
+| `version` | Да | Версия схемы файла. В настоящее время — `"1"`. |
+| `context.active-host` | Да | Значение `account-host`, используемое по умолчанию. Его можно найти на странице **Account settings**. |
+| `context.active-project` | Да | Значение `project-id` проекта, используемого по умолчанию при выполнении команд. Должно совпадать с одним из значений `project-id`, перечисленных в `projects`. |
+| `context.defer-env-id` | Нет | Идентификатор среды, из которой следует использовать артефакты сборки при отложенном разрешении ссылок. Необязательное переопределение среды отложенного разрешения ссылок, заданной для проекта по умолчанию. Только для <Constant name="platform_cli" />. См. [Настройка отложенного разрешения ссылок](/docs/platform/about-defer#configure-deferral-environment-id). |
+| `projects.project-name` | Да | Понятное человеку название проекта. |
+| `projects.project-id` | Да | Идентификатор проекта в <Constant name="dbt_platform" />. Его можно найти в URL при просмотре проекта (например, `…/projects/123456`). |
+| `projects.account-name` | Да | Понятное человеку название учётной записи. |
+| `projects.account-id` | Да | Идентификатор учётной записи в <Constant name="dbt_platform" />. |
+| `projects.account-host` | Да | Хост вашей учётной записи, например `cloud.getdbt.com`, `emea.dbt.com` или URL доступа к вашему однопользовательскому экземпляру (single-tenant). |
+| `projects.token-name` | Да | Имя [персонального токена доступа (PAT)](/docs/dbt-apis/user-tokens). |
+| `projects.token-value` | Да | Значение PAT. Обращайтесь с ним как с секретом. |
 
 </SimpleTable>
 
-## The dbt-cloud block in dbt_project.yml
+## Блок dbt-cloud в dbt_project.yml {#the-dbt-cloud-block-in-dbt_projectyml}
 
-The `dbt-cloud` block is a companion config that lives in your project's `dbt_project.yml` file (not in `dbt_cloud.yml`). It tells the <Constant name="platform_cli" />, the <Constant name="studio_ide" />, and <Constant name="fusion" /> which <Constant name="dbt_platform" /> project your local project corresponds to.
+Блок `dbt-cloud` — это сопутствующая конфигурация, которая находится в файле `dbt_project.yml` вашего проекта (а не в `dbt_cloud.yml`). Он сообщает <Constant name="platform_cli" />, <Constant name="studio_ide" /> и <Constant name="fusion" />, какому проекту в <Constant name="dbt_platform" /> соответствует ваш локальный проект.
 
 <File name="dbt_project.yml">
 
@@ -175,14 +175,14 @@ dbt-cloud:
 
 <SimpleTable>
 
-| Field | Required | Description |
+| Поле | Обязательное | Описание |
 |-------|----------|-------------|
-| `project-id` | Yes | The <Constant name="dbt_platform" /> project ID this local project maps to. Find it in the URL when viewing your project (for example, `https://YOUR_ACCESS_URL/develop/26228/projects/123456` → `123456`). |
-| `defer-env-id` | No | The environment ID to defer to for build artifacts. Used for <Constant name="fusion" /> [auto-deferral](/docs/platform/about-defer) and <Constant name="platform_cli" /> deferral overrides. |
-| `account_id` | No | <Constant name="fusion" /> only. The <Constant name="dbt_platform" /> account ID this local project belongs to. Note the underscore &mdash; unlike the other fields in this block, this one isn't hyphenated. |
+| `project-id` | Да | Идентификатор проекта в <Constant name="dbt_platform" />, которому соответствует этот локальный проект. Его можно найти в URL при просмотре проекта (например, `https://YOUR_ACCESS_URL/develop/26228/projects/123456` → `123456`). |
+| `defer-env-id` | Нет | Идентификатор среды, из которой следует использовать артефакты сборки при отложенном разрешении ссылок. Используется для [автоматического отложенного разрешения ссылок](/docs/platform/about-defer) в <Constant name="fusion" /> и переопределения настроек отложенного разрешения ссылок в <Constant name="platform_cli" />. |
+| `account_id` | Нет | Только для <Constant name="fusion" />. Идентификатор учётной записи <Constant name="dbt_platform" />, которой принадлежит этот локальный проект. Обратите внимание на символ подчёркивания &mdash; в отличие от других полей в этом блоке, здесь не используется дефис. |
 </SimpleTable>
 
-## Related docs
+## Связанная документация
 - [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation)
-- [dbt VS Code extension](/docs/about-dbt-extension)
+- [Расширение dbt для VS Code](/docs/about-dbt-extension)
 - [`dbt_project.yml`](/reference/dbt_project.yml)

@@ -1,8 +1,8 @@
 ---
-title: "Wizard CLI command reference"
+title: "Справочник команд Wizard CLI"
 id: "wizard-cli-reference"
-description: "Full reference for all wizard subcommands and global flags."
-sidebar_label: "Command reference"
+description: "Полный справочник всех подкоманд wizard и глобальных флагов."
+sidebar_label: "Справочник команд"
 tags: [AI, Wizard, Reference]
 image: /img/docs/wizard-cli-intro.png
 availability: local_all
@@ -11,50 +11,50 @@ availability: local_all
 import CliGenerated from './_wizard-cli-full-generated.md';
 
 
-# <Constant name="wizard" /> command reference <Lifecycle status="beta"/>
+# Справочник команд <Constant name="wizard" /> <Lifecycle status="beta"/>
 
 <IntroText>
-Full reference for all <code>wizard</code> subcommands and global flags.
+Полный справочник всех подкоманд <code>wizard</code> и глобальных флагов.
 </IntroText>
 
 
-:::info Not the same as dbt commands
+:::info Не путайте с командами dbt
 
-This page is auto-generated and covers `wizard` commands and flags. For standard dbt project commands (`dbt run`, `dbt build`, `dbt test`, and so on.) refer to the [dbt command reference](/reference/dbt-commands).
+Эта страница создаётся автоматически и описывает команды и флаги `wizard`. Сведения о стандартных командах для проектов dbt (`dbt run`, `dbt build`, `dbt test` и т. д.) см. в [справочнике команд dbt](/reference/dbt-commands).
 
-If you see any issues, please [file an issue](https://github.com/dbt-labs/docs.getdbt.com/issues) and we'll be happy to sort it out.
+Если вы обнаружите какие-либо проблемы, [сообщите о них](https://github.com/dbt-labs/docs.getdbt.com/issues), и мы с радостью поможем их решить.
 :::
 
-## Common commands
+## Основные команды
 
-Most people use a handful of commands to get started. View the following table and then refer to the rest of the page or the [examples](#examples) section for more details.
+Большинству пользователей для начала работы достаточно нескольких команд. Ознакомьтесь с таблицей ниже, а затем обратитесь к остальной части страницы или разделу [примеров](#examples) за дополнительными сведениями.
 
 <SimpleTable>
-| I want to... | Command | What it does |
+| Я хочу... | Команда | Что она делает |
 | --- | --- | --- |
-| Start an interactive session | `wizard` | Opens the interactive TUI where you chat with the agent. |
-| Start a session seeded with a prompt | `wizard "summarize what this project does"` | Opens the TUI with your prompt already sent. |
-| Run a one-off task without the TUI | `wizard exec "add tests to my staging models"` | Runs the agent once, prints the result, and exits. Good for scripts and CI. |
-| Review my uncommitted changes | `wizard review --uncommitted` | Runs a code review on your staged, unstaged, and untracked changes. |
-| Review my branch against a base branch | `wizard review --base main` | Runs a code review on the diff between your branch and the base branch. |
-| Pick up where I left off | `wizard resume --last` | Reopens your most recent session with its full history. |
-| Check that my install is healthy | `wizard doctor` | Diagnoses your install, config, auth, runtime health |
-| Update to the latest version | `wizard update` | Updates Wizard to the newest release. |
-| Apply the latest Wizard diff | `wizard apply TASK_ID` | Applies the latest Wizard diff to your working directory. |
-| Sign in or out | `wizard login` / `wizard logout` | Authenticates into or signs out of your dbt account. |
-| Connect to MCP servers | `wizard mcp add dbt` | Connects to MCP server connections. |
+| Начать интерактивный сеанс | `wizard` | Открывает интерактивный текстовый интерфейс (TUI), в котором вы общаетесь с агентом. |
+| Начать сеанс с заданным запросом | `wizard "summarize what this project does"` | Открывает TUI с уже отправленным запросом. |
+| Выполнить разовую задачу без TUI | `wizard exec "add tests to my staging models"` | Запускает агента один раз, выводит результат и завершает работу. Подходит для скриптов и CI. |
+| Проверить мои незакоммиченные изменения | `wizard review --uncommitted` | Выполняет ревью кода для изменений, добавленных и не добавленных в индекс, а также для неотслеживаемых файлов. |
+| Проверить мою ветку относительно базовой ветки | `wizard review --base main` | Выполняет ревью кода на основе различий между вашей веткой и базовой веткой. |
+| Продолжить с того места, где я остановился | `wizard resume --last` | Снова открывает ваш последний сеанс с полной историей. |
+| Проверить работоспособность установленного инструмента | `wizard doctor` | Выполняет диагностику установки, конфигурации, аутентификации и среды выполнения. |
+| Обновиться до последней версии | `wizard update` | Обновляет Wizard до последней версии. |
+| Применить последние изменения Wizard | `wizard apply TASK_ID` | Применяет последние изменения Wizard к вашему рабочему каталогу. |
+| Войти в учётную запись или выйти из неё | `wizard login` / `wizard logout` | Выполняет вход в вашу учётную запись dbt или выход из неё. |
+| Подключиться к серверам MCP | `wizard mcp add dbt` | Устанавливает подключения к серверам MCP. |
 </SimpleTable>
 
 <CliGenerated />
 
-## Examples
+## Примеры {#examples}
 
-Here are some examples and commands that you might use. Replace the example prompts with your own:
+Ниже приведены примеры и команды, которые могут вам пригодиться. Замените примеры запросов своими:
 
 
-- **Run a task without the TUI**
+- **Выполнение задачи без TUI**
 
-  Use `wizard exec` for one-off tasks, scripts, and CI. It runs the agent, prints the result, and exits.
+  Используйте `wizard exec` для разовых задач, скриптов и CI. Эта команда запускает агента, выводит результат и завершает работу.
 
   ```shell
   # Run a task and exit
@@ -67,9 +67,9 @@ Here are some examples and commands that you might use. Replace the example prom
   wizard exec --json "list my models" > result.jsonl
   ```
 
-- **Review your changes**
+- **Проверка ваших изменений**
 
-  `wizard review` runs a code review without starting an interactive session.
+  `wizard review` выполняет ревью кода без запуска интерактивного сеанса.
 
   ```shell
   # Review staged, unstaged, and untracked changes
@@ -79,7 +79,7 @@ Here are some examples and commands that you might use. Replace the example prom
   wizard review --base main
   ```
 
-- **Resume a session**
+- **Возобновление сеанса**
 
   ```shell
   # Continue your most recent session
@@ -89,18 +89,18 @@ Here are some examples and commands that you might use. Replace the example prom
   wizard resume
   ```
 
-- **Override a config value**
+- **Переопределение значения конфигурации**
 
-  Use `-c` to override any value from `~/.dbt/wizard/config.toml` for a single run, without editing the file.
+  Используйте `-c`, чтобы переопределить любое значение из `~/.dbt/wizard/config.toml` для одного запуска, не редактируя файл.
 
   ```shell
   # Set the model for this run only
   wizard exec -c model="dbt/gpt-5.5" "your prompt"
   ```
 
-## Related docs
+## Связанная документация
 
-- [Slash command reference](/docs/dbt-ai/wizard-slash-commands) for interactive TUI slash commands
-- [Headless mode](/docs/dbt-ai/wizard-headless)
-- [Configuration reference](/docs/dbt-ai/wizard-config)
-- [dbt command reference](/reference/dbt-commands) for `dbt run`, `dbt build`, and other dbt commands
+- [Справочник слеш-команд](/docs/dbt-ai/wizard-slash-commands) — слеш-команды для интерактивного TUI
+- [Режим без интерактивного интерфейса](/docs/dbt-ai/wizard-headless)
+- [Справочник по конфигурации](/docs/dbt-ai/wizard-config)
+- [Справочник команд dbt](/reference/dbt-commands) — `dbt run`, `dbt build` и другие команды dbt

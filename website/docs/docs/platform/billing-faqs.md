@@ -1,7 +1,7 @@
 ---
-title: "Billing FAQs"
-sidebar_label: "Billing FAQs"
-description: "Answers to common questions about dbt plans, billing, and usage."
+title: "Частые вопросы об оплате"
+sidebar_label: "Частые вопросы об оплате"
+description: "Ответы на частые вопросы о тарифных планах dbt, оплате и использовании."
 id: billing-faqs
 pagination_next: null
 pagination_prev: null
@@ -13,41 +13,41 @@ availability:
 import DevToStarterUpgradeBody from '/snippets/_dev-to-starter-upgrade-body.md';
 
 <IntroText>
-Common questions about <Constant name="dbt" /> plans, billing, and usage. For pricing and plan details, refer to [Billing](/docs/platform/billing).
+Частые вопросы о тарифных планах <Constant name="dbt" />, оплате и использовании. Подробную информацию о ценах и тарифных планах см. в разделе [Оплата](/docs/platform/billing).
 </IntroText>
 
-<Expandable alt_header="What happens if I need more seats on the Starter plan?">
+<Expandable alt_header="Что делать, если мне нужно больше мест в тарифном плане Starter?">
 
-If you need more developer seats, select the [Contact Sales](https://www.getdbt.com/contact) option from the billing settings to talk to our sales team about an Enterprise or Enterprise+ plan.
-
-</Expandable>
-
-<Expandable alt_header="What if I go significantly over my included free models on the Starter or Developer plan?">
-
-Consider upgrading to a Starter or Enterprise-tier plan. Starter and Enterprise-tier plans include more models and allow you to exceed the monthly usage limit. Enterprise accounts are supported by a dedicated account management team and offer annual plans, custom configurations, and negotiated usage rates.
+Если вам нужно больше мест для разработчиков, выберите [Contact Sales](https://www.getdbt.com/contact) в настройках оплаты, чтобы обсудить с нашим отделом продаж переход на тарифный план Enterprise или Enterprise+.
 
 </Expandable>
 
-<Expandable alt_header="I want to upgrade my plan. Will all of my work carry over?">
+<Expandable alt_header="Что делать, если я значительно превышу количество бесплатных моделей, включённых в тарифный план Starter или Developer?">
 
-Yes. Your <Constant name="dbt" /> account will be upgraded without impacting your existing projects and account settings.
+Рассмотрите возможность перехода на тарифный план Starter или один из тарифных планов уровня Enterprise. Эти планы включают больше моделей и позволяют превышать месячный лимит использования. Клиентам Enterprise предоставляется поддержка выделенной команды по работе с клиентами, а также доступны годовые тарифные планы, индивидуальные конфигурации и согласованные расценки на использование.
 
 </Expandable>
 
-<Expandable alt_header="What happens when I upgrade from Developer to Starter?">
+<Expandable alt_header="Я хочу перейти на более высокий тарифный план. Сохранится ли вся моя работа?">
+
+Да. Тарифный план вашего аккаунта <Constant name="dbt" /> будет обновлён без изменений существующих проектов и настроек аккаунта.
+
+</Expandable>
+
+<Expandable alt_header="Что происходит при переходе с Developer на Starter?">
 
 <DevToStarterUpgradeBody />
 
 </Expandable>
 
-<Expandable alt_header="How do I determine the right plan for me?">
+<Expandable alt_header="Как выбрать подходящий тарифный план?">
 
-The best option is to consult with our sales team. They'll help you figure out what is right for your needs. We also offer a free two-week trial on the Starter plan.
+Лучше всего проконсультироваться с нашим отделом продаж. Наши специалисты помогут вам определить, какой вариант соответствует вашим потребностям. Мы также предлагаем бесплатный двухнедельный пробный период для тарифного плана Starter.
 
 </Expandable>
 
 ## dbt Wizard
 
-<Constant name="wizard" /> is billed on usage: metered per token and drawn from your consumption pool. Enterprise and Enterprise+ accounts get a monthly pool; all other plans start with a 30-day trial and a $100 pool.
+Оплата <Constant name="wizard" /> зависит от использования: оно учитывается по токенам, а стоимость списывается из вашего бюджета потребления. Аккаунтам Enterprise и Enterprise+ предоставляется ежемесячный бюджет; для всех остальных тарифных планов предусмотрен 30-дневный пробный период с бюджетом в размере 100 долларов США.
 
-For trials, consumption pools, spend limits, and BYOK billing, refer to [<Constant name="wizard" /> billing FAQs](/docs/dbt-ai/wizard-billing-faqs).
+Информацию о пробных периодах, бюджетах потребления, лимитах расходов и оплате при использовании собственного ключа (BYOK) см. в разделе [Частые вопросы об оплате <Constant name="wizard" />](/docs/dbt-ai/wizard-billing-faqs).

@@ -1,7 +1,7 @@
 ---
-title: "dbt State trial and billing"
-sidebar_label: "Trial and billing"
-description: "Learn about dbt State trial and billing."
+title: "Пробный период и оплата dbt State"
+sidebar_label: "Пробный период и оплата"
+description: "Узнайте о пробном периоде и оплате dbt State."
 id: "dbt-state-trial"
 tags: ['dbt State']
 availability: everywhere_usage
@@ -11,61 +11,61 @@ import DbtStatePricing from '/snippets/_dbt-state-pricing.md';
 import DbtStateTrialHowItWorks from '/snippets/_dbt-state-trial-how-it-works.md';
 import DbtStateFreePlan from '/snippets/_dbt-state-free-plan.md';
 
-# dbt State trial and billing
+# Пробный период и оплата dbt State
 
 <IntroText>
 
-Start a dbt State trial, continue on your plan's free monthly DATT allowance, or manage paid access from the <Constant name="dbt_platform" /> **Billing & Usage** dashboard.
+Начните пробный период dbt State, продолжайте работу в пределах бесплатного ежемесячного лимита DATT вашего тарифного плана или управляйте платным доступом на панели **Billing & Usage** в <Constant name="dbt_platform" />.
 
 </IntroText>
 
-## How the trial works
+## Как работает пробный период
 
 <DbtStateTrialHowItWorks />
 
 
-## How billing works
+## Как работает оплата
 
 <DbtStatePricing />
 
-## Free monthly DATT allowance
+## Бесплатный ежемесячный лимит DATT {#free-monthly-datt-allowance}
 
 <DbtStateFreePlan />
 
-## Setting up usage-based billing
+## Настройка оплаты по мере использования {#setting-up-usage-based-billing}
 
-dbt State pricing is usage-based; you're billed per target table that dbt State reuses each day, _not_ per <Constant name="dbt_platform" /> seat.
+Стоимость dbt State зависит от объема использования: плата взимается за каждую целевую таблицу, которую dbt State повторно использует в течение дня, а _не_ за каждое пользовательское место в <Constant name="dbt_platform" />.
 
-You can set up billing during your trial or at any time after. Follow the steps for your account type:
+Вы можете настроить оплату во время пробного периода или в любое время после его окончания. Следуйте инструкциям для вашего типа аккаунта:
 
-#### Managed accounts
+#### Управляемые аккаунты
 
-If your account has consumption spend on contract, go to the **State** tab of the **Usage-based features** page and click **Allow** to bill against your committed spend. Otherwise, [contact the dbt Labs sales team](https://www.getdbt.com/contact).
+Если в договоре для вашего аккаунта предусмотрена оплата потребления, перейдите на вкладку **State** на странице **Usage-based features** и нажмите **Allow**, чтобы списывать плату в счет суммы, предусмотренной договором. В противном случае [свяжитесь с отделом продаж dbt Labs](https://www.getdbt.com/contact).
 
-#### Self-hosted and Developer accounts
+#### Аккаунты Self-hosted и Developer
 
-1. Go to **Billing & Usage** > **Usage-based features**.
-2. Click **Set up billing** (if your trial is still active) or **Add billing info** (if your trial has ended).
-3. In **Add a payment method**, enter your card details and billing address.
-4. Click **Save card**.
-5. Under the **State** tab, the card you added is displayed. Click **Confirm and activate**.
+1. Перейдите в **Billing & Usage** > **Usage-based features**.
+2. Нажмите **Set up billing** (если пробный период еще действует) или **Add billing info** (если пробный период завершился).
+3. В разделе **Add a payment method** введите данные карты и платежный адрес.
+4. Нажмите **Save card**.
+5. На вкладке **State** отобразится добавленная карта. Нажмите **Confirm and activate**.
 
-After setting up billing, you can optionally [set a spend alert](#setting-spend-alerts) to get notified when your monthly costs reach a threshold.
+После настройки оплаты вы также можете [настроить оповещение о расходах](#setting-spend-alerts), чтобы получать уведомления, когда ваши ежемесячные расходы достигают порогового значения.
 
-## Setting spend alerts
+## Настройка оповещений о расходах {#setting-spend-alerts}
 
-You can set a spend alert to get notified when your monthly dbt State costs reach a defined threshold.
+Вы можете настроить оповещение о расходах, чтобы получать уведомления, когда ваши ежемесячные расходы на dbt State достигают заданного порогового значения.
 
-1. In your <Constant name="dbt_platform" /> account, click your account name in the lower-left corner above your username and click **Account settings**.
-2. Go to **Billing & Usage** > **Usage-based features**.
-3. In the **Spend alert** section, click **Set a spend alert**.
-4. Enable the toggle to receive email notifications when monthly spend reaches your threshold.
-5. In the **Alert threshold** field, enter the amount in USD that triggers the alert.
-6. Click **Save**.
+1. В своем аккаунте <Constant name="dbt_platform" /> нажмите название аккаунта в левом нижнем углу над именем пользователя и выберите **Account settings**.
+2. Перейдите в **Billing & Usage** > **Usage-based features**.
+3. В разделе **Spend alert** нажмите **Set a spend alert**.
+4. Включите переключатель, чтобы получать уведомления по электронной почте, когда ежемесячные расходы достигают заданного порогового значения.
+5. В поле **Alert threshold** введите сумму в долларах США, при достижении которой будет отправлено оповещение.
+6. Нажмите **Save**.
 
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [dbt State usage and pricing](/docs/platform/billing/dbt-state-usage)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Использование и стоимость dbt State](/docs/platform/billing/dbt-state-usage)

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './styles.module.css';
 import SpellShooter from './spellShooter';
 import PlayInvite from './playInvite';
@@ -257,87 +258,92 @@ const WizardPopcorn = ({ children = 'wizard logo' }) => {
       <button type="button" className={styles.link} onClick={burst}>
         {children}
       </button>
-      {invite && !game && (
-        <PlayInvite
-          onPlay={() => {
-            setInvite(false);
-            setGame(true);
-          }}
-          onDismiss={closeInvite}
-          // Letting it time out isn't a "no" — keep the count running so
-          // clicking on through to 20 still summons the Wizard.
-          onExpire={expireInvite}
-        />
-      )}
-
-      {game && <SpellShooter onClose={closeGame} />}
-
-      <div className={styles.overlay} aria-hidden="true">
-        {pops.map((p) => (
-          <span
-            key={p.id}
-            className={styles.pop}
-            style={{
-              left: `${p.left}px`,
-              top: `${p.top}px`,
-              '--rot': `${p.rot}deg`,
-              '--scale': p.scale,
-              animationDelay: `${p.delay}s`,
-            }}
-          >
-            <Sprite />
-          </span>
-        ))}
-      </div>
-
-      {finale && (
-        <div className={styles.finale} aria-hidden="true">
-          {/* A soft light sweep so the whole screen shimmers. */}
-          <div className={styles.shimmer} />
-          {/* Ambient fairy dust drifting and twinkling across the page. */}
-          {DUST.map((d, i) => (
-            <span
-              key={i}
-              className={styles.dust}
-              style={{
-                left: `${d.left}vw`,
-                top: `${d.top}vh`,
-                fontSize: `${d.size}vmin`,
-                color: d.c,
-                textShadow: `0 0 6px ${d.c}`,
-                '--drift': `${d.drift}px`,
-                '--rise': `${d.rise}px`,
-                '--peak': d.peak,
-                animationDuration: `${d.dur}s`,
-                animationDelay: `${d.delay}s`,
+      {(invite || game || pops.length > 0 || finale) && createPortal(
+        <>
+          {invite && !game && (
+            <PlayInvite
+              onPlay={() => {
+                setInvite(false);
+                setGame(true);
               }}
-            >
-              {d.g}
-            </span>
-          ))}
-          {/* The Wizard only appears once the dust has shimmered in. */}
-          {finale !== 'dust' && (
-            <div className={styles[`finale_${finale}`]}>
-              <Sprite skates />
-              <DbtBit />
-              {finale === 'poofing' &&
-                PUFFS.map((p, i) => (
-                  <span
-                    key={i}
-                    className={styles.puff}
-                    style={{
-                      '--sx': `${p.x}em`,
-                      '--sy': `${p.y}em`,
-                      '--ss': p.s,
-                      animationDelay: `${p.d}s`,
-                    }}
-                  >
-                    {p.g}
-                  </span>
-                ))}
+              onDismiss={closeInvite}
+              // Letting it time out isn't a "no" — keep the count running so
+              // clicking on through to 20 still summons the Wizard.
+              onExpire={expireInvite}
+            />
+          )}
+
+          {game && <SpellShooter onClose={closeGame} />}
+
+          <div className={styles.overlay} aria-hidden="true">
+            {pops.map((p) => (
+              <span
+                key={p.id}
+                className={styles.pop}
+                style={{
+                  left: `${p.left}px`,
+                  top: `${p.top}px`,
+                  '--rot': `${p.rot}deg`,
+                  '--scale': p.scale,
+                  animationDelay: `${p.delay}s`,
+                }}
+              >
+                <Sprite />
+              </span>
+            ))}
+          </div>
+
+          {finale && (
+            <div className={styles.finale} aria-hidden="true">
+              {/* A soft light sweep so the whole screen shimmers. */}
+              <div className={styles.shimmer} />
+              {/* Ambient fairy dust drifting and twinkling across the page. */}
+              {DUST.map((d, i) => (
+                <span
+                  key={i}
+                  className={styles.dust}
+                  style={{
+                    left: `${d.left}vw`,
+                    top: `${d.top}vh`,
+                    fontSize: `${d.size}vmin`,
+                    color: d.c,
+                    textShadow: `0 0 6px ${d.c}`,
+                    '--drift': `${d.drift}px`,
+                    '--rise': `${d.rise}px`,
+                    '--peak': d.peak,
+                    animationDuration: `${d.dur}s`,
+                    animationDelay: `${d.delay}s`,
+                  }}
+                >
+                  {d.g}
+                </span>
+              ))}
+              {/* The Wizard only appears once the dust has shimmered in. */}
+              {finale !== 'dust' && (
+                <div className={styles[`finale_${finale}`]}>
+                  <Sprite skates />
+                  <DbtBit />
+                  {finale === 'poofing' &&
+                    PUFFS.map((p, i) => (
+                      <span
+                        key={i}
+                        className={styles.puff}
+                        style={{
+                          '--sx': `${p.x}em`,
+                          '--sy': `${p.y}em`,
+                          '--ss': p.s,
+                          animationDelay: `${p.d}s`,
+                        }}
+                      >
+                        {p.g}
+                      </span>
+                    ))}
+                </div>
+              )}
             </div>
           )}
-        </div>
+        </>,
+        document.body,
       )}
     </>
   );

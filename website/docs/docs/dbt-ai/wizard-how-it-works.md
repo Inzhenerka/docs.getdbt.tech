@@ -1,241 +1,241 @@
 ---
-title: "How dbt Wizard works"
+title: "Как работает dbt Wizard"
 id: "wizard-how-it-works"
-description: "Understand the dbt Wizard agent loop, tools, project context, and approval workflow."
-sidebar_label: "How dbt Wizard works"
+description: "Узнайте о цикле работы агента dbt Wizard, инструментах, контексте проекта и процессе согласования действий."
+sidebar_label: "Как работает dbt Wizard"
 tags: [AI, Wizard]
 availability: all_users
 ---
 
 import WizardArchitecturePlatform from '/snippets/_wizard-architecture-platform.md';
 
-<Constant name="wizard" /> helps teams develop, troubleshoot, harden, and ship trusted dbt projects faster and with less risk.
+<Constant name="wizard" /> помогает командам быстрее разрабатывать, отлаживать, повышать надёжность и выпускать проверенные проекты dbt с меньшими рисками.
 
-Built for governed data development in dbt, <Constant name="wizard" /> understands your project, routes to the right dbt tools, and validates work with awareness of warehouse operations. Use it to investigate failed runs, debug models, assess impact, make changes, and ship trusted data work in one place.
+Созданный для разработки данных с централизованным управлением в dbt, <Constant name="wizard" /> понимает ваш проект, обращается к нужным инструментам dbt и проверяет результаты с учётом операций в хранилище данных. Используйте его для анализа неудачных запусков, отладки моделей, оценки влияния, внесения изменений и выпуска проверенных решений для работы с данными — всё в одном месте.
 
-Most of how <Constant name="wizard" /> works is the same in [<Constant name="dbt_platform" />](/docs/platform/wizard-platform), [Wizard Desktop](/docs/dbt-ai/wizard-desktop), and in the [terminal CLI](/docs/dbt-ai/wizard-cli). The following sections explain shared behavior first, then call out what differs in each environment.
+Большинство принципов работы <Constant name="wizard" /> одинаковы в [<Constant name="dbt_platform" />](/docs/platform/wizard-platform), [Wizard Desktop](/docs/dbt-ai/wizard-desktop) и [CLI в терминале](/docs/dbt-ai/wizard-cli). В следующих разделах сначала описано общее поведение, а затем — различия между средами.
 ## dbt Information Schema
 
-<Constant name="wizard" /> uses the [dbt Information Schema](/docs/build/dbt-information-schema) &mdash; a contracted interface into your project’s metadata that's ready before your first prompt.
+<Constant name="wizard" /> использует [dbt Information Schema](/docs/build/dbt-information-schema) &mdash; интерфейс к метаданным вашего проекта с определённым контрактом, который готов к работе ещё до вашего первого запроса.
 
-Think of it like a map of your whole city: <Constant name="wizard" /> knows how everything connects before it starts, rather than walking every street to figure out the layout. (No <WizardPopcorn>crystal ball</WizardPopcorn> required.)
+Представьте себе карту всего города: <Constant name="wizard" /> ещё до начала работы знает, как всё связано, вместо того чтобы обходить каждую улицу для изучения планировки. (<WizardPopcorn>Хрустальный шар</WizardPopcorn> не нужен.)
 
-That metadata gives <Constant name="wizard" /> four capabilities that aren't possible from file-reading alone:
+Эти метаданные дают <Constant name="wizard" /> четыре возможности, которые нельзя получить одним лишь чтением файлов:
 
 <SimpleTable>
-| Capability | Description |
+| Возможность | Описание |
 |---|---|
-| Impact analysis | When you ask "what breaks if I change this column?", <Constant name="wizard" /> returns the exact set of downstream models, metrics, tests, and exposures affected — instantly, from the dbt Information Schema. Column-level lineage is tracked, so <Constant name="wizard" /> knows not just which models reference a table, but which ones reference that specific column. |
-| Health checks | <Constant name="wizard" /> knows which models have tests, which don't, which have stale data, which have failing contracts, and which had recent run failures — as a structured dataset. You can ask "what's unhealthy in this part of my DAG?" and get a precise answer without running anything. |
-| Data profiling | <Constant name="wizard" /> can profile your data — row counts, column distributions, null rates — and use that context when deciding how to build or refactor a model. It can reason about your data without materializing models or running expensive queries. |
-| Validation planning | <Constant name="wizard" /> uses project metadata to identify affected resources and choose relevant checks. In the CLI, you control the depth of structured validation before commands run. |
+| Анализ влияния | Когда вы спрашиваете «что сломается, если я изменю этот столбец?», <Constant name="wizard" /> мгновенно возвращает из dbt Information Schema точный набор затронутых нижестоящих моделей, метрик, тестов и exposures. Происхождение данных отслеживается на уровне столбцов, поэтому <Constant name="wizard" /> знает не только, какие модели ссылаются на таблицу, но и какие из них ссылаются на конкретный столбец. |
+| Проверки состояния | <Constant name="wizard" /> располагает структурированным набором данных о том, у каких моделей есть тесты, у каких их нет, в каких данные устарели, какие нарушают контракты и у каких недавно были неудачные запуски. Вы можете спросить «какие проблемы есть в этой части моего DAG?» и получить точный ответ, ничего не запуская. |
+| Профилирование данных | <Constant name="wizard" /> может профилировать ваши данные — определять количество строк, распределения значений столбцов, долю null — и учитывать этот контекст при выборе способа построения или рефакторинга модели. Он может анализировать ваши данные без материализации моделей и выполнения дорогостоящих запросов. |
+| Планирование валидации | <Constant name="wizard" /> использует метаданные проекта, чтобы определить затронутые ресурсы и выбрать подходящие проверки. В CLI вы управляете глубиной структурированной валидации до выполнения команд. |
 </SimpleTable>
 
-<Constant name="wizard" /> builds and updates this metadata from dbt artifacts. In <Constant name="dbt_platform" />, project state comes from your connected development environment. In the terminal, run `dbt parse`, `dbt compile`, or `dbt build` before a session so <Constant name="wizard" /> has your latest local project state.
+<Constant name="wizard" /> создаёт и обновляет эти метаданные на основе артефактов dbt. В <Constant name="dbt_platform" /> состояние проекта поступает из подключённой среды разработки. В терминале запустите `dbt parse`, `dbt compile` или `dbt build` перед началом сеанса, чтобы <Constant name="wizard" /> располагал актуальным состоянием локального проекта.
 
-:::note dbt version shown in the status panel
-The dbt version <Constant name="wizard" /> displays comes from your project's manifest (`target/manifest.json`), not the `dbt` executable on your `PATH`. If you generated the manifest with a different binary, <Constant name="wizard" /> reports that version until you recompile. Run `dbt compile` (or `dbt parse`/`dbt build`) with your intended dbt to refresh the manifest and the displayed version.
+:::note Версия dbt, отображаемая на панели состояния
+Версия dbt, которую отображает <Constant name="wizard" />, берётся из манифеста вашего проекта (`target/manifest.json`), а не из исполняемого файла `dbt` в вашем `PATH`. Если вы создали манифест с помощью другого исполняемого файла, <Constant name="wizard" /> будет показывать ту версию до повторной компиляции. Выполните `dbt compile` (или `dbt parse`/`dbt build`) с нужной версией dbt, чтобы обновить манифест и отображаемую версию.
 :::
 
-## Validation mechanics {#validation-loop-mechanics}
+## Механика валидации {#validation-loop-mechanics}
 
-Validation can combine static checks, dbt commands, development builds, downstream impact analysis, and development-to-production comparisons. The checks that run depend on the surface, available tools, project state, permissions, and the validation depth you approve.
+Валидация может сочетать статические проверки, команды dbt, сборки в среде разработки, анализ влияния на нижестоящие ресурсы и сравнение среды разработки с продуктивной средой. Выполняемые проверки зависят от интерфейса, доступных инструментов, состояния проекта, разрешений и одобренной вами глубины валидации.
 
 
-In <Constant name="wizard" /> CLI or [Wizard Desktop](/docs/dbt-ai/wizard-desktop), choose light, medium, heavy, or skipped validation. Medium validation is the default: 
-- Light validation focuses on syntax, linting where supported, tests, and code review without materializing the changed models. 
-- Medium validation adds development materialization and downstream checks. 
-- Heavy validation adds explicit expectations and development-to-production comparisons when the required relations are available.
+В <Constant name="wizard" /> CLI или [Wizard Desktop](/docs/dbt-ai/wizard-desktop) выберите лёгкую, среднюю, глубокую валидацию или её пропуск. По умолчанию используется средняя валидация: 
+- Лёгкая валидация сосредоточена на синтаксисе, линтинге там, где он поддерживается, тестах и проверке кода без материализации изменённых моделей. 
+- Средняя валидация дополнительно включает материализацию в среде разработки и проверки нижестоящих ресурсов. 
+- Глубокая валидация дополнительно включает явно заданные ожидаемые результаты и сравнение среды разработки с продуктивной средой, когда доступны необходимые отношения.
 
-<Constant name="wizard" /> reports failures and checks it couldn't complete. A passing check doesn't remove the need to review business logic, and a skipped check should remain visible in your review. For a complete procedure and the approval points for warehouse commands, refer to [Validate dbt changes with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes).
+<Constant name="wizard" /> сообщает об ошибках и проверках, которые не удалось выполнить. Успешная проверка не отменяет необходимости проверить бизнес-логику, а пропущенная проверка должна оставаться видимой при ревью. Полную процедуру и этапы согласования команд для хранилища данных см. в разделе [Валидация изменений dbt с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes).
 
-## Tools and capabilities
+## Инструменты и возможности {#tools-and-capabilities}
 
-<Constant name="wizard" /> takes action through a defined set of tools — from reading files to running dbt commands — so you can see exactly what it's doing and why.
+<Constant name="wizard" /> выполняет действия с помощью определённого набора инструментов — от чтения файлов до запуска команд dbt, — поэтому вы можете точно видеть, что он делает и почему.
 
 <SimpleTable>
-| Tool | Purpose | Where available |
+| Инструмент | Назначение | Где доступен |
 |---|---|---|
-| File read/write | Read files and propose edits as diffs | Platform, CLI, and Desktop |
-| Project queries | Query lineage, tests, metadata, metrics, and run results | Platform, CLI, and Desktop |
-| dbt commands | Run commands like `dbt compile`, `dbt build`, and `dbt test` | Platform, CLI, and Desktop |
-| Bash | Execute shell commands in your project directory | CLI and Desktop |
-| Web search | Look up dbt docs and troubleshooting information | Platform, CLI, and Desktop |
-| MCP | Access connected MCP servers | CLI and Desktop (add servers); platform includes built-in docs and platform context |
+| Чтение и запись файлов | Чтение файлов и предложение правок в виде diff | Платформа, CLI и Desktop |
+| Запросы к проекту | Запросы к графу зависимостей, тестам, метаданным, метрикам и результатам запусков | Платформа, CLI и Desktop |
+| Команды dbt | Выполнение команд, таких как `dbt compile`, `dbt build` и `dbt test` | Платформа, CLI и Desktop |
+| Bash | Выполнение команд оболочки в каталоге проекта | CLI и Desktop |
+| Поиск в интернете | Поиск документации dbt и информации об устранении неполадок | Платформа, CLI и Desktop |
+| MCP | Доступ к подключённым MCP-серверам | CLI и Desktop (добавление серверов); платформа включает встроенную документацию и контекст платформы |
 </SimpleTable>
 
-<Constant name="wizard" /> never runs destructive commands (such as `dbt build --full-refresh`, `dbt run --full-refresh`, or `git reset --hard`) without approval.
+<Constant name="wizard" /> никогда не выполняет потенциально разрушительные команды (такие как `dbt build --full-refresh`, `dbt run --full-refresh` или `git reset --hard`) без одобрения.
 
-## Skills and memories
+## Навыки и память
 
-<Constant name="wizard" /> supports reusable skills and memories that help it apply your team's conventions across sessions.
+<Constant name="wizard" /> поддерживает многократно используемые навыки и память, которые помогают ему применять принятые в вашей команде соглашения в разных сеансах.
 
 <SimpleTable>
-| Feature | Description |
+| Функция | Описание |
 |---|---|
-| Skills | Standardize repeatable workflows and best practices. For example, a skill can tell <Constant name="wizard" /> how your team structures staging models, writes tests, or documents columns. |
-| Memories | Store project-specific context that should carry between sessions. For example, <Constant name="wizard" /> can remember that your project uses `customer_id` as the standard customer key or that finance models require extra review. |
+| Навыки | Стандартизируют повторяющиеся рабочие процессы и лучшие практики. Например, навык может объяснять <Constant name="wizard" />, как ваша команда структурирует staging-модели, пишет тесты или документирует столбцы. |
+| Память | Хранит контекст конкретного проекта, который должен сохраняться между сеансами. Например, <Constant name="wizard" /> может запомнить, что в вашем проекте `customer_id` используется как стандартный ключ клиента или что финансовые модели требуют дополнительной проверки. |
 </SimpleTable>
 
-<Constant name="wizard" /> automatically loads skills from your project and local directories in both the platform and the CLI. In the platform, start a new chat after adding or changing skills so they are picked up.
+<Constant name="wizard" /> автоматически загружает навыки из каталогов проекта и локальных каталогов как на платформе, так и в CLI. На платформе после добавления или изменения навыков начните новый чат, чтобы они были подхвачены.
 
-Refer to the [Skills](/docs/dbt-ai/wizard-skills) page for more details.
+Подробнее см. на странице [Навыки](/docs/dbt-ai/wizard-skills).
 
-## In dbt platform
+## В dbt platform {#in-the-dbt-platform}
 
-Use <Constant name="wizard" /> in [<Constant name="dbt_platform" />](/docs/platform/wizard-platform) from the home app or <Constant name="studio_ide" />. 
+Используйте <Constant name="wizard" /> в [<Constant name="dbt_platform" />](/docs/platform/wizard-platform) из главного приложения или <Constant name="studio_ide" />. 
 
 <WizardArchitecturePlatform />
 
-### Approval and review
+### Согласование и проверка
 
-By default, <Constant name="wizard" /> keeps you in control before it changes your project or runs commands.
+По умолчанию <Constant name="wizard" /> оставляет вам контроль перед изменением проекта или выполнением команд.
 
-In the platform:
+На платформе:
 
-- <Constant name="wizard" /> shows file edits as diffs for you to accept or reject before anything is persisted
-- dbt commands ask for confirmation before running
-- In the home app and Studio IDE, toggle **Ask for approval** or **Edit files automatically** to choose how much freedom the agent has per session
+- <Constant name="wizard" /> показывает правки файлов в виде diff, чтобы вы могли принять или отклонить их до сохранения
+- Команды dbt запрашивают подтверждение перед выполнением
+- В главном приложении и Studio IDE переключайтесь между **Ask for approval** и **Edit files automatically**, чтобы выбрать степень свободы агента для каждого сеанса
 
-There is no bash sandbox in the platform — shell access is not exposed the way it is in the CLI.
+На платформе нет изолированной среды bash — доступ к оболочке не предоставляется так, как в CLI.
 
-### Sessions and conversations
+### Сеансы и диалоги {#sessions-and-conversations}
 
-In the platform, a session is a saved conversation in the <Constant name="wizard" /> panel or home app:
+На платформе сеанс — это сохранённый диалог на панели <Constant name="wizard" /> или в главном приложении:
 
-- Ask follow-up questions without restating full context
-- Continue an earlier investigation, refactor, or validation task
-- Review prior prompts, responses, and proposed changes in the conversation list
+- Задавайте уточняющие вопросы без повторного изложения всего контекста
+- Продолжайте ранее начатый анализ, рефакторинг или валидацию
+- Просматривайте предыдущие запросы, ответы и предложенные изменения в списке диалогов
 
-Start a new session with **Start new dbt Wizard chat** in the panel. Chat history is retained for 90 days. Refreshing the same browser tab keeps your active session; opening a new tab starts empty.
+Начните новый сеанс с помощью **Start new dbt Wizard chat** на панели. История чата хранится 90 дней. Обновление той же вкладки браузера сохраняет активный сеанс; новая вкладка открывается без активного диалога.
 
-:::tip Start a new chat for each task
-Use a separate chat for each discrete unit of work, such as building one model, debugging one job failure, or reviewing a change. A focused conversation keeps the context relevant to the task, so <Constant name="wizard" /> doesn't carry over assumptions from unrelated work. Return to an existing chat only when you're continuing that same task.
+:::tip Начинайте новый чат для каждой задачи
+Используйте отдельный чат для каждой самостоятельной задачи, например построения одной модели, отладки одного сбоя задания или проверки изменения. Сфокусированный диалог сохраняет контекст, относящийся к задаче, чтобы <Constant name="wizard" /> не переносил предположения из несвязанной работы. Возвращайтесь к существующему чату, только если продолжаете ту же задачу.
 :::
 
-For Studio-specific behavior and availability, refer to [<Constant name="wizard" /> in Studio IDE](/docs/dbt-ai/wizard-ide).
+Особенности работы и доступность в Studio описаны в разделе [<Constant name="wizard" /> в Studio IDE](/docs/dbt-ai/wizard-ide).
 
-## Locally (CLI and Desktop)
+## Локально (CLI и Desktop)
 
-Use the [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) or [Wizard Desktop](/docs/dbt-ai/wizard-desktop) for local development. Everything in this section applies to both, since the app runs the same engine as the CLI.
+Используйте [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) или [Wizard Desktop](/docs/dbt-ai/wizard-desktop) для локальной разработки. Всё в этом разделе относится к обоим вариантам, поскольку приложение использует тот же движок, что и CLI.
 
-### Connections and authentication (MCP)
+### Подключения и аутентификация (MCP) {#connections-and-authentication-mcp}
 
-<Constant name="wizard" /> can connect to MCP servers from the CLI, including the [dbt MCP server](/docs/dbt-ai/about-mcp), for access to platform APIs, <Constant name="semantic_layer" /> metadata, and cross-project context. For the complete setup (like supported server types, configuration keys, authentication, and examples), refer to [Use MCP servers with the <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp). MCP connector support for Wizard Desktop is coming soon.
+<Constant name="wizard" /> может подключаться к MCP-серверам из CLI, включая [dbt MCP server](/docs/dbt-ai/about-mcp), для доступа к API платформы, метаданным <Constant name="semantic_layer" /> и контексту разных проектов. Полную информацию о настройке (например, поддерживаемые типы серверов, ключи конфигурации, аутентификацию и примеры) см. в разделе [Использование MCP-серверов с <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp). Поддержка MCP-коннекторов в Wizard Desktop появится в ближайшее время.
 
-To connect to an MCP server, run the following commands, replacing `MCP_NAME` with a name of your choice and `YOUR_MCP_URL` with the URL of the MCP server:
+Чтобы подключиться к MCP-серверу, выполните следующие команды, заменив `MCP_NAME` выбранным вами именем, а `YOUR_MCP_URL` — URL-адресом MCP-сервера:
 
 ```bash
 wizard mcp add MCP_NAME --url https://YOUR_MCP_URL
 wizard mcp login MCP_NAME
 ```
 
-You can see more options by running `wizard mcp --help`.
+Дополнительные параметры можно посмотреть, выполнив `wizard mcp --help`.
 
-For example, to connect to the dbt MCP server, replace `DBT_MCP_ENDPOINT` with your endpoint and run:
+Например, чтобы подключиться к dbt MCP server, замените `DBT_MCP_ENDPOINT` адресом вашей конечной точки и выполните:
 
 ```bash
 wizard mcp add dbt --url DBT_MCP_ENDPOINT
 ```
 
-You should see output similar to `Added global MCP server 'dbt'.` Then authenticate:
+Вы должны увидеть вывод, похожий на `Added global MCP server 'dbt'.` Затем выполните аутентификацию:
 
 ```bash
 wizard mcp login dbt
 ```
 
-The dbt MCP server reads its connection settings &mdash; such as `DBT_HOST`, `DBT_TOKEN`, `DBT_PROJECT_DIR`, `DBT_PATH`, `DBT_PROD_ENV_ID`, and `DBT_ACCOUNT_ID` &mdash; from environment variables, typically a `.env` file in your dbt project root. 
+dbt MCP server считывает настройки подключения &mdash; такие как `DBT_HOST`, `DBT_TOKEN`, `DBT_PROJECT_DIR`, `DBT_PATH`, `DBT_PROD_ENV_ID` и `DBT_ACCOUNT_ID` &mdash; из переменных окружения, обычно из файла `.env` в корне вашего проекта dbt. 
 
-If <Constant name="wizard" /> can't reach the server, confirm these values are set, then restart `wizard` so it picks up the changes. 
+Если <Constant name="wizard" /> не может подключиться к серверу, убедитесь, что эти значения заданы, а затем перезапустите `wizard`, чтобы он подхватил изменения. 
 
-For the full list of variables and an example `.env` file, refer to [Set up self-hosted MCP](/docs/dbt-ai/setup-local-mcp) and the [Environment variables reference](/docs/dbt-ai/mcp-environment-variables).
+Полный список переменных и пример файла `.env` см. в разделах [Настройка самостоятельно размещаемого MCP](/docs/dbt-ai/setup-local-mcp) и [Справочник переменных окружения](/docs/dbt-ai/mcp-environment-variables).
 
-### Deferral and state
+### Отложенное разрешение ссылок и состояние {#deferral-and-state}
 
-When you work on part of a project, <Constant name="wizard" /> uses [deferral](/reference/node-selection/defer) so it can reuse models that are already built elsewhere (for example, in production) instead of rebuilding everything. This saves time and warehouse cost. 
+Когда вы работаете над частью проекта, <Constant name="wizard" /> использует [отложенное разрешение ссылок (deferral)](/reference/node-selection/defer), чтобы повторно использовать модели, уже построенные в другой среде (например, в продуктивной), вместо повторного построения всего проекта. Это экономит время и снижает затраты на хранилище данных. 
 
-How deferral is handled depends on the mode set up in `wizard_config.toml` for your project:
+Способ обработки отложенного разрешения ссылок зависит от режима, заданного для вашего проекта в `wizard_config.toml`:
 
 <SimpleTable>
-| `deferral.mode` value | Behavior |
+| Значение `deferral.mode` | Поведение |
 |---|---|
-| `"wizard"` | <Constant name="wizard" /> handles deferral for you. You tell <Constant name="wizard" /> which target from your `profiles.yml` to defer to (it tries to detect one automatically when you first set up the project). <Constant name="wizard" /> then compiles that target and reuses its models for any upstream models you haven't built yourself. |
-| `"fusion_cloud"` | <Constant name="dbt_platform" /> handles deferral against your connected environment, so <Constant name="wizard" /> doesn't manage local state. |
-| `"cloud_cli"` | The <Constant name="platform_cli" /> handles credentials and deferral through <Constant name="dbt_platform" />, so <Constant name="wizard" /> doesn't manage local state or inject deferral flags. |
-| `"dbt_state"` | dbt State or run cache handles deferral, so <Constant name="wizard" /> skips its own production compile. |
-| `"manual"` | You maintain the deferral manifest path manually. |
-| `"disabled"` | Deferral is disabled for the project. |
+| `"wizard"` | <Constant name="wizard" /> управляет отложенным разрешением ссылок за вас. Вы указываете <Constant name="wizard" />, какой target из `profiles.yml` использовать для отложенного разрешения ссылок (при первоначальной настройке проекта он пытается определить его автоматически). Затем <Constant name="wizard" /> компилирует этот target и повторно использует его модели вместо вышестоящих моделей, которые вы ещё не построили самостоятельно. |
+| `"fusion_cloud"` | <Constant name="dbt_platform" /> обрабатывает отложенное разрешение ссылок с использованием подключённой среды, поэтому <Constant name="wizard" /> не управляет локальным состоянием. |
+| `"cloud_cli"` | <Constant name="platform_cli" /> управляет учётными данными и отложенным разрешением ссылок через <Constant name="dbt_platform" />, поэтому <Constant name="wizard" /> не управляет локальным состоянием и не добавляет флаги отложенного разрешения ссылок. |
+| `"dbt_state"` | dbt State или кеш запусков обрабатывает отложенное разрешение ссылок, поэтому <Constant name="wizard" /> пропускает собственную компиляцию для продуктивной среды. |
+| `"manual"` | Вы вручную поддерживаете путь к манифесту для отложенного разрешения ссылок. |
+| `"disabled"` | Отложенное разрешение ссылок отключено для проекта. |
 </SimpleTable>
 
-For more about dbt State, refer to [About dbt State](/docs/deploy/dbt-state-about).
+Подробнее о dbt State см. в разделе [О dbt State](/docs/deploy/dbt-state-about).
 
-The per-project `favor_state` setting defaults to `true`. With favor-state on, deferred relations take precedence. Set `favor_state = false` when you want dbt to use relations you have already built in development and fall back to the deferred environment for relations that aren't available there.
+Параметр `favor_state`, задаваемый для каждого проекта, по умолчанию имеет значение `true`. Когда favor-state включён, отношения из среды отложенного разрешения ссылок имеют приоритет. Установите `favor_state = false`, если хотите, чтобы dbt использовал отношения, уже построенные вами в среде разработки, и обращался к среде отложенного разрешения ссылок только для отношений, отсутствующих в среде разработки.
 
-<Constant name="wizard" /> stores the deferral mode for each project in `wizard_config.toml` under `deferral.mode`. For a complete setup and verification procedure, refer to [Developing with production deferral](/best-practices/how-to-use-wizard/wizard-6-production-deferral).
+<Constant name="wizard" /> хранит режим отложенного разрешения ссылок для каждого проекта в `wizard_config.toml` в параметре `deferral.mode`. Полную процедуру настройки и проверки см. в разделе [Разработка с отложенным разрешением ссылок на продуктивную среду](/best-practices/how-to-use-wizard/wizard-6-production-deferral).
 
 
-### Approval and sandboxing
+### Согласование и изоляция {#approval-and-sandboxing}
 
-By default, the CLI keeps you in control before it changes your project or runs commands.
+По умолчанию CLI оставляет вам контроль перед изменением проекта или выполнением команд.
 
-In the terminal:
+В терминале:
 
-- <Constant name="wizard" /> shows file changes as diffs so you can review them
-- Commands that need permission under the active approval policy request confirmation before running
-- The active sandbox profile limits where shell commands can read and write. <Constant name="wizard" /> shows the active profile when the session starts.
+- <Constant name="wizard" /> показывает изменения файлов в виде diff, чтобы вы могли их проверить
+- Команды, требующие разрешения согласно действующей политике согласования, запрашивают подтверждение перед выполнением
+- Активный профиль изоляции ограничивает области, в которых команды оболочки могут читать и записывать данные. <Constant name="wizard" /> показывает активный профиль при запуске сеанса.
 
-Choose the sandbox profile and approval behavior that match the task:
+Выберите профиль изоляции и режим согласования, соответствующие задаче:
 
 ```bash
-# Restrict shell commands to read-only access.
+# Ограничить команды оболочки доступом только для чтения.
 wizard --sandbox read-only
 
-# Never prompt for approval during this session.
-# Useful for trusted tasks where you want Wizard to iterate without stopping.
+# Никогда не запрашивать одобрение в течение этого сеанса.
+# Полезно для доверенных задач, в которых Wizard должен работать итеративно без остановок.
 wizard --ask-for-approval never
 
-# Allow shell commands to write inside your workspace directory.
-# Useful for commands that generate files.
+# Разрешить командам оболочки запись в каталоге вашего рабочего пространства.
+# Полезно для команд, создающих файлы.
 wizard --sandbox workspace-write
 ```
 
-Use relaxed settings when you want <Constant name="wizard" /> to move faster on a scoped task you trust, such as a large refactor, generating documentation, or applying repetitive test updates. The tradeoff is that <Constant name="wizard" /> has more freedom to act before you review each step, so use these settings in a clean working tree or feature branch.
+Используйте менее строгие настройки, если хотите, чтобы <Constant name="wizard" /> быстрее выполнял ограниченную задачу, которой вы доверяете, например масштабный рефакторинг, создание документации или однотипные обновления тестов. Компромисс в том, что <Constant name="wizard" /> получает больше свободы действий до проверки вами каждого шага, поэтому используйте эти настройки в чистом рабочем дереве или отдельной ветке для изменений.
 
-Approval settings apply to the current session. They are not scoped per action type in the command line flags shown above; for example, `--ask-for-approval never` relaxes prompts broadly for that session. To set defaults that persist across sessions or apply only to a specific project, use the [configuration file](/docs/dbt-ai/wizard-config).
+Настройки согласования применяются к текущему сеансу. Показанные выше флаги командной строки не позволяют ограничить их отдельными типами действий; например, `--ask-for-approval never` отменяет запросы подтверждения в целом для этого сеанса. Чтобы задать значения по умолчанию, сохраняющиеся между сеансами или применяемые только к определённому проекту, используйте [файл конфигурации](/docs/dbt-ai/wizard-config).
 
-You can view more options by running:
+Дополнительные параметры можно посмотреть, выполнив:
 
 ```bash
 wizard --help
 ```
 
-### Sessions
+### Сеансы {#sessions}
 
-Locally, a session is a saved conversation and task history from a previous run on your machine. Sessions help you return to earlier work, continue a multi-step task, or review what the agent did in a past interaction.
+При локальной работе сеанс — это сохранённый диалог и история задач из предыдущего запуска на вашем компьютере. Сеансы помогают вернуться к предыдущей работе, продолжить многоэтапную задачу или проверить, что агент делал при прошлом взаимодействии.
 
-Within a session, you can:
+В рамках сеанса вы можете:
 
-- Ask follow-up questions without restating the full context
-- Continue work on an earlier investigation, refactor, or validation task
-- Review prior prompts, responses, tool calls, and proposed changes
+- Задавать уточняющие вопросы без повторного изложения всего контекста
+- Продолжать ранее начатый анализ, рефакторинг или валидацию
+- Просматривать предыдущие запросы, ответы, вызовы инструментов и предложенные изменения
 
-Resume a previous session with:
+Возобновите предыдущий сеанс с помощью:
 
 ```bash
-wizard resume        # choose from a list of saved sessions
-wizard resume --last # resume the most recent session
+wizard resume        # выбрать из списка сохранённых сеансов
+wizard resume --last # возобновить последний сеанс
 ```
 
-Local sessions are saved on your machine, in the CLI and in Wizard Desktop alike. This is separate from platform conversations, which are stored in your <Constant name="dbt_platform" /> account.
+Локальные сеансы сохраняются на вашем компьютере как в CLI, так и в Wizard Desktop. Они отделены от диалогов на платформе, которые хранятся в вашей учётной записи <Constant name="dbt_platform" />.
 
-:::tip Start a new session for each task
-Use a separate session for each discrete unit of work, such as building one model, debugging one job failure, or reviewing one change. Resume a previous session only when you're continuing the same task. In the CLI, type `/new` to start fresh without leaving the TUI, or type `/compact` to summarize the conversation if a long session for a single task approaches the context limit. For more information, refer to [Slash commands](/docs/dbt-ai/wizard-slash-commands).
+:::tip Начинайте новый сеанс для каждой задачи
+Используйте отдельный сеанс для каждой самостоятельной задачи, например построения одной модели, отладки одного сбоя задания или проверки одного изменения. Возобновляйте предыдущий сеанс, только если продолжаете ту же задачу. В CLI введите `/new`, чтобы начать заново, не выходя из TUI, или `/compact`, чтобы создать краткое изложение диалога, если длительный сеанс по одной задаче приближается к пределу контекста. Подробнее см. в разделе [Слеш-команды](/docs/dbt-ai/wizard-slash-commands).
 :::
 
-## Related docs
+## Связанная документация
 
-- [<Constant name="wizard" /> overview](/docs/platform/wizard-overview)
-- [<Constant name="wizard" /> in dbt platform](/docs/platform/wizard-platform)
-- [Use <Constant name="wizard" /> locally](/docs/platform/wizard-overview#get-started)
-- [<Constant name="wizard" /> command reference](/docs/dbt-ai/wizard-cli-reference)
-- [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro) for recommended workflows
+- [Обзор <Constant name="wizard" />](/docs/platform/wizard-overview)
+- [<Constant name="wizard" /> в dbt platform](/docs/platform/wizard-platform)
+- [Локальное использование <Constant name="wizard" />](/docs/platform/wizard-overview#get-started)
+- [Справочник команд <Constant name="wizard" />](/docs/dbt-ai/wizard-cli-reference)
+- [Как использовать dbt Wizard в вашем проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro) — рекомендуемые рабочие процессы

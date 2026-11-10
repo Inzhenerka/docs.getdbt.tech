@@ -1,7 +1,7 @@
 ---
 title: "Токены сервисных аккаунтов"
 id: "service-tokens"
-description: "Service account tokens help you define permissions for securing access to your dbt account and its projects."
+description: "Сервисные токены позволяют задавать разрешения на доступ к аккаунту dbt и его проектам."
 availability:
   surface: platform
   access: paid_plan

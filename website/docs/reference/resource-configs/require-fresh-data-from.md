@@ -1,6 +1,6 @@
 ---
 title: require_fresh_data_from
-description: "Configure how many direct parent nodes need fresh data before a node is rebuilt by dbt State."
+description: "Настройте, сколько непосредственных родительских узлов должны иметь свежие данные, прежде чем dbt State пересоберёт узел."
 id: "require-fresh-data-from"
 tags: ['dbt State']
 ---
@@ -8,7 +8,7 @@ tags: ['dbt State']
 # require_fresh_data_from
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
 
@@ -22,7 +22,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Properties YAML file">
+<TabItem value="property" label="YAML-файл свойств">
 
 <File name="models/<filename>.yml">
 
@@ -37,7 +37,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="SQL file config">
+<TabItem value="sql" label="Конфигурация в SQL-файле">
 
 <File name="models/<filename>.sql">
 
@@ -53,24 +53,24 @@ models:
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
-`require_fresh_data_from` controls how many direct parent nodes need fresh data before dbt State considers this node eligible for a rebuild. dbt State still looks for an object to reuse before triggering an actual rebuild.
+`require_fresh_data_from` определяет, сколько непосредственных родительских узлов должны иметь свежие данные, прежде чем dbt State сочтёт этот узел готовым к пересборке. Прежде чем фактически запустить пересборку, dbt State всё равно ищет объект для повторного использования.
 
-| Value | Behavior |
+| Значение | Поведение |
 |-------|----------|
-| `any` (default) | The node becomes eligible for a rebuild when _any_ direct parent has fresh data. Rebuilds more frequently; may increase spend. |
-| `all` | The node only becomes eligible for a rebuild when _all_ direct parents have fresh data. Rebuilds less frequently; reduces spend. |
+| `any` (по умолчанию) | Узел становится готовым к пересборке, когда у _любого_ непосредственного родительского узла появляются свежие данные. Пересборки выполняются чаще; затраты могут увеличиться. |
+| `all` | Узел становится готовым к пересборке, только когда у _всех_ непосредственных родительских узлов появляются свежие данные. Пересборки выполняются реже; затраты снижаются. |
 
-## Default
+## Значение по умолчанию
 
 `any`
 
-## Examples
+## Примеры
 
-### Require all parents to have fresh data
+### Требовать свежие данные у всех родительских узлов
 
-Use `all` for a model that joins multiple sources and should only rebuild when every upstream dependency has updated:
+Используйте `all` для модели, которая объединяет несколько источников и должна пересобираться только после обновления каждой вышестоящей зависимости:
 
 <File name="models/fct_orders.yml">
 
@@ -84,7 +84,7 @@ models:
 
 </File>
 
-### Apply a project-wide default
+### Задать значение по умолчанию для всего проекта
 
 <File name="dbt_project.yml">
 
@@ -96,7 +96,7 @@ models:
 
 </File>
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)

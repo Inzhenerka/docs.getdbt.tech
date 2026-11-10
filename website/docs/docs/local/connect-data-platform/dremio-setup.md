@@ -11,7 +11,7 @@ meta:
   cloud_support: Not Supported
   min_supported_version: 'Dremio 22.0'
   slack_channel_name: 'db-dremio'
-  slack_channel_link: '[https://www.getdbt.com/community](https://getdbt.slack.com/archives/C049G61TKBK)'
+  slack_channel_link: 'https://getdbt.slack.com/archives/C049G61TKBK'
   platform_name: 'Dremio'
   config_page: '/reference/resource-configs/no-configs'
 availability: local_free

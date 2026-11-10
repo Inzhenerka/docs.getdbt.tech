@@ -1,6 +1,6 @@
 ---
-title: "Set up BigQuery OAuth"
-description: "Learn how dbt administrators can use BigQuery OAuth to control access in a dbt account"
+title: "Настройка BigQuery OAuth"
+description: "Узнайте, как администраторы dbt могут использовать BigQuery OAuth для управления доступом в аккаунте dbt"
 id: "set-up-bigquery-oauth"
 pagination_next: null
 availability:
@@ -11,278 +11,278 @@ availability:
 
 import EntraIdGetToken from '/snippets/_entra-id-get-token.md';
 
-# Set up BigQuery OAuth
+# Настройка BigQuery OAuth {#set-up-bigquery-oauth}
 
-:::info Enterprise-tier feature
+:::info Функция уровня Enterprise
 
-This guide describes a feature available in the <Constant name="dbt_platform" /> Enterprise and Enterprise+ plans. If you’re interested in learning more about our Enterprise-tier plans, contact us at sales@getdbt.com. 
+В этом руководстве описана функция, доступная в тарифных планах Enterprise и Enterprise+ <Constant name="dbt_platform" />. Если вы хотите узнать больше о наших тарифных планах уровня Enterprise, свяжитесь с нами по адресу sales@getdbt.com. 
 
 :::
 
-The <Constant name="dbt_platform" /> supports [OAuth](https://cloud.google.com/bigquery/docs/authentication) with BigQuery, providing an additional layer of security for dbt enterprise users. 
+<Constant name="dbt_platform" /> поддерживает [OAuth](https://cloud.google.com/bigquery/docs/authentication) для BigQuery, обеспечивая дополнительный уровень безопасности для корпоративных пользователей dbt. 
 
-## Set up BigQuery native OAuth
+## Настройка нативного OAuth BigQuery {#set-up-bigquery-native-oauth}
 
-When BigQuery OAuth is enabled for a <Constant name="dbt_platform" /> project, all <Constant name="dbt_platform" /> developers must authenticate with BigQuery to access development tools, such as the <Constant name="studio_ide" />. 
+Когда BigQuery OAuth включен для проекта <Constant name="dbt_platform" />, все разработчики <Constant name="dbt_platform" /> должны аутентифицироваться в BigQuery для доступа к инструментам разработки, таким как <Constant name="studio_ide" />.
 
 
-To set up BigQuery OAuth in the <Constant name="dbt_platform" />, a BigQuery admin must:
-1. [Locate the redirect URI value](#locate-the-redirect-uri-value) in the <Constant name="dbt_platform" />.
-2. [Create a BigQuery OAuth 2.0 client ID and secret](#creating-a-bigquery-oauth-20-client-id-and-secret) in BigQuery.
-3. [Configure the connection](/docs/platform/manage-access/set-up-bigquery-oauth#configure-the-connection-in-dbt) in the <Constant name="dbt_platform" />.
+Чтобы настроить BigQuery OAuth в <Constant name="dbt_platform" />, администратор BigQuery должен:
+1. [Найти значение URI перенаправления](#locate-the-redirect-uri-value) в <Constant name="dbt_platform" />.
+2. [Создать OAuth 2.0 client ID и secret для BigQuery](#creating-a-bigquery-oauth-20-client-id-and-secret) в BigQuery.
+3. [Настроить подключение](/docs/platform/manage-access/set-up-bigquery-oauth#configure-the-connection-in-dbt) в <Constant name="dbt_platform" />.
 
-To use BigQuery in the <Constant name="studio_ide" />, all developers must:
-1. [Authenticate to BigQuery](#authenticating-to-bigquery) in their profile credentials.
+Чтобы использовать BigQuery в <Constant name="studio_ide" />, всем разработчикам необходимо:
+1. [Пройти аутентификацию в BigQuery](#authenticating-to-bigquery) в разделе учетных данных своего профиля.
 
-### Locate the redirect URI value
-To get started, locate the connection's redirect URI for configuring BigQuery OAuth. To do so:
+### Найдите значение redirect URI {#locate-the-redirect-uri-value}
+Для начала найдите redirect URI подключения, необходимый для настройки BigQuery OAuth. Для этого:
 
-1. Navigate to your account name, above your profile icon on the left side panel. 
-2. Select **Account settings** from the menu. 
-3. From the left sidebar, select **Connections**.
-4. Click the BigQuery connection.
-5. Locate the **Redirect URI** field under the **Development OAuth** section. Copy this value to your clipboard to use later on.
+1. Перейдите к имени вашего аккаунта над иконкой профиля на левой боковой панели.
+2. Выберите **Account settings** в меню.
+3. В левой боковой панели выберите **Connections**.
+4. Нажмите на подключение BigQuery.
+5. Найдите поле **Redirect URI** в разделе **Development OAuth**. Скопируйте это значение в буфер обмена — оно понадобится позже.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/dbt-cloud-bq-id-secret-02.png" title="Accessing the BigQuery OAuth configuration in dbt" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/dbt-cloud-bq-id-secret-02.png" title="Доступ к настройкам BigQuery OAuth в dbt" />
 
-### Creating a BigQuery OAuth 2.0 client ID and secret
+### Создание client ID и secret для BigQuery OAuth 2.0 {#creating-a-bigquery-oauth-20-client-id-and-secret}
 
 :::note
 
-The <Constant name="dbt_platform" /> will request the required BigQuery scopes automatically during the OAuth flow. [Configuring scopes in the BigQuery OAuth consent screen](https://developers.google.com/workspace/guides/configure-oauth-consent) is optional and not required for <Constant name="dbt_platform" /> to connect to BigQuery. Required scopes are requested and approved when users authenticate with OAuth.
+<Constant name="dbt_platform" /> автоматически запросит необходимые области доступа BigQuery в процессе OAuth. [Настройка областей доступа на экране согласия OAuth для BigQuery](https://developers.google.com/workspace/guides/configure-oauth-consent) необязательна и не требуется для подключения <Constant name="dbt_platform" /> к BigQuery. Необходимые области доступа запрашиваются и одобряются при аутентификации пользователей через OAuth.
 
 :::
 
-To get started, you need to create a client ID and secret for [authentication](https://cloud.google.com/bigquery/docs/authentication) with BigQuery. This client ID and secret will be stored in the <Constant name="dbt_platform" /> to manage the OAuth connection between the <Constant name="dbt_platform" /> users and BigQuery.
+Для начала необходимо создать идентификатор и секрет клиента для [аутентификации](https://cloud.google.com/bigquery/docs/authentication) в BigQuery. Эти идентификатор и секрет клиента будут храниться в <Constant name="dbt_platform" /> для управления OAuth-подключением между пользователями <Constant name="dbt_platform" /> и BigQuery.
 
-1. In the BigQuery console, navigate to **APIs & Services** and select **Credentials**:
+1. В консоли BigQuery перейдите в **API и сервисы** и выберите **Учетные данные**:
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/BQ-nav.gif" title="BigQuery navigation to credentials" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/BQ-nav.gif" title="Переход к учетным данным в BigQuery" />
 
-On the **Credentials** page, you can see your existing keys, client IDs, and service accounts.
+На странице **Credentials** вы увидите существующие ключи, client ID и service accounts.
 
-2. Set up an [OAuth consent screen](https://support.google.com/cloud/answer/6158849) if you haven't already. 
-3. Click **+ Create Credentials** at the top of the page and select **OAuth client ID**.
+2. Настройте [экран согласия OAuth](https://support.google.com/cloud/answer/6158849), если вы еще этого не сделали. 
+3. Нажмите **+ Создать учетные данные** в верхней части страницы и выберите **Идентификатор клиента OAuth**.
 
-4. Fill in the client ID configuration. **Authorized JavaScript Origins** are not applicable. 
-5. Add an item to **Authorized redirect URIs** and replace `REDIRECT_URI` with the value you copied to your clipboard earlier from the connection's **OAuth 2.0 Settings** section in the <Constant name="dbt_platform" />:
+4. Заполните настройки идентификатора клиента. **Разрешенные источники JavaScript** не применяются. 
+5. Добавьте элемент в **Разрешенные URI перенаправления** и замените `REDIRECT_URI` значением, которое вы ранее скопировали в буфер обмена из раздела **Настройки OAuth 2.0** подключения в <Constant name="dbt_platform" />:
 
-| Config                       | Value           |
+| Параметр                     | Значение        |
 | ---------------------------- | --------------- |
-| **Application type**         | Web application |
+| **Тип приложения**         | Веб-приложение |
 | **Name**                     | <Constant name="dbt_platform" />       |
-| **Authorized redirect URIs** | `REDIRECT_URI`  |
+| **Разрешенные URI перенаправления** | `REDIRECT_URI`  |
 <br />
-6. Click **Create** to create the BigQuery OAuth app and see the app client ID and secret values. These values are available even if you close the app screen, so this isn't the only chance you have to save them.
+6. Нажмите **Создать**, чтобы создать приложение BigQuery OAuth и просмотреть значения идентификатора и секрета клиента приложения. Эти значения доступны и после закрытия экрана приложения, поэтому вы сможете сохранить их и позже.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/bq-oauth-app-02.png" title="Create an OAuth app in BigQuery" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/bq-oauth-app-02.png" title="Создание приложения OAuth в BigQuery" />
 
-### Configure the Connection in dbt
-Now that you have an OAuth app set up in BigQuery, you'll need to add the client ID and secret to the <Constant name="dbt_platform" />. To do so:
- 1. Navigate back to the Connection details page, as described in [Locate the redirect URI value](#locate-the-redirect-uri-value).
- 2. Add the client ID and secret from the BigQuery OAuth app under the **OAuth 2.0 Settings** section.
- 3. Enter the BigQuery token URI. The default value is `https://oauth2.googleapis.com/token`. 
+### Настройте подключение в dbt {#configure-the-connection-in-dbt}
+Теперь, когда приложение OAuth настроено в BigQuery, необходимо добавить идентификатор и секрет клиента в <Constant name="dbt_platform" />. Для этого:
+ 1. Вернитесь на страницу деталей подключения, как описано в разделе [Найдите значение redirect URI](#locate-the-redirect-uri-value).
+ 2. Добавьте client ID и secret из OAuth-приложения BigQuery в разделе **OAuth 2.0 Settings**.
+ 3. Укажите token URI BigQuery. Значение по умолчанию — `https://oauth2.googleapis.com/token`.
 
-### Authenticating to BigQuery
-Once the BigQuery OAuth app is set up for a <Constant name="dbt_platform" /> project, each <Constant name="dbt_platform" /> user will need to authenticate with BigQuery in order to use the <Constant name="studio_ide" />. To do so:
+### Аутентификация в BigQuery {#authenticating-to-bigquery}
+После настройки OAuth-приложения BigQuery для проекта <Constant name="dbt_platform" /> каждому пользователю <Constant name="dbt_platform" /> необходимо аутентифицироваться в BigQuery, чтобы использовать <Constant name="studio_ide" />. Для этого:
 
-1. Navigate to your account name, above your profile icon on the left side panel.
-2. Select **Account settings** from the menu.
-3. From the left sidebar, select **Credentials**.
-4. Choose the project from the list.
-5. Ensure the **Authentication Method** is set to **Native OAuth**.
-6. Select **Connect to BigQuery**.
+1. Перейдите к имени своей учетной записи над значком профиля на левой боковой панели.
+2. Выберите **Настройки учетной записи** в меню.
+3. На левой боковой панели выберите **Учетные данные**.
+4. Выберите проект из списка.
+5. Убедитесь, что для параметра **Метод аутентификации** установлено значение **Встроенный OAuth**.
+6. Выберите **Подключиться к BigQuery**.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" width="100%" title="Navigate to account settings in dbt platform."/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/1-settings-gear-icon.png" width="100%" title="Переход к настройкам учетной записи в платформе dbt."/>
 
-<Lightbox src="/img/docs/dbt-platform/connect-to-bigquery.png" width="90%" title="Connect BigQuery account."/>
+<Lightbox src="/img/docs/dbt-platform/connect-to-bigquery.png" width="90%" title="Подключение учетной записи BigQuery."/>
 
 </DocCarousel>
 
-You will then be redirected to BigQuery and asked to approve the drive, cloud platform, and BigQuery scopes, unless the connection is less privileged.
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/BQ-access.png" width="60%" title="BigQuery access request" />
+После этого вы будете перенаправлены в BigQuery, где потребуется одобрить доступы к Google Drive, Cloud Platform и BigQuery, если только подключение не обладает меньшими привилегиями.
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/BQ-auth/BQ-access.png" width="60%" title="Запрос доступа к BigQuery" />
 
-Select **Allow**. This redirects you back to the <Constant name="dbt_platform" />. You are now an authenticated BigQuery user and can begin accessing dbt development tools. 
+Выберите **Разрешить**. Вы будете перенаправлены обратно в <Constant name="dbt_platform" />. Теперь вы прошли аутентификацию в BigQuery и можете начать пользоваться инструментами разработки dbt. 
 
 <a id="set-up-bigquery-workload-identity-federation-"></a>
 
-## Set up BigQuery Workload Identity Federation <Lifecycle status= "managed" /> {#set-up-bigquery-workload-identity-federation}
+## Настройка Workload Identity Federation для BigQuery <Lifecycle status= "managed" /> {#set-up-bigquery-workload-identity-federation}
 
-Workload Identity Federation (WIF) allows application workloads, running outside the <Constant name="dbt_platform" />, to act as a service account without the need to manage service accounts or other keys for deployment environments. The following instructions will enable you to authenticate your BigQuery connection in the <Constant name="dbt_platform" /> using WIF. 
-Currently, Microsoft Entra ID is the only supported identity provider (IdP). If you need additional IdP support, please contact your account team.
+Workload Identity Federation (WIF) позволяет рабочим нагрузкам приложений, выполняющимся за пределами <Constant name="dbt_platform" />, действовать от имени сервисного аккаунта без необходимости управлять сервисными аккаунтами или другими ключами для сред развертывания. Следующие инструкции позволят вам настроить аутентификацию подключения BigQuery в <Constant name="dbt_platform" /> с помощью WIF. 
+В настоящее время единственным поддерживаемым провайдером идентификации (IdP) является Microsoft Entra ID. Если вам требуется поддержка дополнительных IdP, свяжитесь с вашей аккаунт-командой.
 
-### 1. Set up Entra ID
+### 1. Настройка Entra ID {#1-set-up-entra-id}
 
-Create an app in Entra where dbt will request access tokens when authenticating to BigQuery via the workload identity pool:
+Создайте приложение в Entra, через которое dbt будет запрашивать access tokens при аутентификации в BigQuery через workload identity pool:
 
-1. From the **app registrations** screen, click **New registration**.
-2. Give the app a name that makes it easily identifiable.
-3. Ensure **Supported account types** are set to “Accounts in this organizational directory only (Org name - Single Tenant).”
-4. Click **Register** to see the application’s overview screen.
-5. From the **app overview**, click **Expose an API** in the left menu.
-6. Click **Add** next to Application ID URI. The field will automatically populate. 
-7. Click **Save**.
-8. (Optional) To include the `sub` claim in tokens issued by this application, configure [optional claims in Entra ID](https://learn.microsoft.com/en-us/entra/identity-platform/optional-claims?tabs=appui).  
-The `sub` (subject) claim uniquely identifies the user or service principal for whom the token is issued.  
-When you configure service account impersonation in GCP, the Workload Identity Federation mapping uses this `sub` value to verify the identity of the calling Entra application.
-9. (Optional but recommended) Test your Entra ID configuration by requesting a token:
+1. На экране **app registrations** нажмите **New registration**.
+2. Задайте приложению понятное имя.
+3. Убедитесь, что **Supported account types** установлено в “Accounts in this organizational directory only (Org name - Single Tenant).”
+4. Нажмите **Register**, чтобы открыть экран обзора приложения.
+5. На странице обзора приложения выберите **Expose an API** в левом меню.
+6. Нажмите **Add** рядом с Application ID URI. Поле заполнится автоматически.
+7. Нажмите **Save**.
+8. (Опционально) Чтобы включить claim `sub` в токены, выпускаемые этим приложением, настройте [optional claims в Entra ID](https://learn.microsoft.com/en-us/entra/identity-platform/optional-claims?tabs=appui).  
+Claim `sub` (subject) однозначно идентифицирует пользователя или service principal, для которого был выпущен токен.  
+При настройке service account impersonation в GCP сопоставление Workload Identity Federation использует это значение `sub` для проверки идентичности вызывающего Entra-приложения.
+9. (Опционально, но рекомендуется) Проверьте конфигурацию Entra ID, запросив токен:
    
    <EntraIdGetToken />
 
-Workload Identity Federation utilizes a machine-to-machine OAuth flow that is unattended by the user; as such, a redirect URI won't need to be set for the application. Step 3 in this section is crucial because it determines the audience for tokens issued from the app and informs the workpool in GCP whether the calling application has permission to access the resources guarded by the workpool.
+Workload Identity Federation использует машинный OAuth-поток (machine-to-machine), не требующий участия пользователя; поэтому redirect URI для приложения настраивать не нужно. Шаг 3 в этом разделе критически важен, так как он определяет audience для токенов, выпускаемых приложением, и сообщает workpool в GCP, имеет ли вызывающее приложение право доступа к ресурсам, защищенным этим workpool.
 
-- **Related documentation:** [GCP &mdash; Prepare your external identity provider](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#create)
+- **Связанная документация:** [GCP — Prepare your external identity provider](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#create)
 
-### 2. Create a Workpool and Workpool Provider in GCP
+### 2. Создайте Workpool и Workpool Provider в GCP {#2-create-a-workpool-and-workpool-provider-in-gcp}
 
-1. In your GCP account's main menu, navigate to **IAM & Admin** and click the **Workload Identity Federation** option (not to be confused with the **Work_force_ Identity Federation** option directly adjacent). 
-2. If you haven’t created a workpool yet, click **Get started** or create a new workpool (use button near the top of the page).
-3. Give the workpool a name and description. Per the [GCP documentation](https://cloud.google.com/iam/docs/workload-identity-federation#pools), a new pool should be created for each non-Google Cloud environment that needs to access Google Cloud resources, such as development, staging, or production environments. The workpool should be named accordingly to make it easily identifiable in the future.
-4. When creating your provider:
-    - Set the type of the provider to **OpenID Connect (OIDC)**.
-    - Name the provider something identifiable, like `Entra ID`.
-    - Set the URL to https://sts.windows.net/YOUR_TENANT_ID/. This can be found in the token itself, if you decode it via jwt.io. You can also see a reference to the expected issuer URL for Entra in the [GCP documentation for WIF](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#create_the_workload_identity_pool_and_provider).
-        - Replace `YOUR_TENANT_ID` with your tenant ID.
-        - The tenant (provider) ID can be found in the app registration created in [section 1 of these instructions](#1-set-up-entra-id); it's called **Directory (tenant) ID** and can be found in the overview section for the application.
-    - For **Audiences**, select **Allowed Audiences** and set the value to the **Application ID URI** that was defined for your Entra ID app.
-5. Click **Continue**.
-6. Under **Configure provider attributes**, set the mapping for `google.subject` to `assertion.sub`.
-7. Click **Save**.
+1. В главном меню GCP перейдите в **IAM & Admin** и выберите **Workload Identity Federation** (не путать с **Work_force_ Identity Federation**, расположенным рядом).
+2. Если вы еще не создали workpool, нажмите **Get started** или создайте новый workpool (кнопка в верхней части страницы).
+3. Задайте имя и описание workpool. Согласно [документации GCP](https://cloud.google.com/iam/docs/workload-identity-federation#pools), для каждого окружения вне Google Cloud (development, staging, production и т.д.) следует создавать отдельный pool. Название workpool должно отражать это, чтобы его было легко идентифицировать в будущем.
+4. При создании provider:
+    - Установите тип provider в **OpenID Connect (OIDC)**.
+    - Задайте понятное имя provider, например `Entra ID`.
+    - Укажите URL https://sts.windows.net/YOUR_TENANT_ID/. Его можно найти в самом токене, если декодировать его через jwt.io. Также сведения об ожидаемом URL издателя для Entra можно найти в [документации GCP по WIF](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#create_the_workload_identity_pool_and_provider).
+        - Замените `YOUR_TENANT_ID` идентификатором вашего арендатора.
+        - Tenant (provider) ID можно найти в app registration, созданной в [разделе 1](#1-set-up-entra-id); он называется **Directory (tenant) ID** и отображается на странице overview приложения.
+    - В разделе **Audiences** выберите **Allowed Audiences** и укажите **Application ID URI**, заданный для вашего Entra ID приложения.
+5. Нажмите **Continue**.
+6. В разделе **Configure provider attributes** установите сопоставление `google.subject` → `assertion.sub`.
+7. Нажмите **Save**.
 
-### 3. Service Account Impersonation
+### 3. Имперсонация сервисного аккаунта {#3-service-account-impersonation}
 
-A workpool either uses a service account or is granted direct resource access to determine which resources a caller can access. The [GCP documentation](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#access) provides more detailed information on configuring both for your workpool. We chose the service account approach in our implementation because it offered greater flexibility.
+Workpool либо использует service account, либо получает прямой доступ к ресурсам для определения того, к каким ресурсам может обращаться вызывающая сторона. Более подробную информацию см. в [документации GCP](https://cloud.google.com/iam/docs/workload-identity-federation-with-other-clouds#access). В нашей реализации мы выбрали подход с service account, так как он обеспечивает большую гибкость.
 
-If you haven’t already, create a new service account:
-1. From the main menu, select **IAM & Admin** 
-2. Click **Service Accounts**. 
-3. Click **Create service account**. Google recommends creating a service account per workload.
-4. Assign the relevant roles you would like this service account to have. In our experience, `BigQuery Admin` is the default role with required access.
+Если вы еще не сделали этого, создайте новый service account:
+1. В главном меню выберите **IAM & Admin**.
+2. Нажмите **Service Accounts**.
+3. Нажмите **Create service account**. Google рекомендует создавать отдельный service account для каждой нагрузки.
+4. Назначьте необходимые роли. По нашему опыту, роль `BigQuery Admin` является ролью по умолчанию с необходимым уровнем доступа.
 
-Once you've created the service account, navigate back to the workpool you created in the previous step: 
-1. Click the **Grant Access** option at the top of the page.
-2. Select **Grant access using Service Account Impersonation**.
-3. Select the service account you just created.
-4. Under **Select Principals**, set `subject` as the **Attribute Name**. For the **Attribute Value**, set it to the `sub` (subject) claim value from the Entra ID access token.
+После создания service account вернитесь к workpool, созданному на предыдущем шаге:
+1. Нажмите **Grant Access** в верхней части страницы.
+2. Выберите **Grant access using Service Account Impersonation**.
+3. Выберите созданный service account.
+4. В разделе **Select Principals** укажите `subject` в качестве **Attribute Name**, а в поле **Attribute Value** задайте значение claim `sub` из access token Entra ID.
    
-   <Expandable alt_header="Obtain the sub value">
-   To obtain the `sub` value, request an access token from Entra ID. The `sub` claim is consistent 
-   across all tokens issued by this application:
+   <Expandable alt_header="Получение значения sub">
+   Чтобы получить значение `sub`, запросите access token из Entra ID. Claim `sub` является
+   постоянным для всех токенов, выпускаемых этим приложением:
    <EntraIdGetToken />
    
    </Expandable>
 
-### 4. Set up dbt
+### 4. Настройка dbt {#4-set-up-dbt}
 
-To configure a BigQuery connection to use WIF authentication in the <Constant name="dbt_platform" />, you must set up a custom OAuth integration configured with details from the Entra application used as your workpool provider in GCP.
+Чтобы настроить подключение BigQuery для использования аутентификации WIF в <Constant name="dbt_platform" />, необходимо создать пользовательскую интеграцию OAuth с данными приложения Entra, используемого в качестве поставщика пула рабочих нагрузок в GCP.
 <Constant name="dbt_platform" />: 
 
-1. Navigate to **Account settings** --> **Integrations**.
-2. Scroll down to the section for **Custom OAuth Integrations** and create a new integration.
-3. Fill out all fields with the appropriate information from your IdP environment.
-    - The Application ID URI should be set to the expected audience claim on tokens issued from the Entra application. It will be the same URI your workpool provider has been configured to expect.
-    - You do not have to add the Redirect URI to your Entra application.
+1. Перейдите в **Настройки учетной записи** --> **Интеграции**.
+2. Прокрутите вниз до раздела **Пользовательские интеграции OAuth** и создайте новую интеграцию.
+3. Заполните все поля соответствующей информацией из вашего окружения IdP.
+    - Application ID URI должен быть установлен в значение ожидаемого audience claim для токенов, выпускаемых Entra-приложением. Это будет тот же URI, который ожидает ваш workpool provider.
+    - Добавлять URI перенаправления в приложение Entra не требуется.
 
-### 5. Create connections in dbt
+### 5. Создайте подключения в dbt {#5-create-connections-in-dbt}
 
-To get started, create a new connection in the <Constant name="dbt_platform" />:
+Для начала создайте новое подключение в <Constant name="dbt_platform" />:
 
-1. Navigate to **Account settings** --> **Connections**.
-2. Click **New connection** and select **BigQuery** as the connection type. You will then see the option to select **BigQuery** or **BigQuery (Legacy)**. Select **BigQuery**.
-3. For the **Deployment Environment Authentication Method**, select **Workload Identity Federation**.
-4. Fill out the **Google Cloud Project ID** and any optional settings you need.
-5. Select the OAuth Configuration you created in the previous section from the drop-down. 
-6. Configure your development connection: 
-    - [BigQuery OAuth](/docs/platform/connect-data-platform/connect-bigquery#bigquery-oauth) (recommended).
-        - Set this up in the same connection as the one you're using for WIF under **`OAuth2.0 settings`**
-    - Service JSON.
-        - You must create a separate connection with the Service JSON configuration.
+1. Перейдите в **Account settings** --> **Connections**.
+2. Нажмите **New connection** и выберите **BigQuery** в качестве типа подключения. Затем выберите **BigQuery** (не **BigQuery (Legacy)**).
+3. В поле **Deployment Environment Authentication Method** выберите **Workload Identity Federation**.
+4. Заполните **Google Cloud Project ID** и при необходимости другие параметры.
+5. Выберите OAuth Configuration, созданную на предыдущем шаге, из выпадающего списка.
+6. Настройте подключение для разработки:
+    - [BigQuery OAuth](/docs/platform/connect-data-platform/connect-bigquery#bigquery-oauth) (рекомендуется).
+        - Настраивается в том же подключении, что и WIF, в разделе **`OAuth2.0 settings`**
+    - JSON сервисного аккаунта.
+        - Необходимо создать отдельное подключение с конфигурацией Service JSON.
 
-### 6. Set up project
+### 6. Настройте проект {#6-set-up-project}
 
-To connect a new project to your WIF configuration:
-1. Navigate to **Account settings** --> **Projects**.
-2. Click **New project**. 
-3. Give your project a name and (optional) subdirectory path and click **Continue**.
-4. Select the **Connection** with the WIF configuration.
-5. Configure the remainder of the project with the appropriate fields.
+Чтобы подключить новый проект к вашей WIF-конфигурации:
+1. Перейдите в **Account settings** --> **Projects**.
+2. Нажмите **New project**.
+3. Укажите имя проекта и (опционально) путь к поддиректории, затем нажмите **Continue**.
+4. Выберите **Connection** с WIF-конфигурацией.
+5. Завершите настройку проекта, заполнив остальные необходимые поля.
 
-### 7. Set up deployment environment
+### 7. Настройте deployment environment {#7-set-up-deployment-environment}
 
-Create a new or updated environment to use the WIF connection. 
+Создайте новое или обновите существующее окружение для использования WIF-подключения.
 
-When you set your environment connection to the WIF configuration, you will then see two fields appear under the Deployment credentials section: 
-- **Workload pool provider path:** This field is required for all WIF configurations. For example:
+После установки WIF-подключения для окружения в разделе Deployment credentials появятся два поля:
+- **Путь к поставщику пула рабочих нагрузок:** Это поле обязательно для всех конфигураций WIF. Например:
  - `//iam.googleapis.com/projects/<numeric_project_id>/locations/global/workloadIdentityPools/<workpool_name>/providers/<workpool_providername>`
-- **Service account impersonation URL:** Used only if you’ve configured your workpool to use a service account impersonation for accessing your BigQuery resources (as opposed to granting the workpool direct resource access to the BigQuery resources). For example:
+- **URL олицетворения сервисного аккаунта:** Используется только в том случае, если вы настроили пул рабочих нагрузок на использование олицетворения сервисного аккаунта для доступа к ресурсам BigQuery (вместо предоставления пулу прямого доступа к ресурсам BigQuery). Например:
  - `https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/<serviceaccountemail>:generateAccessToken`
 
-To avoid errors from incorrect casing or typos, we recommend retrieving these values directly from GCP rather than constructing them manually:
+Чтобы избежать ошибок из-за неверного регистра символов или опечаток, рекомендуем получать эти значения непосредственно из GCP, а не составлять их вручную:
 
-1. In the GCP console, go to **IAM & Admin > Workload Identity Federation**.
-2. Click your workload identity pool, then click the provider you created for this configuration.
-3. Click **Download configuration** at the top of the provider detail page.
-4. Open the downloaded JSON file and copy the following values:
-    - The `audience` field &mdash; paste into the **Workload pool provider path** field in dbt.
-    - The `service_account_impersonation_url` field &mdash; paste into the **Service account impersonation URL** field in dbt.
+1. В консоли GCP перейдите в **IAM и администрирование > Workload Identity Federation**.
+2. Нажмите на свой пул удостоверений рабочих нагрузок, затем на поставщика, созданного для этой конфигурации.
+3. Нажмите **Скачать конфигурацию** в верхней части страницы сведений о поставщике.
+4. Откройте скачанный JSON-файл и скопируйте следующие значения:
+    - Поле `audience` &mdash; вставьте в поле **Путь к поставщику пула рабочих нагрузок** в dbt.
+    - Поле `service_account_impersonation_url` &mdash; вставьте в поле **URL олицетворения сервисного аккаунта** в dbt.
 
-If you don't already have a job based on the deployment environment with a connection set up for WIF, you should create one now. Once you've configured it with the preferred settings, run the job.
+Если у вас еще нет задания на основе среды развертывания с подключением, настроенным для WIF, создайте его сейчас. Задав нужные настройки, запустите задание.
 
-## FAQs
+## Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Warehouse/bq-oauth-drive-scope" />
 
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
-The following section provides troubleshooting steps for common issues with BigQuery OAuth connections.
+В следующем разделе приведены шаги по устранению распространенных проблем с подключениями BigQuery OAuth.
 
-#### Connection fails after granting Google permissions
+#### Сбой подключения после предоставления разрешений Google {#connection-fails-after-granting-google-permissions}
 
-When connecting a BigQuery account, you may successfully sign in to Google and approve the requested permissions, but then see an error page (like `403 Account restricted`) instead of returning to the <Constant name="dbt_platform" />. This typically appears as a server error message rather than the credentials page you started from.
+При подключении учетной записи BigQuery вы можете успешно войти в Google и одобрить запрошенные разрешения, но затем увидеть страницу ошибки (например, `403 Account restricted`) вместо возврата в <Constant name="dbt_platform" />. Обычно отображается сообщение об ошибке сервера вместо страницы учетных данных, с которой вы начали.
 
-This can happen when your Google Workspace organization restricts which third-party applications can access Google services. Even though Google allowed you to sign in and view the consent screen, the organization's security policy blocked the final step of issuing credentials to the <Constant name="dbt_platform" />.
+Это может произойти, если ваша организация Google Workspace ограничивает доступ сторонних приложений к сервисам Google. Хотя Google позволил вам войти и просмотреть экран согласия, политика безопасности организации заблокировала заключительный этап выдачи учетных данных для <Constant name="dbt_platform" />.
 
-This troubleshooting section will explain Why this happens, how to resolve it, and what to do if it keeps happening.
+В этом разделе по устранению неполадок объясняется, почему это происходит, как решить проблему и что делать, если она возникает снова.
 
-<Expandable alt_header="1. Why this affects BigQuery OAuth">
+<Expandable alt_header="1. Почему это влияет на BigQuery OAuth">
 
-Google classifies OAuth scopes into three tiers: non-sensitive, sensitive, and restricted. Applications that only request non-sensitive scopes (such as basic sign-in) typically work without additional admin approval. The BigQuery OAuth connection requires scopes that Google classifies as [restricted](https://support.google.com/cloud/answer/9110914), which always require explicit admin trust regardless of your organization's default policy for third-party apps.
+Google делит области доступа OAuth на три уровня: неконфиденциальные, конфиденциальные и ограниченные. Приложения, которые запрашивают только неконфиденциальные области доступа (например, для обычного входа), как правило, работают без дополнительного одобрения администратора. Подключению BigQuery OAuth требуются области доступа, которые Google классифицирует как [ограниченные](https://support.google.com/cloud/answer/9110914), а они всегда требуют явного подтверждения доверия администратором независимо от политики вашей организации по умолчанию в отношении сторонних приложений.
 
-The BigQuery OAuth connection requests these restricted scopes:
+Подключение BigQuery OAuth запрашивает следующие ограниченные области доступа:
 
-- `bigquery` &mdash; Required to run queries and access BigQuery resources
-- `cloud-platform` &mdash; Required for cross-project BigQuery access and service interoperability
-- `drive` &mdash; Required to support [BigQuery external tables over Google Drive](https://cloud.google.com/bigquery/docs/external-data-drive)
+- `bigquery` &mdash; Требуется для выполнения запросов и доступа к ресурсам BigQuery
+- `cloud-platform` &mdash; Требуется для доступа к BigQuery между проектами и взаимодействия сервисов
+- `drive` &mdash; Требуется для поддержки [внешних таблиц BigQuery на основе Google Drive](https://cloud.google.com/bigquery/docs/external-data-drive)
 
-Other applications you use may connect without this approval step because they likely request only non-sensitive or sensitive scopes that don't trigger the same restriction.
-
-</Expandable>
-
-<Expandable alt_header="2. How to resolve it">
-
-Your Google Workspace administrator must trust the OAuth client ID that your <Constant name="dbt_platform" /> BigQuery connection uses. Find this client ID in the <Constant name="dbt_platform" /> under **Account settings** > **Connections** > your BigQuery connection > **OAuth 2.0 Settings**.
-
-Once you have the client ID, ask your Google Workspace administrator to:
-
-1. Sign in to the [Google Workspace Admin Console](https://admin.google.com).
-2. Navigate to **Security** > **Access and data control** > **API controls** > **Manage third-party app access**.
-3. Click **Add app** > **OAuth App Name Or Client ID**.
-4. Enter the client ID from your <Constant name="dbt_platform" /> BigQuery connection.
-5. Set the access level to **Trusted**.
-6. Apply the setting to the relevant organizational unit or the entire organization.
-
-After the administrator completes these steps, retry the BigQuery connection from your credentials page in the <Constant name="dbt_platform" />.
-
-For more details, see Google's documentation on [controlling third-party app access to Google Workspace data](https://support.google.com/a/answer/7281227).
+Другие используемые вами приложения могут подключаться без этого этапа одобрения, поскольку они, вероятно, запрашивают только неконфиденциальные или конфиденциальные области доступа, на которые это ограничение не распространяется.
 
 </Expandable>
 
-<Expandable alt_header="3. If the issue persists">
+<Expandable alt_header="2. Как решить проблему">
 
-If the connection still fails after your administrator trusts the OAuth client in Google Workspace, ask your GCP project administrator to check whether a Google Cloud [Organization Policy](https://cloud.google.com/resource-manager/docs/organization-policy/overview) restricts external OAuth clients. The relevant constraint is `constraints/iam.allowedExternalOAuthClients`.
+Администратор Google Workspace должен пометить как доверенный идентификатор клиента OAuth, используемый вашим подключением BigQuery в <Constant name="dbt_platform" />. Найдите этот идентификатор клиента в <Constant name="dbt_platform" /> в разделе **Настройки учетной записи** > **Подключения** > ваше подключение BigQuery > **Настройки OAuth 2.0**.
 
-If neither of these steps resolves the issue, contact [dbt Support](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support) with the approximate time of the failed connection attempt and the email address you used to authenticate with Google.
+Получив идентификатор клиента, попросите администратора Google Workspace выполнить следующие действия:
+
+1. Войти в [Консоль администратора Google Workspace](https://admin.google.com).
+2. Перейти в **Безопасность** > **Управление доступом и данными** > **Управление API** > **Управление доступом сторонних приложений**.
+3. Нажать **Добавить приложение** > **Название приложения OAuth или идентификатор клиента**.
+4. Ввести идентификатор клиента из вашего подключения BigQuery в <Constant name="dbt_platform" />.
+5. Установить уровень доступа **Доверенное**.
+6. Применить настройку к соответствующему организационному подразделению или ко всей организации.
+
+После того как администратор выполнит эти действия, повторите попытку подключения к BigQuery со страницы учетных данных в <Constant name="dbt_platform" />.
+
+Подробнее см. в документации Google об [управлении доступом сторонних приложений к данным Google Workspace](https://support.google.com/a/answer/7281227).
+
+</Expandable>
+
+<Expandable alt_header="3. Если проблема сохраняется">
+
+Если подключение по-прежнему не удается после того, как администратор пометил клиент OAuth как доверенный в Google Workspace, попросите администратора проекта GCP проверить, не ограничивает ли [политика организации](https://cloud.google.com/resource-manager/docs/organization-policy/overview) Google Cloud использование внешних клиентов OAuth. Соответствующее ограничение — `constraints/iam.allowedExternalOAuthClients`.
+
+Если ни один из этих шагов не помог решить проблему, обратитесь в [службу поддержки dbt](https://docs.getdbt.com/community/resources/getting-help#dbt-cloud-support), указав приблизительное время неудачной попытки подключения и адрес электронной почты, который вы использовали для аутентификации в Google.
 </Expandable>

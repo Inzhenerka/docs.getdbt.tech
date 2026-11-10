@@ -5,7 +5,7 @@ sidebar: "Об изменениях поведения"
 description: "Флаги изменения поведения позволяют управлять тем, когда переходить на новое поведение dbt во время выполнения."
 ---
 
-A behavior change is a deliberate update to dbt where the same project code and commands produce a different result than before—for example, a new validation error, a changed macro signature, or a breaking change to artifacts or structured logs. It is not a bug fix, a new warning, or a non-breaking addition.
+Изменение поведения — это намеренное обновление dbt, после которого тот же код проекта и те же команды дают другой результат. Например, появляется новая ошибка валидации, меняется сигнатура макроса или нарушается совместимость артефактов или структурированных журналов. Исправления ошибок, новые предупреждения и обратно совместимые дополнения к таким изменениям не относятся.
 
 dbt вводит эти изменения с помощью флагов изменения поведения, чтобы вы могли сами решать, когда переходить на новое поведение.
 
@@ -83,8 +83,8 @@ dbt вводит эти изменения с помощью флагов изм
 | [use_describe_as_json_for_relation_metadata](/reference/global-configs/databricks-changes#use-describe-as-json-for-relation-metadata) | Databricks 1.12.0 | - | - |
 | [redshift_skip_autocommit_transaction_statements](/reference/global-configs/redshift-changes#redshift_skip_autocommit_transaction_statements-flag) | Redshift 1.12.0 | - | - |
 | [bigquery_use_batch_source_freshness](/reference/global-configs/bigquery-changes#the-bigqueryusebatchsourcefreshness-flag) | BigQuery 1.11.0rc2 | - | - |
-| [bigquery_reject_wildcard_metadata_source_freshness](/reference/global-configs/bigquery-changes#%D1%84%D0%BB%D0%B0%D0%B3-bigquery_reject_wildcard_metadata_source_freshness) | BigQuery 1.12.0 | - | - |
-| [bigquery_use_standard_sql_for_partitions](/reference/global-configs/bigquery-changes#%D1%84%D0%BB%D0%B0%D0%B3-bigquery_use_standard_sql_for_partitions) | BigQuery 1.12.0 | 1.12.0 | - |
+| [bigquery_reject_wildcard_metadata_source_freshness](/reference/global-configs/bigquery-changes#the-bigquery_reject_wildcard_metadata_source_freshness-flag) | BigQuery 1.12.0 | - | - |
+| [bigquery_use_standard_sql_for_partitions](/reference/global-configs/bigquery-changes#the-bigquery_use_standard_sql_for_partitions-flag) | BigQuery 1.12.0 | 1.12.0 | - |
 | [snowflake_default_transient_dynamic_tables](/reference/global-configs/snowflake-changes#the-snowflake_default_transient_dynamic_tables-flag) | Snowflake 1.12.0 | - | - |
 
 ## Часто задаваемые вопросы
@@ -127,20 +127,20 @@ flags:
 
 <Expandable alt_header="Что означает отсутствие даты погашения? ">
 
-When a maturity date has not yet been set (shown as -), we have not yet determined the exact date when the flag's default value will change. Affected users will see deprecation warnings in the meantime, and they will receive emails providing advance warning ahead of the maturity date. In the meantime, if you are seeing a deprecation warning, you can either:
+Если дата вступления в силу ещё не назначена (в таблице стоит прочерк), точная дата смены значения флага по умолчанию пока неизвестна. До этого пользователи будут видеть предупреждения об устаревании и заранее получат уведомление по электронной почте. Если вы видите такое предупреждение, можно:
 
-- Migrate your project to support the new behavior, and then set the flag to true to stop seeing the warnings.
-- Explicitly set the flag to `false`. You will continue to see warnings, and you will retain the legacy behavior even after the maturity date (when the default value changes).
+- Обновить проект для работы с новым поведением и установить флаг в `true`, чтобы отключить предупреждения.
+- Явно установить флаг в `false`. Предупреждения останутся, но прежнее поведение сохранится даже после смены значения флага по умолчанию.
 
 </Expandable>
 
-<Expandable alt_header="How do behavior change flags related to other changes?">
+<Expandable alt_header="Чем флаги изменения поведения отличаются от других изменений?">
 
-Since behavior change flags are different from other dbt changes, it's important to understand the difference:
-- [Deprecation warnings](/reference/deprecations) &mdash; Features in your project code that will stop working (behavior flags often control when these become errors)
-- [Deprecated CLI flags](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags) &mdash; Command-line flags being removed in v2
+Флаги изменения поведения следует отличать от других изменений dbt:
+- [Предупреждения об устаревании](/reference/deprecations) сообщают о конструкциях в коде проекта, которые перестанут работать. Флаги поведения часто определяют, когда такие предупреждения станут ошибками.
+- [Устаревшие флаги CLI](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags) — параметры командной строки, которые удаляются в v2.
 
-See the [Changes overview](/reference/changes-overview) for a quick comparison.
+Краткое сравнение приведено в разделе [Обзор изменений](/reference/changes-overview).
 
 Если вы переходите на [v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2), некоторые флаги изменения поведения удалены, а соответствующее им новое поведение всегда включено.
 

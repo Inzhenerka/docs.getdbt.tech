@@ -88,7 +88,7 @@ models:
 
 </File>
 
-Supported dbt-adapters use these fields when populated, to render out the foreign key constraint instead of `expression`.
+Адаптеры, поддерживающие эти поля, используют их вместо `expression` при построении ограничения внешнего ключа, если поля заполнены.
   
 Для получения дополнительной информации об адаптерах, которые поддерживают ограничения внешних ключей, ознакомьтесь с нашим руководством по [поддержке ограничений платформами](/reference/resource-properties/constraints).
 
@@ -550,19 +550,19 @@ alter table schema_name.constraints_example add constraint 472394792387497234 ch
 
 <div warehouse="Fabric">
 
-Microsoft Fabric allows you to define:
+В Microsoft Fabric можно задать:
 
-- A `not_null` constraint, which is checked when the model builds
-- The `primary_key`, `foreign_key`, and `unique` constraints, which are recorded on the table for reference but not checked when new data is added
+- Ограничение `not_null`, которое проверяется при сборке модели.
+- Ограничения `primary_key`, `foreign_key` и `unique`. Они сохраняются как справочные сведения о таблице и не проверяются при добавлении данных.
 
-Be aware of the following limitations and requirements:
+Учитывайте ограничения и требования:
 
-- `check` constraints are not supported on Microsoft Fabric. Use [data tests](/docs/build/data-tests) such as `dbt_utils.expression_is_true` to validate custom rules instead.
-- Microsoft Fabric does not include all constraints in the initial `create table` statement. dbt creates the table first, then runs separate statements to add model-level constraints.
-- You must provide a `name` for each model-level constraint.
-- Columns in [snapshot](/docs/build/snapshots) source tables cannot have constraints. If a source column has a `not_null` constraint or similar rule, the snapshot may fail.
+- Microsoft Fabric не поддерживает ограничения `check`. Для проверки собственных правил используйте [тесты данных](/docs/build/data-tests), например `dbt_utils.expression_is_true`.
+- Microsoft Fabric включает не все ограничения в исходную инструкцию `create table`. dbt сначала создаёт таблицу, а затем добавляет ограничения уровня модели отдельными инструкциями.
+- Для каждого ограничения уровня модели укажите `name`.
+- Столбцы исходных таблиц для [снимков](/docs/build/snapshots) не могут иметь ограничений. Если у исходного столбца есть `not_null` или аналогичное ограничение, создание снимка может завершиться ошибкой.
 
-For more on Microsoft Fabric setup, refer to [Microsoft Fabric Data Warehouse configurations](/reference/resource-configs/fabric-configs).
+Подробнее см. [Настройки Microsoft Fabric Data Warehouse](/reference/resource-configs/fabric-configs).
 
 <File name='models/constraints_example.sql'>
 
@@ -610,7 +610,7 @@ models:
 
 </File>
 
-Expected SQL to enforce constraints:
+Ожидаемый SQL для применения ограничений:
 <File name='target/run/.../constraints_example.sql'>
 
 ```sql

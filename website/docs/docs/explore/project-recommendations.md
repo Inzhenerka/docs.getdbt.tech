@@ -48,8 +48,8 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 ## Вкладка рекомендаций {#the-recommendations-tab}
 
-## Вкладка Recommendations
+
 
 Модели, источники и exposures также имеют вкладку **Recommendations** на странице с деталями ресурса. На этой вкладке отображаются рекомендации, которые относятся именно к данному ресурсу:
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-tab.png" width="80%" title="Example of the Recommendations tab "/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/example-recommendations-tab.png" width="80%" title="Пример вкладки Recommendations"/>

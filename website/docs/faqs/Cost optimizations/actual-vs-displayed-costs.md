@@ -1,14 +1,14 @@
 ---
-title: Why might my actual warehouse costs differ from displayed costs? 
-description: "Explanation of why actual warehouse costs may differ from displayed costs"
-sidebar_label: 'Actual vs displayed costs'
+title: Почему фактические затраты на хранилище данных могут отличаться от отображаемых? 
+description: "Объяснение причин, по которым фактические затраты на хранилище данных могут отличаться от отображаемых"
+sidebar_label: 'Фактические и отображаемые затраты'
 id: actual-vs-displayed-costs
 ---
 
-Cost Insights shows estimates based on warehouse-reported usage and your configured pricing variables. These estimates are based on a retroactive analysis of historical runs and reflect actual usage, _not_ forecasts of future costs. Adjustments and differences may occur if:
+Cost Insights показывает оценочные затраты на основе данных об использовании, предоставляемых хранилищем данных, и заданных вами параметров ценообразования. Эти оценки основаны на ретроспективном анализе прошлых запусков и отражают фактическое использование, а _не_ прогноз будущих затрат. Корректировки и расхождения возможны, если:
 
-- Your warehouse has custom pricing that differs from the default compute credit unit.
-- There are discounts or credits applied at the billing level that aren't reflected in usage tables.
-- Costs include other charges beyond compute. 
+- Для вашего хранилища данных действуют индивидуальные тарифы, отличающиеся от стандартной стоимости единицы вычислительных кредитов.
+- На уровне выставления счетов применяются скидки или кредиты, которые не отражены в таблицах использования.
+- Затраты включают дополнительные начисления помимо платы за вычислительные ресурсы. 
 
-Costs Insights in the <Constant name="dbt_platform" /> is designed to be directionally accurate, showing you dbt-specific components rather than matching your billing exactly.
+Cost Insights в <Constant name="dbt_platform" /> предназначен для оценки общего уровня затрат и показывает составляющие затрат, связанные с dbt, а не обеспечивает точное соответствие вашему счету.

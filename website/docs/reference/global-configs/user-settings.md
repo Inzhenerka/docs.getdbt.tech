@@ -1,15 +1,15 @@
 ---
-title: "User settings"
+title: "Пользовательские настройки"
 id: "user-settings"
-sidebar: "User settings"
-description: "Configure user-scoped dbt settings in ~/.dbt/user_settings.yml."
+sidebar: "Пользовательские настройки"
+description: "Настройте пользовательские параметры dbt в ~/.dbt/user_settings.yml."
 ---
 
-`~/.dbt/user_settings.yml` is a user-scoped configuration file for personal dbt preferences. Because it always lives at `~/.dbt/`, it applies globally across all projects on your machine, regardless of which project you're running or where your `profiles.yml` is located.
+`~/.dbt/user_settings.yml` — это файл конфигурации пользовательского уровня для личных настроек dbt. Поскольку он всегда находится в `~/.dbt/`, его настройки применяются глобально ко всем проектам на вашем компьютере независимо от того, какой проект вы запускаете и где расположен ваш `profiles.yml`.
 
-Today, `user_settings.yml` is primarily written by [`dbt login`](/reference/commands/login?version=2.0#dbt-login-with-dbt-state) to configure [dbt State](/docs/deploy/dbt-state-about) locally (`manage_state`). dbt may add other user-scoped flags to this file over time.
+На данный момент `user_settings.yml` в основном заполняется командой [`dbt login`](/reference/commands/login?version=2.0#dbt-login-with-dbt-state) для локальной настройки [dbt State](/docs/deploy/dbt-state-about) (`manage_state`). Со временем dbt может добавить в этот файл другие флаги пользовательского уровня.
 
-Settings in this file are separate from project-level configuration ([`dbt_project.yml`](/reference/dbt_project.yml)) and connection configuration ([`profiles.yml`](/docs/local/profiles.yml)). Use this file for preferences that belong to you, not the project, as an alternative to setting environment variables or populating an `.env` file.
+Настройки в этом файле отделены от конфигурации уровня проекта ([`dbt_project.yml`](/reference/dbt_project.yml)) и конфигурации подключения ([`profiles.yml`](/docs/local/profiles.yml)). Используйте этот файл для настроек, относящихся к вам, а не к проекту, как альтернативу заданию переменных окружения или заполнению файла `.env`.
 
 <File name="~/.dbt/user_settings.yml">
 
@@ -20,31 +20,31 @@ flags:
 
 </File>
 
-Some dbt commands write to this file automatically. You can also edit it manually.
+Некоторые команды dbt автоматически записывают настройки в этот файл. Вы также можете редактировать его вручную.
 
-When you run [`dbt login`](/reference/commands/login?version=2.0#dbt-login-with-dbt-state), dbt writes to `user_settings.yml`:
+При запуске [`dbt login`](/reference/commands/login?version=2.0#dbt-login-with-dbt-state) dbt записывает настройки в `user_settings.yml`:
 
-- **Log in with your <Constant name="dbt_platform" /> account**
-  - In <Constant name="fusion_engine" />, the CLI prompts you before writing to `user_settings.yml`.
-  - In dbt v1.13, dbt writes `manage_state: true` automatically. If you previously set `manage_state: false`, the CLI prompts you before overwriting it.
-  - Setting `manage_state: true` enables dbt State locally on every `dbt run` or `dbt build`.
+- **Вход с помощью учётной записи <Constant name="dbt_platform" />**
+  - В <Constant name="fusion_engine" /> CLI запрашивает подтверждение перед записью в `user_settings.yml`.
+  - В dbt v1.13 dbt автоматически записывает `manage_state: true`. Если ранее вы задали `manage_state: false`, CLI запрашивает подтверждение перед перезаписью этого значения.
+  - Настройка `manage_state: true` включает dbt State локально при каждом выполнении `dbt run` или `dbt build`.
 
-If `user_settings.yml` already contains a value, [`dbt login`](/reference/commands/login?version=2.0#dbt-login-with-dbt-state) prompts you before overwriting it.
+Если в `user_settings.yml` уже задано значение, [`dbt login`](/reference/commands/login?version=2.0#dbt-login-with-dbt-state) запрашивает подтверждение перед его перезаписью.
 
-## Config precedence
+## Приоритет настроек
 
-`user_settings.yml` is the lowest precedence level in dbt's flag hierarchy. More specific settings always override it. For more on flag precedence, refer to [About flags (global configs)](/reference/global-configs/about-global-configs).
+`user_settings.yml` имеет самый низкий приоритет в иерархии флагов dbt. Более специфичные настройки всегда переопределяют его значения. Подробнее о приоритете флагов см. в разделе [О флагах (глобальных настройках)](/reference/global-configs/about-global-configs).
 
-1. CLI option (highest)
-2. Environment variable
-3. Project scope (`dbt_project.yml`)
-4. User scope (`~/.dbt/user_settings.yml`) (lowest)
+1. Параметр CLI (наивысший приоритет)
+2. Переменная окружения
+3. Уровень проекта (`dbt_project.yml`)
+4. Уровень пользователя (`~/.dbt/user_settings.yml`) (самый низкий приоритет)
 
-For example, if `manage_state: true` is set in `user_settings.yml` but you run `dbt run --no-manage-state`, the CLI flag takes precedence, and dbt disables dbt State for that invocation.
+Например, если в `user_settings.yml` задано `manage_state: true`, но вы запускаете `dbt run --no-manage-state`, флаг CLI имеет приоритет, и dbt отключает dbt State для этого запуска.
 
-## When dbt State is enabled locally but not in dbt platform
+## Если dbt State включён локально, но не в dbt platform
 
-If `manage_state: true` is set in `user_settings.yml` but dbt State is not enabled in your <Constant name="dbt_platform" /> account, dbt fails with an error on your next `dbt run` or `dbt build`. To resolve this, either:
+Если в `user_settings.yml` задано `manage_state: true`, но dbt State не включён в вашей учётной записи <Constant name="dbt_platform" />, dbt завершится с ошибкой при следующем выполнении `dbt run` или `dbt build`. Чтобы устранить проблему, выполните одно из следующих действий:
 
-- [Enable dbt State in your <Constant name="dbt_platform" /> account](/docs/deploy/dbt-state-setup).
-- Disable dbt State locally by setting `manage_state: false` in `user_settings.yml`, or run `dbt run --no-manage-state`.
+- [Включите dbt State в своей учётной записи <Constant name="dbt_platform" />](/docs/deploy/dbt-state-setup).
+- Отключите dbt State локально, задав `manage_state: false` в `user_settings.yml`, или выполните `dbt run --no-manage-state`.

@@ -18,7 +18,7 @@ intro_text: "Используйте dbt debug для проверки подкл
 
 *Примечание: не путать с [логированием уровня debug](/reference/global-configs/logs#debug-level-logging) через опцию `--debug`, которая увеличивает подробность вывода.
 
-## Flags {#flags}
+## Флаги {#flags}
 
 Большинство флагов `dbt debug` применимы к самостоятельно размещаемому dbt CLI. Некоторые флаги также работают в <Constant name="platform_cli" />, но в <Constant name="studio_ide" /> поддерживается только `--connection`.
 
@@ -233,7 +233,7 @@ Options:
                 Show this message and exit.
 ```
 
-## Example usage {#example-usage}
+## Пример использования {#example-usage}
 
 Проверить только подключение к платформе данных и пропустить остальные проверки, которые выполняет `dbt debug`:
 

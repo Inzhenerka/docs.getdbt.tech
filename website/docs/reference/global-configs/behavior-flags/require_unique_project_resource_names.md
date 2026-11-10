@@ -1,36 +1,36 @@
 ---
-title: "Unique project resource names"
+title: "Уникальные имена ресурсов проекта"
 id: "require_unique_project_resource_names"
-sidebar_label: "require unique project resource names"
+sidebar_label: "требование уникальности имён ресурсов проекта"
 ---
 
 | require_unique_project_resource_names | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2025.12 | 1.11.0 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Введён | 2025.12 | 1.11.0 |
+| Стабилизирован (по умолчанию → `true`) | — | — |
+| Удалён | — | — |
 
-The `require_unique_project_resource_names` flag enforces uniqueness of resource names within the same package. dbt resources such as models, seeds, snapshots, analyses, tests, and functions share a common namespace. When two resources in the same package have the same name, dbt must decide which one a `ref()` or `source()` refers to. Previously, this check was not always enforced, which meant duplicate names could result in dbt referencing the wrong resource.
+Флаг `require_unique_project_resource_names` обеспечивает уникальность имён ресурсов в пределах одного пакета. Ресурсы dbt, такие как модели, seed-файлы, снимки, анализы, тесты и функции, используют общее пространство имён. Если два ресурса в одном пакете имеют одинаковое имя, dbt должен определить, на какой из них ссылается вызов `ref()` или `source()`. Ранее эта проверка выполнялась не всегда, поэтому дублирующиеся имена могли приводить к тому, что dbt ссылался не на тот ресурс.
 
-The `require_unique_project_resource_names` flag is set to `false` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateNameDistinctNodeTypesDeprecation`](/reference/deprecations#duplicatenamedistinctnodetypesdeprecation) warning. When set to `true`, dbt raises a `DuplicateResourceNameError` error.
+По умолчанию флаг `require_unique_project_resource_names` имеет значение `false`. При этом, если два неверсионируемых ресурса в одном пакете имеют одинаковое имя, dbt продолжает работу и выдаёт предупреждение [`DuplicateNameDistinctNodeTypesDeprecation`](/reference/deprecations#duplicatenamedistinctnodetypesdeprecation). Если установлено значение `true`, dbt выдаёт ошибку `DuplicateResourceNameError`.
 
-For example, if your project contains a model and a seed named `sales`:
+Например, если в вашем проекте есть модель и seed-файл с именем `sales`:
 
 ```
 models/sales.sql
 seeds/sales.csv
 ```
 
-And a model contains:
+А одна из моделей содержит:
 
 ```sql
 select * from {{ ref('sales') }}
 ```
 
-When the flag is set to `true`, dbt will raise:
+Если флаг имеет значение `true`, dbt выдаст ошибку:
 
 ```
 DuplicateResourceNameError: Found resources with the same name 'sales' in package 'project': 'model.project.sales' and 'seed.project.sales'. Please update one of the resources to have a unique name.
 ```
 
-When this error is raised, rename one of the resources or refactor the project structure to avoid name conflicts.
+При возникновении этой ошибки переименуйте один из ресурсов или измените структуру проекта, чтобы избежать конфликтов имён.

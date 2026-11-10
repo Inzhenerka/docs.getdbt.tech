@@ -131,11 +131,18 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
     
     <Lightbox src="/img/docs/dbt-platform/canvas/join-not-connected.png" width="90%" title="Соединение, ещё не подключённое к моделям" />
 
-    <Lightbox src="/img/docs/dbt-cloud/canvas/join-not-connected.png" width="90%" title="Join, не подключённый к моделям." />
+2. Соедините выходы исходных моделей с соответствующими входами оператора **Join**.
+   
+   <Lightbox src="/img/docs/dbt-platform/canvas/join-connected.png" width="90%" title="Соединение подключено к двум операторам моделей." />
 
-<Lightbox src="/img/docs/dbt-platform/canvas/join-connected.png" width="90%" title="Соединение подключено к двум операторам моделей." />
-
-    <Lightbox src="/img/docs/dbt-cloud/canvas/join-connected.png" width="90%" title="Join, подключённый к двум операторам моделей." />
+3. В операторе **Join** нажмите **Configure inputs**.
+4. В поле **Join type** выберите `Inner`.
+5. В обоих выпадающих списках выберите `ORDER_ID` для `stg_orders` и `stg_order_items`.
+6. Нажмите **Select and rename columns**, затем **Configure columns**. Выберите следующие столбцы:
+   - Из `stg_orders` выберите `ORDER_ID` и `CUSTOMER_ID`.
+   - Из `stg_order_items` выберите `PRODUCT_ID`.
+   - Столбцы появятся в порядке выбора.
+7. Нажмите **значок воспроизведения** в правом верхнем углу оператора **Join**, чтобы проверить результат.
 
 <Lightbox src="/img/docs/dbt-platform/canvas/preview-join.png" width="90%" title="Завершённое соединение с образцом данных." />
 
@@ -203,7 +210,7 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 <Lightbox src="/img/docs/dbt-platform/canvas/output-model.png" width="90%" title="Оператор Output Model задаёт имя и расположение итоговой модели." />
 
-<Lightbox src="/img/docs/dbt-cloud/canvas/output-model.png" width="90%" title="Output Model задаёт имя и расположение итоговой модели." />
+:::tip Расположение моделей
 
 Вы можете настроить расположение моделей <Constant name="canvas" />, чтобы хранить их отдельно от других моделей <Constant name="dbt" />. Обратитесь к администраторам dbt за рекомендациями и идеями по выбору расположения моделей <Constant name="canvas" /> и соглашений об их именовании.
 

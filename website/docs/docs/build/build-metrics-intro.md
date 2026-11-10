@@ -25,14 +25,14 @@ MetricFlow позволяет:
 <div className="grid--3-col">
 
   <Card
-    title="Semantic Layer reference"
-    body="Complete, exhaustive configuration reference for semantic models, metrics, and dimensions."
+    title="Справочник по семантическому слою"
+    body="Полный справочник по настройке семантических моделей, метрик и измерений."
     link="/reference/semantic-layer-reference"
     icon="dbt-bit"/>
 
   <Card
-    title="Migrate to the latest YAML spec"
-    body="Learn how to migrate from the legacy metrics YAML spec to the latest metrics YAML spec."
+    title="Переход на новую спецификацию YAML"
+    body="Как перенести определения метрик с прежней спецификации YAML на новую."
     link="/docs/build/latest-metrics-spec"
     icon="dbt-bit"/>
 

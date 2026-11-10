@@ -1,6 +1,6 @@
 ---
-title: "Схема объекта Environment"
-sidebar_label: "Environment"
+title: "Схема объекта environment"
+sidebar_label: "Окружение"
 id: "discovery-schema-environment"
 availability:
   surface: platform
@@ -10,19 +10,19 @@ availability:
  
 import { QueryArgsTable, SchemaTable } from "./schema";
 
-Вы можете использовать объект `environment` для запросов и сравнения состояний определения (intended) и применения (applied) для узлов (models, seeds, snapshots, models и других) в вашем dbt‑проекте. Например, вы указываете `environmentId`, чтобы получить больше информации о конкретной модели (или другом типе узла) в данном окружении.
+Объект environment позволяет запрашивать и сравнивать состояния definition (заданное) и applied (фактическое) для узлов (моделей, сидов, снимков, моделей и других) в вашем проекте dbt. Например, вы можете указать `environmentId`, чтобы получить дополнительную информацию об определённой модели (или узле другого типа) в этом окружении.
 
-В разделе [Example queries](#example-queries) показаны некоторые поля, которые можно запрашивать с помощью объекта `environment`. Обратитесь к разделу [Fields](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запросов.
+В разделе [Примеры запросов](#example-queries) показаны некоторые поля, которые можно запрашивать с помощью объекта `environment`. Полная схема со всеми доступными для запроса полями приведена в разделе [Поля](#fields).
 
-### Аргументы {#arguments}
+### Аргументы
 
-При выполнении запроса `environment` вы можете использовать следующие аргументы.
+При запросе `environment` можно использовать следующие аргументы.
 
 <QueryArgsTable queryName="environment" />
 
 ### Примеры запросов {#example-queries}
 
-Вы можете использовать `id` вашего production‑окружения:
+Вы можете использовать `id` своего производственного окружения:
 
 ```graphql
 query Example {
@@ -49,7 +49,7 @@ query Example {
 	}
 ```
 
-В связи с выводом из использования типа данных `Int` для поля `id`, ниже приведён пример его замены на `BigInt`:
+В связи с прекращением поддержки типа данных `Int` для `id` ниже приведён пример его замены на `BigInt`:
 
 ```graphql
 query ($environmentId: BigInt!, $first: Int!) {
@@ -71,7 +71,7 @@ query ($environmentId: BigInt!, $first: Int!) {
 
 ```
 
-В связи с выводом из использования `modelByEnvironment`, ниже приведён пример его замены на `environment`:
+В связи с прекращением поддержки `modelByEnvironment` ниже приведён пример его замены на `environment`:
 
 ```graphql
 query ($environmentId: BigInt!, $uniqueId: String) {
@@ -88,13 +88,12 @@ query ($environmentId: BigInt!, $uniqueId: String) {
 ```
 
 ### Поля {#fields}
-
-При выполнении запроса `environment` вы можете использовать следующие поля.
+При запросе `environment` можно использовать следующие поля.
 
 <SchemaTable nodeName="Environment" />
 
-Подробности о запросах к полю `applied` объекта `environment` можно найти здесь:  
-[Applied](./schema-discovery-environment-applied.mdx)
+Подробную информацию о запросах к полю `applied` объекта `environment` см. в разделе:
+[Применённое состояние](./schema-discovery-environment-applied.mdx)
 
-Подробности о запросах к полю `definition` объекта `environment` можно найти здесь:  
-[Definition](./schema-discovery-environment-definition.mdx)
+Подробную информацию о запросах к полю `definition` объекта `environment` см. в разделе:
+[Определение](./schema-discovery-environment-definition.mdx)

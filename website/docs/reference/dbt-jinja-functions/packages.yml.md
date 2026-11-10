@@ -1,27 +1,27 @@
 ---
-title: "About packages.yml context"
-sidebar_label: "packages.yml context"
+title: "О контексте packages.yml"
+sidebar_label: "Контекст packages.yml"
 id: "packages.yml context"
-description: "Use these context methods to configure dependencies in the packages.yml file."
+description: "Используйте эти методы контекста для настройки зависимостей в файле packages.yml."
 ---
 
-The following context methods and variables are available when configuring a `packages.yml` file. 
+Следующие методы и переменные контекста доступны при настройке файла `packages.yml`. 
 
-**Available context methods:**
+**Доступные методы контекста:**
 - [env_var](/reference/dbt-jinja-functions/env_var)
-    - Use `env_var()` in any dbt YAML file that supports Jinja. Only `packages.yml` and `profiles.yml` support environment variables for [secure values](/docs/build/dbt-tips#yaml-tips) (using the `DBT_ENV_SECRET_` prefix).
-- [var](/reference/dbt-jinja-functions/var) (Note: only variables defined with `--vars` are available. Refer to [YAML tips](/docs/build/dbt-tips#yaml-tips) for more information)
+    - Используйте `env_var()` в любом YAML-файле dbt, который поддерживает Jinja. Только `packages.yml` и `profiles.yml` поддерживают переменные окружения для [секретных значений](/docs/build/dbt-tips#yaml-tips) (с префиксом `DBT_ENV_SECRET_`).
+- [var](/reference/dbt-jinja-functions/var) (Примечание: доступны только переменные, заданные с помощью `--vars`. Дополнительную информацию см. в разделе [Советы по YAML](/docs/build/dbt-tips#yaml-tips))
 
-**Available context variables:**
+**Доступные переменные контекста:**
 - [builtins](/reference/dbt-jinja-functions/builtins)
 - [dbt_version](/reference/dbt-jinja-functions/dbt_version)
 - [target](/reference/dbt-jinja-functions/target)
 
-## Example usage
+## Примеры использования
 
-The following examples show how to use the different context methods and variables in your `packages.yml`.
+Следующие примеры показывают, как использовать различные методы и переменные контекста в файле `packages.yml`.
 
-Use `builtins` in your `packages.yml`:
+Используйте `builtins` в файле `packages.yml`:
 
 ```
 packages:
@@ -30,7 +30,7 @@ packages:
 
 ```
 
-Use `env_var` in your `packages.yml`:
+Используйте `env_var` в файле `packages.yml`:
 
 ```
 packages:
@@ -38,7 +38,7 @@ packages:
     version: "{{ env_var('DBT_UTILS_VERSION') }}"
 ```
 
-Use `dbt_version` in your `packages.yml`:
+Используйте `dbt_version` в файле `packages.yml`:
 
 ```
 packages:
@@ -47,7 +47,7 @@ packages:
 
 ```
 
-Use `target` in your `packages.yml`:
+Используйте `target` в файле `packages.yml`:
 
 ```
 
@@ -57,6 +57,6 @@ packages:
 
 ```
 
-## Related docs
+## Связанная документация
 
-- [Packages](/docs/build/packages)
+- [Пакеты](/docs/build/packages)

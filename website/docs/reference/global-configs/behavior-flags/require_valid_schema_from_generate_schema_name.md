@@ -1,22 +1,22 @@
 ---
-title: "Valid schema from generate_schema_name"
+title: "Допустимое имя схемы из generate_schema_name"
 id: "require_valid_schema_from_generate_schema_name"
-sidebar_label: "require valid schema from generate schema name"
+sidebar_label: "Требовать допустимое имя схемы из generate_schema_name"
 ---
 
 | require_valid_schema_from_generate_schema_name | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2026.1 | 1.12.0a1 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Добавлен | 2026.1 | 1.12.0a1 |
+| Стабилизирован (по умолчанию → `true`) | — | — |
+| Удалён | — | — |
 
-The `generate_schema_name` macro determines the schema where dbt creates models and other resources. Returning a `null` value from this macro can result in invalid schema names and lead to unpredictable behavior during dbt runs.
+Макрос `generate_schema_name` определяет схему, в которой dbt создаёт модели и другие ресурсы. Возврат значения `null` из этого макроса может привести к недопустимым именам схем и непредсказуемому поведению во время запусков dbt.
 
-The `require_valid_schema_from_generate_schema_name` behavior flag is set to `false` by default. When `false`, dbt raises the [`GenerateSchemaNameNullValueDeprecation`](/reference/deprecations#generateschemanamenullvaluedeprecation) warning when a custom `generate_schema_name` macro returns a `null` value.
+Флаг поведения `require_valid_schema_from_generate_schema_name` по умолчанию имеет значение `false`. При значении `false` dbt выдаёт предупреждение [`GenerateSchemaNameNullValueDeprecation`](/reference/deprecations#generateschemanamenullvaluedeprecation), когда пользовательский макрос `generate_schema_name` возвращает значение `null`.
 
-When `require_valid_schema_from_generate_schema_name` is set to `true`, dbt enforces stricter validation and raises a parsing error.
+Когда `require_valid_schema_from_generate_schema_name` имеет значение `true`, dbt выполняет более строгую проверку и выдаёт ошибку разбора.
 
-For example, if your project has a custom `generate_schema_name` macro that returns `null`:
+Например, если в вашем проекте есть пользовательский макрос `generate_schema_name`, который возвращает `null`:
 
 <File name='macros/get_custom_schema.sql'>
 
@@ -32,9 +32,9 @@ For example, if your project has a custom `generate_schema_name` macro that retu
 
 </File>
 
-With the default behavior, dbt raises a deprecation warning. When `require_valid_schema_from_generate_schema_name` is set to `true`, dbt raises an error.
+При поведении по умолчанию dbt выдаёт предупреждение об устаревшем поведении. Когда `require_valid_schema_from_generate_schema_name` имеет значение `true`, dbt выдаёт ошибку.
 
-To resolve this, update your macro to return a valid schema name (`target.schema` in this example):
+Чтобы устранить эту проблему, обновите макрос так, чтобы он возвращал допустимое имя схемы (в этом примере — `target.schema`):
 
 <File name='macros/get_custom_schema.sql'>
 

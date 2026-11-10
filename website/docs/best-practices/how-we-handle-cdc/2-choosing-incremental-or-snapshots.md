@@ -1,35 +1,35 @@
 ---
-title: "Choosing incremental models or snapshots"
+title: "Выбор между инкрементальными моделями и снимками"
 id: "2-choosing-incremental-or-snapshots"
-description: "Choose incremental models, snapshots, or both for change data capture in dbt."
-sidebar_label: "Choosing incremental models or snapshots"
-hoverSnippet: "Choose incremental models, snapshots, or both for change data capture"
+description: "Выберите инкрементальные модели, снимки или их сочетание для захвата изменений данных в dbt."
+sidebar_label: "Выбор между инкрементальными моделями и снимками"
+hoverSnippet: "Выберите инкрементальные модели, снимки или их сочетание для захвата изменений данных"
 availability: all_users
 ---
 
-Use [incremental models](/docs/build/incremental-models-overview), [snapshots](/docs/build/snapshots), or both depending on whether you need current values, historical versions, or both.
+Используйте [инкрементальные модели](/docs/build/incremental-models-overview), [снимки](/docs/build/snapshots) или их сочетание в зависимости от того, нужны ли вам текущие значения, исторические версии или и то и другое.
 
-## Compare incremental models and snapshots
+## Сравнение инкрементальных моделей и снимков
 
-Start with this table if you already know what you need to keep. Use it to match the source to an incremental model, a snapshot, or both.
+Начните с этой таблицы, если уже знаете, какие данные нужно сохранять. Она поможет выбрать для вашего источника инкрементальную модель, снимок или их сочетание.
 <SimpleTable>
-| Approach | Use it when | Do not use it when |
+| Подход | Когда использовать | Когда не использовать |
 | --- | --- | --- |
-| [Incremental only](#incremental-only) | You need the latest row per id, and the source already lists changes or has a reliable change timestamp | You must answer "what did this row look like last month?" from this table |
-| [Snapshot only](#snapshot-only) | The source overwrites rows in place, you need history, and scanning it each run is acceptable | The source only adds rows and never updates them, or the table is so large that a full snapshot run is too expensive |
-| [Incremental models and snapshots together](#using-incremental-models-and-snapshots-together) | You want incremental staging so runs stay cheap, and a snapshot for history | You only need one of those jobs, or you would snapshot the final table people query |
+| [Только инкрементальные модели](#incremental-only) | Вам нужна последняя строка для каждого id, а источник уже содержит перечень изменений или надёжную временную метку изменения | На основе этой таблицы нужно отвечать на вопрос «как выглядела эта строка в прошлом месяце?» |
+| [Только снимки](#snapshot-only) | Источник перезаписывает строки, вам нужна история, и сканирование источника при каждом запуске допустимо | Источник только добавляет строки и никогда их не обновляет, либо таблица настолько велика, что полный запуск снимка обходится слишком дорого |
+| [Совместное использование инкрементальных моделей и снимков](#using-incremental-models-and-snapshots-together) | Вам нужна инкрементальная подготовка данных, чтобы снизить стоимость запусков, и снимок для хранения истории | Вам нужна только одна из этих задач, либо вы собираетесь создавать снимок итоговой таблицы, к которой обращаются пользователи |
 </SimpleTable>
 <br />
 
-## Incremental only
+## Только инкрементальные модели {#incremental-only}
 
-Choose this approach when you only need each row's current values. Your source must let you identify new or updated rows from:
+Выберите этот подход, если нужны только текущие значения каждой строки. Источник должен позволять определять новые или обновлённые строки одним из следующих способов:
 
-- A loading tool or stream that writes inserts, updates, and deletes (for an example, refer to [CDC with Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams))
-- A table that only adds rows
-- A table that overwrites rows and has a reliable `updated_at` (or load timestamp) you can filter on
+- Инструмент загрузки или поток, который записывает операции вставки, обновления и удаления (пример см. в разделе [CDC с использованием Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams))
+- Таблица, в которую только добавляются строки
+- Таблица, в которой строки перезаписываются и есть надёжная временная метка `updated_at` (или временная метка загрузки), по которой можно фильтровать данные
 
-These examples follow two customers, Alice and Bob. After the first run, both have a `trial` status:
+В этих примерах рассматриваются два клиента: Alice и Bob. После первого запуска у обоих статус `trial`:
 
 <SimpleTable>
 | id | name | status | updated_at |
@@ -40,7 +40,7 @@ These examples follow two customers, Alice and Bob. After the first run, both ha
 
 <br />
 
-Alice then becomes an `active` customer the next day. With a `merge` strategy and `id` as the `unique_key`, the next run updates her existing row:
+На следующий день Alice становится клиентом со статусом `active`. При использовании стратегии `merge` и `id` в качестве `unique_key` следующий запуск обновит её существующую строку:
 
 <SimpleTable>
 | id | name | status | updated_at |
@@ -51,21 +51,21 @@ Alice then becomes an `active` customer the next day. With a `merge` strategy an
 
 <br />
 
-Alice's current status is `active`. Her earlier `trial` status is no longer stored in this table.
+Текущий статус Alice — `active`. Её предыдущий статус `trial` больше не хранится в этой таблице.
 
-To configure this behavior:
+Чтобы настроить такое поведение:
 
-- Use `is_incremental()` to apply a filter for new or updated rows on later runs
-- Set [`unique_key`](/reference/resource-configs/unique_key) to the customer ID so <Constant name="dbt" /> can match incoming rows to existing ones
-- Choose a strategy such as `merge`, which updates matching rows and inserts new ones
+- Используйте `is_incremental()`, чтобы при последующих запусках применять фильтр для новых или обновлённых строк
+- Укажите идентификатор клиента в параметре [`unique_key`](/reference/resource-configs/unique_key), чтобы <Constant name="dbt" /> мог сопоставлять входящие строки с существующими
+- Выберите стратегию, например `merge`, которая обновляет совпадающие строки и вставляет новые
 
-Refer to [Configure incremental models](/docs/build/incremental-models) and [About incremental strategy](/docs/build/incremental-strategy) for details.
+Подробности см. в разделах [Настройка инкрементальных моделей](/docs/build/incremental-models) и [Об инкрементальных стратегиях](/docs/build/incremental-strategy).
 
-## Snapshot only
+## Только снимки {#snapshot-only}
 
-Choose this approach when your source overwrites rows and you need the history to answer questions such as "When did Alice become an active customer?"
+Выберите этот подход, если источник перезаписывает строки и вам нужна история, чтобы отвечать на вопросы вроде «Когда Alice стала активным клиентом?».
 
-Using the same example, run a snapshot before and after Alice's status changes. With the `timestamp` strategy, the snapshot keeps both versions:
+В том же примере запустите создание снимка до и после изменения статуса Alice. При использовании стратегии `timestamp` снимок сохраняет обе версии:
 
 <SimpleTable>
 | id | name | status | updated_at | dbt_valid_from | dbt_valid_to |
@@ -77,31 +77,31 @@ Using the same example, run a snapshot before and after Alice's status changes. 
 
 <br />
 
-The `dbt_valid_from` and `dbt_valid_to` columns show you when each version was valid. By default, `dbt_valid_to` is `null` for the current version.
+Столбцы `dbt_valid_from` и `dbt_valid_to` показывают, когда действовала каждая версия. По умолчанию для текущей версии значение `dbt_valid_to` равно `null`.
 
-To configure your snapshot, set `unique_key` to the customer ID and choose how to detect changes:
+Чтобы настроить снимок, укажите идентификатор клиента в параметре `unique_key` и выберите способ обнаружения изменений:
 
-- Use `timestamp` (recommended) when you have a reliable `updated_at` column that advances whenever a row changes
-- Use `check` when a table has no reliable `updated_at` column. <Constant name="dbt" /> tracks changes by comparing the columns you specify, or all columns
+- Используйте `timestamp` (рекомендуется), если есть надёжный столбец `updated_at`, значение которого увеличивается при каждом изменении строки
+- Используйте `check`, если в таблице нет надёжного столбца `updated_at`. <Constant name="dbt" /> отслеживает изменения, сравнивая указанные вами столбцы или все столбцы
 
-Run `dbt snapshot` or `dbt build` regularly on a schedule. Snapshots capture the values available when they run, so they cannot recover intermediate changes that were overwritten between runs. Choose a schedule based on how often your data changes and how much detail you need in its history.
+Регулярно запускайте `dbt snapshot` или `dbt build` по расписанию. Снимки фиксируют значения, доступные на момент запуска, поэтому они не могут восстановить промежуточные изменения, перезаписанные между запусками. Выбирайте расписание с учётом частоты изменения данных и необходимой детализации их истории.
 
-Refer to [Add snapshots to your DAG](/docs/build/snapshots) and [How often should I run the snapshot command?](/faqs/Runs/snapshot-frequency) for configuration and scheduling.
+О настройке и расписании см. в разделах [Добавление снимков в DAG](/docs/build/snapshots) и [Как часто следует запускать команду snapshot?](/faqs/Runs/snapshot-frequency).
 
-## Using incremental models and snapshots together
+## Совместное использование инкрементальных моделей и снимков {#using-incremental-models-and-snapshots-together}
 
-Use incremental models and snapshots together when you need an incremental staging model to prepare incoming data before capturing its history.
+Используйте инкрементальные модели вместе со снимками, если вам нужна инкрементальная staging-модель для подготовки входящих данных перед сохранением их истории.
 
-The following example continues with Alice and Bob. It uses a source named `raw` with a `customers` table that stores one current row per customer. Replace these names with a [source defined in your project](/docs/build/sources).
+Следующий пример продолжает историю Alice и Bob. В нём используется источник с именем `raw` и таблицей `customers`, которая хранит одну текущую строку для каждого клиента. Замените эти имена на [источник, определённый в вашем проекте](/docs/build/sources).
 
-The source includes two timestamps:
+Источник содержит две временные метки:
 
-- `updated_at`: When the customer's data changed.
-- `_loaded_at`: When your loading tool wrote that version to the warehouse. This example assumes it is populated and advances with each loaded change.
+- `updated_at`: когда изменились данные клиента.
+- `_loaded_at`: когда инструмент загрузки записал эту версию в хранилище. В этом примере предполагается, что значение заполнено и увеличивается с каждым загруженным изменением.
 
-### 1. Process incoming changes
+### 1. Обработка входящих изменений
 
-Create an incremental staging model that uses `_loaded_at` to find recently loaded rows and `id` to update the matching customer.
+Создайте инкрементальную staging-модель, которая использует `_loaded_at` для поиска недавно загруженных строк и `id` для обновления данных соответствующего клиента.
 
 <File name="models/staging/stg_customers.sql">
 
@@ -131,11 +131,11 @@ where _loaded_at >= (
 
 </File>
 
-The first run reads all rows. Later runs read rows at or after the latest stored `_loaded_at` value. Using `>=` includes rows that share that timestamp.
+При первом запуске считываются все строки. При последующих запусках считываются строки, у которых значение `_loaded_at` не меньше последнего сохранённого значения. Использование `>=` позволяет включить строки с такой же временной меткой.
 
-### 2. Capture historical versions
+### 2. Сохранение исторических версий
 
-Create a snapshot of the staging model. It uses `updated_at` to detect changes to each customer's data.
+Создайте снимок staging-модели. Он использует `updated_at` для обнаружения изменений в данных каждого клиента.
 
 <File name="snapshots/customers_snapshot.yml">
 
@@ -151,11 +151,11 @@ snapshots:
 
 </File>
 
-Snapshot sources or lightly transformed staging models. Keep business logic in downstream models so changes to that logic do not become part of your source history.
+Создавайте снимки источников или staging-моделей с минимальными преобразованиями. Оставляйте бизнес-логику в последующих моделях, чтобы изменения этой логики не становились частью истории источника.
 
-### 3. Select current values for reporting
+### 3. Выбор текущих значений для отчётности
 
-Create a model that selects the current version of each customer:
+Создайте модель, которая выбирает текущую версию каждого клиента:
 
 <File name="models/marts/dim_customers_current.sql">
 
@@ -171,26 +171,26 @@ where dbt_valid_to is null
 
 </File>
 
-Run these resources in dependency order: staging model, snapshot, then reporting model. You can use `dbt build` with all three selected.
+Запускайте эти ресурсы в порядке зависимостей: staging-модель, снимок, затем модель для отчётности. Можно использовать `dbt build`, выбрав все три ресурса.
 
-After a run captures Alice's change, the staging and reporting models show her as `active`. The snapshot keeps both her `trial` and `active` versions, as shown in the earlier examples.
+После того как запуск зафиксирует изменение данных Alice, staging-модель и модель для отчётности будут показывать её статус как `active`. Снимок сохранит обе версии — `trial` и `active`, как показано в предыдущих примерах.
 
-If the source already includes from and to dates (or a list of changes you want to keep in full), you may not need a snapshot. Load those changes with incremental `append` or `merge`, and keep the latest row with a SQL filter.
+Если источник уже содержит даты начала и окончания действия версий (или перечень изменений, который нужно сохранить целиком), снимок может не понадобиться. Загружайте эти изменения инкрементально с помощью `append` или `merge` и выбирайте последнюю строку с помощью SQL-фильтра.
 
-## What else to consider
+## Что ещё следует учитывать
 
-- Hard deletes: Loading tools often mark a row as deleted. Snapshots can close the old row or add a deletion record with [`hard_deletes`](/reference/resource-configs/hard-deletes). Incremental models must handle deletes in your merge (or a separate delete statement).
-- Late-arriving changes: Widen the incremental filter so you look a bit further back than the last run, and know when a `--full-refresh` is the safe fix. Refer to [Configure incremental models](/docs/build/incremental-models).
-- Several changes in one run: On incremental models, keep only the latest change per id before you merge.
-- Source columns change: Use [`on_schema_change`](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change) to control how incremental models handle schema changes. Snapshots can add new columns, but you may need to update [`check_cols`](/docs/build/snapshots#check-strategy) if you use the `check` strategy.
-- Tests: Test that the source or staging `unique_key` is unique and not null. For snapshots, also test that `(unique_key, dbt_valid_from)` is unique, that `dbt_valid_from` / `dbt_valid_to` ranges do not overlap, and that each ID has at most one current version (`dbt_valid_to` is null). Monitor [source freshness](/docs/build/sources#source-data-freshness) to identify loading delays.
-- Cost: Organize your table by the change timestamp and use filters to limit how much data each run scans. Refer to [About incremental strategy](/docs/build/incremental-strategy).
+- Физическое удаление: инструменты загрузки часто помечают строку как удалённую. Снимки могут закрывать старую версию строки или добавлять запись об удалении с помощью [`hard_deletes`](/reference/resource-configs/hard-deletes). В инкрементальных моделях удаление необходимо обрабатывать в операции merge (или отдельной инструкцией delete).
+- Изменения, поступающие с задержкой: расширьте инкрементальный фильтр, чтобы захватывать данные за период немного раньше последнего запуска, и определите, в каких случаях безопаснее использовать `--full-refresh`. См. раздел [Настройка инкрементальных моделей](/docs/build/incremental-models).
+- Несколько изменений за один запуск: в инкрементальных моделях перед выполнением merge оставляйте только последнее изменение для каждого id.
+- Изменение столбцов источника: используйте [`on_schema_change`](/docs/build/incremental-models#what-if-the-columns-of-my-incremental-model-change), чтобы управлять обработкой изменений схемы в инкрементальных моделях. Снимки могут добавлять новые столбцы, но при использовании стратегии `check` может потребоваться обновить [`check_cols`](/docs/build/snapshots#check-strategy).
+- Тесты: проверяйте, что `unique_key` в источнике или staging-модели уникален и не содержит null. Для снимков также проверяйте уникальность сочетания `(unique_key, dbt_valid_from)`, отсутствие пересечений интервалов `dbt_valid_from` / `dbt_valid_to` и наличие не более одной текущей версии для каждого идентификатора (`dbt_valid_to` равно null). Отслеживайте [свежесть данных источника](/docs/build/sources#source-data-freshness), чтобы выявлять задержки загрузки.
+- Стоимость: организуйте таблицу по временной метке изменения и используйте фильтры, чтобы ограничить объём данных, сканируемых при каждом запуске. См. раздел [Об инкрементальных стратегиях](/docs/build/incremental-strategy).
 
-## Related docs
+## Связанная документация
 
-- [About incremental models](/docs/build/incremental-models-overview)
-- [Configure incremental models](/docs/build/incremental-models)
-- [Add snapshots to your DAG](/docs/build/snapshots)
+- [Об инкрементальных моделях](/docs/build/incremental-models-overview)
+- [Настройка инкрементальных моделей](/docs/build/incremental-models)
+- [Добавление снимков в DAG](/docs/build/snapshots)
 - [`unique_key`](/reference/resource-configs/unique_key)
-- [CDC with Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams)
-- [dbt blog: Strategies for change data capture in dbt](/blog/change-data-capture)
+- [CDC с использованием Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams)
+- [Блог dbt: стратегии захвата изменений данных в dbt](/blog/change-data-capture)

@@ -1,8 +1,8 @@
 ---
-title: "About private connectivity"
+title: "О частных подключениях"
 id: private-connectivity
-description: "Configuring private connections."
-sidebar_label: "About private connectivity"
+description: "Настройка частных подключений."
+sidebar_label: "О частных подключениях"
 availability:
   surface: platform
   access: paid_plan
@@ -15,19 +15,19 @@ import PrivateLinkHostnameWarning from '/snippets/_private-connection-hostname-r
 
 <SetUpPages />
 
-Private connections enables secure communication from any <Constant name="dbt" /> environment to your data platform hosted on a cloud provider, such as [AWS](https://aws.amazon.com/privatelink/), [Azure](https://azure.microsoft.com/en-us/products/private-link), or [GCP](https://cloud.google.com/vpc/docs/private-service-connect), using that provider's private connection technology. Private connections allow <Constant name="dbt" /> customers to meet security and compliance controls as it allows connectivity between <Constant name="dbt" /> and your data platform without traversing the public internet. This feature is supported in most regions across North America, Europe, and Asia, but [contact us](https://www.getdbt.com/contact/) if you have questions about availability.
+Частные подключения обеспечивают безопасную связь между любой средой <Constant name="dbt" /> и вашей платформой данных, размещенной у облачного провайдера, например [AWS](https://aws.amazon.com/privatelink/), [Azure](https://azure.microsoft.com/en-us/products/private-link) или [GCP](https://cloud.google.com/vpc/docs/private-service-connect), с использованием технологии частных подключений этого провайдера. Частные подключения позволяют клиентам <Constant name="dbt" /> выполнять требования безопасности и соответствия нормативным требованиям, обеспечивая связь между <Constant name="dbt" /> и вашей платформой данных без передачи трафика через общедоступный интернет. Эта функция поддерживается в большинстве регионов Северной Америки, Европы и Азии. Если у вас есть вопросы о доступности, [свяжитесь с нами](https://www.getdbt.com/contact/).
 
 <CloudProviders type='Snowflake'/>
 
-## Private endpoint configuration
+## Настройка частной конечной точки
 
 
 <PrivateLinkHostnameWarning />
 
 
-## Available platforms
+## Доступные платформы
 
-Select your cloud platform to view private connectivity options, support matrix, and configuration guides.
+Выберите свою облачную платформу, чтобы ознакомиться с вариантами частных подключений, матрицей поддержки и руководствами по настройке.
 
 <div className="grid--3-col">
 

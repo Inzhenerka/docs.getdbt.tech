@@ -1,10 +1,10 @@
 ---
-title: overloads
-sidebar_label: "overloads"
+title: Перегрузки
+sidebar_label: "Перегрузки"
 id: overloads
 ---
 
-# overloads
+# Перегрузки
 
 <VersionCallout version="1.12" />
 
@@ -20,59 +20,59 @@ functions:
     returns:
       data_type: <string>
     overloads:
-      - defined_in: <string>       # required, name of the SQL, Python, or JavaScript file
-        arguments:                 # optional
-          - name: <arg name>       # required if arguments is specified
-            data_type: <string>    # required if arguments is specified, warehouse-specific
+      - defined_in: <string>       # обязательное поле, имя файла SQL, Python или JavaScript
+        arguments:                 # необязательное поле
+          - name: <arg name>       # обязательное поле, если задано arguments
+            data_type: <string>    # обязательное поле, если задано arguments; зависит от хранилища данных
             description: <markdown_string>
-            default_value: <string | boolean | integer> # optional, Snowflake and Postgres only
-        returns:                   # optional, inherits from root function if omitted
-          data_type: <string>      # required if returns is specified, warehouse-specific
+            default_value: <string | boolean | integer> # необязательное поле, только для Snowflake и Postgres
+        returns:                   # необязательное поле; если не задано, наследуется от основной функции
+          data_type: <string>      # обязательное поле, если задано returns; зависит от хранилища данных
           description: <markdown_string>
-      - defined_in: ...            # declare additional overloads
+      - defined_in: ...            # объявление дополнительных перегрузок
 
 ```
 
 </File>
 
-## Definition
+## Определение
 
-The `overloads` property lets you define multiple argument signatures for the same [user-defined function UDF](/docs/build/udfs). This lets you call the same function name with different input types, without creating separate UDFs for each variant. The warehouse calls the right version based on the argument types. `overloads` is supported for SQL UDFs in Snowflake and Postgres, and Python and JavaScript UDFs in Snowflake.
+Свойство `overloads` позволяет определить несколько сигнатур аргументов для одной и той же [пользовательской функции (UDF)](/docs/build/udfs). Это позволяет вызывать функцию с одним и тем же именем для разных типов входных данных, не создавая отдельную UDF для каждого варианта. Хранилище данных вызывает нужную версию на основе типов аргументов. Свойство `overloads` поддерживается для SQL UDF в Snowflake и Postgres, а также для Python и JavaScript UDF в Snowflake.
 
-Each overload references a separate file that contains its function body, with optional `arguments` and `returns`. All overloads are grouped into one DAG node (the root function), so they're built and selected together. On retry, dbt skips overloads that succeeded and reruns only those that failed.
+Каждая перегрузка ссылается на отдельный файл, содержащий тело функции, и может задавать необязательные свойства `arguments` и `returns`. Все перегрузки объединяются в один узел DAG (основную функцию), поэтому они создаются и выбираются вместе. При повторной попытке dbt пропускает успешно выполненные перегрузки и повторно запускает только те, которые завершились с ошибкой.
 
-## Behavior
+## Поведение
 
-dbt runs all overloads regardless of individual failures, so you get a complete picture of which overloads succeeded and which failed. The following behaviors apply:
+dbt выполняет все перегрузки независимо от ошибок в отдельных перегрузках, чтобы вы получили полную картину того, какие перегрузки выполнились успешно, а какие завершились с ошибкой. Действуют следующие правила:
 
-- If any overload fails, dbt marks the function node as `PARTIAL_SUCCESS` and skips downstream nodes.
-- [`dbt retry`](/reference/commands/retry) skips overloads that already succeeded and only re-runs the previously failed ones.
-- [`state:modified`](/reference/node-selection/methods#state) detects changes to any overload's function body, arguments, or return type and marks the root function node as modified.
+- Если хотя бы одна перегрузка завершается с ошибкой, dbt помечает узел функции статусом `PARTIAL_SUCCESS` и пропускает зависимые узлы.
+- [`dbt retry`](/reference/commands/retry) пропускает перегрузки, которые уже выполнились успешно, и повторно запускает только те, которые ранее завершились с ошибкой.
+- [`state:modified`](/reference/node-selection/methods#the-state-method) обнаруживает изменения в теле функции, аргументах или типе возвращаемого значения любой перегрузки и помечает узел основной функции как изменённый.
 
-## Properties
+## Свойства
 
-Each entry in the `overloads` list supports the following properties.
+Каждый элемент списка `overloads` поддерживает следующие свойства.
 
 ### defined_in
 
-The name of the file (without extension) that contains the overload's function body. The file must exist in the `functions/` directory. For example, `defined_in: null_if_empty_numeric` references `functions/null_if_empty_numeric.sql` for SQL UDFs, `functions/null_if_empty_numeric.py` for Python UDFs, or `functions/null_if_empty_numeric.js` for JavaScript UDFs.
+Имя файла (без расширения), содержащего тело перегрузки функции. Файл должен существовать в каталоге `functions/`. Например, `defined_in: null_if_empty_numeric` ссылается на `functions/null_if_empty_numeric.sql` для SQL UDF, `functions/null_if_empty_numeric.py` для Python UDF или `functions/null_if_empty_numeric.js` для JavaScript UDF.
 
-Each overload must reference a unique file. The root function's file and all `defined_in` values must be distinct.
+Каждая перегрузка должна ссылаться на уникальный файл. Файл основной функции и файлы, указанные во всех значениях `defined_in`, должны отличаться друг от друга.
 
-dbt raises a parsing error if:
-- A `defined_in` value matches the root function's own file.
-- Two overloads reference the same file.
-- The referenced file doesn't exist in the `functions/` directory.
+dbt выдаёт ошибку разбора, если:
+- Значение `defined_in` соответствует файлу самой основной функции.
+- Две перегрузки ссылаются на один и тот же файл.
+- Указанный файл не существует в каталоге `functions/`.
 
 ### arguments
 
-The argument list for the overload. Follows the same structure as [function arguments](/reference/resource-properties/function-arguments).
+Список аргументов перегрузки. Имеет ту же структуру, что и [аргументы функции](/reference/resource-properties/function-arguments).
 
 ### returns
 
-The return type for the overload. Follows the same structure as [returns](/reference/resource-properties/returns). If omitted, the overload inherits the return type of the root function.
+Тип возвращаемого значения перегрузки. Имеет ту же структуру, что и [returns](/reference/resource-properties/returns). Если свойство не задано, перегрузка наследует тип возвращаемого значения основной функции.
 
-## Example
+## Пример
 
 <Tabs>
 <TabItem value="SQL">
@@ -98,15 +98,15 @@ functions:
 
 </File>
 
-Create a separate SQL file for each overload body. In this example, the base function handles empty strings, and the overload handles numeric values:
+Создайте отдельный SQL-файл для тела каждой перегрузки. В этом примере основная функция обрабатывает пустые строки, а перегрузка — числовые значения:
 
 <File name='functions/null_if_empty.sql'>
 
 ```sql
-# syntax for Snowflake
+# синтаксис для Snowflake
 CASE WHEN val = '' THEN NULL ELSE val END
 
-# syntax for Postgres
+# синтаксис для Postgres
 SELECT CASE WHEN val = '' THEN NULL ELSE val END
 ```
 
@@ -115,10 +115,10 @@ SELECT CASE WHEN val = '' THEN NULL ELSE val END
 <File name='functions/null_if_empty_numeric.sql'>
 
 ```sql
-# syntax for Snowflake
+# синтаксис для Snowflake
 CASE WHEN val = 0 THEN NULL ELSE val END
 
-# syntax for Postgres
+# синтаксис для Postgres
 SELECT CASE WHEN val = 0 THEN NULL ELSE val END
 ```
 
@@ -151,7 +151,7 @@ functions:
 
 </File>
 
-Create a separate Python file for each overload body. In this example, the base function handles empty strings, and the overload handles numeric values:
+Создайте отдельный Python-файл для тела каждой перегрузки. В этом примере основная функция обрабатывает пустые строки, а перегрузка — числовые значения:
 
 <File name='functions/null_if_empty.py'>
 
@@ -195,7 +195,7 @@ functions:
 
 </File>
 
-Create a separate JavaScript file for each overload body. In this example, the base function handles empty strings, and the overload handles numeric values:
+Создайте отдельный JavaScript-файл для тела каждой перегрузки. В этом примере основная функция обрабатывает пустые строки, а перегрузка — числовые значения:
 
 <File name='functions/null_if_empty.js'>
 
@@ -218,9 +218,9 @@ return val;
 </TabItem>
 </Tabs>
 
-## Related documentation
+## Связанная документация
 
-- [User-defined functions](/docs/build/udfs)
-- [Function properties](/reference/function-properties)
-- [Function arguments](/reference/resource-properties/function-arguments)
+- [Пользовательские функции](/docs/build/udfs)
+- [Свойства функций](/reference/function-properties)
+- [Аргументы функций](/reference/resource-properties/function-arguments)
 - [returns](/reference/resource-properties/returns)

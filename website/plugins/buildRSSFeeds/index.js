@@ -1,6 +1,7 @@
 const fs = require('fs')
 const Feed = require('feed').Feed
 const matter = require('gray-matter')
+const { createSlugger, parseMarkdownHeadingId } = require('@docusaurus/utils')
 
 const siteUrl = 'https://docs.getdbt.tech'
 
@@ -9,30 +10,45 @@ const MONTH_NAMES = [
   'july', 'august', 'september', 'october', 'november', 'december'
 ]
 
+const RUSSIAN_MONTHS = [
+  'январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
+  'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'
+]
+
+const RUSSIAN_DATE_MONTHS = [
+  'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+  'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+]
+
 function parseMonthYearHeading(heading) {
-  const parts = heading.trim().split(/\s+/)
-  if (parts.length !== 2) return null
-  const monthIdx = MONTH_NAMES.indexOf(parts[0].toLowerCase())
-  const year = parseInt(parts[1], 10)
-  if (monthIdx === -1 || isNaN(year)) return null
-  return new Date(year, monthIdx, 1)
-}
-
-// Parses a "Month Day, Year" heading (for example, "July 13, 2026") into a
-// Date. Returns null for anything that isn't a full date heading, so category
-// headings such as "Enhancements" or "Fixes" are skipped.
-function parseFullDateHeading(heading) {
-  const match = heading.trim().match(/^([a-z]+)\s+(\d{1,2}),\s*(\d{4})$/i)
+  const match = heading.match(/^(\p{L}+)\s+(\d{4})(?:\s+г\.)?$/iu)
   if (!match) return null
-  const monthIdx = MONTH_NAMES.indexOf(match[1].toLowerCase())
-  const day = parseInt(match[2], 10)
-  const year = parseInt(match[3], 10)
-  if (monthIdx === -1 || isNaN(day) || isNaN(year)) return null
-  return new Date(year, monthIdx, day)
+  const month = match[1].toLowerCase()
+  const index = MONTH_NAMES.includes(month) ? MONTH_NAMES.indexOf(month) : RUSSIAN_MONTHS.indexOf(month)
+  return index === -1 ? null : new Date(Number(match[2]), index, 1)
 }
 
-function headingToAnchor(heading) {
-  return heading.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')
+function parseFullDateHeading(heading) {
+  const english = heading.match(/^([a-z]+)\s+(\d{1,2}),\s*(\d{4})$/i)
+  const russian = heading.match(/^(\d{1,2})\s+([а-яё]+)\s+(\d{4})(?:\s+г\.)?$/i)
+  if (!english && !russian) return null
+  const month = english ? MONTH_NAMES.indexOf(english[1].toLowerCase()) :
+    RUSSIAN_DATE_MONTHS.indexOf(russian[2].toLowerCase())
+  const day = Number(english ? english[2] : russian[1])
+  const year = Number(english ? english[3] : russian[3])
+  if (month === -1 || day === 0) return null
+  const date = new Date(year, month, day)
+  return date.getMonth() === month ? date : null
+}
+
+function releaseHeadings(content) {
+  const slugger = createSlugger()
+  return content.split('\n').flatMap((line, order) => {
+    const match = line.match(/^(#{1,6})\s+(.+)$/)
+    if (!match) return []
+    const { text, id } = parseMarkdownHeadingId(match[2].trim())
+    return [{ level: match[1].length, heading: text, anchor: id ?? slugger.slug(text), order }]
+  })
 }
 
 // Parses content into RSS items — one item per H2 or H3 heading. A reader
@@ -47,16 +63,12 @@ function parseItems(content, pageUrl) {
   const items = []
   let currentMonthDate = null
 
-  content.split('\n').forEach((line, order) => {
-    const h2Match = line.match(/^##\s+(.+)$/)
-    const h3Match = line.match(/^###\s+(.+)$/)
-
-    if (h2Match) {
-      const heading = h2Match[1].trim()
+  releaseHeadings(content).forEach(({ level, heading, anchor, order }) => {
+    if (level === 2) {
       const date = parseMonthYearHeading(heading)
       if (!date) return
       currentMonthDate = date
-      const link = `${pageUrl}#${headingToAnchor(heading)}`
+      const link = `${pageUrl}#${anchor}`
       items.push({
         title: `dbt platform release notes — ${heading}`,
         id: link,
@@ -68,10 +80,9 @@ function parseItems(content, pageUrl) {
       return
     }
 
-    if (h3Match) {
-      const heading = h3Match[1].trim()
+    if (level === 3) {
       if (!currentMonthDate) return
-      const link = `${pageUrl}#${headingToAnchor(heading)}`
+      const link = `${pageUrl}#${anchor}`
       items.push({
         title: `dbt platform release notes — ${heading}`,
         id: link,
@@ -93,15 +104,12 @@ function parseItems(content, pageUrl) {
 function parseDatedItems(content, pageUrl) {
   const items = []
 
-  content.split('\n').forEach((line, order) => {
-    const h2Match = line.match(/^##\s+(.+)$/)
-    if (!h2Match) return
-
-    const heading = h2Match[1].trim()
+  releaseHeadings(content).forEach(({ level, heading, anchor, order }) => {
+    if (level !== 2) return
     const date = parseFullDateHeading(heading)
     if (!date) return
 
-    const link = `${pageUrl}#${headingToAnchor(heading)}`
+    const link = `${pageUrl}#${anchor}`
     items.push({
       title: `dbt single-tenant release notes — ${heading}`,
       id: link,
@@ -122,7 +130,7 @@ function buildFeed({ title, description, pageUrl, feedPathPrefix, items }) {
     description,
     id: siteUrl,
     link: pageUrl,
-    language: 'en',
+    language: 'ru',
     image: 'https://www.getdbt.com/ui/img/blog/dbt-card.jpg',
     favicon: `${siteUrl}/img/favicon.svg`,
     copyright: `Copyright © ${today.getFullYear()} dbt Labs™, Inc. All Rights Reserved.`,

@@ -1,6 +1,6 @@
 ---
 title: "Set up Snowflake OAuth"
-description: "Learn how dbt administrators can use Snowflake OAuth to control access in a dbt account."
+description: "Как администраторы dbt могут управлять доступом к аккаунту через Snowflake OAuth."
 id: "set-up-snowflake-oauth"
 availability:
   surface: platform

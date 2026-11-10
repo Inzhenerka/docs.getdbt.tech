@@ -1,7 +1,7 @@
 ---
-title: Receiving a 'Could not parse dbt_project.yml' error in dbt job
-description: "Receiving a 'Could not parse dbt_project.yml' error in dbt? This error is typically caused by a tab indentation in your dbt_project.yml file."
-sidebar_label: 'Could not parse dbt_project.yml error in dbt'
+title: "Почему задание dbt выдаёт ошибку «Could not parse dbt_project.yml»?"
+description: "Ошибка «Could not parse dbt_project.yml» обычно возникает из-за отступа табуляцией в файле dbt_project.yml."
+sidebar_label: "Ошибка разбора dbt_project.yml"
 ---
 
 Сообщение об ошибке `Could not parse dbt_project.yml: while scanning for...` при запуске задания или во время разработки в <Constant name="dbt" /> обычно возникает по нескольким причинам:

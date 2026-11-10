@@ -103,9 +103,9 @@ data_tests:
 
 <TabItem value="functions" label="Functions">
 
-Specify a custom database for a function in your `dbt_project.yml` or a properties YAML file.
+Чтобы указать другую базу данных для функции, задайте её в `dbt_project.yml` или в YAML-файле свойств.
 
-For example, to create a function in a database called `analytics` instead of the target database:
+Например, чтобы создать функцию в базе `analytics` вместо целевой базы данных:
 
 <File name='dbt_project.yml'>
 
@@ -129,7 +129,7 @@ functions:
 
 </File>
 
-This results in the function being located in the `analytics` database, so the full relation name would be `analytics.finance.calculate_tax` instead of the default target database.
+Функция будет создана в базе `analytics`, поэтому её полное имя будет `analytics.finance.calculate_tax`.
 
 </TabItem>
 </Tabs>
@@ -145,15 +145,12 @@ This results in the function being located in the `analytics` database, so the f
 * Если пользовательская база данных указана, база данных отношения — это значение `{{ database }}`.
 
 Стандартное поведение dbt:
-* Если пользовательская база данных _не_ указана, для отношения используется целевая база данных (`{{ target.database }}`).
-* Если пользовательская база данных указана, для отношения используется значение `{{ database }}`.
 
 Подробнее об изменении способа, которым dbt формирует `database` для отношения, читайте в разделе [Использование пользовательских баз данных](/docs/build/custom-databases)
 
 
 
 ## Особенности хранилищ данных
-* BigQuery: `project` и `database` взаимозаменяемы
 * Databricks: `catalog` и `database` взаимозаменяемы
 
 ## Информация, специфичная для хранилища {#warehouse-specific-information}

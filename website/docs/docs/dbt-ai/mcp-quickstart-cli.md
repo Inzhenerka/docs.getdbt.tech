@@ -1,7 +1,7 @@
 ---
-title: "Run the self-hosted dbt MCP server"
-sidebar_label: "Run self-hosted dbt MCP"
-description: "Set up the self-hosted dbt MCP server with dbt commands"
+title: "Запуск самостоятельно размещённого сервера dbt MCP"
+sidebar_label: "Запуск самостоятельно размещённого dbt MCP"
+description: "Настройка самостоятельно размещённого сервера dbt MCP с помощью команд dbt"
 id: "mcp-quickstart-cli"
 availability: local_free
 ---

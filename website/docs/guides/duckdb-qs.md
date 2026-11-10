@@ -20,7 +20,7 @@ agent_guidance:
 
 В этом кратком руководстве вы узнаете, как использовать <Constant name="core" /> вместе с DuckDB, чтобы быстро и эффективно начать работу. [DuckDB](https://duckdb.org/) — это система управления базами данных с открытым исходным кодом, предназначенная для аналитических нагрузок. Она обеспечивает быстрый и удобный доступ к большим наборам данных, что делает её хорошо подходящей для задач аналитики данных.
 
-This guide covers DuckDB with <Constant name="core" /> command-line interface (CLI). For dbt v2-specific DuckDB setup, refer to [DuckDB setup](/docs/local/connect-data-platform/duckdb-setup?version=2).
+В этом руководстве используется DuckDB с CLI <Constant name="core" />. Для dbt v2 см. [Настройка DuckDB](/docs/local/connect-data-platform/duckdb-setup?version=2).
 
 В этом руководстве будет показано, как:
 
@@ -242,28 +242,28 @@ This guide covers DuckDB with <Constant name="core" /> command-line interface (C
 </Tabs>
 
 
-## Local storage
+## Локальное хранилище {#local-storage}
 
-DuckDB stores your data in a local `.duckdb` file on your machine. The location of this file is defined by the `path` field in your [`profiles.yml`](/docs/local/profiles.yml).
+DuckDB хранит данные в локальном файле `.duckdb`. Его расположение задаёт поле `path` в [`profiles.yml`](/docs/local/profiles.yml).
 
-In this quickstart, the project is configured to use a file named `jaffle_shop.duckdb`. After running `dbt build`, you can confirm that the database file was created by running the following command:
+В этом руководстве проект использует файл `jaffle_shop.duckdb`. После запуска `dbt build` проверьте, что файл базы данных создан, следующей командой:
 
 ```shell
 ls -lah *.duckdb
 ```
 
-You should see a `jaffle_shop.duckdb` file in your project directory. This file contains the tables and views built by dbt and persists between runs.
+В каталоге проекта должен появиться файл `jaffle_shop.duckdb`. Он содержит таблицы и представления, созданные dbt, и сохраняется между запусками.
 
-If you delete the file:
+Если удалить файл:
 
 ```shell
 rm *.duckdb
 ```
 
-Running `dbt build` again will recreate it.
+Повторный запуск `dbt build` создаст его заново.
 
 :::note
-If you use a relative path (such as `./local.duckdb`), the file is created relative to your `profiles.yml` file.
+Относительный путь, например `./local.duckdb`, отсчитывается от каталога, где находится `profiles.yml`.
 :::
 
 
@@ -296,7 +296,7 @@ jafgen NUMBER_OF_YEARS
 - Ознакомьтесь с другими [руководствами по быстрому старту](/guides?tags=Quickstart), чтобы начать интеграцию с вашим существующим хранилищем данных.
 
 - Страница [About projects](/docs/build/projects) описывает структуру проекта dbt и его компоненты.
-- [dbt command reference](/reference/dbt-commands) объясняет доступные команды и их назначение.
+- В [справочнике команд dbt](/reference/dbt-commands) описаны доступные команды и их назначение.
 - [Курсы dbt Labs](https://courses.getdbt.com/collections) предлагают обучающие модули начального, среднего и продвинутого уровня, которые помогут вам стать экспертом по dbt.
 - Когда вы увидите потенциал dbt для вашей организации, зарегистрируйтесь для бесплатного пробного периода [<Constant name="cloud" />](https://www.getdbt.com/signup). Это самый быстрый и простой способ развернуть dbt на сегодняшний день.
 - Ознакомьтесь с другими [quickstart‑руководствами](/guides?tags=Quickstart), чтобы начать интеграцию с вашим существующим хранилищем данных.

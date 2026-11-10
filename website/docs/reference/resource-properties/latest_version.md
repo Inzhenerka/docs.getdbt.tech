@@ -1,5 +1,5 @@
 ---
-description: "Use latest_version to set which version of a versioned model unpinned ref() calls resolve to."
+description: "Укажите latest_version, чтобы задать версию модели для вызовов ref() без явного номера версии."
 resource_types: [models]
 datatype: latest_version
 required: no

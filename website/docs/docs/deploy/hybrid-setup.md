@@ -145,25 +145,18 @@ availability:
 
 6. После завершения запуска вы должны увидеть сообщение `Artifacts uploaded successfully to artifact ingestion API: command run completed successfully` и запуск в <Constant name="dbt" /> в вашей производственной среде.
 
-### Просмотр артефактов на платформе dbt
+### Просмотр артефактов на платформе dbt {#review-artifacts-in-the-dbt-platform}
 Теперь, когда вы загрузили артефакты <Constant name="core" /> на <Constant name="dbt_platform" /> и выполнили `dbt run`, вы можете просмотреть запуск задания по загрузке артефактов:
 1. Перейдите в раздел **Deploy**
 2. Нажмите **Jobs**, а затем откройте вкладку **Runs**.
 3. Вы должны увидеть запуск задания со статусом **Success** и индикатором `</> Artifact ingestion`.
 4. Нажмите на запуск задания, чтобы просмотреть журналы и убедиться, что в них есть сообщение об успешной загрузке артефактов. Если возникли ошибки, изучите отладочные журналы и устраните их.
 
-После загрузки артефактов dbt Core в <Constant name="dbt_platform" /> и выполнения `dbt run` вы можете просмотреть запуск job с артефактами:
-
-1. Перейдите в **Deploy**
-2. Нажмите **Jobs**, затем откройте вкладку **Runs**
-3. Вы должны увидеть запуск со статусом **Success** и индикатором `</> Artifact ingestion`
-4. Откройте этот запуск, чтобы просмотреть логи и убедиться, что загрузка артефактов прошла успешно. Если есть ошибки, изучите debug‑логи для их устранения.
-
 <Lightbox src="/img/docs/deploy/hp-artifact-job.jpg" width="70%" title="Запуск job в hybrid‑проекте с импортом артефактов" />
 
-Теперь, когда вы интегрировали артефакты <Constant name="core" /> в свой проект <Constant name="dbt" />, вы можете:
+## Преимущества гибридных проектов {#benefits-of-using-hybrid-projects}
 
-Теперь, когда вы интегрировали артефакты <Constant name="core" /> с проектом <Constant name="cloud" />, вы можете:
+Теперь, когда вы интегрировали артефакты <Constant name="core" /> в свой проект <Constant name="dbt" />, вы можете:
 
 - Сотрудничайте с пользователями <Constant name="dbt" />, предоставляя им возможность визуализировать модели dbt из проектов <Constant name="core" /> и создавать [межпроектные ссылки](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) на эти модели.
 - Пользователи <Constant name="core" /> могут перейти в [<Constant name="catalog" />](/docs/explore/explore-projects) и просматривать свои модели и ресурсы. Для просмотра <Constant name="catalog" /> необходимо иметь [место с доступом только для чтения](/docs/platform/manage-access/seats-and-users).

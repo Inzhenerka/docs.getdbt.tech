@@ -1,7 +1,7 @@
 ---
-title: "Manage AI features in dbt platform"
-sidebar_label: "Manage AI features"
-description: "Admin tasks for AI in dbt platform: turn account access to AI features on or off, choose an AI provider, and manage spend."
+title: "Управление функциями ИИ в dbt platform"
+sidebar_label: "Управление функциями ИИ"
+description: "Задачи администратора по работе с ИИ в dbt platform: включение и отключение доступа аккаунта к функциям ИИ, выбор провайдера ИИ и управление расходами."
 availability: platform_login
 ---
 
@@ -10,57 +10,57 @@ import WizardConfigureAiProvider from '/snippets/_wizard-configure-ai-provider.m
 import WizardTrialBilling from '/snippets/_wizard-trial-billing.md';
 
 <IntroText>
-Manage AI features in <Constant name="dbt_platform" /> by turning AI features on or off, choosing which AI provider to use, and controlling spend.
+Управляйте функциями ИИ в <Constant name="dbt_platform" />: включайте и отключайте их, выбирайте провайдера ИИ и контролируйте расходы.
 </IntroText>
 
-The details on this page are generally for admin tasks. If you're looking for what <Constant name="wizard" /> does and where you can use it, start with [About <Constant name="wizard" /> in <Constant name="dbt_platform" />](/docs/platform/wizard-platform).
+Информация на этой странице в основном предназначена для выполнения задач администратора. Если вы хотите узнать, что делает <Constant name="wizard" /> и где его можно использовать, начните со страницы [О <Constant name="wizard" /> в <Constant name="dbt_platform" />](/docs/platform/wizard-platform).
 
 <WizardTrialBilling/>
 
-## Prerequisites
+## Предварительные требования
 
-- A [<Constant name="dbt_platform" /> account](https://www.getdbt.com/pricing) on Developer, Starter, Enterprise, or Enterprise+ plans
-  - [Legacy team plans](/docs/platform/billing/plans-and-billing#legacy-plans) don't have access to <Constant name="wizard" /> and we recommend moving to a [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing) to use it and other features.
-- <Constant name="dbt" /> admin permissions to change account settings and configure providers.
-- A development environment on a supported [release track](/docs/dbt-versions/dbt-release-tracks) to receive ongoing updates.
+- [Аккаунт <Constant name="dbt_platform" />](https://www.getdbt.com/pricing) с тарифным планом Developer, Starter, Enterprise или Enterprise+
+  - [Устаревшие тарифные планы Team](/docs/platform/billing/plans-and-billing#legacy-plans) не предоставляют доступ к <Constant name="wizard" />. Рекомендуем перейти на [тарифный план Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing), чтобы использовать его и другие функции.
+- Права администратора <Constant name="dbt" /> для изменения настроек аккаунта и настройки провайдеров.
+- Среда разработки на поддерживаемом [канале релизов](/docs/dbt-versions/dbt-release-tracks) для регулярного получения обновлений.
 
-## Manage account access to AI features {#manage-ai-features}
+## Управление доступом аккаунта к функциям ИИ {#manage-ai-features}
 
-Eligible accounts, including new ones, have AI features on by default, so most users can open <Constant name="wizard" /> without an admin changing anything first. Admins with governance or compliance requirements can turn AI off or back on anytime by following these steps:
+В аккаунтах, которым доступны функции ИИ, включая новые аккаунты, эти функции включены по умолчанию, поэтому большинство пользователей могут открыть <Constant name="wizard" /> без предварительных изменений со стороны администратора. Администраторы, которым необходимо соблюдать требования к управлению и нормативные требования, могут в любой момент отключить или снова включить ИИ, выполнив следующие действия:
 
-1. Navigate to **Account settings** in the navigation menu.
-2. Under **Settings**, confirm the account you want to change.
-3. Click **Edit** in the top right corner.
-4. Turn **Enable account access to AI features** off to disable access or on to enable it.
-5. Click **Save**.
+1. Перейдите в **Account settings** в меню навигации.
+2. В разделе **Settings** убедитесь, что выбран аккаунт, настройки которого вы хотите изменить.
+3. Нажмите **Edit** в правом верхнем углу.
+4. Выключите переключатель **Enable account access to AI features**, чтобы отключить доступ, или включите его, чтобы предоставить доступ.
+5. Нажмите **Save**.
 
-Turning AI features off applies to the whole account, including <Constant name="wizard" /> and dbt Copilot. The [dbt Support Assistant](/docs/dbt-support?version=2#ask-dbt-support-assistant) is managed separately by dbt Labs (contact the [dbt Support team](mailto:support@dbtlabs.com) for more info).
+Отключение функций ИИ распространяется на весь аккаунт, включая <Constant name="wizard" /> и dbt Copilot. [dbt Support Assistant](/docs/dbt-support?version=2#ask-dbt-support-assistant) управляется отдельно компанией dbt Labs (за дополнительной информацией обратитесь в [службу поддержки dbt](mailto:support@dbtlabs.com)).
 
-## Supported AI providers
+## Поддерживаемые провайдеры ИИ
 
 <WizardSupportedProviders />
 
-dbt Copilot supports a smaller set of providers. Refer to [dbt Copilot](/docs/dbt-ai/copilot-overview#configure-ai-provider-for-dbt-copilot) for its providers and setup steps.
+dbt Copilot поддерживает более ограниченный набор провайдеров. Список провайдеров и инструкции по настройке приведены на странице [dbt Copilot](/docs/dbt-ai/copilot-overview#configure-ai-provider-for-dbt-copilot).
 
-## Configure AI provider
+## Настройка провайдера ИИ {#configure-ai-provider}
 
 <WizardConfigureAiProvider />
 
-To bring your own key instead of using dbt Labs' managed infrastructure, refer to [Configure BYOK for dbt Wizard in dbt platform](/docs/platform/wizard-byok-platform). BYOK is available on Starter, Enterprise, and Enterprise+ plans.
+Чтобы использовать собственный ключ вместо управляемой инфраструктуры dbt Labs, обратитесь к странице [Настройка BYOK для dbt Wizard в dbt platform](/docs/platform/wizard-byok-platform). BYOK доступен в тарифных планах Starter, Enterprise и Enterprise+.
 
-## Manage spend
+## Управление расходами
 
-<Constant name="wizard"/> is available to <Constant name="dbt_platform"/> Developer, Starter, Enterprise, and Enterprise+ plans. Legacy team plans don't have access to <Constant name="wizard"/> but can [upgrade](https://www.getdbt.com/pricing) to Starter or Enterprise-tiered plans to access.
+<Constant name="wizard"/> доступен в тарифных планах Developer, Starter, Enterprise и Enterprise+ платформы <Constant name="dbt_platform"/>. Устаревшие тарифные планы Team не предоставляют доступ к <Constant name="wizard"/>, но вы можете [перейти](https://www.getdbt.com/pricing) на Starter или тарифные планы уровня Enterprise, чтобы получить доступ.
 
-Enterprise and Enterprise+ accounts get monthly usage credits, and all other plans start with a 30-day trial with $100 in usage credits. When your credits or trial run out (whichever comes first), set a spend limit so your team can keep working with minimal interruption:
+Аккаунтам Enterprise и Enterprise+ ежемесячно предоставляются кредиты на использование, а для всех остальных тарифных планов предусмотрен 30-дневный пробный период с кредитами на использование в размере 100 долларов США. Когда кредиты будут исчерпаны или пробный период завершится (в зависимости от того, что произойдёт раньше), установите лимит расходов, чтобы ваша команда могла продолжить работу с минимальными перерывами:
 
-- [Manage your spend limit](/docs/dbt-ai/pricing-billing/trial-and-billing#manage-your-spend-limit) to cap what the account can spend on AI usage.
-- [Models and pricing](/docs/dbt-ai/pricing-billing/overview) explains what each model costs.
-- With [BYOK](/docs/platform/wizard-byok-platform), your AI provider bills you directly and the usage doesn't draw from your consumption pool.
+- [Управляйте лимитом расходов](/docs/dbt-ai/pricing-billing/trial-and-billing#manage-your-spend-limit), чтобы ограничить расходы аккаунта на использование ИИ.
+- На странице [Модели и цены](/docs/dbt-ai/pricing-billing/overview) указана стоимость использования каждой модели.
+- При использовании [BYOK](/docs/platform/wizard-byok-platform) провайдер ИИ выставляет счета напрямую вам, а использование не расходует ваш общий пул кредитов.
 
-## Related docs
+## Связанная документация
 
-- [About <Constant name="wizard" /> in <Constant name="dbt_platform" />](/docs/platform/wizard-platform)
-- [Configure BYOK in <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform)
-- [Trial and billing](/docs/dbt-ai/pricing-billing/trial-and-billing)
-- [Data & Privacy in <Constant name="dbt_platform" />](/docs/dbt-ai/dbt-ai-faqs#privacy-and-data)
+- [О <Constant name="wizard" /> в <Constant name="dbt_platform" />](/docs/platform/wizard-platform)
+- [Настройка BYOK в <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform)
+- [Пробный период и оплата](/docs/dbt-ai/pricing-billing/trial-and-billing)
+- [Данные и конфиденциальность в <Constant name="dbt_platform" />](/docs/dbt-ai/dbt-ai-faqs#privacy-and-data)

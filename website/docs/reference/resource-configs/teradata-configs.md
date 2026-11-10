@@ -13,7 +13,7 @@ id: "teradata-configs"
     +quote_columns: false  #or `true` if you have CSV column headers with spaces
   ```
 
-## Models {#models}
+## Модели {#models}
 
 ### <Term id="table" />
 * `table_kind` — определяет тип таблицы. Допустимые значения: `MULTISET` (значение по умолчанию для режима ANSI transaction, требуемого `dbt-teradata`) и `SET`, например:
@@ -162,7 +162,7 @@ id: "teradata-configs"
       WITH [NO] LOAD IDENTITY
       ```
 
-Examples:
+Примеры:
 * В файле определения материализации SQL:
 
 Перевод:

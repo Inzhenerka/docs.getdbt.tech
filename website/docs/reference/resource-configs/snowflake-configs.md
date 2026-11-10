@@ -27,7 +27,7 @@ import SnowflakePythonParams from '/snippets/_snowflake-python-config-params.md'
 
 <VersionBlock lastVersion="1.10">
 
-| Parameter          | Type       | Required | Default     | Change Monitoring Support |
+| Параметр | Тип | Обязательный | По умолчанию | Поддержка отслеживания изменений |
 |--------------------|------------|----------|-------------|---------------------------|
 | [`on_configuration_change`](/reference/resource-configs/on_configuration_change) | `<string>` | no       | `apply`     | n/a                       |
 | [`target_lag`](#target-lag)      | `<string>` | yes      |        | alter          |
@@ -39,9 +39,9 @@ import SnowflakePythonParams from '/snippets/_snowflake-python-config-params.md'
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project YAML file', value: 'project-yaml', },
-    { label: 'Properties YAML file', value: 'property-yaml', },
-    { label: 'SQL file config', value: 'config', },
+    { label: 'YAML-файл проекта', value: 'project-yaml', },
+    { label: 'YAML-файл свойств', value: 'property-yaml', },
+    { label: 'Настройка в SQL-файле', value: 'config', },
   ]
 }>
 
@@ -366,24 +366,24 @@ Snowflake поддерживает два сценария конфигурац�
 
 ### Scheduler
 
-The `scheduler` parameter controls whether the dynamic table is refreshed by Snowflake's background scheduler or by an external orchestrator (for example, dbt). Snowflake accepts two options:
-- **ENABLE** &mdash; Snowflake's built-in scheduler automatically refreshes the dynamic table based on the defined `target_lag`. Refreshes cascade across the dependency graph to maintain snapshot consistency. Setting `target_lag` is _required_ when using this option. 
-- **DISABLE** &mdash; The dynamic table is excluded from Snowflake's automatic background refresh. You must trigger refreshes manually or through orchestration external to Snowflake (for example, by a `dbt run` that executes `ALTER DYNAMIC TABLE ... REFRESH`). When this option is explicitly set, specifying `target_lag` results in an error.
+Параметр `scheduler` определяет, кто обновляет динамическую таблицу: фоновый планировщик Snowflake или внешний оркестратор, например dbt. Snowflake принимает два значения:
+- **ENABLE** &mdash; планировщик Snowflake автоматически обновляет таблицу по заданному `target_lag`. Обновления распространяются по графу зависимостей, чтобы сохранять согласованность снимков данных. Для этого варианта `target_lag` обязателен.
+- **DISABLE** &mdash; Snowflake исключает таблицу из автоматического фонового обновления. Запускайте обновление вручную или внешним оркестратором, например через `dbt run`, который выполняет `ALTER DYNAMIC TABLE ... REFRESH`. Если этот режим указан явно, установка `target_lag` вызывает ошибку.
 
-:::info dbt default differs from Snowflake's native default
-In Snowflake's native DDL, omitting `SCHEDULER` defaults to `ENABLE`, and `TARGET_LAG` is required.
+:::info Значения по умолчанию в dbt и Snowflake различаются
+Если в DDL Snowflake опустить `SCHEDULER`, используется `ENABLE`, а параметр `TARGET_LAG` обязателен.
 
-In dbt, the default value is `DISABLE`. If neither `scheduler` nor `target_lag` is specified, dbt creates the dynamic table with `scheduler: DISABLE` and manages refreshes directly.
+В dbt по умолчанию используется `DISABLE`. Если не заданы ни `scheduler`, ни `target_lag`, dbt создаёт динамическую таблицу с `scheduler: DISABLE` и сам управляет обновлениями.
 
-If you specify `target_lag` without explicitly setting `scheduler`, dbt sets `scheduler: ENABLE`.
+Если задан `target_lag` без явного значения `scheduler`, dbt устанавливает `scheduler: ENABLE`.
 :::
 
-**Key points:**
-- Explicitly setting `scheduler: DISABLE` together with `target_lag` results in an error. If you omit `scheduler` and provide `target_lag`, dbt resolves the conflict by setting `scheduler: ENABLE` automatically.
-- When `scheduler: DISABLE`, a manual refresh does _not_ automatically refresh upstream dynamic table dependencies. This creates an isolation boundary, allowing dbt to manage specific table refreshes without triggering the entire pipeline. In contrast, `ENABLE` cascades refreshes across the dependency graph.
-- If a dynamic table with `scheduler: DISABLE` depends on other dynamic tables, those upstream tables will not be refreshed when the downstream table is refreshed. dbt must manage the refresh order explicitly.
+**Важные особенности:**
+- Явное сочетание `scheduler: DISABLE` и `target_lag` вызывает ошибку. Если `scheduler` опущен, а `target_lag` задан, dbt автоматически выбирает `scheduler: ENABLE`.
+- При `scheduler: DISABLE` ручное обновление не затрагивает вышестоящие динамические таблицы. Это позволяет dbt обновлять отдельные таблицы без запуска всего пайплайна. В режиме `ENABLE` обновления распространяются по графу зависимостей.
+- Если таблица с `scheduler: DISABLE` зависит от других динамических таблиц, они не обновятся при обновлении зависимой таблицы. dbt должен явно управлять порядком обновления.
 
-For example, to let dbt manage refreshes (default behavior):
+Пример, в котором dbt управляет обновлениями по умолчанию:
 
 ```sql
 {{ config(
@@ -394,7 +394,7 @@ For example, to let dbt manage refreshes (default behavior):
 select * from {{ source('raw', 'events') }}
 ```
 
-To enable Snowflake-managed scheduling with a target lag:
+Чтобы включить планировщик Snowflake и указать целевое отставание:
 
 ```sql
 {{ config(
@@ -406,7 +406,7 @@ To enable Snowflake-managed scheduling with a target lag:
 select * from {{ source('raw', 'events') }}
 ```
 
-Learn more about `scheduler` in [Snowflake's docs](https://docs.snowflake.com/en/sql-reference/sql/create-dynamic-table#optional-parameters).
+Подробнее о `scheduler` см. в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/sql/create-dynamic-table#optional-parameters).
 
 </VersionBlock>
 
@@ -414,9 +414,9 @@ Learn more about `scheduler` in [Snowflake's docs](https://docs.snowflake.com/en
 
 ### Refresh warehouse
 
-Starting `dbt-snowflake` v1.11, you can use the `refresh_warehouse` parameter in your model configuration to specify a separate warehouse for the dynamic table's self-refresh operations. This is separate from [`snowflake_warehouse`](#configuring-virtual-warehouses), which controls <Term id="ddl" /> execution. By setting `refresh_warehouse`, you can use a smaller warehouse for automatic refreshes while keeping a larger `snowflake_warehouse` for DDL operations.
+Начиная с `dbt-snowflake` v1.11, параметр `refresh_warehouse` в конфигурации модели задаёт отдельное вычислительное хранилище для автоматических обновлений динамической таблицы. Настройка [`snowflake_warehouse`](#configuring-virtual-warehouses) по-прежнему определяет хранилище для операций <Term id="ddl" />. Например, для автоматических обновлений можно использовать меньшее хранилище, а для DDL — более крупное.
 
-To configure the `refresh_warehouse` parameter in your model, refer to the following example:
+Пример настройки `refresh_warehouse` в модели:
 
 <File name='models/<model_name>.sql'>
 
@@ -433,12 +433,12 @@ select * from {{ source('raw', 'events') }}
 
 </File>
 
-**Key points:**
-- If `refresh_warehouse` is not set, `snowflake_warehouse` is used for both DDL execution and self-refresh operations.
-- You can change `refresh_warehouse` on an existing dynamic table without a full refresh.
-- To revert to the default behavior after setting a refresh warehouse, remove the `refresh_warehouse` parameter from your model configuration or explicitly set it to `None`.
+**Важные особенности:**
+- Если `refresh_warehouse` не задан, `snowflake_warehouse` используется и для DDL, и для автоматических обновлений.
+- Значение `refresh_warehouse` существующей динамической таблицы можно изменить без полной пересборки.
+- Чтобы вернуться к поведению по умолчанию, удалите `refresh_warehouse` из конфигурации модели или явно установите `None`.
 
-Learn more about the `WAREHOUSE` parameter in [Snowflake's docs](https://docs.snowflake.com/en/user-guide/dynamic-tables-warehouses).
+Подробнее о параметре `WAREHOUSE` см. в [документации Snowflake](https://docs.snowflake.com/en/user-guide/dynamic-tables-warehouses).
 
 </VersionBlock>
 
@@ -1505,21 +1505,21 @@ models:
 
 </File>
 
-`COPY GRANTS` retains existing object privileges (except ownership) on the table, view, or dynamic table when Snowflake runs `CREATE OR REPLACE`. Object ownership remains with the role that runs the rebuild.
+При выполнении `CREATE OR REPLACE` в Snowflake конструкция `COPY GRANTS` сохраняет существующие права на таблицу, представление или динамическую таблицу, кроме права владения. Владельцем остаётся роль, выполняющая пересоздание.
 
 <VersionBlock firstVersion="1.13">
 
-When `copy_grants` is `false` or unset, dbt adds `IGNORE GRANTS` for tables, views, and clones. That drops existing privileges on recreate, so [copying grants on CREATE OR REPLACE](https://docs.snowflake.com/en/release-notes/bcr-bundles/2026_08/bcr-2433) does not leave leftover grants. dbt then applies your [`grants`](/reference/resource-configs/grants) config as usual.
+Если `copy_grants` равен `false` или не задан, dbt добавляет `IGNORE GRANTS` для таблиц, представлений и клонов. При пересоздании существующие права сбрасываются, поэтому функция [копирования прав при CREATE OR REPLACE](https://docs.snowflake.com/en/release-notes/bcr-bundles/2026_08/bcr-2433) не оставляет старых разрешений. Затем dbt применяет настройки [`grants`](/reference/resource-configs/grants) как обычно.
 
-This `IGNORE GRANTS` path does not apply to [dynamic tables](#copy-grants-dynamic-tables).
+Этот вариант с `IGNORE GRANTS` не применяется к [динамическим таблицам](#copy-grants-dynamic-tables).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.12">
 
-When `copy_grants` is `false`, dbt emits a bare `CREATE OR REPLACE` for tables and views. If [copying grants on CREATE OR REPLACE](https://docs.snowflake.com/en/release-notes/bcr-bundles/2026_08/bcr-2433) is enabled on your account, Snowflake keeps existing privileges even when `copy_grants` is `false`. dbt adds the grants you configured and does not remove extras.
+При `copy_grants: false` dbt выполняет обычный `CREATE OR REPLACE` для таблиц и представлений. Если в аккаунте включено [копирование прав при CREATE OR REPLACE](https://docs.snowflake.com/en/release-notes/bcr-bundles/2026_08/bcr-2433), Snowflake сохраняет существующие права даже при `copy_grants: false`. dbt добавляет настроенные разрешения и не удаляет остальные.
 
-To have dbt manage the full grant list after a recreate on these versions, set `copy_grants: true` and declare those grants. If `grants` is missing or set to `{}`, leftovers stay. From `dbt-snowflake` v1.13, `copy_grants: false` emits `IGNORE GRANTS` for tables, views, and clones instead.
+Чтобы в этих версиях dbt управлял полным списком прав после пересоздания, задайте `copy_grants: true` и явно перечислите разрешения. Если `grants` отсутствует или равен `{}`, старые разрешения сохраняются. Начиная с `dbt-snowflake` v1.13, при `copy_grants: false` для таблиц, представлений и клонов используется `IGNORE GRANTS`.
 
 </VersionBlock>
 

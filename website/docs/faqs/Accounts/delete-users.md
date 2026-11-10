@@ -10,7 +10,7 @@ id: delete-users
 
 1. В <Constant name="dbt" /> нажмите на название своего аккаунта в левом боковом меню и выберите **Account settings**.
 
-<Lightbox src="/img/docs/dbt-platform/Navigate-to-account-settings.png" title="Navigate to account settings" />
+<Lightbox src="/img/docs/dbt-platform/Navigate-to-account-settings.png" title="Переход к настройкам аккаунта" />
 
 2. В разделе **Account settings** выберите **Users** в подразделе **Teams**.
 3. Выберите пользователя, которого хотите удалить, затем нажмите **Edit**.

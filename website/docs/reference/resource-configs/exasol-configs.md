@@ -1,41 +1,41 @@
 ---
-title: "Exasol configurations"
-description: "Exasol Configurations - Read this in-depth guide to learn about configurations in dbt."
+title: "Конфигурации Exasol"
+description: "Конфигурации Exasol — прочитайте это подробное руководство, чтобы узнать о настройках в dbt."
 id: "exasol-configs"
 ---
 
-## Incremental materialization strategies
+## Стратегии инкрементальной материализации
 
-In dbt-exasol, the following incremental materialization strategies are supported:
+В dbt-exasol поддерживаются следующие стратегии инкрементальной материализации:
 
-- `append` (default when `unique_key` is not defined)
+- `append` (по умолчанию, если `unique_key` не задан)
 - `merge`
-- `delete+insert` (default when `unique_key` is defined)
+- `delete+insert` (по умолчанию, если `unique_key` задан)
 - [`microbatch`](/docs/build/incremental-microbatch)
 
-All of these strategies are inherited from dbt. For more information on incremental strategies, refer to the [incremental strategy documentation](/docs/build/incremental-strategy).
+Все эти стратегии унаследованы от dbt. Дополнительную информацию об инкрементальных стратегиях см. в [документации по инкрементальным стратегиям](/docs/build/incremental-strategy).
 
-## Performance optimizations
+## Оптимизация производительности
 
-### Table distribution and partitioning
+### Распределение и секционирование таблиц
 
-Starting from dbt-exasol 1.8.1, you can configure table distribution and partitioning strategies to optimize query performance in Exasol. These configurations are available for models materialized as `table` or `incremental`.
+Начиная с dbt-exasol 1.8.1, вы можете настраивать стратегии распределения и секционирования таблиц для оптимизации производительности запросов в Exasol. Эти настройки доступны для моделей с материализацией `table` или `incremental`.
 
-Exasol supports the following performance optimization configurations:
+Exasol поддерживает следующие настройки оптимизации производительности:
 
-| Parameter | Type | Required | Description |
+| Параметр | Тип | Обязательный | Описание |
 |-----------|------|----------|-------------|
-| `partition_by_config` | `<string>` or `[<string>]` | no | Partitions the table by specified column(s) for improved query performance |
-| `distribute_by_config` | `<string>` | no | Distributes data across cluster nodes by specified column |
-| `primary_key_config` | `[<string>]` | no | Defines primary key constraint(s) |
+| `partition_by_config` | `<string>` или `[<string>]` | нет | Секционирует таблицу по указанным столбцам для повышения производительности запросов |
+| `distribute_by_config` | `<string>` | нет | Распределяет данные по узлам кластера по указанному столбцу |
+| `primary_key_config` | `[<string>]` | нет | Определяет ограничения первичного ключа |
 
 <Tabs
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project YAML file', value: 'project-yaml', },
-    { label: 'Properties YAML file', value: 'property-yaml', },
-    { label: 'SQL file config', value: 'config', },
+    { label: 'YAML-файл проекта', value: 'project-yaml', },
+    { label: 'YAML-файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация в SQL-файле', value: 'config', },
   ]
 }>
 
@@ -93,9 +93,9 @@ models:
 
 </Tabs>
 
-#### Single column example
+#### Пример с одним столбцом
 
-The following example creates a table partitioned by `order_date`, distributed by `customer_id`, with a primary key on `customer_id`:
+Следующий пример создаёт таблицу, секционированную по `order_date`, с распределением по `customer_id` и первичным ключом по `customer_id`:
 
 <File name='models/orders.sql'>
 
@@ -119,9 +119,9 @@ from {{ source('sales', 'orders') }}
 
 </File>
 
-#### Multiple columns example
+#### Пример с несколькими столбцами
 
-When configuring multiple columns for `primary_key_config`, provide them as a list:
+При настройке нескольких столбцов для `primary_key_config` укажите их в виде списка:
 
 <File name='models/order_items.sql'>
 
@@ -148,24 +148,24 @@ from {{ source('sales', 'order_items') }}
 </File>
 
 :::info
-When configuring multiple columns for `primary_key_config`, always provide them as a list: `['column1', 'column2']`
+При настройке нескольких столбцов для `primary_key_config` всегда указывайте их в виде списка: `['column1', 'column2']`
 :::
 
-For more information about Exasol's table distribution and partitioning, refer to the [Exasol documentation](https://docs.exasol.com/db/latest/sql/create_table.htm).
+Дополнительную информацию о распределении и секционировании таблиц в Exasol см. в [документации Exasol](https://docs.exasol.com/db/latest/sql/create_table.htm).
 
-## Model contracts
+## Контракты моделей
 
-Exasol supports [model contracts](/docs/mesh/govern/model-contracts) with the following database constraints:
+Exasol поддерживает [контракты моделей](/docs/mesh/govern/model-contracts) со следующими ограничениями базы данных:
 
-| Constraint Type | Support Status | Description |
+| Тип ограничения | Статус поддержки | Описание |
 |----------------|----------------|-------------|
-| `not_null`     | ✅ Enforced    | Prevents NULL values in the column |
-| `primary_key`  | ✅ Enforced    | Enforces uniqueness and NOT NULL |
-| `foreign_key`  | ✅ Enforced    | References another table's primary key |
-| `check`        | ❌ Not supported | Custom validation expressions not supported |
-| `unique`       | ❌ Not supported | Unique constraints not supported |
+| `not_null`     | ✅ Применяется    | Запрещает значения NULL в столбце |
+| `primary_key`  | ✅ Применяется    | Обеспечивает уникальность и NOT NULL |
+| `foreign_key`  | ✅ Применяется    | Ссылается на первичный ключ другой таблицы |
+| `check`        | ❌ Не поддерживается | Пользовательские выражения проверки не поддерживаются |
+| `unique`       | ❌ Не поддерживается | Ограничения уникальности не поддерживаются |
 
-### Example with enforced constraints
+### Пример с применяемыми ограничениями
 
 <File name='models/customers.yml'>
 
@@ -194,13 +194,13 @@ models:
 
 </File>
 
-For more information on model contracts, refer to the [model contracts documentation](/docs/mesh/govern/model-contracts).
+Дополнительную информацию о контрактах моделей см. в [документации по контрактам моделей](/docs/mesh/govern/model-contracts).
 
-## Timestamp format
+## Формат временных меток
 
-Starting from dbt-exasol 1.2.2, the default timestamp format is `YYYY-MM-DDTHH:MI:SS.FF6`.
+Начиная с dbt-exasol 1.2.2, формат временных меток по умолчанию — `YYYY-MM-DDTHH:MI:SS.FF6`.
 
-You can customize the timestamp format in your [profile configuration](/docs/local/connect-data-platform/exasol-setup):
+Вы можете изменить формат временных меток в [конфигурации профиля](/docs/local/connect-data-platform/exasol-setup):
 
 <File name='profiles.yml'>
 
@@ -209,70 +209,70 @@ outputs:
   dev:
     type: exasol
     timestamp_format: 'YYYY-MM-DD HH24:MI:SS.FF3'
-    # ... other settings
+    # ... другие настройки
 ```
 
 </File>
 
-### Microbatch strategy considerations
+### Особенности стратегии microbatch
 
-When using the [`microbatch`](/docs/build/incremental-microbatch) incremental strategy, Exasol requires timestamps without timezone suffix in model definitions:
+При использовании инкрементальной стратегии [`microbatch`](/docs/build/incremental-microbatch) Exasol требует, чтобы временные метки в определениях моделей не содержали суффикса часового пояса:
 
 ```sql
--- ✅ Correct (Exasol compatible)
+-- ✅ Правильно (совместимо с Exasol)
 TIMESTAMP '2024-01-01 10:00:00'
 
--- ❌ Incorrect (will cause parse errors)
+-- ❌ Неправильно (вызовет ошибки синтаксического анализа)
 TIMESTAMP '2024-01-01 10:00:00-0'
 ```
 
-The dbt-exasol adapter automatically handles timestamp formatting for microbatch boundaries.
+Адаптер dbt-exasol автоматически обрабатывает форматирование временных меток для границ микропакетов.
 
-For more information about the microbatch strategy, refer to the [microbatch documentation](/docs/build/incremental-microbatch).
+Дополнительную информацию о стратегии microbatch см. в [документации по microbatch](/docs/build/incremental-microbatch).
 
-## Materialized views
+## Материализованные представления
 
-Exasol does not support materialized views. If you attempt to use `materialized='materialized_view'`, the operation will fail with an error.
+Exasol не поддерживает материализованные представления. При попытке использовать `materialized='materialized_view'` операция завершится с ошибкой.
 
-### Workarounds
+### Обходные решения
 
-- Use `materialized='table'` with appropriate refresh logic
-- Use `materialized='incremental'` with suitable [incremental strategies](/docs/build/incremental-strategy)
+- Используйте `materialized='table'` с соответствующей логикой обновления
+- Используйте `materialized='incremental'` с подходящими [инкрементальными стратегиями](/docs/build/incremental-strategy)
 
-## Clone operations
+## Операции клонирования
 
-Exasol does not support table cloning operations. This affects dbt features that rely on `CLONE` functionality.
+Exasol не поддерживает операции клонирования таблиц. Это влияет на возможности dbt, которые зависят от функциональности `CLONE`.
 
-## Unit test limitations
+## Ограничения модульного тестирования
 
-Exasol has specific limitations with [unit tests](/docs/build/unit-tests):
+В Exasol существуют определённые ограничения для [модульных тестов](/docs/build/unit-tests):
 
-### Empty string handling
+### Обработка пустых строк
 
-In Exasol, empty strings are treated as `NULL`. This affects test fixtures that use empty string literals to simulate empty values. When writing unit tests with seed data, be aware that:
+В Exasol пустые строки обрабатываются как `NULL`. Это влияет на тестовые фикстуры, использующие пустые строковые литералы для имитации пустых значений. При написании модульных тестов с seed-данными учитывайте следующее:
 
 ```yaml
-# This seed data
+# Эти seed-данные
 id,name,value
-1,test,""  # Empty string
+1,test,""  # Пустая строка
 
-# Will be interpreted as
+# Будут интерпретированы как
 id,name,value
-1,test,NULL  # NULL value in Exasol
+1,test,NULL  # Значение NULL в Exasol
 ```
 
-### Cross-database testing
+### Тестирование с использованием разных баз данных
 
-Unit tests that rely on sources in a database different from the models are not supported. All test fixtures and models must exist in the same database.
+Модульные тесты, использующие источники из базы данных, отличной от базы данных моделей, не поддерживаются. Все тестовые фикстуры и модели должны находиться в одной базе данных.
 
-### Aggregate functions in CTEs
+### Агрегатные функции в CTE
 
-Exasol does not support certain aggregate functions (`LISTAGG`, `MEDIAN`, `PERCENTILE_CONT`) when used within common table expressions (CTEs) created from dbt's unit test fixtures. These functions require user-created tables.
+Exasol не поддерживает некоторые агрегатные функции (`LISTAGG`, `MEDIAN`, `PERCENTILE_CONT`) при их использовании внутри общих табличных выражений (CTE), созданных на основе фикстур модульных тестов dbt. Для этих функций требуются таблицы, созданные пользователем.
 
-**Workaround:** Create actual tables for test fixtures rather than using inline CTEs when testing models with these functions.
+**Обходное решение:** При тестировании моделей с этими функциями создавайте реальные таблицы для тестовых фикстур вместо использования встроенных CTE.
 
-If you are interested in supporting materialized test fixtures, we encourage you to participate in this issue in GitHub: [dbt-labs/dbt#8499](https://github.com/dbt-labs/dbt/issues/8499)
+Если вы заинтересованы в поддержке материализованных тестовых фикстур, приглашаем вас принять участие в обсуждении этой задачи на GitHub: [dbt-labs/dbt#8499](https://github.com/dbt-labs/dbt/issues/8499)
 
-## Connection configuration
+## Настройка подключения
 
-For information about connection parameters such as encryption, SSL/TLS validation, OpenID authentication, and other profile settings, refer to the [Exasol setup documentation](/docs/local/connect-data-platform/exasol-setup).
+Информацию о параметрах подключения, таких как шифрование, проверка SSL/TLS, аутентификация OpenID и другие настройки профиля, см. в [документации по настройке Exasol](/docs/local/connect-data-platform/exasol-setup).

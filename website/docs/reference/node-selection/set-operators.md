@@ -7,11 +7,11 @@ description: "Операторы объединения и пересечени�
 
 ## Объединения {#unions}
 
-A union merges the node sets from several selector expressions; every resource that matches _any_ of those expressions is selected. In other words, union behaves like OR across the arguments you pass to `--select` or `--exclude`.
+Объединение выбирает узлы, соответствующие _хотя бы одному_ из нескольких выражений. Для аргументов `--select` или `--exclude` оно действует как логическое «ИЛИ».
 
-With unions, you can pass multiple arguments separated by spaces (space-delimited). dbt resolves each argument using the normal selection rules ([selection methods](/reference/node-selection/methods), [graph operators](/reference/node-selection/graph-operators), and other selection syntax), then combines the results. If more than one argument matches the same node, that node appears only once in the final selection.
+Для объединения передайте аргументы через пробел. dbt применяет к каждому аргументу обычные правила: [методы выбора](/reference/node-selection/methods) и [операторы графа](/reference/node-selection/graph-operators). Затем результаты объединяются, и каждый узел входит в итоговую выборку только один раз.
 
-For example, the following command combines two selector expressions. Each uses `+` to include a model and its ancestors, and the space between them merges both sets:
+В примере два выражения. Оператор `+` включает модель и её предков, а пробел объединяет результаты:
 
 ```bash
 dbt run --select "+snowplow_sessions +fct_orders"
@@ -23,37 +23,37 @@ dbt run --select "+snowplow_sessions +fct_orders"
 
 Пересечение сохраняет только те узлы, которые соответствуют каждому выражению селектора; чтобы остаться в итоговом наборе, ресурс должен соответствовать _всем_ аргументам, разделённым запятыми.
 
-Use commas with no spaces between arguments to define an intersection when you pass multiple arguments to `--select` or `--exclude`. Spaces between arguments still mean a [union](#unions). dbt resolves each argument using the normal selection rules ([selection methods](/reference/node-selection/methods), [graph operators](/reference/node-selection/graph-operators), and other selection syntax), then keeps only resources that satisfy all of them. The order of comma-separated arguments does not change the final set.
+Для пересечения укажите аргументы `--select` или `--exclude` через запятую без пробелов. Пробел по-прежнему означает [объединение](#unions). dbt применяет [методы выбора](/reference/node-selection/methods), [операторы графа](/reference/node-selection/graph-operators) и другие обычные правила, а затем оставляет только ресурсы, подходящие под все аргументы. Порядок аргументов через запятую на результат не влияет.
 
-The following examples show intersections:
+Примеры пересечений:
 
-Select shared upstream nodes (common ancestors of `snowplow_sessions` and `fct_orders`):
+Выбрать общие вышестоящие узлы, от которых зависят и `snowplow_sessions`, и `fct_orders`:
 
 ```bash
 dbt run --select "+snowplow_sessions,+fct_orders"
 ```
 
-Select shared downstream nodes (common descendants of `stg_invoices` and `stg_accounts`):
+Выбрать общие зависимые узлы для `stg_invoices` и `stg_accounts`:
 
 ```bash
 dbt run --select "stg_invoices+,stg_accounts+"
 ```
 
-Select models that are under the `marts/finance` path and tagged `nightly`:
+Выбрать модели по пути `marts/finance` с тегом `nightly`:
 
 ```bash
 dbt run --select "marts.finance,tag:nightly"
 ```
 
-## Combining unions and intersections
+## Объединение и пересечение в одной команде {#combining-unions-and-intersections}
 
-You can combine unions and intersections in a single `--select` or `--exclude` value to build complex selections in one command. dbt evaluates each space-delimited argument independently: commas with no spaces within an argument define an intersection, and a space between arguments combines their results as a union. Combining both operators lets you apply different filtering logic to different subsets of your project at once.
+В одном значении `--select` или `--exclude` можно сочетать объединение и пересечение. dbt вычисляет каждый аргумент, разделённый пробелом, отдельно: запятые без пробелов внутри аргумента задают пересечение, а пробелы между аргументами объединяют результаты.
 
-For example, the following command contains two space-separated arguments, each defining an intersection:
-- `+snowplow_sessions,+fct_orders` selects nodes that are upstream of both `snowplow_sessions` and `fct_orders`.
-- `marts.finance,tag:nightly` selects models under the `marts/finance` path that are tagged `nightly`.
+В следующей команде два аргумента разделены пробелом, и каждый задаёт пересечение:
+- `+snowplow_sessions,+fct_orders` выбирает узлы, от которых зависят обе модели, `snowplow_sessions` и `fct_orders`.
+- `marts.finance,tag:nightly` выбирает модели по пути `marts/finance` с тегом `nightly`.
 
-The space between those arguments creates a union and combines both results into one selection:
+Пробел между аргументами объединяет оба результата:
 
 ```bash
 dbt run --select "+snowplow_sessions,+fct_orders marts.finance,tag:nightly"

@@ -16,9 +16,9 @@ dbt выводит логи в два разных места: консоль CL
 
 <VersionBlock firstVersion="2.0">
 
-The `LOG_FORMAT` and `LOG_FORMAT_FILE` configs specify how dbt's logs should be formatted. Shared options are `text`, `json`, and `default`. The `otel` option is available for `LOG_FORMAT` only (console output). Setting `--log-format-file otel` has no effect.
+Параметры `LOG_FORMAT` и `LOG_FORMAT_FILE` задают формат журналов dbt. Оба поддерживают `text`, `json` и `default`. Формат `otel` доступен только для вывода в консоль через `LOG_FORMAT`. Параметр `--log-format-file otel` не действует.
 
-The `otel` format streams [OpenTelemetry](https://opentelemetry.io/)-style structured telemetry to the console. It uses a different schema than <Constant name="core" />'s `json` logs. For JSONL files, Parquet export, OTLP, and how this maps to <Constant name="core" /> structured logging, refer to [<Constant name="fusion" /> telemetry and observability](/reference/telemetry-observability).
+Формат `otel` выводит в консоль структурированную телеметрию в стиле [OpenTelemetry](https://opentelemetry.io/). Её схема отличается от журналов `json` в <Constant name="core" />. Подробнее о JSONL, экспорте Parquet, OTLP и связи с журналами <Constant name="core" /> см. [Телеметрия и наблюдаемость <Constant name="fusion" />](/reference/telemetry-observability).
 
 <File name='Usage'>
 
@@ -104,7 +104,7 @@ dbt 2.0.1
 
 <VersionBlock firstVersion="2.0">
 
-When the `LOG_FORMAT` is set explicitly to `text`, `json`, or `default`, it takes effect in both the console and log files. The `otel` value applies to console output only. Use `LOG_FORMAT_FILE` to set a different format for the log file (`text`, `json`, or `default`).
+Если для `LOG_FORMAT` явно указано `text`, `json` или `default`, формат применяется и к консоли, и к файлам журнала. Значение `otel` действует только для консоли. Чтобы задать отдельный формат файла (`text`, `json` или `default`), используйте `LOG_FORMAT_FILE`.
 
 </VersionBlock>
 

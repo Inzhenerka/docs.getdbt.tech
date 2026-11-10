@@ -1,114 +1,114 @@
 ---
-title: "dbt AI: Usage metering and limiting"
+title: "dbt AI: учет и ограничение использования"
 id: dbt-ai-usage
-description: "Learn how dbt Wizard and dbt Copilot usage is metered and limited."
-sidebar_label: "dbt AI usage"
+description: "Узнайте, как учитывается и ограничивается использование dbt Wizard и dbt Copilot."
+sidebar_label: "Использование dbt AI"
 availability: platform_login
 ---
 
-dbt AI usage is metered differently depending on the feature you use:
+Использование dbt AI учитывается по-разному в зависимости от выбранной функции:
 
-:::info What's changing on September 1, 2026
+:::info Что изменится с 1 сентября 2026 года
 
-From September 1, 2026, a couple of things are changing for dbt AI features:
-- **AI features are being enabled by default.** They're already on for new accounts and are rolling out soon to existing accounts. If your organization opted out, they'll remain off. Admins can turn AI features on or off anytime in **Account settings**.
-- **<Constant name="wizard" /> is moving to usage-based billing** for [dbt-<Term id="managed"/> AI](#dbt-wizard). Usage is metered per token against your consumption pool, and an admin can set a monthly spend limit in <Constant name="dbt_platform"/>.
+С 1 сентября 2026 года для функций dbt AI вводятся следующие изменения:
+- **Функции ИИ включаются по умолчанию.** Они уже включены для новых аккаунтов и вскоре будут включены для существующих. Если ваша организация отказалась от их использования, они останутся выключенными. Администраторы могут в любой момент включить или выключить функции ИИ в разделе **Account settings**.
+- **<Constant name="wizard" /> переходит на оплату по факту использования** для [ИИ под управлением dbt (<Term id="managed"/>)](/docs/dbt-ai/wizard-billing-faqs#dbt-managed-inference). Использование учитывается по токенам и списывается из вашего пула потребления, а администратор может задать месячный лимит расходов в <Constant name="dbt_platform"/>.
 
-Refer to [<Constant name="wizard" /> billing and access FAQs](/docs/dbt-ai/wizard-billing-faqs) for more info.
+Подробнее см. в разделе [Часто задаваемые вопросы об оплате и доступе к <Constant name="wizard" />](/docs/dbt-ai/wizard-billing-faqs).
 :::
 
-The [Wizard Desktop](/docs/dbt-ai/wizard-desktop) is billed through consumption pool pricing when you use dbt-managed inference, or directly by your provider when you use BYOK. 
+Использование [Wizard Desktop](/docs/dbt-ai/wizard-desktop) оплачивается из пула потребления при использовании инференса под управлением dbt или напрямую вашему провайдеру при использовании BYOK. 
 
-### Usage and metering information 
+### Информация об использовании и его учете 
 
 <SimpleTable>
-| Feature | How it's metered | What limits usage |
+| Функция | Как учитывается использование | Что ограничивает использование |
 |---|---|---|
-| [<Constant name="wizard" />](#dbt-wizard) | Dollar-based usage, converted from tokens | Your consumption pool, then your monthly spend limit |
-| [dbt Copilot](#dbt-copilot) | A count of completed AI requests, known as actions | A monthly action allotment set by your plan |
+| [<Constant name="wizard" />](#dbt-wizard) | Использование в долларах, рассчитанное на основе количества токенов | Ваш пул потребления, затем месячный лимит расходов |
+| [dbt Copilot](#dbt-copilot) | Количество выполненных запросов к ИИ, называемых действиями | Месячная квота действий, установленная вашим тарифным планом |
 </SimpleTable>
 
-Bring your own key (BYOK) usage isn't metered by dbt. Your AI provider bills you directly and the usage doesn't draw from either limit.
+При использовании собственного ключа (Bring your own key, BYOK) dbt не учитывает использование. Ваш провайдер ИИ выставляет счета напрямую, и такое использование не расходует ни один из этих лимитов.
 
 ## dbt Wizard
 
-<Constant name="wizard" /> is metered by dollar-based usage rather than a count of actions. Usage is measured in tokens &mdash; prompts, project context, cached content, and generated responses all consume them &mdash; and converted into a dollar amount based on the model and token type. That amount is deducted from your consumption pool.
+Использование <Constant name="wizard" /> учитывается в долларах, а не по количеству действий. Оно измеряется в токенах &mdash; они расходуются на запросы, контекст проекта, кешированное содержимое и сгенерированные ответы &mdash; и пересчитывается в доллары в зависимости от модели и типа токенов. Эта сумма списывается из вашего пула потребления.
 
-Usage from <Constant name="dbt_platform" /> and the local CLI both draw from the same account-level pool.
+Использование как в <Constant name="dbt_platform" />, так и в локальном CLI расходует один и тот же пул на уровне аккаунта.
 
-### Usage credits by plan
+### Кредиты на использование по тарифным планам
 
-:::note All credits are account-level
-Usage credits are granted per account, not per user or per seat. Everyone on your account draws from the same balance, whether they use <Constant name="wizard" /> in <Constant name="dbt_platform" /> or the local CLI.
+:::note Все кредиты предоставляются на уровне аккаунта
+Кредиты на использование предоставляются на аккаунт, а не на пользователя или рабочее место. Все пользователи вашего аккаунта расходуют общий баланс независимо от того, используют ли они <Constant name="wizard" /> в <Constant name="dbt_platform" /> или в локальном CLI.
 :::
 
 <SimpleTable>
-| Plan | What you get |
+| Тарифный план | Что включено |
 |---|---|
-| Enterprise | $100/month in usage credits per account, resets each billing month |
-| Enterprise+ | $200/month in usage credits per account, resets each billing month |
-| All other plans and self hosted dbt users| One-time 30-day trial with $100 in usage credits per account |
+| Enterprise | Кредиты на использование на сумму $100 в месяц на аккаунт, баланс обновляется каждый расчетный месяц |
+| Enterprise+ | Кредиты на использование на сумму $200 в месяц на аккаунт, баланс обновляется каждый расчетный месяц |
+| Все остальные тарифные планы и пользователи dbt с самостоятельным размещением| Однократный 30-дневный пробный период с кредитами на использование на сумму $100 на аккаунт |
 </SimpleTable>
 
-Pools don't roll over. For eligibility, how to start a trial, and how to set up paid access afterward, refer to [Trial and billing](/docs/dbt-ai/pricing-billing/trial-and-billing).
+Неиспользованный остаток пула не переносится на следующий период. Об условиях участия, запуске пробного периода и последующей настройке платного доступа см. в разделе [Пробный период и оплата](/docs/dbt-ai/pricing-billing/trial-and-billing).
 
-### When you reach your limit
+### Что происходит при достижении лимита
 
-Your spend limit caps how much dbt <Term id="managed" /> <Constant name="wizard" /> usage your account can consume in a billing period. You only pay for actual usage, up to the limit you choose.
+Лимит расходов ограничивает объем использования <Constant name="wizard" /> под управлением dbt (<Term id="managed" />) вашим аккаунтом за расчетный период. Вы платите только за фактическое использование в пределах выбранного лимита.
 
-- If you use up your consumption pool on a Developer, Starter, or self-hosted plan, usage pauses until you add paid usage or the next billing cycle starts.
-- Enterprise and Enterprise+ accounts should add a committed spend amount to their contract to keep using <Constant name="wizard" />. You may lose access to <Constant name="wizard" /> without this commit in place. If you've set an optional monthly <Constant name="wizard" /> spend limit, that still applies and pauses usage once reached.
-- Limits are set separately for <Constant name="wizard" /> and [dbt State](/docs/deploy/dbt-state-about), but both draw from your account's overall usage-based spend.
+- Если вы исчерпаете пул потребления на тарифном плане Developer, Starter или при самостоятельном размещении, использование приостановится, пока вы не подключите платное использование или не начнется следующий расчетный период.
+- Для аккаунтов Enterprise и Enterprise+ необходимо добавить в договор обязательство по расходам на определенную сумму, чтобы продолжить использование <Constant name="wizard" />. Без такого обязательства вы можете потерять доступ к <Constant name="wizard" />. Если вы установили необязательный месячный лимит расходов на <Constant name="wizard" />, он по-прежнему действует: при его достижении использование приостанавливается.
+- Лимиты для <Constant name="wizard" /> и [dbt State](/docs/deploy/dbt-state-about) задаются отдельно, но расходы на оба инструмента учитываются в общей сумме расходов аккаунта с оплатой по факту использования.
 
-### View Wizard usage
+### Просмотр использования Wizard
 
-1. Navigate to [**Account settings**](/docs/platform/account-settings).
-2. Select **Billing & Usage** under the Settings header.
-3. On the **Overview** tab, check the **Consumption pool** card, or open **Usage-based features > Wizard** for usage and spend controls.
+1. Перейдите в раздел [**Account settings**](/docs/platform/account-settings).
+2. Выберите **Billing & Usage** под заголовком Settings.
+3. На вкладке **Overview** просмотрите карточку **Consumption pool** или откройте **Usage-based features > Wizard**, чтобы просмотреть использование и настроить расходы.
 
-You need to be an account admin or billing admin to view or change spend limits.
+Для просмотра или изменения лимитов расходов необходимо быть администратором аккаунта или администратором по вопросам оплаты.
 
-For trials, consumption pools, spend limits, and BYOK billing, refer to [<Constant name="wizard" /> billing and access FAQs](/docs/dbt-ai/wizard-billing-faqs).
+О пробных периодах, пулах потребления, лимитах расходов и оплате при использовании BYOK см. в разделе [Часто задаваемые вопросы об оплате и доступе к <Constant name="wizard" />](/docs/dbt-ai/wizard-billing-faqs).
 
 ## dbt Copilot
 
-dbt Copilot usage is measured by the number of completed AI requests, known as dbt Copilot actions. A defined number of actions is allocated monthly based on your [subscription plan](https://www.getdbt.com/pricing). Once you reach the limit, dbt Copilot is temporarily disabled until the start of the next billing cycle.
+Использование dbt Copilot измеряется количеством выполненных запросов к ИИ, называемых действиями dbt Copilot. Определенное количество действий выделяется ежемесячно в соответствии с вашим [тарифным планом](https://www.getdbt.com/pricing). При достижении лимита dbt Copilot временно отключается до начала следующего расчетного периода.
 
-### View Copilot actions
+### Просмотр действий Copilot
 
-1. Navigate to [**Account settings**](/docs/platform/account-settings).
-2. Select **Billing** under the Settings header.
-3. On the billing page, click the **Copilot Actions** tab to view your usage.
+1. Перейдите в раздел [**Account settings**](/docs/platform/account-settings).
+2. Выберите **Billing** под заголовком Settings.
+3. На странице оплаты откройте вкладку **Copilot Actions**, чтобы просмотреть использование.
 
-<Lightbox src="/img/docs/dbt-platform/view-usage-in-copilot.gif" title="View usage in dbt Copilot" />
+<Lightbox src="/img/docs/dbt-platform/view-usage-in-copilot.gif" title="Просмотр использования dbt Copilot" />
 
-## FAQs
-<Expandable alt_header="Temporary dbt Copilot Actions bridge (ended September 1, 2026)">
+## Часто задаваемые вопросы
+<Expandable alt_header="Временный учет в рамках действий dbt Copilot (завершен 1 сентября 2026 года)">
 
-As a temporary compatibility bridge, <Constant name="wizard" /> drew from your existing dbt Copilot included action allotment. That bridge ended on September 1, 2026, and <Constant name="wizard" /> usage is now metered separately as dollar-based usage against your usage credits and consumption pool.
+В качестве временной меры для обеспечения совместимости использование <Constant name="wizard" /> списывалось из существующей включенной квоты действий dbt Copilot. Эта мера прекратила действовать 1 сентября 2026 года, и теперь использование <Constant name="wizard" /> учитывается отдельно в долларах и списывается из ваших кредитов на использование и пула потребления.
 
-Users who bring their own key (BYOK) were never affected by this bridge.
-
-</Expandable>
-
-<Expandable alt_header="What counts as a dbt Copilot action">
-
-dbt Copilot actions refer to requests made to the dbt Copilot assistant through the <Constant name="dbt" /> interface. These actions are recorded and displayed on the billing page alongside other usage metrics by accessing the **Copilot Actions** tab in the **Billing** page.
-
-The following interactions count as dbt Copilot actions:
-
-- **Each inline generation** &mdash; Every time dbt AI writes or suggests code in your file, it counts toward your usage limit.
-- **Each generation of documentation, tests, semantic models, or metrics** &mdash; Any time you ask dbt AI to automatically create things like documentation, tests, data models, or metrics, it counts as one interaction.
-- - **Each generation within dbt AI chats on <Constant name="insights" />** &mdash; Any time you use dbt Copilot chat in <Constant name="insights" /> to generate something, it counts as an interaction.
+Пользователей, использующих собственный ключ (BYOK), эта временная мера никогда не затрагивала.
 
 </Expandable>
 
-<Expandable alt_header="Allowed limits on number of dbt Copilot actions per month per license">
+<Expandable alt_header="Что считается действием dbt Copilot" anchor_id="dbt-copilot-details-1">
 
-The following table outlines the limits of dbt Copilot actions by plan per month:
+Под действиями dbt Copilot понимаются запросы к помощнику dbt Copilot через интерфейс <Constant name="dbt" />. Эти действия регистрируются и отображаются на странице оплаты наряду с другими показателями использования. Просмотреть их можно на вкладке **Copilot Actions** страницы **Billing**.
+
+Следующие взаимодействия считаются действиями dbt Copilot:
+
+- **Каждая генерация непосредственно в файле** &mdash; Каждый раз, когда dbt AI пишет или предлагает код в вашем файле, это учитывается в лимите использования.
+- **Каждая генерация документации, тестов, семантических моделей или метрик** &mdash; Каждый ваш запрос к dbt AI на автоматическое создание документации, тестов, моделей данных или метрик считается одним взаимодействием.
+- - **Каждая генерация в чатах dbt AI в <Constant name="insights" />** &mdash; Каждый раз, когда вы используете чат dbt Copilot в <Constant name="insights" /> для генерации чего-либо, это считается взаимодействием.
+
+</Expandable>
+
+<Expandable alt_header="Допустимое количество действий dbt Copilot в месяц на лицензию" anchor_id="dbt-copilot-details-2">
+
+В следующей таблице приведены месячные лимиты действий dbt Copilot по тарифным планам:
 
 <SimpleTable>
-|Plan                       |Limit |
+|Тарифный план              |Лимит |
 |---------------------------|------|
 |Developer                  | ❌   |
 |Starter<sup>*</sup>        |100   |
@@ -117,29 +117,29 @@ The following table outlines the limits of dbt Copilot actions by plan per month
 |Enterprise+                |10,000|
 </SimpleTable>
 
-<sup>*</sup>Team plan customers who enrolled in dbt Copilot Beta prior to March 19, 2025 have access to dbt Copilot. All other legacy Team plan customers must move to the [Starter plan or above](https://www.getdbt.com/pricing) to get access. 
+<sup>*</sup>Клиенты на тарифном плане Team, присоединившиеся к бета-тестированию dbt Copilot до 19 марта 2025 года, имеют доступ к dbt Copilot. Всем остальным клиентам на устаревшем тарифном плане Team для получения доступа необходимо перейти на [тарифный план Starter или выше](https://www.getdbt.com/pricing). 
 
-<sup>**</sup>Enterprise-tier customers on plans enrolled prior to May 1, 2025 (including legacy Business Critical) have a limit of 1,000 dbt Copilot actions per month. To get a higher allotment, move to the current [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing).
-
-</Expandable>
-
-<Expandable alt_header="Notifications when limits are reached">
-
-When usage limits are reached, a notification appears in the UI. Additionally, an email notification is sent to the designated recipient. 
-
-For users on the Starter plan, the account owner receives an email notification when the usage limit is reached. 
-
-For users enrolled on the Enterprise and Enterprise+ plans, both the billing administrator and the account administrator are notified by email when the usage limit is reached.
-
-Once usage limits are reached, attempts to perform an action in dbt Copilot triggers a banner notification indicating that the limit has been exceeded.
-
-Under Bring Your Own Key (BYOK), usage is not tracked by dbt AI and is subject to your OpenAI limits.
+<sup>**</sup>Для клиентов уровня Enterprise, подключивших тарифные планы до 1 мая 2025 года (включая устаревший Business Critical), действует лимит в 1,000 действий dbt Copilot в месяц. Чтобы увеличить квоту, перейдите на текущий [тарифный план Enterprise или Enterprise+](https://www.getdbt.com/pricing).
 
 </Expandable>
 
-## Related docs
+<Expandable alt_header="Уведомления о достижении лимитов">
 
-- [Trial and billing](/docs/dbt-ai/pricing-billing/trial-and-billing) to start a <Constant name="wizard" /> trial and set a spend limit
-- [<Constant name="wizard" /> billing and access FAQs](/docs/dbt-ai/wizard-billing-faqs) for common billing questions
-- [Models and pricing](/docs/dbt-ai/pricing-billing/overview) for model options and token pricing
-- [Billing](/docs/platform/billing) for general <Constant name="dbt_platform" /> billing
+При достижении лимитов использования в интерфейсе появляется уведомление. Кроме того, назначенному получателю отправляется уведомление по электронной почте. 
+
+Для пользователей тарифного плана Starter уведомление о достижении лимита использования отправляется по электронной почте владельцу аккаунта. 
+
+Для пользователей тарифных планов Enterprise и Enterprise+ уведомления о достижении лимита использования отправляются по электронной почте как администратору по вопросам оплаты, так и администратору аккаунта.
+
+После достижения лимитов использования при попытке выполнить действие в dbt Copilot появляется баннер с уведомлением о превышении лимита.
+
+При использовании собственного ключа (Bring Your Own Key, BYOK) dbt AI не отслеживает использование; оно ограничивается вашими лимитами OpenAI.
+
+</Expandable>
+
+## Связанная документация
+
+- [Пробный период и оплата](/docs/dbt-ai/pricing-billing/trial-and-billing) — запуск пробного периода <Constant name="wizard" /> и настройка лимита расходов
+- [Часто задаваемые вопросы об оплате и доступе к <Constant name="wizard" />](/docs/dbt-ai/wizard-billing-faqs) — распространенные вопросы об оплате
+- [Модели и цены](/docs/dbt-ai/pricing-billing/overview) — доступные модели и стоимость токенов
+- [Оплата](/docs/platform/billing) — общая информация об оплате <Constant name="dbt_platform" />

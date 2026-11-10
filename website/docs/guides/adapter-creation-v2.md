@@ -1,8 +1,8 @@
 ---
-title: "Contribute a dbt v2 adapter"
+title: "Добавление адаптера dbt v2"
 id: adapter-creation-v2
-description: "Learn how to contribute a new community adapter to the dbt v2 Rust monorepo, from ADBC driver registration to SQL macros."
-hoverSnippet: "Step-by-step guide to contributing a community adapter to dbt v2, including crate structure, Rust patterns, and Jinja macros."
+description: "Узнайте, как добавить новый адаптер сообщества в монорепозиторий dbt v2 на Rust: от регистрации драйвера ADBC до SQL-макросов."
+hoverSnippet: "Пошаговое руководство по добавлению адаптера сообщества в dbt v2, включая структуру крейтов, паттерны Rust и макросы Jinja."
 icon: 'guides'
 hide_table_of_contents: false
 tags: ['Adapter creation']
@@ -12,108 +12,108 @@ level: 'Advanced'
 <div style={{maxWidth: '900px'}}>
 
 :::info
-This guide is for <Constant name="core_v2" />. For <Constant name="core_v1" />, see [Build, test, document, and promote adapters](/guides/adapter-creation).
+Это руководство предназначено для <Constant name="core_v2" />. Для <Constant name="core_v1" /> см. [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
 :::
 
-## Step 1: Introduction
+## Шаг 1: Введение
 
-<Constant name="core_v2" /> adapters work very differently from v1, and it's worth understanding why before diving in.
+Адаптеры <Constant name="core_v2" /> существенно отличаются от адаптеров v1, и прежде чем приступать к работе, стоит разобраться почему.
 
-In <Constant name="core_v1" />, every adapter was a **standalone Python package**, independently maintained by the community. That model didn't scale: maintenance cost grew with every new warehouse added, bugs had to be fixed separately in each package, and shared improvements rarely made it back across the ecosystem.
+В <Constant name="core_v1" /> каждый адаптер представлял собой **отдельный пакет Python**, который сообщество сопровождало независимо от других. Такая модель плохо масштабировалась: с каждым новым хранилищем росли затраты на сопровождение, ошибки приходилось исправлять отдельно в каждом пакете, а общие улучшения редко распространялись на всю экосистему.
 
-<Constant name="core_v2" /> flips this entirely. Adapters now live **inside a single Rust monorepo**, organized by feature area rather than by warehouse. A fix in the auth module benefits every adapter at once. When you contribute a new adapter, you're extending shared code, not building a whole new package from scratch. In Rust terms: adding arms to *existing* match expressions. The more adapters that exist, the easier each new adapter becomes. Your contribution makes the whole ecosystem better.
+В <Constant name="core_v2" /> этот подход полностью изменился. Теперь адаптеры находятся **в едином монорепозитории на Rust**, организованном по функциональным областям, а не по хранилищам. Исправление в модуле аутентификации приносит пользу сразу всем адаптерам. Добавляя новый адаптер, вы расширяете общий код, а не создаёте совершенно новый пакет с нуля. В терминах Rust это означает добавление ветвей в *существующие* выражения match. Чем больше адаптеров уже существует, тем проще добавить следующий. Ваш вклад улучшает всю экосистему.
 
-Another advantage of <Constant name="core_v2" />: connection management lives in its own lane outside of the adapter. In v1, each adapter had to own its connection logic, wrapping vendor SDKs or implementing the Python DB API spec. **In v2, ADBC drivers handle that responsibility**: pre-compiled binaries that you register but don't write. For a full explanation of ADBC and how <Constant name="core_v2" /> uses it, see [ADBC in <Constant name="core_v2" />](/docs/dbt/adbc?version=2.0).
+Ещё одно преимущество <Constant name="core_v2" />: управление подключениями вынесено за пределы адаптера. В v1 каждый адаптер должен был реализовывать собственную логику подключения, создавая обёртки над SDK поставщиков или реализуя спецификацию Python DB API. **В v2 эту задачу выполняют драйверы ADBC**: предварительно скомпилированные бинарные файлы, которые вы регистрируете, но не пишете. Подробное объяснение ADBC и его использования в <Constant name="core_v2" /> см. в разделе [ADBC в <Constant name="core_v2" />](/docs/dbt/adbc?version=2.0).
 
-What you need to contribute is the exact logic that varies by warehouse: credentials, relation naming, macros, and catalog queries. A complete community adapter touches ~13 files; that's the bar we're aiming for.
+Вам нужно добавить именно ту логику, которая различается между хранилищами: учётные данные, именование объектов БД, макросы и запросы к каталогу. Полноценный адаптер сообщества затрагивает около 13 файлов — именно на такой объём работы мы ориентируемся.
 
-This guide walks you through the architecture, crate structure, and how to contribute a <Constant name="core_v2" /> adapter step by step. I’m Hope Watson, product manager for <Constant name="core_v2" /> adapters at dbt Labs, and I put this together to help design, document, and shepherd this process for the community in the v2 world. 
+Это руководство познакомит вас с архитектурой, структурой крейтов и пошаговым процессом добавления адаптера <Constant name="core_v2" />. Меня зовут Хоуп Уотсон, я менеджер по продукту адаптеров <Constant name="core_v2" /> в dbt Labs. Я подготовила этот материал, чтобы помочь спроектировать, задокументировать и организовать этот процесс для сообщества в мире v2. 
 
-The Exasol adapter, contributed by [Marco Nätlitz](https://www.linkedin.com/in/marco-naetlitz/), is used as the reference example throughout. The full file breakdown in the [reference section](#reference-file-by-file-implementation-guide) defines exactly what you're building.
+В качестве примера на протяжении всего руководства используется адаптер Exasol, добавленный [Марко Нэтлицем](https://www.linkedin.com/in/marco-naetlitz/). Полный перечень файлов в [справочном разделе](#reference-file-by-file-implementation-guide) точно определяет, что вам предстоит создать.
 
-### How v1 vs. v2 adapters differ
+### Чем отличаются адаптеры v1 и v2
 
-| Topic | <Constant name="core_v1" /> | <Constant name="core_v2" /> |
+| Аспект | <Constant name="core_v1" /> | <Constant name="core_v2" /> |
 |-------|-------------|-------------|
-| **Package structure** | Separate Python packages (for example, `dbt-snowflake` and `dbt-bigquery`), each inheriting from `dbt-adapters` | Part of the `dbt-labs/dbt` monorepo, contributed as PRs |
-| **Who maintains them** | dbt Labs maintains base adapter and 6 major adapters; others community-maintained independently | dbt Labs maintains the monorepo; community contributes through pull requests |
-| **Language** | Python | Rust (with Jinja SQL macros still used for SQL logic) |
-| **How they load** | Dynamically loaded at runtime through Python's plugin system | Compiled into the monorepo binary |
-| **Connection management** | Each adapter implements its own connection logic, built on vendor Python SDK connectors/drivers | ADBC drivers handle connection management: a unified driver interface that abstracts away wire protocol details |
-| **Code organization** | Organized by warehouse, each adapter is its own isolated codebase | Organized by feature area (vertical): a fix in one crate benefits all adapters |
+| **Структура пакетов** | Отдельные пакеты Python (например, `dbt-snowflake` и `dbt-bigquery`), каждый из которых наследуется от `dbt-adapters` | Часть монорепозитория `dbt-labs/dbt`; изменения вносятся через PR |
+| **Кто сопровождает** | dbt Labs сопровождает базовый адаптер и 6 основных адаптеров; остальные независимо сопровождает сообщество | dbt Labs сопровождает монорепозиторий; сообщество вносит изменения через pull request |
+| **Язык** | Python | Rust (для SQL-логики по-прежнему используются SQL-макросы Jinja) |
+| **Как загружаются** | Динамически во время выполнения через систему плагинов Python | Компилируются в бинарный файл монорепозитория |
+| **Управление подключениями** | Каждый адаптер реализует собственную логику подключения на основе коннекторов/драйверов Python SDK поставщика | Подключениями управляют драйверы ADBC: единый интерфейс драйверов, скрывающий детали сетевого протокола |
+| **Организация кода** | По хранилищам: каждый адаптер — изолированная кодовая база | По функциональным областям (вертикалям): исправление в одном крейте приносит пользу всем адаптерам |
 
-### What you're building
+### Что вы создаёте
 
-As a community contributor, you're building the foundation: connect your warehouse, run dbt macros, and support basic materializations. Once your adapter is in place, `dbt build` and `dbt run` should work. The ~13 files in the [reference section](#reference-file-by-file-implementation-guide) define the complete scope.
+Как участник сообщества, вы создаёте основу: подключение к своему хранилищу, выполнение макросов dbt и поддержку базовых материализаций. После добавления адаптера команды `dbt build` и `dbt run` должны работать. Около 13 файлов в [справочном разделе](#reference-file-by-file-implementation-guide) определяют полный объём работ.
 
-Think of your adapter contribution as the bridge between <Constant name="core_v2" /> and your warehouse: everything dbt needs to talk to it, nothing more. The architecture diagram below shows where your work fits in the stack.
+Рассматривайте свой адаптер как связующее звено между <Constant name="core_v2" /> и вашим хранилищем: всё необходимое для взаимодействия dbt с ним, и ничего лишнего. Архитектурная схема ниже показывает место вашей работы в стеке.
 
-<Lightbox src="/img/adapter-guide/adapter-creation-v2-architecture.svg" title="dbt v2 adapter architecture diagram showing the community contribution zone within the monorepo, the ADBC C ABI boundary, the ADBC driver, and the warehouse" />
+<Lightbox src="/img/adapter-guide/adapter-creation-v2-architecture.svg" title="Архитектурная схема адаптера dbt v2: область вклада сообщества в монорепозитории, граница ADBC C ABI, драйвер ADBC и хранилище" />
 
-## Step 2: Prerequisites
+## Шаг 2: Предварительные требования
 
-**Rust familiarity**: You don't need to be a Rust expert. You need to read Rust, understand enum match expressions, and make sense of compiler errors. If Rust is new to you, skim [The Rust Book](https://doc.rust-lang.org/book/) Chapter 6 (enums and pattern matching). Those are the concepts you'll encounter most.
+**Знакомство с Rust**: вам не нужно быть экспертом по Rust. Нужно уметь читать код на Rust, понимать выражения сопоставления enum и разбираться в ошибках компилятора. Если Rust для вас в новинку, ознакомьтесь с главой 6 [The Rust Book](https://doc.rust-lang.org/book/) (перечисления и сопоставление с образцом). Именно эти концепции будут встречаться чаще всего.
 
-**dbt fundamentals**: Understand how [`profiles.yml`](/docs/local/profiles.yml) works, what [materializations](/docs/build/materializations) are, and what [adapter dispatch](/reference/dbt-jinja-functions/dispatch) macros do.
+**Основы dbt**: нужно понимать, как работает [`profiles.yml`](/docs/local/profiles.yml), что такое [материализации](/docs/build/materializations) и для чего нужны макросы [диспетчеризации адаптеров](/reference/dbt-jinja-functions/dispatch).
 
-**Deep knowledge of your warehouse**: As you work through this guide, you'll need to know how your warehouse behaves:
-- What character does it use for quoting identifiers?
-- Does it support two-part or three-part relation names?
-- What connection parameters does it require?
-- How does it handle transactions?
-- What datatypes map to standard SQL types like string, timestamp, boolean?
-- What's the most efficient way to list columns in a schema?
+**Глубокое знание своего хранилища**: при работе с этим руководством вам нужно будет знать особенности его поведения:
+- Какой символ используется для заключения идентификаторов в кавычки?
+- Поддерживает ли оно имена объектов БД из двух или трёх частей?
+- Какие параметры подключения ему требуются?
+- Как оно обрабатывает транзакции?
+- Какие типы данных соответствуют стандартным SQL-типам, таким как string, timestamp, boolean?
+- Как наиболее эффективно получить список столбцов в схеме?
 
-**A note on AI-assisted development**: <Constant name="core_v2" />'s architecture is naturally legible to AI coding tools. Match arms are explicit, compiler errors are precise, and the scope of each file is narrow. You don't need to use an LLM, but if you do, the structure works in your favor.
+**Примечание о разработке с помощью ИИ**: архитектура <Constant name="core_v2" /> хорошо понятна ИИ-инструментам для написания кода. Ветви match заданы явно, ошибки компилятора точны, а область ответственности каждого файла узкая. Использовать LLM необязательно, но если вы решите это делать, такая структура вам поможет.
 
-### Your ADBC driver
+### Ваш драйвер ADBC
 
-*Do you have an ADBC driver for your warehouse? If no, stop here.* The ADBC driver is a firm requirement before creating a <Constant name="core_v2" /> adapter.
+*Есть ли драйвер ADBC для вашего хранилища? Если нет, остановитесь здесь.* Наличие драйвера ADBC — обязательное условие для создания адаптера <Constant name="core_v2" />.
 
-Check these sources to find out if one exists for your warehouse:
-- [apache/arrow-adbc](https://github.com/apache/arrow-adbc): upstream community repo
-- [dbt-labs/arrow-adbc](https://github.com/dbt-labs/arrow-adbc): the dbt Labs fork
-- [ADBC driver foundry](https://github.com/adbc-drivers): primary community home for ADBC drivers, with active drivers and Rust/Go frameworks for building new ones
-- Your warehouse vendor's own GitHub org
+Проверьте следующие источники, чтобы узнать, существует ли драйвер для вашего хранилища:
+- [apache/arrow-adbc](https://github.com/apache/arrow-adbc): исходный репозиторий сообщества
+- [dbt-labs/arrow-adbc](https://github.com/dbt-labs/arrow-adbc): форк dbt Labs
+- [ADBC driver foundry](https://github.com/adbc-drivers): основная площадка сообщества драйверов ADBC с активно развиваемыми драйверами и фреймворками на Rust/Go для создания новых
+- Собственная организация поставщика вашего хранилища на GitHub
 
-If no driver exists yet, building one is a separate project that comes before the adapter contribution. This is outside the scope of dbt Labs. [Columnar](https://columnar.tech/) specializes in building ADBC drivers and may be a useful resource.
+Если драйвера пока нет, его создание — отдельный проект, который должен предшествовать добавлению адаптера. Это выходит за рамки ответственности dbt Labs. Компания [Columnar](https://columnar.tech/) специализируется на разработке драйверов ADBC и может оказаться полезным ресурсом.
 
-:::note Long-term: signed driver distribution
-dbt Labs is working toward a model where community drivers can be distributed and loaded safely through signed binaries, similar to how operating systems verify installers. The goal is to make third-party driver installation as seamless and trustworthy as first-party. This isn't in place yet, but dbt Labs is considering this direction.
+:::note В долгосрочной перспективе: распространение подписанных драйверов
+dbt Labs работает над моделью, в которой драйверы сообщества можно будет безопасно распространять и загружать в виде подписанных бинарных файлов — подобно тому, как операционные системы проверяют установщики. Цель — сделать установку сторонних драйверов такой же простой и надёжной, как установку собственных. Пока эта возможность не реализована, но dbt Labs рассматривает такое направление.
 :::
 
-## Step 3: Understanding the codebase shape before you build
+## Шаг 3: Изучите устройство кодовой базы перед началом разработки
 
-### The vertical model
+### Вертикальная модель
 
-<Constant name="core_v2" /> organizes adapter logic by *capability*, not by warehouse. There's no `SnowflakeAdapter` class, no `BigQueryAdapter` class. Instead, a single shared codebase handles all warehouses, with warehouse-specific behavior driven by `match adapter_type()` expressions. When you add a new warehouse, you're adding arms to those expressions across a set of feature areas, auth, relations, catalog introspection, Jinja macros, rather than creating a new top-level package.
+В <Constant name="core_v2" /> логика адаптеров организована по *возможностям*, а не по хранилищам. Нет ни класса `SnowflakeAdapter`, ни класса `BigQueryAdapter`. Вместо этого все хранилища обслуживает единая общая кодовая база, а специфичное для хранилища поведение определяется выражениями `match adapter_type()`. Добавляя новое хранилище, вы добавляете ветви в эти выражения в нескольких функциональных областях — аутентификация, объекты БД, анализ каталога, макросы Jinja, — а не создаёте новый пакет верхнего уровня.
 
-The structural diagram below shows how the layers fit together. Your work lives in the **ADAPTER** layer: the crates that handle warehouse identity, credential resolution, relation logic, and Jinja dispatch. XDBC (driver loading and connection pooling) sits just below and has a small registration step too.
+Структурная схема ниже показывает, как связаны уровни системы. Ваша работа сосредоточена на уровне **ADAPTER**: в крейтах, отвечающих за идентификацию хранилища, получение учётных данных, логику объектов БД и диспетчеризацию Jinja. Сразу под ним расположен XDBC (загрузка драйверов и пул подключений), где также требуется небольшой шаг регистрации.
 
-<Lightbox src="/img/adapter-guide/adapter-creation-v2-structural.svg" title="dbt v2 system layers diagram showing USER, CLI, PIPELINE, TASK RUNNER, ADAPTER (highlighted as the contribution zone), XDBC, and WAREHOUSE layers" />
+<Lightbox src="/img/adapter-guide/adapter-creation-v2-structural.svg" title="Схема уровней системы dbt v2: USER, CLI, PIPELINE, TASK RUNNER, ADAPTER (выделен как область внесения изменений), XDBC и WAREHOUSE" />
 
-### Crate map
+### Карта крейтов
 
-In Rust, a **crate** is a package: the unit of compilation, roughly equivalent to a "library" or "module" in other languages. The `dbt-labs/dbt` repo is a monorepo of multiple crates, each responsible for one vertical slice of functionality across all warehouses. This is a quick-reference map of the six crates you'll touch to build your adapter, in the order you'll work through them in Step 5.
+В Rust **крейт** — это пакет, единица компиляции, примерно соответствующая «библиотеке» или «модулю» в других языках. Репозиторий `dbt-labs/dbt` — это монорепозиторий из нескольких крейтов, каждый из которых отвечает за один функциональный срез для всех хранилищ. Ниже приведена краткая карта шести крейтов, которые вам предстоит изменить для создания адаптера, в том порядке, в котором вы будете работать с ними на шаге 5.
 
-| Crate | Location | What you touch |
+| Крейт | Расположение | Что вы изменяете |
 |-------|----------|----------------|
-| `dbt-adapter-core` | `crates/dbt-adapter-core/` | `AdapterType` enum variant, `quote_char` arm |
-| `dbt-xdbc` | `crates/dbt-xdbc/` | ADBC driver registration (`Backend` enum, library name) |
-| `dbt-schemas` | `crates/dbt-schemas/` | `profiles.yml` config struct (`DbConfig` variant) |
-| `dbt-auth` | `crates/dbt-auth/` | Credential resolution, connection URI construction |
-| `dbt-adapter` | `crates/dbt-adapter/` | Relation quoting, metadata catalog queries, adapter match arms, column builder, sql_types |
-| `dbt-loader` | `crates/dbt-loader/` | Jinja SQL macros (`dbt_macro_assets/dbt-<adapter>/`) |
+| `dbt-adapter-core` | `crates/dbt-adapter-core/` | Вариант перечисления `AdapterType`, ветвь `quote_char` |
+| `dbt-xdbc` | `crates/dbt-xdbc/` | Регистрация драйвера ADBC (перечисление `Backend`, имя библиотеки) |
+| `dbt-schemas` | `crates/dbt-schemas/` | Структура конфигурации `profiles.yml` (вариант `DbConfig`) |
+| `dbt-auth` | `crates/dbt-auth/` | Получение учётных данных, формирование URI подключения |
+| `dbt-adapter` | `crates/dbt-adapter/` | Кавычки для имён объектов БД, запросы к каталогу метаданных, ветви match адаптера, построитель столбцов, sql_types |
+| `dbt-loader` | `crates/dbt-loader/` | SQL-макросы Jinja (`dbt_macro_assets/dbt-<adapter>/`) |
 
-### Where your adapter fits in the execution model
+### Место вашего адаптера в модели выполнения
 
-By the time your adapter is invoked, all the dbt work is already done. dbt has resolved `ref()` and `source()` calls, rendered every Jinja template, and produced dialect-specific SQL. Your adapter receives a finished string and executes it.
+К моменту вызова адаптера вся работа dbt уже выполнена. dbt разрешил вызовы `ref()` и `source()`, обработал все шаблоны Jinja и сформировал SQL для нужного диалекта. Ваш адаптер получает готовую строку и выполняет её.
 
-:::tip The adapter never sees un-rendered SQL
-dbt resolves `ref()`, renders Jinja, and hands your adapter a finished string. You execute it; you don't template it.
+:::tip Адаптер никогда не получает необработанный SQL-шаблон
+dbt разрешает `ref()`, обрабатывает Jinja и передаёт адаптеру готовую строку. Вы выполняете её, а не обрабатываете шаблон.
 :::
 
-While you're coding, the compiler enforces completeness. When you add `AdapterType::MyWarehouse` to the enum, every `match adapter_type()` block that doesn't handle it fails at that exact line. Your to-do list is always visible. For example:
+Пока вы пишете код, компилятор контролирует полноту реализации. Когда вы добавляете `AdapterType::MyWarehouse` в перечисление, каждый блок `match adapter_type()`, который его не обрабатывает, вызывает ошибку ровно в соответствующей строке. Список задач всегда перед глазами. Например:
 
 ```rust
 // You add your variant to the enum in dbt-adapter-core:
@@ -144,57 +144,57 @@ error[E0004]: non-exhaustive patterns: `AdapterType::MyWarehouse` not covered
    |           ^^^^^^^^^^^^^^^^^^^ pattern `AdapterType::MyWarehouse` not covered
 ```
 
-Each failure is a concrete implementation task.
+Каждая ошибка — это конкретная задача по реализации.
 
-### Are you porting an existing v1 adapter?
+### Переносите существующий адаптер v1?
 
-No v1 adapter? Skip to [Step 4](#step-4-development-machine-setup). If you're porting, use this map to see exactly what transfers, what needs rethinking, and what dbt Labs now owns for you in v2.
+Нет адаптера v1? Переходите к [шагу 4](#step-4-development-machine-setup). Если вы переносите адаптер, эта карта поможет точно понять, что можно перенести, что нужно переосмыслить и за что в v2 теперь отвечает dbt Labs.
 
-<Lightbox src="/img/adapter-guide/adapter-creation-v2-blocks.svg" title="Diagram showing which v1 adapter components map directly to v2 (green), require rethinking (purple), or are absorbed by dbt Labs or the ADBC driver (red)" />
+<Lightbox src="/img/adapter-guide/adapter-creation-v2-blocks.svg" title="Схема компонентов адаптера v1: что напрямую переносится в v2 (зелёный), требует переосмысления (фиолетовый) или переходит в ведение dbt Labs либо драйвера ADBC (красный)" />
 
-Most community contributors aren't building from scratch, they're porting an adapter they already maintain or use in Python for <Constant name="core_v1" />. If that's you, **you have a significant head start**, and this is the most realistic path for the vast majority of contributors.
+Большинство участников сообщества не создают адаптер с нуля, а переносят тот, который уже сопровождают или используют на Python для <Constant name="core_v1" />. Если это ваш случай, **у вас уже есть значительная фора**, и для подавляющего большинства участников это наиболее реалистичный путь.
 
-Before writing any Rust, check a couple of things:
+Прежде чем писать код на Rust, проверьте несколько вещей:
 
-1. Does a v1 adapter already exist for your warehouse?
+1. Существует ли уже адаптер v1 для вашего хранилища?
 
-Refer to the [community adapters](/docs/community-adapters) list. If one exists, find its GitHub repo. The macro SQL and connection logic are almost directly reusable.
+Обратитесь к списку [адаптеров сообщества](/docs/community-adapters). Если такой адаптер есть, найдите его репозиторий на GitHub. SQL-код макросов и логику подключения можно использовать повторно почти без изменений.
 
-2. Did dbt Labs already add a placeholder for your warehouse?
+2. Добавила ли dbt Labs заготовку для вашего хранилища?
 
-Some warehouses already appear in v2's `AdapterType` enum but aren't fully implemented yet: the enum variant exists, which means the boilerplate is partially in place. When you add the remaining code, the compiler shows you exactly what's still missing. The warehouses in this state are:
+Некоторые хранилища уже присутствуют в перечислении `AdapterType` в v2, но ещё не полностью реализованы: вариант перечисления существует, а значит, часть базового кода уже на месте. При добавлении оставшегося кода компилятор покажет, чего именно не хватает. В таком состоянии находятся следующие хранилища:
 
-| Warehouse | v1 adapter | <Constant name="core_v2" /> status |
+| Хранилище | Адаптер v1 | Состояние в <Constant name="core_v2" /> |
 |-----------|------------|-------------------|
-| Athena | [dbt-athena](https://github.com/dbt-athena/dbt-athena) | `AdapterType::Athena` exists: needs auth, macros, adapter arms |
-| Trino | [dbt-trino](https://github.com/starburstdata/dbt-trino) | `AdapterType::Trino` exists: needs auth, macros, adapter arms |
-| Starburst | [dbt-trino](https://github.com/starburstdata/dbt-trino) | `AdapterType::Starburst` exists: needs auth, macros, adapter arms |
-| Dremio | [dbt-dremio](https://github.com/dremio/dbt-dremio) | `AdapterType::Dremio` exists: needs auth, macros, adapter arms |
-| Oracle | [dbt-oracle](https://github.com/oracle/dbt-oracle) | `AdapterType::Oracle` exists: needs auth, macros, adapter arms |
+| Athena | [dbt-athena](https://github.com/dbt-athena/dbt-athena) | `AdapterType::Athena` существует: нужны аутентификация, макросы, ветви адаптера |
+| Trino | [dbt-trino](https://github.com/starburstdata/dbt-trino) | `AdapterType::Trino` существует: нужны аутентификация, макросы, ветви адаптера |
+| Starburst | [dbt-trino](https://github.com/starburstdata/dbt-trino) | `AdapterType::Starburst` существует: нужны аутентификация, макросы, ветви адаптера |
+| Dremio | [dbt-dremio](https://github.com/dremio/dbt-dremio) | `AdapterType::Dremio` существует: нужны аутентификация, макросы, ветви адаптера |
+| Oracle | [dbt-oracle](https://github.com/oracle/dbt-oracle) | `AdapterType::Oracle` существует: нужны аутентификация, макросы, ветви адаптера |
 
-For warehouses not yet in `AdapterType` at all (MySQL, Hive, Vertica, SQL Server, Teradata, and more), you start from Step 5.1 by adding the `AdapterType` variant.
+Для хранилищ, которых ещё нет в `AdapterType` (MySQL, Hive, Vertica, SQL Server, Teradata и других), начните с шага 5.1 — добавления варианта `AdapterType`.
 
-#### What transfers from v1 to v2
+#### Что переносится из v1 в v2
 
-| v1 component | Where it goes in v2 | Notes |
+| Компонент v1 | Куда переносится в v2 | Примечания |
 |--------------|---------------------|-------|
-| `macros/adapters.sql` | `dbt-loader/.../dbt-<wh>/macros/adapters.sql` | Mostly a direct port, same `<wh>__` dispatch prefix, same macro names, same Jinja patterns |
-| `macros/catalog.sql` | Same location | The catalog SQL (`list_relations_without_caching`, `get_catalog`) transfers almost verbatim |
-| Custom materializations and adapter-overrides | Same location | Look out for Jinja that might not yet be supported in <Constant name="core_v2" />; that will need to be addressed separately |
-| Profile fields in `credentials.py` / `profile_template.yml` | `DbConfig` struct in `dbt-schemas` | Each profile field becomes a struct field: optional fields use `Option<T>` |
-| Connection URI / DSN construction in `connections.py` | `dbt-auth/src/<wh>/mod.rs` | The URI building logic maps cleanly to the auth module pattern |
-| `BaseRelation.quote_policy` / identifier casing behavior | `include_policy()` in `crates/dbt-adapter/src/relation/relation_impl.rs`, `Policy` is a type alias for `ResolvedQuoting` defined in `crates/dbt-schemas/src/schemas/relations/base.rs` | The 3-part vs. 2-part name structure and quote flags map 1:1 to the <Constant name="core_v2" /> `Policy` struct |
-| Catalog introspection SQL in macros and `adapter.py` | `get_relation.rs` and Jinja macros | The system catalog table names and queries you already know transfer directly |
+| `macros/adapters.sql` | `dbt-loader/.../dbt-<wh>/macros/adapters.sql` | В основном прямой перенос: тот же префикс диспетчеризации `<wh>__`, те же имена макросов и паттерны Jinja |
+| `macros/catalog.sql` | В то же расположение | SQL-код для каталога (`list_relations_without_caching`, `get_catalog`) переносится почти дословно |
+| Пользовательские материализации и переопределения адаптера | В то же расположение | Обратите внимание на конструкции Jinja, которые могут пока не поддерживаться в <Constant name="core_v2" />; их потребуется доработать отдельно |
+| Поля профиля в `credentials.py` / `profile_template.yml` | Структура `DbConfig` в `dbt-schemas` | Каждое поле профиля становится полем структуры: для необязательных полей используется `Option<T>` |
+| Формирование URI подключения / DSN в `connections.py` | `dbt-auth/src/<wh>/mod.rs` | Логика формирования URI хорошо вписывается в паттерн модуля аутентификации |
+| `BaseRelation.quote_policy` / правила регистра идентификаторов | `include_policy()` в `crates/dbt-adapter/src/relation/relation_impl.rs`; `Policy` — псевдоним типа `ResolvedQuoting`, определённого в `crates/dbt-schemas/src/schemas/relations/base.rs` | Структура имён из трёх или двух частей и флаги кавычек напрямую соответствуют структуре `Policy` в <Constant name="core_v2" /> |
+| SQL-код анализа каталога в макросах и `adapter.py` | `get_relation.rs` и макросы Jinja | Уже знакомые вам имена таблиц системного каталога и запросы переносятся напрямую |
 
-#### What doesn't transfer by design
+#### Что не переносится по замыслу архитектуры
 
-Four categories of v1 code simply don't exist in v2, which means less code to port:
-- **Connection management**: In v1 you owned the full connection lifecycle against the Python DB API. In v2 the ADBC driver handles this entirely; skip anything related to cursors, retries, or connection pooling.
-- **Query execution**: Shared Rust infrastructure handles raw query plumbing (`execute`, `add_query`). You don't implement it.
-- **Adapter class hierarchy**: The Python subclass structure is replaced by shared Rust match expressions. You register your adapter; you don't implement execution logic.
-- **Packaging and distribution**: No `setup.py`, no PyPI release. dbt Labs ships your adapter once the PR is merged.
+Четыре категории кода v1 в v2 просто отсутствуют, поэтому переносить нужно меньше кода:
+- **Управление подключениями**: в v1 вы отвечали за полный жизненный цикл подключения через Python DB API. В v2 этим полностью занимается драйвер ADBC; пропускайте всё, что связано с курсорами, повторными попытками и пулом подключений.
+- **Выполнение запросов**: низкоуровневую обработку запросов (`execute`, `add_query`) обеспечивает общая инфраструктура на Rust. Вам не нужно её реализовывать.
+- **Иерархия классов адаптеров**: структура подклассов Python заменена общими выражениями match на Rust. Вы регистрируете адаптер, а не реализуете логику выполнения.
+- **Упаковка и распространение**: нет ни `setup.py`, ни публикации в PyPI. После слияния PR dbt Labs выпускает ваш адаптер.
 
-## Step 4: Development machine setup
+## Шаг 4: Настройка среды разработки {#step-4-development-machine-setup}
 
 ```shell
 # Rust
@@ -212,59 +212,59 @@ cd dbt
 cargo build --bin dbt
 ```
 
-If you hit Z3 errors:
+Если возникнут ошибки Z3:
 
 ```shell
 brew install pkg-config z3
 ```
 
-If disk fills during build:
+Если во время сборки закончится место на диске:
 
 ```shell
 cargo clean  # frees old build artifacts; you'll do this often
 ```
 
-### Development workflow
+### Рабочий процесс разработки
 
-The core development loop is the same whether you write code manually or with an AI assistant:
+Основной цикл разработки одинаков независимо от того, пишете ли вы код вручную или с ИИ-помощником:
 
-1. Add `AdapterType::MyWarehouse` to the enum (Step 5.1)
-2. Run `cargo build -p <crate>`: the compiler lists every match arm missing for your new variant
-3. Use the compiler output + the file you're editing + the equivalent reference file (from the breakdown at the bottom) to write each arm. If using an AI assistant, paste all three in as context.
-   - *Example:* to fill in the `quote_char` arm, paste the error listing `AdapterType::MyWarehouse` as missing, the `quote_char` match block from `dbt-adapter-core/src/lib.rs`, and the Exasol line (`Exasol => '"'`) as the pattern to follow.
-4. Fill in the arm; verify with `cargo build` again
-5. Repeat for each crate until error-free
+1. Добавьте `AdapterType::MyWarehouse` в перечисление (шаг 5.1)
+2. Выполните `cargo build -p <crate>`: компилятор перечислит все отсутствующие ветви match для нового варианта
+3. Используйте вывод компилятора, редактируемый файл и соответствующий эталонный файл (из перечня внизу), чтобы написать каждую ветвь. Если используете ИИ-помощника, передайте ему все три элемента в качестве контекста.
+   - *Пример:* чтобы добавить ветвь `quote_char`, передайте ошибку о том, что `AdapterType::MyWarehouse` не обработан, блок match функции `quote_char` из `dbt-adapter-core/src/lib.rs` и строку Exasol (`Exasol => '"'`) как образец.
+4. Добавьте ветвь и снова проверьте результат с помощью `cargo build`
+5. Повторяйте для каждого крейта, пока не устраните все ошибки
 
-Every missing case is a compile error, so an AI assistant always has a precise specification to work from.
+Каждый необработанный вариант вызывает ошибку компиляции, поэтому у ИИ-помощника всегда есть точная спецификация для работы.
 
-What context helps for each arm:
-- **The file you're editing**: paste the relevant `match` block or function. For example, the `match self.adapter_type()` block from `adapter_impl.rs` that needs a new arm.
-- **The equivalent reference file** from the breakdown below. For example, when writing your auth module, paste `crates/dbt-auth/src/exasol/mod.rs` as the pattern.
-- **The compiler error output.** For example: `error[E0004]: non-exhaustive patterns: AdapterType::MyWarehouse not covered`
-- **Your warehouse's specifics**: system catalog table names and the connection fields from your `profiles.yml`.
+Какой контекст полезен для каждой ветви:
+- **Редактируемый файл**: вставьте соответствующий блок `match` или функцию. Например, блок `match self.adapter_type()` из `adapter_impl.rs`, в который нужно добавить новую ветвь.
+- **Соответствующий эталонный файл** из перечня ниже. Например, при написании модуля аутентификации вставьте `crates/dbt-auth/src/exasol/mod.rs` в качестве образца.
+- **Вывод компилятора с ошибкой.** Например: `error[E0004]: non-exhaustive patterns: AdapterType::MyWarehouse not covered`
+- **Особенности вашего хранилища**: имена таблиц системного каталога и поля подключения из вашего `profiles.yml`.
 
-Watch out for:
-- **Hallucinated file paths**: AI often invents <Constant name="core_v2" /> paths. Use the file breakdown below as ground truth.
-- **Always verify with the type checker**: run `cargo build -p <crate>` after any AI-generated changes.
-- **SQL macro patterns from v1** may not apply cleanly in <Constant name="core_v2" />. Compare against the reference `adapters.sql` at `crates/dbt-loader/src/dbt_macro_assets/dbt-exasol/macros/adapters.sql` in [dbt-labs/dbt](https://github.com/dbt-labs/dbt).
+На что обратить внимание:
+- **Выдуманные пути к файлам**: ИИ часто придумывает пути в <Constant name="core_v2" />. Используйте перечень файлов ниже как достоверный источник.
+- **Всегда проверяйте результат компилятором**: выполняйте `cargo build -p <crate>` после любых изменений, сгенерированных ИИ.
+- **Паттерны SQL-макросов из v1** могут не подходить напрямую для <Constant name="core_v2" />. Сверяйтесь с эталонным `adapters.sql` по пути `crates/dbt-loader/src/dbt_macro_assets/dbt-exasol/macros/adapters.sql` в [dbt-labs/dbt](https://github.com/dbt-labs/dbt).
 
-## Step 5: Build a new adapter
+## Шаг 5: Создание нового адаптера
 
-This step walks you through each crate you need to touch. Work through them in order. Each builds on the last. After each sub-step, run the type checker to catch missed match arms and type errors:
+На этом шаге рассматривается каждый крейт, который нужно изменить. Проходите их по порядку: каждый следующий этап опирается на предыдущий. После каждого подшага запускайте проверку типов, чтобы находить пропущенные ветви match и ошибки типов:
 
 ```shell
 cargo build -p <crate-name>
 ```
 
-Replace `<crate-name>` with the crate you just edited, for example `dbt-adapter-core`, `dbt-xdbc`, `dbt-schemas`, `dbt-auth`, `dbt-adapter`, or `dbt-loader`.
+Замените `<crate-name>` на имя крейта, который вы только что изменили, например `dbt-adapter-core`, `dbt-xdbc`, `dbt-schemas`, `dbt-auth`, `dbt-adapter` или `dbt-loader`.
 
-### 5.1: Register the adapter type
+### 5.1: Регистрация типа адаптера
 
-**Crate:** `crates/dbt-adapter-core/`
+**Крейт:** `crates/dbt-adapter-core/`
 
-`AdapterType` is the central enum that identifies your warehouse throughout the entire codebase. Add your variant here first.
+`AdapterType` — центральное перечисление, которое идентифицирует ваше хранилище во всей кодовой базе. Сначала добавьте свой вариант именно сюда.
 
-Rust's `match` expressions must handle every possible variant explicitly. So when you add `AdapterType::MyWarehouse`, every `match adapter_type()` block that doesn't handle your variant becomes a **compile error**. Run `cargo build -p <crate>` and the compiler hands you a complete list of exactly what still needs to be written. Nothing is hidden or implicit.
+Выражения `match` в Rust должны явно обрабатывать все возможные варианты. Поэтому при добавлении `AdapterType::MyWarehouse` каждый блок `match adapter_type()`, который не обрабатывает этот вариант, вызывает **ошибку компиляции**. Выполните `cargo build -p <crate>`, и компилятор предоставит полный список того, что ещё нужно написать. Ничего скрытого или неявного.
 
 ```rust
 // crates/dbt-adapter-core/src/lib.rs
@@ -277,7 +277,7 @@ pub enum AdapterType {
 }
 ```
 
-Also add a `quote_char` arm in the same file. Use double quotes `'"'` for most warehouses; BigQuery and Databricks use a backtick instead:
+Также добавьте ветвь `quote_char` в том же файле. Для большинства хранилищ используйте двойные кавычки `'"'`; BigQuery и Databricks используют обратную кавычку:
 
 ```rust
 // crates/dbt-adapter-core/src/lib.rs
@@ -291,38 +291,38 @@ fn quote_char(&self) -> char {
 }
 ```
 
-### 5.2: Register the ADBC driver
+### 5.2: Регистрация драйвера ADBC
 
-**Crate:** `crates/dbt-xdbc/`
+**Крейт:** `crates/dbt-xdbc/`
 
-Your driver already exists (covered in Step 2). This step is where you register it so <Constant name="core_v2" /> knows its library name and how to load it at runtime.
+Ваш драйвер уже существует (это рассматривалось на шаге 2). Здесь вы регистрируете его, чтобы <Constant name="core_v2" /> знал имя его библиотеки и способ загрузки во время выполнения.
 
-| File | What to do | Required? |
+| Файл | Что нужно сделать | Обязательно? |
 |-------|-----------|-----------|
-| `src/driver.rs` | Add a variant to the `Backend` enum; add the ADBC library name (for example, `"adbc_driver_exasol"`) and FFI protocol; also define a `LoadStrategy` | **Yes** |
-| `src/install.rs` | Add CDN download URL and platform strings | No, only for drivers distributed through the dbt Labs CDN, which requires separate coordination with dbt Labs |
+| `src/driver.rs` | Добавить вариант в перечисление `Backend`; указать имя библиотеки ADBC (например, `"adbc_driver_exasol"`) и протокол FFI; также определить `LoadStrategy` | **Да** |
+| `src/install.rs` | Добавить URL загрузки из CDN и строки платформ | Нет, только для драйверов, распространяемых через CDN dbt Labs; это требует отдельного согласования с dbt Labs |
 
-The `Backend` enum maps to the ADBC shared library name (`lib<name>.so` / `<name>.dll` / `lib<name>.dylib`). You're registering its identity so <Constant name="core_v2" /> knows what to load. You're not writing the driver here.
+Перечисление `Backend` сопоставляется с именем динамической библиотеки ADBC (`lib<name>.so` / `<name>.dll` / `lib<name>.dylib`). Вы регистрируете сведения о драйвере, чтобы <Constant name="core_v2" /> знал, что загружать. Сам драйвер здесь не пишется.
 
-#### CDN-distributed vs. manual install
+#### Распространение через CDN и ручная установка
 
-For these 11 adapters, <Constant name="core_v2" /> automatically downloads the driver on first use. All other adapters require manual installation. Users take one extra setup step. Make this clear in your documentation (Step 7).
+Для этих 11 адаптеров <Constant name="core_v2" /> автоматически загружает драйвер при первом использовании. Для всех остальных адаптеров требуется ручная установка — пользователям нужно выполнить дополнительный шаг настройки. Явно укажите это в документации (шаг 7).
 
-| On the CDN: auto-downloaded |
+| В CDN: загружаются автоматически |
 |---|
 | Snowflake, BigQuery, ClickHouse, Postgres, Databricks, Redshift, DuckDB, DuckDB Extended, Spark, SQL Server |
 
-For **custom Arrow type mappings** (for example, DuckDB needed this for `HUGEINT`, `UTINYINT`): only add warehouse-specific type handling if your driver returns types that Arrow's standard schema doesn't cover. Most warehouses don't need this.
+Что касается **нестандартных сопоставлений типов Arrow** (например, DuckDB это потребовалось для `HUGEINT`, `UTINYINT`): добавляйте специфичную для хранилища обработку типов только в том случае, если драйвер возвращает типы, не охваченные стандартной схемой Arrow. Большинству хранилищ это не нужно.
 
-### 5.3: Add your connection profile
+### 5.3: Добавление профиля подключения
 
-**Crate:** `crates/dbt-schemas/`
+**Крейт:** `crates/dbt-schemas/`
 
-| File | What to do |
+| Файл | Что нужно сделать |
 |------|------------|
-| `src/schemas/profiles.rs` | Add a `DbConfig` variant and a config struct with all connection fields |
+| `src/schemas/profiles.rs` | Добавить вариант `DbConfig` и структуру конфигурации со всеми полями подключения |
 
-The config struct should include everything a user would put in their `profiles.yml` for your warehouse. Example from Exasol:
+Структура конфигурации должна включать всё, что пользователь укажет в `profiles.yml` для вашего хранилища. Пример Exasol:
 
 ```rust
 #[derive(Debug, Clone, Serialize, Deserialize, Default, DbtSchema, Merge)]
@@ -342,15 +342,15 @@ pub struct ExasolDbConfig {
 }
 ```
 
-After adding the config struct, also add `DbConfig::MyWarehouse(Box<MyWarehouseDbConfig>)` as a new variant to the `DbConfig` enum. The compiler will then point you at every place that reads from `DbConfig` and needs a new case for your warehouse. Follow those errors to wire it in.
+После добавления структуры конфигурации добавьте также `DbConfig::MyWarehouse(Box<MyWarehouseDbConfig>)` как новый вариант перечисления `DbConfig`. Затем компилятор укажет все места, где читается `DbConfig` и требуется новый вариант для вашего хранилища. Следуйте этим сообщениям об ошибках, чтобы подключить его во всех нужных местах.
 
-### 5.3.1: Add `dbt init` profile generation (optional but strongly encouraged)
+### 5.3.1: Добавление генерации профиля через `dbt init` (необязательно, но настоятельно рекомендуется)
 
-This is what makes your adapter easy to use. When someone runs `dbt init` and selects your warehouse, they get a guided prompt that builds their `profiles.yml`, without documentation hunting or manual YAML editing.
+Это сделает ваш адаптер удобным в использовании. Когда пользователь запускает `dbt init` и выбирает ваше хранилище, интерактивные подсказки помогают создать `profiles.yml` — без поисков по документации и ручного редактирования YAML.
 
-Add support in `crates/dbt-init/`:
+Добавьте поддержку в `crates/dbt-init/`:
 
-1. Register your adapter in `get_available_adapters()` in `crates/dbt-init/src/profile_setup.rs`:
+1. Зарегистрируйте адаптер в `get_available_adapters()` в файле `crates/dbt-init/src/profile_setup.rs`:
 
 ```rust
 pub fn get_available_adapters() -> &'static [AdapterType] {
@@ -361,16 +361,16 @@ pub fn get_available_adapters() -> &'static [AdapterType] {
 }
 ```
 
-2. Create a config file `crates/dbt-init/src/adapter_config/<warehouse>_config.rs` implementing `InteractiveSetup` for your `DbConfig` struct: define the fields `dbt init` should prompt for and a `set_field()` handler. See `postgres_config.rs` as a minimal reference.
+2. Создайте файл конфигурации `crates/dbt-init/src/adapter_config/<warehouse>_config.rs`, реализующий `InteractiveSetup` для вашей структуры `DbConfig`: определите поля, которые должен запрашивать `dbt init`, и обработчик `set_field()`. Минимальный образец см. в `postgres_config.rs`.
 
-3. Export it from `crates/dbt-init/src/adapter_config/mod.rs`:
+3. Экспортируйте его из `crates/dbt-init/src/adapter_config/mod.rs`:
 
 ```rust
 pub mod mywarehouse_config;
 pub use mywarehouse_config::setup_mywarehouse_profile;
 ```
 
-4. Add a match arm in `create_profile_for_adapter()` in `profile_setup.rs`:
+4. Добавьте ветвь match в `create_profile_for_adapter()` в файле `profile_setup.rs`:
 
 ```rust
 AdapterType::MyWarehouse => {
@@ -382,41 +382,41 @@ AdapterType::MyWarehouse => {
 }
 ```
 
-### 5.4: Add authentication
+### 5.4: Добавление аутентификации
 
-**Crate:** `crates/dbt-auth/`
+**Крейт:** `crates/dbt-auth/`
 
-| File | What to do | Required? |
+| Файл | Что нужно сделать | Обязательно? |
 |------|------------|-----------|
-| `src/<warehouse>/mod.rs` | Credential resolution, reads config fields, env vars, key files, tokens; builds the ADBC connection URI and credentials | **Yes** |
-| `src/<warehouse>/init.rs` | Init SQL generation, SQL that must run when the connection opens (for example, `USE SCHEMA`, `SET` statements, and extension loading) | Optional, only for warehouses that need SQL on connection open. Most don't. |
-| `src/lib.rs` | Register the new module with `mod <warehouse>;` and wire it into the auth dispatch match | **Yes** |
+| `src/<warehouse>/mod.rs` | Получение учётных данных: чтение полей конфигурации, переменных окружения, файлов ключей, токенов; формирование URI подключения ADBC и учётных данных | **Да** |
+| `src/<warehouse>/init.rs` | Генерация SQL инициализации, который должен выполняться при открытии подключения (например, `USE SCHEMA`, операторы `SET` и загрузка расширений) | Необязательно, только для хранилищ, которым требуется SQL при открытии подключения. Большинству это не нужно. |
+| `src/lib.rs` | Зарегистрировать новый модуль через `mod <warehouse>;` и подключить его к match диспетчеризации аутентификации | **Да** |
 
-The auth module turns a `DbConfig` into a live, authenticated ADBC connection. At minimum you need basic credential handling. More sophisticated auth (OAuth, SSO, key-pair) can be added incrementally.
+Модуль аутентификации преобразует `DbConfig` в активное аутентифицированное подключение ADBC. Как минимум нужна базовая обработка учётных данных. Более сложные способы аутентификации (OAuth, SSO, пара ключей) можно добавлять постепенно.
 
-The pattern is: read config fields → construct URI → call `builder.with_parse_uri(uri)`, `builder.with_username(user)`, `builder.with_password(password)`.
+Паттерн таков: прочитать поля конфигурации → сформировать URI → вызвать `builder.with_parse_uri(uri)`, `builder.with_username(user)`, `builder.with_password(password)`.
 
-### 5.5: Build the adapter layer
+### 5.5: Создание уровня адаптера
 
-**Crate:** `crates/dbt-adapter/`
+**Крейт:** `crates/dbt-adapter/`
 
-This is the largest step. You're adding warehouse-specific behavior to the shared adapter layer using `match adapter_type()` arms.
+Это самый объёмный этап. Вы добавляете специфичное для хранилища поведение в общий уровень адаптера с помощью ветвей `match adapter_type()`.
 
-:::tip Simple vs. complex adapters
-Most adapters, including Exasol, Athena, Trino, Starburst, Dremio, Oracle, and ClickHouse, add match arms directly to the shared files in `src/relation/`.
+:::tip Простые и сложные адаптеры
+Большинство адаптеров, включая Exasol, Athena, Trino, Starburst, Dremio, Oracle и ClickHouse, добавляют ветви match непосредственно в общие файлы в `src/relation/`.
 
-Only adapters with highly custom relation logic (Snowflake's multi-part names and case rules; BigQuery's project/dataset structure) have their own subdirectory under `src/relation/`.
+Собственный подкаталог в `src/relation/` есть только у адаптеров с существенно отличающейся логикой объектов БД (составные имена и правила регистра Snowflake; структура project/dataset BigQuery).
 
-If your warehouse uses standard `schema.table` or `database.schema.table` naming with straightforward quoting, you're a simple adapter. Start simple and only add complexity if the compiler forces it.
+Если ваше хранилище использует стандартные имена `schema.table` или `database.schema.table` с простыми правилами кавычек, ваш адаптер относится к простым. Начните с простого решения и усложняйте его только по требованию компилятора.
 :::
 
-#### Relation type and quoting
+#### Тип объекта БД и кавычки
 
-**File:** `crates/dbt-adapter/src/relation/relation_impl.rs`
+**Файл:** `crates/dbt-adapter/src/relation/relation_impl.rs`
 
-Add a match arm that sets your quoting policy. The policy controls three things: whether the database is included in fully-qualified names, whether the schema is quoted, and whether the identifier is quoted.
+Добавьте ветвь match, задающую вашу политику кавычек. Эта политика управляет тремя аспектами: включается ли база данных в полные имена, заключается ли схема в кавычки и заключается ли идентификатор в кавычки.
 
-For example, Exasol uses a 2-part name (`schema.table`, no database prefix) and quotes both:
+Например, Exasol использует имя из двух частей (`schema.table`, без префикса базы данных) и заключает обе части в кавычки:
 
 ```rust
 // crates/dbt-adapter/src/relation/relation_impl.rs
@@ -432,11 +432,11 @@ fn include_policy(adapter_type: AdapterType, path: &RelationPath) -> Policy {
 }
 ```
 
-Decide up front whether your warehouse uses 2-part or 3-part names, and whether identifiers are case-sensitive. For example, Exasol uppercases unquoted identifiers by default, so all catalog lookup SQL uses `upper()` comparisons.
+Заранее определите, использует ли ваше хранилище имена из двух или трёх частей и чувствительны ли идентификаторы к регистру. Например, Exasol по умолчанию приводит идентификаторы без кавычек к верхнему регистру, поэтому во всех SQL-запросах поиска по каталогу используются сравнения с `upper()`.
 
-**File:** `src/relation/factory.rs`
+**Файл:** `src/relation/factory.rs`
 
-Add your `AdapterType` to the `create_static_relation` match, wiring it to `RelationStatic` (the generic static relation used for Jinja's `api.Relation`):
+Добавьте свой `AdapterType` в match функции `create_static_relation`, связав его с `RelationStatic` (универсальным статическим объектом relation, используемым для `api.Relation` в Jinja):
 
 ```rust
 Databricks | Spark | Fabric | DuckDB | Exasol | Postgres | Redshift | Bigquery => {
@@ -445,11 +445,11 @@ Databricks | Spark | Fabric | DuckDB | Exasol | Postgres | Redshift | Bigquery =
 }
 ```
 
-#### Catalog introspection
+#### Анализ каталога
 
-**File:** `src/metadata/get_relation.rs`
+**Файл:** `src/metadata/get_relation.rs`
 
-Add a match arm and a function that queries your warehouse's system catalog to look up a single relation by name. Follow the reference implementations closely. This area of the codebase is expected to evolve:
+Добавьте ветвь match и функцию, которая запрашивает системный каталог вашего хранилища для поиска одного объекта БД по имени. Внимательно следуйте эталонным реализациям. Ожидается, что эта часть кодовой базы будет развиваться:
 
 ```rust
 AdapterType::Exasol => exasol_get_relation(
@@ -482,13 +482,13 @@ fn exasol_get_relation(
 }
 ```
 
-Use `information_schema` if your warehouse supports standard SQL, or system catalog tables (`sys.*`, `information_schema.*`) as appropriate.
+Используйте `information_schema`, если ваше хранилище поддерживает стандартный SQL, или подходящие таблицы системного каталога (`sys.*`, `information_schema.*`).
 
-#### Adapter match arms
+#### Ветви match адаптера
 
-**File:** `src/adapter/adapter_impl.rs`
+**Файл:** `src/adapter/adapter_impl.rs`
 
-After adding `AdapterType::MyWarehouse`, the compiler will enumerate every `match self.adapter_type()` block that needs a new arm. Most arms simply delegate to an existing pattern. For example:
+После добавления `AdapterType::MyWarehouse` компилятор перечислит все блоки `match self.adapter_type()`, которым нужна новая ветвь. Большинство ветвей просто используют существующий паттерн. Например:
 
 ```rust
 // Column builder: delegate to postgres-like builder
@@ -501,36 +501,36 @@ Exasol => "name",
 AdapterType::Exasol => "DATA_TYPE",  // in src/sql_types.rs
 ```
 
-For capabilities your adapter doesn't support yet (like `valid_incremental_strategies`), return `unimplemented!()`. That's fine for an initial community adapter contribution.
+Для возможностей, которые ваш адаптер пока не поддерживает (например, `valid_incremental_strategies`), используйте `unimplemented!()`. Для первоначальной реализации адаптера сообщества это допустимо.
 
-#### Column builder
+#### Построитель столбцов
 
-**File:** `src/column/column_builder.rs`
+**Файл:** `src/column/column_builder.rs`
 
-Add a match arm for how your warehouse's Arrow record batches map to dbt column objects. Most adapters can delegate to `build_postgres_like`:
+Добавьте ветвь match, определяющую, как пакеты записей Arrow вашего хранилища преобразуются в объекты столбцов dbt. Большинство адаптеров могут делегировать эту работу `build_postgres_like`:
 
 ```rust
 Exasol => Ok(Self::build_postgres_like(field, type_ops)),
 ```
 
-Only implement custom logic if your warehouse has unusual type handling.
+Реализуйте собственную логику только в том случае, если у вашего хранилища есть необычные особенности обработки типов.
 
-### 5.6: Write your SQL macros
+### 5.6: Написание SQL-макросов
 
-**Crate:** `crates/dbt-loader/`
+**Крейт:** `crates/dbt-loader/`
 
-Create a new directory at `src/dbt_macro_assets/dbt-<adapter_type>/`.
+Создайте новый каталог по пути `src/dbt_macro_assets/dbt-<adapter_type>/`.
 
-:::note Registration is automatic
-The loader discovers adapter packages by scanning `src/dbt_macro_assets/`. You don't need to add any Rust code to register your directory. Creating it and the `dbt_project.yml` is sufficient.
+:::note Регистрация выполняется автоматически
+Загрузчик обнаруживает пакеты адаптеров, сканируя `src/dbt_macro_assets/`. Для регистрации каталога не нужно добавлять код на Rust. Достаточно создать его и файл `dbt_project.yml`.
 :::
 
-| File | What to do |
+| Файл | Что нужно сделать |
 |------|------------|
-| `dbt_macro_assets/dbt-<warehouse>/dbt_project.yml` | Adapter plugin project definition: `name: dbt_<warehouse>`, `macro-paths: ["macros"]` |
-| `macros/adapters.sql` | <Constant name="core" /> adapter macros: `create_schema`, `drop_schema`, `drop_relation`, `rename_relation`, `truncate_relation`, `create_table_as`, `create_view_as`, `list_schemas`, `check_schema_exists`, `information_schema_name`, `current_timestamp`, `get_columns_in_relation`, `list_relations_without_caching` |
+| `dbt_macro_assets/dbt-<warehouse>/dbt_project.yml` | Определение проекта плагина адаптера: `name: dbt_<warehouse>`, `macro-paths: ["macros"]` |
+| `macros/adapters.sql` | Макросы адаптера <Constant name="core" />: `create_schema`, `drop_schema`, `drop_relation`, `rename_relation`, `truncate_relation`, `create_table_as`, `create_view_as`, `list_schemas`, `check_schema_exists`, `information_schema_name`, `current_timestamp`, `get_columns_in_relation`, `list_relations_without_caching` |
 
-v2 uses the same `adapter.dispatch()` pattern as v1. Your macros use the `<warehouse>__` prefix to override defaults:
+В v2 используется тот же паттерн `adapter.dispatch()`, что и в v1. Ваши макросы используют префикс `<warehouse>__` для переопределения реализаций по умолчанию:
 
 ```sql
 {% macro exasol__create_table_as(temporary, relation, sql) -%}
@@ -558,9 +558,9 @@ v2 uses the same `adapter.dispatch()` pattern as v1. Your macros use the `<wareh
 {% endmacro %}
 ```
 
-Note: `rename_relation` uses only `to_relation.identifier`, not the full relation. Exasol's `RENAME` syntax doesn't take a fully qualified target.
+Примечание: `rename_relation` использует только `to_relation.identifier`, а не полное имя объекта БД. Синтаксис `RENAME` в Exasol не принимает полное имя целевого объекта.
 
-For catalog introspection, use your warehouse's system catalog. For example, Exasol queries `sys.*` instead of `information_schema`:
+Для анализа каталога используйте системный каталог вашего хранилища. Например, Exasol запрашивает `sys.*` вместо `information_schema`:
 
 ```sql
 {% macro exasol__list_relations_without_caching(schema_relation) -%}
@@ -589,7 +589,7 @@ For catalog introspection, use your warehouse's system catalog. For example, Exa
 {%- endmacro %}
 ```
 
-If your warehouse is similar to an existing one (for example, Postgres-compatible), start by delegating to that dialect's macros and only override where behavior differs:
+Если ваше хранилище похоже на уже поддерживаемое (например, совместимо с Postgres), начните с делегирования макросам этого диалекта и переопределяйте только те места, где поведение отличается:
 
 ```sql
 {% macro mywarehouse__create_table_as(temporary, relation, sql) -%}
@@ -598,11 +598,11 @@ If your warehouse is similar to an existing one (for example, Postgres-compatibl
 ```
 
 
-## Step 6: Test your adapter
+## Шаг 6: Тестирование адаптера
 
-### Type check after each crate
+### Проверка типов после работы с каждым крейтом
 
-Run the type checker after completing work in each crate to catch missed match arms and type errors immediately:
+Запускайте проверку типов после завершения работы с каждым крейтом, чтобы сразу обнаруживать пропущенные ветви match и ошибки типов:
 
 ```shell
 cargo build -p dbt-adapter-core
@@ -613,9 +613,9 @@ cargo build -p dbt-adapter
 cargo build -p dbt-loader
 ```
 
-### Smoke testing with a dbt project
+### Базовая проверка с проектом dbt
 
-Run a real `dbt build` against your warehouse and ensure it builds error-free. At minimum, exercise table, view, incremental, and seed materializations. A clean `dbt build` on [jaffle-shop](https://github.com/dbt-labs/jaffle-shop) is one example of an acceptance bar for a community adapter.
+Выполните настоящий `dbt build` для вашего хранилища и убедитесь, что сборка проходит без ошибок. Как минимум проверьте материализации table, view, incremental и seed. Успешный `dbt build` проекта [jaffle-shop](https://github.com/dbt-labs/jaffle-shop) — один из примеров критерия приёмки адаптера сообщества.
 
 ```shell
 # Build the CLI
@@ -628,70 +628,70 @@ cargo build --bin dbt
 ./target/debug/dbt build --project-dir <your-project>
 ```
 
-### CI testing
+### Тестирование в CI
 
-CI testing for community adapter PRs is coordinated with the dbt Labs adapters team: the test infrastructure is not publicly distributed. When your PR is ready, reach out in `#adapter-ecosystem` on the [dbt Community Slack](https://community.getdbt.com/), tag Hope Watson (`@Hope Watson (dbt Labs)`), and the adapters team will work with you on warehouse validation. Note that this may take some time and coordination.
+Тестирование PR с адаптерами сообщества в CI согласовывается с командой адаптеров dbt Labs: тестовая инфраструктура не распространяется публично. Когда ваш PR будет готов, напишите в `#adapter-ecosystem` в [dbt Community Slack](https://community.getdbt.com/), отметьте Хоуп Уотсон (`@Hope Watson (dbt Labs)`), и команда адаптеров поможет вам с проверкой работы хранилища. Учтите, что это может потребовать времени и согласования.
 
-:::caution Known gap: CI requires coordination
-Community contributors cannot run CI independently. dbt Labs' CI pipeline requires certain checks. For certain adapters, that means warehouse credentials. dbt Labs is still defining this handoff process for <Constant name="core_v2" />. Expect to coordinate closely with the adapters team, for the approval process to take some time, and for some back-and-forth. If you hit friction, flag it in `#adapter-ecosystem`.
+:::caution Известное ограничение: CI требует согласования
+Участники сообщества не могут самостоятельно запускать CI. Конвейер CI dbt Labs требует определённых проверок. Для некоторых адаптеров это означает необходимость предоставить учётные данные хранилища. dbt Labs пока определяет процесс такого взаимодействия для <Constant name="core_v2" />. Будьте готовы к тесному взаимодействию с командой адаптеров, к тому, что процесс одобрения займёт время, и к нескольким раундам обсуждений. Если возникнут сложности, сообщите о них в `#adapter-ecosystem`.
 :::
 
-## Step 7: Document your adapter
+## Шаг 7: Документирование адаптера
 
-Once your adapter is merged and available in a release, document it so users can find and configure it.
+После слияния изменений и выхода адаптера в релизе подготовьте документацию, чтобы пользователи могли найти и настроить его.
 
-### Write a setup guide
+### Напишите руководство по настройке
 
-Document the `profiles.yml` configuration for your warehouse: what fields are required, what's optional, and example values. Follow the format of existing [adapter setup guides](/docs/local/connect-data-platform/about-dbt-connections?version=2.0).
+Опишите конфигурацию `profiles.yml` для вашего хранилища: какие поля обязательны, какие необязательны, и приведите примеры значений. Следуйте формату существующих [руководств по настройке адаптеров](/docs/local/connect-data-platform/about-dbt-connections?version=2.0).
 
-:::caution Driver installation is critical to document
-Unlike adapters distributed through the CDN, your users won't get the driver automatically: <Constant name="core_v2" /> won't download it for them. Your setup guide must explain where to get the driver binary and how to install it so <Constant name="core_v2" /> can find it at runtime. Without this, users will configure a valid profile and still get a connection error. Include the exact library name <Constant name="core_v2" /> looks for (for example, `libadbc_driver_<yourwarehouse>.dylib`) and where to put it.
+:::caution Крайне важно описать установку драйвера
+В отличие от адаптеров, распространяемых через CDN, ваши пользователи не получат драйвер автоматически: <Constant name="core_v2" /> не загрузит его за них. Руководство по настройке должно объяснять, где взять бинарный файл драйвера и как установить его, чтобы <Constant name="core_v2" /> мог найти его во время выполнения. Без этого пользователи настроят корректный профиль, но всё равно получат ошибку подключения. Укажите точное имя библиотеки, которую ищет <Constant name="core_v2" /> (например, `libadbc_driver_<yourwarehouse>.dylib`), и место, куда её нужно поместить.
 :::
 
-### General documentation guidelines
+### Общие рекомендации по документации
 
-- Assume the reader knows dbt fundamentals but is not an expert on your warehouse's inner workings.
-- Include a complete working `profiles.yml` example.
-- Document any warehouse-specific quirks (for example, 2-part versus 3-part naming and identifier case sensitivity).
-- Link to the warehouse vendor's ADBC driver documentation.
+- Предполагайте, что читатель знает основы dbt, но не является экспертом по внутреннему устройству вашего хранилища.
+- Приведите полный рабочий пример `profiles.yml`.
+- Опишите все особенности хранилища (например, имена из двух или трёх частей и чувствительность идентификаторов к регистру).
+- Добавьте ссылку на документацию поставщика хранилища по драйверу ADBC.
 
-## Step 8: Promote your adapter
+## Шаг 8: Продвижение адаптера
 
-:::caution Your PR must be merged first
-dbt Labs reviews and merges community adapter PRs into `dbt-labs/dbt`. Wait until the PR is merged and the adapter ships in a published release before directing users to it.
+:::caution Сначала ваш PR должен быть принят
+dbt Labs рассматривает PR с адаптерами сообщества и сливает их в `dbt-labs/dbt`. Прежде чем направлять пользователей к адаптеру, дождитесь слияния PR и выхода адаптера в опубликованном релизе.
 :::
 
-### Community channels
+### Каналы сообщества
 
-Join the [dbt Community Slack](https://community.getdbt.com/) and find:
-- **`#adapter-ecosystem`**: the main channel for adapter developers
-- **`#db-<yourwarehouse>`**: if a channel exists for your warehouse, let users know v2 support is available. Note: v1 adapter users will still be on the Python-based adapter and will need to migrate.
+Присоединитесь к [dbt Community Slack](https://community.getdbt.com/) и найдите:
+- **`#adapter-ecosystem`**: основной канал для разработчиков адаптеров
+- **`#db-<yourwarehouse>`**: если канал для вашего хранилища существует, сообщите пользователям о доступности поддержки v2. Примечание: пользователи адаптера v1 по-прежнему будут использовать адаптер на Python, и им потребуется миграция.
 
-### Before you announce
+### Перед объявлением
 
-Align with the adapters team on: which materializations you're targeting in the initial implementation, any known gaps in your ADBC driver, and timeline. This prevents surprises during review and sets accurate expectations for users.
+Согласуйте с командой адаптеров, какие материализации вы планируете поддерживать в первоначальной реализации, известные ограничения драйвера ADBC и сроки. Это поможет избежать неожиданностей при рассмотрении изменений и сформировать у пользователей верные ожидания.
 
-## Reference: File-by-file implementation guide
+## Справочник: руководство по реализации для каждого файла {#reference-file-by-file-implementation-guide}
 
-A community-contributed <Constant name="core_v2" /> adapter touches roughly 13 files, all in the public [dbt-labs/dbt](https://github.com/dbt-labs/dbt) repo. The "Exasol example" column shows what it looks like in practice. Substitute your warehouse name and system catalog throughout.
+Адаптер <Constant name="core_v2" />, добавляемый сообществом, затрагивает примерно 13 файлов, и все они находятся в публичном репозитории [dbt-labs/dbt](https://github.com/dbt-labs/dbt). В столбце «Пример Exasol» показано, как это выглядит на практике. Везде подставляйте имя вашего хранилища и его системный каталог.
 
-| Generic path | What it does | Exasol example |
+| Обобщённый путь | Назначение | Пример Exasol |
 |--------------|--------------|----------------|
-| `.changes/unreleased/Features-*.yaml` | Changelog entry | Same for all adapters |
-| `crates/dbt-adapter-core/src/lib.rs` | Add `AdapterType::<Warehouse>` variant and `quote_char` arm | `AdapterType::Exasol` |
-| `crates/dbt-xdbc/src/driver.rs` | Add `Backend::<Warehouse>` variant: the ADBC library name and FFI protocol | `Backend::Exasol`, library name `"adbc_driver_exasol"` |
-| `crates/dbt-schemas/src/schemas/profiles.rs` | `<Warehouse>DbConfig` struct + `DbConfig::<Warehouse>` variant, wired into all config match arms | `ExasolDbConfig` struct + `DbConfig::Exasol` variant |
-| `crates/dbt-auth/src/<warehouse>/mod.rs` | Auth module, reads config fields, resolves credentials, constructs connection URI | `src/exasol/mod.rs`, builds URI from host, port, user/pass, TLS options |
-| `crates/dbt-adapter/src/adapter/adapter_impl.rs` | All exhaustive `match adapter_type()` arms, most delegate to existing patterns; use `unimplemented!()` for features not yet supported | Exasol adds ~10 arms, most are 1–2 lines |
-| `crates/dbt-adapter/src/column/column_builder.rs` | Column builder match arm, maps Arrow record batches to dbt column objects | `Exasol => Ok(Self::build_postgres_like(...))` |
-| `crates/dbt-adapter/src/metadata/get_relation.rs` | Catalog lookup function, queries system tables to find a relation by name | `exasol_get_relation()`, queries `sys.exa_all_tables` / `sys.exa_all_views` |
-| `crates/dbt-adapter/src/relation/relation_impl.rs` | Add your adapter to the `include_policy()` match, controls whether the database prefix is included and whether parts are quoted | `Policy::new(false, true, true)`, database disabled, schema + identifier quoted. Default `Policy::trues()` includes and quotes all three parts. |
-| `crates/dbt-adapter/src/relation/factory.rs` | Add warehouse to `RelationStatic` arm in `create_static_relation` | Exasol added alongside Postgres, Redshift, DuckDB, and more. |
-| `crates/dbt-adapter/src/sql_types.rs` | Metadata column name arms, `DATA_TYPE` and schema listing column names | Exasol uses standard `DATA_TYPE` column name |
-| `crates/dbt-loader/src/dbt_macro_assets/dbt-<warehouse>/dbt_project.yml` | Macro plugin project definition | `dbt-exasol/dbt_project.yml` |
-| `crates/dbt-loader/src/dbt_macro_assets/dbt-<warehouse>/macros/adapters.sql` | All required adapter macros | `dbt-exasol/macros/adapters.sql`, uses `sys.*` instead of `information_schema` |
+| `.changes/unreleased/Features-*.yaml` | Запись в журнале изменений | Одинаково для всех адаптеров |
+| `crates/dbt-adapter-core/src/lib.rs` | Добавление варианта `AdapterType::<Warehouse>` и ветви `quote_char` | `AdapterType::Exasol` |
+| `crates/dbt-xdbc/src/driver.rs` | Добавление варианта `Backend::<Warehouse>`: имя библиотеки ADBC и протокол FFI | `Backend::Exasol`, имя библиотеки `"adbc_driver_exasol"` |
+| `crates/dbt-schemas/src/schemas/profiles.rs` | Структура `<Warehouse>DbConfig` и вариант `DbConfig::<Warehouse>`, подключённый ко всем ветвям match конфигурации | Структура `ExasolDbConfig` и вариант `DbConfig::Exasol` |
+| `crates/dbt-auth/src/<warehouse>/mod.rs` | Модуль аутентификации: чтение полей конфигурации, получение учётных данных, формирование URI подключения | `src/exasol/mod.rs`, формирует URI из хоста, порта, имени пользователя/пароля и параметров TLS |
+| `crates/dbt-adapter/src/adapter/adapter_impl.rs` | Все ветви исчерпывающих выражений `match adapter_type()`; большинство используют существующие паттерны; для пока не поддерживаемых функций используется `unimplemented!()` | Exasol добавляет около 10 ветвей, большинство — по 1–2 строки |
+| `crates/dbt-adapter/src/column/column_builder.rs` | Ветвь match построителя столбцов: преобразование пакетов записей Arrow в объекты столбцов dbt | `Exasol => Ok(Self::build_postgres_like(...))` |
+| `crates/dbt-adapter/src/metadata/get_relation.rs` | Функция поиска в каталоге: запрос системных таблиц для поиска объекта БД по имени | `exasol_get_relation()`, запрашивает `sys.exa_all_tables` / `sys.exa_all_views` |
+| `crates/dbt-adapter/src/relation/relation_impl.rs` | Добавление адаптера в match функции `include_policy()`: определяет, включается ли префикс базы данных и заключаются ли части имени в кавычки | `Policy::new(false, true, true)`: база данных исключена, схема и идентификатор заключены в кавычки. Значение по умолчанию `Policy::trues()` включает все три части и заключает их в кавычки. |
+| `crates/dbt-adapter/src/relation/factory.rs` | Добавление хранилища в ветвь `RelationStatic` в `create_static_relation` | Exasol добавлен вместе с Postgres, Redshift, DuckDB и другими. |
+| `crates/dbt-adapter/src/sql_types.rs` | Ветви для имён столбцов метаданных: `DATA_TYPE` и имена столбцов для получения списка схем | Exasol использует стандартное имя столбца `DATA_TYPE` |
+| `crates/dbt-loader/src/dbt_macro_assets/dbt-<warehouse>/dbt_project.yml` | Определение проекта плагина макросов | `dbt-exasol/dbt_project.yml` |
+| `crates/dbt-loader/src/dbt_macro_assets/dbt-<warehouse>/macros/adapters.sql` | Все обязательные макросы адаптера | `dbt-exasol/macros/adapters.sql`, использует `sys.*` вместо `information_schema` |
 
-## Reference: Useful commands
+## Справочник: полезные команды
 
 ```shell
 # Type check a specific crate

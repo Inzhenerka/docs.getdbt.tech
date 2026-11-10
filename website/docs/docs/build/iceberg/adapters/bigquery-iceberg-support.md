@@ -1,55 +1,55 @@
 ---
-title: "BigQuery and Apache Iceberg"
+title: "BigQuery и Apache Iceberg"
 id: bigquery-iceberg-support
-sidebar_label: "BigQuery Iceberg support"
-description: Understand BigQuery support for Apache Iceberg.
+sidebar_label: "Поддержка Iceberg в BigQuery"
+description: Узнайте о поддержке Apache Iceberg в BigQuery.
 ---
 
 import BaseLocationEnvIsolation from '/snippets/_base-location-env-isolation-warning.md';
 
-dbt supports materializing models in the Iceberg table format in two ways:
+dbt поддерживает материализацию моделей в формате таблиц Iceberg двумя способами:
 
-- **Simplest:** The model config `table_format = 'iceberg'` instructs dbt to materialize this model as an Iceberg table in BigLake Metastore (managed catalog)
-- **Extensible:** Define an Iceberg catalog in `catalogs.yml` and configure this model with `catalog_name`
+- **Самый простой:** конфигурация модели `table_format = 'iceberg'` указывает dbt материализовать эту модель как таблицу Iceberg в BigLake Metastore (управляемом каталоге)
+- **Расширяемый:** определите каталог Iceberg в `catalogs.yml` и настройте для этой модели параметр `catalog_name`
 
-## Creating Iceberg tables
+## Создание таблиц Iceberg
 
-dbt supports creating Iceberg tables for two of the BigQuery materializations: 
+dbt поддерживает создание таблиц Iceberg для двух материализаций BigQuery: 
 
-- [Table](/docs/build/materializations#table)
-- [Incremental](/docs/build/materializations#incremental)
+- [Таблица](/docs/build/materializations#table)
+- [Инкрементальная](/docs/build/materializations#incremental)
 
-## Iceberg catalogs
+## Каталоги Iceberg
 
-BigQuery supports Iceberg tables through its built-in catalog [BigLake Metastore](https://cloud.google.com/bigquery/docs/iceberg-tables#architecture) today. No setup is needed to access the BigLake Metastore. However, you need to have a [storage bucket](https://docs.cloud.google.com/storage/docs/buckets#buckets) and [the required BigQuery roles](https://cloud.google.com/bigquery/docs/iceberg-tables#required-roles) configured prior to creating an Iceberg table. 
+В настоящее время BigQuery поддерживает таблицы Iceberg через встроенный каталог [BigLake Metastore](https://cloud.google.com/bigquery/docs/iceberg-tables#architecture). Для доступа к BigLake Metastore настройка не требуется. Однако перед созданием таблицы Iceberg необходимо настроить [бакет хранилища](https://docs.cloud.google.com/storage/docs/buckets#buckets) и [необходимые роли BigQuery](https://cloud.google.com/bigquery/docs/iceberg-tables#required-roles). 
 
 
-## BigQuery-specific configs for `biglake_metastore` catalogs
+## Конфигурации BigQuery для каталогов `biglake_metastore`
 
-The following table outlines the configuration fields required to set up a catalog integration for [BigLake Iceberg tables in BigQuery](https://docs.cloud.google.com/bigquery/docs/iceberg-tables).
+В следующей таблице описаны поля конфигурации, необходимые для настройки интеграции с каталогом для [таблиц BigLake Iceberg в BigQuery](https://docs.cloud.google.com/bigquery/docs/iceberg-tables).
 
-Supply and nest these additional configurations, unique to BigQuery, under `config.bigquery` (in the new catalog spec) or `adapter_properties` (in the old catalog spec).
+Укажите эти дополнительные конфигурации, специфичные для BigQuery, вложив их в `config.bigquery` (в новой спецификации каталогов) или `adapter_properties` (в старой спецификации каталогов).
 
-| Field | Type | Required | Description | Note |
+| Поле | Тип | Обязательно | Описание | Примечание |
 | ----- | ---- | -------- | ----------- | ---- |
-| `file_format` | String | Yes, except for [Lakehouse Runtime Catalog (LRC)](#lakehouse-runtime-catalog-lrc-) catalogs | The file format for the Iceberg table. | `parquet` is the only accepted value. |
-| `external_volume` | String | Yes, except for LRC catalogs | The Cloud Storage bucket where Iceberg table data is written. | For example, `gs://BUCKET_NAME`. |
-| `lakehouse_catalog` | String | No | The name of the LRC that holds this catalog's tables. | New spec only, and requires <Constant name="fusion" /> (v2). Set it in `catalogs.yml`, not per model. |
-| `base_location_root` | String | No | If provided, the input overrides the default dbt `base_location` value of `_dbt`. | Can be set in `catalogs.yml`. |
-| `base_location_subpath` | String | No | An optional suffix to add to the `base_location` path that dbt automatically specifies. | Only configurable per-model. |
-| `storage_uri` | String | No | If provided, the input overrides the dbt `storage_uri` value. | Only configurable per-model. |
+| `file_format` | String | Да, кроме каталогов [Lakehouse Runtime Catalog (LRC)](#lakehouse-runtime-catalog-lrc) | Формат файлов таблицы Iceberg. | Единственное допустимое значение — `parquet`. |
+| `external_volume` | String | Да, кроме каталогов LRC | Бакет Cloud Storage, в который записываются данные таблицы Iceberg. | Например, `gs://BUCKET_NAME`. |
+| `lakehouse_catalog` | String | Нет | Имя LRC, в котором хранятся таблицы этого каталога. | Только для новой спецификации; требуется <Constant name="fusion" /> (v2). Задавайте в `catalogs.yml`, а не для отдельных моделей. |
+| `base_location_root` | String | Нет | Если задано, это значение переопределяет значение `base_location`, которое в dbt по умолчанию равно `_dbt`. | Можно задать в `catalogs.yml`. |
+| `base_location_subpath` | String | Нет | Необязательный суффикс, добавляемый к пути `base_location`, который dbt задаёт автоматически. | Настраивается только для отдельных моделей. |
+| `storage_uri` | String | Нет | Если задано, это значение переопределяет значение `storage_uri` в dbt. | Настраивается только для отдельных моделей. |
 
-- `lakehouse_catalog`: Tells dbt that this catalog's tables live in a [Lakehouse Runtime Catalog](#lakehouse-runtime-catalog-lrc-), so dbt addresses them with BigQuery's four-part name. LRC catalogs don't need `external_volume` or `file_format` because the LRC derives the storage location from the namespace.
-- `base_location_root`: Specifies the prefix of the base location path within the storage bucket where Iceberg table data is written.
-- `base_location_subpath`: Specifies the suffix of the base location path within the storage bucket where Iceberg table data is written. This property can only be set in model configurations, not in `catalogs.yml`.
-- `storage_uri`: Completely overrides the storage_uri, allowing you to specify the full path directly instead of using the catalog integration's external volume and base_location components.
+- `lakehouse_catalog`: указывает dbt, что таблицы этого каталога находятся в [Lakehouse Runtime Catalog](#lakehouse-runtime-catalog-lrc), поэтому dbt обращается к ним с помощью имени BigQuery из четырёх частей. Каталогам LRC не нужны `external_volume` и `file_format`, поскольку LRC определяет расположение хранилища на основе пространства имён.
+- `base_location_root`: задаёт префикс базового пути в бакете хранилища, куда записываются данные таблицы Iceberg.
+- `base_location_subpath`: задаёт суффикс базового пути в бакете хранилища, куда записываются данные таблицы Iceberg. Это свойство можно задать только в конфигурациях моделей, но не в `catalogs.yml`.
+- `storage_uri`: полностью переопределяет storage_uri, позволяя указать полный путь напрямую вместо использования external volume и компонентов base_location интеграции с каталогом.
 
-### Example
+### Пример
 
-1. Create a `catalogs.yml` at the top level of your dbt project.
+1. Создайте `catalogs.yml` в корневом каталоге вашего проекта dbt.
 
 <Tabs defaultValue="new">
-<TabItem value="new" label={<><VersionBlock lastVersion="1.99">New spec (beta)</VersionBlock><VersionBlock firstVersion="2.0">New spec</VersionBlock></>}>
+<TabItem value="new" label={<><VersionBlock lastVersion="1.99">Новая спецификация (бета)</VersionBlock><VersionBlock firstVersion="2.0">Новая спецификация</VersionBlock></>}>
 
 <File name="catalogs.yml">
 
@@ -68,7 +68,7 @@ catalogs:
 </File>
 
 </TabItem>
-<TabItem value="old" label="Old spec">
+<TabItem value="old" label="Старая спецификация">
 
 <File name="catalogs.yml">
 
@@ -90,7 +90,7 @@ catalogs:
 </TabItem>
 </Tabs>
 
-2. Apply the catalog configuration at either the model, folder, or project level:
+2. Примените конфигурацию каталога на уровне модели, папки или проекта:
 
 <File name="iceberg_model.sql">
 
@@ -111,26 +111,26 @@ select * from {{ ref('jaffle_shop_customers') }}
 </File>
 
 
-3. Finally, run the model: `dbt run -s my_iceberg_model`.
+3. Наконец, запустите модель: `dbt run -s my_iceberg_model`.
 
-### Limitations
+### Ограничения
 
-BigQuery today doesn't support connecting to external Iceberg catalogs. In terms of SQL operations and table management features, refer to the [BigQuery docs](https://cloud.google.com/bigquery/docs/iceberg-tables#limitations) for more information. 
+В настоящее время BigQuery не поддерживает подключение к внешним каталогам Iceberg. Дополнительную информацию об операциях SQL и возможностях управления таблицами см. в [документации BigQuery](https://cloud.google.com/bigquery/docs/iceberg-tables#limitations). 
 
-### Base location
+### Базовое расположение
 
-BigQuery's DDL for creating Iceberg tables requires that a fully qualified `storage_uri` be provided, including the object path. Once the user has provided the bucket name as the `external_volume` in the catalog integration, dbt manages the `storage_uri` input. The default behavior in dbt is to provide an object path, referred to in dbt as the `base_location`, in the form: `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`.  We recommend using the default behavior, but if you need to customize the resulting `base_location`, you can configure `base_location` with the model configuration fields `base_location_root` and `base_location_subpath`.
+DDL BigQuery для создания таблиц Iceberg требует указания полного `storage_uri`, включая путь к объекту. После того как пользователь укажет имя бакета в качестве `external_volume` в интеграции с каталогом, dbt управляет значением `storage_uri`. По умолчанию dbt задаёт путь к объекту, называемый в dbt `base_location`, в формате `_dbt/{SCHEMA_NAME}/{MODEL_NAME}`. Мы рекомендуем использовать поведение по умолчанию, но если вам нужно изменить результирующий `base_location`, вы можете настроить `base_location` с помощью полей конфигурации модели `base_location_root` и `base_location_subpath`.
 
-- If no inputs are provided, dbt outputs for base_location `{{ external_volume }}/_dbt/{{ schema }}/{{ model_name }}`
-- If base_location_root = `foo`, dbt outputs `{{ external_volume }}/foo/{{ schema }}/{{ model_name }}`
-- If base_location_subpath = `bar`, dbt outputs `{{ external_volume }}/_dbt/{{ schema }}/{{ model_name }}/bar`
-- If base_location_root = `foo` and base_location_subpath = `bar`, dbt outputs `{{ external_volume }}/foo/{{ schema }}/{{ model_name }}/bar`
+- Если входные значения не заданы, dbt формирует для base_location `{{ external_volume }}/_dbt/{{ schema }}/{{ model_name }}`
+- Если base_location_root = `foo`, dbt формирует `{{ external_volume }}/foo/{{ schema }}/{{ model_name }}`
+- Если base_location_subpath = `bar`, dbt формирует `{{ external_volume }}/_dbt/{{ schema }}/{{ model_name }}/bar`
+- Если base_location_root = `foo` и base_location_subpath = `bar`, dbt формирует `{{ external_volume }}/foo/{{ schema }}/{{ model_name }}/bar`
 
 <BaseLocationEnvIsolation />
 
-You can also completely override the `storage_uri` with the model configuration field `storage_uri`. This overrides both the catalog integration path and the other model configuration fields to supply the entire `storage_uri` path directly.
+Вы также можете полностью переопределить `storage_uri` с помощью поля конфигурации модели `storage_uri`. Оно переопределяет как путь интеграции с каталогом, так и остальные поля конфигурации модели, позволяя напрямую указать полный путь `storage_uri`.
 
-An example model with a customized `base_location`:
+Пример модели с настроенным `base_location`:
 
 <File name='iceberg_model.sql'>
 
@@ -152,7 +152,7 @@ select * from {{ ref('jaffle_shop_customers') }}
 </File>
 
 <Tabs defaultValue="new">
-<TabItem value="new" label={<><VersionBlock lastVersion="1.99">New spec (beta)</VersionBlock><VersionBlock firstVersion="2.0">New spec</VersionBlock></>}>
+<TabItem value="new" label={<><VersionBlock lastVersion="1.99">Новая спецификация (бета)</VersionBlock><VersionBlock firstVersion="2.0">Новая спецификация</VersionBlock></>}>
 
 <File name='catalogs.yml'>
 
@@ -172,7 +172,7 @@ catalogs:
 </File>
 
 </TabItem>
-<TabItem value="old" label="Old spec">
+<TabItem value="old" label="Старая спецификация">
 
 <File name='catalogs.yml'>
 
@@ -195,26 +195,26 @@ catalogs:
 </TabItem>
 </Tabs>
 
-#### Rationale
+#### Обоснование
 
-By default, dbt manages the full `storage_uri` on behalf of users for ease of use. The `base_location` parameter specifies the location within the storage bucket where the data is written. Without guardrails (for example, if the user forgets to provide a base location root), it's possible for BigQuery to reuse the same path across multiple tables.  
+По умолчанию dbt управляет полным `storage_uri` от имени пользователей для удобства работы. Параметр `base_location` задаёт расположение в бакете хранилища, куда записываются данные. Без защитных механизмов (например, если пользователь забудет указать корень базового пути) BigQuery может повторно использовать один и тот же путь для нескольких таблиц.  
 
-This behavior could result in future technical debt because it limits the ability to:
+Такое поведение может привести к техническому долгу в будущем, поскольку оно ограничивает возможности:
 
-- Navigate the underlying object store 
-- Read Iceberg tables through an object-store integration
-- Grant schema-specific access to tables through object store
-- Use a crawler pointed at the tables within the external storage to build a new catalog with another tool
+- Навигации по базовому объектному хранилищу 
+- Чтения таблиц Iceberg через интеграцию с объектным хранилищем
+- Предоставления доступа к таблицам для отдельных схем через объектное хранилище
+- Использования сканера, направленного на таблицы во внешнем хранилище, для создания нового каталога с помощью другого инструмента
 
-To maintain best practices, dbt enforces an input and, by default, writes your tables within a `_dbt/{SCHEMA_NAME}/{TABLE_NAME}` prefix to ensure easier object-store observability and auditability.
+Чтобы обеспечить соблюдение рекомендуемых практик, dbt требует задания пути и по умолчанию записывает ваши таблицы с префиксом `_dbt/{SCHEMA_NAME}/{TABLE_NAME}`, упрощая наблюдение за объектным хранилищем и его аудит.
 
 <VersionBlock firstVersion="2.0">
 
-## Lakehouse Runtime Catalog (LRC) <Lifecycle status="beta" />
+## Lakehouse Runtime Catalog (LRC) <Lifecycle status="beta" /> {#lakehouse-runtime-catalog-lrc}
 
-:::info <Constant name="fusion" /> only
+:::info Только <Constant name="fusion" />
 
-`lakehouse_catalog` requires the [<Constant name="fusion_engine" />](/docs/introduction) (v2) with the `use_catalogs_v2` behavior flag enabled.
+Для `lakehouse_catalog` требуется [<Constant name="fusion_engine" />](/docs/introduction) (v2) с включённым флагом поведения `use_catalogs_v2`.
 
 <File name='dbt_project.yml'>
 
@@ -227,19 +227,19 @@ flags:
 
 :::
 
-BigQuery's [Lakehouse Runtime Catalog](https://cloud.google.com/bigquery/docs/blms-rest-catalog) (LRC) addresses a table with four parts — project, catalog, namespace, and table — but BigQuery SQL accepts only three quoted segments. dbt handles this by quoting the catalog and namespace together as the middle segment:
+[Lakehouse Runtime Catalog](https://cloud.google.com/bigquery/docs/blms-rest-catalog) (LRC) в BigQuery использует для адресации таблицы четыре части — проект, каталог, пространство имён и таблицу, — но SQL BigQuery принимает только три сегмента, заключённых в обратные кавычки. dbt решает эту задачу, заключая каталог и пространство имён вместе в обратные кавычки как средний сегмент:
 
 ```sql
 `{project}`.`{catalog}.{namespace}`.`{table}`
 ```
 
-Set `lakehouse_catalog` on a `biglake_metastore` catalog to tell dbt that its tables live in an LRC. dbt then uses the four-part name and omits the connection clause and the `table_format` option, neither of which BigQuery accepts for LRC tables.
+Задайте `lakehouse_catalog` для каталога `biglake_metastore`, чтобы указать dbt, что его таблицы находятся в LRC. После этого dbt использует имя из четырёх частей и опускает предложение подключения и параметр `table_format`, поскольку BigQuery не принимает их для таблиц LRC.
 
-### Prerequisites
+### Предварительные требования
 
-Create the LRC catalog and namespace before you run dbt. BigQuery has no SQL statement that creates them, so dbt can create only the table.
+Создайте каталог LRC и пространство имён перед запуском dbt. В BigQuery нет SQL-инструкции для их создания, поэтому dbt может создать только таблицу.
 
-Because of this, dbt attempts to create the namespace on every run against an LRC catalog, and BigQuery rejects it with the following warning:
+Из-за этого dbt при каждом запуске с каталогом LRC пытается создать пространство имён, а BigQuery отклоняет эту операцию со следующим предупреждением:
 
 ```shell
 [FailedToCreateDatabase (dbt1051)]: Failed to create schema 'sales_catalog.analytics' in database
@@ -247,11 +247,11 @@ Because of this, dbt attempts to create the namespace on every run against an LR
 Invalid project ID 'my_project.sales_catalog'.
 ```
 
-Expect this warning &mdash; it doesn't fail the run. As long as the catalog and namespace exist, dbt creates the table.
+Это ожидаемое предупреждение &mdash; оно не приводит к сбою запуска. Если каталог и пространство имён существуют, dbt создаёт таблицу.
 
-### LRC example
+### Пример LRC
 
-1. Add a catalog with `lakehouse_catalog` set. An LRC catalog doesn't need `external_volume` or `file_format`.
+1. Добавьте каталог с заданным `lakehouse_catalog`. Каталогу LRC не нужны `external_volume` и `file_format`.
 
 <File name="catalogs.yml">
 
@@ -267,7 +267,7 @@ catalogs:
 
 </File>
 
-2. Configure a model with `catalog_name`:
+2. Настройте модель с помощью `catalog_name`:
 
 <File name="my_lrc_model.sql">
 
@@ -286,7 +286,7 @@ select * from {{ ref('jaffle_shop_customers') }}
 
 </File>
 
-3. Run the model: `dbt run -s my_lrc_model`. dbt generates the following DDL:
+3. Запустите модель: `dbt run -s my_lrc_model`. dbt сгенерирует следующий DDL:
 
 ```sql
 create or replace table `my_project`.`sales_catalog.analytics`.`my_lrc_model`
@@ -296,8 +296,8 @@ create or replace table `my_project`.`sales_catalog.analytics`.`my_lrc_model`
   )
 ```
 
-### LRC limitations
+### Ограничения LRC
 
-BigQuery doesn't expose LRC tables through `INFORMATION_SCHEMA`, so your queries against those views don't return them. This doesn't affect `dbt docs generate`.
+BigQuery не предоставляет сведения о таблицах LRC через `INFORMATION_SCHEMA`, поэтому ваши запросы к этим представлениям не возвращают такие таблицы. Это не влияет на `dbt docs generate`.
 
 </VersionBlock>

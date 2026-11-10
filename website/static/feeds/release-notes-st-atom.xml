@@ -1,6 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>dbt single-tenant release notes</title>
-  <link href="https://docs.getdbt.com/docs/dbt-versions/dbt-platform-release-notes-gen"/>
-  <subtitle>dbt provides release notes for single-tenant so you can see recent and historical changes.</subtitle>
+    <id>https://docs.getdbt.tech</id>
+    <title>dbt single-tenant release notes</title>
+    <updated>2026-11-03T23:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen"/>
+    <link rel="self" href="https://docs.getdbt.tech/feeds/release-notes-st-atom.xml"/>
+    <subtitle>dbt provides release notes for single-tenant so you can see recent and historical changes.</subtitle>
+    <logo>https://www.getdbt.com/ui/img/blog/dbt-card.jpg</logo>
+    <icon>https://docs.getdbt.tech/img/favicon.svg</icon>
+    <rights>Copyright © 2026 dbt Labs™, Inc. All Rights Reserved.</rights>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 4 ноября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#november-4-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#november-4-2026"/>
+        <updated>2026-11-03T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 4 ноября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 28 октября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-28-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-28-2026"/>
+        <updated>2026-10-27T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 28 октября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 21 октября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-21-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-21-2026"/>
+        <updated>2026-10-20T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 21 октября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 19 октября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-19-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-19-2026"/>
+        <updated>2026-10-18T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 19 октября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 14 октября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-14-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-14-2026"/>
+        <updated>2026-10-13T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 14 октября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 7 октября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-7-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#october-7-2026"/>
+        <updated>2026-10-06T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 7 октября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 30 сентября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-30-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-30-2026"/>
+        <updated>2026-09-29T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 30 сентября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 23 сентября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-23-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-23-2026"/>
+        <updated>2026-09-22T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 23 сентября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 9 сентября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-9-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-9-2026"/>
+        <updated>2026-09-08T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 9 сентября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 2 сентября 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-2-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#september-2-2026"/>
+        <updated>2026-09-01T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 2 сентября 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 26 августа 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-26-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-26-2026"/>
+        <updated>2026-08-25T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 26 августа 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 19 августа 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-19-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-19-2026"/>
+        <updated>2026-08-18T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 19 августа 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 12 августа 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-12-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-12-2026"/>
+        <updated>2026-08-11T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 12 августа 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 5 августа 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-5-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#august-5-2026"/>
+        <updated>2026-08-04T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 5 августа 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 29 июля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-29-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-29-2026"/>
+        <updated>2026-07-28T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 29 июля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 22 июля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-22-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-22-2026"/>
+        <updated>2026-07-21T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 22 июля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 15 июля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-15-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-15-2026"/>
+        <updated>2026-07-14T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 15 июля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 13 июля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-13-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-13-2026"/>
+        <updated>2026-07-12T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 13 июля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 8 июля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-8-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-8-2026"/>
+        <updated>2026-07-07T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 8 июля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 1 июля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-1-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#july-1-2026"/>
+        <updated>2026-06-30T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 1 июля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 24 июня 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-24-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-24-2026"/>
+        <updated>2026-06-23T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 24 июня 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 17 июня 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-17-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-17-2026"/>
+        <updated>2026-06-16T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 17 июня 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 10 июня 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-10-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-10-2026"/>
+        <updated>2026-06-09T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 10 июня 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 3 июня 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-3-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#june-3-2026"/>
+        <updated>2026-06-02T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 3 июня 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 27 мая 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-27-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-27-2026"/>
+        <updated>2026-05-26T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 27 мая 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 20 мая 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-20-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-20-2026"/>
+        <updated>2026-05-19T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 20 мая 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 13 мая 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-13-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-13-2026"/>
+        <updated>2026-05-12T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 13 мая 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 6 мая 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-6-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#may-6-2026"/>
+        <updated>2026-05-05T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 6 мая 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 29 апреля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-29-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-29-2026"/>
+        <updated>2026-04-28T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 29 апреля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 22 апреля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-22-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-22-2026"/>
+        <updated>2026-04-21T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 22 апреля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 15 апреля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-15-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-15-2026"/>
+        <updated>2026-04-14T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 15 апреля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 8 апреля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-8-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-8-2026"/>
+        <updated>2026-04-07T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 8 апреля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 1 апреля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-1-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#april-1-2026"/>
+        <updated>2026-03-31T22:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 1 апреля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 25 марта 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-25-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-25-2026"/>
+        <updated>2026-03-24T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 25 марта 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 18 марта 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-18-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-18-2026"/>
+        <updated>2026-03-17T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 18 марта 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 11 марта 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-11-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-11-2026"/>
+        <updated>2026-03-10T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 11 марта 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 4 марта 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-4-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#march-4-2026"/>
+        <updated>2026-03-03T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 4 марта 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 25 февраля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-25-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-25-2026"/>
+        <updated>2026-02-24T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 25 февраля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 18 февраля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-18-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-18-2026"/>
+        <updated>2026-02-17T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 18 февраля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 11 февраля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-11-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-11-2026"/>
+        <updated>2026-02-10T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 11 февраля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 4 февраля 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-4-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#february-4-2026"/>
+        <updated>2026-02-03T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 4 февраля 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 28 января 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-28-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-28-2026"/>
+        <updated>2026-01-27T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 28 января 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 21 января 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-21-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-21-2026"/>
+        <updated>2026-01-20T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 21 января 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 14 января 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-14-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-14-2026"/>
+        <updated>2026-01-13T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 14 января 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 7 января 2026 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-7-2026</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#january-7-2026"/>
+        <updated>2026-01-06T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 7 января 2026 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 24 декабря 2025 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-24-2025</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-24-2025"/>
+        <updated>2025-12-23T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 24 декабря 2025 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 17 декабря 2025 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-17-2025</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-17-2025"/>
+        <updated>2025-12-16T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 17 декабря 2025 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 10 декабря 2025 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-10-2025</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-10-2025"/>
+        <updated>2025-12-09T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 10 декабря 2025 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[dbt single-tenant release notes — 3 декабря 2025 г.]]></title>
+        <id>https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-3-2025</id>
+        <link href="https://docs.getdbt.tech/docs/dbt-versions/dbt-platform-release-notes-gen#december-3-2025"/>
+        <updated>2025-12-02T23:00:00.000Z</updated>
+        <summary type="html"><![CDATA[New dbt single-tenant release notes for 3 декабря 2025 г.. Visit the page to see what's new, updated, and fixed.]]></summary>
+    </entry>
 </feed>

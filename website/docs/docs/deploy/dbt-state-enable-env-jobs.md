@@ -1,67 +1,67 @@
 ---
-title: "Enabling dbt State on environments and jobs"
-sidebar_label: "Enable on environments and jobs"
-description: "Enable dbt State on deployment environments and individual jobs in dbt platform."
+title: "Включение dbt State для сред и заданий"
+sidebar_label: "Включение для сред и заданий"
+description: "Включите dbt State для сред развертывания и отдельных заданий на платформе dbt."
 id: "dbt-state-enable-env-jobs"
 tags: ['dbt State']
 availability: everywhere_usage
 ---
 
-# Enabling dbt State on environments and jobs
+# Включение dbt State для сред и заданий
 
-Learn how to enable [dbt State](/docs/deploy/dbt-state-about) on deployment environments and individual jobs. This option is only visible if dbt State is [enabled on your account](/docs/deploy/dbt-state-setup).
+Узнайте, как включить [dbt State](/docs/deploy/dbt-state-about) для сред развертывания и отдельных заданий. Эта опция отображается только в том случае, если dbt State [включен для вашей учетной записи](/docs/deploy/dbt-state-setup).
 
-## Enabling dbt State on environments
+## Включение dbt State для сред {#enabling-dbt-state-on-environments}
 
-You can enable [dbt State](/docs/deploy/dbt-state-about) at the environment level, allowing jobs in that environment to inherit the setting automatically.
+Вы можете включить [dbt State](/docs/deploy/dbt-state-about) на уровне среды, чтобы задания в этой среде автоматически наследовали эту настройку.
 
-When you enable dbt State on a deployment environment (production, staging, or general):
-- New jobs default to **Inherited from environment** and have dbt State enabled without any additional configuration.
-- Existing jobs are not automatically updated. You must [configure each job manually](#enabling-dbt-state-on-individual-jobs).
+При включении dbt State для среды развертывания (production, staging или general):
+- Для новых заданий по умолчанию выбирается значение **Inherited from environment**, и dbt State включается без дополнительной настройки.
+- Существующие задания не обновляются автоматически. Необходимо [настроить каждое задание вручную](#enabling-dbt-state-on-individual-jobs).
 
-<!-- TODO (ORC-4324): When this ships, replace with:
-- Existing jobs with **dbt State** set to **Off** automatically switch to **Inherited from environment**, enabling dbt State for those jobs.
+<!-- TODO (ORC-4324): После выпуска этого изменения заменить на:
+- Существующие задания, у которых для **dbt State** выбрано значение **Off**, автоматически переключаются на **Inherited from environment**, что включает dbt State для этих заданий.
 -->
 
-To enable dbt State on a deployment environment:
+Чтобы включить dbt State для среды развертывания:
 
-1. Go to **Orchestration** > **Environments**.
-2. Select the environment you want to enable dbt State for.
-3. Click **Settings** > **Edit**.
-3. In the **dbt State** section, select **Enable dbt State**.
-5. Click **Save**.
+1. Перейдите в **Orchestration** > **Environments**.
+2. Выберите среду, для которой хотите включить dbt State.
+3. Нажмите **Settings** > **Edit**.
+3. В разделе **dbt State** выберите **Enable dbt State**.
+5. Нажмите **Save**.
 
-For development environments, refer to [Enabling dbt State in Studio](/docs/deploy/dbt-state-enable-studio).
+Для сред разработки см. раздел [Включение dbt State в Studio](/docs/deploy/dbt-state-enable-studio).
 
-## Enabling dbt State on individual jobs
+## Включение dbt State для отдельных заданий {#enabling-dbt-state-on-individual-jobs}
 
-dbt State is available on all job types: deploy, continuous integration (CI), and merge jobs. Each job has a **dbt State** dropdown in its execution settings with **On**, **Off**, or **Inherited from environment** options. New jobs default to **Inherited from environment** &mdash; no additional configuration needed as long as dbt State is enabled on the environment.
+dbt State доступен для всех типов заданий: развертывания, непрерывной интеграции (CI) и слияния. В настройках выполнения каждого задания есть раскрывающийся список **dbt State** со значениями **On**, **Off** и **Inherited from environment**. Для новых заданий по умолчанию выбирается значение **Inherited from environment** &mdash; дополнительная настройка не требуется, если dbt State включен для среды.
 
-Existing jobs default to **Off**. To follow the environment's setting, you must configure each job manually.
+Для существующих заданий по умолчанию выбрано значение **Off**. Чтобы они использовали настройку среды, необходимо настроить каждое задание вручную.
 
-<!-- TODO (ORC-4324): When this ships, replace with:
+<!-- TODO (ORC-4324): После выпуска этого изменения заменить на:
 
-dbt State is available on all job types: deploy, continuous integration (CI), and merge jobs. Each job has a **dbt State** dropdown in its execution settings with **On**, **Off**, or **Inherited from environment** options.
+dbt State доступен для всех типов заданий: развертывания, непрерывной интеграции (CI) и слияния. В настройках выполнения каждого задания есть раскрывающийся список **dbt State** со значениями **On**, **Off** и **Inherited from environment**.
 
-When you enable dbt State on a deployment environment:
-- New jobs default to **Inherited from environment** with dbt State enabled automatically.
-- Existing jobs with **dbt State** set to **Off** automatically switch to **Inherited from environment**, enabling dbt State for those jobs.
+При включении dbt State для среды развертывания:
+- Для новых заданий по умолчанию выбирается значение **Inherited from environment**, и dbt State включается автоматически.
+- Существующие задания, у которых для **dbt State** выбрано значение **Off**, автоматически переключаются на **Inherited from environment**, что включает dbt State для этих заданий.
 -->
 
-To enable dbt State on individual jobs:
+Чтобы включить dbt State для отдельных заданий:
 
-1. Go to **Orchestration** > **Jobs**.
-2. Select the job you want to enable dbt State for.
-3. Click **Settings** > **Edit**.
-4. In the **Execution settings** section, set the **dbt State** dropdown to **On** to enable it explicitly, or **Inherited from environment** to follow the environment's setting. If you select **Inherited from environment**, make sure dbt State is [enabled on the environment](#enabling-dbt-state-on-environments) first &mdash; otherwise, the job will inherit it as off.
-5. Click **Save**.
+1. Перейдите в **Orchestration** > **Jobs**.
+2. Выберите задание, для которого хотите включить dbt State.
+3. Нажмите **Settings** > **Edit**.
+4. В разделе **Execution settings** выберите в раскрывающемся списке **dbt State** значение **On**, чтобы явно включить эту функцию, или **Inherited from environment**, чтобы использовать настройку среды. Если вы выбираете **Inherited from environment**, сначала убедитесь, что dbt State [включен для среды](#enabling-dbt-state-on-environments) &mdash; иначе задание унаследует отключенное состояние.
+5. Нажмите **Save**.
 
 :::note
-dbt State and State-aware orchestration are mutually exclusive. Selecting **Inherited from environment** or **On** automatically clears the **State-aware orchestration** option, and enabling **State-aware orchestration** sets **dbt State** to **Off**.
+dbt State и State-aware orchestration являются взаимоисключающими функциями. При выборе **Inherited from environment** или **On** автоматически снимается флажок **State-aware orchestration**, а при включении **State-aware orchestration** для **dbt State** устанавливается значение **Off**.
 :::
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [Enable dbt State in Studio](/docs/deploy/dbt-state-enable-studio)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Включение dbt State в Studio](/docs/deploy/dbt-state-enable-studio)

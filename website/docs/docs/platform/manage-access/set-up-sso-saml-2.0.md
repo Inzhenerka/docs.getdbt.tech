@@ -438,7 +438,7 @@ src="/img/docs/dbt-platform/dbt-platform-enterprise/okta/okta-5-instructions.png
 - SAML 2.0 Endpoint (HTTP)
 - X.509 Certificate (требуется формат PEM)
   <!-- vale off -->
-    - <Expandable alt_header="Пример формата PEM" >
+    - <Expandable alt_header="Пример формата PEM"  anchor_id="pem-details-2">
       ```text
       -----BEGIN CERTIFICATE-----
       MIIC8DCCAdigAwIBAgIQSANTIKwxA1221kqhkiG9w0dbtLabsBAQsFADA0MTIwMAYDVQQD

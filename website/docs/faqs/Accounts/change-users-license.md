@@ -1,5 +1,5 @@
 ---
-title: How do I change a user license type to read-only in dbt?
+title: "Как изменить тип лицензии пользователя dbt на доступ только для чтения?"
 description: "Изменение типа лицензии пользователя на read-only в dbt"
 sidebar_label: 'Как изменить тип лицензии пользователя на read-only'
 id: change-user-license

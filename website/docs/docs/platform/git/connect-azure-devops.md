@@ -1,5 +1,5 @@
 ---
-title: "Connect to Azure DevOps"
+title: "Подключение к Azure DevOps"
 id: "connect-azure-devops"
 pagination_next: "docs/platform/git/setup-service-principal"
 availability:
@@ -8,44 +8,44 @@ availability:
   minPlan: enterprise
 ---
 
-# Connect to Azure DevOps
+# Подключение к Azure DevOps
 
 <Snippet path="available-enterprise-tier-only" />
 
 
-## About Azure DevOps and dbt
+## Об Azure DevOps и dbt
 
-Connect your Azure DevOps cloud account in <Constant name="dbt" /> to unlock new product experiences:
+Подключите свою облачную учетную запись Azure DevOps к <Constant name="dbt" />, чтобы воспользоваться новыми возможностями:
 
-- Import new Azure DevOps repos with a couple clicks during <Constant name="dbt" /> project setup.
-- Clone repos using HTTPS rather than SSH
-- Enforce user authorization with OAuth 2.0.
-- Carry Azure DevOps user repository permissions (read / write access) through to <Constant name="studio_ide" /> or <Constant name="dbt" /> CLI's git actions.
-- Trigger Continuous integration (CI) builds when pull requests are opened in Azure DevOps.
+- Импортируйте новые репозитории Azure DevOps в несколько кликов при настройке проекта <Constant name="dbt" />.
+- Клонируйте репозитории по HTTPS вместо SSH
+- Обеспечивайте авторизацию пользователей с помощью OAuth 2.0.
+- Применяйте права пользователей Azure DevOps на доступ к репозиториям (чтение / запись) при выполнении операций git в <Constant name="studio_ide" /> или CLI <Constant name="dbt" />.
+- Запускайте сборки непрерывной интеграции (CI) при открытии запросов на слияние (pull request) в Azure DevOps.
 
 
-Currently, there are multiple methods for integrating Azure DevOps with <Constant name="dbt" />. The following methods are available to all accounts: 
+В настоящее время существует несколько способов интеграции Azure DevOps с <Constant name="dbt" />. Следующие способы доступны для всех учетных записей: 
 
-- [**Service principal (recommended)**](/docs/platform/git/setup-service-principal)
-- [**Service user (legacy)**](/docs/platform/git/setup-service-user)
-- [**Service user to service principal migration**](/docs/platform/git/setup-service-principal#migrate-to-service-principal)
+- [**Субъект-служба (рекомендуется)**](/docs/platform/git/setup-service-principal)
+- [**Служебный пользователь (устаревший способ)**](/docs/platform/git/setup-service-user)
+- [**Переход со служебного пользователя на субъект-службу**](/docs/platform/git/setup-service-principal#migrate-to-service-principal)
 
-No matter which approach you take, you will need admins for <Constant name="dbt" />, Azure Entra ID, and Azure DevOps to complete the integration. For more information, follow the setup guide that's right for you. 
+Независимо от выбранного подхода для завершения интеграции потребуется участие администраторов <Constant name="dbt" />, Azure Entra ID и Azure DevOps. Подробные сведения см. в подходящем вам руководстве по настройке. 
 
-## Troubleshooting
+## Устранение неполадок
 
-<Expandable alt_header="CI jobs don't trigger on pull requests" >
+<Expandable alt_header="Задания CI не запускаются при открытии запросов на слияние" >
 
-If continuous integration (CI) jobs aren't triggered when you open pull requests in Azure DevOps, and you don't see an error in <Constant name="dbt" /> or Azure DevOps, try these checks:
+Если задания непрерывной интеграции (CI) не запускаются при открытии запросов на слияние в Azure DevOps, а в <Constant name="dbt" /> и Azure DevOps не отображаются ошибки, выполните следующие проверки:
 
-- Confirm the Azure DevOps service hooks for the repository still exist and point to your <Constant name="dbt" /> account.
-- Confirm your service principal or service user still has access to the repository.
+- Убедитесь, что сервисные хуки Azure DevOps для репозитория по-прежнему существуют и указывают на вашу учетную запись <Constant name="dbt" />.
+- Убедитесь, что субъект-служба или служебный пользователь по-прежнему имеет доступ к репозиторию.
 
-If those look fine, disconnect and reconnect the repository:
+Если все в порядке, отключите репозиторий и подключите его заново:
 
-1. From **Account settings**, select **Projects**, then select the project.
-2. Select the **Repository** link, then **Edit**, then **Disconnect**.
-3. Select **Confirm Disconnect**.
-4. Select **Configure Repository** and connect the same Azure DevOps repository.
+1. В разделе **Account settings** выберите **Projects**, затем выберите проект.
+2. Выберите ссылку **Repository**, затем **Edit**, затем **Disconnect**.
+3. Выберите **Confirm Disconnect**.
+4. Выберите **Configure Repository** и подключите тот же репозиторий Azure DevOps.
 
 </Expandable>

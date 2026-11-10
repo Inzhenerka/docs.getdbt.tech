@@ -18,7 +18,7 @@ availability: all_users
 
 После того как time spine создан, его необходимо настроить в YAML, чтобы сообщить MetricFlow, как именно его использовать.
 
-## Prerequisites {#prerequisites}
+## Предварительные требования {#prerequisites}
 MetricFlow требует, чтобы вы определили как минимум одну dbt-модель, которая предоставляет time spine, а затем указали (в YAML), какие столбцы должны использоваться для временных соединений. Это означает, что вам нужно:
 
 - Определите как минимум один [time spine](#example-time-spine-tables) с той гранулярностью, которая требуется для ваших метрик (например, дневной или почасовой). При необходимости вы также можете определить дополнительные таблицы с более крупной гранулярностью (например, месячной или годовой).
@@ -144,13 +144,13 @@ MetricFlow поддерживает гранулярности от миллис
 Следующие примеры показывают, как создавать таблицы time spine с разной гранулярностью:
 
 <!-- no toc -->
-- [Seconds](#seconds)
-- [Minutes](#minutes)
-- [Daily](#daily)
-- [Daily (BigQuery)](#daily-bigquery)
-- [Hourly](#hourly)
+- [Секунды](#seconds)
+- [Минуты](#minutes)
+- [Дни](#daily)
+- [Дни (BigQuery)](#daily-bigquery)
+- [Часы](#hourly)
 
-### Seconds {#seconds}
+### Секунды {#seconds}
 
 <File name="metricflow_time_spine.sql">
 
@@ -179,7 +179,7 @@ select * from final
 ```
 </File>
 
-### Minutes {#minutes}
+### Минуты {#minutes}
 
 <File name="metricflow_time_spine.sql">
 
@@ -208,7 +208,7 @@ select * from final
 
 </File>
 
-### Daily {#daily}
+### Дни {#daily}
 
 <File name="metricflow_time_spine.sql">
 

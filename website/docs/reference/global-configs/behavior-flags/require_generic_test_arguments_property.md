@@ -1,26 +1,26 @@
 ---
-title: "Generic test arguments property"
+title: "Свойство arguments для универсальных тестов"
 id: "require_generic_test_arguments_property"
-sidebar_label: "require generic test arguments property"
+sidebar_label: "Обязательное свойство arguments для универсальных тестов"
 ---
 
-:::info This flag has reached maturity
+:::info Этот флаг перешёл в стабильную фазу
 
-The default value is now `true`. To preserve the previous behavior, set this flag to `false` in your `dbt_project.yml`.
+Значение по умолчанию теперь — `true`. Чтобы сохранить прежнее поведение, установите для этого флага значение `false` в файле `dbt_project.yml`.
 
 :::
 
-| require_generic_test_arguments_property | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
+| require_generic_test_arguments_property | <Constant name="dbt" /> **v1 Последняя версия** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2025.07 | 1.10.5 |
-| Matured (default → `true`) | 2025.08 | 1.10.8 |
-| Removed | — | — |
+| Введён | 2025.07 | 1.10.5 |
+| Перешёл в стабильную фазу (по умолчанию → `true`) | 2025.08 | 1.10.8 |
+| Удалён | — | — |
 
-dbt supports parsing key-value arguments that are inputs to generic tests when specified under the `arguments` property. In the past, dbt didn't support a way to clearly disambiguate between properties that were inputs to generic tests and framework configurations, and only accepted arguments as top-level properties.
+dbt поддерживает разбор аргументов в виде пар «ключ — значение», передаваемых универсальным тестам, если они указаны в свойстве `arguments`. Ранее в dbt не было способа однозначно разграничить свойства, передаваемые универсальным тестам в качестве входных аргументов, и настройки фреймворка; аргументы принимались только как свойства верхнего уровня.
 
-If you are on an older <Constant name="core" /> version where the flag is `false`, dbt will recognize the `arguments` property but raise the `ArgumentsPropertyInGenericTestDeprecation` warning.
+Если вы используете более старую версию <Constant name="core" />, в которой флаг имеет значение `false`, dbt распознает свойство `arguments`, но выдаст предупреждение `ArgumentsPropertyInGenericTestDeprecation`.
 
-Here's an example using the new `arguments` property:
+Ниже приведён пример использования нового свойства `arguments`:
 
 <File name='model.yml'>
 
@@ -35,7 +35,7 @@ models:
 
 </File>
 
-Here's an example using the alternative `test_name` format:
+Ниже приведён пример использования альтернативного формата `test_name`:
 
 <File name='model.yml'>
 
@@ -53,11 +53,11 @@ models:
 
 </File>
 
-With this flag enabled, dbt will:
-- Parse any key-value pairs under `arguments` in generic tests as inputs to the generic test macro.
-- Raise a `MissingArgumentsPropertyInGenericTestDeprecation` warning if additional non-config arguments are specified outside of the `arguments` property.
+Когда этот флаг включён, dbt будет:
+- Разбирать все пары «ключ — значение» в свойстве `arguments` универсальных тестов как входные аргументы макроса универсального теста.
+- Выдавать предупреждение `MissingArgumentsPropertyInGenericTestDeprecation`, если дополнительные аргументы, не относящиеся к настройкам, указаны вне свойства `arguments`.
 
-To preserve the previous behavior:
+Чтобы сохранить прежнее поведение:
 
 <File name='dbt_project.yml'>
 

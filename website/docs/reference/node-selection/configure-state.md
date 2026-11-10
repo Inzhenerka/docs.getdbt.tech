@@ -18,7 +18,7 @@ State и [defer](/reference/node-selection/defer) можно задавать к
 - Артефакты, передаваемые через `--state`, должны иметь версии схем, совместимые с текущей версией dbt.
 - Это мощные и достаточно сложные возможности. Рекомендуем ознакомиться с [известными оговорками и ограничениями](/reference/node-selection/state-comparison-caveats), связанными со сравнением состояний.
 
-:::warning Syntax deprecated
+:::warning Синтаксис устарел
 
 В [dbt v1.5](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5#behavior-changes) мы объявили устаревшим исходный синтаксис для state (`DBT_ARTIFACT_STATE_PATH`) и defer (`DBT_DEFER_TO_STATE`). Хотя dbt сохраняет обратную совместимость со старым синтаксисом, мы удалим его в одном из будущих выпусков, который пока не определён.
 
@@ -103,7 +103,7 @@ dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
 </VersionBlock>
 Дополнительные примеры команд приведены в разделе [Советы по рабочим процессам](/best-practices/best-practice-workflows#pro-tips-for-workflows).
 
-Больше примеров команд можно найти в разделе [Pro-tips for workflows](/best-practices/best-practice-workflows#pro-tips-for-workflows).
+Другие примеры команд см. в разделе [Советы по рабочим процессам](/best-practices/best-practice-workflows#pro-tips-for-workflows).
 
 ## Связанные материалы {#related-docs}
 - [О state в dbt](/reference/node-selection/state-selection)

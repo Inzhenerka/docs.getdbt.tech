@@ -1,12 +1,12 @@
 ---
-title: How does dbt State calculate that a model has changed?
-description: "Learn how dbt State determines whether a model has meaningfully changed."
-sidebar_label: 'How do you calculate that a model has changed?'
+title: Как dbt State определяет, что модель изменилась?
+description: "Узнайте, как dbt State определяет, произошли ли в модели существенные изменения."
+sidebar_label: 'Как определяется, что модель изменилась?'
 id: model-change-calculation
 ---
 
-dbt State only considers substantial changes to a model. Because dbt State understands the entire lineage of your models, it can see through things like whitespace and aliases to determine whether a model is the same or different across environments.
+dbt State учитывает только существенные изменения модели. Поскольку dbt State понимает всю цепочку зависимостей ваших моделей, он может учитывать такие особенности, как пробельные символы и псевдонимы, чтобы определить, одинакова ли модель в разных окружениях или различается.
 
-By default, dbt State compares rendered SQL to detect code changes. Any change to the rendered SQL &mdash; including from non-deterministic macros or environment variables &mdash; triggers a rebuild.
+По умолчанию dbt State сравнивает SQL-код, полученный после рендеринга, для обнаружения изменений кода. Любое изменение такого SQL-кода &mdash; в том числе вызванное недетерминированными макросами или переменными окружения &mdash; приводит к пересборке.
 
-You can enable [`compare_unrendered_code`](/reference/resource-configs/compare-unrendered-code) to also check the Jinja template (unrendered code). When enabled, a rebuild only occurs when both the template _and_ the rendered SQL have changed. Non-deterministic values (for example, `{{ env_var('AIRFLOW_RUN_ID') }}` or a macro that calls `uuid()`) don't trigger rebuilds as long as the template itself is unchanged, which helps avoid unnecessary warehouse compute costs.
+Вы можете включить [`compare_unrendered_code`](/reference/resource-configs/compare-unrendered-code), чтобы дополнительно проверять шаблон Jinja (код до рендеринга). При включённой настройке пересборка происходит только тогда, когда изменились _и_ шаблон, _и_ SQL-код после рендеринга. Недетерминированные значения (например, `{{ env_var('AIRFLOW_RUN_ID') }}` или макрос, вызывающий `uuid()`) не приводят к пересборке, пока сам шаблон остаётся неизменным, что помогает избежать ненужных затрат на вычисления в хранилище данных.

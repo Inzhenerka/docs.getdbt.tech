@@ -1,8 +1,8 @@
 ---
-title: "Semantic model properties"
+title: "Свойства семантических моделей"
 id: semantic-model-properties
-sidebar_label: "Semantic model properties"
-description: "Complete property reference for dbt Semantic Layer semantic models: name, model, entities, dimensions, measures, and configuration."
+sidebar_label: "Свойства семантических моделей"
+description: "Полный справочник свойств семантических моделей dbt Semantic Layer: name, model, entities, dimensions, measures и конфигурация."
 keywords:
   - dbt semantic layer
   - semantic model
@@ -10,7 +10,7 @@ keywords:
   - MetricFlow
 ---
 
-Semantic models define the structure that MetricFlow uses to build the semantic graph. In the *latest spec*, they can be declared as a top-level `semantic_model:` block on a [model](/reference/model-properties). In the *legacy spec*, we used standalone YAML. For more information, refer to [Semantic models](/docs/build/semantic-models).
+Семантические модели определяют структуру, которую MetricFlow использует для построения семантического графа. В *новой спецификации* их можно объявлять в блоке `semantic_model:` верхнего уровня в [модели](/reference/model-properties). В *устаревшей спецификации* использовались отдельные YAML-файлы. Подробнее см. в разделе [Семантические модели](/docs/build/semantic-models).
 
 import LatestYamlSpecAvailability from '/snippets/_latest-yaml-spec-availability-versioned.md';
 
@@ -18,50 +18,50 @@ import LatestYamlSpecAvailability from '/snippets/_latest-yaml-spec-availability
 
 <VersionBlock firstVersion="1.12">
 
-## Latest spec (model YAML)
+## Новая спецификация (YAML модели)
 
-In the latest spec, a model defines a semantic model with the `semantic_model` key, and that value can be:
+В новой спецификации модель определяет семантическую модель с помощью ключа `semantic_model`, значение которого может быть:
 
-- **`true` or `false`**: Boolean shorthand. `true` enables a semantic model and uses the **model’s name** as the semantic model name (and other defaults where fields are unset). `false` turns off the semantic model for this model.
-- A **mapping**: An object with `enabled`, optional `name`, `group`, `config`, and so on, as in the table below.
+- **`true` или `false`**: сокращённая запись с логическим значением. `true` включает семантическую модель и использует **имя модели** в качестве имени семантической модели (а также другие значения по умолчанию для незаданных полей). `false` отключает семантическую модель для этой модели.
+- **Сопоставлением**: объектом с ключами `enabled`, необязательными `name`, `group`, `config` и так далее, как показано в таблице ниже.
 
-Dimensions and entities are defined with a column.
+Измерения и сущности определяются на уровне столбца.
 
-### Available semantic model properties (latest spec)
+### Доступные свойства семантической модели (новая спецификация)
 
-| Property / location | Type | Required | Description |
+| Свойство / расположение | Тип | Обязательно | Описание |
 |---------------------|------|----------|-------------|
-| `semantic_model` | boolean or object | When using semantic layer for a model | `true` / `false`, or a mapping. When using a mapping, optional keys are in the following rows. |
-| `semantic_model.enabled` | boolean | No (mapping form) | Defaults to `true` when `semantic_model` is a mapping. Set `false` to disable. Omit when using `semantic_model: true` or `false`. |
-| `semantic_model.name` | string | No | Unique name; defaults to model name. Avoid double underscores (`__`) in the name; see [Name](/docs/build/semantic-models#name) in **Semantic models**. |
-| `semantic_model.group` | string | No | Group for organization. |
-| `semantic_model.config` | object | No | Supports [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [enabled](/reference/resource-configs/enabled). |
-| `agg_time_dimension` (top-level) | string | Yes | Default time dimension for metrics; references dimension name. |
-| `primary_entity` (top-level) | string | No | Primary entity name when no column has `type: primary`. |
-| `columns` | array | Yes | Column list; each can have `entity:` or `dimension:` block; time dimensions have `granularity` on the column. |
-| `derived_semantics` (top-level) | object | No | Optional dimensions and entities with `expr`. |
-| `metrics` (top-level) | array | No | Metrics derived from this semantic model; list is alongside (not under) `semantic_model`. |
+| `semantic_model` | boolean или object | При использовании семантического слоя для модели | `true` / `false` или сопоставление. Необязательные ключи сопоставления приведены в следующих строках. |
+| `semantic_model.enabled` | boolean | Нет (при записи в виде сопоставления) | По умолчанию `true`, если `semantic_model` — сопоставление. Установите `false` для отключения. Не указывайте при использовании `semantic_model: true` или `false`. |
+| `semantic_model.name` | string | Нет | Уникальное имя; по умолчанию — имя модели. Избегайте двойных подчёркиваний (`__`) в имени; см. [Имя](/docs/build/semantic-models#name) в разделе **Семантические модели**. |
+| `semantic_model.group` | string | Нет | Группа для организации ресурсов. |
+| `semantic_model.config` | object | Нет | Поддерживает [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [enabled](/reference/resource-configs/enabled). |
+| `agg_time_dimension` (верхний уровень) | string | Да | Временное измерение по умолчанию для метрик; ссылается на имя измерения. |
+| `primary_entity` (верхний уровень) | string | Нет | Имя первичной сущности, если ни у одного столбца не задано `type: primary`. |
+| `columns` | array | Да | Список столбцов; каждый может содержать блок `entity:` или `dimension:`; для временных измерений на уровне столбца задаётся `granularity`. |
+| `derived_semantics` (верхний уровень) | object | Нет | Необязательные измерения и сущности с `expr`. |
+| `metrics` (верхний уровень) | array | Нет | Метрики, получаемые из этой семантической модели; список расположен на одном уровне с `semantic_model`, а не внутри него. |
 
-### Minimal structure example
+### Пример минимальной структуры
 
 ```yaml
 models:
   - name: my_model
     semantic_model:
-      enabled: true    # explicit; defaults to true if omitted in mapping form
-      name: optional_override   # optional; defaults to model name
+      enabled: true    # задано явно; по умолчанию true, если опущено при записи в виде сопоставления
+      name: optional_override   # необязательно; по умолчанию — имя модели
       group: optional_group
       config:
         meta: {}
-    agg_time_dimension: my_time_dimension   # top-level; references dimension name
-    primary_entity: my_primary_entity       # optional; use when no column has type: primary
+    agg_time_dimension: my_time_dimension   # верхний уровень; ссылается на имя измерения
+    primary_entity: my_primary_entity       # необязательно; используйте, если ни у одного столбца нет type: primary
     columns:
       - name: my_entity_column
         entity:
           type: primary | foreign | unique | natural
           name: optional_entity_name
       - name: my_time_dimension_column
-        granularity: day    # required for time dimensions
+        granularity: day    # обязательно для временных измерений
         dimension:
           type: time
           name: my_time_dimension
@@ -69,7 +69,7 @@ models:
         dimension:
           type: categorical
           name: my_categorical_dimension
-    derived_semantics:    # optional
+    derived_semantics:    # необязательно
       dimensions: []
       entities: []
     metrics:
@@ -79,16 +79,16 @@ models:
         expr: optional_expr
 ```
 
-### Example with boolean instead of mapping
+### Пример с логическим значением вместо сопоставления
 
-Same layout as previous example, but with a boolean instead of a `semantic_model:` mapping (semantic model name defaults to the model name):
+Структура такая же, как в предыдущем примере, но вместо сопоставления `semantic_model:` используется логическое значение (имя семантической модели по умолчанию совпадает с именем модели):
 
 ```yaml
 models:
   - name: my_model
     semantic_model: true
     agg_time_dimension: my_time_dimension
-    primary_entity: my_primary_entity       # optional
+    primary_entity: my_primary_entity       # необязательно
     columns:
       - name: my_entity_column
         entity:
@@ -104,32 +104,32 @@ models:
         agg: count
 ```
 
-For the latest spec (model-embedded form with top-level `semantic_model:` and `metrics:` on the model), see [Semantic models](/docs/build/semantic-models).
+Подробнее о новой спецификации (записи внутри модели с ключами `semantic_model:` и `metrics:` на верхнем уровне модели) см. в разделе [Семантические модели](/docs/build/semantic-models).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.11">
 
-## Legacy spec
+## Устаревшая спецификация
 
-Semantic models are defined in a top-level `semantic_models:` list in standalone YAML, with `model`, `defaults`, `entities`, `dimensions`, and `measures`.
+Семантические модели определяются в списке `semantic_models:` верхнего уровня в отдельном YAML-файле с ключами `model`, `defaults`, `entities`, `dimensions` и `measures`.
 
-### Available semantic model properties (legacy spec)
+### Доступные свойства семантической модели (устаревшая спецификация)
 
-| Property | Type | Required | Description |
+| Свойство | Тип | Обязательно | Описание |
 |----------|------|----------|-------------|
-| name | string | Yes | Unique name for the semantic model. Avoid double underscores (`__`). |
-| description | string | No | Documentation for the semantic model. |
-| model | string | Yes | The dbt model reference (for example, `ref('my_model')`). |
-| defaults | object | Yes | Defaults; typically `agg_time_dimension`. |
-| entities | array | Yes | Join keys and type (primary, foreign, unique); each with `name`, `type`, optional `expr`. |
-| primary_entity | string | No | Name of the primary entity if not declared on an entity. |
-| dimensions | array | Yes | List of [dimension](/reference/dimension-properties) definitions (time or categorical). |
-| measures | array | No | List of measures (simple aggregations). |
-| label | string | No | Display name in downstream tools. |
-| config | object | No | Supports [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [enabled](/reference/resource-configs/enabled). |
+| name | string | Да | Уникальное имя семантической модели. Избегайте двойных подчёркиваний (`__`). |
+| description | string | Нет | Документация семантической модели. |
+| model | string | Да | Ссылка на модель dbt (например, `ref('my_model')`). |
+| defaults | object | Да | Значения по умолчанию; обычно `agg_time_dimension`. |
+| entities | array | Да | Ключи соединения и их типы (primary, foreign, unique); для каждого задаются `name`, `type` и необязательный `expr`. |
+| primary_entity | string | Нет | Имя первичной сущности, если оно не задано в объявлении сущности. |
+| dimensions | array | Да | Список определений [измерений](/reference/dimension-properties) (временных или категориальных). |
+| measures | array | Нет | Список мер (простых агрегаций). |
+| label | string | Нет | Отображаемое имя в инструментах, использующих эти данные. |
+| config | object | Нет | Поддерживает [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [enabled](/reference/resource-configs/enabled). |
 
-### Full structure
+### Полная структура
 
 ```yaml
 semantic_models:
@@ -145,7 +145,7 @@ semantic_models:
     dimensions:
       - name: <dimension_name>
         type: time | categorical
-        # ... see dimension-properties
+        # ... см. dimension-properties
     measures:
       - name: <measure_name>
         agg: sum | count | count_distinct | avg | min | max | ...
@@ -157,6 +157,6 @@ semantic_models:
       enabled: true | false
 ```
 
-For the latest spec (model-embedded form with top-level `semantic_model:` and `metrics:` on the model), see [Semantic models](/docs/build/semantic-models).
+Подробнее о новой спецификации (записи внутри модели с ключами `semantic_model:` и `metrics:` на верхнем уровне модели) см. в разделе [Семантические модели](/docs/build/semantic-models).
 
 </VersionBlock>

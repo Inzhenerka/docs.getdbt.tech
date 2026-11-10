@@ -1,8 +1,8 @@
 ---
-title: "Metric properties"
+title: "Свойства метрик"
 id: metric-properties
-sidebar_label: "Metric properties"
-description: "Property reference for Semantic Layer metrics: simple, cumulative, ratio, derived, and conversion."
+sidebar_label: "Свойства метрик"
+description: "Справочник свойств метрик семантического слоя: простых, накопительных, отношений, производных и конверсионных."
 keywords:
   - dbt semantic layer
   - metrics
@@ -10,10 +10,10 @@ keywords:
   - MetricFlow
 ---
 
-Metrics define measurable quantities that you can query through the <Constant name="semantic_layer" />. You define them in different places, depending on your <Constant name="dbt" /> version:
+Метрики определяют измеримые величины, которые можно запрашивать через <Constant name="semantic_layer" />. Место их определения зависит от версии <Constant name="dbt" />:
 
-- In a model using the *latest* YAML spec. Top-level `metrics:` list on a [model](/reference/model-properties) that has semantic modeling enabled, alongside `semantic_model:` and `columns:`. Available in the <Constant name="dbt_platform" /> **v1 Latest** release track and <Constant name="fusion_engine" />.
-- In the standalone *legacy* YAML spec.  Refer to [Creating metrics](/docs/build/metrics-overview) for more information.
+- В модели с использованием *новейшей* спецификации YAML. Список `metrics:` верхнего уровня в [модели](/reference/model-properties) с включённым семантическим моделированием, наряду с `semantic_model:` и `columns:`. Доступно в канале выпусков **v1 Latest** <Constant name="dbt_platform" /> и в <Constant name="fusion_engine" />.
+- В отдельном файле с использованием *устаревшей* спецификации YAML.  Подробнее см. в разделе [Создание метрик](/docs/build/metrics-overview).
 
 import LatestYamlSpecAvailability from '/snippets/_latest-yaml-spec-availability-versioned.md';
 
@@ -21,68 +21,68 @@ import LatestYamlSpecAvailability from '/snippets/_latest-yaml-spec-availability
 
 <VersionBlock firstVersion="1.12">
 
-## Latest spec (model YAML)
+## Новейшая спецификация (YAML модели)
 
-In the latest YAML spec, you can define metrics on a model that has semantic modeling enabled. Add a top-level `metrics` list alongside `semantic_model` and `columns` (metrics are not nested under `semantic_model`). Type-specific settings are top-level keys on each metric.
+В новейшей спецификации YAML метрики можно определять в модели с включённым семантическим моделированием. Добавьте список `metrics` верхнего уровня наряду с `semantic_model` и `columns` (метрики не вкладываются в `semantic_model`). Настройки, зависящие от типа, задаются ключами верхнего уровня в каждой метрике.
 
-### Available metric properties (latest spec)
+### Доступные свойства метрик (новейшая спецификация)
 
-| Property | Type | Required | Description |
+| Свойство | Тип | Обязательное | Описание |
 |----------|------|----------|-------------|
-| name | string | Yes | Unique metric name. Use lowercase letters, numbers, and underscores. |
-| type | string | Yes | One of: `simple`, `cumulative`, `ratio`, `derived`, `conversion`. |
-| description | string | No | Documentation for the metric. |
-| label | string | No | Display name in downstream tools. |
-| filter | string | No | MetricFlow filter expression (dimensions, entities, or other metrics). |
-| config | object | No | Supports [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [tags](/reference/resource-configs/tags), [enabled](/reference/resource-configs/enabled). |
+| name | string | Да | Уникальное имя метрики. Используйте строчные латинские буквы, цифры и символы подчёркивания. |
+| type | string | Да | Одно из значений: `simple`, `cumulative`, `ratio`, `derived`, `conversion`. |
+| description | string | Нет | Документация метрики. |
+| label | string | Нет | Отображаемое имя в инструментах, использующих метрику. |
+| filter | string | Нет | Выражение фильтра MetricFlow (измерения, сущности или другие метрики). |
+| config | object | Нет | Поддерживает [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [tags](/reference/resource-configs/tags), [enabled](/reference/resource-configs/enabled). |
 
-### Properties by metric type (latest spec)
+### Свойства по типам метрик (новейшая спецификация)
 
-| Metric type | Key properties |
+| Тип метрики | Основные свойства |
 |-------------|-----------------|
-| All | name, type, description, label, hidden, filter, config |
-| [Simple](/docs/build/simple) | agg, expr, time_granularity, agg_time_dimension, join_to_timespine, fill_nulls_with; optionally non_additive_dimension |
-| [Derived](/docs/build/derived) | expr, input_metrics (each with optional alias, filter, offset_window) |
-| [Ratio](/docs/build/ratio) | numerator, denominator (each a metric name or a dict with name, filter, alias) |
-| [Conversion](/docs/build/conversion) | entity, calculation, base_metric, conversion_metric, window; optional constant_properties |
-| [Cumulative](/docs/build/cumulative) | input_metric, window, grain_to_date, period_agg |
+| Все | name, type, description, label, hidden, filter, config |
+| [Простая](/docs/build/simple) | agg, expr, time_granularity, agg_time_dimension, join_to_timespine, fill_nulls_with; необязательное свойство non_additive_dimension |
+| [Производная](/docs/build/derived) | expr, input_metrics (для каждой метрики необязательные alias, filter, offset_window) |
+| [Отношение](/docs/build/ratio) | numerator, denominator (каждое значение — имя метрики или словарь с name, filter, alias) |
+| [Конверсионная](/docs/build/conversion) | entity, calculation, base_metric, conversion_metric, window; необязательное свойство constant_properties |
+| [Накопительная](/docs/build/cumulative) | input_metric, window, grain_to_date, period_agg |
 
-**Cross-model metrics:** Metrics under a model's `metrics:` list can only reference that semantic model. Metrics that depend on other semantic models (for example, cross-model cumulative, ratio, derived, or conversion) go in a top-level `metrics:` block (outside `models:`). This can live in the same YAML file or a separate file.
+**Метрики, использующие несколько моделей:** Метрики в списке `metrics:` модели могут ссылаться только на эту семантическую модель. Метрики, зависящие от других семантических моделей (например, накопительные, отношения, производные или конверсионные метрики, использующие несколько моделей), размещаются в блоке `metrics:` верхнего уровня (вне `models:`). Этот блок может находиться в том же файле YAML или в отдельном файле.
 
-**Note:** For the legacy spec, all metrics were defined in standalone YAML; there was no model-level `metrics:` list.
+**Примечание:** В устаревшей спецификации все метрики определялись в отдельных файлах YAML; списка `metrics:` на уровне модели не было.
 
-For the latest spec, refer to [Semantic models](/docs/build/semantic-models). For metric types, `type_params`, and more examples, refer to [Creating metrics](/docs/build/metrics-overview).
+Подробнее о новейшей спецификации см. в разделе [Семантические модели](/docs/build/semantic-models). О типах метрик, `type_params` и дополнительных примерах см. в разделе [Создание метрик](/docs/build/metrics-overview).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.11">
 
-## Legacy spec (standalone YAML)
+## Устаревшая спецификация (отдельный YAML)
 
-Metrics are defined in a top-level `metrics:` key in standalone YAML. Type-specific settings go under `type_params`.
+Метрики определяются в ключе `metrics:` верхнего уровня в отдельном файле YAML. Настройки, зависящие от типа, размещаются в `type_params`.
 
-### Available metric properties (legacy spec)
+### Доступные свойства метрик (устаревшая спецификация)
 
-| Property | Type | Required | Description |
+| Свойство | Тип | Обязательное | Описание |
 |----------|------|----------|-------------|
-| name | string | Yes | Unique metric name. Use lowercase letters, numbers, and underscores. |
-| type | string | Yes | One of: `simple`, `cumulative`, `ratio`, `derived`, `conversion`. |
-| type_params | object | Yes | Type-specific parameters; structure depends on `type`. See the type-specific list below. |
-| description | string | No | Documentation for the metric. |
-| label | string | Yes | Display name in downstream tools. |
-| filter | string | No | MetricFlow filter expression (dimensions, entities, or other metrics). |
-| config | object | No | Supports [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [tags](/reference/resource-configs/tags), [enabled](/reference/resource-configs/enabled). |
+| name | string | Да | Уникальное имя метрики. Используйте строчные латинские буквы, цифры и символы подчёркивания. |
+| type | string | Да | Одно из значений: `simple`, `cumulative`, `ratio`, `derived`, `conversion`. |
+| type_params | object | Да | Параметры, зависящие от типа; структура определяется значением `type`. См. список по типам ниже. |
+| description | string | Нет | Документация метрики. |
+| label | string | Да | Отображаемое имя в инструментах, использующих метрику. |
+| filter | string | Нет | Выражение фильтра MetricFlow (измерения, сущности или другие метрики). |
+| config | object | Нет | Поддерживает [meta](/reference/resource-configs/meta), [group](/reference/resource-configs/group), [tags](/reference/resource-configs/tags), [enabled](/reference/resource-configs/enabled). |
 
-### Type-specific parameters (legacy spec)
+### Параметры, зависящие от типа (устаревшая спецификация)
 
-The following parameters apply by metric type under `type_params`:
+Следующие параметры задаются в `type_params` в зависимости от типа метрики:
 
-- **[Simple](/docs/build/simple)**: `agg` (required), `expr`, `percentile`, `percentile_type`, `non_additive_dimension`, `agg_time_dimension`, `join_to_timespine`, `fill_nulls_with`
-- **[Cumulative](/docs/build/cumulative)**: `input_metric` (required), `window`, `grain_to_date`, `period_agg`
-- **[Derived](/docs/build/derived)**: `expr` (required), `input_metrics` (required)
-- **[Ratio](/docs/build/ratio)**: `numerator` (required), `denominator` (required)
-- **[Conversion](/docs/build/conversion)**: `entity` (required), `calculation` (required), `base_metric` (required), `conversion_metric` (required), `window`, `constant_properties`
+- **[Простая](/docs/build/simple)**: `agg` (обязательный), `expr`, `percentile`, `percentile_type`, `non_additive_dimension`, `agg_time_dimension`, `join_to_timespine`, `fill_nulls_with`
+- **[Накопительная](/docs/build/cumulative)**: `input_metric` (обязательный), `window`, `grain_to_date`, `period_agg`
+- **[Производная](/docs/build/derived)**: `expr` (обязательный), `input_metrics` (обязательный)
+- **[Отношение](/docs/build/ratio)**: `numerator` (обязательный), `denominator` (обязательный)
+- **[Конверсионная](/docs/build/conversion)**: `entity` (обязательный), `calculation` (обязательный), `base_metric` (обязательный), `conversion_metric` (обязательный), `window`, `constant_properties`
 
-For full `type_params` and examples per type, see [Creating metrics](/docs/build/metrics-overview), [Simple metrics](/docs/build/simple), [Cumulative metrics](/docs/build/cumulative), [Ratio metrics](/docs/build/ratio), [Derived metrics](/docs/build/derived), and [Conversion metrics](/docs/build/conversion).
+Полное описание `type_params` и примеры для каждого типа см. в разделах [Создание метрик](/docs/build/metrics-overview), [Простые метрики](/docs/build/simple), [Накопительные метрики](/docs/build/cumulative), [Метрики отношений](/docs/build/ratio), [Производные метрики](/docs/build/derived) и [Конверсионные метрики](/docs/build/conversion).
 
 </VersionBlock>

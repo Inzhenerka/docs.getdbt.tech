@@ -1,6 +1,6 @@
 ---
 title: latest_version_pointer
-description: "Use latest_version_pointer to automatically create a view pointing to the latest version of a versioned model."
+description: "Используйте latest_version_pointer для автоматического создания представления, указывающего на последнюю версию модели с версионированием."
 id: "latest_version_pointer"
 resource_types: [models]
 datatype: "{<dictionary>}"
@@ -16,9 +16,9 @@ import LatestVersionPointerCollision from '/snippets/_latest-version-pointer-col
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация SQL', value: 'config', },
   ]
 }>
 
@@ -74,17 +74,17 @@ models:
 
 </Tabs>
 
-## Definition
+## Определение
 
-:::note dbt platform on <Constant name="fusion" />
+:::note Платформа dbt на базе <Constant name="fusion" />
 
-In <Constant name="fusion" />, `latest_version_pointer` is enabled by default for all versioned models. If you have a versioned model with an explicit `alias` that matches the model's base name, you may see a `dbt1005` collision error. See [Naming collisions](#naming-collisions) below for how to resolve it.
+В <Constant name="fusion" /> параметр `latest_version_pointer` включён по умолчанию для всех моделей с версионированием. Если у модели с версионированием явно задан `alias`, совпадающий с базовым именем модели, может возникнуть ошибка конфликта имён `dbt1005`. Способы её устранения описаны ниже в разделе [Конфликты имён](#naming-collisions).
 
 :::
 
-The `latest_version_pointer` config creates a view named after a [versioned model's](/docs/mesh/govern/model-versions) base name (for example, `dim_customers`) that always points to the latest versioned relation (for example, `dim_customers_v2`). The view is created after the model with `is_latest_version = true` materializes successfully and is skipped for all other versions.
+Параметр `latest_version_pointer` создаёт представление с базовым именем [модели с версионированием](/docs/mesh/govern/model-versions) (например, `dim_customers`), которое всегда указывает на объект базы данных, соответствующий последней версии (например, `dim_customers_v2`). Представление создаётся после успешной материализации модели с `is_latest_version = true`; для всех остальных версий его создание пропускается.
 
-You can also enable this feature globally for all versioned models by setting the [`latest_version_pointer_enabled_by_default`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default) flag to `true` in `dbt_project.yml`:
+Вы также можете включить эту функцию глобально для всех моделей с версионированием, установив флаг [`latest_version_pointer_enabled_by_default`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default) в значение `true` в файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -95,28 +95,28 @@ flags:
 
 </File>
 
-`latest_version_pointer` accepts two optional sub-keys for per-model control:
+`latest_version_pointer` принимает два необязательных вложенных ключа для настройки отдельных моделей:
 
-| Key | Type | Default | Description |
+| Ключ | Тип | Значение по умолчанию | Описание |
 |-----|------|---------|-------------|
-| `enabled` | boolean | — | Enables or disables the pointer view for this model. Overrides the `latest_version_pointer_enabled_by_default` project flag when set; defers to the flag when not set. |
-| `alias` | string | Model base name | Custom name for the pointer view. Overrides the default base name. For more information, see [Alias customization](#alias-customization).|
+| `enabled` | boolean | — | Включает или отключает представление-указатель для этой модели. Если задан, переопределяет флаг проекта `latest_version_pointer_enabled_by_default`; если не задан, используется значение этого флага. |
+| `alias` | string | Базовое имя модели | Пользовательское имя представления-указателя. Переопределяет базовое имя, используемое по умолчанию. Подробнее см. в разделе [Настройка псевдонима](#alias-customization).|
 
-## Alias customization
+## Настройка псевдонима {#alias-customization}
 
-By default, the pointer view uses the model's base name (for example, `dim_customers`). You can customize this in two ways:
+По умолчанию представление-указатель использует базовое имя модели (например, `dim_customers`). Это можно изменить двумя способами:
 
-- **Per model**: Set `latest_version_pointer.alias` in the model config.
-- **Globally**: Override the [`generate_latest_version_pointer_alias`](/docs/build/custom-aliases#generate_latest_version_pointer_alias) macro in your project. This macro follows the same pattern as [`generate_alias_name`](/docs/build/custom-aliases#generate_alias_name).
+- **Для отдельной модели**: задайте `latest_version_pointer.alias` в конфигурации модели.
+- **Глобально**: переопределите макрос [`generate_latest_version_pointer_alias`](/docs/build/custom-aliases#generate_latest_version_pointer_alias) в своём проекте. Этот макрос работает по тому же принципу, что и [`generate_alias_name`](/docs/build/custom-aliases#generate_alias_name).
 
-## Naming collisions {#naming-collisions}
+## Конфликты имён {#naming-collisions}
 
 <LatestVersionPointerCollision />
 
-## Related documentation
+## Связанная документация
 
-- [Model versions](/docs/mesh/govern/model-versions)
-- [Pointing to the latest version](/docs/mesh/govern/model-versions#pointing-to-the-latest-version)
-- [`latest_version_pointer_enabled_by_default` flag](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default)
+- [Версии моделей](/docs/mesh/govern/model-versions)
+- [Указание на последнюю версию](/docs/mesh/govern/model-versions#pointing-to-the-latest-version)
+- [Флаг `latest_version_pointer_enabled_by_default`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default)
 - [`versions`](/reference/resource-properties/versions)
 - [`latest_version`](/reference/resource-properties/latest_version)

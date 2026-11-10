@@ -1,6 +1,6 @@
 ---
 title: pre_clone
-description: "Configure when dbt State pre-populates incremental models and snapshots in dev by cloning their production counterparts."
+description: "Настройте, когда dbt State предварительно заполняет инкрементальные модели и снимки в среде разработки, клонируя их аналоги из рабочей среды."
 id: "pre-clone"
 tags: ['dbt State']
 ---
@@ -8,7 +8,7 @@ tags: ['dbt State']
 # pre_clone
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
 
@@ -27,7 +27,7 @@ snapshots:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Properties YAML file">
+<TabItem value="property" label="YAML-файл свойств">
 
 <File name="models/<filename>.yml">
 
@@ -54,7 +54,7 @@ snapshots:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="SQL file config">
+<TabItem value="sql" label="Конфигурация в SQL-файле">
 
 <File name="models/<filename>.sql">
 
@@ -70,25 +70,25 @@ snapshots:
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
-`pre_clone` controls whether and when dbt State pre-populates incremental models and snapshots in your development environment by cloning their production counterparts before a run.
+`pre_clone` определяет, будет ли dbt State предварительно заполнять инкрементальные модели и снимки в вашей среде разработки, клонируя их аналоги из рабочей среды перед запуском, и когда это будет происходить.
 
-| Value | Behavior |
+| Значение | Поведение |
 |-------|----------|
-| `never` | Never pre-clone. Incremental models and snapshots start from whatever exists in the development environment. If it doesn't already exist, it's built from scratch. |
-| `if_missing` (default) | Clone only if the target table does not yet exist in development. After the first clone, subsequent runs build incrementally on top of the cloned data. |
-| `always` | Clone before every run, regardless of whether the development table already exists. Guarantees development incremental state matches production on every run. |
+| `never` | Никогда не выполнять предварительное клонирование. Инкрементальные модели и снимки используют в качестве исходного состояния то, что уже существует в среде разработки. Если соответствующего объекта ещё нет, он создаётся с нуля. |
+| `if_missing` (по умолчанию) | Клонировать только в том случае, если целевая таблица ещё не существует в среде разработки. После первого клонирования последующие запуски инкрементально обновляют клонированные данные. |
+| `always` | Клонировать перед каждым запуском независимо от того, существует ли уже таблица в среде разработки. Гарантирует, что при каждом запуске исходное состояние для инкрементального обновления в среде разработки соответствует рабочей среде. |
 
 :::note
-Non-incremental materializations are never pre-cloned. This setting has no effect on them.
+Неинкрементальные материализации никогда не клонируются предварительно. Эта настройка на них не влияет.
 :::
 
-## Examples
+## Примеры
 
-### Always sync development with production
+### Всегда синхронизировать среду разработки с рабочей средой
 
-Use `always` when you want development to reflect the current production state before every run:
+Используйте `always`, если хотите, чтобы перед каждым запуском среда разработки отражала текущее состояние рабочей среды:
 
 <File name="models/fct_orders.yml">
 
@@ -102,9 +102,9 @@ models:
 
 </File>
 
-### Isolate dev state from production
+### Изолировать состояние среды разработки от рабочей среды
 
-Use `never` when you want development to be fully independent from production:
+Используйте `never`, если хотите, чтобы среда разработки была полностью независима от рабочей среды:
 
 <File name="dbt_project.yml">
 
@@ -116,7 +116,7 @@ models:
 
 </File>
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)

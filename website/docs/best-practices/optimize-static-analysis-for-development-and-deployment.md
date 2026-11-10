@@ -1,10 +1,10 @@
 ---
-title: "Optimize static analysis for development and deployment"
+title: "Оптимизация статического анализа для разработки и развертывания"
 id: "optimize-static-analysis-for-development-and-deployment"
-description: "Configure dbt v2 static analysis with strict in development and baseline in deployment for stronger local checks and faster jobs."
-sidebar_label: "Optimize static analysis"
-displayText: Optimize static analysis for development and deployment
-hoverSnippet: Use strict static analysis in development and baseline in deployment for stronger local checks and faster jobs.
+description: "Настройте статический анализ в dbt v2: strict при разработке и baseline при развертывании — для более строгих локальных проверок и быстрого выполнения заданий."
+sidebar_label: "Оптимизация статического анализа"
+displayText: Оптимизация статического анализа для разработки и развертывания
+hoverSnippet: Используйте статический анализ strict при разработке и baseline при развертывании для более строгих локальных проверок и быстрого выполнения заданий.
 ---
 
 import FusionLifecycle from '/snippets/_v2-lifecycle-callout.md';
@@ -13,42 +13,42 @@ import FusionLifecycle from '/snippets/_v2-lifecycle-callout.md';
 
 <IntroText>
 
-Static analysis helps <Constant name="fusion_engine" /> validate your SQL before it runs. This guide shows how to configure it so you get stronger checks while you develop, and faster, less blocking runs in deployment.
+Статический анализ помогает <Constant name="fusion_engine" /> проверять SQL до его выполнения. В этом руководстве показано, как настроить его для более строгих проверок при разработке и более быстрых запусков с меньшим риском блокировки при развертывании.
 
 </IntroText>
 
-This guide explains why using `strict` in development and `baseline` (the default, lighter static analysis mode) in deployment is a valid and recommended pattern, and how to configure it in your <Constant name="fusion" /> project. For more information about modes and features, refer to [About static analysis](/docs/build/about-static-analysis).
+В этом руководстве объясняется, почему использование `strict` при разработке и `baseline` (более легкого режима статического анализа, используемого по умолчанию) при развертывании — обоснованный и рекомендуемый подход, а также как настроить его в проекте <Constant name="fusion" />. Подробнее о режимах и возможностях см. в разделе [О статическом анализе](/docs/build/about-static-analysis).
 
-## Why this pattern
+## Почему стоит использовать этот подход
 
-- **Development:** `strict` mode has the strongest SQL checks before you promote changes, including richer column-level features in the VS Code extension.
-- **Deployment:** `baseline` skips remote warehouse schema downloads and surfaces findings as warnings, so jobs are less likely to block. That can save compile time (and warehouse cost) in deployment, especially in projects with many sources. Review deployment logs for warnings that `strict` would have raised as errors in development.
+- **Разработка:** режим `strict` обеспечивает наиболее строгие проверки SQL перед переносом изменений в другие среды, а также расширенные возможности на уровне столбцов в расширении VS Code.
+- **Развертывание:** режим `baseline` пропускает загрузку схем из удаленного хранилища данных и выводит обнаруженные проблемы как предупреждения, поэтому задания реже блокируются. Это может сократить время компиляции (и затраты на хранилище данных) при развертывании, особенно в проектах с большим количеством источников. Просматривайте журналы развертывания на предмет предупреждений, которые режим `strict` при разработке выдал бы как ошибки.
 
-`strict` can increase compile time because <Constant name="fusion_engine" /> downloads schemas for all sources (including sources your models do not reference). Teams with thousands of sources have seen large differences between `baseline` and `strict`.
+Режим `strict` может увеличить время компиляции, поскольку <Constant name="fusion_engine" /> загружает схемы всех источников (включая те, на которые ваши модели не ссылаются). Команды, работающие с тысячами источников, отмечали значительную разницу между `baseline` и `strict`.
 
-## Set the mode with the CLI flag
+## Настройка режима с помощью флага CLI
 
-Use the [`--static-analysis`](/reference/global-configs/static-analysis-flag) flag to set the mode for a single run.
+Используйте флаг [`--static-analysis`](/reference/global-configs/static-analysis-flag), чтобы задать режим для одного запуска.
 
-**Development:**
+**Разработка:**
 
 ```bash
 dbt compile --static-analysis strict
 ```
 
-**Deployment:**
+**Развертывание:**
 
 ```bash
 dbt compile --static-analysis baseline
 ```
 
-You can use the same flag with `dbt run` or `dbt build`. If you already have <Constant name="core" /> or the platform CLI installed alongside <Constant name="fusion" />, use `dbtf` as the unambiguous <Constant name="fusion" /> command.
+Тот же флаг можно использовать с `dbt run` или `dbt build`. Если наряду с <Constant name="fusion" /> у вас уже установлен <Constant name="core" /> или CLI платформы, используйте `dbtf`, чтобы однозначно вызвать <Constant name="fusion" />.
 
-You can also configure [`static_analysis`](/reference/resource-configs/static-analysis) per directory or model. Refer to [Configuring `static_analysis`](/docs/build/about-static-analysis#configuring-static_analysis) for examples.
+Вы также можете настроить [`static_analysis`](/reference/resource-configs/static-analysis) для отдельного каталога или модели. Примеры см. в разделе [Настройка `static_analysis`](/docs/build/about-static-analysis#configuring-static_analysis).
 
-## Set the mode with an environment variable
+## Настройка режима с помощью переменной окружения
 
-You can also drive [`static_analysis`](/reference/resource-configs/static-analysis) from a custom environment variable in `dbt_project.yml`. This is useful when development and deployment share the same project config but set different environment values.
+Вы также можете управлять [`static_analysis`](/reference/resource-configs/static-analysis) через пользовательскую переменную окружения в `dbt_project.yml`. Это удобно, если для разработки и развертывания используется одна конфигурация проекта, но задаются разные значения переменных окружения.
 
 <File name="dbt_project.yml">
 
@@ -60,17 +60,17 @@ models:
 
 </File>
 
-Then set the variable per environment:
+Затем задайте переменную для каждой среды:
 
-- Development: `DBT_ENV_STATIC_ANALYSIS=strict`
-- Deployment: leave unset (defaults to `baseline`), or set `DBT_ENV_STATIC_ANALYSIS=baseline`
+- Разработка: `DBT_ENV_STATIC_ANALYSIS=strict`
+- Развертывание: оставьте переменную незаданной (по умолчанию используется `baseline`) или задайте `DBT_ENV_STATIC_ANALYSIS=baseline`
 
-`DBT_ENV_STATIC_ANALYSIS` is a custom variable name you choose. It is separate from the built-in `DBT_STATIC_ANALYSIS` override used with the CLI flag.
+`DBT_ENV_STATIC_ANALYSIS` — это имя пользовательской переменной, которое вы выбираете сами. Она не связана со встроенной переменной `DBT_STATIC_ANALYSIS`, используемой для переопределения режима вместе с флагом CLI.
 
-For more information about `env_var`, refer to [About env_var](/reference/dbt-jinja-functions/env_var) and [Environment variables](/docs/build/environment-variables).
+Подробнее об `env_var` см. в разделах [Об env_var](/reference/dbt-jinja-functions/env_var) и [Переменные окружения](/docs/build/environment-variables).
 
-## Related docs
+## Связанная документация
 
-- [About static analysis](/docs/build/about-static-analysis)
-- [`static_analysis` config](/reference/resource-configs/static-analysis)
-- [`--static-analysis` flag](/reference/global-configs/static-analysis-flag)
+- [О статическом анализе](/docs/build/about-static-analysis)
+- [Параметр конфигурации `static_analysis`](/reference/resource-configs/static-analysis)
+- [Флаг `--static-analysis`](/reference/global-configs/static-analysis-flag)

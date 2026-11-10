@@ -32,7 +32,7 @@ availability: all_users
 
 <VersionBlock lastVersion="1.11">
 
-| Parameter | Description | Required | Type |
+| Параметр | Описание | Обязательный | Тип |
 | --------- | ----------- | ---- | ---- |
 | `name` | Укажите ссылочное имя метрики. Это имя должно быть уникальным и может состоять из строчных букв, цифр и символов подчеркивания. | Required | String |
 | `description` | Описание метрики. | Optional | String |
@@ -665,7 +665,7 @@ models:
 
 Настройте фильтр с помощью шаблонов Jinja и следующего синтаксиса для ссылки на сущности, измерения, временные измерения или метрики в фильтрах.
 
-Подробности о том, как использовать метрики в качестве измерений в фильтрах, см. в разделе [Metrics as dimensions](/docs/build/ref-metrics-in-filters):
+Подробнее см. [Метрики как измерения](/docs/build/ref-metrics-in-filters):
 
 <File name="models/metrics/file_name.yml" >
 
@@ -696,6 +696,6 @@ filter: |
 
 ## Связанная документация
 
-- [Semantic models](/docs/build/semantic-models)
-- [Fill null values for metrics](/docs/build/fill-nulls-advanced)
-- [Metrics as dimensions with metric filters](/docs/build/ref-metrics-in-filters)
+- [Семантические модели](/docs/build/semantic-models)
+- [Заполнение пустых значений метрик](/docs/build/fill-nulls-advanced)
+- [Метрики как измерения в фильтрах](/docs/build/ref-metrics-in-filters)

@@ -1,8 +1,8 @@
 ---
-title: "Connect apps with OAuth"
-description: "Manage OAuth 2.0 client registrations to connect AI tools and third-party apps to dbt."
+title: "Подключение приложений с помощью OAuth"
+description: "Управляйте регистрациями клиентов OAuth 2.0 для подключения ИИ-инструментов и сторонних приложений к dbt."
 id: "connect-apps-oauth"
-sidebar_label: "Connect apps with OAuth"
+sidebar_label: "Подключение приложений с помощью OAuth"
 availability:
   surface: platform
   access: paid_plan
@@ -11,124 +11,124 @@ availability:
 
 import MCPCustomConnectorOauth from '/snippets/_mcp-custom-connector-oauth.md';
 
-# Connect apps with OAuth <Lifecycle status="beta" />
+# Подключение приложений с помощью OAuth <Lifecycle status="beta" />
 
-The **App integrations** section in <Constant name="dbt_platform" /> lets admins manage OAuth 2.0 client registrations &mdash; a standard that lets external apps connect to dbt securely without sharing API tokens. Use it for:
+Раздел **App integrations** в <Constant name="dbt_platform" /> позволяет администраторам управлять регистрациями клиентов OAuth 2.0 &mdash; стандарта, который позволяет внешним приложениям безопасно подключаться к dbt без передачи токенов API. Используйте его для:
 
-- AI tools that connect to the remote dbt MCP server.
-- Your own API integrations built against <Constant name="dbt_platform" /> APIs, when you want end users to sign in with their dbt identity instead of distributing tokens.
-- Third-party apps and IDE extensions that support OAuth for connecting to dbt.
+- ИИ-инструментов, которые подключаются к удалённому серверу dbt MCP.
+- Собственных интеграций с API <Constant name="dbt_platform" />, если вы хотите, чтобы конечные пользователи входили со своей учётной записью dbt, вместо того чтобы распространять токены.
+- Сторонних приложений и расширений IDE, которые поддерживают OAuth для подключения к dbt.
 
-This feature is available to Account admins on Starter, Enterprise or Enterprise+ plans.
+Эта функция доступна администраторам аккаунта на тарифных планах Starter, Enterprise или Enterprise+.
 
-To access this section, go to **Account settings** → **Integrations** → **App integrations**.
+Чтобы открыть этот раздел, перейдите в **Account settings** → **Integrations** → **App integrations**.
 
-<Lightbox src="/img/docs/dbt-cloud/app-integrations-oauth.png" title="App integrations page showing manually and dynamically registered OAuth clients" />
+<Lightbox src="/img/docs/dbt-cloud/app-integrations-oauth.png" title="Страница интеграций приложений с клиентами OAuth, зарегистрированными вручную и динамически" />
 
-## Registration methods
+## Способы регистрации
 
-There are two ways you can register an app as an OAuth client:
-- [Dynamic registration](#dynamic-registration): Apps that support [Dynamic Client Registration (RFC 7591)](https://datatracker.ietf.org/doc/html/rfc7591) self-register automatically when a user connects them to dbt. No admin action is required.
-- [Manual registration](#manual-registration): For apps that don't support dynamic registration (for example, custom-built integrations), an admin can manually register an OAuth client.
+Зарегистрировать приложение в качестве клиента OAuth можно двумя способами:
+- [Динамическая регистрация](#dynamic-registration): приложения, поддерживающие [Dynamic Client Registration (RFC 7591)](https://datatracker.ietf.org/doc/html/rfc7591), регистрируются автоматически, когда пользователь подключает их к dbt. Действия администратора не требуются.
+- [Ручная регистрация](#manual-registration): для приложений, которые не поддерживают динамическую регистрацию (например, собственных интеграций), администратор может зарегистрировать клиент OAuth вручную.
 
-### Dynamic registration
+### Динамическая регистрация {#dynamic-registration}
 
-Apps that support [Dynamic Client Registration (RFC 7591)](https://datatracker.ietf.org/doc/html/rfc7591) self-register automatically when a user connects them to dbt. No admin action is required.
+Приложения, поддерживающие [Dynamic Client Registration (RFC 7591)](https://datatracker.ietf.org/doc/html/rfc7591), регистрируются автоматически, когда пользователь подключает их к dbt. Действия администратора не требуются.
 
-Dynamically registered apps appear in the **Dynamically registered** table, which shows:
+Динамически зарегистрированные приложения отображаются в таблице **Dynamically registered**, которая содержит следующие сведения:
 
-| Column | Description |
+| Столбец | Описание |
 |--------|-------------|
-| Name | The app name |
-| Redirect URL | The OAuth callback URL the app registered |
-| Created on | When the client was first registered |
-| Last used on | When the client last made an authenticated request |
+| Name | Название приложения |
+| Redirect URL | URL обратного вызова OAuth, зарегистрированный приложением |
+| Created on | Дата первоначальной регистрации клиента |
+| Last used on | Дата последнего аутентифицированного запроса клиента |
 
-<!-- add info on how to disable dynamic client registration when it's live -->
+<!-- добавить информацию о том, как отключить динамическую регистрацию клиентов, когда эта возможность станет доступна -->
 
-### Manual registration
+### Ручная регистрация {#manual-registration}
 
-For apps that don't support dynamic registration (for example, Salesforce agent or custom-built integrations), an admin can manually register an OAuth client.
+Для приложений, которые не поддерживают динамическую регистрацию (например, агента Salesforce или собственных интеграций), администратор может зарегистрировать клиент OAuth вручную.
 
-To add a manually registered integration:
+Чтобы добавить интеграцию с ручной регистрацией:
 
-1. Go to **Account settings** → **Integrations** → **App integrations**.
-2. Click **+ Add integration**.
-3. Complete the registration form. Each manually registered client receives a unique client ID. Note that no client secret is issued, and the client must instead support the [PKCE extension (RFC 7636)](https://datatracker.ietf.org/doc/html/rfc7636).
+1. Перейдите в **Account settings** → **Integrations** → **App integrations**.
+2. Нажмите **+ Add integration**.
+3. Заполните форму регистрации. Каждый клиент, зарегистрированный вручную, получает уникальный идентификатор клиента. Обратите внимание: секрет клиента не выдаётся, поэтому клиент должен поддерживать [расширение PKCE (RFC 7636)](https://datatracker.ietf.org/doc/html/rfc7636).
 
-Manually registered clients appear in the **Manually registered** section.
+Клиенты, зарегистрированные вручную, отображаются в разделе **Manually registered**.
 
-When configuring your client, use the following OAuth endpoints (replace `YOUR_PREFIX` with your dbt platform subdomain):
+При настройке клиента используйте следующие конечные точки OAuth (замените `YOUR_PREFIX` на поддомен вашей платформы dbt):
 
-| Endpoint | URL |
+| Конечная точка | URL |
 |----------|-----|
-| Authorization | `https://YOUR_PREFIX.dbt.com/oauth/authorize` |
-| Token | `https://YOUR_PREFIX.dbt.com/oauth/token` |
+| Авторизация | `https://YOUR_PREFIX.dbt.com/oauth/authorize` |
+| Получение токена | `https://YOUR_PREFIX.dbt.com/oauth/token` |
 
-## Use with remote MCP
+## Использование с удалённым MCP
 
-When you connect an MCP client to the [remote dbt MCP server](/docs/dbt-ai/setup-remote-mcp#oauth-remote-mcp), it authenticates using OAuth. The client needs just your dbt platform MCP URL, which you can find under **Account settings** → **Access URLs** → **MCP Endpoint URL**. 
+Когда вы подключаете клиент MCP к [удалённому серверу dbt MCP](/docs/dbt-ai/setup-remote-mcp#oauth-remote-mcp), он проходит аутентификацию с помощью OAuth. Клиенту нужен только URL MCP вашей платформы dbt, который можно найти в разделе **Account settings** → **Access URLs** → **MCP Endpoint URL**. 
 
-Clients that support dynamic registration complete the registration step automatically &mdash; you'll see them appear in the **Dynamically registered** table after first use.
+Клиенты, поддерживающие динамическую регистрацию, выполняют этап регистрации автоматически &mdash; после первого использования они появятся в таблице **Dynamically registered**.
 
 <MCPCustomConnectorOauth />
 
-For more information on remote MCP OAuth setup, see [Use the remote dbt MCP server](/docs/dbt-ai/mcp-quickstart-remote).
+Дополнительные сведения о настройке OAuth для удалённого MCP см. в разделе [Использование удалённого сервера dbt MCP](/docs/dbt-ai/mcp-quickstart-remote).
 
-## Scopes and consent
+## Области доступа и согласие пользователя {#scopes-and-consent}
 
-The first time a user connects a tool to dbt through OAuth, dbt shows a consent screen listing the scopes the client is requesting. Scopes act as a **filter on the user's existing permissions** &mdash; they don't grant any new access. A user can only consent to scopes for permissions they already have in dbt.
+Когда пользователь впервые подключает инструмент к dbt через OAuth, dbt показывает экран согласия со списком областей доступа, которые запрашивает клиент. Области доступа служат **фильтром для существующих разрешений пользователя** &mdash; они не предоставляют никаких новых прав доступа. Пользователь может дать согласие только на те области доступа, для которых у него уже есть разрешения в dbt.
 
-From the consent screen, the user can:
+На экране согласия пользователь может:
 
-- Approve or deny individual scopes.
-- Choose whether to grant access to **all projects** or only **selected projects**.
-- Toggle **Keep session alive** to control whether dbt automatically refreshes their session (see [Sessions and refresh tokens](#sessions-and-refresh-tokens)).
+- Разрешить или отклонить отдельные области доступа.
+- Выбрать, предоставлять ли доступ ко **всем проектам** или только к **выбранным проектам**.
+- Включить или отключить **Keep session alive**, чтобы указать, должен ли dbt автоматически продлевать сеанс (см. [Сеансы и токены обновления](#sessions-and-refresh-tokens)).
 
-<Lightbox src="/img/docs/dbt-cloud/oauth-consent-screen.png" width="60%" title="OAuth consent screen showing requested scopes and project access" />
+<Lightbox src="/img/docs/dbt-cloud/oauth-consent-screen.png" width="60%" title="Экран согласия OAuth с запрашиваемыми областями доступа и доступом к проектам" />
 
-The exact scopes shown depend on what the connecting tool requests. The full list of available scopes is:
+Конкретные области доступа на экране зависят от того, что запрашивает подключаемый инструмент. Полный список доступных областей доступа:
 
-| Scope | Description |
+| Область доступа | Описание |
 |-------|-------------|
-| `offline_access` | Allows the client to request a refresh token to maintain long-lived sessions |
-| `account:read` | Read-only access to account details such as project and environment settings |
-| `projects:query` | Query project data using <Constant name="semantic_layer" /> metrics |
-| `catalog:read` | Access model descriptions, column lineage, and other project metadata from dbt Catalog |
-| `projects:develop` | Use development tooling, including the CLI, to make updates to dbt models |
-| `jobs:run` | View, edit, and re-trigger dbt jobs |
+| `offline_access` | Позволяет клиенту запрашивать токен обновления для поддержания длительных сеансов |
+| `account:read` | Доступ только для чтения к сведениям об аккаунте, например настройкам проектов и окружений |
+| `projects:query` | Выполнение запросов к данным проекта с использованием метрик <Constant name="semantic_layer" /> |
+| `catalog:read` | Доступ к описаниям моделей, происхождению данных на уровне столбцов и другим метаданным проектов из dbt Catalog |
+| `projects:develop` | Использование инструментов разработки, включая CLI, для внесения изменений в модели dbt |
+| `jobs:run` | Просмотр, редактирование и повторный запуск заданий dbt |
 
-### For developers: handling partial scope grants
+### Для разработчиков: обработка частичного предоставления областей доступа
 
-When a user unchecks one or more scopes on the consent screen, the access token is issued with only the approved subset. Your client should:
+Когда пользователь снимает флажки для одной или нескольких областей доступа на экране согласия, токен доступа выдаётся только для одобренного подмножества. Ваш клиент должен:
 
-- Request only the scopes your tool actually needs — don't request scopes as a precaution.
-- Handle `403` responses gracefully and surface a clear message if a required scope was not granted.
-- Avoid assuming the full set of requested scopes was approved; always check the `scope` field in the token response.
+- Запрашивать только те области доступа, которые действительно нужны инструменту, — не запрашивайте их про запас.
+- Корректно обрабатывать ответы `403` и выводить понятное сообщение, если необходимая область доступа не была предоставлена.
+- Не предполагать, что одобрены все запрошенные области доступа; всегда проверять поле `scope` в ответе с токеном.
 
-To select the scopes your client should request, choose from the list above. Request scopes during the authorization request (`/oauth/authorize`). Scopes are not set during client registration.
+Чтобы определить, какие области доступа должен запрашивать ваш клиент, выберите их из списка выше. Запрашивайте области доступа в запросе авторизации (`/oauth/authorize`). При регистрации клиента области доступа не задаются.
 
-## Sessions and refresh tokens
+## Сеансы и токены обновления {#sessions-and-refresh-tokens}
 
-OAuth sessions use refresh tokens with a 7-day inactivity window. As long as the client requests a new access token at least once every 7 days, the session stays alive. After 7 days of inactivity, the refresh token expires and the user has to sign in again.
+В сеансах OAuth используются токены обновления с допустимым периодом неактивности 7 дней. Пока клиент запрашивает новый токен доступа хотя бы раз в 7 дней, сеанс остаётся активным. После 7 дней неактивности срок действия токена обновления истекает, и пользователю необходимо войти снова.
 
-Users can opt out of automatic refresh at consent time by turning off **Keep session alive**.
+Пользователи могут отказаться от автоматического продления на этапе предоставления согласия, отключив **Keep session alive**.
 
-## Revoke access
+## Отзыв доступа
 
-To revoke an OAuth grant, the user disconnects dbt from their MCP client &mdash; for example, by removing the dbt connector in the client's settings. We'll soon add the ability to revoke access in <Constant name="dbt_platform"/>.
+Чтобы отозвать разрешение OAuth, пользователь отключает dbt в своём клиенте MCP &mdash; например, удаляет коннектор dbt в настройках клиента. Вскоре мы добавим возможность отзывать доступ в <Constant name="dbt_platform"/>.
 
-<Lightbox src="/img/docs/dbt-cloud/oauth-disconnect-client.png" title="MCP client connectors page with the option to remove the dbt connector" />
+<Lightbox src="/img/docs/dbt-cloud/oauth-disconnect-client.png" title="Страница коннекторов клиента MCP с возможностью удалить коннектор dbt" />
 
-## Audit logging
+## Журнал аудита
 
-OAuth-related events appear in the dbt [Audit log](/docs/platform/manage-access/audit-log) (**Account settings** &rarr; **Audit log**), so admins can see which clients were registered, which users authorized them, and what those users did through OAuth.
+События, связанные с OAuth, отображаются в [журнале аудита](/docs/platform/manage-access/audit-log) dbt (**Account settings** &rarr; **Audit log**), поэтому администраторы могут видеть, какие клиенты были зарегистрированы, какие пользователи их авторизовали и какие действия эти пользователи выполняли через OAuth.
 
-Audited OAuth events include:
+В журнал аудита записываются следующие события OAuth:
 
-- **Registering a client** (manual or dynamic).
-- **Authorizing a client** (a user completing the consent flow).
+- **Регистрация клиента** (ручная или динамическая).
+- **Авторизация клиента** (завершение пользователем процесса предоставления согласия).
 
-Actions a user performs through an OAuth-connected client &mdash; for example, creating a job or running a model &mdash; appear in the audit log with the **user as the actor**, the same as actions taken through the dbt UI or with a personal access token.
+Действия, которые пользователь выполняет через клиент, подключённый по OAuth, &mdash; например, создание задания или запуск модели, &mdash; отображаются в журнале аудита с указанием **пользователя в качестве исполнителя**, как и действия, выполненные через интерфейс dbt или с помощью персонального токена доступа.
 
-<Lightbox src="/img/docs/dbt-cloud/oauth-audit-log.png" title="Audit log entry for an action taken through an OAuth-connected client" />
+<Lightbox src="/img/docs/dbt-cloud/oauth-audit-log.png" title="Запись в журнале аудита о действии, выполненном через клиент, подключённый по OAuth" />

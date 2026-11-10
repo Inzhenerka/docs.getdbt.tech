@@ -1,136 +1,136 @@
 ---
-title: "Trial and billing"
+title: "Пробный период и оплата"
 id: "trial-and-billing"
-description: "Start a dbt Wizard trial, set a spend limit, and manage Wizard billing for the dbt platform and local CLI."
-sidebar_label: "Trial and billing"
+description: "Начните пробный период dbt Wizard, установите лимит расходов и управляйте оплатой Wizard для платформы dbt и локального CLI."
+sidebar_label: "Пробный период и оплата"
 tags: [AI, Wizard, billing]
 ---
 
 import WizardHowTrialWorks from '/snippets/_wizard-how-trial-works.md';
 
-# Trial and billing
+# Пробный период и оплата
 
 <IntroText>
 
-Start a <Constant name="wizard" /> trial, set a spend limit, and manage paid access for both the <Constant name="dbt_platform" /> and local CLI.
+Начните пробный период <Constant name="wizard" />, установите лимит расходов и управляйте платным доступом как для <Constant name="dbt_platform" />, так и для локального CLI.
 
 </IntroText>
 
-This page covers how to get <Constant name="wizard" /> access and pay for it. For the models <Constant name="wizard" /> can use and how tokens and credits work, refer to [Models and pricing](/docs/dbt-ai/pricing-billing/overview).
+На этой странице описано, как получить доступ к <Constant name="wizard" /> и оплачивать его использование. Информацию о моделях, которые может использовать <Constant name="wizard" />, а также о токенах и кредитах см. в разделе [Модели и цены](/docs/dbt-ai/pricing-billing/overview).
 
-Billing and spend controls are shared across the <Constant name="dbt_platform" /> and local CLI. Both surfaces draw from the same account-level balance.
+Настройки оплаты и ограничения расходов действуют совместно для <Constant name="dbt_platform" /> и локального CLI. Оба интерфейса используют общий баланс аккаунта.
 
-## Prerequisites
+## Предварительные требования
 
-- Account admin or billing admin permissions to start a trial or change a spend limit.
-- A <Constant name="dbt" /> account to manage usage, billing, spend limits, and more.
-    - If you don't have one, you can create one during setup. No paid <Constant name="dbt_platform" /> plan required. This is generally useful for users on self-hosted <Constant name="dbt" /> running the CLI.
-- A business email address. Personal domains such as Gmail aren't eligible for a trial.
+- Права администратора аккаунта или администратора по оплате для запуска пробного периода или изменения лимита расходов.
+- Аккаунт <Constant name="dbt" /> для управления использованием, оплатой, лимитами расходов и другими настройками.
+    - Если у вас нет аккаунта, его можно создать во время настройки. Платный тариф <Constant name="dbt_platform" /> не требуется. Это особенно полезно для пользователей, которые работают с CLI в самостоятельно размещённой среде <Constant name="dbt" />.
+- Корпоративный адрес электронной почты. Адреса в личных почтовых доменах, таких как Gmail, не подходят для пробного периода.
 
-## What you get by plan
+## Что доступно на каждом тарифе
 
 <WizardHowTrialWorks product={<Constant name="wizard" />} />
 
-Everything on this page describes dbt <Term id="managed" /> billing &mdash; usage that dbt Labs bills through your <Constant name="dbt" /> account. If you bring your own key, your AI provider bills you directly and none of this applies. Refer to [BYOK for <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform) or [BYOK for the CLI](/docs/dbt-ai/wizard-byok) instead.
+Всё описанное на этой странице относится к оплате dbt <Term id="managed" /> &mdash; использованию, за которое dbt Labs выставляет счета через ваш аккаунт <Constant name="dbt" />. Если вы используете собственный ключ, счета вам выставляет непосредственно поставщик ИИ, и описанные здесь условия не применяются. В этом случае см. [BYOK для <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform) или [BYOK для CLI](/docs/dbt-ai/wizard-byok).
 
-## Start your trial
+## Начало пробного периода {#start-your-trial}
 
-Start your trial from anywhere in the <Constant name="dbt_platform" /> or from the <Constant name="wizard" /> CLI.
-Note, Enterprise-tiered plans automatically have a [spend limit set](/docs/dbt-ai/wizard-billing-faqs#what-does-the-dbt-wizard-enterprise-plan-monthly-usage-credits-include)
+Начать пробный период можно из любого раздела <Constant name="dbt_platform" /> или из CLI <Constant name="wizard" />.
+Обратите внимание: для тарифов уровня Enterprise [лимит расходов устанавливается автоматически](/docs/dbt-ai/wizard-billing-faqs#what-does-the-dbt-wizard-enterprise-plan-monthly-usage-credits-include)
 
 <Tabs queryString="start-trial">
 
 <TabItem value="platform" label="dbt platform">
 
-Start from **Billing & Usage**, or from the <Constant name="wizard" /> prompt in <Constant name="studio_ide" /> or the home tab as they all take you to the same flow. 
+Начните в разделе **Billing & Usage**, из окна <Constant name="wizard" /> в <Constant name="studio_ide" /> или на главной вкладке: все эти варианты запускают один и тот же процесс. 
 
-1. Click your account name, then select **Account settings**. (Or click on any button that says "Start trial" to start your Wizard trial.)
-2. Under **Settings**, click **Billing & Usage**.
-3. On the **Overview** tab, find the **dbt Wizard** card and click **Start trial**.
+1. Нажмите на название своего аккаунта, затем выберите **Account settings**. (Или нажмите любую кнопку с надписью «Start trial», чтобы начать пробный период Wizard.)
+2. В разделе **Settings** нажмите **Billing & Usage**.
+3. На вкладке **Overview** найдите карточку **dbt Wizard** и нажмите **Start trial**.
 
-No credit card is required. Your 30-day trial with $100 in usage credits starts right away. The $100 is per account and shared by everyone on it, and you can track how much you've used anytime in **Billing & Usage**.
+Кредитная карта не требуется. Пробный период на 30 дней с кредитами на использование в размере $100 начнётся сразу. Эти $100 предоставляются на весь аккаунт и доступны всем его пользователям, а отслеживать расходы можно в любой момент в разделе **Billing & Usage**.
 
-<Lightbox src="/img/docs/dbt-platform/wizard-billing-overview.png" width="85%" title="The Billing & Usage Overview page, showing dbt State and dbt Wizard cards with Start trial buttons, plus a usage-by-month chart" />
+<Lightbox src="/img/docs/dbt-platform/wizard-billing-overview.png" width="85%" title="Страница обзора Billing & Usage с карточками dbt State и dbt Wizard, кнопками Start trial и диаграммой использования по месяцам" />
 
 </TabItem>
 
 <TabItem value="cli" label="Wizard CLI">
 
-There's no **Start trial** button in the CLI. Logging in is what starts your trial &mdash; one command creates your free <Constant name="dbt" /> account, if you don't have one, and provisions the 30-day trial with $100 in usage credits for your account at the same time. The $100 is per account, not per user, so it's shared with anyone else on your account.
+В CLI нет кнопки **Start trial**. Пробный период начинается при входе в аккаунт &mdash; одна команда создаёт бесплатный аккаунт <Constant name="dbt" />, если у вас его ещё нет, и одновременно активирует для него пробный период на 30 дней с кредитами на использование в размере $100. Эти $100 предоставляются на аккаунт, а не на пользователя, поэтому они доступны и другим пользователям вашего аккаунта.
 
-1. [Install <Constant name="wizard" />](/docs/dbt-ai/wizard-cli).
-2. Run `dbt login` and complete the browser sign-in, or create a new account to manage your <Constant name="wizard" /> spend limits:
+1. [Установите <Constant name="wizard" />](/docs/dbt-ai/wizard-cli).
+2. Выполните `dbt login` и завершите вход в браузере или создайте новый аккаунт для управления лимитами расходов на <Constant name="wizard" />:
 
    ```shell
    dbt login
    ```
 
-3. Run `wizard` in your project and choose **dbt-managed** when onboarding asks how AI usage is billed. You don't need an AI provider key.
+3. Запустите `wizard` в своём проекте и выберите **dbt-managed**, когда в процессе первоначальной настройки появится вопрос о способе оплаты использования ИИ. Ключ поставщика ИИ не требуется.
 
-This CLI setup is the same whether you're on a <Constant name="dbt_platform" /> plan (free or paid) or running against a self-hosted <Constant name="dbt" /> project. Refer to [Use the <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) for the full onboarding walkthrough. 
+Процесс настройки CLI одинаков как для пользователей тарифа <Constant name="dbt_platform" /> (бесплатного или платного), так и для тех, кто работает с самостоятельно размещённым проектом <Constant name="dbt" />. Полное пошаговое руководство по первоначальной настройке см. в разделе [Использование CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-cli). 
 
 </TabItem>
 
 </Tabs>
 
-## Set up paid usage
+## Настройка платного использования
 
-What you do next depends on your plan.
+Дальнейшие действия зависят от вашего тарифа.
 
-### Developer, Starter, or self hosted
+### Developer, Starter или самостоятельное размещение
 
-1. Go to **Billing & Usage > Usage-based features**.
-2. Click **Set up billing**.
-3. Add a credit card and fill in your payment details. Click **Save card**.
-4. Complete your setup to choose a preset monthly spend limit, or set your own with the **Custom** option.
-5. Optionally, turn on automatic increases for when you're close to your limit.
-6. Click **Continue**.
-7. Review and confirm your spend limit. Click **Activate dbt Wizard** to start your billing. You won't be charged today and will be billed monthly for actual usage, up to the limit you set. Usage then pauses if you reach that limit.
+1. Перейдите в раздел **Billing & Usage > Usage-based features**.
+2. Нажмите **Set up billing**.
+3. Добавьте кредитную карту и укажите платёжные данные. Нажмите **Save card**.
+4. Завершите настройку, выбрав один из предложенных месячных лимитов расходов или задав собственный с помощью варианта **Custom**.
+5. При необходимости включите автоматическое повышение лимита при приближении к нему.
+6. Нажмите **Continue**.
+7. Проверьте и подтвердите лимит расходов. Нажмите **Activate dbt Wizard**, чтобы активировать оплату. Сегодня списаний не будет: счета будут выставляться ежемесячно за фактическое использование в пределах установленного лимита. При достижении лимита использование будет приостановлено.
 
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/wizard-add-billing.png" width="90%" title="The Add billing page, showing a credit card form and a complete billing setup flow" />
+<Lightbox src="/img/docs/dbt-platform/wizard-add-billing.png" width="90%" title="Страница Add billing с формой ввода данных кредитной карты и процессом завершения настройки оплаты" />
 
-<Lightbox src="/img/docs/dbt-platform/wizard-manage-spend.png" width="85%" title="The Set your dbt Wizard spend limit page, showing pre-set monthly options, a Custom option, and an auto-raise toggle" />
+<Lightbox src="/img/docs/dbt-platform/wizard-manage-spend.png" width="85%" title="Страница Set your dbt Wizard spend limit с предложенными месячными лимитами, вариантом Custom и переключателем автоматического повышения лимита" />
 
-<Lightbox src="/img/docs/dbt-platform/wizard-activate.png" width="85%" title="The Activate dbt Wizard page where you can review and confirm your spend limit and a button to activate dbt Wizard" />
+<Lightbox src="/img/docs/dbt-platform/wizard-activate.png" width="85%" title="Страница Activate dbt Wizard, где можно проверить и подтвердить лимит расходов, с кнопкой активации dbt Wizard" />
 
 </DocCarousel>
 
-### Enterprise and Enterprise+ plans
+### Тарифы Enterprise и Enterprise+
 
-There's no trial to start and no self-serve credit card flow. Your monthly usage credits &mdash; $100/month on Enterprise and $200/month on Enterprise+ &mdash; are granted automatically per account, not per user, and shared by everyone on the account. [Contact your account team](https://www.getdbt.com/contact) to set up or adjust committed spend.
+Для этих тарифов не требуется запускать пробный период, а самостоятельная настройка оплаты кредитной картой недоступна. Ежемесячные кредиты на использование &mdash; $100 в месяц на тарифе Enterprise и $200 в месяц на Enterprise+ &mdash; начисляются автоматически на аккаунт, а не на пользователя, и доступны всем пользователям аккаунта. [Свяжитесь с командой сопровождения вашего аккаунта](https://www.getdbt.com/contact), чтобы установить или изменить сумму обязательных расходов по договору.
 
-Enterprise and Enterprise+ accounts should add a committed spend amount to their contract to keep using <Constant name="wizard" />. You may lose access to <Constant name="wizard" /> without this commit in place. If you've set an optional monthly <Constant name="wizard" /> spend limit, that still applies and pauses usage once reached.
+Для аккаунтов Enterprise и Enterprise+ следует добавить в договор сумму обязательных расходов, чтобы продолжить использование <Constant name="wizard" />. Без этого обязательства вы можете потерять доступ к <Constant name="wizard" />. Если вы установили необязательный месячный лимит расходов на <Constant name="wizard" />, он продолжает действовать и приостанавливает использование при его достижении.
 
-## Manage your spend limit
+## Управление лимитом расходов {#manage-your-spend-limit}
 
-Your spend limit caps how much dbt <Term id="managed" /> <Constant name="wizard" /> usage your account can consume in a billing period, across both the <Constant name="dbt_platform" /> and local development.
+Лимит расходов ограничивает объём использования dbt <Term id="managed" /> <Constant name="wizard" /> вашим аккаунтом за расчётный период — как в <Constant name="dbt_platform" />, так и при локальной разработке.
 
-- You only pay for actual usage, up to the limit you choose. The limit is a cap, not a prepaid charge.
-- If you reach your limit, <Constant name="wizard" /> usage pauses until you raise it or the next billing cycle starts. This applies on every plan, including Enterprise-tiered plans that set the optional limit. Enterprise-tiered accounts that don't have a committed spend amount will be prompted to connect with their account rep about adding a spend amount.
-- Limits are set separately for <Constant name="wizard" /> and [dbt State](/docs/deploy/dbt-state-about), but both draw from your account's overall usage-based spend.
+- Вы платите только за фактическое использование в пределах выбранного лимита. Лимит — это верхняя граница расходов, а не предоплата.
+- Если вы достигнете лимита, использование <Constant name="wizard" /> будет приостановлено, пока вы не повысите лимит или не начнётся следующий расчётный период. Это правило действует на всех тарифах, включая тарифы уровня Enterprise, для которых установлен необязательный лимит. Пользователям аккаунтов уровня Enterprise, у которых не установлена сумма обязательных расходов, будет предложено связаться с представителем, сопровождающим их аккаунт, чтобы добавить такую сумму.
+- Лимиты для <Constant name="wizard" /> и [dbt State](/docs/deploy/dbt-state-about) устанавливаются отдельно, но расходы на оба продукта учитываются в общей сумме расходов аккаунта с оплатой по факту использования.
 
-To view or update your limit, go to **Billing & Usage > Usage-based features > Wizard**. Enterprise-tiered plans can [contact their account team](https://www.getdbt.com/contact) to adjust their limit.
+Чтобы просмотреть или изменить лимит, перейдите в раздел **Billing & Usage > Usage-based features > Wizard**. Пользователи тарифов уровня Enterprise могут [связаться с командой сопровождения своего аккаунта](https://www.getdbt.com/contact), чтобы изменить лимит.
 
-<Lightbox src="/img/docs/dbt-platform/wizard-manage-spend.png" width="85%" title="The Manage your dbt Wizard spend limit page, showing pre-set monthly options and a Custom option." />
+<Lightbox src="/img/docs/dbt-platform/wizard-manage-spend.png" width="85%" title="Страница Manage your dbt Wizard spend limit с предложенными месячными лимитами и вариантом Custom." />
 
-## View your usage and costs
+## Просмотр использования и расходов
 
-To see what you've spent, go to **Account settings > Billing & Usage > Usage-based features** and open the **Wizard** tab. From there you can check:
+Чтобы посмотреть свои расходы, перейдите в раздел **Account settings > Billing & Usage > Usage-based features** и откройте вкладку **Wizard**. Здесь можно проверить:
 
-- How much of your included monthly usage you've used, what's left, and when it resets.
-- Your current <Constant name="wizard" /> spend limit, with an **Edit** button to change it.
-- **<Constant name="wizard" /> usage by model**, which breaks down your usage (in UTC) so you can see which models are driving your costs.
+- Какую часть включённого месячного объёма использования вы израсходовали, сколько осталось и когда этот объём обновится.
+- Текущий лимит расходов на <Constant name="wizard" />, который можно изменить с помощью кнопки **Edit**.
+- **Использование <Constant name="wizard" /> по моделям** — детализацию использования (по времени UTC), которая позволяет увидеть, какие модели формируют ваши расходы.
 
-## How usage is measured
+## Как измеряется использование
 
-<Constant name="wizard" /> usage is measured in tokens, then converted into dollar-based usage based on the model and the token type, such as input, cached read, cache write, or output. Refer to [Key terms](/docs/dbt-ai/pricing-billing/overview#key-terms) for what a token is, and the [Model Provider Rate Table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) for current rates.
+Использование <Constant name="wizard" /> измеряется в токенах, а затем пересчитывается в стоимость в долларах в зависимости от модели и типа токенов: входные, чтение из кэша, запись в кэш или выходные. Объяснение того, что такое токен, см. в разделе [Основные термины](/docs/dbt-ai/pricing-billing/overview#key-terms), а актуальные тарифы — в [таблице тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model).
 
-## Related docs
+## Связанная документация
 
-- [<Constant name="wizard" /> billing FAQs](/docs/dbt-ai/wizard-billing-faqs) for common billing questions
-- [Models and pricing](/docs/dbt-ai/pricing-billing/overview) for model options and token pricing
-- [BYOK for dbt platform](/docs/platform/wizard-byok-platform) or [BYOK for the CLI](/docs/dbt-ai/wizard-byok) for bring-your-own-key setup
-- [Billing](/docs/platform/billing) for general <Constant name="dbt_platform" /> billing
+- [Часто задаваемые вопросы об оплате <Constant name="wizard" />](/docs/dbt-ai/wizard-billing-faqs) — ответы на распространённые вопросы об оплате
+- [Модели и цены](/docs/dbt-ai/pricing-billing/overview) — доступные модели и стоимость токенов
+- [BYOK для платформы dbt](/docs/platform/wizard-byok-platform) или [BYOK для CLI](/docs/dbt-ai/wizard-byok) — настройка использования собственного ключа
+- [Оплата](/docs/platform/billing) — общая информация об оплате <Constant name="dbt_platform" />

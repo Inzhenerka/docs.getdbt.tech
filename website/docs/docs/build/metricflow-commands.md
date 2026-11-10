@@ -26,7 +26,7 @@ MetricFlow — это библиотека Python, которая позволя
 
 <Tabs>
 
-<TabItem value="cloud" label="MetricFlow in dbt platform">
+<TabItem value="cloud" label="MetricFlow на платформе dbt">
 
 Этот раздел предназначен для пользователей <Constant name="dbt_platform" />, использующих движок v1 или v2, у которых команды и проверки выполняются удалённо в <Constant name="dbt_platform" />. 
 
@@ -69,7 +69,7 @@ MetricFlow — это библиотека Python, которая позволя
 - Если вы используете v1 локально без v2, выполняйте команды MetricFlow с префиксом `mf`.
 
 <Tabs>
-<TabItem value="cloudcommands" label="Commands for dbt platform">
+<TabItem value="cloudcommands" label="Команды для платформы dbt">
 
 Этот раздел предназначен для пользователей <Constant name="dbt_platform" />, использующих движок v2 или v1, при котором команды и проверки выполняются удалённо в <Constant name="dbt_platform" />.
 
@@ -111,7 +111,7 @@ MetricFlow — это библиотека Python, которая позволя
 </TabItem>
 </Tabs>
 
-## List metrics {#list-metrics}
+## Список метрик {#list-metrics}
 Эта команда выводит список метрик с указанием доступных для них измерений (dimensions):
 
 ```bash
@@ -124,7 +124,7 @@ mf list metrics <metric_name> # Для пользователей с самос�
   --help                 Показать это сообщение и выйти.
 ```
 
-## List dimensions {#list-dimensions}
+## Список измерений {#list-dimensions}
 
 Эта команда перечисляет все уникальные измерения для метрики или нескольких метрик. Она отображает только общие измерения при запросе нескольких метрик:
 
@@ -138,7 +138,7 @@ mf list dimensions --metrics <metric_name> # Для пользователей �
   --help              Показать это сообщение и выйти.
 ```
 
-## List dimension-values {#list-dimension-values}
+## Список значений измерения {#list-dimension-values}
 
 Эта команда перечисляет все значения измерений с соответствующей метрикой:
 
@@ -160,7 +160,7 @@ Options:
   --help              Показать это сообщение и выйти.
 ```
 
-## List entities {#list-entities}
+## Список сущностей {#list-entities}
 
 Эта команда перечисляет все уникальные сущности:
 
@@ -174,7 +174,7 @@ mf list entities --metrics <metric_name> # Для пользователей с 
   --help              Показать это сообщение и выйти.
 ```
 
-## List saved queries {#list-saved-queries}
+## Список сохранённых запросов {#list-saved-queries}
 
 Эта команда перечисляет все доступные сохраненные запросы:
 
@@ -201,7 +201,7 @@ dbt sl list saved-queries --show-exports
        - Export(new_customer_orders, alias=orders, schemas=customer_schema, exportAs=TABLE)
 ```
 
-## Validate {#validate}
+## Проверка конфигурации {#validate}
 
 Следующая команда выполняет проверки против определенных конфигураций семантической модели.
 
@@ -255,7 +255,7 @@ mf health-checks # Для пользователей с самостоятель
 mf tutorial # Для пользователей с самостоятельным развертыванием (dbt v1 или v2)
 ```
 
-## Query {#query}
+## Выполнение запросов {#query}
 
 Создайте новый запрос с помощью MetricFlow и выполните его на вашей платформе данных. Запрос возвращает следующий результат:
 
@@ -320,22 +320,18 @@ mf query --metrics <metric_name> --group-by <dimension_name> # Для польз
   --help                   Показать это сообщение и выйти.
   ```
 
-### Примеры запросов {#query-metrics}
-
-<a id="query-examples" />
-
-## Query examples {#additional-query-examples}
+## Примеры запросов {#query-examples}
 
 В этом разделе приведены различные типы примеров запросов, которые вы можете использовать для выполнения запросов к метрикам и измерениям. В разделе представлены следующие примеры запросов:
 
-- [Query metrics](#query-metrics)
-- [Query dimensions](#query-dimensions)
-- [Add `order`/`limit` function](#add-orderlimit)
-- [Add `where` clause](#add-where-clause)
-- [Filter by time](#filter-by-time)
-- [Query saved queries](#query-saved-queries)
+- [Запрос к метрикам](#query-metrics)
+- [Запрос к измерениям](#query-dimensions)
+- [Добавление сортировки и ограничения числа результатов](#add-orderlimit)
+- [Добавление условия `where`](#add-where-clause)
+- [Фильтрация по времени](#filter-by-time)
+- [Выполнение сохранённых запросов](#query-saved-queries)
 
-### Метрики запросов
+### Запрос к метрикам {#query-metrics}
 
 Используйте этот пример, чтобы запросить несколько метрик по измерению и вернуть метрики `order_total` и `users_active` по `metric_time.`
 
@@ -433,11 +429,11 @@ dbt sl query --metrics order_total --group-by order_id__is_food_order --where "{
 mf query --metrics order_total --group-by order_id__is_food_order --where "{{ Dimension('order_id__is_food_order') }} = True" --where "{{ TimeDimension('metric_time', 'week') }} >= '2024-02-01'"
 ```
 
-Notes:
+Примечания:
 - Тип измерения влияет на синтаксис, который вы используете. Например, если у вас поле с датой, нужно использовать `TimeDimension` вместо `Dimension`.
 - При выполнении запроса по измерению необходимо указывать первичную сущность (primary entity) для этого измерения. В приведённом примере первичной сущностью является `order_id`.
 
-**Result**
+**Результат**
 ```bash
  ✔ Успех 🦄 - запрос завершен через 1.06 секунды
 | METRIC_TIME   | IS_FOOD_ORDER   |   ORDER_TOTAL |
@@ -462,7 +458,7 @@ Notes:
 
 Обратите внимание, что при запросе измерения необходимо указать первичную сущность (primary entity) для этого измерения. В следующем примере в качестве первичной сущности используется `order_id`.
 
-**Query**
+**Запрос**
 ```bash
 # Для пользователей самостоятельно размещённых инсталляций (dbt v1 или v2)
 mf query --metrics order_total --group-by order_id__is_food_order --limit 10 --order-by -metric_time --where "is_food_order = True" --start-time '2017-08-22' --end-time '2017-08-27' 
@@ -501,7 +497,7 @@ mf query --saved-query <name> # Для пользователей самосто
 При запросе [сохраненных запросов](/docs/build/saved-queries) вы можете использовать такие параметры, как `where`, `limit`, `order`, `compile` и так далее. Однако имейте в виду, что вы не можете получить доступ к параметрам `metric` или `group_by` в этом контексте. Это связано с тем, что они являются предопределенными и фиксированными параметрами для сохраненных запросов, и вы не можете изменить их во время запроса. Если вы хотите запросить больше метрик или измерений, вы можете построить запрос, используя стандартный формат.
 :::
 
-## Дополнительные примеры запросов {#time-granularity}
+## Дополнительные примеры запросов {#additional-query-examples}
 
 Следующие вкладки представляют дополнительные примеры запросов, такие как экспорт в CSV. Выберите вкладку, которая лучше всего соответствует вашим потребностям:
 
@@ -568,7 +564,7 @@ mf query --metrics order_total --group-by metric_time,is_food_order --limit 10 -
 </TabItem>
 </Tabs>
 
-## Временная гранулярность {#export}
+## Временная гранулярность {#time-granularity}
 
 При желании вы можете указать гранулярность времени, на которую вы хотите агрегировать ваши данные, добавив два подчеркивания и единицу гранулярности к `metric_time`, глобальному временному измерению. Вы можете группировать гранулярность по: `day`, `week`, `month`, `quarter` и `year`.
 
@@ -580,7 +576,7 @@ dbt sl query --metrics revenue --group-by metric_time__month # Для польз
 mf query --metrics revenue --group-by metric_time__month # Для пользователей с самостоятельным размещением (dbt v1 или v2)
 ```
 
-## Export {#export-all}
+## Экспорт одного сохранённого запроса {#export}
 
 Запустите [экспорты для конкретного сохраненного запроса](/docs/use-dbt-semantic-layer/exports#exports-for-single-saved-query). Используйте эту команду для тестирования и генерации экспортов в вашей среде разработки. Вы также можете использовать флаг `--select`, чтобы указать конкретные экспорты из сохраненного запроса. Обратитесь к [экспортам в разработке](/docs/use-dbt-semantic-layer/exports#exports-in-development) для получения дополнительной информации.
 
@@ -590,7 +586,7 @@ mf query --metrics revenue --group-by metric_time__month # Для пользов
 dbt sl export # For dbt platform users (dbt v1 or v2)
 ```
 
-## Export-all {#faqs}
+## Экспорт нескольких сохранённых запросов {#export-all}
 
 Запустите [экспорты для нескольких сохраненных запросов](/docs/use-dbt-semantic-layer/exports#exports-for-multiple-saved-queries) одновременно. Эта команда предоставляет удобный способ управления и выполнения экспортов для нескольких запросов одновременно, экономя время и усилия. Обратитесь к [экспортам в разработке](/docs/use-dbt-semantic-layer/exports#exports-in-development) для получения дополнительной информации.
 
@@ -600,7 +596,7 @@ dbt sl export # For dbt platform users (dbt v1 or v2)
 dbt sl export-all # For dbt platform users (dbt v1 or v2)
 ```
 
-## Часто задаваемые вопросы
+## Часто задаваемые вопросы {#faqs}
 
 <DetailsToggle alt_header="Как я могу добавить фильтр измерения к фильтру where?">
 
@@ -612,7 +608,9 @@ dbt sl export-all # For dbt platform users (dbt v1 or v2)
 
 <details> 
 <summary>Как настроить ваш терминал для экранирования фигурных скобок?</summary>
+
  Чтобы настроить ваш профиль <code>.zshrc</code> для экранирования фигурных скобок, вы можете использовать команду <code>setopt</code>, чтобы включить опцию <code>BRACECCL</code>. Эта опция заставит оболочку рассматривать фигурные скобки как литералы и предотвратит расширение скобок. Обратитесь к следующим шагам, чтобы настроить это: <br />
+
 
 1. Откройте ваш терминал.
 2. Откройте ваш файл <code>.zshrc</code> с помощью текстового редактора, такого как <code>nano</code>, <code>vim</code> или любого другого текстового редактора, который вы предпочитаете. Вы можете использовать следующую команду, чтобы открыть его с помощью <code>nano</code>:

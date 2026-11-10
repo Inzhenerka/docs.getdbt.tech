@@ -1,20 +1,20 @@
 ---
-title: dbt State configurations
-description: "Reference for all dbt State configurations — node-level state configs and profile-level settings."
+title: Настройки dbt State
+description: "Справочник по всем настройкам dbt State — настройкам состояния на уровне узлов и параметрам на уровне профиля."
 id: "dbt-state-configs"
 tags: ['dbt State']
 ---
 
-When you run a dbt command with [dbt State](/docs/deploy/dbt-state-about) enabled, dbt compares a node's logic and data against previous builds and takes the most efficient path:
+Когда вы выполняете команду dbt с включённым [dbt State](/docs/deploy/dbt-state-about), dbt сравнивает логику и данные узла с предыдущими сборками и выбирает наиболее эффективный вариант:
 
-- **Reuse** — if the object exists in the target schema, its logic hasn't changed, and it is not yet due for rebuilding under its `lag_tolerance` (its last build is still within the tolerance window, or its upstream data hasn't changed), the node is reused.
-- **Clone** — if reuse isn't possible but the object exists in the deferred environment with the same logic and sufficiently fresh data, dbt State clones it.
-- **Normal build** — if neither reuse nor clone is possible, the node builds as normal, using deferral for any unselected upstream nodes.
+- **Повторное использование** — если объект существует в целевой схеме, его логика не изменилась и время для повторной сборки в соответствии с `lag_tolerance` ещё не наступило (последняя сборка всё ещё находится в пределах допустимого интервала или данные вышестоящих узлов не изменились), узел используется повторно.
+- **Клонирование** — если повторное использование невозможно, но объект существует в окружении, используемом для отложенного разрешения ссылок (deferral), с той же логикой и достаточно свежими данными, dbt State клонирует его.
+- **Обычная сборка** — если ни повторное использование, ни клонирование невозможны, узел собирается как обычно, с использованием deferral для всех невыбранных вышестоящих узлов.
 
-Use the following configs to control how dbt State makes these decisions.
+Используйте следующие настройки, чтобы управлять тем, как dbt State принимает эти решения.
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
 
@@ -32,7 +32,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Properties YAML file">
+<TabItem value="property" label="YAML-файл свойств">
 
 <File name="models/schema.yml">
 
@@ -52,7 +52,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="SQL file config">
+<TabItem value="sql" label="Настройка в SQL-файле">
 
 <File name="models/<filename>.sql">
 
@@ -73,7 +73,7 @@ models:
 </TabItem>
 </Tabs>
 
-Profile-level settings are configured in `profiles.yml` and apply to a specific target environment:
+Параметры уровня профиля задаются в `profiles.yml` и применяются к определённому целевому окружению:
 
 <File name="profiles.yml">
 
@@ -82,30 +82,30 @@ my_project:
   outputs:
     dev:
       type: snowflake
-      # ... dev connection settings
-      defer_to_target: prod  # self-managed only
+      # ... настройки подключения к dev
+      defer_to_target: prod  # только для самостоятельно управляемых окружений
     prod:
       type: snowflake
-      # ... prod connection settings
+      # ... настройки подключения к prod
       allow_clones: true | false
-      metadata_warehouse: <warehouse_name>  # Snowflake only
+      metadata_warehouse: <warehouse_name>  # только для Snowflake
   target: dev
 ```
 </File>
 
-| Config | Default | Scope | Description |
+| Настройка | По умолчанию | Область действия | Описание |
 |--------|---------|-------|-------------|
-| [`lag_tolerance`](/reference/resource-configs/lag-tolerance) | `45m` | Node, folder, or project-level via model config | Sets how long dbt State waits before rebuilding a node after its upstream data changes. A node rebuilds only when its last build is older than this window and its upstream data has changed. Acts as a compute-saving buffer that helps align builds with freshness SLAs. Applies to data freshness only; SQL changes always trigger a rebuild regardless of this setting. |
-| [`compare_unrendered_code`](/reference/resource-configs/compare-unrendered-code) | `false` | Node, folder, or project-level via model config | Controls whether dbt State checks both the Jinja template (unrendered code) and rendered SQL when detecting code changes. Useful for models with non-deterministic macros or environment variables that produce different rendered SQL on every run. |
-| [`require_fresh_data_from`](/reference/resource-configs/require-fresh-data-from) | `any` | Node, folder, or project-level via model config | Whether `any` or `all` direct parents need fresh data before a node is eligible for a rebuild. |
-| [`pre_clone`](/reference/resource-configs/pre-clone) | `if_missing` | Node, folder, or project-level via model config | Whether dbt State pre-populates incremental models and snapshots by cloning production before a run. |
-| [`execute_hooks_on_any_reuse`](/reference/resource-configs/execute-hooks-on-any-reuse) | `false` | Node, folder, or project-level via model config | Whether pre- and post-hooks run when a node is reused without rebuilding. |
-| [`evaluate_volatile_sql`](/reference/resource-configs/evaluate-volatile-sql) | `false` | Node, folder, or project-level via model config | Whether dbt State stores and compares the runtime output of volatile SQL functions when deciding whether to rebuild. |
-| [`defer_to_target`](/reference/resource-configs/defer-to-target) | `prod` | Profile | (Self-managed only) Which profile target dbt State defers to. |
-| [`allow_clones`](/reference/resource-configs/allow-clones) | `true` | Profile | Whether dbt State can clone tables into a target. For example, set to `false` on `prod` to prevent dbt State from cloning dev tables into production. |
-| [`metadata_warehouse`](/reference/resource-configs/metadata-warehouse) | Profile `warehouse` | Profile | (Snowflake only) A separate warehouse for dbt State metadata lookups. When set, dbt issues multiple, individual queries (one per schema) instead of a single, consolidated query. |
+| [`lag_tolerance`](/reference/resource-configs/lag-tolerance) | `45m` | Уровень узла, папки или проекта через конфигурацию модели | Задаёт время ожидания dbt State перед повторной сборкой узла после изменения данных вышестоящих узлов. Узел пересобирается только тогда, когда с момента его последней сборки прошло больше указанного времени и данные вышестоящих узлов изменились. Этот интервал служит буфером для экономии вычислительных ресурсов и помогает согласовать сборки с SLA по свежести данных. Применяется только к свежести данных; изменения SQL всегда вызывают повторную сборку независимо от этой настройки. |
+| [`compare_unrendered_code`](/reference/resource-configs/compare-unrendered-code) | `false` | Уровень узла, папки или проекта через конфигурацию модели | Определяет, проверяет ли dbt State при обнаружении изменений кода как шаблон Jinja (код до рендеринга), так и SQL после рендеринга. Полезно для моделей с недетерминированными макросами или переменными окружения, из-за которых при каждом запуске получается разный SQL после рендеринга. |
+| [`require_fresh_data_from`](/reference/resource-configs/require-fresh-data-from) | `any` | Уровень узла, папки или проекта через конфигурацию модели | Определяет, должны ли свежие данные появиться у любого (`any`) или у всех (`all`) непосредственных родительских узлов, прежде чем узел сможет быть пересобран. |
+| [`pre_clone`](/reference/resource-configs/pre-clone) | `if_missing` | Уровень узла, папки или проекта через конфигурацию модели | Определяет, заполняет ли dbt State инкрементальные модели и снимки перед запуском, клонируя объекты из производственного окружения. |
+| [`execute_hooks_on_any_reuse`](/reference/resource-configs/execute-hooks-on-any-reuse) | `false` | Уровень узла, папки или проекта через конфигурацию модели | Определяет, выполняются ли хуки pre-hook и post-hook, когда узел используется повторно без пересборки. |
+| [`evaluate_volatile_sql`](/reference/resource-configs/evaluate-volatile-sql) | `false` | Уровень узла, папки или проекта через конфигурацию модели | Определяет, сохраняет и сравнивает ли dbt State результаты выполнения волатильных SQL-функций при принятии решения о повторной сборке. |
+| [`defer_to_target`](/reference/resource-configs/defer-to-target) | `prod` | Профиль | (Только для самостоятельно управляемых окружений) Указывает целевое окружение профиля, которое dbt State использует для deferral. |
+| [`allow_clones`](/reference/resource-configs/allow-clones) | `true` | Профиль | Определяет, может ли dbt State клонировать таблицы в целевое окружение. Например, установите `false` для `prod`, чтобы запретить dbt State клонировать таблицы из dev в производственное окружение. |
+| [`metadata_warehouse`](/reference/resource-configs/metadata-warehouse) | `warehouse` из профиля | Профиль | (Только для Snowflake) Отдельный вычислительный склад для запросов метаданных dbt State. Если он задан, dbt выполняет несколько отдельных запросов (по одному на схему) вместо одного объединённого запроса. |
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)

@@ -1,74 +1,73 @@
 ---
-title: "dbt licensing"
+title: "Лицензирование dbt"
 id: "dbt-licensing"
-description: "Learn about dbt v1 and dbt v2 licensing."
+description: "Узнайте о лицензировании dbt v1 и dbt v2."
 pagination_next: null
 pagination_prev: null
 ---
 
 <VersionBlock firstVersion="2.0">
 
-dbt v2 has the following distributions today, all free to install and run.
+На сегодняшний день dbt v2 доступен в следующих дистрибутивах, каждый из которых можно бесплатно устанавливать и запускать.
 
 <SimpleTable>
 
-| Distribution | Package | Use it when |
+| Дистрибутив | Пакет | Когда использовать |
 | --- | --- | --- |
-| <Constant name="fusion" /> | `dbt` | The recommended v2 experience. |
-| dbt OSS | `dbt-oss` | Your organization has a strict requirement to use the Apache 2.0 open-source runtime |
+| <Constant name="fusion" /> | `dbt` | Рекомендуемый вариант для работы с v2. |
+| dbt OSS | `dbt-oss` | В вашей организации действует строгое требование использовать среду выполнения с открытым исходным кодом под лицензией Apache 2.0 |
 
 </SimpleTable>
 
-If you have a older project that isn’t ready to move to v2, continue using v1.x for compatibility. For new or upgraded projects, we recommend [upgrading to v2](/docs/dbt-versions/upgrade-dbt-platform-version?version=2.0#dbt-v2).
+Если у вас есть старый проект, который ещё не готов к переходу на v2, продолжайте использовать v1.x для совместимости. Для новых или обновляемых проектов мы рекомендуем [перейти на v2](/docs/dbt-versions/upgrade-dbt-platform-version?version=2.0#dbt-v2).
 
-## Which one should I use?
+## Какой вариант выбрать? {#which-one-should-i-use}
 
-For most people: <Constant name="fusion" />. It has more [capabilities](/docs/dbt/dbt-availability?version=2.0#what-you-get-with-v2) out of the box than the open source v2 &mdash; including a built-in high-performance SQL linter &mdash; even if you never create a dbt account.
+Для большинства пользователей: <Constant name="fusion" />. Он предоставляет больше [возможностей](/docs/dbt/dbt-availability?version=2.0#what-you-get-with-v2) без дополнительной настройки, чем v2 с открытым исходным кодом, &mdash; в том числе встроенный высокопроизводительный SQL-линтер &mdash; даже если вы никогда не создадите учётную запись dbt.
 
-We recommend everyone to just [install dbt](/docs/local/install-dbt) and get <Constant name="fusion" /> by default.
+Мы рекомендуем всем просто [установить dbt](/docs/local/install-dbt) и получить <Constant name="fusion" /> по умолчанию.
 
-Typically you'd choose the open source installation directly only if you're in one of two specific situations: 
-1. Your organization's license policy requires a strict open-source distribution
-2. You're building something custom on top of the OSS code itself. 
+Как правило, выбирать непосредственно установку версии с открытым исходным кодом стоит только в одной из двух конкретных ситуаций: 
+1. Лицензионная политика вашей организации строго требует использовать дистрибутив с открытым исходным кодом.
+2. Вы разрабатываете собственное решение на основе самого кода OSS. 
 
-Already running <Constant name="core_v1" />? You don't have to move to v2 &mdash; it's still fully supported. Over time, new capabilities will land in v2 only, so most people will eventually want to [upgrade](/docs/dbt-versions/upgrade-dbt-platform-version?version=2.0#dbt-v2).
+Уже используете <Constant name="core_v1" />? Переходить на v2 необязательно &mdash; ваша версия по-прежнему полностью поддерживается. Со временем новые возможности будут появляться только в v2, поэтому большинство пользователей в итоге захотят [обновиться](/docs/dbt-versions/upgrade-dbt-platform-version?version=2.0#dbt-v2).
 
-To check which distribution you're using, run `dbt --version` in the command line.
+Чтобы проверить, какой дистрибутив вы используете, выполните `dbt --version` в командной строке.
 
-## What changed, and what didn't
+## Что изменилось, а что осталось прежним {#what-changed-and-what-didnt}
 
-**Changed:**
-- v2 is available through two distributions: <Constant name="fusion" /> and dbt OSS.
-- dbt OSS, the Apache 2.0 open-source distribution for v2, is powered by the shared Rust engine code and is now available in `dbt-oss`.
-- dbt v2 builds on dbt OSS and extends it with additional proprietary capabilities under the dbt Product Licensing Agreement.
+**Изменилось:**
+- v2 доступен в двух дистрибутивах: <Constant name="fusion" /> и dbt OSS.
+- dbt OSS, дистрибутив v2 с открытым исходным кодом под лицензией Apache 2.0, использует общий код движка на Rust и теперь доступен в пакете `dbt-oss`.
+- dbt v2 построен на основе dbt OSS и расширяет его дополнительными проприетарными возможностями в рамках лицензионного соглашения на продукты dbt (dbt Product Licensing Agreement).
 
-**Unchanged:**
-- <Constant name="core_v1" /> is still fully available and still Apache 2.0.
-- <Constant name="fusion" /> is still completely free to use, with some features unlocked by a free login or a paid dbt platform account &mdash; not required for any distribution.
-- Contributing to dbt is still open to everyone.
+**Осталось прежним:**
+- <Constant name="core_v1" /> по-прежнему полностью доступен под лицензией Apache 2.0.
+- <Constant name="fusion" /> по-прежнему полностью бесплатен для использования; некоторые функции становятся доступны после бесплатного входа в систему или при наличии платной учётной записи платформы dbt &mdash; ни то ни другое не обязательно для использования любого из дистрибутивов.
+- Участвовать в разработке dbt по-прежнему может каждый.
 
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-dbt v1 is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0). It's fully supported and free to install and run.
+dbt v1 выпускается под [лицензией Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0). Он полностью поддерживается, и его можно бесплатно устанавливать и запускать.
 
-Typically, you'd use <Constant name="core_v1" /> if you're managing older projects and aren't yet ready to [upgrade to v2](/docs/dbt-versions/upgrade-dbt-platform-version?version=2.0#dbt-v2).
+Как правило, <Constant name="core_v1" /> используют для работы со старыми проектами, если ещё не готовы [перейти на v2](/docs/dbt-versions/upgrade-dbt-platform-version?version=2.0#dbt-v2).
 
-### What's v2?
+### Что такое v2? {#whats-v2}
 
-dbt v2 introduces a shared Rust runtime available through two free distributions: the Apache 2.0 open-source distribution, and <Constant name="fusion" />, which builds on the open source offering with more capabilities out of the box. Over time, new capabilities will land in v2 only, so most people will eventually want to upgrade when possible.
+dbt v2 представляет общую среду выполнения на Rust, доступную в двух бесплатных дистрибутивах: дистрибутиве с открытым исходным кодом под лицензией Apache 2.0 и <Constant name="fusion" />, который расширяет возможности версии с открытым исходным кодом без дополнительной настройки. Со временем новые возможности будут появляться только в v2, поэтому большинство пользователей в итоге захотят обновиться, когда появится такая возможность.
 
-When you're ready to upgrade to v2, check out the [Upgrade to v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) for guidance.
+Когда будете готовы перейти на v2, ознакомьтесь с рекомендациями в разделе [«Переход на v2»](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2).
 
 </VersionBlock>
 
-## Licensing details
+## Подробности лицензирования {#licensing-details}
 
-[<Constant name="core" />](https://github.com/dbt-labs/dbt) is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0). <Constant name="fusion" /> is proprietary to dbt Labs, made available under the [dbt Product Licensing Agreement](https://www.getdbt.com/dbt-product-license-agreement).
+[<Constant name="core" />](https://github.com/dbt-labs/dbt) выпускается под [лицензией Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0). <Constant name="fusion" /> является проприетарным продуктом dbt Labs и предоставляется в рамках [лицензионного соглашения на продукты dbt (dbt Product Licensing Agreement)](https://www.getdbt.com/dbt-product-license-agreement).
 
-For the full breakdown of what's permitted under each license &mdash; source visibility, contributions, modifications, self-hosting, and redistribution &mdash; see the [dbt Licensing FAQ](https://www.getdbt.com/licenses-faq).
+Полный обзор того, что разрешает каждая лицензия, &mdash; доступ к исходному коду, участие в разработке, внесение изменений, самостоятельное размещение и распространение &mdash; приведён в разделе [«Часто задаваемые вопросы о лицензировании dbt»](https://www.getdbt.com/licenses-faq).
 
-<Constant name="dbt_platform" /> is a separate hosted product governed by its own [terms of service](https://www.getdbt.com/terms-of-use). Also not to be confused with <Constant name="dbt_platform"/> [licenses](/docs/platform/manage-access/seats-and-users). 
-
+<Constant name="dbt_platform" /> &mdash; это отдельный облачный продукт, на который распространяются собственные [условия использования](https://www.getdbt.com/terms-of-use). Также не следует путать эти лицензии с [лицензиями](/docs/platform/manage-access/seats-and-users) <Constant name="dbt_platform"/>.

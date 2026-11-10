@@ -20,16 +20,12 @@ is_featured: true
 
 ## Кратко
 
-<FilterableTable>
-
 | Модель | Метод | Точность, % |
 | --- | --- | --- |
 | claude-sonnet-4-6 | Text-to-SQL | 90.0% |
 | claude-sonnet-4-6 | Semantic Layer | 98.2% |
 | gpt-5.3-codex | Text-to-SQL | 84.1% |
 | gpt-5.3-codex | Semantic Layer | 100.0% |
-
-</FilterableTable>
 
 <br />
 
@@ -72,8 +68,6 @@ is_featured: true
 
 Мы протестировали Opus 4.6, Sonnet 4.6, GPT-5.3 Codex и GPT-5.2 (GPT-5.4 тогда ещё не была доступна через API) на нескольких уровнях интенсивности рассуждений: от `low` до `max` у Anthropic и от `none` до `xhigh` у OpenAI. Вот как выглядели 16 комбинаций для вопросов, на которые можно ответить через Semantic Layer:
 
-<FilterableTable>
-
 | Модель | Уровень рассуждений | Точность SL, % | Точность Text-to-SQL, % | Преимущество SL (п. п.) |
 | --- | --- | --- | --- | --- |
 | gpt-5.3-codex | none | 100.0 | 50.0 | 50.0 |
@@ -94,8 +88,6 @@ is_featured: true
 | claude-opus-4-6 | max | 87.5 | 62.5 | 25.0 |
 | claude-opus-4-6 | medium | 87.2 | 62.5 | 24.7 |
 | claude-opus-4-6 | high | 87.2 | 62.5 | 24.7 |
-
-</FilterableTable>
 
 <br />
 
@@ -120,15 +112,11 @@ is_featured: true
 
 Ниже приведена разбивка в зависимости от того, требует ли вопрос слишком большого для MetricFlow числа переходов между сущностями:
 
-<FilterableTable>
-
 | Слишком много переходов | Text-to-SQL 2023 | Text-to-SQL Sonnet 4.6 | Text-to-SQL GPT-5.3 Codex | SL 2023 | SL Sonnet 4.6 | SL GPT-5.3 Codex |
 | --- | --- | --- | --- | --- | --- | --- |
 | Нет | 26.9% | 62.5% | 51.2% | 83.1% | 100.0% | 100.0% |
 | Да | 48.3% | 70.0% | 100.0% | 0.0% | 0.0% | 0.0% |
 | Все | 32.7% | 64.5% | 64.5% | 60.5% | 72.7% | 72.7% |
-
-</FilterableTable>
 
 <br />
 
@@ -152,16 +140,12 @@ is_featured: true
 
 Результаты говорят сами за себя. Всего с 3 дополнительными моделями Semantic Layer теперь может ответить на каждый вопрос бенчмарка. Результаты Text-to-SQL тоже улучшились, что подтверждает: **более качественное моделирование помогает обоим подходам.**
 
-<FilterableTable>
-
 | Модель | Метод | Точность, % |
 | --- | --- | --- |
 | claude-sonnet-4-6 | Text-to-SQL | 90.0% |
 | claude-sonnet-4-6 | Semantic Layer | 98.2% |
 | gpt-5.3-codex | Text-to-SQL | 84.1% |
 | gpt-5.3-codex | Semantic Layer | 100.0% |
-
-</FilterableTable>
 
 <br />
 

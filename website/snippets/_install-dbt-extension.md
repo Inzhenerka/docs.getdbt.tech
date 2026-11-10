@@ -73,7 +73,9 @@ import FusionManualInstall from '/snippets/_v2-manual-install.md';
 
 </Expandable>
 
-## Начало работы
+<a id="getting-started" />
+
+## Начало работы {#начало-работы}
 
 После установки v2 и расширения dbt для VS Code на боковой панели появляется логотип dbt. Нажмите на него, чтобы открыть панель **Get started**.
 

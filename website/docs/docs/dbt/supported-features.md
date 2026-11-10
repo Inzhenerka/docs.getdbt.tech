@@ -1,16 +1,16 @@
 ---
-title: "Supported features"
+title: "Поддерживаемые возможности"
 id: "supported-features"
-description: "Feature support and parity information for dbt."
+description: "Информация о поддержке возможностей dbt и функциональном паритете."
 pagination_next: null
 pagination_prev: null
 ---
 
-# Supported features
+# Поддерживаемые возможности
 
 <IntroText>
 
-Learn about the features supported by dbt v2, including requirements and limitations.
+Узнайте о возможностях, поддерживаемых dbt v2, а также о требованиях и ограничениях.
 
 </IntroText>
 
@@ -23,46 +23,46 @@ import FusionDWH from '/snippets/_v2-dwh.md';
 
 </VersionBlock>
 
-When you install dbt, you get v2 by default. There's no separate feature set to choose between &mdash; v2 is just dbt, running faster, with more capability built in.
+При установке dbt вы по умолчанию получаете v2. Выбирать между отдельными наборами возможностей не нужно &mdash; v2 — это тот же dbt, который работает быстрее и предоставляет больше встроенных возможностей.
 
-## Requirements
+## Требования {#requirements}
 
-To use v2 in your project you must:
-- Use a supported adapter and authentication method:
+Чтобы использовать v2 в своём проекте, необходимо:
+- Использовать поддерживаемый адаптер и метод аутентификации:
   <FusionDWH /> 
-- Be able to run your project on the latest version of v1 with no deprecation warnings or errors.
-- Migrate your Semantic Layer configurations to the [latest YAML spec](/docs/build/latest-metrics-spec).
+- Убедиться, что ваш проект может выполняться на последней версии v1 без предупреждений об устаревших возможностях и ошибок.
+- Перевести конфигурации Semantic Layer на [последнюю спецификацию YAML](/docs/build/latest-metrics-spec).
 
-## Parity with dbt v1
+## Функциональный паритет с dbt v1
 
-dbt v2 supports nearly all of v1.x's capabilities today. Refer to [Limitations](#limitations) below for the small number of gaps that remain.
+На сегодняшний день dbt v2 поддерживает почти все возможности v1.x. Немногочисленные оставшиеся различия описаны ниже, в разделе [Ограничения](#limitations).
 
-v2 has also removed some deprecated features and introduced more rigorous validation of erroneous project code compared to v1.x. Refer to the [Upgrade guide](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) for details.
+В v2 также удалены некоторые устаревшие возможности и введена более строгая проверка ошибочного кода проекта по сравнению с v1.x. Подробности см. в [Руководстве по обновлению](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2).
 
-## Features and capabilities
+## Функции и возможности {#features-and-capabilities}
 
-dbt v2 gives your team faster development workflows with semantic and syntax error detection, a faster linter, column-level lineage, language server and VS Code integration, docs v2 (full), and data diff. The dbt VS Code extension adds editor features like IntelliSense, hover info, and inline errors on top, powered by the <Term id="lsp"/>.
+dbt v2 ускоряет рабочие процессы разработки вашей команды благодаря обнаружению семантических и синтаксических ошибок, более быстрому линтеру, отслеживанию происхождения данных на уровне столбцов, языковому серверу и интеграции с VS Code, документации v2 (в полном объёме) и сравнению данных. Расширение dbt для VS Code дополнительно предоставляет такие возможности редактора, как IntelliSense, информация при наведении и отображение ошибок прямо в коде, на базе <Term id="lsp"/>.
 
-Most v2 features work right away, with no login required. A few dbt platform-based capabilities become available once you sign in with a <Constant name="dbt_platform" /> account &mdash; free to create, no paid plan needed. For the full free-vs-login breakdown, refer to [v2 feature availability](/docs/dbt/dbt-availability). For <Term id="lsp"/> features specifically, refer to [About dbt LSP](/docs/about-dbt-lsp).
+Большинство возможностей v2 доступны сразу и не требуют входа в систему. Некоторые возможности на базе платформы dbt становятся доступны после входа с учётной записью <Constant name="dbt_platform" /> &mdash; её можно создать бесплатно, платный тариф не требуется. Полное описание возможностей, доступных без входа и после входа в систему, см. в разделе [Доступность возможностей v2](/docs/dbt/dbt-availability). Подробнее о возможностях <Term id="lsp"/> см. в разделе [О dbt LSP](/docs/about-dbt-lsp).
 
 :::tip 
-<Constant name="dbt_platform" /> [features](/docs/platform/about-platform/dbt-platform-features) (like [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh), and more) are the enterprise layer on top of v2 &mdash; available no matter how you run dbt, depending on your [dbt plan](https://www.getdbt.com/pricing).
+[Возможности](/docs/platform/about-platform/dbt-platform-features) <Constant name="dbt_platform" /> (такие как [Advanced CI](/docs/deploy/advanced-ci), [dbt <Constant name="mesh" />](/docs/mesh/about-mesh) и другие) — это корпоративный уровень функциональности поверх v2 &mdash; они доступны независимо от способа запуска dbt, в зависимости от вашего [тарифного плана dbt](https://www.getdbt.com/pricing).
 :::
 
-## Limitations
+## Ограничения {#limitations}
 
-If your project uses any of the following, you can still use v2, but full migration may not be possible yet:
+Если ваш проект использует что-либо из перечисленного ниже, вы всё ещё можете использовать v2, но полная миграция пока может быть невозможна:
 
-- Models that rely on materialization features v2 doesn't fully support, or that need configurations it's still missing
-- Tooling that depends on v1.x's exact log output
-- Workflows built around dbt platform features v2 doesn't yet support, like model-level notifications
-- Using the dbt VS Code extension in Cursor's Agent mode &mdash; lineage visualization only renders in Editor mode, so switch there if you need the full lineage tab
-- [Linting using SQLFluff](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) &mdash; You use SQLFluff for linting in CI or local development. SQLFluff is not natively compatible with <Constant name="fusion_engine"/> but we provide a [SQLFluff compatible high performance alternative](/reference/commands/lint?version=2.0) with <Constant name="fusion" />. Support varies by where you run it:
-    - **<Constant name="dbt_platform"/> CI jobs**: CI jobs on a <Constant name="fusion"/> version invoke [`dbt lint`](/reference/commands/lint?version=2.0) instead of SQLFluff, so results can differ. Refer to [Rule parity with SQLFluff](/reference/commands/lint?version=2.0#rule-parity-with-sqlfluff).
-    - **Studio IDE**: SQLFluff linting works, but uses the <Constant name="core"/> engine templater rather than <Constant name="fusion"/>. 
-    - **Local development**: You can run SQLFluff locally using the standalone <Constant name="core"/> engine templater as a workaround. A native <Constant name="fusion"/> linter is available with [`dbt lint` command](/reference/commands/lint?version=2.0)
+- Модели, которые зависят от возможностей материализации, не полностью поддерживаемых v2, или требуют конфигураций, которые в ней пока отсутствуют
+- Инструменты, которые зависят от точного формата вывода журналов v1.x
+- Рабочие процессы, построенные на возможностях платформы dbt, которые v2 пока не поддерживает, например на уведомлениях на уровне моделей
+- Использование расширения dbt для VS Code в режиме Agent в Cursor &mdash; визуализация происхождения данных отображается только в режиме Editor, поэтому переключитесь в него, если вам нужна полноценная вкладка происхождения данных
+- [Линтинг с помощью SQLFluff](/docs/deploy/continuous-integration#to-configure-sqlfluff-linting) &mdash; Вы используете SQLFluff для линтинга в CI или при локальной разработке. SQLFluff изначально не совместим с <Constant name="fusion_engine"/>, но в составе <Constant name="fusion" /> мы предоставляем [высокопроизводительную альтернативу, совместимую с SQLFluff](/reference/commands/lint?version=2.0). Поддержка зависит от среды запуска:
+    - **Задания CI в <Constant name="dbt_platform"/>**: задания CI на версии <Constant name="fusion"/> вызывают [`dbt lint`](/reference/commands/lint?version=2.0) вместо SQLFluff, поэтому результаты могут отличаться. См. раздел [Паритет правил с SQLFluff](/reference/commands/lint?version=2.0#rule-parity-with-sqlfluff).
+    - **Studio IDE**: линтинг с помощью SQLFluff работает, но использует обработчик шаблонов движка <Constant name="core"/>, а не <Constant name="fusion"/>. 
+    - **Локальная разработка**: в качестве обходного решения можно запускать SQLFluff локально с помощью отдельного обработчика шаблонов движка <Constant name="core"/>. Встроенный линтер <Constant name="fusion"/> доступен через [команду `dbt lint`](/reference/commands/lint?version=2.0)
 
-## Package support
+## Поддержка пакетов {#package-support}
 
 import FusionPackages from '/snippets/_v2-supported-packages.md';
 

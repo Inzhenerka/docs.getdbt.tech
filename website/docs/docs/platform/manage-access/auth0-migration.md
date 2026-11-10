@@ -21,7 +21,7 @@ dbt Labs сотрудничает с Auth0, чтобы расширить воз
 
 Также вы можете начать процесс, нажав на имя своей учетной записи в меню в левом нижнем углу и перейдя в раздел **Account settings** > **SSO & SCIM**. Нажмите кнопку **Begin Migration**, чтобы начать.
 
-:::warning vanity urls
+:::warning Пользовательские URL
 
 Не используйте vanity URL при настройке параметров SSO. Необходимо использовать универсальный URL, указанный в настройках SSO для вашей среды. Например, если ваш vanity URL — `cloud.MY_COMPANY.getdbt.com`, в качестве `<YOUR_AUTH0_URI>` нужно указать `auth.cloud.getdbt.com`.
 
@@ -61,7 +61,7 @@ dbt Labs сотрудничает с Auth0, чтобы расширить воз
 
 4. Сохраните настройки и протестируйте новую конфигурацию, используя URL для входа SSO, предоставленный на странице настроек.
 
-### SAML 2.0 and Entra ID {#saml-20-and-entra-id}
+### SAML 2.0 и Entra ID {#saml-20-and-entra-id}
 
 Поля Entra ID, которые будут обновлены:
 - Single sign-on URL &mdash; `https://<YOUR_AUTH0_URI>/login/callback?connection=<SLUG>`
@@ -77,11 +77,11 @@ dbt Labs сотрудничает с Auth0, чтобы расширить воз
     - Entra ID **Identifier (Entity ID)** = <Constant name="dbt" /> **Audience URI (SP Entity ID)**
     - Entra ID **Reply URL (Assertion Consumer Service URL)** = <Constant name="dbt" /> **Single sign-on URL**
 
-    <Lightbox src="/img/docs/dbt-platform/access-control/edit-entra-saml.png" width="90%" title="Editing the SAML configuration window in Entra ID"/>
+    <Lightbox src="/img/docs/dbt-platform/access-control/edit-entra-saml.png" width="90%" title="Редактирование настроек SAML в Entra ID"/>
 
 4. Сохраните поля, и завершенная конфигурация будет выглядеть примерно так:
 
-    <Lightbox src="/img/docs/dbt-platform/access-control/entra-id-saml.png" width="90%" title="Completed configuration of the SAML fields in Entra ID"/>
+    <Lightbox src="/img/docs/dbt-platform/access-control/entra-id-saml.png" width="90%" title="Заполненные поля конфигурации SAML в Entra ID"/>
 
 3. Включите параметр `Enable new SSO authentication`, чтобы обеспечить корректную маршрутизацию трафика. _Новое действие миграции SSO является окончательным и не может быть отменено._
 
@@ -89,25 +89,25 @@ dbt Labs сотрудничает с Auth0, чтобы расширить воз
 
 ## Microsoft Entra ID {#microsoft-entra-id}
 
-Microsoft Entra ID admins using OpenID Connect (ODIC) will need to make a slight adjustment to the existing authentication app in the Azure portal. This migration does not require that the entire app be deleted or recreated; you can edit the existing app. Start by opening the Azure portal and navigating to the Microsoft Entra ID overview.
+Администраторам Microsoft Entra ID, использующим OpenID Connect (OIDC), нужно изменить существующее приложение аутентификации. Пересоздавать приложение не требуется. Откройте портал Azure и перейдите на страницу обзора Microsoft Entra ID.
 
 Ниже приведены шаги по обновлению. Необходимо выполнить их все, чтобы обеспечить бесперебойный доступ к <Constant name="dbt" />, а при внесении этих изменений следует координировать действия с администратором вашего поставщика удостоверений.
 
 1. Нажмите **App Registrations** в меню слева.
 
-<Lightbox src="/img/docs/dbt-platform/access-control/aad-app-registration.png" title="Select App Registrations"/>
+<Lightbox src="/img/docs/dbt-platform/access-control/aad-app-registration.png" title="Раздел App Registrations в Entra ID"/>
 
 2. Выберите нужное приложение **<Constant name="dbt" />** (название может отличаться) из списка. На странице обзора приложения нажмите на гиперссылку рядом с **Redirect URI**
 
-<Lightbox src="/img/docs/dbt-platform/access-control/app-overview.png" title="Click the Redirect URI hyperlink"/>
+<Lightbox src="/img/docs/dbt-platform/access-control/app-overview.png" title="Ссылка Redirect URI на странице приложения"/>
 
 3. В панели **Web** с **Redirect URIs** нажмите **Add URI** и введите соответствующий `https://<YOUR_AUTH0_URI>/login/callback`. Сохраните настройки и убедитесь, что он учтен в обновленном обзоре приложения.
 
-<Lightbox src="/img/docs/dbt-platform/access-control/redirect-URI.png" title="Enter new redirect URI"/>
+<Lightbox src="/img/docs/dbt-platform/access-control/redirect-URI.png" title="Ввод нового URI перенаправления"/>
 
 4. Перейдите в среду <Constant name="dbt" /> и откройте **Account settings** (Настройки аккаунта). Выберите **SSO & SCIM** в меню слева и нажмите **Edit** (Изменить) в правой части панели SSO. В поле **domain** укажите домен, который ваша организация использует для входа в Microsoft Entra ID. Включите параметр **Enable New SSO Authentication** (Включить новую аутентификацию SSO) и нажмите **Save** (Сохранить). _После включения этого параметра отключить его будет невозможно._
 
-:::warning Domain authorization
+:::warning Авторизация домена
 
 Вы должны завершить авторизацию домена до того, как включите `Enable New SSO Authentication`, иначе миграция не будет успешно завершена.
 

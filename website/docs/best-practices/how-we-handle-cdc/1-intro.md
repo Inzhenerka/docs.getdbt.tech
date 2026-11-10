@@ -1,46 +1,46 @@
 ---
-title: "Change data capture in dbt"
+title: "Отслеживание изменений данных в dbt"
 id: "1-intro"
-description: "Learn how change data capture works in dbt, and how to choose incremental models, snapshots, or both."
-hoverSnippet: "Learn how change data capture works in dbt"
+description: "Узнайте, как работает отслеживание изменений данных в dbt и как выбрать инкрементальные модели, снимки или их сочетание."
+hoverSnippet: "Узнайте, как работает отслеживание изменений данных в dbt"
 availability: all_users
 ---
 
-Change data capture (CDC) identifies new, updated, and deleted rows in your source data so you can process changes without rebuilding an _entire_ table.
+Отслеживание изменений данных (Change data capture, CDC) позволяет выявлять новые, изменённые и удалённые строки в исходных данных, чтобы обрабатывать изменения без перестроения _всей_ таблицы.
 
-This guide explains how you can use incremental models and snapshots in <Constant name="dbt" /> to keep tables current, preserve a history of changes, or both. To find the best approach for your project, refer to [Choosing incremental models or snapshots](/best-practices/how-we-handle-cdc/2-choosing-incremental-or-snapshots). For job frequency, streams, and dynamic tables, refer to [Near real-time data in dbt](/best-practices/how-we-handle-real-time-data/1-intro), including [CDC with Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams).
+В этом руководстве объясняется, как использовать инкрементальные модели и снимки в <Constant name="dbt" />, чтобы поддерживать таблицы в актуальном состоянии, сохранять историю изменений или решать обе задачи. Чтобы выбрать оптимальный подход для своего проекта, обратитесь к разделу [Выбор инкрементальных моделей или снимков](/best-practices/how-we-handle-cdc/2-choosing-incremental-or-snapshots). Информацию о частоте запуска заданий, потоках и динамических таблицах см. в разделе [Данные в dbt в режиме, близком к реальному времени](/best-practices/how-we-handle-real-time-data/1-intro), в том числе в подразделе [CDC с помощью Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams).
 
-## How to handle CDC in dbt
+## Как работать с CDC в dbt
 
-When source data changes, you may want to update your table, keep old versions, or do both.
+Когда исходные данные меняются, вам может потребоваться обновить таблицу, сохранить старые версии или сделать и то и другое.
 
-In <Constant name="dbt" />, that usually means one of two ways to build a table:
+В <Constant name="dbt" /> для этого обычно используется один из двух способов построения таблицы:
 
-- An [incremental model](/docs/build/incremental-models-overview) keeps a table current. On each run, <Constant name="dbt" /> processes new or changed rows and _replaces_ the old row for that `unique_key`.
-- A [snapshot](/docs/build/snapshots) keeps history. On each run, <Constant name="dbt" /> compares the source to the last snapshot and _adds_ a row when the record changes, with `dbt_valid_from` and `dbt_valid_to`.
+- [Инкрементальная модель](/docs/build/incremental-models-overview) поддерживает таблицу в актуальном состоянии. При каждом запуске <Constant name="dbt" /> обрабатывает новые или изменённые строки и _заменяет_ старую строку с соответствующим значением `unique_key`.
+- [Снимок](/docs/build/snapshots) сохраняет историю. При каждом запуске <Constant name="dbt" /> сравнивает исходные данные с последним снимком и _добавляет_ строку при изменении записи, указывая `dbt_valid_from` и `dbt_valid_to`.
 
-Snapshots only capture changes when you run them, which means you should run them on a schedule or you might miss changes. Refer to the FAQ [How often should I run the snapshot command?](/faqs/Runs/snapshot-frequency), which recommends hourly to daily.
+Снимки фиксируют изменения только при запуске, поэтому их следует запускать по расписанию, иначе вы можете пропустить изменения. Обратитесь к ответу на частый вопрос [Как часто следует запускать команду snapshot?](/faqs/Runs/snapshot-frequency), где рекомендуется запускать её с периодичностью от одного раза в час до одного раза в день.
 
-## Choose an approach: latest row, history, or both
+## Выберите подход: последняя версия строки, история или и то и другое
 
-Your approach depends on how your source exposes changes and what you need to keep.
+Выбор подхода зависит от того, как источник предоставляет изменения и что вам нужно сохранять.
 
 <SimpleTable>
-| If you need | How your source stores changes | Use |
+| Что вам нужно | Как источник хранит изменения | Что использовать |
 | --- | --- | --- |
-| Latest row only | Appends a row for each change, or overwrites rows but has a reliable change timestamp | Incremental model |
-| Current row plus old versions | Overwrites rows, and is small enough to scan each run | Snapshot |
-| Current row plus old versions, without scanning the full source each run | Overwrites rows, or appends a row for each change (after cleanup) | An incremental staging model, then a snapshot, then a downstream model that keeps only the latest snapshot row |
+| Только последняя версия строки | Добавляет строку для каждого изменения или перезаписывает строки, но содержит надёжную метку времени изменения | Инкрементальная модель |
+| Текущая строка и старые версии | Перезаписывает строки и достаточно мал, чтобы сканировать его при каждом запуске | Снимок |
+| Текущая строка и старые версии без полного сканирования источника при каждом запуске | Перезаписывает строки или добавляет строку для каждого изменения (после очистки данных) | Инкрементальная модель промежуточного слоя (staging), затем снимок, затем зависимая модель, сохраняющая только последнюю версию строки из снимка |
 </SimpleTable>
 
 <br />
 
-For examples of each approach, refer to [Choosing incremental models or snapshots](/best-practices/how-we-handle-cdc/2-choosing-incremental-or-snapshots).
+Примеры каждого подхода см. в разделе [Выбор инкрементальных моделей или снимков](/best-practices/how-we-handle-cdc/2-choosing-incremental-or-snapshots).
 
-## Key recommendations
+## Основные рекомендации
 
-- Use incremental models when you only need the current rows and you can identify new or changed rows. An incremental model _replaces_ the old row, so runs stay small and you do not store versions you will never query.
-- Use snapshots when you need to know what a record looked like at a point in the past. A snapshot _adds_ a row when the record changes, which is how you keep the old version. An incremental model would have overwritten it.
-- Use both when staging should stay cheap and current, and a snapshot should store versions. The incremental model limits how much you process. The snapshot records history. Snapshot the staging models (or sources), not the final table people query, so you track the source as it changed, not a report that can change for other reasons.
-- Prefer a snapshot `timestamp` strategy when `updated_at` is reliable and only moves forward. That lets <Constant name="dbt" /> detect a change from the clock instead of comparing every column. Use `check` when the timestamp is missing or untrustworthy, so a change in the row still gets recorded.
-- If the warehouse already writes a list of changes (streams), use an incremental model. The warehouse already detected the change, so you do not need a snapshot to find it. Refer to [CDC with Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams) for that example.
+- Используйте инкрементальные модели, если вам нужны только текущие строки и вы можете выявлять новые или изменённые строки. Инкрементальная модель _заменяет_ старую строку, поэтому объём обработки при каждом запуске остаётся небольшим, а версии, к которым вы никогда не будете обращаться в запросах, не хранятся.
+- Используйте снимки, если вам нужно знать, как выглядела запись в определённый момент в прошлом. Снимок _добавляет_ строку при изменении записи, благодаря чему сохраняется старая версия. Инкрементальная модель перезаписала бы её.
+- Используйте оба подхода, если промежуточный слой должен оставаться актуальным при небольших затратах на обработку, а снимок должен хранить версии. Инкрементальная модель ограничивает объём обрабатываемых данных. Снимок сохраняет историю. Создавайте снимки моделей промежуточного слоя (или источников), а не итоговой таблицы, к которой обращаются пользователи: так вы будете отслеживать изменения источника, а не отчёта, который может меняться по другим причинам.
+- Отдавайте предпочтение стратегии снимков `timestamp`, если поле `updated_at` надёжно и его значение только увеличивается. Это позволяет <Constant name="dbt" /> выявлять изменения по метке времени, а не сравнивать каждый столбец. Используйте `check`, если метка времени отсутствует или ненадёжна, чтобы изменения строки всё равно фиксировались.
+- Если хранилище уже записывает список изменений (потоки), используйте инкрементальную модель. Хранилище уже выявило изменение, поэтому для его обнаружения снимок не нужен. Соответствующий пример см. в разделе [CDC с помощью Snowflake Streams](/best-practices/how-we-handle-real-time-data/2-incremental-patterns#cdc-with-snowflake-streams).

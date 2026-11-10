@@ -221,7 +221,7 @@ sources:
 
 </File>
 
-Note that for backwards compatibility, `tags` is supported as a top-level key for sources, but without the capabilities of config inheritance.
+Для обратной совместимости у источников поддерживается ключ `tags` верхнего уровня. Он не наследует настройки конфигурации.
 
 </TabItem>
 
@@ -252,7 +252,7 @@ exposures:
 
 </File>
 
-Note that for backwards compatibility, `tags` is supported as a top-level key for exposures, but without the capabilities of config inheritance.
+Для обратной совместимости у экспозиций поддерживается ключ `tags` верхнего уровня. Он не наследует настройки конфигурации.
 
 </TabItem>
 
@@ -407,11 +407,11 @@ models:
 </File>
 
 
-### Apply tags to models {#apply-tags-to-models}
+### Назначение тегов моделям {#apply-tags-to-models}
 
-This section demonstrates applying tags to models in the `dbt_project.yml`, `schema.yml`, and SQL files. 
+В этом разделе показано, как назначать теги моделям в `dbt_project.yml`, `schema.yml` и SQL-файлах.
 
-To apply tags to a model in your `dbt_project.yml` file, you would add the following:
+Чтобы задать теги для модели в `dbt_project.yml`, добавьте:
 
 <File name='dbt_project.yml'>
 
@@ -606,9 +606,9 @@ dbt test --select tag:column_level
 dbt test --select tag:test_level
 ```
 
-### Backwards compatibility for sources and exposures
+### Обратная совместимость для источников и экспозиций {#backwards-compatibility-for-sources-and-exposures}
 
-For backwards compatibility, `tags` is supported as a top-level key for sources and exposures (prior to dbt v1.10), but without the capabilities of config inheritance.
+Для обратной совместимости у источников и экспозиций поддерживается ключ `tags` верхнего уровня, как до dbt v1.10. Он не наследует настройки конфигурации.
 
 <File name='models/properties.yml'>
 

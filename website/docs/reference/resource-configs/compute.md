@@ -1,7 +1,7 @@
 ---
 resource_types: [unit tests]
 title: "compute"
-description: "Use the compute config to run unit tests locally with DuckDB instead of against your data platform."
+description: "Используйте настройку compute, чтобы запускать юнит-тесты локально с DuckDB, а не на вашей платформе данных."
 datatype: string
 default_value: remote
 sidebar_label: "compute"
@@ -13,25 +13,25 @@ availability:
 
 <IntroText>
 
-Compute controls whether a unit test runs against your data platform or locally with DuckDB.
+Настройка compute определяет, где выполняется юнит-тест: на вашей платформе данных или локально с DuckDB.
 
 </IntroText>
 
-:::info Available in v2 with opt in
+:::info Доступно в v2 при явном включении
 
-The `compute` config is available in v2 only. It isn't available in v1 and will be ignored. To upgrade to v2, refer to [Upgrade to v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2) upgrade guide. Setting `compute: local` on a unit test is in an experimental feature. Set the `DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS` environment variable to `true` before you use it:
+Настройка `compute` доступна только в v2. В v1 она недоступна и будет проигнорирована. Чтобы перейти на v2, обратитесь к руководству [Обновление до v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2). Использование `compute: local` для юнит-теста — экспериментальная возможность. Перед её использованием установите переменную окружения `DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS` в значение `true`:
 
 ```bash
 export DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS=true
 ```
 
-Without it, dbt fails with an invalid configuration error that names the variable.
+Без этой переменной dbt завершает работу с ошибкой недопустимой конфигурации, в которой указано имя переменной.
 
 :::
 
-By default, each unit test sends a query to your data platform and waits for the result. This can slow down testing and use warehouse compute.
+По умолчанию каждый юнит-тест отправляет запрос на вашу платформу данных и ожидает результата. Это может замедлять тестирование и расходовать вычислительные ресурсы хранилища.
 
-Use the `compute: local` config to run [unit tests](/docs/build/unit-tests) locally with DuckDB for faster feedback while you develop while managing warehouse compute cost. 
+Используйте настройку `compute: local`, чтобы запускать [юнит-тесты](/docs/build/unit-tests) локально с DuckDB, быстрее получать обратную связь при разработке и контролировать затраты на вычислительные ресурсы хранилища. 
 
 <File name='models/filename.yml'>
 
@@ -55,20 +55,20 @@ unit_tests:
 
 </File>
 
-## Definition
+## Определение
 
-You can configure `compute` for [unit tests](/docs/build/unit-tests), either on an individual test in a properties YAML file or for a group of tests in your project YAML file (`dbt_project.yml`).
+Вы можете задать `compute` для [юнит-тестов](/docs/build/unit-tests): как для отдельного теста в YAML-файле свойств, так и для группы тестов в YAML-файле проекта (`dbt_project.yml`).
 
-The following values are available for `compute`:
+Для `compute` доступны следующие значения:
 
-- `local`: Run the unit test with DuckDB, wherever dbt is running. Nothing is sent to your data platform, so the test returns quickly and uses no warehouse compute.
-- `remote` (default): Send the unit test to your data platform to run, using warehouse compute like any other query. Because this is the default, you only need to set it explicitly to opt a test out of a project-level `+compute: local`.
+- `local`: выполнять юнит-тест с DuckDB там, где запущен dbt. На вашу платформу данных ничего не отправляется, поэтому тест быстро возвращает результат и не использует вычислительные ресурсы хранилища.
+- `remote` (по умолчанию): отправлять юнит-тест на вашу платформу данных для выполнения с использованием вычислительных ресурсов хранилища, как и любой другой запрос. Поскольку это значение используется по умолчанию, задавать его явно нужно только для того, чтобы исключить тест из действия настройки `+compute: local`, заданной на уровне проекта.
 
-Local execution is available for Snowflake and BigQuery. You might also see `sidecar` in error messages, which means the same thing as `local`.
+Локальное выполнение доступно для Snowflake и BigQuery. В сообщениях об ошибках также может встречаться `sidecar` — это то же самое, что и `local`.
 
-A config on an individual unit test overrides the project-level config. So if you set `+compute: local` in your `dbt_project.yml` and `compute: remote` in one test, that single test runs against your data platform while the rest run locally.
+Настройка отдельного юнит-теста переопределяет настройку на уровне проекта. Поэтому, если вы зададите `+compute: local` в `dbt_project.yml` и `compute: remote` для одного теста, этот тест будет выполняться на вашей платформе данных, а остальные — локально.
 
-In your project file:
+В файле проекта:
 
 <File name='dbt_project.yml'>
 
@@ -80,7 +80,7 @@ unit_tests:
 
 </File>
 
-Then on a single test:
+Затем для отдельного теста:
 
 <File name='models/filename.yml'>
 
@@ -94,17 +94,17 @@ unit_tests:
 
 </File>
 
-#### Things to know about local execution
+#### Что нужно знать о локальном выполнении
 
-- `compute: local` is refused unless `DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS=true` is set in the environment where dbt runs. This applies whether you set it on an individual test or as `+compute: local` in `dbt_project.yml`.
-- Your SQL has to be translatable to DuckDB. Platform-specific functions with no DuckDB equivalent fail, and `local` doesn't fall back to your data platform &mdash; a translation failure is a test failure.
-- To translate your SQL, dbt fetches the schemas of your model's direct upstream models from your data platform the first time you run the test, then caches them for later runs. Those upstream models must already exist in your data platform.
-- Setting `compute: local` also promotes [`static_analysis`](/reference/resource-configs/static-analysis) to `strict` for that test, because local execution needs strict analysis to translate your SQL. If you set `static_analysis: off` on the test, it can't run locally and produces an error.
+- Настройка `compute: local` отклоняется, если в окружении, где запущен dbt, не задано `DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS=true`. Это относится как к настройке отдельного теста, так и к `+compute: local` в `dbt_project.yml`.
+- Ваш SQL должен поддаваться преобразованию в SQL для DuckDB. Функции, специфичные для платформы и не имеющие эквивалента в DuckDB, приводят к ошибке, а режим `local` не переключается на вашу платформу данных при сбое &mdash; ошибка преобразования означает ошибку теста.
+- Чтобы преобразовать ваш SQL, при первом запуске теста dbt получает с вашей платформы данных схемы моделей, от которых тестируемая модель зависит напрямую, а затем кеширует их для последующих запусков. Эти модели должны уже существовать на вашей платформе данных.
+- Настройка `compute: local` также устанавливает для [`static_analysis`](/reference/resource-configs/static-analysis) значение `strict` для этого теста, поскольку для преобразования SQL при локальном выполнении необходим строгий анализ. Если задать для теста `static_analysis: off`, он не сможет выполняться локально и завершится с ошибкой.
 
 
-## Related docs
+## Связанная документация
 
-- [Run unit tests locally](/docs/build/unit-tests#run-unit-tests-locally)
-- [Unit tests](/docs/build/unit-tests)
-- [About unit tests property](/reference/resource-properties/unit-tests)
+- [Локальный запуск юнит-тестов](/docs/build/unit-tests#run-unit-tests-locally)
+- [Юнит-тесты](/docs/build/unit-tests)
+- [О свойстве unit_tests](/reference/resource-properties/unit-tests)
 - [static_analysis](/reference/resource-configs/static-analysis)

@@ -1,11 +1,11 @@
 ---
 title: "Конфигурация DuckDB"
 id: "duckdb-configs"
-description: "Reference for DuckDB-specific configurations in dbt-duckdb, including secrets, DuckLake, external files, incremental strategies, and more."
+description: "Настройки dbt-duckdb для DuckDB, включая секреты, DuckLake, внешние файлы и инкрементальные стратегии."
 tags: ['DuckDB']
 ---
 
-These configurations are specific to `dbt-duckdb`. For profile setup and connection options, refer to [Connect DuckDB](/docs/local/connect-data-platform/duckdb-setup). For general dbt concepts, refer to [Materializations](/docs/build/materializations) and [Incremental models](/docs/build/incremental-models).
+Эти настройки относятся к `dbt-duckdb`. Настройки профиля и подключения описаны в разделе [Подключение DuckDB](/docs/local/connect-data-platform/duckdb-setup). Общие сведения о dbt см. в разделах [Материализации](/docs/build/materializations) и [Инкрементальные модели](/docs/build/incremental-models).
 
 Для некоторых возможностей требуется определённая минимальная версия `dbt-duckdb`. Требования к версии указаны по ходу текста на этой странице.
 
@@ -169,7 +169,7 @@ DuckLake применяет партиционирование с помощью
 
 ## Модели на Python
 
-dbt supports [Python models](/docs/build/python-models) in <Constant name="dbt" /> 1.3 and later. In `dbt-duckdb`, Python models run in the same process that owns the DuckDB connection. The `.py` file is loaded as a Python module using [`importlib`](https://docs.python.org/3/library/importlib.html), the `model` function is called with a `dbt` object (containing `ref` and `source` information) and a `DuckDBPyConnection` object, and the returned object is materialized as a table.
+[Модели Python](/docs/build/python-models) поддерживаются в <Constant name="dbt" /> начиная с версии 1.3. В `dbt-duckdb` они выполняются в том же процессе, который владеет подключением DuckDB. Файл `.py` загружается как модуль через [`importlib`](https://docs.python.org/3/library/importlib.html). Функция `model` получает объект `dbt` со сведениями о `ref` и `source`, а также объект `DuckDBPyConnection`. Возвращённый объект материализуется как таблица.
 
 Значением `dbt.ref` и `dbt.source` внутри Python-модели будет объект [DuckDB Relation](https://duckdb.org/docs/api/python/reference/), который можно преобразовать в DataFrame Pandas/Polars или таблицу Arrow. Возвращаемым значением может быть любой объект, который DuckDB умеет преобразовывать в таблицу, включая DataFrame Pandas/Polars, DuckDB Relation или объекты Arrow: Table, Dataset, RecordBatchReader или Scanner.
 
@@ -281,13 +281,13 @@ LEFT JOIN {{ source('upstream', 'source') }} s USING (id)
 | `glue_register` | `false` | Если задано `true`, попытаться зарегистрировать файл, созданный этой моделью, в AWS Glue Catalog. |
 | `glue_database` | `default` | Имя базы данных AWS Glue, в которой нужно зарегистрировать модель. |
 
-- If the `location` argument is specified, it must be a filename (or S3 bucket/path), and `dbt-duckdb` will attempt to infer the `format` argument from the file extension of the `location` if the `format` argument is unspecified.
+- Если задан `location`, его значением должно быть имя файла или путь в бакете S3. Если при этом не указан `format`, `dbt-duckdb` попытается определить формат по расширению файла.
 
 - Если аргумент `location` не указан, внешний файл получит имя файла `model.sql` (или `model.py`), в котором он определён, с расширением, соответствующим аргументу `format`. По умолчанию внешние файлы создаются относительно текущего рабочего каталога. Вы можете изменить каталог по умолчанию (или бакет/префикс S3), указав настройку `external_root` в своём профиле DuckDB.
 
 Стратегии инкрементальной материализации не поддерживаются для моделей `external`.
 
-### Register external models
+### Регистрация внешних моделей {#register-external-models}
 
 При использовании `:memory:` в качестве базы данных DuckDB последующие запуски dbt могут завершаться ошибкой, если выбрано подмножество моделей, зависящих от внешних таблиц. Это происходит потому, что внешние файлы регистрируются как представления DuckDB только при их создании, а не при обращении к ним. Чтобы решить эту проблему, используйте макрос `register_upstream_external_models` в начале запуска:
 

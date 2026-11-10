@@ -1,8 +1,8 @@
 ---
-title: Sign in to the dbt VS Code extension
+title: Вход в расширение dbt для VS Code
 id: sign-in-dbt-extension
-description: "Sign in to connect the dbt VS Code extension to your dbt platform account."
-sidebar_label: "Sign in"
+description: "Войдите, чтобы подключить расширение dbt для VS Code к вашей учетной записи на платформе dbt."
+sidebar_label: "Вход"
 availability: local_all
 ---
 
@@ -10,50 +10,50 @@ import FusionTroubleshooting from '/snippets/_v2-troubleshooting.md';
 import AboutFusion from '/snippets/_about-v2.md';
 import AuthorizeAdditionalAccess from '/snippets/_vsce-authorize-additional-access.md';
 
-# Sign in
+# Вход {#sign-in}
 
-Sign in to connect the dbt VS Code extension to your <Constant name="dbt_platform" /> account. Signing in is what lets the extension reach your account for <Constant name="dbt_platform" /> capabilities, such as the [**Catalog** tab](/docs/dbt-extension-features#explore-your-catalog) and [compare changes](/docs/dbt/vs-compare-changes) with <Constant name="dbt_platform" /> deferral.
+Войдите, чтобы подключить расширение dbt для VS Code к вашей учетной записи <Constant name="dbt_platform" />. Вход позволяет расширению обращаться к вашей учетной записи и использовать возможности <Constant name="dbt_platform" />, такие как [вкладка **Catalog**](/docs/dbt-extension-features#explore-your-catalog) и [сравнение изменений](/docs/dbt/vs-compare-changes) с отложенным разрешением ссылок (deferral) в <Constant name="dbt_platform" />.
 
-Refer to [VS Code extension features](/docs/dbt-extension-features#feature-availability) for the full list of features and their availability.
+Полный список функций и сведения об их доступности приведены в разделе [Возможности расширения для VS Code](/docs/dbt-extension-features#feature-availability).
 
 <VersionBlock firstVersion="1.13">
 
-You can sign in from the command line using [`dbt login`](/reference/commands/login?version=2.0), available with v1.13 and later. Your login state can be shared across dbt features, including the dbt VS Code extension and, in supported versions, dbt State.
+Вы можете войти из командной строки с помощью [`dbt login`](/reference/commands/login?version=2.0), доступной начиная с версии 1.13. Состояние входа может совместно использоваться разными инструментами dbt, включая расширение dbt для VS Code и, в поддерживаемых версиях, dbt State.
 
 </VersionBlock>
 
-Run [`dbt login status`](/reference/commands/login?version=2.0#dbt-login-status) to view your currently authenticated status.
+Выполните [`dbt login status`](/reference/commands/login?version=2.0#dbt-login-status), чтобы просмотреть текущий статус аутентификации.
 
-## Key points
+## Основные сведения {#key-points}
 
-- The extension is available to all users. Refer to the [dbt Product License Agreement](https://www.getdbt.com/dbt-product-license-agreement) for more information.
-- Signing in links your editor to your <Constant name="dbt_platform" /> account so the extension can use <Constant name="dbt_platform" /> capabilities.
-- You can authenticate with `dbt login` or sign in from inside the extension. If you don't have a <Constant name="dbt_platform" /> account, you can create a free account during authentication.
-- If a valid [`dbt_cloud.yml`](/reference/dbt_cloud.yml) file exists on your machine, the extension can use it automatically.
+- Расширение доступно всем пользователям. Дополнительные сведения см. в [Лицензионном соглашении на продукты dbt](https://www.getdbt.com/dbt-product-license-agreement).
+- Вход связывает ваш редактор с учетной записью <Constant name="dbt_platform" />, чтобы расширение могло использовать возможности <Constant name="dbt_platform" />.
+- Вы можете пройти аутентификацию с помощью `dbt login` или войти из самого расширения. Если у вас нет учетной записи <Constant name="dbt_platform" />, вы можете бесплатно создать ее в процессе аутентификации.
+- Если на вашем компьютере есть действительный файл [`dbt_cloud.yml`](/reference/dbt_cloud.yml), расширение может использовать его автоматически.
 
-If you've signed in before, you won't need to authenticate again unless your session expired.
+Если вы уже входили ранее, повторная аутентификация не потребуется, пока не истечет срок действия сеанса.
 
-## Session expiry and re-authorization
+## Истечение срока действия сеанса и повторная авторизация {#session-expiry-and-re-authorization}
 
-Your sign-in session stays active across editor restarts. dbt automatically renews your session while you're using the extension or the CLI. You may need to re-authorize in a few specific cases:
+Сеанс входа сохраняется при перезапуске редактора. dbt автоматически продлевает сеанс, пока вы используете расширение или CLI. Повторная авторизация может потребоваться в нескольких случаях:
 
-- **Session expired after 7 days of inactivity.** The extension shows the message: "Your dbt extension session expired. Sign in again to continue using the extension." Click the prompt or run **dbt: Register dbt extension** from the command palette to sign in again.
-- **A feature needs broader access than your initial sign-in granted.** [`dbt login`](/reference/commands/login?version=2.0) and the dbt VS Code extension may request different sets of permissions. If you signed in via `dbt login` and later use an extension feature that needs more access (for example, the catalog tab or running a job), the extension prompts you to re-authorize. You'll re-authorize with the same <Constant name="dbt_platform" /> account &mdash; you don't need a second account.
-- **You authenticated with `dbt_cloud.yml` instead of OAuth.** File-based credentials don't expire on the 7-day inactivity rule. You only re-authenticate if you regenerate the file or it's removed.
+- **Срок действия сеанса истек после 7 дней бездействия.** Расширение показывает сообщение: "Your dbt extension session expired. Sign in again to continue using the extension." Нажмите на уведомление или выполните **dbt: Register dbt extension** из палитры команд, чтобы войти снова.
+- **Функции нужны более широкие права доступа, чем были предоставлены при первоначальном входе.** [`dbt login`](/reference/commands/login?version=2.0) и расширение dbt для VS Code могут запрашивать разные наборы разрешений. Если вы вошли через `dbt login`, а затем используете функцию расширения, которой нужны дополнительные права доступа (например, вкладку каталога или запуск задания), расширение предложит пройти повторную авторизацию. Вы пройдете ее с той же учетной записью <Constant name="dbt_platform" /> &mdash; вторая учетная запись не нужна.
+- **Вы прошли аутентификацию с помощью `dbt_cloud.yml`, а не OAuth.** На учетные данные из файла не распространяется правило истечения срока действия после 7 дней бездействия. Повторная аутентификация нужна только при повторном создании или удалении файла.
 
-When re-authorizing, the **Authorize dbt login** consent screen lists the access being requested. Click **Allow access** to continue.
+При повторной авторизации на экране согласия **Authorize dbt login** перечислены запрашиваемые права доступа. Нажмите **Allow access**, чтобы продолжить.
 
-## Choose a sign-in path
+## Выберите способ входа {#choose-a-sign-in-path}
 
-There are a couple of different ways to sign in to a <Constant name="dbt_platform" /> account. Choose the best path for you:
+Войти в учетную запись <Constant name="dbt_platform" /> можно несколькими способами. Выберите подходящий для вас:
 
 <SimpleTable>
-| If you... | Use this path |
+| Если вы... | Используйте этот способ |
 | --- | --- |
-| Starting authentication from the terminal | [`dbt login`](/docs/sign-in-dbt-extension?registration-path=dbt-login#choose-a-sign-in-path) from the command line. |
-| Are new to dbt and don't have a <Constant name="dbt_platform" /> account | [First-time sign-in](/docs/sign-in-dbt-extension?registration-path=first-time#choose-a-sign-in-path) from the dbt VS Code extension. |
-| Can't sign in or need to reset access | [Recover your login](/docs/sign-in-dbt-extension?registration-path=recover-login#choose-a-sign-in-path) from the dbt VS Code extension. |
-| Prefer file-based authentication to remove need for re-authenticating | [`dbt_cloud.yml`](/docs/sign-in-dbt-extension?registration-path=dbt-cloud-yml#choose-a-sign-in-path) from the dbt VS Code extension. |
+| Начинаете аутентификацию из терминала | [`dbt login`](/docs/sign-in-dbt-extension?registration-path=dbt-login#choose-a-sign-in-path) из командной строки. |
+| Только начинаете работать с dbt и у вас нет учетной записи <Constant name="dbt_platform" /> | [Первый вход](/docs/sign-in-dbt-extension?registration-path=first-time#choose-a-sign-in-path) из расширения dbt для VS Code. |
+| Не можете войти или вам нужно восстановить доступ | [Восстановление доступа](/docs/sign-in-dbt-extension?registration-path=recover-login#choose-a-sign-in-path) из расширения dbt для VS Code. |
+| Предпочитаете аутентификацию на основе файла, чтобы не проходить ее повторно | [`dbt_cloud.yml`](/docs/sign-in-dbt-extension?registration-path=dbt-cloud-yml#choose-a-sign-in-path) из расширения dbt для VS Code. |
 </SimpleTable>
 
 <Tabs queryString="registration-path">
@@ -64,111 +64,111 @@ There are a couple of different ways to sign in to a <Constant name="dbt_platfor
 
 <VersionBlock lastVersion="1.99">
 
-`dbt login` is available with v2 and later.
+`dbt login` доступна начиная с версии 2.
 
 </VersionBlock>
 
-Use this path if you prefer the terminal or want a single auth flow that works across the CLI and the dbt VS Code extension. Running `dbt login` opens the same browser flow that the extension uses when you select **dbt: Register dbt extension** from the command palette, so completing it once authenticates both.
+Используйте этот способ, если предпочитаете терминал или хотите проходить аутентификацию один раз для CLI и расширения dbt для VS Code. Команда `dbt login` открывает в браузере тот же процесс, который запускается при выборе **dbt: Register dbt extension** в палитре команд, поэтому однократное его завершение обеспечивает аутентификацию в обоих инструментах.
 
-1. From your terminal, run:
+1. В терминале выполните:
 
     ```shell
     dbt login
     ```
 
-2. Complete the sign-in or sign-up flow in your browser. 
-   - Refer to [First-time registration](/docs/sign-in-dbt-extension?registration-path=first-time#first-time-registration) if you've never registered
-   - Refer to [Existing account sign-in](/docs/sign-in-dbt-extension?registration-path=existing-account#existing-dbt-account) if you already have a dbt account.
-   - Refer to [Recover your login](/docs/sign-in-dbt-extension?registration-path=recover-login#recover-your-login) if you've forgotten your password or your account is locked.
+2. Завершите вход или регистрацию в браузере. 
+   - См. [Первая регистрация](/docs/sign-in-dbt-extension?registration-path=first-time#first-time-registration), если вы еще не регистрировались
+   - См. [Вход в существующую учетную запись](/docs/sign-in-dbt-extension?registration-path=existing-account#existing-dbt-account), если у вас уже есть учетная запись dbt.
+   - См. [Восстановление доступа](/docs/sign-in-dbt-extension?registration-path=recover-login#recover-your-login), если вы забыли пароль или ваша учетная запись заблокирована.
 
-3. On the **Authorize dbt login** screen, click **Allow access**. dbt saves your credentials to your local dbt configuration directory and uses them for future CLI commands:
-   - macOS and Linux: `~/.dbt/`
+3. На экране **Authorize dbt login** нажмите **Allow access**. dbt сохранит ваши учетные данные в локальном каталоге конфигурации dbt и будет использовать их для последующих команд CLI:
+   - macOS и Linux: `~/.dbt/`
    - Windows: `C:\Users\[username]\.dbt\`
 
-   <Lightbox src="/img/docs/extension/signin-authorize-extension.png" width="70%" title="The Authorize VS Code Extension consent screen."/>
+   <Lightbox src="/img/docs/extension/signin-authorize-extension.png" width="70%" title="Экран согласия Authorize VS Code Extension."/>
 
-4. Return to your editor and restart the dbt VS Code extension, or open a new editor window.
-5. The extension detects the credentials and shows **Registered**.
-
-<AuthorizeAdditionalAccess />
-
-The extension can now reach your <Constant name="dbt_platform" /> account. For details on what `dbt login` does across tools, refer to the [`dbt login` reference](/reference/commands/login?version=2.0).
-
-</TabItem>
-
-<TabItem value="first-time" label="First-time registration">
-
-<h3 id="first-time-registration">First-time registration</h3>
-
-Create a <Constant name="dbt_platform" /> account and connect it to the extension. Use this path if you've never signed in before. The extension and the CLI open the same browser flow, so you can start from either entry point:
-
-- **From the extension:** Click the registration prompt, or open the command palette (Windows/Linux: Ctrl + Shift + P, macOS: Cmd + Shift + P) and run **dbt: Register dbt extension**.
-
-   <Lightbox src="/img/docs/extension/registration-prompt.png" width="70%" title="The extension registration prompt in VS Code."/>
-
-- **From the CLI:** Run `dbt login` in your terminal.
-
-
-After you start the flow, complete the browser steps:
-
-1. On the **Log in to dbt platform** page, enter your email and click **Continue**.
-2. On the **Create your dbt platform** page, enter your name, create a password, then click **Continue**. dbt creates a free account for you.
-3. On the **Authorize dbt login** screen, review the requested access. Leave **Keep session alive** on if you want dbt to renew your session automatically, then click **Allow access**.
-
-   <Lightbox src="/img/docs/extension/signin-authorize-extension.png" width="70%" title="The Authorize dbt login consent screen."/>
-
-4. Return to your editor. The extension shows **Registered**. If you started from the CLI, your credentials are also saved for future CLI commands.
-5. Continue with the [Get started](/docs/install-dbt-extension#%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D0%BE-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B) workflow.
+4. Вернитесь в редактор и перезапустите расширение dbt для VS Code или откройте новое окно редактора.
+5. Расширение обнаружит учетные данные и покажет статус **Registered**.
 
 <AuthorizeAdditionalAccess />
 
+Теперь расширение может обращаться к вашей учетной записи <Constant name="dbt_platform" />. Подробнее о том, как `dbt login` работает с разными инструментами, см. в [справочнике по `dbt login`](/reference/commands/login?version=2.0).
+
 </TabItem>
 
-<TabItem value="existing-account" label="Existing account sign-in">
+<TabItem value="first-time" label="Первая регистрация">
 
-<h3 id="existing-dbt-account">Existing account sign-in</h3>
+<h3 id="first-time-registration">Первая регистрация</h3>
 
-Use this path if you've registered before, including with an older or inactive registration. The extension and the CLI open the same browser flow, so you can start from either entry point:
+Создайте учетную запись <Constant name="dbt_platform" /> и подключите ее к расширению. Используйте этот способ, если вы еще ни разу не входили. Расширение и CLI открывают один и тот же процесс в браузере, поэтому начать можно из любого из этих инструментов:
 
-- **From the extension:** [Update the VS Code extension](https://code.visualstudio.com/docs/setup/setup-overview#_update-cadence) to the latest version, restart your editor, then click the registration prompt or run **dbt: Register dbt extension** from the command palette.
-- **From the CLI:** Run `dbt login` in your terminal.
+- **Из расширения:** Нажмите на предложение зарегистрироваться или откройте палитру команд (Windows/Linux: Ctrl + Shift + P, macOS: Cmd + Shift + P) и выполните **dbt: Register dbt extension**.
 
-After you start the flow, complete the browser steps:
+   <Lightbox src="/img/docs/extension/registration-prompt.png" width="70%" title="Предложение зарегистрироваться в расширении в VS Code."/>
 
-1. On the **Sign in to dbt** page, enter the email you used to register, agree to the terms of service, complete the "I'm not a robot" check, then click **Continue**.
-2. On the **Verify your email** page, enter the verification code dbt sent to your email and click **Continue**.
-3. If your email is linked to more than one account, select the account you want to use on the account selection page.
-4. If your account uses an authenticator app, choose a method to verify your identity, then complete the prompt.
+- **Из CLI:** Выполните `dbt login` в терминале.
 
-   <Lightbox src="/img/docs/extension/signin-verify-identity.png" width="70%" title="The verify-your-identity screen for accounts that use an authenticator app."/>
 
-5. On the **Authorize dbt login** screen, review the requested access and click **Allow access**.
+После запуска процесса выполните следующие действия в браузере:
 
-**When you might still need a [`dbt_cloud.yml`](/reference/dbt_cloud.yml):**
+1. На странице **Log in to dbt platform** введите адрес электронной почты и нажмите **Continue**.
+2. На странице **Create your dbt platform** введите свое имя, создайте пароль, затем нажмите **Continue**. dbt создаст для вас бесплатную учетную запись.
+3. На экране **Authorize dbt login** ознакомьтесь с запрашиваемыми правами доступа. Оставьте **Keep session alive** включенным, если хотите, чтобы dbt автоматически продлевал сеанс, затем нажмите **Allow access**.
 
-- You want a file-based credential for automations or defer.
-- You use platform features that require `dbt_cloud.yml`, such as Mesh or auto-deferral.
+   <Lightbox src="/img/docs/extension/signin-authorize-extension.png" width="70%" title="Экран согласия Authorize dbt login."/>
+
+4. Вернитесь в редактор. Расширение покажет статус **Registered**. Если вы начали из CLI, ваши учетные данные также сохранятся для последующих команд CLI.
+5. Продолжите работу, следуя инструкциям в разделе [Начало работы](/docs/install-dbt-extension#начало-работы).
 
 <AuthorizeAdditionalAccess />
 
 </TabItem>
 
-<TabItem value="recover-login" label="Recover your login">
+<TabItem value="existing-account" label="Вход в существующую учетную запись">
 
-<h3 id="recover-your-login">Recover your login</h3>
+<h3 id="existing-dbt-account">Вход в существующую учетную запись</h3>
 
-Use this path if the login flow says you have an account but you don't remember your password.
+Используйте этот способ, если вы уже регистрировались, в том числе если регистрация устарела или неактивна. Расширение и CLI открывают один и тот же процесс в браузере, поэтому начать можно из любого из этих инструментов:
 
-1. On the **Sign in to dbt** page, click **Reset password**.
-2. On the reset-password screen, enter the email you used to register.
-3. Check your inbox for the password-reset email and follow the link.
-4. Set a new password.
-5. Return to your terminal and run `dbt login` again. The password reset opens a separate browser session from the original terminal login session, so you need to restart the login flow.
-6. On the **Sign in to dbt** page, sign in with the email and new password you just set, agree to the terms of service, complete the "I'm not a robot" check, then click **Continue**.
-7. If your email is linked to more than one account, select the account you want to use.
-8. On the **Authorize dbt login** screen, click **Allow access**. When authorization completes, the flow returns to your terminal and the dbt VS Code extension.
+- **Из расширения:** [Обновите расширение для VS Code](https://code.visualstudio.com/docs/setup/setup-overview#_update-cadence) до последней версии, перезапустите редактор, затем нажмите на предложение зарегистрироваться или выполните **dbt: Register dbt extension** из палитры команд.
+- **Из CLI:** Выполните `dbt login` в терминале.
 
-If you still can't sign in, your account may be locked. Contact [dbt Support](mailto:support@getdbt.com) to unlock your account, then continue with the **Existing account sign-in** flow.
+После запуска процесса выполните следующие действия в браузере:
+
+1. На странице **Sign in to dbt** введите адрес электронной почты, который вы использовали при регистрации, примите условия использования, пройдите проверку "I'm not a robot", затем нажмите **Continue**.
+2. На странице **Verify your email** введите код подтверждения, отправленный dbt на вашу электронную почту, и нажмите **Continue**.
+3. Если ваш адрес электронной почты связан с несколькими учетными записями, на странице выбора учетной записи выберите ту, которую хотите использовать.
+4. Если для вашей учетной записи используется приложение-аутентификатор, выберите способ подтверждения личности и выполните предложенные действия.
+
+   <Lightbox src="/img/docs/extension/signin-verify-identity.png" width="70%" title="Экран подтверждения личности для учетных записей, использующих приложение-аутентификатор."/>
+
+5. На экране **Authorize dbt login** ознакомьтесь с запрашиваемыми правами доступа и нажмите **Allow access**.
+
+**Когда вам по-прежнему может понадобиться [`dbt_cloud.yml`](/reference/dbt_cloud.yml):**
+
+- Вам нужны учетные данные в файле для автоматизации или отложенного разрешения ссылок (defer).
+- Вы используете функции платформы, которым требуется `dbt_cloud.yml`, например Mesh или автоматическое отложенное разрешение ссылок (auto-deferral).
+
+<AuthorizeAdditionalAccess />
+
+</TabItem>
+
+<TabItem value="recover-login" label="Восстановление доступа">
+
+<h3 id="recover-your-login">Восстановление доступа</h3>
+
+Используйте этот способ, если при входе сообщается, что у вас есть учетная запись, но вы не помните пароль.
+
+1. На странице **Sign in to dbt** нажмите **Reset password**.
+2. На экране сброса пароля введите адрес электронной почты, который вы использовали при регистрации.
+3. Найдите во входящих письмо для сброса пароля и перейдите по ссылке.
+4. Задайте новый пароль.
+5. Вернитесь в терминал и снова выполните `dbt login`. Сброс пароля открывает отдельный сеанс в браузере, не связанный с первоначальным сеансом входа из терминала, поэтому процесс входа нужно запустить заново.
+6. На странице **Sign in to dbt** войдите с помощью адреса электронной почты и только что заданного пароля, примите условия использования, пройдите проверку "I'm not a robot", затем нажмите **Continue**.
+7. Если ваш адрес электронной почты связан с несколькими учетными записями, выберите ту, которую хотите использовать.
+8. На экране **Authorize dbt login** нажмите **Allow access**. После завершения авторизации управление вернется в терминал и расширение dbt для VS Code.
+
+Если войти по-прежнему не удается, ваша учетная запись может быть заблокирована. Обратитесь в [службу поддержки dbt](mailto:support@getdbt.com), чтобы разблокировать учетную запись, затем выполните действия из раздела **Вход в существующую учетную запись**.
 
 <AuthorizeAdditionalAccess />
 
@@ -176,38 +176,38 @@ If you still can't sign in, your account may be locked. Contact [dbt Support](ma
 
 <TabItem value="dbt-cloud-yml" label="dbt_cloud.yml">
 
-<h3 id="register-with-dbt_cloudyml">Register with <code>dbt_cloud.yml</code></h3>
+<h3 id="register-with-dbt_cloudyml">Регистрация с помощью <code>dbt_cloud.yml</code></h3>
 
-Use this path if your workflow requires a credential file or if you want to remove the need to re-authenticate when sessions expire.
+Используйте этот способ, если для вашего рабочего процесса нужен файл учетных данных или если вы хотите избежать повторной аутентификации при истечении срока действия сеансов.
 
-`dbt_cloud.yml` is a separate, complementary authentication path. You may still need `dbt_cloud.yml` for <Constant name="dbt_platform" /> features such as Mesh and auto-deferral.
+`dbt_cloud.yml` — отдельный, дополнительный способ аутентификации. Вам по-прежнему может понадобиться `dbt_cloud.yml` для таких функций <Constant name="dbt_platform" />, как Mesh и автоматическое отложенное разрешение ссылок (auto-deferral).
 
-1. Log in to <Constant name="dbt_platform" />.
-2. Go to **Account settings** → **VS Code extension**.
-3. In the **Set up your credentials** section, click **Download credentials** to get your [`dbt_cloud.yml`](/reference/dbt_cloud.yml) file.
+1. Войдите в <Constant name="dbt_platform" />.
+2. Перейдите в **Account settings** → **VS Code extension**.
+3. В разделе **Set up your credentials** нажмите **Download credentials**, чтобы получить файл [`dbt_cloud.yml`](/reference/dbt_cloud.yml).
 
-    <Lightbox src="/img/docs/extension/download-registration-2.png" width="70%" title="Download the dbt_cloud.yml file from your dbt platform account."/>
+    <Lightbox src="/img/docs/extension/download-registration-2.png" width="70%" title="Скачивание файла dbt_cloud.yml из вашей учетной записи на платформе dbt."/>
 
-4. Move the file into your `.dbt` directory:
-   - macOS and Linux: `~/.dbt/dbt_cloud.yml`
+4. Переместите файл в каталог `.dbt`:
+   - macOS и Linux: `~/.dbt/dbt_cloud.yml`
    - Windows: `C:\Users\[username]\.dbt\dbt_cloud.yml`
-5. Return to your editor, open the command palette, and run **dbt: Register dbt extension**.
-6. The extension detects the credential file and continues the registration flow.
+5. Вернитесь в редактор, откройте палитру команд и выполните **dbt: Register dbt extension**.
+6. Расширение обнаружит файл учетных данных и продолжит процесс регистрации.
 
-**Behavior details:**
+**Особенности работы:**
 
-- If a [`dbt_cloud.yml`](/reference/dbt_cloud.yml) file exists, the extension uses it automatically.
-- If the file is missing, the extension prompts you to sign in or add the file.
+- Если файл [`dbt_cloud.yml`](/reference/dbt_cloud.yml) существует, расширение использует его автоматически.
+- Если файл отсутствует, расширение предложит войти или добавить файл.
 
-If your dbt project uses environment variables, configure them locally so the extension can use the same values as your dbt environment. For more information, refer to [Configure environment variables](/docs/configure-dbt-extension).
+Если ваш проект dbt использует переменные окружения, настройте их локально, чтобы расширение могло использовать те же значения, что и ваше окружение dbt. Дополнительные сведения см. в разделе [Настройка переменных окружения](/docs/configure-dbt-extension).
 
 </TabItem>
 
 </Tabs>
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
-<!-- This anchor is linked from the VS Code extension. Please do not change it -->
+<!-- На этот якорь ссылается расширение для VS Code. Пожалуйста, не изменяйте его -->
 
 <FusionTroubleshooting />
 

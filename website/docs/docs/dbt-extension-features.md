@@ -61,165 +61,165 @@ import ExtensionFeatures from '/snippets/_extension-features.md';
   <source src="/img/docs/extension/build-flexibly.mp4" type="video/webm" />
 </video>
 
-## Live error detection
+## Обнаружение ошибок в реальном времени {#live-error-detection}
 
-Automatically validate your SQL code to detect errors and surface warnings without hitting the warehouse.
+Расширение автоматически проверяет SQL, находит ошибки и показывает предупреждения без обращения к хранилищу.
 
-Syntax-tree diagnostics for Jinja, YAML, and SQL syntax errors (L1):
+Диагностика синтаксического дерева Jinja, YAML и SQL (L1):
 
-- Syntax errors (missing commas, misspelled keywords, and more)
-- Hover over red squiggles to display errors
-- Full diagnostic information is available in the **Problems** panel
+- Ошибки синтаксиса, например пропущенные запятые и опечатки в ключевых словах.
+- Наведите указатель на красное подчёркивание, чтобы увидеть ошибку.
+- Полная информация доступна на панели **Problems**.
 
-L2 dbt v2 SQL comprehension diagnostics (requires [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2)):
+Семантическая диагностика SQL в dbt v2 (L2) требует настройки [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2):
 
-- Missing `group by` clauses, or columns that are neither grouped nor aggregated
-- Invalid function names or arguments
-- SQL type and schema errors
-- Linter warning diagnostics
+- Пропущенные выражения `group by` или столбцы, которые не входят в группировку и не агрегируются.
+- Недопустимые имена функций или аргументы.
+- Ошибки типов и схемы SQL.
+- Предупреждения линтера.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/live-error-detection.mp4" type="video/webm" />
 </video>
 
-## Powerful IntelliSense
+## Автодополнение IntelliSense {#powerful-intellisense}
 
-Autocomplete SQL functions, model names, macros, and more.
+Автодополнение предлагает SQL-функции, имена моделей, макросы и другие элементы.
 
-- Autocomplete `ref`s and `source` calls. For example, type `{{ ref(`  or `{{ source(` and you will see a list of available resources and their type complete the function call. Autocomplete doesn't trigger when replacing existing model names inside parentheses.
-- Dialect-aware SQL function autocomplete
+- Автодополнение вызовов `ref` и `source`. Введите `{{ ref(` или `{{ source(`, чтобы увидеть список доступных ресурсов и их типы. При замене имени модели внутри скобок автодополнение не срабатывает.
+- Автодополнение SQL-функций с учётом диалекта.
 
-<Lightbox src="/img/docs/extension/vsce-intellisense.gif" width="100%" title="Example of the VS Code extension IntelliSense"/>
+<Lightbox src="/img/docs/extension/vsce-intellisense.gif" width="100%" title="Пример автодополнения IntelliSense в расширении для VS Code"/>
 
-## Instant refactoring
+## Рефакторинг {#instant-refactoring}
 
-Rename models or columns and see references update project-wide.
+При переименовании модели или столбца расширение обновляет ссылки во всём проекте.
 
-Renaming models:
+Переименование модели:
 
-- Right-click on a file in the file tree and select **Rename**.
-- After renaming the file, you'll get a prompt asking if you want to make refactoring changes.
-  - Select **OK** to apply the changes, or **Show Preview** to display a preview of refactorings.
-- After applying your changes, `ref`s should be updated to use the updated model name.
+- Щёлкните правой кнопкой мыши по файлу в дереве и выберите **Rename**.
+- После переименования файла расширение предложит обновить ссылки.
+  - Выберите **OK**, чтобы применить изменения, или **Show Preview**, чтобы просмотреть их.
+- После применения изменений вызовы `ref` будут использовать новое имя модели.
 
-Renaming columns (requires [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2)):
+Переименование столбцов требует настройки [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2):
 
-Column renaming depends on strict static analysis, which validates column references across your project before the extension updates downstream models.
+Строгий статический анализ проверяет ссылки на столбец по всему проекту, прежде чем расширение обновит зависимые модели.
 
-- Right-click on a column alias and select **Rename Symbol**.
-- After renaming the column, you'll get a prompt asking if you want to make refactoring changes.
-  - Select **OK** to apply the changes, or **Show Preview** to show a preview of refactorings.
-- After applying your changes, downstream references to the column should be updated to use the new column name.
+- Щёлкните правой кнопкой мыши по псевдониму столбца и выберите **Rename Symbol**.
+- После переименования столбца расширение предложит обновить ссылки.
+  - Выберите **OK**, чтобы применить изменения, или **Show Preview**, чтобы просмотреть их.
+- После применения изменений ссылки на столбец в зависимых моделях будут использовать новое имя.
 
-Note: Renaming models and columns is not yet supported for snapshots, or any resources defined in a .yml file.
+Примечание. Переименование пока недоступно для снимков и других ресурсов, определённых в файлах `.yml`.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/refactor.mp4" type="video/webm" />
 </video>
 
-## Go-to-definition and reference
+## Переход к определениям и ссылкам {#go-to-definition-and-reference}
 
-Jump to the definition of any `ref`, macro, model, or column with a single click. Particularly useful in large projects with many models and macros. Excludes definitions from installed packages.
+Переходите к определению `ref`, макроса, модели или столбца одним щелчком. Это особенно удобно в крупных проектах. Переход к определениям из установленных пакетов недоступен.
 
-- Command or Ctrl-click to go to the definition for an identifier.
-- Right-click an identifier and select **Go to Definition** or **Go to References**.
-- Jinja LSP go-to-definition for `ref()`, `source()`, and macros.
+- Щёлкните по идентификатору, удерживая Command или Ctrl, чтобы перейти к его определению.
+- Щёлкните по идентификатору правой кнопкой мыши и выберите **Go to Definition** или **Go to References**.
+- Языковой сервер Jinja поддерживает переход к определениям `ref()`, `source()` и макросов.
 
-Column and CTE go-to-definition (requires [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2)):
+Переход к определениям столбцов и CTE требует настройки [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2):
 
-- Go-to-definition for column names
-- Go-to-definition for CTE names
+- Переход к определению по имени столбца.
+- Переход к определению по имени CTE.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/go-to-definition.mp4" type="video/webm" />
 </video>
 
-## Rich lineage in context
+## Граф зависимостей в редакторе {#rich-lineage-in-context}
 
-See lineage at the column or table level as you develop — no context switching or breaking flow.
+Просматривайте зависимости таблиц и столбцов прямо во время разработки.
 
-Table-level lineage:
+Зависимости на уровне таблиц:
 
-:::tip Using the lineage tab in Cursor
+:::tip Вкладка Lineage в Cursor
 
-If you're using the dbt VS Code extension in Cursor, the lineage tab works best in Editor mode and doesn't render in Agent mode. If you're in Agent mode and the lineage tab isn't rendering, just switch to Editor mode to view your project's table and column lineage.
+При использовании расширения dbt для VS Code в Cursor вкладка **Lineage** работает в режиме Editor. В режиме Agent она не отображается. Переключитесь в Editor, чтобы просмотреть зависимости таблиц и столбцов проекта.
 
 :::
 
-View table lineage:
-- Open the **Lineage** tab in your editor. It will reflect table lineage focused on the currently-open file.
-- Double-click nodes to open the files in your editor.
-- The lineage pane updates as you navigate the files in your dbt project.
-- Right-click on a node to update the DAG, or view column lineage for a node.
+Чтобы просмотреть зависимости таблиц:
+- Откройте вкладку **Lineage** в редакторе. На ней показаны зависимости таблиц для текущего открытого файла.
+- Дважды щёлкните по узлу, чтобы открыть файл в редакторе.
+- Панель зависимостей обновляется при переходе между файлами проекта.
+- Щёлкните по узлу правой кнопкой мыши, чтобы обновить граф или просмотреть зависимости его столбцов.
 
-[Column-level lineage](/docs/explore/column-level-lineage) (depends on [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2)):
+[Зависимости на уровне столбцов](/docs/explore/column-level-lineage) требуют настройки [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2).
 
-View column lineage:
-- Right-click on a filename, or in the SQL contents of a model file.
-- Select **dbt: View Lineage** --> **Show column lineage**.
-- Select the column to view lineage for.
-- Double-click on a node to update the DAG selector.
-- You can also use column selectors in the lineage window by adding the `column:` prefix and appending the column name.
+Чтобы просмотреть зависимости столбца:
+- Щёлкните правой кнопкой мыши по имени файла модели или по SQL внутри него.
+- Выберите **dbt: View Lineage** → **Show column lineage**.
+- Выберите столбец.
+- Дважды щёлкните по узлу, чтобы обновить выбор в графе.
+- Чтобы выбрать столбец в окне графа, введите префикс `column:`, а затем имя столбца.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/lineage.mp4" type="video/webm" />
 </video>
 
-## Hover insights
+## Подсказки при наведении {#hover-insights}
 
-See context on tables, columns, and functions without leaving your code. Simply hover over any SQL element to see details like column names and data types.
+Наведите указатель на элемент SQL, чтобы увидеть сведения о таблице, столбце или функции прямо в редакторе, например имя столбца и его тип.
 
-Hover insights depend on [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2), which lets the extension understand column types and function signatures across your project.
+Для подсказок нужна настройка [`static_analysis: strict`](/reference/resource-configs/static-analysis?version=2). Она позволяет расширению определять типы столбцов и сигнатуры функций во всём проекте.
 
-Usage:
-- Hover over `*` to see expanded list of columns and their types.
-- Hover over column name or alias to see its type.
+Как пользоваться:
+- Наведите указатель на `*`, чтобы увидеть список столбцов и их типы.
+- Наведите указатель на имя столбца или псевдоним, чтобы узнать тип.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/hover-insights.mp4" type="video/webm" />
 </video>
 
-## Live preview for models and CTEs
+## Предпросмотр моделей и CTE {#live-preview-for-models-and-ctes}
 
-Preview query output directly from inside your editor for faster validation and debugging.
+Просматривайте результаты запросов прямо в редакторе, чтобы быстрее проверять и отлаживать SQL.
 
-- Click the **table icon** or use keyboard shortcut `cmd+enter` (macOS) / `ctrl+enter` (Windows/Linux) to preview query results for a model or selected SQL snippet.
-- Results are displayed in the **Query Results** tab in the bottom panel.
-- The preview table is sortable and results are stored until the tab is closed.
+- Нажмите **значок таблицы** или используйте сочетание `cmd+enter` (macOS) либо `ctrl+enter` (Windows/Linux), чтобы просмотреть результаты модели или выделенного фрагмента SQL.
+- Результаты отображаются на вкладке **Query Results** в нижней панели.
+- Таблицу можно сортировать. Результаты сохраняются до закрытия вкладки.
 
-CTE preview:
+Предпросмотр CTE:
 
-- Click the **Preview CTE** codelens to preview CTE results.
+- Нажмите **Preview CTE** над кодом, чтобы просмотреть результат CTE.
 
 <video width="100%" height="100%" playsinline muted controls>
   <source src="/img/docs/extension/preview-cte.mp4" type="video/webm" />
 </video>
 
-## Explore your catalog {#explore-your-catalog}
+## Просмотр каталога {#explore-your-catalog}
 
-This tab reads metadata from your <Constant name="dbt_platform" /> account, so you need to [sign in](/docs/sign-in-dbt-extension) to use it.
+Вкладка читает метаданные из вашего аккаунта <Constant name="dbt_platform" />, поэтому сначала нужно [войти](/docs/sign-in-dbt-extension).
 
-Open the **Catalog** tab to see information for the model you're working on &mdash; enriched by your <Constant name="dbt_platform" /> account &mdash; without leaving your editor.
+Откройте вкладку **Catalog**, чтобы увидеть сведения о текущей модели из аккаунта <Constant name="dbt_platform" /> прямо в редакторе.
 
-For the current model, the catalog tab surfaces:
+Для текущей модели на вкладке доступны:
 
-- The build status, last build time, and run duration from the <Constant name="dbt_platform" />.
-- The model's **Description**.
-- The model's **Columns**, including each column's type, description, and test results. Sort columns alphabetically or by test name.
-- A **View in dbt platform** link to open the resource in the <Constant name="dbt_platform" />.
+- Статус, время последней сборки и длительность запуска из <Constant name="dbt_platform" />.
+- Описание модели (**Description**).
+- Столбцы (**Columns**): типы, описания и результаты тестов. Столбцы можно сортировать по алфавиту или по имени теста.
+- Ссылка **View in dbt platform**, открывающая ресурс в <Constant name="dbt_platform" />.
 
-<Lightbox src="/img/docs/extension/vsce-catalog-tab.png" width="100%" title="Example of the Catalog tab in the dbt VS Code extension" />
+<Lightbox src="/img/docs/extension/vsce-catalog-tab.png" width="100%" title="Вкладка Catalog в расширении dbt для VS Code" />
 
-## Generate a system report
+## Создание системного отчёта {#generate-a-system-report}
 
-Generate a system report to collect your VS Code extension logs and system information into a zip file. This is useful when troubleshooting issues with the dbt VS Code extension. You can share the zip file with dbt Labs support to help diagnose problems.
+Системный отчёт собирает журналы расширения VS Code и сведения о системе в ZIP-архив. При неполадках его можно отправить в поддержку dbt Labs для диагностики.
 
-To generate and download a system report:
+Чтобы создать и скачать отчёт:
 
-1. Open the Command Palette (`Cmd+Shift+P` on macOS, `Ctrl+Shift+P` on Windows/Linux).
-2. Search for and select **dbt: Generate System Report**.
-3. Choose a location to save the .zip file when prompted.
-4. A notification will confirm where the file was saved.
+1. Откройте палитру команд (`Cmd+Shift+P` в macOS или `Ctrl+Shift+P` в Windows/Linux).
+2. Найдите и выберите **dbt: Generate System Report**.
+3. Укажите, куда сохранить ZIP-архив.
+4. Появится уведомление с путём к сохранённому файлу.
 
 
 import CompareChangesTLDR from '/snippets/_compare-changes-tldr.md';

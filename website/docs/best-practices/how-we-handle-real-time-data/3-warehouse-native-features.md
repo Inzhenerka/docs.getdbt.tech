@@ -1,55 +1,55 @@
 ---
-title: "Warehouse-native features for real-time data"
+title: "Встроенные возможности хранилищ для данных в реальном времени"
 id: "3-warehouse-native-features"
-description: Learn when to use dynamic tables and materialized views instead of incremental models for near real-time data
-hoverSnippet: Use dynamic tables and materialized views for simplified near real-time data
+description: Узнайте, когда использовать динамические таблицы и материализованные представления вместо инкрементальных моделей для данных, обновляемых почти в реальном времени
+hoverSnippet: Используйте динамические таблицы и материализованные представления, чтобы упростить обновление данных почти в реальном времени
 ---
 
-Modern data warehouses offer native features that can simplify near real-time data patterns. Instead of managing incremental logic yourself, you can declare the desired freshness and let the warehouse handle the refresh mechanics.
+Современные хранилища данных предлагают встроенные возможности, которые упрощают работу с данными, обновляемыми почти в реальном времени. Вместо того чтобы самостоятельно управлять инкрементальной логикой, вы можете задать желаемую актуальность данных и поручить хранилищу управление механизмами обновления.
 
-This section covers when to use dynamic tables and materialized views instead of incremental models for near real-time data. 
+В этом разделе рассматривается, когда стоит использовать динамические таблицы и материализованные представления вместо инкрементальных моделей для данных, обновляемых почти в реальном времени. 
 
-- [Dynamic tables](/reference/resource-configs/snowflake-configs#dynamic-tables) are a warehouse-specific feature in Snowflake that lets the warehouse keep a table updated for you. You define what the table should look like, and the warehouse keeps the table fresh automatically.
-- [Materialized views](/docs/build/materializations#materialized-view) are a warehouse-specific feature that lets the warehouse save the results of a query so they’re faster to read, and refresh them as the underlying data changes. Note that the exact behavior depends on the warehouse.
-- [Incremental models](/docs/build/incremental-models) are a dbt feature that lets dbt update a table by processing only new data. You tell dbt how new data should be added using your incremental logic SQL, and dbt runs the right SQL when the model is built.
+- [Динамические таблицы](/reference/resource-configs/snowflake-configs#dynamic-tables) — это встроенная возможность Snowflake, которая позволяет поручить хранилищу поддержание таблицы в актуальном состоянии. Вы определяете, какие данные должна содержать таблица, а хранилище автоматически поддерживает их актуальность.
+- [Материализованные представления](/docs/build/materializations#materialized-view) — это встроенная возможность хранилища, которая позволяет сохранять результаты запроса для ускорения чтения и обновлять их при изменении исходных данных. Обратите внимание, что конкретное поведение зависит от хранилища.
+- [Инкрементальные модели](/docs/build/incremental-models) — это возможность dbt, которая позволяет обновлять таблицу, обрабатывая только новые данные. Вы указываете в SQL-коде инкрементальной логики, как следует добавлять новые данные, а dbt выполняет соответствующий SQL-код при построении модели.
 
 
-#### When to consider warehouse-native features
+#### Когда стоит рассмотреть встроенные возможности хранилища
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px'}}>
 
 <div>
 
-**Use dynamic tables or materialized views when:**
+**Используйте динамические таблицы или материализованные представления, если:**
 
-- Your requirement is "data always within X minutes of real time" and you don't need precise scheduling control.
-- You want to simplify operational complexity by offloading refresh logic to the warehouse.
-- Your transformations are relatively straightforward.
-- You're willing to trade some control for convenience.
+- Ваше требование — «данные всегда отстают от реального времени не более чем на X минут», и вам не нужен точный контроль над расписанием.
+- Вы хотите упростить эксплуатацию, передав логику обновления хранилищу.
+- Ваши преобразования относительно просты.
+- Вы готовы пожертвовать частью контроля ради удобства.
 
 </div>
 
 <div>
 
-**Stick with incremental models when:**
+**Продолжайте использовать инкрементальные модели, если:**
 
-- You need fine-grained control over scheduling and refresh logic,
-- You have complex business rules requiring custom incremental strategies (like microbatching).
-- You need to coordinate refreshes across multiple models in a specific order.
-
-</div>
+- Вам нужен детальный контроль над расписанием и логикой обновления.
+- У вас сложные бизнес-правила, требующие настраиваемых инкрементальных стратегий (например, микропакетной обработки).
+- Вам нужно координировать обновления нескольких моделей в определённом порядке.
 
 </div>
 
-## Dynamic tables
+</div>
 
-:::info Warehouse support
-Dynamic tables are currently supported in Snowflake, with similar features available in other warehouses under different names. Check your warehouse documentation for availability.
+## Динамические таблицы {#dynamic-tables}
+
+:::info Поддержка в хранилищах
+Динамические таблицы в настоящее время поддерживаются в Snowflake; аналогичные возможности доступны в других хранилищах под другими названиями. Сведения об их доступности см. в документации вашего хранилища.
 :::
 
-With dynamic tables, you can define the target state with SQL, and the warehouse automatically handles incremental refreshes.
+При использовании динамических таблиц вы определяете целевое состояние с помощью SQL, а хранилище автоматически выполняет инкрементальные обновления.
 
-For example, the following SQL model uses a dynamic table to keep a table up to date for you:
+Например, следующая SQL-модель использует динамическую таблицу, чтобы поддерживать данные в актуальном состоянии:
 
 ```sql
 {{ config(
@@ -69,49 +69,49 @@ from {{ source('raw', 'events') }}
 where event_ts >= current_timestamp() - interval '7 days';
 ```
 
-#### target_lag config
+#### Настройка target_lag
 
-The [`target_lag` parameter](/reference/resource-configs/snowflake-configs#target-lag) tells the warehouse the maximum acceptable staleness of the dynamic table relative to its sources, and helps determine when the table should be refreshed.
+[Параметр `target_lag`](/reference/resource-configs/snowflake-configs#target-lag) задаёт для хранилища максимально допустимое отставание данных динамической таблицы от её источников и помогает определить, когда следует обновлять таблицу.
 
-For example:
+Например:
 
-- `target_lag = '1 minute'` - Warehouse keeps the table within one minute of its source data, refreshing automatically as needed.
+- `target_lag = '1 minute'` — хранилище поддерживает отставание таблицы от исходных данных в пределах одной минуты, автоматически обновляя её по мере необходимости.
 
-- `target_lag = '5 minutes'` - Table may lag up to five minutes behind its sources.
+- `target_lag = '5 minutes'` — таблица может отставать от своих источников не более чем на пять минут.
 
-- `target_lag = 'downstream'` - Table refreshes only when a downstream table depends on it.
+- `target_lag = 'downstream'` — таблица обновляется только тогда, когда это требуется зависящей от неё нижестоящей таблице.
 
-- `target_lag = '1 minute'` - Data refreshed to be within 1 minute of the source
-- `target_lag = '5 minutes'` - Data within 5 minutes
-- `target_lag = 'downstream'` - Refresh when downstream tables need it
+- `target_lag = '1 minute'` — данные обновляются так, чтобы отставание от источника не превышало 1 минуты
+- `target_lag = '5 minutes'` — отставание данных не превышает 5 минут
+- `target_lag = 'downstream'` — обновление выполняется, когда оно требуется нижестоящим таблицам
 
-The warehouse automatically determines when to refresh, whether to do a full or incremental update, and how to optimize the refresh query.
+Хранилище автоматически определяет, когда выполнять обновление, будет ли оно полным или инкрементальным и как оптимизировать запрос обновления.
 
-#### Benefits
+#### Преимущества
 
-- Declarative freshness: specify "how fresh" not "when to refresh"
-- Warehouse-managed optimization
-- Cost predictability: refreshes run only when needed to meet `target_lag`
-- Simple setup
+- Декларативное задание актуальности: укажите, «насколько актуальными должны быть данные», а не «когда их обновлять»
+- Оптимизация на стороне хранилища
+- Предсказуемость затрат: обновления выполняются только тогда, когда это необходимо для соблюдения `target_lag`
+- Простота настройки
 
-#### Limitations
+#### Ограничения
 
-- Less control over exact timing or orchestration logic
-- Cost visibility can be harder to predict than scheduled dbt jobs
-- Less visibility into refresh decisions compared to dbt's explicit incremental logic
-- Currently warehouse-specific (implementation varies by platform)
+- Меньше контроля над точным временем выполнения и логикой оркестрации
+- Затраты может быть сложнее прогнозировать, чем при использовании заданий dbt, выполняемых по расписанию
+- Меньше прозрачности в принятии решений об обновлении по сравнению с явно заданной инкрементальной логикой dbt
+- На данный момент зависят от хранилища (реализация различается в зависимости от платформы)
 
-## Materialized views
+## Материализованные представления {#materialized-views}
 
-Materialized views are available in most modern data warehouses and cache query results that automatically refresh when underlying data changes.
+Материализованные представления доступны в большинстве современных хранилищ данных и кешируют результаты запросов, которые автоматически обновляются при изменении исходных данных.
 
-Materialized views work like this:
-- The warehouse detects changes to source tables and refreshes the materialized view.
-- Many warehouses can incrementally update the view rather than recomputing everything.
-- Queries against the materialized view read cached results, not the underlying tables.
+Материализованные представления работают следующим образом:
+- Хранилище обнаруживает изменения в исходных таблицах и обновляет материализованное представление.
+- Многие хранилища могут обновлять представление инкрементально, а не пересчитывать всё целиком.
+- Запросы к материализованному представлению читают кешированные результаты, а не исходные таблицы.
 
 
-For example, the following sql model uses a materialized view to keep a table up to date for you:
+Например, следующая SQL-модель использует материализованное представление, чтобы поддерживать данные в актуальном состоянии:
 
 ```sql
 {{ config(
@@ -127,42 +127,42 @@ group by 1, 2;
 ```
 
 
-## Resources by warehouse
+## Материалы по хранилищам {#resources-by-warehouse}
 
-Here are some resources for each warehouse:
+Ниже приведены полезные материалы для каждого хранилища:
 
 
 #### BigQuery
 
-- [dbt developer docs: BigQuery materialized views](/reference/resource-configs/bigquery-configs#materialized-views)
-- [BigQuery docs: Materialized views intro](https://cloud.google.com/bigquery/docs/materialized-views-intro)
-- [BigQuery docs: Streaming API](https://docs.cloud.google.com/bigquery/docs/write-api)
+- [Документация для разработчиков dbt: материализованные представления BigQuery](/reference/resource-configs/bigquery-configs#materialized-views)
+- [Документация BigQuery: введение в материализованные представления](https://cloud.google.com/bigquery/docs/materialized-views-intro)
+- [Документация BigQuery: API для потоковой передачи данных](https://docs.cloud.google.com/bigquery/docs/write-api)
 
 #### Databricks
 
-- [dbt developer docs: Databricks materialized views and streaming tables](/reference/resource-configs/databricks-configs#materialized-views-and-streaming-tables)
-- [Databricks docs: Materialized views](https://docs.databricks.com/en/views/materialized.html)
+- [Документация для разработчиков dbt: материализованные представления и потоковые таблицы Databricks](/reference/resource-configs/databricks-configs#materialized-views-and-streaming-tables)
+- [Документация Databricks: материализованные представления](https://docs.databricks.com/en/views/materialized.html)
 
 #### Postgres
 
-- [dbt developer docs: Postgres materialized views](/reference/resource-configs/postgres-configs#materialized-views)
-- [Postgres docs: Materialized views](https://www.postgresql.org/docs/current/rules-materializedviews.html)
+- [Документация для разработчиков dbt: материализованные представления Postgres](/reference/resource-configs/postgres-configs#materialized-views)
+- [Документация Postgres: материализованные представления](https://www.postgresql.org/docs/current/rules-materializedviews.html)
 
 #### Redshift
 
-- [dbt developer docs: Redshift materialized views](/reference/resource-configs/redshift-configs#materialized-views)
-- [Redshift docs: Materialized views overview](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-overview.html)
-- [Redshift docs: Streaming ingestion to a materialized view](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-streaming-ingestion.html)
+- [Документация для разработчиков dbt: материализованные представления Redshift](/reference/resource-configs/redshift-configs#materialized-views)
+- [Документация Redshift: обзор материализованных представлений](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-overview.html)
+- [Документация Redshift: потоковая загрузка данных в материализованное представление](https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-streaming-ingestion.html)
 
 #### Snowflake
 
-- [dbt developer docs: Dynamic tables configurations](/reference/resource-configs/snowflake-configs#dynamic-tables)
-- [Snowflake docs: Dynamic tables intro](https://docs.snowflake.com/en/user-guide/dynamic-tables-intro)
-- [Snowflake blog: Dynamic tables for streaming pipelines](https://www.snowflake.com/en/blog/dynamic-tables-delivering-declarative-streaming-data-pipelines/)
-- [Snowflake docs: Materialized views](https://docs.snowflake.com/en/user-guide/views-materialized)
+- [Документация для разработчиков dbt: настройки динамических таблиц](/reference/resource-configs/snowflake-configs#dynamic-tables)
+- [Документация Snowflake: введение в динамические таблицы](https://docs.snowflake.com/en/user-guide/dynamic-tables-intro)
+- [Блог Snowflake: динамические таблицы для потоковых конвейеров](https://www.snowflake.com/en/blog/dynamic-tables-delivering-declarative-streaming-data-pipelines/)
+- [Документация Snowflake: материализованные представления](https://docs.snowflake.com/en/user-guide/views-materialized)
 
 
-## Related docs
+## Связанная документация
 
-- [dbt blog: Announcing materialized views](/blog/announcing-materialized-views)
-- [dbt blog: Optimizing query run time with materialization schedules](https://www.getdbt.com/blog/optimizing-query-run-time-with-materialization-schedules/)
+- [Блог dbt: анонс материализованных представлений](/blog/announcing-materialized-views)
+- [Блог dbt: оптимизация времени выполнения запросов с помощью расписаний материализации](https://www.getdbt.com/blog/optimizing-query-run-time-with-materialization-schedules/)

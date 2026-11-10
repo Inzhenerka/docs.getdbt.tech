@@ -59,7 +59,7 @@ metrics:
 
 <VersionBlock firstVersion="1.12">
 
-On the days when there are no conversions, you can set the value for leads to zero by adding the `fill_nulls_with` parameter to the leads metric:
+Для дней без конверсий можно задать нулевое значение метрики лидов с помощью параметра `fill_nulls_with`:
 
 <File name='models/website_visits.yml'>
 

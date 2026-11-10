@@ -1,5 +1,5 @@
 ---
-title: "Connect dbt MCP to dbt platform"
+title: "Подключение dbt MCP к платформе dbt"
 id: "qs-mcp-oauth"
 level: 'Beginner'
 icon: 'zap'

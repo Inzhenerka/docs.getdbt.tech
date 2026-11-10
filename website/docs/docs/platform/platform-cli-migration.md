@@ -1,41 +1,41 @@
 ---
-title: dbt platform CLI migration
+title: Миграция dbt platform CLI
 id: platform-cli-migration
-description: "Starting September 14, 2026, pip install dbt will install dbt v2 instead of the dbt platform CLI. Learn what to change to keep using the dbt platform CLI without interruption."
+description: "С 14 сентября 2026 года команда pip install dbt будет устанавливать dbt v2 вместо dbt platform CLI. Узнайте, что нужно изменить, чтобы продолжить пользоваться dbt platform CLI без перебоев."
 unlisted: true
 ---
 
-Starting September 14, 2026, `pip install dbt` will install dbt v2 instead of the <Constant name="platform_cli" />. If you install the <Constant name="platform_cli" /> with pip, you need to take action to keep using it without interruption.
+С 14 сентября 2026 года команда `pip install dbt` будет устанавливать dbt v2 вместо <Constant name="platform_cli" />. Если вы устанавливаете <Constant name="platform_cli" /> с помощью pip, вам необходимо принять меры, чтобы продолжить пользоваться им без перебоев.
 
-## What's changing
+## Что изменится
 
-Starting September 14, 2026, `pip install dbt` will install v2, dbt's next-generation Rust-based engine, instead of the <Constant name="platform_cli" />. This is a one-time change to what the `dbt` package on PyPI contains, not a <Constant name="platform_cli" /> upgrade.
+С 14 сентября 2026 года команда `pip install dbt` будет устанавливать v2 — движок dbt нового поколения на базе Rust — вместо <Constant name="platform_cli" />. Это разовое изменение содержимого пакета `dbt` на PyPI, а не обновление <Constant name="platform_cli" />.
 
-If you install the <Constant name="platform_cli" /> using pip today and don't pin a version, your next `pip install dbt` or `pip install --upgrade dbt` installs v2 instead. dbt v2 is a different engine: it runs locally against a warehouse connection you configure yourself, instead of running your commands against your <Constant name="dbt_platform" /> development environment. Commands like `dbt cancel`, `dbt reattach`, `dbt environment`, `dbt sl export`, and `dbt sqlfluff` don't exist in v2.
+Если сейчас вы устанавливаете <Constant name="platform_cli" /> с помощью pip и не фиксируете версию, при следующем выполнении `pip install dbt` или `pip install --upgrade dbt` вместо него будет установлен v2. dbt v2 — это другой движок: он работает локально через подключение к хранилищу данных, которое вы настраиваете самостоятельно, а не выполняет команды в вашей среде разработки <Constant name="dbt_platform" />. Команды `dbt cancel`, `dbt reattach`, `dbt environment`, `dbt sl export` и `dbt sqlfluff` в v2 отсутствуют.
 
-## What to do
+## Что нужно сделать
 
-If you use the <Constant name="platform_cli" /> and want to keep using it, reinstall it using the current method for your operating system &mdash; Homebrew on macOS, or the native executable on Windows or Linux. Refer to [Install the <Constant name="platform_cli" />](/docs/platform/dbt-cli-installation) for full instructions.
+Если вы используете <Constant name="platform_cli" /> и хотите продолжить им пользоваться, переустановите его актуальным для вашей операционной системы способом &mdash; через Homebrew на macOS или с помощью нативного исполняемого файла на Windows или Linux. Подробные инструкции приведены в разделе [Установка <Constant name="platform_cli" />](/docs/platform/dbt-cli-installation).
 
-If you can't reinstall right now (for example, a Docker image that only has pip available), pin your version instead:
+Если вы не можете переустановить его прямо сейчас (например, в Docker-образе доступен только pip), зафиксируйте версию:
 
 ```bash
 pip install dbt==1.0.0.40.20
 ```
 
-This keeps working indefinitely, but won't receive further <Constant name="platform_cli" /> updates through pip. Reinstalling with a currently supported method is the long-term path.
+Эта версия продолжит работать без ограничения по времени, но больше не будет получать обновления <Constant name="platform_cli" /> через pip. Для долгосрочного использования следует переустановить инструмент одним из поддерживаемых сейчас способов.
 
-## General areas of impact
+## Основные области, которых коснутся изменения
 
-- **Dockerfiles / CI pipelines**: any unpinned `pip install dbt` step. Search your repos for `pip install dbt` without a `==` version pin.
-- **Airflow**: `BashOperator`/`KubernetesPodOperator` tasks that install the CLI into the worker image at build time.
-- **`requirements.txt` / `Pipfile` / `pyproject.toml`**: any unpinned `dbt` entry.
-- **dbt Power User (VS Code extension)**: it shells out to the <Constant name="platform_cli" /> internally. Pin your version the same way; the extension itself doesn't need any separate action.
+- **Dockerfile / пайплайны CI**: любые шаги с `pip install dbt` без фиксации версии. Найдите в своих репозиториях команды `pip install dbt`, в которых версия не зафиксирована с помощью `==`.
+- **Airflow**: задачи `BashOperator`/`KubernetesPodOperator`, которые устанавливают CLI в образ рабочего узла на этапе сборки.
+- **`requirements.txt` / `Pipfile` / `pyproject.toml`**: любые записи `dbt` без фиксации версии.
+- **dbt Power User (расширение VS Code)**: расширение вызывает <Constant name="platform_cli" /> через командную оболочку. Зафиксируйте версию тем же способом; никаких отдельных действий с самим расширением не требуется.
 
-## FAQ
+## Часто задаваемые вопросы
 
-- **Why is dbt Labs doing this?** dbt v2 is the new default `dbt` engine going forward. Publishing it under the `dbt` name on PyPI means new users get v2 by default, matching how `dbt` already behaves everywhere else (Homebrew, standalone install).
+- **Почему dbt Labs вносит это изменение?** В дальнейшем dbt v2 станет новым движком `dbt` по умолчанию. Публикация под именем `dbt` на PyPI означает, что новые пользователи будут получать v2 по умолчанию — так же, как это уже происходит при установке `dbt` другими способами (через Homebrew или отдельный установщик).
 
-- **Will my pinned <Constant name="platform_cli" /> version stop working?** No. Pinned installs keep working. They just won't get new <Constant name="platform_cli" /> releases through pip after September 14. For that, reinstall using a currently supported method.
+- **Перестанет ли работать моя зафиксированная версия <Constant name="platform_cli" />?** Нет. Установленные версии с фиксацией продолжат работать. Они просто перестанут получать новые выпуски <Constant name="platform_cli" /> через pip после 14 сентября. Чтобы получать их, переустановите инструмент одним из поддерживаемых сейчас способов.
 
-- **How do I tell which one I have installed?** `dbt --version`. The <Constant name="platform_cli" /> prints a version like `0.40.20`; the corresponding version on PyPI is `1.0.0.40.20`. dbt v2's version string needs reconfirming post-update.
+- **Как определить, какой вариант у меня установлен?** Выполните `dbt --version`. <Constant name="platform_cli" /> выводит версию вида `0.40.20`; соответствующая версия на PyPI — `1.0.0.40.20`. Формат строки версии dbt v2 необходимо повторно уточнить после обновления.

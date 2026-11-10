@@ -1,17 +1,17 @@
 ---
-title: "Configuration not working in WSL (VS Code)"
-sidebar_label: "Configuration not working in WSL (VS Code)"
-description: "Troubleshooting: Configuration not working in WSL (VS Code)"
+title: "Конфигурация не работает в WSL (VS Code)"
+sidebar_label: "Конфигурация не работает в WSL (VS Code)"
+description: "Устранение неполадок: конфигурация не работает в WSL (VS Code)"
 id: mcp-troubleshoot-wsl
 ---
 
-**Symptoms:** VS Code MCP config works on other machines or native Windows but not in WSL.
+**Симптомы:** Конфигурация MCP в VS Code работает на других компьютерах или непосредственно в Windows, но не в WSL.
 
-**Cause:** Local user settings are not applied in WSL environments.
+**Причина:** Локальные пользовательские настройки не применяются в средах WSL.
 
-**Solution:**
+**Решение:**
 
-Configure MCP in the WSL-specific settings instead of local user settings:
-1. Open the Command Palette → **Preferences: Open Remote Settings**.
-2. Or select the **Remote** tab in the Settings editor.
-3. Add your MCP server configuration there.
+Настройте MCP в параметрах для WSL, а не в локальных пользовательских настройках:
+1. Откройте палитру команд → **Preferences: Open Remote Settings**.
+2. Или выберите вкладку **Remote** в редакторе настроек.
+3. Добавьте туда конфигурацию вашего MCP-сервера.

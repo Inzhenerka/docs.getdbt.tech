@@ -16,9 +16,9 @@ import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
 # Редактирование и создание моделей dbt
 
-<p style={{ color: '#717d7d', fontSize: '1.1em' }}>
+<div style={{ color: '#717d7d', fontSize: '1.1em' }}>
 Откройте <Constant name="canvas" /> и используйте его для создания и редактирования моделей dbt в визуальном интерфейсе с поддержкой перетаскивания.
-</p>
+</div>
 
 ## Доступ к Canvas {#access-canvas}
 

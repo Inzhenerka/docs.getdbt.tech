@@ -42,19 +42,16 @@ level: 'Advanced'
 
 Полные инструкции см. в разделе [Create a webhook subscription](/docs/deploy/webhooks#create-a-webhook-subscription). В качестве события выберите **Run completed**. В качестве альтернативы можно выбрать **Run errored**, но в этом случае нужно учитывать, что необходимые метаданные [могут быть недоступны сразу](/docs/deploy/webhooks#completed-errored-event-difference).
 
+Сохраните секретный ключ вебхука для следующего шага.
+
 После того как вы протестируете эндпоинт в <Constant name="dbt" />, вернитесь в Zapier и нажмите **Test Trigger**. Это создаст пример тела вебхука на основе тестового события, отправленного <Constant name="dbt" />.
 
-После того как вы протестировали endpoint в <Constant name="cloud" />, вернитесь в Zapier и нажмите **Test Trigger**. Это создаст пример тела webhook на основе тестового события, отправленного из <Constant name="cloud" />.
-
-## Сохранение секретов 
-На следующем шаге вам понадобятся секретный ключ вебхука (Webhook Secret Key) из предыдущего шага и [персональный токен доступа](/docs/dbt-apis/user-tokens) или [токен сервисной учётной записи](/docs/dbt-apis/service-tokens) <Constant name="dbt" />.
+Поля в примере содержат фиксированные значения и не отражают данные вашего проекта. Пример показывает структуру объекта, с которым Zapier будет работать во время настройки.
 
 ## Хранение секретов {#store-secrets}
-На следующем шаге вам понадобится Webhook Secret Key из предыдущего шага, а также <Constant name="cloud" /> [personal access token](/docs/dbt-apis/user-tokens) или [service account token](/docs/dbt-apis/service-tokens).
+На следующем шаге вам понадобится секретный ключ вебхука (Webhook Secret Key) и [персональный токен доступа](/docs/dbt-apis/user-tokens) или [токен сервисной учётной записи](/docs/dbt-apis/service-tokens) <Constant name="dbt" />.
 
-Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). Это предотвращает отображение ваших ключей в виде открытого текста в коде Zap. Вы можете получать к ним доступ с помощью утилиты [StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
-
-Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). Это предотвращает отображение ваших ключей в виде открытого текста в коде Zap. Вы можете получить к ним доступ с помощью [утилиты StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
+Zapier позволяет [хранить секреты](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps). Ключи не будут отображаться открытым текстом в коде Zap. Для доступа к ним используйте [утилиту StoreClient](https://help.zapier.com/hc/en-us/articles/8496293969549-Store-data-from-code-steps-with-StoreClient).
 
 <Snippet path="webhook_guide_zapier_secret_store" />
 
@@ -224,7 +221,7 @@ Zapier позволяет [хранить секреты](https://help.zapier.co
 
 Это руководство использует краткосрочное действие кода для хранения секретов, но вы также можете использовать инструмент, такой как Postman, для взаимодействия с [REST API](https://store.zapier.com/) или создать отдельный Zap и вызвать [Set Value Action](https://help.zapier.com/hc/en-us/articles/8496293271053-Save-and-retrieve-data-from-Zaps#3-set-a-value-in-your-store-0-3).
 
-#### a. Создание подключения Storage by Zapier {#a-create-a-storage-by-zapier-connection}
+#### a. Создание подключения Storage by Zapier {#create-storage-connection-for-slack-trigger}
 Если у вас его еще нет, перейдите на [https://zapier.com/app/connections/storage](https://zapier.com/app/connections/storage) и создайте новое подключение. Запомните сгенерированный UUID секрет для дальнейшего использования.
 
 #### b. Добавьте временный шаг с кодом

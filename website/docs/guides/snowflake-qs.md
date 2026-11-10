@@ -116,11 +116,11 @@ Partner Connect позволяет создать полноценный акк�
 
 <Lightbox src="/img/snowflake_tutorial/dbt_cloud_snowflake_project_overview.png" title="dbt - Snowflake Project Overview" />
 
-<Lightbox src="/img/snowflake_tutorial/dbt_cloud_update_database_and_warehouse.png" title="dbt - Update Database and Warehouse" />
+<Lightbox src="/img/snowflake_tutorial/dbt_cloud_update_database_and_warehouse.png" title="dbt — обновление базы данных и вычислительного хранилища" />
 
 </DocCarousel>
 
-You should now be logged into <Constant name="dbt" /> with a project that has a Snowflake connection using the `analytics` database and `transforming` warehouse. Partner Connect also created a managed repository for you, so skip to [Initialize your dbt project and start developing](#initialize-your-dbt-project-and-start-developing).
+Теперь в <Constant name="dbt" /> должен открыться проект с подключением к Snowflake, использующим базу `analytics` и хранилище `transforming`. Partner Connect также создал управляемый репозиторий. Перейдите к разделу [Инициализация проекта dbt и начало разработки](#initialize-your-dbt-project-and-start-developing).
 
 </TabItem>
 <TabItem value="manual-connect" label="Подключить вручную">

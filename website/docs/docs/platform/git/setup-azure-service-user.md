@@ -17,8 +17,6 @@ availability:
 
 :::
 
-Чтобы использовать нативную интеграцию с Azure DevOps в <Constant name="cloud" />, администратор аккаунта должен настроить приложение Microsoft Entra ID. Мы рекомендуем создавать отдельное [приложение Entra ID, отличное от используемого для SSO](/docs/platform/manage-access/set-up-sso-microsoft-entra-id).
-
 Чтобы использовать нашу встроенную интеграцию с Azure DevOps в <Constant name="dbt" />, администратору аккаунта необходимо настроить приложение Microsoft Entra ID. Мы рекомендуем настроить отдельное [приложение Entra ID, отличное от используемого для SSO](/docs/platform/manage-access/set-up-sso-microsoft-entra-id).
 
 1. [Зарегистрируйте приложение Entra ID](#register-a-microsoft-entra-id-app).
@@ -28,12 +26,6 @@ availability:
 5. [Добавьте приложение Entra ID в <Constant name="dbt" />](#add-your-microsoft-entra-id-app-to-dbt).
 
 После добавления приложения Microsoft Entra ID в <Constant name="dbt" /> администратор аккаунта также должен [подключить служебного пользователя](#connect-a-service-user) с помощью OAuth. Эта учётная запись будет использоваться для выполнения действий без участия пользователя в <Constant name="dbt" />, таких как запуски развёртывания и CI.
-
-Для выполнения шагов на этой странице требуются следующие роли:
-- администратор Microsoft Entra ID
-- администратор Azure DevOps
-- администратор аккаунта <Constant name="cloud" />
-- администратор Azure (если среды Entra ID и Azure DevOps не связаны)
 
 После добавления приложения Microsoft Entra ID в <Constant name="dbt" /> и подключения служебного пользователя разработчики <Constant name="dbt" /> смогут проходить индивидуальную аутентификацию в <Constant name="dbt" /> через Azure DevOps. Подробнее см. в разделе [Аутентификация через Azure DevOps](/docs/platform/git/authenticate-azure).
 
@@ -45,18 +37,7 @@ availability:
 
 ## Регистрация приложения Microsoft Entra ID {#register-a-microsoft-entra-id-app}
 
-1. Войдите в Azure portal и выберите **Microsoft Entra ID**.
-2. В левой панели выберите **App registrations**.
-3. Нажмите **New registration**. Откроется форма создания нового приложения Entra ID.
-4. Укажите имя приложения. Мы рекомендуем использовать, например, `dbt Labs Azure DevOps app`.
-5. В качестве Supported Account Types выберите **Accounts in any organizational directory (Any Entra ID directory - Multitenant)**.  
-   Многие клиенты спрашивают, почему необходимо выбирать Multitenant вместо Single tenant, и часто ошибаются на этом шаге. Microsoft рассматривает Azure DevOps (ранее Visual Studio) и Microsoft Entra ID как отдельные тенанты, поэтому для корректной работы приложения Entra ID необходимо выбрать Multitenant.
-6. Добавьте redirect URI.
-    1. Выберите платформу **Web**.
-    2. В поле введите `https://YOUR_ACCESS_URL/complete/azure_active_directory`. Обязательно замените `YOUR_ACCESS_URL` на [соответствующий Access URL](/docs/platform/about-platform/access-regions-ip-addresses) для вашего региона и плана.
-7. Нажмите **Register**.
-
-<Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/ADnavigation.gif" title="Переход к регистрации приложений Entra ID"/>
+Следующие шаги выполняет администратор Microsoft Entra ID.
 
 1. Войдите на портал Azure и нажмите **Microsoft Entra ID**.
 2. Выберите **App registrations** на левой панели.
@@ -71,9 +52,13 @@ availability:
 
 <Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/ADnavigation.gif" title="Переход к регистрации приложений Entra ID"/>
 
+Перед регистрацией приложение должно выглядеть так:
+<Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/AD app.png" title="Регистрация приложения Microsoft Entra ID"/>
+
 ## Добавление разрешений для нового приложения {#add-permissions-to-your-new-app}
 
-<Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/AD app.png" title="Регистрация приложения Microsoft Entra ID"/>
+Администратор Microsoft Entra ID должен предоставить приложению доступ к Azure DevOps.
+
 
 1. В левой панели навигации выберите **API permissions**.
 2. Удалите разрешение **Microsoft Graph / User Read**.
@@ -81,13 +66,13 @@ availability:
 4. Выберите **Azure DevOps**.
 5. Выберите разрешение **user_impersonation**. Это единственное доступное разрешение для Azure DevOps.
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/user-impersonation.gif" title="Добавление разрешений для приложения"/>
-
 ## Добавление дополнительного redirect URI {#add-another-redirect-uri}
 
 Администратор Microsoft Entra ID должен добавить еще один redirect URI в приложение Entra ID. Этот redirect URI будет использоваться для аутентификации сервисного пользователя при headless‑действиях в средах деплоя.
 
+Перед добавлением URI убедитесь, что при [регистрации приложения](#register-a-microsoft-entra-id-app) вы выбрали платформу **Web**.
 <Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/user-impersonation.gif" title="Добавление разрешений приложению"/>
+
 
 1. Перейдите к вашему приложению Microsoft Entra ID.
 2. Нажмите на ссылку рядом с **Redirect URIs**.
@@ -95,22 +80,11 @@ availability:
    `https://YOUR_ACCESS_URL/complete/azure_active_directory_service_user`
 4. Нажмите **Save**.
 
-<Lightbox src="/img/docs/dbt-cloud/connecting-azure-devops/redirect-uri.gif" title="Добавление redirect URI для сервисного пользователя"/>
+## Создание секрета клиента {#create-a-client-secret}
 
-## Создание client secret {#create-a-client-secret}
-
-Администратор Microsoft Entra ID должен выполнить следующие шаги:
-
-2. Выберите ссылку рядом с **Redirect URIs**.
-3. Нажмите **Add URI** и добавьте URI, заменив `YOUR_ACCESS_URL` на [соответствующий URL доступа](/docs/platform/about-platform/access-regions-ip-addresses) для вашего региона и тарифного плана:
-`https://YOUR_ACCESS_URL/complete/azure_active_directory_service_user`
-4. Нажмите **Save**.
+Администратор Microsoft Entra ID должен выполнить следующие действия:
 
 <Lightbox src="/img/docs/dbt-platform/connecting-azure-devops/redirect-uri.gif" title="Добавление URI перенаправления для служебного пользователя"/>
-
-## Создание секрета клиента
-
-Администратору Microsoft Entra ID необходимо выполнить следующие действия:
 
 1. Перейдите к своему приложению Microsoft Entra ID.
 2. Выберите **Certificates and Secrets** на левой панели навигации.
@@ -152,17 +126,12 @@ availability:
 
 Теперь ваше приложение Microsoft Entra ID должно быть добавлено в аккаунт <Constant name="dbt" />. Участники вашей команды, которые хотят разрабатывать в <Constant name="studio_ide" /> или <Constant name="dbt" /> CLI, теперь могут самостоятельно [авторизовать доступ к Azure DevOps в своих профилях](/docs/platform/git/authenticate-azure).
 
-## Подключение сервисного пользователя {#connect-a-service-user}
-
-## Настройка сервисного пользователя
+## Настройка сервисного пользователя {#connect-a-service-user}
 
 Сервисный пользователь — это техническая учетная запись, которую администратор создает так же, как учетную запись обычного пользователя, но предоставляет ей разрешения, предназначенные специально для взаимодействия между сервисами. Не следует привязывать аутентификацию к реальному пользователю Azure DevOps: если этот человек покинет вашу организацию, <Constant name="dbt" /> потеряет доступ к репозиториям dbt в Azure DevOps, что приведет к сбоям запусков в производственной среде.
 
 :::info Истечение срока действия аутентификации сервисного пользователя
 <Constant name="dbt" /> обновляет аутентификацию сервисного пользователя при каждом запуске, инициированном планировщиком, API или CI. Если в вашей учетной записи нет активных запусков более 90 дней, администратору потребуется вручную обновить аутентификацию сервисного пользователя, отключив и повторно подключив его профиль через описанную выше процедуру OAuth, чтобы возобновить операции без участия пользователя, такие как настройка проектов, запуски развертывания и CI.
-
-:::info Срок действия аутентификации сервисного пользователя
-<Constant name="cloud" /> обновляет аутентификацию сервисного пользователя при каждом запуске, инициированном планировщиком, API или CI. Если в аккаунте не было активных запусков более 90 дней, администратору потребуется вручную обновить аутентификацию сервисного пользователя, отключив и повторно подключив его профиль через OAuth‑процесс, описанный выше, чтобы возобновить headless‑взаимодействия, такие как настройка проектов, deployment‑запуски и CI.
 :::
 
 Если <Constant name="studio_ide" /> не запускается и отображает сообщение `Failed to start server. The project is not fully set up: Azure Service User not found`, значит, служебный пользователь на уровне аккаунта не подключён. Подробнее см. в разделе [Подключение служебного пользователя](#connect-a-service-user).

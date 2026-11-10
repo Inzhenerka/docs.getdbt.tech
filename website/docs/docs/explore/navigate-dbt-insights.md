@@ -28,15 +28,11 @@ availability:
   - Содержит три вкладки: **Data**, **Chart** и **Details**, которые позволяют анализировать выполнение запроса и визуализировать результаты.
 4. [Боковое меню консоли запросов](#query-console-sidebar-menu), которое содержит значки **<Constant name="catalog" />**, **Bookmark**, **Query history** и **dbt Copilot**.
 
-1. Редактор Query console, который позволяет писать, запускать и анализировать SQL-запросы:
-  - Поддерживает подсветку синтаксиса и подсказки автодополнения  
-  - Гиперссылку из SQL-кода `ref` на соответствующую страницу Explorer
-2. [Query console menu](#query-console-menu), в котором находятся кнопки **Bookmark (icon)**, **Develop** и **Run**.
-3. [Query output panel](#query-output-panel), расположенную под редактором запросов и отображающую результаты выполнения запроса:
-  - Содержит три вкладки: **Data**, **Chart** и **Details**, которые позволяют анализировать выполнение запроса и визуализировать результаты.
-4. [Query console sidebar menu](#query-console-sidebar-menu), в котором находятся иконки **<Constant name="explorer" />**, **Bookmark**, **Query history** и **<Constant name="copilot" />**.
-
 <Lightbox src="/img/docs/dbt-insights/insights-main.png" title="Основной интерфейс dbt Insights с пустым редактором запросов" />
+
+### Меню консоли запросов {#query-console-menu}
+
+Меню находится в правом верхнем углу редактора и содержит кнопки **Bookmark**, **Develop** и **Run**.
 
 - Кнопка **Bookmark** &mdash; сохраняйте часто используемые SQL-запросы в избранное для быстрого доступа.
   - При нажатии **Bookmark** появится модальное окно **Bookmark Query Details**, в котором можно добавить заголовок (**Title**) и описание (**Description**).
@@ -45,13 +41,13 @@ availability:
  - **Develop**: откройте [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), чтобы продолжить редактирование SQL-запроса.
 - Кнопка **Run** &mdash; выполните SQL-запрос и просмотрите результаты на вкладке **Data**.
 
-<a id="semantic-layer-querying" />
-
-## Запросы к Semantic Layer
+## Запросы к Semantic Layer {#semantic-layer-querying}
 
 Возможность выполнения запросов к Semantic Layer в dbt <Constant name="insights" /> позволяет создавать запросы к Semantic Layer без написания SQL-кода. Она помогает создавать запросы на основе доступных метрик, измерений и сущностей. С помощью этой возможности вы можете:
 
-Query Builder в dbt <Constant name="query_page" /> позволяет создавать запросы к Semantic Layer без написания SQL-кода. Он помогает формировать запросы на основе доступных метрик, измерений и сущностей. С помощью Query Builder вы можете:
+- Стройте анализ на основе заранее определённых метрик Semantic Layer.
+- Настраивайте фильтры, диапазоны дат и агрегаты с учётом семантической модели.
+- Просматривайте SQL-код, который выполняется для каждого запроса к метрике.
 
 Чтобы создать запрос в dbt <Constant name="insights" />:
 
@@ -96,8 +92,6 @@ Query Builder в dbt <Constant name="query_page" /> позволяет созд�
 <Lightbox src="/img/docs/dbt-insights/insights-chart.png" width="95%" title="Вкладка Chart в dbt Insights" />
 <Lightbox src="/img/docs/dbt-insights/insights-details.png" width="95%" title="Вкладка Details в dbt Insights" />
 </DocCarousel>
-
-<a id="query-console-menu" />
 
 ## Боковое меню Query console {#query-console-sidebar-menu}
 Боковое меню Query console содержит следующие разделы и иконки:

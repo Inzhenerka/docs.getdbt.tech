@@ -1,8 +1,8 @@
 ---
-title: Using defer in dbt
+title: Использование defer в dbt
 id: about-defer
-description: "Learn how to leverage defer to prod when developing with dbt."
-sidebar_label: "Defer in dbt"
+description: "Узнайте, как использовать defer для обращения к production-окружению при разработке с dbt."
+sidebar_label: "Defer в dbt"
 pagination_next: "docs/about-dbt-extension"
 availability:
   surface: platform
@@ -10,67 +10,69 @@ availability:
 ---
 
 
-[Defer](/reference/node-selection/defer) is a powerful feature that allows developers to only build, run, and test models<VersionBlock firstVersion="1.11"> and functions</VersionBlock> they've edited, without having to build and run all the models<VersionBlock firstVersion="1.11"> and functions</VersionBlock> that come before them (upstream parents). dbt powers this by using a production manifest for comparison and resolves `{{ ref() }}`<VersionBlock firstVersion="1.11"> and `{{ function() }}`</VersionBlock> calls with upstream production artifacts.
+[Defer](/reference/node-selection/defer) — это мощная возможность, которая позволяет разработчикам собирать, запускать и тестировать только те модели<VersionBlock firstVersion="1.11"> и функции</VersionBlock>, которые они изменили, без необходимости собирать и запускать все предшествующие им модели<VersionBlock firstVersion="1.11"> и функции</VersionBlock> (вышестоящие родительские узлы). Для этого dbt использует манифест production-окружения для сравнения и разрешает вызовы `{{ ref() }}`<VersionBlock firstVersion="1.11"> и `{{ function() }}`</VersionBlock> с помощью вышестоящих артефактов production-окружения.
 
-Both the <Constant name="studio_ide" /> and the <Constant name="dbt" /> CLI enable users to natively defer to production metadata directly in their development workflows. 
+И <Constant name="studio_ide" />, и <Constant name="dbt" /> CLI позволяют пользователям обращаться к метаданным production-окружения с помощью встроенной поддержки defer непосредственно в процессе разработки. 
 
-<Lightbox src src="/img/docs/reference/defer-diagram.png" width="50%" title="Use 'defer' to modify end-of-pipeline models by pointing to production models, instead of running everything upstream." />
+<Lightbox src src="/img/docs/reference/defer-diagram.png" width="50%" title="Используйте 'defer', чтобы изменять модели в конце пайплайна, обращаясь к моделям production-окружения вместо запуска всех вышестоящих моделей." />
 
-When using `--defer`, <Constant name="dbt" /> will follow this order of execution for resolving `{{ ref() }}`<VersionBlock firstVersion="1.11"> and `{{ function() }}`</VersionBlock> calls.
+При использовании `--defer` <Constant name="dbt" /> разрешает вызовы `{{ ref() }}`<VersionBlock firstVersion="1.11"> и `{{ function() }}`</VersionBlock> в следующем порядке.
 
-1. If a development version of a deferred relation exists, dbt preferentially uses the development database location when resolving the reference.
-2. If a development version doesn't exist, dbt uses the staging locations of parent relations based on metadata from the staging environment.
-3. If no development version and no staging environment exist, dbt uses the production locations of parent relations based on metadata from the production environment. Note that dbt only defers to one environment per invocation &mdash; either staging or production.
+1. Если версия объекта базы данных, к которому применяется defer, существует в окружении разработки, dbt при разрешении ссылки отдает предпочтение его расположению в базе данных разработки.
+2. Если версии в окружении разработки нет, dbt использует расположения родительских объектов базы данных в staging-окружении на основе метаданных этого окружения.
+3. Если нет ни версии в окружении разработки, ни staging-окружения, dbt использует расположения родительских объектов базы данных в production-окружении на основе метаданных этого окружения. Обратите внимание: в рамках одного вызова dbt применяет defer только к одному окружению &mdash; либо staging, либо production.
 
-**Note:** Passing the `--favor-state` flag will always resolve refs using staging metadata if available; otherwise, it defaults to production metadata regardless of the presence of a development relation, skipping step #1.
+**Примечание:** При передаче флага `--favor-state` ссылки всегда разрешаются с использованием метаданных staging-окружения, если они доступны; в противном случае используются метаданные production-окружения независимо от наличия объекта базы данных в окружении разработки, а шаг № 1 пропускается.
 
-For a clean slate, it's a good practice to drop the development schema at the start and end of your development cycle.
+Чтобы начинать с чистого состояния, рекомендуется удалять схему разработки в начале и в конце цикла разработки.
 
-If you require additional controls over production data, create a [staging environment](/docs/deploy/deploy-environments#staging-environment), and dbt will use that, rather than the production environment, to resolve `{{ ref() }}`<VersionBlock firstVersion="1.11"> and `{{ function() }}`</VersionBlock> calls.
+Если вам нужен дополнительный контроль над данными production-окружения, создайте [staging-окружение](/docs/deploy/deploy-environments#staging-environment), и dbt будет использовать его вместо production-окружения для разрешения вызовов `{{ ref() }}`<VersionBlock firstVersion="1.11"> и `{{ function() }}`</VersionBlock>.
 
-## Configuration options
+## Варианты настройки
 
-There are several ways to configure deferral in dbt, depending on how your project is set up:
+Существует несколько способов настроить defer в dbt в зависимости от конфигурации вашего проекта:
 
-- **<Constant name="dbt_platform" />**: When using the <Constant name="studio_ide" /> or <Constant name="platform_cli" />, deferral is managed automatically. You can optionally configure `defer-env-id` to target a specific environment. Refer to [Set up deferral in the dbt platform](#set-up-deferral-in-the-dbt-platform) for setup details.
-- **Self-managed deployments (`defer_to_target`)**: If you have [dbt State](/docs/deploy/dbt-state-about) enabled, set `defer_to_target` in `profiles.yml` to specify which environment dbt State defers to. Refer to [`defer_to_target`](/reference/resource-configs/defer-to-target) and [Configuring deferral in dbt State](/docs/deploy/dbt-state-deferral) for setup details.
-- **Manual defer (`--state`)**: Pass `--state` or `--defer-state` explicitly to point dbt to a specific `manifest.json`. Refer to [Defer](/reference/node-selection/defer) for usage details.
+- **<Constant name="dbt_platform" />**: При использовании <Constant name="studio_ide" /> или <Constant name="platform_cli" /> defer управляется автоматически. При необходимости можно настроить `defer-env-id`, чтобы указать конкретное окружение. Подробнее о настройке см. в разделе [Настройка defer на платформе dbt](#set-up-deferral-in-the-dbt-platform).
+- **Самостоятельно управляемые развертывания (`defer_to_target`)**: Если у вас включен [dbt State](/docs/deploy/dbt-state-about), задайте `defer_to_target` в `profiles.yml`, чтобы указать, к какому окружению dbt State должен обращаться при использовании defer. Подробнее о настройке см. в разделах [`defer_to_target`](/reference/resource-configs/defer-to-target) и [Настройка defer в dbt State](/docs/deploy/dbt-state-deferral).
+- **Ручная настройка defer (`--state`)**: Явно передайте `--state` или `--defer-state`, чтобы указать dbt конкретный файл `manifest.json`. Подробнее об использовании см. в разделе [Defer](/reference/node-selection/defer).
 
-:::tip Use dbt State for smarter deferral <Lifecycle status="beta" />
-In self-managed deployments with [dbt State](/docs/deploy/dbt-state-about) enabled, `state:*` selectors can compare each node against its own last execution instead of a single `manifest.json` &mdash; no manifest management needed. Refer to [dbt State-powered `state:*` selectors](/docs/deploy/dbt-state-deferral#dbt-state-powered-state-selectors).
+:::tip Используйте dbt State для более интеллектуальной работы defer <Lifecycle status="beta" />
+В самостоятельно управляемых развертываниях с включенным [dbt State](/docs/deploy/dbt-state-about) селекторы `state:*` могут сравнивать каждый узел с его собственным последним выполнением, а не с единым файлом `manifest.json` &mdash; управлять манифестами не требуется. См. раздел [Селекторы `state:*` на базе dbt State](/docs/deploy/dbt-state-deferral#dbt-state-powered-state-selectors).
 :::
 
-## Set up deferral in the dbt platform
+## Настройка defer на платформе dbt {#set-up-deferral-in-the-dbt-platform}
 
-- You must select the **[Production environment](/docs/deploy/deploy-environments#set-as-production-environment)** checkbox in the **Environment Settings** page.
-  - This can be set for one deployment environment per <Constant name="dbt" /> project.
-- You must have a successful job run first.
+- Необходимо установить флажок **[Production environment](/docs/deploy/deploy-environments#set-as-production-environment)** на странице **Environment Settings**.
+  - Его можно установить для одного окружения развертывания в каждом проекте <Constant name="dbt" />.
+- Сначала необходимо успешно выполнить задание.
 
-When using defer, it compares artifacts from the most recent successful production job, excluding CI jobs.
+При использовании defer для сравнения берутся артефакты последнего успешно выполненного задания в production-окружении, за исключением заданий CI.
 
-The following sections cover how to enable and configure deferral in the <Constant name="studio_ide" />, the <Constant name="platform_cli" />, and how to customize which environment dbt defers to.
+В следующих разделах описано, как включить и настроить defer в <Constant name="studio_ide" /> и <Constant name="platform_cli" />, а также как выбрать окружение, к которому dbt обращается при использовании defer.
 
-### Defer in the dbt IDE
+### Defer в dbt IDE {#defer-in-the-dbt-ide}
 
-To use deferral in the <Constant name="studio_ide" />, you must have production artifacts generated by a deploy job. <Constant name="dbt" /> will first check for these artifacts in your Staging environment (if available), or else in the Production environment.
+Чтобы использовать defer в <Constant name="studio_ide" />, необходимы артефакты production-окружения, созданные заданием развертывания. <Constant name="dbt" /> сначала проверит наличие этих артефактов в staging-окружении (если оно доступно), а затем — в production-окружении.
 
-The defer feature in the <Constant name="studio_ide" /> won't work if a Staging environment exists but no deploy job has run. This is because the necessary metadata to power defer won't exist until a deploy job has run successfully in the Staging environment.
+Функция defer в <Constant name="studio_ide" /> не будет работать, если staging-окружение существует, но в нем еще не запускалось задание развертывания. Это связано с тем, что необходимые для работы defer метаданные появляются только после успешного выполнения задания развертывания в staging-окружении.
 
-To enable defer in the <Constant name="studio_ide" />, toggle the **Defer to staging/production** button on the command bar. Once enabled, <Constant name="dbt" /> will:
+Чтобы включить defer в <Constant name="studio_ide" />, активируйте переключатель **Defer to staging/production** на панели команд. После включения <Constant name="dbt" /> будет:
 
-1. Pull down the most recent manifest from the staging or production environment for comparison
-2. Pass the `--defer` flag to the command (for any command that accepts the flag)
+1. Загружать последний манифест из staging- или production-окружения для сравнения
+2. Передавать команде флаг `--defer` (для любой команды, поддерживающей этот флаг)
 
-For example, if you were to start developing on a new branch with [nothing in your development schema](/reference/node-selection/defer#usage), edit a single model, and run `dbt build -s state:modified` &mdash;  only the edited model runs. Any `{{ ref() }}`<VersionBlock firstVersion="1.11"> and `{{ function() }}`</VersionBlock> calls resolve to the staging or production location of the referenced models<VersionBlock firstVersion="1.11"> and user-defined functions</VersionBlock>.
+Например, если вы начнете разработку в новой ветке, когда [в вашей схеме разработки ничего нет](/reference/node-selection/defer#usage), измените одну модель и выполните `dbt build -s state:modified` &mdash; запустится только измененная модель. Все вызовы `{{ ref() }}`<VersionBlock firstVersion="1.11"> и `{{ function() }}`</VersionBlock> будут разрешаться в расположения соответствующих моделей<VersionBlock firstVersion="1.11"> и пользовательских функций</VersionBlock> в staging- или production-окружении.
 
-<Lightbox src="/img/docs/dbt-platform/defer-toggle.png" width="100%" title="Select the 'Defer to production' toggle on the bottom right of the command bar to enable defer in the Studio IDE."/>
+<Lightbox src="/img/docs/dbt-platform/defer-toggle.png" width="100%" title="Активируйте переключатель 'Defer to production' в правом нижнем углу панели команд, чтобы включить defer в Studio IDE."/>
 
-### Defer in dbt platform CLI
+<a id="defer-in-dbt-cli" />
 
-One key difference between using `--defer` in the <Constant name="platform_cli" /> and the <Constant name="studio_ide" /> is that `--defer` is *automatically* enabled in the <Constant name="platform_cli" /> for all invocations, compared with production artifacts. You can disable it with the `--no-defer` flag.
+### Defer в dbt platform CLI {#defer-in-dbt-platform-cli}
+
+Одно из ключевых отличий использования `--defer` в <Constant name="platform_cli" /> и <Constant name="studio_ide" /> заключается в том, что в <Constant name="platform_cli" /> `--defer` включен *автоматически* для всех вызовов, а сравнение выполняется с артефактами production-окружения. Отключить его можно с помощью флага `--no-defer`.
 
 <VersionBlock firstVersion="2.0">
-A <Constant name="dbt_platform"/> project id must be declared in your `dbt_project.yml` for automatic deferral to associate your project with what is declared in your `dbt_cloud.yml`.
+Чтобы автоматическое применение defer могло связать ваш проект с настройками, указанными в `dbt_cloud.yml`, в файле `dbt_project.yml` необходимо указать идентификатор проекта <Constant name="dbt_platform"/>.
 
 <File name="dbt_project.yml">
 
@@ -82,11 +84,11 @@ dbt-cloud:
 </File>
 </VersionBlock>
 
-### Configure deferral environment ID
+### Настройка идентификатора окружения для defer {#configure-deferral-environment-id}
 
-The <Constant name="studio_ide" /> and <Constant name="platform_cli" /> both offer additional flexibility by letting you choose the source environment for deferral artifacts. You can manually set a `defer-env-id` key in either your `[dbt_project.yml](/reference/dbt_project.yml)` (<Constant name="platform_cli" /> and <Constant name="studio_ide" />) or `dbt_cloud.yml` (<Constant name="platform_cli" /> only) file. By default, dbt will prefer metadata from the project's "Staging" environment (if defined). Otherwise, it uses "Production." For the full file reference, refer to [`dbt_cloud.yml`](/reference/dbt_cloud.yml).
+И <Constant name="studio_ide" />, и <Constant name="platform_cli" /> обеспечивают дополнительную гибкость, позволяя выбирать исходное окружение для артефактов defer. Вы можете вручную задать ключ `defer-env-id` в файле `[dbt_project.yml](/reference/dbt_project.yml)` (<Constant name="platform_cli" /> и <Constant name="studio_ide" />) или `dbt_cloud.yml` (только <Constant name="platform_cli" />). По умолчанию dbt отдает предпочтение метаданным из окружения проекта «Staging» (если оно определено). В противном случае используется «Production». Полное описание файла см. в разделе [`dbt_cloud.yml`](/reference/dbt_cloud.yml).
 
-<Lightbox src="/img/docs/dbt-platform/defer-env-id.png" width="100%" title="Set the defer environment and the target name will change in the UI."/>
+<Lightbox src="/img/docs/dbt-platform/defer-env-id.png" width="100%" title="Задайте окружение для defer, и имя целевого окружения изменится в пользовательском интерфейсе."/>
 
 <File name="dbt_cloud.yml">
 

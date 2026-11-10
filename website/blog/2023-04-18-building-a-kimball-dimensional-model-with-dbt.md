@@ -563,7 +563,7 @@ inner join stg_salesorderheader on stg_salesorderdetail.salesorderid = stg_sales
 - Table
 - Incremental
 
-Обычно таблицы фактов материализуются как `incremental` или `table` в зависимости от объема данных. [Как правило](https://docs.getdbt.tech/docs/build/incremental-overview#when-to-use-an-incremental-model), если вы преобразуете миллионы или миллиарды строк, то вам следует начать использовать материализацию `incremental`. В этом примере мы выбрали `table` для простоты.
+Обычно таблицы фактов материализуются как `incremental` или `table` в зависимости от объема данных. [Как правило](/docs/build/incremental-models-overview#when-to-use-an-incremental-model), если вы преобразуете миллионы или миллиарды строк, то вам следует начать использовать материализацию `incremental`. В этом примере мы выбрали `table` для простоты.
 
 ### Шаг 8: Создание документации и тестов модели {#step-8-create-model-documentation-and-tests}
 
@@ -703,7 +703,7 @@ left join d_date on f_sales.order_date_key = d_date.date_key
 - [Учебные ресурсы группы Кимбалла](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/kimball-techniques/dimensional-modeling-techniques/)
 - [Книга The Data Warehouse toolkit](https://www.kimballgroup.com/data-warehouse-business-intelligence-resources/books/data-warehouse-dw-toolkit/)
 - [Обсуждение dbt о том, актуально ли еще размерное моделирование](https://discourse.getdbt.com/t/is-kimball-dimensional-modeling-still-relevant-in-a-modern-data-warehouse/225)
-- [Глоссарий dbt по размерному моделированию](https://docs.getdbt.tech/terms/dimensional-modeling)
+- [Глоссарий dbt по размерному моделированию](https://www.getdbt.com/blog/guide-to-dimensional-modeling)
 
 Если у вас есть вопросы по материалу, пожалуйста, свяжитесь со мной в сообществе dbt Slack (@Jonathan Neo) или на [LinkedIn](https://www.linkedin.com/in/jonneo/).
 

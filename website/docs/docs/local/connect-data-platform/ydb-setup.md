@@ -80,7 +80,7 @@ profile-name:
 
 ### Все параметры конфигурации {#all-configurations}
 
-| Config | Required? | Default | Description |
+| Параметр | Обязательный? | По умолчанию | Описание |
 | ------ | --------- | ------- | ----------- |
 | host | Да | | Хост YDB |
 | port | Да | | Порт YDB |

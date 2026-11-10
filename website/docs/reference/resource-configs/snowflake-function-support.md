@@ -1,20 +1,20 @@
 ---
-title: "Supported Snowflake functions in dbt v2"
-sidebar_label: "Snowflake functions in dbt v2"
+title: "Поддерживаемые функции Snowflake в dbt v2"
+sidebar_label: "Функции Snowflake в dbt v2"
 id: "snowflake-function-support"
-description: "Check which Snowflake built-in SQL functions dbt v2 can typecheck during static analysis."
+description: "Узнайте, для каких встроенных SQL-функций Snowflake dbt v2 поддерживает проверку типов при статическом анализе."
 tags: ['Snowflake', 'dbt v2', 'static_analysis']
 ---
 
 import SnowflakeFunctionsTable from '/snippets/_functions-table-snowflake.md';
 
 
-<Constant name="fusion"/> can validate that your Snowflake function arguments match expected types directly in <Constant name="dbt_platform"/>, the CLI, or using dbt VS Code extension. To enable this, set [`static_analysis: strict`](/docs/build/about-static-analysis?version=2.0) in your project configuration.
+<Constant name="fusion"/> может проверять соответствие аргументов функций Snowflake ожидаемым типам непосредственно в <Constant name="dbt_platform"/>, в CLI или с помощью расширения dbt для VS Code. Чтобы включить эту возможность, задайте [`static_analysis: strict`](/docs/build/about-static-analysis?version=2.0) в конфигурации проекта.
 
-The following table lists _every_ Snowflake built-in function and its typechecking support status. Use the table's search and filters to find specific functions.
+В следующей таблице перечислены _все_ встроенные функции Snowflake и статус поддержки проверки типов для каждой из них. Используйте поиск и фильтры таблицы, чтобы найти нужные функции.
 
-:::info Refreshed weekly
-This table is updated weekly from the [Snowflake SQL function reference](https://docs.snowflake.com/en/sql-reference/functions-all) and cross-referenced with <Constant name="fusion"/>'s support list. If you spot a discrepancy, we'd love for you to contribute and [open an issue](https://github.com/dbt-labs/dbt/issues) in the <Constant name="core" /> repository!
+:::info Обновляется еженедельно
+Эта таблица еженедельно обновляется на основе [справочника SQL-функций Snowflake](https://docs.snowflake.com/en/sql-reference/functions-all), а затем сверяется со списком функций, поддерживаемых <Constant name="fusion"/>. Если вы заметите несоответствие, будем рады вашему участию — [создайте issue](https://github.com/dbt-labs/dbt/issues) в репозитории <Constant name="core" />!
 :::
 
 <SnowflakeFunctionsTable />

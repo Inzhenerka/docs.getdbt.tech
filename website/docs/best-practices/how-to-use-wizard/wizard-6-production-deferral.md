@@ -1,41 +1,41 @@
 ---
-title: "Developing with production deferral in dbt Wizard"
+title: "Разработка с использованием deferral на основе состояния production в dbt Wizard"
 id: "wizard-6-production-deferral"
-description: "Configure dbt Wizard CLI to reuse production state while developing and validating a subset of a dbt project."
-sidebar_label: "Develop with production deferral"
+description: "Настройте CLI dbt Wizard для повторного использования состояния production при разработке и проверке части проекта dbt."
+sidebar_label: "Разработка с deferral на основе production"
 tags: [AI, Wizard]
 ---
 
 <IntroText>
-Configure production deferral in <Constant name="wizard" /> CLI so local development can reuse unchanged relations from another environment. Deferral reduces the number of upstream models you need to build while you investigate, edit, and validate a focused change.
+Настройте deferral на основе состояния production в CLI <Constant name="wizard" />, чтобы при локальной разработке повторно использовать неизменённые объекты базы данных из другого окружения. Deferral сокращает количество вышестоящих моделей, которые нужно строить при исследовании, внесении и проверке конкретного изменения.
 </IntroText>
 
-This workflow applies to the <Constant name="wizard" /> CLI. The <Constant name="dbt_platform" /> manages credentials and deferral for its own <Constant name="wizard" /> surfaces.
+Этот рабочий процесс предназначен для CLI <Constant name="wizard" />. <Constant name="dbt_platform" /> самостоятельно управляет учётными данными и deferral в собственных интерфейсах <Constant name="wizard" />.
 
-## Choose who manages deferral
+## Выберите, кто управляет deferral
 
-<Constant name="wizard" /> stores per-project deferral settings in `~/.dbt/wizard/wizard_config.toml`. Choose the mode that matches how you already manage state.
+<Constant name="wizard" /> хранит настройки deferral для каждого проекта в `~/.dbt/wizard/wizard_config.toml`. Выберите режим, соответствующий вашему текущему способу управления состоянием.
 
 <SimpleTable>
 
-| `mode` | Use it when |
+| `mode` | Когда использовать |
 |---|---|
-| `wizard` | You want <Constant name="wizard" /> to create and refresh a production state snapshot from a target in `profiles.yml`. |
-| `manual` | You already have a directory containing the production `manifest.json` and want to provide its path. |
-| `fusion_cloud` | <Constant name="fusion_engine" /> and the <Constant name="dbt_platform" /> manage deferral for the connected environment. |
-| `cloud_cli` | The <Constant name="platform_cli" /> manages credentials and deferral through the <Constant name="dbt_platform" />. |
-| `dbt_state` | Your dbt State or run-cache workflow manages deferral, so <Constant name="wizard" /> shouldn't create its own production snapshot. |
-| `disabled` | You don't want deferral for this project. |
+| `wizard` | Вы хотите, чтобы <Constant name="wizard" /> создавал и обновлял снимок состояния production на основе целевого окружения из `profiles.yml`. |
+| `manual` | У вас уже есть каталог с файлом `manifest.json` из production, и вы хотите указать путь к нему. |
+| `fusion_cloud` | <Constant name="fusion_engine" /> и <Constant name="dbt_platform" /> управляют deferral для подключённого окружения. |
+| `cloud_cli` | <Constant name="platform_cli" /> управляет учётными данными и deferral через <Constant name="dbt_platform" />. |
+| `dbt_state` | Ваш рабочий процесс с dbt State или run-cache управляет deferral, поэтому <Constant name="wizard" /> не должен создавать собственный снимок состояния production. |
+| `disabled` | Вы не хотите использовать deferral для этого проекта. |
 
 </SimpleTable>
 
-The configuration values use underscores. For example, use `dbt_state`, not `dbt-state`.
+В значениях конфигурации используются символы подчёркивания. Например, используйте `dbt_state`, а не `dbt-state`.
 
-## Let Wizard manage production state
+## Поручите Wizard управление состоянием production
 
-Use `mode = "wizard"` when your `profiles.yml` contains a target that represents the environment you want to defer to.
+Используйте `mode = "wizard"`, если в вашем `profiles.yml` есть целевое окружение, на объекты которого вы хотите ссылаться через deferral.
 
-Add or update the project entry, replacing the path and target with your own values:
+Добавьте или обновите запись проекта, заменив путь и целевое окружение своими значениями:
 
 <File name='~/.dbt/wizard/wizard_config.toml'>
 
@@ -53,9 +53,9 @@ favor_state = true
 
 </File>
 
-At startup, <Constant name="wizard" /> parses the production target and stores a snapshot under `target/prod-state` by default. The default snapshot time to live is 24 hours.
+При запуске <Constant name="wizard" /> выполняет разбор проекта для целевого окружения production и по умолчанию сохраняет снимок в `target/prod-state`. Срок действия снимка по умолчанию — 24 часа.
 
-Configure the refresh behavior globally when your project needs different parse arguments or a different snapshot location:
+Настройте параметры обновления глобально, если вашему проекту нужны другие аргументы разбора или другое расположение снимка:
 
 <File name='~/.dbt/wizard/wizard_config.toml'>
 
@@ -69,11 +69,11 @@ prod_state_dir = "/Users/you/.cache/dbt/prod-state"
 
 </File>
 
-If you set `global.prod_parse_args` explicitly, those arguments take precedence over the per-project `deferral.target` value.
+Если вы явно задаёте `global.prod_parse_args`, эти аргументы имеют приоритет над значением `deferral.target` для отдельного проекта.
 
-## Use an existing state directory
+## Используйте существующий каталог состояния
 
-Use `mode = "manual"` when another process downloads or creates the production artifacts:
+Используйте `mode = "manual"`, если другой процесс загружает или создаёт артефакты production:
 
 <File name='~/.dbt/wizard/wizard_config.toml'>
 
@@ -86,22 +86,22 @@ favor_state = true
 
 </File>
 
-The `state` directory must contain a compatible production `manifest.json`. Keep the artifacts current enough for the code and packages in your working branch.
+Каталог `state` должен содержать совместимый файл `manifest.json` из production. Поддерживайте артефакты достаточно актуальными, чтобы они соответствовали коду и пакетам в вашей рабочей ветке.
 
-## Decide whether to favor deferred state
+## Решите, отдавать ли приоритет состоянию deferral
 
-`favor_state` defaults to `true`.
+По умолчанию `favor_state` имеет значение `true`.
 
-- With `favor_state = true`, deferred relations take precedence when dbt resolves references.
-- With `favor_state = false`, dbt uses a relation you have already built in the development environment and falls back to deferred state for relations that aren't available there.
+- При `favor_state = true` объекты из окружения deferral имеют приоритет при разрешении ссылок в dbt.
+- При `favor_state = false` dbt использует объект, который вы уже создали в окружении разработки, и обращается к состоянию deferral для объектов, недоступных в этом окружении.
 
-Set this value deliberately. Favoring state is useful when you need a stable production baseline. Turning it off is useful when you want downstream work to consume models you have already built in development.
+Задавайте это значение осознанно. Приоритет состояния полезен, когда вам нужна стабильная исходная версия из production. Отключение этого приоритета полезно, когда вы хотите, чтобы нижестоящие модели использовали модели, уже построенные вами в окружении разработки.
 
-For the underlying dbt behavior, refer to [`--favor-state`](/reference/node-selection/defer#favor-state).
+Подробнее о соответствующем поведении dbt см. в разделе [`--favor-state`](/reference/node-selection/defer#favor-state).
 
-## Start a session and confirm the plan
+## Начните сеанс и проверьте план
 
-Restart `wizard` after editing `wizard_config.toml`, then use a prompt that makes the intended environment explicit:
+Перезапустите `wizard` после редактирования `wizard_config.toml`, а затем используйте запрос, явно указывающий нужное окружение:
 
 ```text
 I am changing fct_orders. Use the configured production deferral state for
@@ -109,34 +109,34 @@ unchanged upstream models. Before running any dbt command, show me the selector,
 target, state directory, and whether favor-state will be applied.
 ```
 
-Before approving a command, verify that:
+Прежде чем одобрить команду, убедитесь, что:
 
-1. The development target receives any new or modified relations.
-2. The state directory points to the intended production artifacts.
-3. The selector is limited to the resources needed for the task.
-4. The `--favor-state` behavior matches your choice.
+1. Все новые или изменённые объекты создаются в целевом окружении разработки.
+2. Каталог состояния указывает на нужные артефакты production.
+3. Селектор ограничен ресурсами, необходимыми для задачи.
+4. Поведение `--favor-state` соответствует вашему выбору.
 
-Deferral changes where dbt resolves unbuilt relations. It doesn't make production a safe write target. Review the target and command before approving any build, test, or query.
+Deferral меняет то, где dbt разрешает ссылки на ещё не построенные объекты. Он не делает production безопасным целевым окружением для записи. Проверяйте целевое окружение и команду, прежде чем одобрять любую сборку, тест или запрос.
 
-## Troubleshoot deferral
+## Устранение неполадок deferral
 
 <SimpleTable>
 
-| Symptom | Check |
+| Проблема | Что проверить |
 |---|---|
-| <Constant name="wizard" /> creates an unexpected production snapshot | Confirm `mode`, `target`, and any explicit `global.prod_parse_args`. Use `manual`, `dbt_state`, or `disabled` when another system owns state. |
-| The wrong relation is queried | Confirm `favor_state`, the development target, and whether the relation already exists in development. |
-| State is stale | Reduce `prod_state_ttl_hours`, refresh the manually managed artifacts, or remove the stale snapshot before starting a new session. |
-| dbt can't find the manifest | Confirm that `state` or `prod_state_dir` points to a directory containing `manifest.json`, not to the file itself. |
-| Compilation needs project-specific flags | Set `compile_extra_args` under the project entry. Project values override global compile arguments. |
-| <Constant name="wizard" /> uses the wrong profile | Configure `profile_override.path`, `profile_override.profile`, and `profile_override.target` for the project. |
+| <Constant name="wizard" /> неожиданно создаёт снимок состояния production | Проверьте `mode`, `target` и явно заданные значения `global.prod_parse_args`. Используйте `manual`, `dbt_state` или `disabled`, если состоянием управляет другая система. |
+| Запрос обращается не к тому объекту | Проверьте `favor_state`, целевое окружение разработки и наличие объекта в этом окружении. |
+| Состояние устарело | Уменьшите `prod_state_ttl_hours`, обновите артефакты, которыми управляете вручную, или удалите устаревший снимок перед началом нового сеанса. |
+| dbt не может найти манифест | Убедитесь, что `state` или `prod_state_dir` указывает на каталог, содержащий `manifest.json`, а не на сам файл. |
+| Для компиляции нужны флаги, специфичные для проекта | Задайте `compile_extra_args` в записи проекта. Значения проекта переопределяют глобальные аргументы компиляции. |
+| <Constant name="wizard" /> использует не тот профиль | Настройте `profile_override.path`, `profile_override.profile` и `profile_override.target` для проекта. |
 
 </SimpleTable>
 
-## Related docs
+## Связанная документация
 
-- [About deferral](/reference/node-selection/defer)
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [<Constant name="wizard" /> configuration](/docs/dbt-ai/wizard-config#deferral)
-- [How <Constant name="wizard" /> works](/docs/dbt-ai/wizard-how-it-works#deferral-and-state)
-- [Validating dbt changes with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes)
+- [О deferral](/reference/node-selection/defer)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка <Constant name="wizard" />](/docs/dbt-ai/wizard-config#deferral)
+- [Как работает <Constant name="wizard" />](/docs/dbt-ai/wizard-how-it-works#deferral-and-state)
+- [Проверка изменений dbt с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes)

@@ -1,8 +1,8 @@
 ---
-title: Where does the metadata about last updated timestamp come from?
-description: "Learn where dbt State gets last updated timestamp metadata."
-sidebar_label: 'Where does last updated timestamp metadata come from?'
+title: Откуда берутся метаданные о времени последнего обновления?
+description: "Узнайте, откуда dbt State получает метаданные о времени последнего обновления."
+sidebar_label: 'Откуда берутся метаданные о времени последнего обновления?'
 id: last-updated-timestamp
 ---
 
-Last updated timestamps come directly from the data warehouse, for example from `INFORMATION_SCHEMA` tables.
+Временные метки последнего обновления поступают непосредственно из хранилища данных, например из таблиц `INFORMATION_SCHEMA`.

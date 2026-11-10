@@ -14,7 +14,9 @@ __Аргументы__:
 
 <details>
 <summary>Исходный код</summary>
+
 	В качестве источника используйте <a href="https://github.com/dbt-labs/dbt/blob/HEAD/core/dbt/context/base.py#L549-L566">GitHub</a> или следующий код: <br /><br />
+
 
 ```python
     def log(msg: str, info: bool = False) -> str: 

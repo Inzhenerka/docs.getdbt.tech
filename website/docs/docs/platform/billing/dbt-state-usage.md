@@ -1,8 +1,8 @@
 ---
-title: "dbt State usage"
+title: "Использование dbt State"
 id: dbt-state-usage
-description: "Learn how dbt State usage and pricing works."
-sidebar_label: "dbt State usage"
+description: "Узнайте, как учитывается использование dbt State и рассчитывается его стоимость."
+sidebar_label: "Использование dbt State"
 availability: everywhere_usage
 ---
 
@@ -10,16 +10,16 @@ import DbtStatePricing from '/snippets/_dbt-state-pricing.md';
 import DbtStateTrialHowItWorks from '/snippets/_dbt-state-trial-how-it-works.md';
 import DbtStateFreePlan from '/snippets/_dbt-state-free-plan.md';
 
-[dbt State](/docs/deploy/dbt-state-about) enables dbt to reuse nodes by cloning from another location or skipping a rebuild when the logic and data haven't changed. It's a separate, usage-based product available to <Constant name="core" />, <Constant name="dbt_platform" />, and <Constant name="fusion_engine" /> users. Learn more about how your usage influences the price so you can plan your savings effectively.
+[dbt State](/docs/deploy/dbt-state-about) позволяет dbt повторно использовать узлы, клонируя их из другого расположения или пропуская повторное построение, если логика и данные не изменились. Это отдельный продукт с оплатой по фактическому использованию, доступный пользователям <Constant name="core" />, <Constant name="dbt_platform" /> и <Constant name="fusion_engine" />. Узнайте подробнее о том, как объём использования влияет на стоимость, чтобы эффективно планировать экономию.
 
-## How the trial works
+## Как работает пробный период
 
 <DbtStateTrialHowItWorks />
 
-## How billing works
+## Как рассчитывается оплата
 
 <DbtStatePricing />
 
-## Free monthly DATT allowance
+## Бесплатный ежемесячный лимит DATT {#free-monthly-datt-allowance}
 
 <DbtStateFreePlan />

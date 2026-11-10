@@ -1,7 +1,7 @@
 ---
-title: "Connect Hologres to dbt v1"
+title: "Подключение Hologres к dbt v1"
 sidebar_label: "Hologres"
-description: "Read this guide to learn about the Alibaba Cloud Hologres setup in dbt."
+description: "Прочитайте это руководство, чтобы узнать о настройке Alibaba Cloud Hologres в dbt."
 meta:
   maintained_by: Alibaba Cloud Hologres Team
   authors: "Alibaba Cloud Hologres Team"
@@ -19,16 +19,16 @@ import SetUpPages from '/snippets/\_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to Hologres with **dbt-alibaba-cloud-hologres**
+## Подключение к Hologres с помощью **dbt-alibaba-cloud-hologres**
 
-`dbt-alibaba-cloud-hologres` enables dbt to work with Alibaba Cloud Hologres, a real-time data warehouse compatible with PostgreSQL.
+`dbt-alibaba-cloud-hologres` позволяет dbt работать с Alibaba Cloud Hologres — хранилищем данных реального времени, совместимым с PostgreSQL.
 
-Check out the dbt profile configuration below for details.
+Подробности приведены ниже в конфигурации профиля dbt.
 
 <File name='~/.dbt/profiles.yml'>
 
 ```yaml
-dbt-alibaba-cloud-hologres: # this needs to match the profile in your dbt_project.yml file
+dbt-alibaba-cloud-hologres: # это имя должно совпадать с именем профиля в файле dbt_project.yml
   target: dev
   outputs:
     dev:
@@ -44,75 +44,75 @@ dbt-alibaba-cloud-hologres: # this needs to match the profile in your dbt_projec
 
 </File>
 
-### Connection parameters
+### Параметры подключения
 
-Currently it supports the following parameters:
+В настоящее время поддерживаются следующие параметры:
 
-| **Field**          | **Description**                                                                                    | Required? | **Default**                | **Example**                                     |
+| **Поле**           | **Описание**                                                                                       | Обязательный? | **По умолчанию**           | **Пример**                                      |
 | ------------------ | -------------------------------------------------------------------------------------------------- | --------- | -------------------------- | ----------------------------------------------- |
-| `type`             | Specifies the type of database connection; must be set to "hologres" for Hologres connections.     | Required  | -                          | `hologres`                                      |
-| `host`             | The endpoint hostname for connecting to Hologres instance.                                         | Required  | -                          | `hgxxx-xxx.hologres.aliyuncs.com`            |
-| `port`             | Port number for Hologres connection.                                                               | Optional  | `80`                       | `80`                                            |
-| `user`             | The username for authentication with Hologres (case-sensitive).                                    | Required  | -                          | `AccessKey ID`                           |
-| `password`         | The password for authentication with Hologres (case-sensitive).                                    | Required  | -                          | `AccessKey Secret`                                 |
-| `database`         | The name of your Hologres database.                                                                | Required  | -                          | `my_database`                                   |
-| `schema`           | The default schema that the models will use in Hologres (use empty string "" if not needed).       | Required  | -                          | `public`                                        |
-| `threads`          | Number of threads for parallel execution.                                                          | Optional  | `1`                        | `4`                                             |
-| `connect_timeout`  | Connection timeout in seconds.                                                                     | Optional  | `10`                       | `10`                                            |
-| `sslmode`          | SSL mode for the connection.                                                                       | Optional  | `disable`                  | `disable`                                       |
-| `application_name` | Application identifier for connection tracking.                                                    | Optional  | `dbt_hologres_{version}`   | `my_dbt_app`                                    |
-| `retries`          | Number of connection retries.                                                                      | Optional  | `1`                        | `3`                                             |
+| `type`             | Тип подключения к базе данных; для подключения к Hologres необходимо задать "hologres".             | Да        | -                          | `hologres`                                      |
+| `host`             | Имя хоста конечной точки для подключения к экземпляру Hologres.                                     | Да        | -                          | `hgxxx-xxx.hologres.aliyuncs.com`            |
+| `port`             | Номер порта для подключения к Hologres.                                                             | Нет       | `80`                       | `80`                                            |
+| `user`             | Имя пользователя для аутентификации в Hologres (с учётом регистра).                                  | Да        | -                          | `AccessKey ID`                           |
+| `password`         | Пароль для аутентификации в Hologres (с учётом регистра).                                            | Да        | -                          | `AccessKey Secret`                                 |
+| `database`         | Имя вашей базы данных Hologres.                                                                    | Да        | -                          | `my_database`                                   |
+| `schema`           | Схема по умолчанию, которую модели будут использовать в Hologres (укажите пустую строку "", если схема не нужна). | Да | -                          | `public`                                        |
+| `threads`          | Количество потоков для параллельного выполнения.                                                   | Нет       | `1`                        | `4`                                             |
+| `connect_timeout`  | Время ожидания подключения в секундах.                                                             | Нет       | `10`                       | `10`                                            |
+| `sslmode`          | Режим SSL для подключения.                                                                        | Нет       | `disable`                  | `disable`                                       |
+| `application_name` | Идентификатор приложения для отслеживания подключений.                                             | Нет       | `dbt_hologres_{version}`   | `my_dbt_app`                                    |
+| `retries`          | Количество повторных попыток подключения.                                                          | Нет       | `1`                        | `3`                                             |
 
-## Authentication configuration
+## Настройка аутентификации
 
-`dbt-alibaba-cloud-hologres` uses the standard PostgreSQL-compatible authentication mechanism with username and password (Access Key). Hologres supports using Alibaba Cloud AccessKey or RAM user credentials for authentication.
+`dbt-alibaba-cloud-hologres` использует стандартный механизм аутентификации, совместимый с PostgreSQL, с именем пользователя и паролем (Access Key). Hologres поддерживает аутентификацию с помощью Alibaba Cloud AccessKey или учётных данных пользователя RAM.
 
-### Access key
+### Ключ доступа
 
-You can authenticate using your Alibaba Cloud account credentials. For security reasons, it is recommended to create a RAM sub-account with appropriate permissions rather than using the primary account AccessKey.
+Вы можете пройти аутентификацию с помощью учётных данных вашей учётной записи Alibaba Cloud. В целях безопасности рекомендуется создать дочернюю учётную запись RAM с соответствующими разрешениями, а не использовать AccessKey основной учётной записи.
 
 ```yaml
-jaffle_shop: # this needs to match the profile in your dbt_project.yml file
+jaffle_shop: # это имя должно совпадать с именем профиля в файле dbt_project.yml
   target: dev
   outputs:
     dev:
       type: hologres
-      host: hgxxx-cn-shanghai.hologres.aliyuncs.com  # Replace with your Hologres endpoint
+      host: hgxxx-cn-shanghai.hologres.aliyuncs.com  # Замените на конечную точку вашего экземпляра Hologres
       port: 80
-      user: your_access_key_id  # Replace with your AccessKeyId
-      password: your_access_key_secret  # Replace with your AccessKeySecret
-      database: my_database  # Replace with your database name
-      schema: public  # Replace with your schema name
+      user: your_access_key_id  # Замените на ваш AccessKeyId
+      password: your_access_key_secret  # Замените на ваш AccessKeySecret
+      database: my_database  # Замените на имя вашей базы данных
+      schema: public  # Замените на имя вашей схемы
       threads: 4
       connect_timeout: 10
       sslmode: disable
 ```
 
-### Important notes
+### Важные замечания
 
-1. **Case sensitivity**: Hologres usernames and passwords are case-sensitive. Make sure to enter them exactly as configured.
+1. **Чувствительность к регистру**: имена пользователей и пароли Hologres чувствительны к регистру. Убедитесь, что вы вводите их в точности так, как они заданы.
 
-2. **Default port**: The default port for Hologres is `80`, which is different from the standard PostgreSQL port `5432`.
+2. **Порт по умолчанию**: порт по умолчанию для Hologres — `80`, что отличается от стандартного порта PostgreSQL `5432`.
 
-3. **SSL mode**: SSL is disabled by default for Hologres connections. You can enable it by setting `sslmode` to an appropriate value if required.
+3. **Режим SSL**: по умолчанию SSL для подключений к Hologres отключён. При необходимости его можно включить, задав подходящее значение параметра `sslmode`.
 
-## Testing your connection
+## Проверка подключения
 
-After configuring your `profiles.yml`, you can verify your connection by running:
+После настройки `profiles.yml` вы можете проверить подключение, выполнив:
 
 ```bash
 dbt debug
 ```
 
-This [command](/reference/commands/debug) will test the connection to your Hologres instance and report any configuration issues.
+Эта [команда](/reference/commands/debug) проверит подключение к вашему экземпляру Hologres и сообщит о проблемах с конфигурацией.
 
-## Hologres-specific features
+## Особенности Hologres
 
-### Dynamic tables in Hologres
+### Динамические таблицы в Hologres
 
-Dynamic tables are Hologres's implementation of materialized views with automatic refresh. 
-When refreshing data, multiple modes are supported, including "full" (full mode) and "incremental" (incremental mode). For more information, please refer to the [reference manual](https://www.alibabacloud.com/help/en/hologres/user-guide/introduction-to-dynamic-table).
-You can configure them in your dbt models:
+Динамические таблицы — это реализация материализованных представлений с автоматическим обновлением в Hologres. 
+При обновлении данных поддерживается несколько режимов, включая "full" (полный режим) и "incremental" (инкрементальный режим). Дополнительные сведения см. в [справочном руководстве](https://www.alibabacloud.com/help/en/hologres/user-guide/introduction-to-dynamic-table).
+Вы можете настроить их в своих моделях dbt:
 
 ```yaml
 models:
@@ -123,47 +123,46 @@ models:
     computing_resource: serverless
 ```
 
-Supported configurations for Dynamic tables:
+Поддерживаемые параметры настройки динамических таблиц:
 
-| **Configuration**     | **Description**                                                    | **Example values**                    |
+| **Параметр**          | **Описание**                                                       | **Примеры значений**                  |
 | --------------------- | ------------------------------------------------------------------ | ------------------------------------- |
-| `freshness`           | Data freshness requirement.                                        | `"30 minutes"`, `"1 hours"`           |
-| `auto_refresh_mode`   | Refresh mode for the dynamic table.                                | `auto`, `incremental`, `full`         |
-| `computing_resource`  | Computing resource to use for refreshing.                          | `serverless`, `local`, warehouse name |
+| `freshness`           | Требование к актуальности данных.                                  | `"30 minutes"`, `"1 hours"`           |
+| `auto_refresh_mode`   | Режим обновления динамической таблицы.                              | `auto`, `incremental`, `full`         |
+| `computing_resource`  | Вычислительный ресурс для обновления.                               | `serverless`, `local`, имя вычислительного хранилища |
 
-### Incremental models with dbt
+### Инкрементальные модели в dbt
 
-`dbt-alibaba-cloud-hologres` supports multiple incremental strategies:
+`dbt-alibaba-cloud-hologres` поддерживает несколько инкрементальных стратегий:
 
-- `append`: Simply append new records
-- `delete+insert`: Delete matching records and insert new ones
-- `merge`: Use MERGE statement for upsert operations
-- `microbatch`: Process data in small batches
+- `append`: добавление новых записей
+- `delete+insert`: удаление совпадающих записей и вставка новых
+- `merge`: использование оператора MERGE для операций вставки или обновления (upsert)
+- `microbatch`: обработка данных небольшими пакетами
 
-### Constraints
+### Ограничения
 
-Full support for database constraints including:
+Полная поддержка ограничений базы данных, включая:
 
-- Primary keys
-- Not null constraints
+- Первичные ключи
+- Ограничения NOT NULL
 
-### Table properties
+### Свойства таблиц
 
-Hologres supports the following table properties. For full details, see the
-[developer reference documentation](https://www.alibabacloud.com/help/en/hologres/developer-reference/create-tables).
+Hologres поддерживает следующие свойства таблиц. Подробные сведения см. в
+[справочной документации для разработчиков](https://www.alibabacloud.com/help/en/hologres/developer-reference/create-tables).
 
-| Property | Best practices |
+| Свойство | Рекомендации |
 |--------|----------------|
-| `orientation` | Use `column` for olap workloads and `row` for key-value queries |
-| `distribution_key` | Choose frequently joined or grouped columns; prefer a single column |
-| `clustering_key` | Use for range filter columns; max 3 columns; follow the left-match principle |
-| `event_time_column` |  Set for time-series data (timestamp columns) |
-| `bitmap_columns` | Use for equality filters |
-| `dictionary_encoding_columns` | Use for low-cardinality string columns |
+| `orientation` | Используйте `column` для нагрузок OLAP и `row` для запросов типа «ключ — значение» |
+| `distribution_key` | Выбирайте столбцы, часто используемые при соединении или группировке; предпочтительно использовать один столбец |
+| `clustering_key` | Используйте для столбцов с фильтрацией по диапазону; не более 3 столбцов; соблюдайте принцип совпадения по левому префиксу |
+| `event_time_column` | Задавайте для данных временных рядов (столбцов с временными метками) |
+| `bitmap_columns` | Используйте для фильтров на равенство |
+| `dictionary_encoding_columns` | Используйте для строковых столбцов с небольшим числом уникальных значений |
 
-## References
+## Справочные материалы
 
-- [dbt-alibaba-cloud-hologres GitHub repository](https://github.com/aliyun/dbt-hologres)
-- [Hologres documentation](https://www.alibabacloud.com/help/en/hologres/)
-- [Hologres dynamic table guide](https://www.alibabacloud.com/help/en/hologres/user-guide/introduction-to-dynamic-table)
-
+- [Репозиторий dbt-alibaba-cloud-hologres на GitHub](https://github.com/aliyun/dbt-hologres)
+- [Документация Hologres](https://www.alibabacloud.com/help/en/hologres/)
+- [Руководство по динамическим таблицам Hologres](https://www.alibabacloud.com/help/en/hologres/user-guide/introduction-to-dynamic-table)

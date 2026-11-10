@@ -1,5 +1,5 @@
 ---
-title: "Single sign-on (SSO) Overview"
+title: "Обзор единого входа (SSO)"
 id: "sso-overview"
 pagination_next: "docs/platform/manage-access/set-up-sso-saml-2.0"
 pagination_prev: null
@@ -11,82 +11,80 @@ availability:
 
 import UniversalLogin from '/snippets/_universal-login.md';
 
-# Single sign-on (SSO) overview
+# Обзор единого входа (SSO)
 
-This overview explains how users are provisioned in <Constant name="dbt" /> using single sign-on (SSO).
-<Constant name="dbt" /> supports JIT (Just-in-Time) provisioning and IdP-initiated login.
+В этом обзоре описано, как создаются учетные записи пользователей в <Constant name="dbt" /> при использовании единого входа (SSO).
+<Constant name="dbt" /> поддерживает создание учетных записей при первом входе (JIT, Just-in-Time) и вход, инициированный поставщиком удостоверений (IdP).
 
 <UniversalLogin />
 
-For SSO, users also use your account **Access URL** or **dbt Enterprise Login URL**, as described in this page.
+Для входа через SSO пользователи также используют **Access URL** или **dbt Enterprise Login URL** вашего аккаунта, как описано на этой странице.
 
-In the <Constant name="dbt_platform" />, dbt assigns an SSO slug (an identifier used in your SSO login URL) to your SSO configuration. The slug is system-generated and read-only. Existing SSO configurations remain valid, but you can’t edit the slug. If you delete and recreate your SSO configuration, the new configuration uses a new, system-generated slug.
+В <Constant name="dbt_platform" /> dbt назначает конфигурации SSO идентификатор slug (идентификатор, используемый в URL для входа через SSO). Этот идентификатор генерируется системой и доступен только для чтения. Существующие конфигурации SSO остаются действительными, но изменить идентификатор slug нельзя. Если удалить и заново создать конфигурацию SSO, новой конфигурации будет назначен новый идентификатор slug, сгенерированный системой.
 
-To further automate your workflow, you can use [System for Cross-Domain Identity Management (SCIM)](/docs/platform/manage-access/scim) to provision users, manage group memberships, and automate license assignments directly from your identity provider (IdP) (Okta or Microsoft Entra ID).
+Для дальнейшей автоматизации рабочих процессов можно использовать [System for Cross-Domain Identity Management (SCIM)](/docs/platform/manage-access/scim), чтобы создавать учетные записи пользователей, управлять членством в группах и автоматизировать назначение лицензий непосредственно из вашего поставщика удостоверений (IdP) — Okta или Microsoft Entra ID.
 
-## Prerequisites
+## Предварительные требования
 
-- You have a <Constant name="dbt" /> Enterprise or Enterprise+ plan. [Contact us](mailto:sales@getdbt.com) to learn more, book a demo, or enroll. For plan details, refer to [Pricing](https://www.getdbt.com/pricing/).
+- У вас есть тарифный план <Constant name="dbt" /> Enterprise или Enterprise+. [Свяжитесь с нами](mailto:sales@getdbt.com), чтобы узнать больше, записаться на демонстрацию или подключить тарифный план. Подробности о тарифных планах см. на странице [Цены](https://www.getdbt.com/pricing/).
 
-## Auth0 URIs
+## URI Auth0 {#auth0-uris}
 
 <Snippet path="auth0-uri" />
 
-## SSO process
+## Процесс SSO
 
-The diagram below explains the basic process by which users are provisioned in <Constant name="dbt" /> upon logging in with SSO.
+На приведенной ниже схеме показан основной процесс создания учетных записей пользователей в <Constant name="dbt" /> при входе через SSO.
 
-<Lightbox src="/img/sso_overview.png" title="SSO diagram" />
+<Lightbox src="/img/sso_overview.png" title="Схема SSO" />
 
-#### Diagram Explanation
+#### Пояснение к схеме
 
-- **Login Page**: The user accesses the <Constant name="dbt" /> login experience (for example, [https://login.dbt.com](https://login.dbt.com)), their account **Access URL**, or their **dbt Enterprise Login URL**, and initiates the SSO flow.
-- **IdP-Initiated Login**: The user accesses the <Constant name="dbt" /> login page within the Identity Provider by selecting the <Constant name="dbt" /> application. This starts the IdP login flow.
-- **IdP Login Page**: The user is prompted to log in to the Identity Provider. This grants the <Constant name="dbt" /> application access to the details of their account.
-- **Login?**: The user can choose to continue or to abort the login process.
-  - **Yes**: The user logs in, grants the <Constant name="dbt" /> application, and continues.
-  - **No**: The user does not log in. They return to the IdP login page.
-- **User Exists?**: This step checks if the user already exists in <Constant name="dbt" />'s user database.
-  - **Yes**: If so, skip the user creation process
-  - **No**: If so, create a new entry in the <Constant name="dbt" /> database for the new user.
-- **Create <Constant name="dbt" /> User**: This will create a new entry in the <Constant name="dbt" /> database for the new user. This user record contains the user's email address, first and last name, and any IdP attributes (for example, groups) passed along from the Identity Provider. <Constant name="dbt" /> will send a verification email, and the user must follow the steps in the [User experience section](/docs/platform/manage-access/invite-users#user-experience) to use SSO in <Constant name="dbt" />.
-- **Attach Matching Accounts**: <Constant name="dbt" /> finds all of the accounts configured to match the SSO config used by this user to log in, and then creates a user license record mapping the user to the account. This step also deletes any licenses that the user should not have based on the current SSO config.
-- **Attach Matching Permissions (Groups)**: <Constant name="dbt" /> iterates through the groups on the matching accounts and finds all that fit one of the following categories:
-  - Have an SSO mapping group that is assigned to the user
-  - Have the **Assign by Default** option selected.
-Then, assign all of these (and only these) to the user license. This step also removes any permissions that the user should not have based on the current SSO group mappings.
-- **<Constant name="dbt" /> Application**: After these steps, the user is redirected into the <Constant name="dbt" /> application, and they can begin to use the application normally.
+- **Страница входа**: пользователь открывает страницу входа в <Constant name="dbt" /> (например, [https://login.dbt.com](https://login.dbt.com)), **Access URL** своего аккаунта или **dbt Enterprise Login URL** и запускает процесс SSO.
+- **Вход, инициированный IdP**: пользователь открывает страницу входа в <Constant name="dbt" /> через поставщика удостоверений, выбрав приложение <Constant name="dbt" />. Это запускает процесс входа через IdP.
+- **Страница входа IdP**: пользователю предлагается войти в систему поставщика удостоверений. Это предоставляет приложению <Constant name="dbt" /> доступ к сведениям об учетной записи пользователя.
+- **Войти?**: пользователь может продолжить или прервать процесс входа.
+  - **Да**: пользователь входит в систему, предоставляет разрешения приложению <Constant name="dbt" /> и продолжает.
+  - **Нет**: пользователь не входит в систему и возвращается на страницу входа IdP.
+- **Пользователь существует?**: на этом этапе проверяется, существует ли пользователь в базе данных пользователей <Constant name="dbt" />.
+  - **Да**: если пользователь существует, процесс создания учетной записи пропускается.
+  - **Нет**: если пользователь не существует, для него создается новая запись в базе данных <Constant name="dbt" />.
+- **Создание пользователя <Constant name="dbt" />**: для нового пользователя создается запись в базе данных <Constant name="dbt" />. Эта запись содержит адрес электронной почты, имя и фамилию пользователя, а также все атрибуты IdP (например, группы), переданные поставщиком удостоверений. <Constant name="dbt" /> отправит письмо для подтверждения адреса электронной почты, и пользователю потребуется выполнить действия из раздела [Процесс для пользователя](/docs/platform/manage-access/invite-users#user-experience), чтобы использовать SSO в <Constant name="dbt" />.
+- **Привязка соответствующих аккаунтов**: <Constant name="dbt" /> находит все аккаунты, настроенные на использование конфигурации SSO, с помощью которой вошел пользователь, а затем создает запись о лицензии пользователя, связывающую его с аккаунтом. На этом этапе также удаляются все лицензии, которые не должны быть у пользователя согласно текущей конфигурации SSO.
+- **Назначение соответствующих разрешений (групп)**: <Constant name="dbt" /> перебирает группы в соответствующих аккаунтах и находит все группы, которые относятся к одной из следующих категорий:
+  - Сопоставлены с группой SSO, в которую входит пользователь.
+  - Имеют выбранный параметр **Assign by Default**.
+Затем все эти группы (и только они) назначаются лицензии пользователя. На этом этапе также удаляются все разрешения, которые не должны быть у пользователя согласно текущим сопоставлениям групп SSO.
+- **Приложение <Constant name="dbt" />**: после выполнения этих действий пользователь перенаправляется в приложение <Constant name="dbt" /> и может начать работу в обычном режиме.
 
-:::note License and permission mappings use IdP groups
-License type mappings and SSO group mappings are based on **IdP group** membership (groups in your identity provider), not <Constant name="dbt_platform" /> group names. When configuring [license mappings](/docs/platform/manage-access/seats-and-users#mapped-configuration-) or group assignments, use the group names and memberships from your IdP.
+:::note Сопоставления лицензий и разрешений используют группы IdP
+Сопоставления типов лицензий и групп SSO основаны на членстве в **группах IdP** (группах вашего поставщика удостоверений), а не на названиях групп <Constant name="dbt_platform" />. При настройке [сопоставлений лицензий](/docs/platform/manage-access/seats-and-users#mapped-configuration) или назначении групп используйте названия групп и сведения о членстве из вашего IdP.
 :::
 
-## SSO enforcement
+## Обязательное использование SSO {#sso-enforcement}
 
-* **SSO Enforcement:** If SSO is turned on in your organization, <Constant name="dbt" /> will enforce SSO-only logins for all non-admin users. By default, if an Account Admin or Security Admin already has a password, they can continue logging in with a password. To restrict admins from using passwords, turn off **Allow password logins for account administrators** in the **SSO & SCIM** section of your organization's **Account settings**.
-* **SSO Re-Authentication:** <Constant name="dbt" /> will prompt you to re-authenticate using your SSO provider every 24 hours to ensure high security.
+* **Обязательное использование SSO:** если в вашей организации включен SSO, <Constant name="dbt" /> разрешает всем пользователям без прав администратора входить только через SSO. По умолчанию, если у пользователя с ролью Account Admin или Security Admin уже есть пароль, он может продолжать входить с паролем. Чтобы запретить администраторам использовать пароли, отключите параметр **Allow password logins for account administrators** в разделе **SSO & SCIM** настроек аккаунта вашей организации (**Account settings**).
+* **Повторная аутентификация через SSO:** <Constant name="dbt" /> будет запрашивать повторную аутентификацию через вашего поставщика SSO каждые 24 часа для обеспечения высокого уровня безопасности.
 
-### How should non-admin users log in?
+### Как должны входить пользователи без прав администратора?
 
-Non-admin users that currently login with a password can no longer do so. They must sign in using [https://login.dbt.com](https://login.dbt.com), the dbt Enterprise Login URL for your account, or an identity provider (IdP), for example, Okta or Microsoft Entra ID.
+Пользователи без прав администратора, которые сейчас входят с паролем, больше не смогут этого делать. Им необходимо входить через [https://login.dbt.com](https://login.dbt.com), dbt Enterprise Login URL вашего аккаунта или поставщика удостоверений (IdP), например Okta или Microsoft Entra ID.
 
-### Security best practices
+### Рекомендации по безопасности
 
-There are a few scenarios that might require you to login with a password. We recommend these security best-practices for the two most common scenarios:
-* **Onboarding partners and contractors** &mdash; We highly recommend that you add partners and contractors to your Identity Provider. IdPs like Okta and Microsoft Entra ID offer capabilities explicitly for temporary employees. We highly recommend that you reach out to your IT team to provision an SSO license for these situations. Using an IdP highly secure, reduces any breach risk, and significantly increases the security posture of your <Constant name="dbt" /> environment.
-* **Identity Provider is down** &mdash; Account admins will continue to be able to log in with a password which would allow them to work with your Identity Provider to troubleshoot the problem.
-* **Offboarding admins** &mdash; When offboarding admins, revoke access to <Constant name="dbt" /> by deleting the user from your environment; otherwise, they can continue to use username/password credentials to log in. 
+В некоторых ситуациях может потребоваться вход с паролем. Мы рекомендуем следующие меры безопасности для наиболее распространенных сценариев:
+* **Предоставление доступа партнерам и подрядчикам** &mdash; настоятельно рекомендуем добавлять партнеров и подрядчиков в систему вашего поставщика удостоверений. Такие IdP, как Okta и Microsoft Entra ID, предлагают специальные возможности для временных сотрудников. Настоятельно рекомендуем обратиться в вашу ИТ-команду для предоставления лицензии SSO в таких ситуациях. Использование IdP обеспечивает высокий уровень безопасности, снижает риск взлома и значительно повышает защищенность вашей среды <Constant name="dbt" />.
+* **Поставщик удостоверений недоступен** &mdash; администраторы аккаунта по-прежнему смогут входить с паролем, что позволит им совместно с поставщиком удостоверений устранить проблему.
+* **Отзыв доступа у администраторов** &mdash; при прекращении работы с администраторами отзовите их доступ к <Constant name="dbt" />, удалив пользователей из вашей среды; иначе они смогут продолжать входить с именем пользователя и паролем. 
 
-### Next steps for non-admin users currently logging in with passwords
+### Дальнейшие действия для пользователей без прав администратора, которые сейчас входят с паролем
 
-If you have any non-admin users logging into <Constant name="dbt" /> with a password today:
+Если у вас есть пользователи без прав администратора, которые сейчас входят в <Constant name="dbt" /> с паролем:
 
-1. Ensure that all users have a user account in your identity provider and are assigned <Constant name="dbt" /> so they won’t lose access.
-2. Alert all <Constant name="dbt" /> users that they won’t be able to use a password for logging in anymore unless they are already an Admin with a password.
-3. We **DO NOT** recommend promoting any users to Admins just to preserve password-based logins because you will reduce security of your <Constant name="dbt" /> environment.
+1. Убедитесь, что у всех пользователей есть учетная запись у вашего поставщика удостоверений и им назначен доступ к приложению <Constant name="dbt" />, чтобы они не потеряли доступ.
+2. Предупредите всех пользователей <Constant name="dbt" />, что они больше не смогут входить с паролем, если только у них уже нет прав администратора и пароля.
+3. Мы **НЕ рекомендуем** предоставлять пользователям права администратора только для сохранения возможности входа с паролем, поскольку это снизит безопасность вашей среды <Constant name="dbt" />.
 
-## FAQ and troubleshooting
+## Часто задаваемые вопросы и устранение неполадок
 
-For common questions and troubleshooting guidance, refer to [SSO FAQs and troubleshooting](/docs/platform/manage-access/sso-faq).
-
-
+Ответы на распространенные вопросы и рекомендации по устранению неполадок см. в разделе [Часто задаваемые вопросы о SSO и устранение неполадок](/docs/platform/manage-access/sso-faq).

@@ -1,8 +1,8 @@
 ---
-title: "dbt Wizard billing and AI access FAQs"
+title: "Часто задаваемые вопросы об оплате dbt Wizard и доступе к ИИ"
 id: "wizard-billing-faqs"
-description: "Answers to common questions about AI being enabled by default, dbt Wizard usage, consumption pools, trials, spend limits, and BYOK billing."
-sidebar_label: "Billing and access FAQs"
+description: "Ответы на распространённые вопросы о включении ИИ по умолчанию, использовании dbt Wizard, пулах потребления, пробном доступе, лимитах расходов и оплате при использовании BYOK."
+sidebar_label: "Вопросы об оплате и доступе"
 tags: [AI, Wizard, billing]
 ---
 
@@ -10,93 +10,93 @@ import WizardBillingFaqs from '/snippets/_wizard-billing-faqs.md';
 
 <IntroText>
 
-Common questions about AI being turned on by default, how <Constant name="wizard" /> usage is measured, what your usage credits covers, and how spend limits work.
+Распространённые вопросы о включении ИИ по умолчанию, учёте использования <Constant name="wizard" />, о том, что покрывают ваши кредиты на использование, и о том, как работают лимиты расходов.
 
 </IntroText>
 
-:::info What's changing from September 1, 2026
+:::info Что изменится с 1 сентября 2026 года
 
-From September 1, 2026, a couple of things are changing for dbt AI features:
-- **AI features are being enabled by default.** They're already on for new accounts and are rolling out soon to existing accounts. If your organization opted out, they'll remain off. Admins can turn AI features on or off anytime in **Account settings**.
-- **<Constant name="wizard" /> is moving to usage-based billing** for [dbt-<Term id="managed"/> AI](#dbt-managed-inference). Usage is metered per token against your consumption pool, and an admin can set a monthly spend limit in <Constant name="dbt_platform"/>.
+С 1 сентября 2026 года в работе функций ИИ dbt произойдут следующие изменения:
+- **Функции ИИ будут включены по умолчанию.** Они уже включены для новых аккаунтов и скоро будут включены для существующих. Если ваша организация отказалась от их использования, они останутся выключенными. Администраторы могут в любое время включить или выключить функции ИИ в разделе **Account settings**.
+- **<Constant name="wizard" /> переходит на оплату по фактическому использованию** для [ИИ под управлением dbt (<Term id="managed"/>)](#dbt-managed-inference). Использование учитывается по токенам и списывается из вашего пула потребления, а администратор может установить месячный лимит расходов в <Constant name="dbt_platform"/>.
 
 :::
 
-## AI enabled by default
+## ИИ включён по умолчанию
 
-AI features are being enabled by default for <Constant name="dbt_platform" /> accounts. They're already on for new accounts and are rolling out soon to existing accounts. If your organization opted out, they'll remain off. Admins can turn AI features on or off anytime in **Account settings**. Turning AI on doesn't create a charge on its own &mdash; refer to [Billing FAQs](#billing-faqs) in the next section to understand how usage is metered.
+Функции ИИ будут включены по умолчанию для аккаунтов <Constant name="dbt_platform" />. Они уже включены для новых аккаунтов и скоро будут включены для существующих. Если ваша организация отказалась от их использования, они останутся выключенными. Администраторы могут в любое время включить или выключить функции ИИ в разделе **Account settings**. Само по себе включение ИИ не приводит к начислению платы &mdash; чтобы узнать, как учитывается использование, см. [вопросы об оплате](#billing-faqs) в следующем разделе.
 
-<Expandable alt_header="Which AI features are enabled by default?">
+<Expandable alt_header="Какие функции ИИ включены по умолчанию?">
 
-The following surfaces are on by default:
+По умолчанию доступны следующие функции и интерфейсы:
 
-- <Constant name="wizard" /> in <Constant name="studio_ide" />
-- <Constant name="wizard" /> home tab
-- dbt Copilot in <Constant name="dbt_platform"/>.
-- Any future dbt AI features will automatically become available as well.           
+- <Constant name="wizard" /> в <Constant name="studio_ide" />
+- Главная вкладка <Constant name="wizard" />
+- dbt Copilot в <Constant name="dbt_platform"/>.
+- Все будущие функции ИИ dbt также будут становиться доступными автоматически.           
 </Expandable>
 
-<Expandable alt_header="AI features aren't on for my account yet. How do I turn them on?">
+<Expandable alt_header="Функции ИИ ещё не включены для моего аккаунта. Как их включить?">
 
-AI features are already on for new accounts and are rolling out soon to existing accounts, so they may not be on for your account right away. An account admin can turn them on now in **Account settings** &mdash; refer to [Manage AI features in dbt platform](/docs/platform/manage-dbt-ai). If your organization opted out, they'll remain off until an admin turns them on.
-
-</Expandable>
-
-<Expandable alt_header="I previously asked for AI to be permanently disabled. Will it turn on anyway?">
-
-No. If your organization already opted out of AI features contractually or had them permanently disabled, they stay off. You don't need to do anything before September 1, 2026.
+Функции ИИ уже включены для новых аккаунтов и скоро будут включены для существующих, поэтому в вашем аккаунте они могут появиться не сразу. Администратор аккаунта может включить их уже сейчас в разделе **Account settings** &mdash; см. [Управление функциями ИИ в dbt platform](/docs/platform/manage-dbt-ai). Если ваша организация отказалась от их использования, они останутся выключенными, пока администратор их не включит.
 
 </Expandable>
 
-<Expandable alt_header="Can I opt out of AI features?">
+<Expandable alt_header="Ранее я запросил постоянное отключение ИИ. Будет ли он всё равно включён?">
 
-Yes. An account admin can turn AI off at any time in **Account settings**. Refer to [Manage AI features in dbt platform](/docs/platform/manage-dbt-ai) for the steps &mdash; the same toggle controls both <Constant name="wizard" /> and dbt Copilot.
-
-</Expandable>
-
-<Expandable alt_header="If AI is enabled by default, will I be charged automatically?">
-
-No. Enabling AI doesn't authorize paid usage by itself. <Constant name="wizard" /> usage draws from your included consumption pool or trial pool.
-
-On Developer, Starter, and self-hosted plans, dbt-managed <Constant name="wizard" /> pauses once that pool is used up, and going beyond it requires explicit purchase.
-
-Enterprise and Enterprise+ accounts should add a committed spend amount to their contract to keep using <Constant name="wizard" />. You may lose access to <Constant name="wizard" /> without this commit in place. If you've set an optional monthly <Constant name="wizard" /> spend limit, that still applies and pauses usage once reached.
-
-
-If you keep AI disabled, you incur no AI charges after September 1, 2026.
+Нет. Если ваша организация уже отказалась от функций ИИ в рамках договора или они были отключены на постоянной основе, они останутся выключенными. Вам не нужно ничего предпринимать до 1 сентября 2026 года.
 
 </Expandable>
 
-<Expandable alt_header="Which AI features use consumption-based billing?">
+<Expandable alt_header="Можно ли отказаться от функций ИИ?">
 
-Only <Constant name="wizard" /> with dbt-<Term id="managed" /> <Term id="inference"/>, across <Constant name="wizard" /> in <Constant name="dbt_platform" /> and the <Constant name="wizard" /> CLI. dbt Copilot stays on its existing actions-based model and isn't moving to consumption-based billing.
-
-</Expandable>
-
-<Expandable alt_header="How do I check whether AI is enabled and what my account has used?">
-
-An account admin will be able to check the AI toggle in **Account settings**. To see usage and remaining credit from September 1st, 2026, go to **Account settings** > **Billing & Usage**. 
-
-The overview and the <Constant name="wizard" /> usage-based feature page will show your consumption pool, amount used and remaining, and the reset date. Historical dbt Copilot Actions usage appears there too.
+Да. Администратор аккаунта может в любое время выключить ИИ в разделе **Account settings**. Инструкции см. в разделе [Управление функциями ИИ в dbt platform](/docs/platform/manage-dbt-ai) &mdash; один и тот же переключатель управляет и <Constant name="wizard" />, и dbt Copilot.
 
 </Expandable>
 
-<Expandable alt_header="Who do I contact about AI access or usage limits?">
+<Expandable alt_header="Если ИИ включён по умолчанию, будет ли плата взиматься автоматически?">
 
-Contact your dbt Labs account team for questions about enabling or disabling AI features, purchasing additional usage credits, or contract-specific billing questions. If you're on Developer or Starter plan, [reach out to dbt Support](mailto:support@getdbt.com) for help.
+Нет. Включение ИИ само по себе не разрешает платное использование. Использование <Constant name="wizard" /> расходует включённый в ваш тариф пул потребления или пробный пул.
+
+На тарифах Developer, Starter и тарифах для самостоятельного размещения работа <Constant name="wizard" /> под управлением dbt приостанавливается, когда этот пул исчерпан, а для дальнейшего использования требуется отдельная покупка.
+
+Для аккаунтов Enterprise и Enterprise+ необходимо добавить в договор обязательство по расходам на определённую сумму, чтобы продолжить использовать <Constant name="wizard" />. Без такого обязательства вы можете потерять доступ к <Constant name="wizard" />. Если вы установили необязательный месячный лимит расходов на <Constant name="wizard" />, он продолжает действовать: при его достижении использование приостанавливается.
+
+
+Если вы оставите ИИ выключенным, после 1 сентября 2026 года плата за ИИ начисляться не будет.
 
 </Expandable>
 
-## Billing FAQs
+<Expandable alt_header="Для каких функций ИИ применяется оплата по фактическому потреблению?">
 
-The following questions cover how dbt-<Term id="managed" /> <Term id="inference"/> is metered for <Constant name="wizard" /> usage, what your plan's consumption pool will include, and how you can track and cap your spend once Wizard usage-based billing goes live on September 1st, 2026.
+Только для <Constant name="wizard" /> с инференсом под управлением dbt (dbt-<Term id="managed" /> <Term id="inference"/>) — как в <Constant name="wizard" /> в <Constant name="dbt_platform" />, так и в CLI <Constant name="wizard" />. dbt Copilot сохраняет существующую модель оплаты на основе действий и не переходит на оплату по фактическому потреблению.
+
+</Expandable>
+
+<Expandable alt_header="Как проверить, включён ли ИИ и сколько ресурсов использовал мой аккаунт?">
+
+Администратор аккаунта сможет проверить состояние переключателя ИИ в разделе **Account settings**. Чтобы посмотреть объём использования и остаток кредитов начиная с 1 сентября 2026 года, перейдите в **Account settings** > **Billing & Usage**. 
+
+На странице обзора и странице <Constant name="wizard" /> с оплатой по фактическому использованию будут показаны ваш пул потребления, использованный и оставшийся объёмы, а также дата обновления пула. Там же отображается история использования dbt Copilot Actions.
+
+</Expandable>
+
+<Expandable alt_header="К кому обратиться по вопросам доступа к ИИ или лимитов использования?">
+
+Обратитесь к команде dbt Labs, которая работает с вашим аккаунтом, по вопросам включения или выключения функций ИИ, покупки дополнительных кредитов на использование или условий оплаты по вашему договору. Если вы используете тариф Developer или Starter, [обратитесь за помощью в службу поддержки dbt](mailto:support@getdbt.com).
+
+</Expandable>
+
+## Вопросы об оплате {#billing-faqs}
+
+Следующие вопросы касаются того, как учитывается инференс под управлением dbt (dbt-<Term id="managed" /> <Term id="inference"/>) при использовании <Constant name="wizard" />, что будет входить в пул потребления вашего тарифа и как отслеживать и ограничивать расходы после перехода Wizard на оплату по фактическому использованию 1 сентября 2026 года.
 
 <WizardBillingFaqs />
 
-## Related docs
+## Связанная документация
 
-- [Manage AI features in <Constant name="dbt_platform" />](/docs/platform/manage-dbt-ai) to turn AI features on or off
-- [How <Constant name="wizard" /> works](/docs/dbt-ai/wizard-how-it-works)
-- [dbt AI usage](/docs/platform/billing/dbt-ai-usage) for how dbt AI usage is metered and limited
-- [BYOK for <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform) or [BYOK for the CLI](/docs/dbt-ai/wizard-byok)
-- [Billing](/docs/platform/billing) for general <Constant name="dbt_platform" /> billing
+- [Управление функциями ИИ в <Constant name="dbt_platform" />](/docs/platform/manage-dbt-ai) — включение и выключение функций ИИ
+- [Как работает <Constant name="wizard" />](/docs/dbt-ai/wizard-how-it-works)
+- [Использование ИИ dbt](/docs/platform/billing/dbt-ai-usage) — учёт и ограничение использования ИИ dbt
+- [BYOK для <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform) или [BYOK для CLI](/docs/dbt-ai/wizard-byok)
+- [Оплата](/docs/platform/billing) — общая информация об оплате <Constant name="dbt_platform" />

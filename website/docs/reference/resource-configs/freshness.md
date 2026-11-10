@@ -102,19 +102,19 @@ sources:
 </TabItem>
 </Tabs>
 
-Freshness blocks are applied hierarchically:
-- A `freshness` and `loaded_at_field` set on a source apply to all tables in that source.
-- A `freshness` and `loaded_at_field` set on a source _table_ override the source-level values.
+Настройки актуальности применяются по иерархии:
+- Параметры `freshness` и `loaded_at_field` источника применяются ко всем его таблицам.
+- Параметры `freshness` и `loaded_at_field` на уровне таблицы источника переопределяют настройки источника.
 
-To exclude a source from freshness calculations, explicitly set `freshness: null`.
+Чтобы исключить источник из расчёта актуальности, явно укажите `freshness: null`.
 
-If a source has a `freshness:` block, dbt will attempt to calculate freshness for that source:
-- If `loaded_at_field` is provided, dbt calculates freshness via a select query.
-- If `loaded_at_field` is _not_ provided, dbt calculates freshness via warehouse metadata tables when possible.
+Если у источника есть блок `freshness:`, dbt пытается рассчитать его актуальность:
+- При заданном `loaded_at_field` dbt выполняет запрос `select`.
+- Если `loaded_at_field` не задан, dbt по возможности использует таблицы метаданных хранилища.
 
 <VersionBlock lastVersion="1.99">
 
-Currently, calculating freshness from warehouse metadata tables is supported on the following adapters:
+Расчёт актуальности по таблицам метаданных хранилища поддерживают следующие адаптеры:
 - [Snowflake](/reference/resource-configs/snowflake-configs)
 - [Redshift](/reference/resource-configs/redshift-configs)
 - [BigQuery](/reference/resource-configs/bigquery-configs) (requires [`dbt-bigquery`](https://github.com/dbt-labs/dbt-bigquery) version 1.7.3 or higher)
@@ -123,18 +123,18 @@ Currently, calculating freshness from warehouse metadata tables is supported on 
 </VersionBlock>
 
 <VersionBlock firstVersion="1.12">
-:::note Wildcard table identifiers
-On BigQuery, metadata-based freshness checks are not reliable for sources defined with wildcard table identifiers (for example, `events_*`).
+:::note Шаблоны в именах таблиц
+В BigQuery проверка актуальности по метаданным ненадёжна для источников с подстановочными символами в имени таблицы, например `events_*`.
 
-To prevent incorrect freshness results, enable the [`bigquery_reject_wildcard_metadata_source_freshness`](/reference/global-configs/bigquery-changes#%D1%84%D0%BB%D0%B0%D0%B3-bigquery_reject_wildcard_metadata_source_freshness) flag in your `dbt_project.yml`. When enabled, dbt raises an error if metadata-based freshness is used with a wildcard table identifier.
+Чтобы избежать неверных результатов, включите флаг [`bigquery_reject_wildcard_metadata_source_freshness`](/reference/global-configs/bigquery-changes#the-bigquery_reject_wildcard_metadata_source_freshness-flag) в `dbt_project.yml`. Тогда dbt выдаст ошибку, если проверка по метаданным используется с подстановочным символом в имени таблицы.
 
-To calculate freshness for wildcard tables, configure `loaded_at_field` to use query-based freshness checks instead.
+Чтобы проверять актуальность таблиц с такими именами, настройте `loaded_at_field`. Тогда проверка будет выполняться запросом.
 :::
 </VersionBlock>
 
-### Examples
+### Примеры {#examples}
 
-#### Using `loaded_at_field`
+#### Использование `loaded_at_field` {#using-loaded_at_field}
 
 ```yml
 sources:
@@ -152,7 +152,7 @@ sources:
             warn_after: {count: 12, period: hour}
 ```
 
-#### Using `loaded_at_query`
+#### Использование `loaded_at_query` {#using-loaded_at_query}
 
 <VersionBlock firstVersion="1.10">
 
@@ -176,12 +176,12 @@ sources:
 
 <VersionBlock lastVersion="1.99">
 
-`loaded_at_query` is available in dbt v1.10 and later. 
+Параметр `loaded_at_query` доступен начиная с dbt v1.10.
 
 </VersionBlock>
 
 
-#### Complete example
+#### Полный пример {#complete-example}
 
 <File name='models/<filename>.yml'>
 
@@ -214,13 +214,13 @@ sources:
 
 <VersionBlock firstVersion="2.0">
 
-When running [`dbt freshness`](/reference/commands/freshness), the following query will be run against the `orders` table:
+Команда [`dbt freshness`](/reference/commands/freshness) выполнит для таблицы `orders` следующий запрос:
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-When running [`dbt source freshness`](/reference/commands/source), the following query will be run against the `orders` table:
+Команда [`dbt source freshness`](/reference/commands/source) выполнит для таблицы `orders` следующий запрос:
 
 </VersionBlock>
 
@@ -262,12 +262,12 @@ _[Source code](https://github.com/dbt-labs/dbt-adapters/blob/main/dbt-adapters/s
 
 <VersionBlock firstVersion="2.0">
 
-## Model freshness
+## Актуальность модели {#model-freshness}
 
-Use the `freshness` config on a model to:
+Настройка модели `freshness` позволяет:
 
-- **Set a freshness threshold**: Set `warn_after` and `error_after` thresholds to declare how stale a model's data can get, then run `dbt freshness` to check each model against its thresholds and report a warning or an error.
-- **Schedule builds (`build_after`)**: Control how often a model rebuilds when new upstream data is available. Available on dbt platform Enterprise tiers only. `build_after` is part of state-aware orchestration, which has been deprecated and is now [dbt State](/docs/deploy/dbt-state-about).
+- **Задать пороги актуальности:** укажите `warn_after` и `error_after`, чтобы задать допустимый возраст данных. Затем запустите `dbt freshness`, чтобы проверить модели и получить предупреждение или ошибку при превышении порогов.
+- **Запланировать сборки (`build_after`):** задайте, как часто перестраивать модель после появления новых данных выше по графу. Доступно только на тарифах Enterprise платформы dbt. Параметр `build_after` относится к прежней оркестрации с учётом состояния, которую заменил [dbt State](/docs/deploy/dbt-state-about).
 
 <Tabs>
 <TabItem value="project" label="Project file">
@@ -323,7 +323,7 @@ warn_after: {count: 24, period: hour}
 </TabItem>
 </Tabs>
 
-Not all materializations support freshness checks the same way. dbt validates your config at parse time and raises an error for invalid combinations.
+Поддержка проверок актуальности зависит от материализации. dbt проверяет конфигурацию при разборе и выдаёт ошибку для недопустимых сочетаний.
 
 <SimpleTable>
 | Материализация | `loaded_at_field` / `loaded_at_query` | Поведение |
@@ -333,7 +333,7 @@ Not all materializations support freshness checks the same way. dbt validates yo
 | `ephemeral` | Не поддерживается | Ничего не материализуется, поэтому оценить свежесть данных невозможно. Вызывает ошибку разбора. |
 </SimpleTable>
 
-An incomplete freshness rule (for example, `warn_after` with `count` but no `period`) issues a warning at parse time for all materializations; `dbt run` and `dbt build` warn but still succeed. Only `dbt freshness` treats it as an error. Separately, `view` and `external` models require l`oaded_at_field` or `loaded_at_query` &mdash; omitting both is a parse error that fails `dbt run`, `dbt build`, and `dbt freshness`, regardless of whether the freshness rule is complete.
+Неполное правило актуальности, например `warn_after` с `count` без `period`, вызывает предупреждение при разборе для всех материализаций. Команды `dbt run` и `dbt build` выдают предупреждение, но выполняются. Только `dbt freshness` считает это ошибкой. Для моделей `view` и `external` нужен `loaded_at_field` или `loaded_at_query`. Если не указан ни один из них, разбор завершается ошибкой для `dbt run`, `dbt build` и `dbt freshness` независимо от полноты правила.
 
 ### Проверка свежести данных между проектами
 

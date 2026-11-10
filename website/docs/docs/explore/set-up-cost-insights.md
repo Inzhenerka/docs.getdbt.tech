@@ -1,7 +1,7 @@
 ---
-title: "Set up Cost Insights"
-sidebar_label: "Set up Cost Insights"
-description: "Learn how to set up Cost Insights to track warehouse compute costs and view realized savings from state-aware orchestration across your dbt projects and models."
+title: "Настройка Cost Insights"
+sidebar_label: "Настройка Cost Insights"
+description: "Узнайте, как настроить Cost Insights для отслеживания затрат на вычисления в хранилище данных и просмотра фактической экономии благодаря оркестрации с учетом состояния в ваших проектах и моделях dbt."
 id: "set-up-cost-insights"
 tags: ['SAO', 'cost savings', 'models built', 'cost insights', 'cost reduction', 'cost optimization']
 availability:
@@ -12,34 +12,34 @@ availability:
 
 import SaoDeprecated from '/snippets/_sao-deprecated.md';
 
-# Set up Cost Insights
+# Настройка Cost Insights
 
-This guide walks you through setting up Cost Insights to track warehouse compute costs and cost reductions from dbt State and state-aware orchestration across your dbt projects and models.
+В этом руководстве описана настройка Cost Insights для отслеживания затрат на вычисления в хранилище данных и их сокращения благодаря dbt State и оркестрации с учетом состояния в ваших проектах и моделях dbt.
 
-## Prerequisites
+## Предварительные требования
 
-Before setting up Cost Insights, ensure you have:
+Перед настройкой Cost Insights убедитесь, что у вас есть:
 
-- An administrator role.
-- A supported data warehouse: 
+- Роль администратора.
+- Поддерживаемое хранилище данных: 
     - Snowflake
     - BigQuery
     - Databricks
     - Amazon Redshift <Lifecycle status="preview" />
 
-To set up Cost Insights, follow these steps:
+Чтобы настроить Cost Insights, выполните следующие действия:
 
-1. [Assign required permissions.](#assign-required-permissions)
-2. [Configure platform metadata credentials.](#configure-platform-metadata-credentials)
-3. [(Optional) Configure Cost Insights settings.](#configure-cost-insights-settings-optional)
-4. [(Optional, Snowflake only) Configure custom relation overrides.](#custom-relation-overrides)
-5. [(Optional) Enable dbt State or state-aware orchestration in your job settings.](#enable-dbt-state-optional)
+1. [Назначьте необходимые разрешения.](#assign-required-permissions)
+2. [Настройте учетные данные для метаданных платформы.](#configure-platform-metadata-credentials)
+3. [(Необязательно) Настройте параметры Cost Insights.](#configure-cost-insights-settings-optional)
+4. [(Необязательно, только для Snowflake) Настройте пользовательские переопределения отношений.](#custom-relation-overrides)
+5. [(Необязательно) Включите dbt State или оркестрацию с учетом состояния в настройках задания.](#enable-dbt-state-or-state-aware-orchestration-optional)
 
-After completing these setup steps, you can view cost and optimization data across multiple areas of the <Constant name="dbt_platform" />. Refer to [Explore cost data](/docs/explore/explore-cost-data) to learn more about the Cost Insights section and how to use it.
+После выполнения этих шагов вы сможете просматривать данные о затратах и оптимизации в различных разделах <Constant name="dbt_platform" />. Подробнее о разделе Cost Insights и его использовании см. в [Обзоре данных о затратах](/docs/explore/explore-cost-data).
 
-## Assign required permissions
+## Назначение необходимых разрешений {#assign-required-permissions}
 
-Users with the following [permission sets](/docs/platform/manage-access/enterprise-permissions) can view cost data by default:
+Пользователи со следующими [наборами разрешений](/docs/platform/manage-access/enterprise-permissions) по умолчанию могут просматривать данные о затратах:
 
 - Account Admin
 - Account Viewer
@@ -51,32 +51,32 @@ Users with the following [permission sets](/docs/platform/manage-access/enterpri
 - Project Creator
 - Team Admin
 
-For more information on how to assign permissions to users, refer to [About user access](/docs/platform/manage-access/about-user-access).
+Подробнее о назначении разрешений пользователям см. в разделе [О доступе пользователей](/docs/platform/manage-access/about-user-access).
 
-## Configure platform metadata credentials
+## Настройка учетных данных для метаданных платформы {#configure-platform-metadata-credentials}
 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**.
-2. Under **Settings**, go to **Connections**.
-3. Select an existing connection or create a new connection for the project where you want to enable Cost Insights.
-4. Configure platform metadata credentials for your connection.
-    1. Go to the **Platform metadata credentials** section. Depending on your current configuration, you may see one of the following:
-        - If no platform metadata credentials are configured yet, the credentials form is immediately in edit mode.
-        - If you previously canceled the form and see **Add credentials**, click the button to reopen the form.
-        - If you have multiple connections that reference the same account identifier, you will only be prompted to add platform metadata credentials to one of them. Other connections using the same account identifier will display a message indicating that platform metadata credentials are already configured.
-    2. Add credentials with permissions to the warehouse tables. Expand each connection to see the permissions required.
+1. Нажмите на имя своей учетной записи в нижней части левого меню и выберите **Account settings**.
+2. В разделе **Settings** перейдите в **Connections**.
+3. Выберите существующее подключение или создайте новое для проекта, в котором вы хотите включить Cost Insights.
+4. Настройте учетные данные для метаданных платформы для вашего подключения.
+    1. Перейдите в раздел **Platform metadata credentials**. В зависимости от текущей конфигурации вы можете увидеть один из следующих вариантов:
+        - Если учетные данные для метаданных платформы еще не настроены, форма учетных данных сразу открывается в режиме редактирования.
+        - Если вы ранее закрыли форму и видите **Add credentials**, нажмите эту кнопку, чтобы снова открыть форму.
+        - Если у вас несколько подключений с одним и тем же идентификатором учетной записи, вам будет предложено добавить учетные данные для метаданных платформы только для одного из них. В остальных подключениях с тем же идентификатором учетной записи появится сообщение о том, что учетные данные для метаданных платформы уже настроены.
+    2. Добавьте учетные данные с разрешениями на доступ к таблицам хранилища данных. Разверните раздел каждого подключения, чтобы увидеть необходимые разрешения.
 
         <Expandable alt_header="Snowflake">
-        - `read` permissions to the [`ORGANIZATION_USAGE`](https://docs.snowflake.com/en/sql-reference/organization-usage) and [`ACCOUNT_USAGE`](https://docs.snowflake.com/en/sql-reference/account-usage) schemas
-        - A Snowflake database role assigned the following access:
+        - Разрешения `read` для схем [`ORGANIZATION_USAGE`](https://docs.snowflake.com/en/sql-reference/organization-usage) и [`ACCOUNT_USAGE`](https://docs.snowflake.com/en/sql-reference/account-usage)
+        - Роль базы данных Snowflake, которой предоставлен доступ к следующим объектам:
             - `ACCOUNT_USAGE.QUERY_HISTORY`
             - `ACCOUNT_USAGE.QUERY_ATTRIBUTION_HISTORY`
-            - `ORGANIZATION_USAGE.USAGE_IN_CURRENCY_DAILY` (Optional)
-            - `ACCOUNT_USAGE.QUERY_METERING_HISTORY` (Optional; required for [Adaptive Warehouse](https://docs.snowflake.com/en/user-guide/warehouses-adaptive) cost attribution)
+            - `ORGANIZATION_USAGE.USAGE_IN_CURRENCY_DAILY` (необязательно)
+            - `ACCOUNT_USAGE.QUERY_METERING_HISTORY` (необязательно; требуется для отнесения затрат к запросам [Adaptive Warehouse](https://docs.snowflake.com/en/user-guide/warehouses-adaptive))
 
-                If `QUERY_METERING_HISTORY` access is not granted, Adaptive Warehouse queries appear as $0 in Cost Insights and a warning is shown in the connection test. For more information, refer to the [Snowflake documentation](https://docs.snowflake.com/en/sql-reference/account-usage/query_metering_history).
+                Если доступ к `QUERY_METERING_HISTORY` не предоставлен, стоимость запросов Adaptive Warehouse отображается в Cost Insights как $0, а при проверке подключения появляется предупреждение. Подробнее см. в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/account-usage/query_metering_history).
         
         :::note
-        If you don't have access to the `SNOWFLAKE` system database, you can [configure custom relation overrides](#custom-relation-overrides) to point Cost Insights to your own tables or views.
+        Если у вас нет доступа к системной базе данных `SNOWFLAKE`, вы можете [настроить пользовательские переопределения отношений](#custom-relation-overrides), чтобы Cost Insights использовал ваши собственные таблицы или представления.
         :::
         </Expandable>
 
@@ -87,103 +87,103 @@ For more information on how to assign permissions to users, refer to [About user
         </Expandable>
 
         <Expandable alt_header="Databricks">
-        - Access to a [Unity Catalog workspace](https://docs.databricks.com/aws/en/admin/system-tables/#requirements)
-        - `USE` permissions on the catalog and schema
-        - `SELECT` permissions on the following system tables:
+        - Доступ к [рабочей области Unity Catalog](https://docs.databricks.com/aws/en/admin/system-tables/#requirements)
+        - Разрешения `USE` для каталога и схемы
+        - Разрешения `SELECT` для следующих системных таблиц:
             - [`system.billing.usage`](https://docs.databricks.com/aws/en/admin/system-tables/billing)
             - [`system.billing.list_prices`](https://docs.databricks.com/aws/en/admin/system-tables/pricing)
             - [`system.query.history`](https://docs.databricks.com/aws/en/admin/system-tables/query-history)
 
-        For more information, refer to the Databricks documentation on [granting access to system tables](https://docs.databricks.com/aws/en/admin/system-tables/#grant-access-to-system-tables).
+        Подробнее см. в документации Databricks о [предоставлении доступа к системным таблицам](https://docs.databricks.com/aws/en/admin/system-tables/#grant-access-to-system-tables).
         </Expandable>
 
         <Expandable alt_header="Amazon Redshift" lifecycle="preview" lifecycle_size="75">
-        By default, Redshift users can only view their own queries. dbt must be able to query all users' queries in `SYS_QUERY_HISTORY` to attribute costs across your dbt runs. Grant one of the following permissions to the platform metadata credentials user:
+        По умолчанию пользователи Redshift могут просматривать только собственные запросы. Чтобы относить затраты к вашим запускам dbt, dbt должен иметь возможность получать из `SYS_QUERY_HISTORY` запросы всех пользователей. Предоставьте пользователю, указанному в учетных данных для метаданных платформы, одно из следующих разрешений:
 
-        - **`sys:monitor` role** (recommended):
+        - **Роль `sys:monitor`** (рекомендуется):
             ```sql
             GRANT ROLE sys:monitor TO <user>;
             ```
-        - **Unrestricted syslog access**:
+        - **Неограниченный доступ к syslog**:
             ```sql
             ALTER USER <user> SYSLOG ACCESS UNRESTRICTED;
             ```
 
-        For more information, refer to the [Amazon Redshift documentation on enhanced query monitoring permissions](https://docs.aws.amazon.com/redshift/latest/mgmt/metrics-enhanced-query-monitoring.html#metrics-enhanced-query-monitoring-permissions).
+        Подробнее см. в [документации Amazon Redshift о разрешениях для расширенного мониторинга запросов](https://docs.aws.amazon.com/redshift/latest/mgmt/metrics-enhanced-query-monitoring.html#metrics-enhanced-query-monitoring-permissions).
 
-        dbt verifies cross-user visibility during the connection test. If the credentials can only see their own queries, the test fails and cost data will not be processed for that environment.
+        При проверке подключения dbt проверяет видимость запросов других пользователей. Если учетные данные позволяют видеть только собственные запросы, проверка завершается неудачей и данные о затратах для этой среды не обрабатываются.
 
         </Expandable>
 
-5. Verify that **Cost insights** is enabled under **Features**. This feature is enabled by default when you configure platform metadata credentials.
-6. Click **Save**.
+5. Убедитесь, что в разделе **Features** включена опция **Cost insights**. Эта функция включается по умолчанию при настройке учетных данных для метаданных платформы.
+6. Нажмите **Save**.
 
-## Configure Cost Insights settings (optional)
+## Настройка параметров Cost Insights (необязательно) {#configure-cost-insights-settings-optional}
 
-**Note:** This step is required for Amazon Redshift users. Without a configured price, costs will appear as $0.
+**Примечание:** Этот шаг обязателен для пользователей Amazon Redshift. Если цена не настроена, затраты будут отображаться как $0.
 
-By default, dbt uses standard warehouse pricing, which you can override if you have custom pricing agreements. Databricks and Amazon Redshift do not have default values. The default values vary by warehouse:
+По умолчанию dbt использует стандартные тарифы хранилища данных, которые можно переопределить, если у вас есть индивидуальные ценовые соглашения. Для Databricks и Amazon Redshift значений по умолчанию нет. Значения по умолчанию зависят от хранилища данных:
 
-| Warehouse | Default values |
+| Хранилище данных | Значения по умолчанию |
 |-----------|----------------|
 | [Snowflake](https://www.snowflake.com/en/pricing-options/) | `price_per_credit` = $3 |
 | [BigQuery](https://cloud.google.com/bigquery/pricing) | `price_per_slot_hour` = $0.04, `price_per_tib` = $6.25 |
-| [Databricks](https://docs.databricks.com/aws/en/admin/system-tables/pricing) | dbt queries the `list_prices` system table directly, so there is no default value. |
-| [Amazon Redshift Serverless](https://aws.amazon.com/redshift/pricing/) | `rpu_price_per_hour` — no default value; costs appear as $0 until configured. |
-| [Amazon Redshift Provisioned](https://aws.amazon.com/redshift/pricing/) | `node_price_per_hour` — no default value; costs appear as $0 until configured. |
+| [Databricks](https://docs.databricks.com/aws/en/admin/system-tables/pricing) | dbt напрямую запрашивает системную таблицу `list_prices`, поэтому значения по умолчанию нет. |
+| [Amazon Redshift Serverless](https://aws.amazon.com/redshift/pricing/) | `rpu_price_per_hour` — значения по умолчанию нет; до настройки затраты отображаются как $0. |
+| [Amazon Redshift Provisioned](https://aws.amazon.com/redshift/pricing/) | `node_price_per_hour` — значения по умолчанию нет; до настройки затраты отображаются как $0. |
 
 <br></br>
 
-To change the default value:
+Чтобы изменить значение по умолчанию:
 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**.
-2. Under **Settings**, go to **Connections**.
-3. Select the connection where you want to configure Cost Insights settings.
-4. Go to the **Cost Insights settings** section.
-5. Enter your custom value in the **Price per credit** field.
-6. Click **Save**.
+1. Нажмите на имя своей учетной записи в нижней части левого меню и выберите **Account settings**.
+2. В разделе **Settings** перейдите в **Connections**.
+3. Выберите подключение, для которого вы хотите настроить параметры Cost Insights.
+4. Перейдите в раздел **Cost Insights settings**.
+5. Введите свое значение в поле **Price per credit**.
+6. Нажмите **Save**.
 
-These custom values will apply to all future cost calculations for this connection. If you clear these values, they will reset to the default warehouse pricing.
+Эти пользовательские значения будут применяться ко всем последующим расчетам затрат для этого подключения. Если вы удалите эти значения, будут восстановлены стандартные тарифы хранилища данных.
 
-## Configure custom relation overrides (optional) <Lifecycle status="private_beta" /> {#custom-relation-overrides}
+## Настройка пользовательских переопределений отношений (необязательно) <Lifecycle status="private_beta" /> {#custom-relation-overrides}
 
-:::info Private beta feature
-This feature is available only for Snowflake connections with Cost Insights enabled. To join the private beta, contact your account representative.
+:::info Функция в закрытом бета-тестировании
+Эта функция доступна только для подключений Snowflake с включенным Cost Insights. Чтобы присоединиться к закрытому бета-тестированию, свяжитесь с представителем, обслуживающим вашу учетную запись.
 :::
 
-If you're a Snowflake user whose credentials don't have access to the `SNOWFLAKE` system database, you can use your own tables or views in place of the default [Snowflake system tables](/docs/explore/set-up-cost-insights#snowflake) that Cost Insights queries. You don't need to override all three &mdash; any table you don't configure falls back to the Snowflake system default.
+Если вы используете Snowflake и ваши учетные данные не дают доступа к системной базе данных `SNOWFLAKE`, вы можете использовать собственные таблицы или представления вместо стандартных [системных таблиц Snowflake](/docs/explore/set-up-cost-insights#snowflake), к которым обращается Cost Insights. Необязательно переопределять все три таблицы &mdash; для любой таблицы, которую вы не настроите, будет использоваться стандартная системная таблица Snowflake.
 
-To configure custom relation overrides:
+Чтобы настроить пользовательские переопределения отношений:
 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**.
-2. Under **Settings**, go to **Connections**.
-3. Select the Snowflake connection where you want to configure custom relation overrides.
-4. Go to the **Cost Insights settings** section and scroll to **Custom relation overrides**.
-5. Enter the fully-qualified name for one or more of the following fields. Each value must be a fully-qualified `database.schema.table` identifier (unquoted or double-quoted).
-    - **Custom query history relation**: Replaces `SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY`.
-    - **Custom query attribution history relation**: Replaces `SNOWFLAKE.ACCOUNT_USAGE.QUERY_ATTRIBUTION_HISTORY`.
-    - **Custom usage in currency daily relation**: Replaces `SNOWFLAKE.ORGANIZATION_USAGE.USAGE_IN_CURRENCY_DAILY`.
-6. Click **Save**.
+1. Нажмите на имя своей учетной записи в нижней части левого меню и выберите **Account settings**.
+2. В разделе **Settings** перейдите в **Connections**.
+3. Выберите подключение Snowflake, для которого вы хотите настроить пользовательские переопределения отношений.
+4. Перейдите в раздел **Cost Insights settings** и прокрутите до **Custom relation overrides**.
+5. Введите полное имя в одно или несколько следующих полей. Каждое значение должно быть полным идентификатором вида `database.schema.table` (без кавычек или в двойных кавычках).
+    - **Custom query history relation**: заменяет `SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY`.
+    - **Custom query attribution history relation**: заменяет `SNOWFLAKE.ACCOUNT_USAGE.QUERY_ATTRIBUTION_HISTORY`.
+    - **Custom usage in currency daily relation**: заменяет `SNOWFLAKE.ORGANIZATION_USAGE.USAGE_IN_CURRENCY_DAILY`.
+6. Нажмите **Save**.
 
-## Enable dbt State (optional)
+## Включение dbt State (необязательно) {#enable-dbt-state-or-state-aware-orchestration-optional}
 
 <SaoDeprecated />
 
-Cost Insights displays cost data for your dbt models and jobs without dbt State. However, to understand the impact of optimizations and see cost reductions from model and test reuse, you must enable dbt State in your jobs. For steps on how to enable it, see [Setting up dbt State](/docs/deploy/dbt-state-setup).
+Cost Insights отображает данные о затратах для ваших моделей и заданий dbt и без dbt State. Однако, чтобы оценить влияние оптимизаций и увидеть сокращение затрат благодаря повторному использованию моделей и тестов, необходимо включить dbt State в ваших заданиях. Инструкции по включению см. в разделе [Настройка dbt State](/docs/deploy/dbt-state-setup).
 
-Cost Insights also reflects cost reductions and efficiency gains from state-aware orchestration if you have it enabled.
+Cost Insights также отражает сокращение затрат и повышение эффективности благодаря оркестрации с учетом состояния, если она включена.
 
 import CostInsights from '/snippets/_cost-insights-sao.md';
 
 <CostInsights />
 
-## Disable Cost Insights
+## Отключение Cost Insights
 
-To disable Cost Insights, you must have an administrator role.
+Чтобы отключить Cost Insights, необходимо иметь роль администратора.
 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**.
-2. Under **Settings**, go to **Connections**.
-3. Select the connection where you want to disable Cost Insights.
-4. Go to **Platform metadata credentials** and click **Edit**.
-5. Go to the **Features** section and clear the **Cost Insights** option.
-6. Click **Save**.
+1. Нажмите на имя своей учетной записи в нижней части левого меню и выберите **Account settings**.
+2. В разделе **Settings** перейдите в **Connections**.
+3. Выберите подключение, для которого вы хотите отключить Cost Insights.
+4. Перейдите в **Platform metadata credentials** и нажмите **Edit**.
+5. Перейдите в раздел **Features** и снимите флажок **Cost Insights**.
+6. Нажмите **Save**.

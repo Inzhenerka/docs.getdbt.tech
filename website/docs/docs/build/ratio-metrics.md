@@ -29,27 +29,27 @@ availability: all_users
 
 <VersionBlock firstVersion="1.12">
 
-| Parameter | Description | Required | Type | 
+| Параметр | Описание | Обязательность | Тип |
 | --------- | ----------- | ---- | ---- |
-| `name` | The name of the metric. | Required | String |
-| `description` | The description of the metric. | Optional | String |
-| `type` | The type of the metric (cumulative, derived, ratio, or simple). | Required | String |
-| `label` | Defines the display value in downstream tools. Accepts plain text, spaces, and quotes (such as `orders_total` or `"orders_total"`). | Optional | String |
-| `numerator` | The name of the metric used for the numerator. Can be a string (metric name) or a dict with `name`, `filter`, and `alias` properties. | Required | String or Dict |
-| `denominator` | The name of the metric used for the denominator. Can be a string (metric name) or a dict with `name`, `filter`, and `alias` properties. | Required | String or Dict |
+| `name` | Имя метрики. | Обязательный | Строка |
+| `description` | Описание метрики. | Необязательный | Строка |
+| `type` | Тип метрики (`cumulative`, `derived`, `ratio` или `simple`). | Обязательный | Строка |
+| `label` | Подпись для внешних инструментов. Допускаются обычный текст, пробелы и кавычки, например `orders_total` или `"orders_total"`. | Необязательный | Строка |
+| `numerator` | Метрика для числителя. Можно указать имя метрики строкой или словарь с полями `name`, `filter` и `alias`. | Обязательный | Строка или словарь |
+| `denominator` | Метрика для знаменателя. Можно указать имя метрики строкой или словарь с полями `name`, `filter` и `alias`. | Обязательный | Строка или словарь |
 
-#### Numerator/Denominator dictionary properties
-The following properties are available for the numerator and denominator dictionary:
+#### Поля словарей числителя и знаменателя {#numeratordenominator-dictionary-properties}
+Для словарей числителя и знаменателя доступны следующие поля:
 
-| Property | Description | Required | Type |
+| Поле | Описание | Обязательность | Тип |
 | -------- | ----------- | -------- | ---- |
-| `name` | Name of the metric. | Required | String |
-| `filter` | Filter to apply to the metric. | Optional | String |
-| `alias` | Alias for the metric. | Optional | String |
+| `name` | Имя метрики. | Обязательное | Строка |
+| `filter` | Фильтр для метрики. | Необязательное | Строка |
+| `alias` | Псевдоним метрики. | Необязательное | Строка |
 
 </VersionBlock>
 
-The complete specification for ratio metrics is as follows:
+Полная спецификация метрики-отношения:
 
 <VersionBlock lastVersion="1.11">
 <File name="models/metrics/file_name.yml">

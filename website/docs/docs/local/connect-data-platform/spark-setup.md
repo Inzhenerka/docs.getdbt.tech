@@ -151,7 +151,7 @@ spark-emr-serverless:
 
 </TabItem>
 
-<TabItem value="emr-eks" label="AWS EMR on EKS">
+<TabItem value="emr-eks" label="AWS EMR в EKS">
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -233,7 +233,7 @@ dbt-spark может подключаться к кластерам Spark чет
 
 - [`session`](#example-profiles) — подключается к pySpark‑сессии, запущенной локально или на удалённой машине.
 
-:::info Advanced functionality
+:::info Расширенные возможности
 Метод подключения `session` предназначен для опытных пользователей и экспериментальной разработки dbt. Этот метод подключения не поддерживается <Constant name="dbt" />.
 :::
 

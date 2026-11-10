@@ -272,7 +272,7 @@ dbt docs generate
 dbt build --select selector:root_project_only tag:nightly
 ```
 
-For more information, refer to [Using `selector:` with `--select`](#%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-selector-%D1%81---select).
+Подробнее см. [Использование `selector:` с `--select`](#%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-selector-%D1%81---select).
 </VersionBlock>
 
 Только один селектор может установить `default: true` для данного вызова; в противном случае dbt вернет ошибку. Вы можете использовать выражение Jinja, чтобы настроить значение `default` в зависимости от среды:

@@ -1,8 +1,8 @@
 ---
-title: How often is cost data refreshed? 
-description: "Explanation of how often cost data is refreshed"
-sidebar_label: 'Cost data refresh frequency'
+title: Как часто обновляются данные о затратах? 
+description: "Объяснение частоты обновления данных о затратах"
+sidebar_label: 'Частота обновления данных о затратах'
 id: cost-data-refresh-frequency
 ---
 
-Cost data refreshes daily and reflects the previous day's usage. This means there is a lag of up to one day between when a job runs and when its cost data appears in Cost Insights.
+Данные о затратах обновляются ежедневно и отражают использование ресурсов за предыдущий день. Это означает, что между выполнением задания и появлением данных о затратах на него в Cost Insights может пройти до одного дня.

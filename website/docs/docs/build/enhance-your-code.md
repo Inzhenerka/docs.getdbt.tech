@@ -21,13 +21,13 @@ availability: all_users
     icon="dbt-bit"/>
 
 <Card
-    title="Packages"
+    title="Пакеты"
     body="Узнайте, как можно использовать повторное использование кода с помощью пакетов (библиотек)."
     link="/docs/build/packages"
     icon="dbt-bit"/>
 
 <Card
-    title="Project variables"
+    title="Переменные проекта"
     body="Узнайте, как использовать переменные проекта для предоставления данных моделям при компиляции."
     link="/docs/build/project-variables"
     icon="dbt-bit"/>    

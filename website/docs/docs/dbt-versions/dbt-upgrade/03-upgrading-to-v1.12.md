@@ -1,48 +1,48 @@
 ---
-title: "Upgrading to v1.12"
+title: "Обновление до v1.12"
 id: upgrading-to-v1.12
-description: New features and changes in dbt v1.12
+description: Новые возможности и изменения в dbt v1.12
 displayed_sidebar: "docs"
 availability:
   engine: v1
   access: free
 ---
 
-# Upgrading to v1.12
+# Обновление до v1.12
 
-## Resources
-- [dbt v1.12 changelog](https://github.com/dbt-labs/dbt/blob/1.12.latest/CHANGELOG.md)
-- [<Constant name="core" /> CLI Installation guide](/docs/local/install-dbt)
-- [dbt platform upgrade guide](/docs/dbt-versions/upgrade-dbt-platform-version)
+## Ресурсы
+- [Список изменений dbt v1.12](https://github.com/dbt-labs/dbt/blob/1.12.latest/CHANGELOG.md)
+- [Руководство по установке CLI <Constant name="core" />](/docs/local/install-dbt)
+- [Руководство по обновлению платформы dbt](/docs/dbt-versions/upgrade-dbt-platform-version)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x. Any behavior changes will be accompanied by a [behavior change flag](/reference/global-configs/behavior-changes#behavior-change-flags) to provide a migration window for existing projects. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt/issues/new).
+dbt Labs стремится обеспечивать обратную совместимость для всех версий 1.x. Любые изменения поведения будут сопровождаться [флагом изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags), чтобы у существующих проектов было время на миграцию. Если после обновления вы столкнулись с ошибкой, сообщите нам об этом, [создав issue](https://github.com/dbt-labs/dbt/issues/new).
 
-<Constant name="dbt" /> provides the functionality from new versions of <Constant name="core" /> via [release tracks](/docs/dbt-versions/dbt-release-tracks) with automatic upgrades. If you have selected the **v1 Latest** release track in <Constant name="dbt" />, you already have access to all the features, fixes, and other functionality included in the latest <Constant name="core" /> version! If you have selected the **v1 Compatible** release track, you will have access to the next monthly **v1 Compatible** release after the dbt v1.12 final release.
+<Constant name="dbt" /> предоставляет функциональность новых версий <Constant name="core" /> через [каналы выпуска](/docs/dbt-versions/dbt-release-tracks) с автоматическим обновлением. Если в <Constant name="dbt" /> вы выбрали канал выпуска **v1 Latest**, вам уже доступны все возможности, исправления и другая функциональность последней версии <Constant name="core" />! Если вы выбрали канал выпуска **v1 Compatible**, вы получите доступ к следующему ежемесячному выпуску **v1 Compatible** после финального релиза dbt v1.12.
 
-## New and changed features and functionality
+## Новые и изменённые возможности и функциональность
 
-### Opt-in v2 parser
-dbt v1.12 introduces the `--use-v2-parser` flag that delegates parsing to the new v2 Rust parser instead of the v1 Python parser. The Rust parser is significantly faster than the Python parser — especially on larger projects, where it can be 5–10× quicker. If you're looking to speed up your development workflow or cut down on job startup times. Using the Rust parser is a natural first step toward v2 compatibility, so you can catch and fix any project issues gradually rather than all at once.
+### Парсер v2 с явным включением
+В dbt v1.12 появился флаг `--use-v2-parser`, который передаёт разбор новому парсеру v2 на Rust вместо парсера v1 на Python. Парсер на Rust значительно быстрее парсера на Python — особенно в крупных проектах, где ускорение может составлять 5–10 раз. Это полезно, если вы хотите ускорить рабочий процесс разработки или сократить время запуска заданий. Использование парсера на Rust — естественный первый шаг к совместимости с v2: вы сможете выявлять и исправлять проблемы в проекте постепенно, а не все сразу.
 
-This is an opt-in flag that changes no behavior unless explicitly set, making it a low-risk way to test v2 parser compatibility from within dbt v1.12.
+Этот флаг требует явного включения и не меняет поведение, пока не задан, поэтому он позволяет с минимальным риском проверить совместимость с парсером v2 в dbt v1.12.
 
 :::note
-The Rust parser is beta. Its output manifest may differ from the Python parser's in edge cases, which can affect downstream behavior. Fall back by removing `--use-v2-parser`, and [report issues](https://github.com/dbt-labs/dbt/issues) to help us close the gap.
+Парсер на Rust находится в стадии бета-тестирования. В пограничных случаях создаваемый им манифест может отличаться от манифеста парсера на Python, что может повлиять на последующее поведение. Чтобы вернуться к прежнему парсеру, уберите `--use-v2-parser` и [сообщите о проблемах](https://github.com/dbt-labs/dbt/issues), чтобы помочь нам устранить различия.
 :::
 
-For more information on how to enable the flag, related behaviors, and parser error types, refer to [Opt-in v2 parser](/reference/global-configs/parsing#opt-in-v2-parser).
+Подробнее о включении флага, связанном поведении и типах ошибок парсера см. в разделе [Парсер v2 с явным включением](/reference/global-configs/parsing#opt-in-v2-parser).
 
-### New Iceberg `catalogs` spec
+### Новая спецификация `catalogs` для Iceberg
 
-We reworked the [`catalogs.yml` spec](/docs/build/iceberg/catalogs-yml) to make it simpler to use, and to bring it up to speed with latest developments in Iceberg support among ecosystem vendors.
+Мы переработали [спецификацию `catalogs.yml`](/docs/build/iceberg/catalogs-yml), чтобы упростить её использование и учесть последние изменения в поддержке Iceberg у поставщиков решений в экосистеме.
 
-The new spec can also power [cross-platform dbt Mesh](/docs/mesh/cross-platform-mesh).
+Новая спецификация также может использоваться для [кроссплатформенного dbt Mesh](/docs/mesh/cross-platform-mesh).
 
-### Native private packages
+### Встроенная поддержка приватных пакетов
 
-<Constant name="core" /> now supports [native private packages](/docs/build/packages#native-private-packages) in `packages.yml` and `dependencies.yml`. You can install packages from private GitHub, GitLab, or Azure DevOps repos using the `private` key without configuring a token or full Git URL. dbt uses your system's SSH configuration for authentication. Use the [`provider` key](/docs/build/packages#using-the-provider-key) to specify your Git provider and tell dbt which SSH URL format to construct. For example:
+<Constant name="core" /> теперь поддерживает [приватные пакеты на встроенном уровне](/docs/build/packages#native-private-packages) в `packages.yml` и `dependencies.yml`. Вы можете устанавливать пакеты из приватных репозиториев GitHub, GitLab или Azure DevOps с помощью ключа `private`, не настраивая токен и не указывая полный Git URL. Для аутентификации dbt использует конфигурацию SSH вашей системы. Используйте [ключ `provider`](/docs/build/packages#using-the-provider-key), чтобы указать Git-провайдера и сообщить dbt, какой формат SSH URL нужно сформировать. Например:
 
 ```yaml
 packages:
@@ -50,139 +50,139 @@ packages:
     provider: "github"  # Supported values: "github", "gitlab", "ado"
 ```
 
-### Extensions to UDFs
+### Расширение возможностей UDF
 
-- dbt v1.12 adds support for JavaScript user-defined functions (UDFs) on Snowflake and BigQuery. Define a JavaScript UDF by creating a `.js` file in your `functions/` directory and a corresponding YAML file with the function's arguments and return type. For more information, refer to [User-defined functions](/docs/build/udfs).
+- В dbt v1.12 добавлена поддержка пользовательских функций (UDF) на JavaScript в Snowflake и BigQuery. Чтобы определить UDF на JavaScript, создайте файл `.js` в каталоге `functions/` и соответствующий YAML-файл с аргументами функции и типом возвращаемого значения. Подробнее см. в разделе [Пользовательские функции](/docs/build/udfs).
 
-- You can define multiple argument signatures for the same user-defined function (UDF) using the `overloads` property. This lets you call the same function name with different input types, without creating separate UDFs for each variant. This is supported for SQL UDFs in Snowflake and Postgres, and Python UDFs in Snowflake. Each overload references a separate file using `defined_in`, with optional `arguments` and `returns`. All overloads are grouped into one <Term id="dag">DAG</Term> node, so they're built and selected together. On retry, dbt skips overloads that succeeded and reruns only those that failed. For more information, refer to [Defining overloaded UDFs](/docs/build/udfs#%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B5%D1%80%D0%B5%D0%B3%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%BD%D1%8B%D1%85-udf) and [`overloads`](/reference/resource-properties/overloads).
+- Вы можете определить несколько сигнатур аргументов для одной пользовательской функции (UDF) с помощью свойства `overloads`. Это позволяет вызывать функцию с одним и тем же именем с разными типами входных данных, не создавая отдельные UDF для каждого варианта. Эта возможность поддерживается для SQL UDF в Snowflake и Postgres, а также для Python UDF в Snowflake. Каждая перегрузка ссылается на отдельный файл через `defined_in` и может содержать необязательные `arguments` и `returns`. Все перегрузки объединены в один узел <Term id="dag">DAG</Term>, поэтому они создаются и выбираются вместе. При повторной попытке dbt пропускает успешно выполненные перегрузки и повторно запускает только те, которые завершились с ошибкой. Подробнее см. в разделах [Определение перегруженных UDF](/docs/build/udfs#defining-overloaded-udfs) и [`overloads`](/reference/resource-properties/overloads).
 
-- You can specify public third-party PyPI packages for your Python UDF with the optional `packages` config. The warehouse installs these packages when it creates the UDF, which lets your UDF use functionality from external Python libraries. For more information, refer to [Defining UDFs in dbt](/docs/build/udfs#defining-udfs-in-dbt) and the [packages](/reference/resource-configs/packages) config reference.
+- Вы можете указать публичные сторонние пакеты PyPI для своей Python UDF с помощью необязательной настройки `packages`. Хранилище данных устанавливает эти пакеты при создании UDF, что позволяет использовать в функции возможности внешних библиотек Python. Подробнее см. в разделе [Определение UDF в dbt](/docs/build/udfs#defining-udfs-in-dbt) и в справочнике по настройке [packages](/reference/resource-configs/packages).
 
-- Python UDFs are now supported in Databricks, in addition to Snowflake and BigQuery. For Databricks, Python UDFs require [Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/), and the `runtime_version` and `entry_point` configs are ignored. For more information, refer to [User-defined functions](/docs/build/udfs).
+- Python UDF теперь поддерживаются в Databricks, помимо Snowflake и BigQuery. Для Python UDF в Databricks требуется [Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/), а настройки `runtime_version` и `entry_point` игнорируются. Подробнее см. в разделе [Пользовательские функции](/docs/build/udfs).
 
-### `latest_version_pointer` for versioned models
-For versioned models, you can configure dbt to automatically create a pointer view named after a model's base name (for example, `dim_customers`) once the latest version materializes successfully. This lets you query the current version without maintaining a view manually.
+### `latest_version_pointer` для версионируемых моделей
+Для версионируемых моделей можно настроить dbt так, чтобы после успешной материализации последней версии автоматически создавалось представление-указатель с базовым именем модели (например, `dim_customers`). Это позволяет запрашивать текущую версию, не поддерживая представление вручную.
 
-Enable this feature in your project with the [`latest_version_pointer_enabled_by_default: true`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default) flag in `dbt_project.yml`, or per model using the [`latest_version_pointer.enabled`](/reference/resource-configs/latest_version_pointer) config. You can customize the pointer name per model with `latest_version_pointer.alias`, or globally by overriding the [`generate_latest_version_pointer_alias`](/docs/build/custom-aliases#generate_latest_version_pointer_alias) macro. For more information, refer to [Model versions](/docs/mesh/govern/model-versions#pointing-to-the-latest-version).
+Включите эту возможность для проекта с помощью флага [`latest_version_pointer_enabled_by_default: true`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default) в `dbt_project.yml` или для отдельной модели с помощью настройки [`latest_version_pointer.enabled`](/reference/resource-configs/latest_version_pointer). Имя указателя можно настроить для отдельной модели через `latest_version_pointer.alias` или глобально, переопределив макрос [`generate_latest_version_pointer_alias`](/docs/build/custom-aliases#generate_latest_version_pointer_alias). Подробнее см. в разделе [Версии моделей](/docs/mesh/govern/model-versions#pointing-to-the-latest-version).
 
-### `--sql` flag for `dbt run-operation`
-You can now use the `--sql` flag with `dbt run-operation` to execute ad hoc database statements directly against your warehouse, without defining a macro. This is useful for one-off operations like dropping or altering a table, applying grants, or running a data fix. The statement runs through dbt's full Jinja compilation pipeline, so you have access to `ref()`, `source()`, `var()`, `target`, and all other context variables. For more information, refer to [About dbt run-operation](/reference/commands/run-operation).
+### Флаг `--sql` для `dbt run-operation`
+Теперь можно использовать флаг `--sql` с `dbt run-operation`, чтобы выполнять разовые инструкции базы данных непосредственно в хранилище данных, не определяя макрос. Это удобно для разовых операций, таких как удаление или изменение таблицы, назначение прав доступа или исправление данных. Инструкция проходит через полный конвейер компиляции Jinja в dbt, поэтому вам доступны `ref()`, `source()`, `var()`, `target` и все остальные переменные контекста. Подробнее см. в разделе [О команде dbt run-operation](/reference/commands/run-operation).
 
-### `on_error` model config
-You can configure whether downstream models run when an upstream model fails using the [`on_error`](/reference/resource-configs/on_error) config. Set `on_error: continue` on a model to allow its downstream models to still attempt to run even when it fails. By default (`skip_children`), dbt skips all downstream models on failure. Note that [`--fail-fast`](/reference/global-configs/failing-fast) takes precedence &mdash; runs with `--fail-fast` stop at the first failure, even if a model is configured with `on_error: continue`.
+### Настройка модели `on_error`
+С помощью настройки [`on_error`](/reference/resource-configs/on_error) можно управлять тем, будут ли запускаться зависимые модели, если модель выше по графу зависимостей завершится с ошибкой. Установите `on_error: continue` для модели, чтобы разрешить попытку запуска зависимых от неё моделей даже в случае её сбоя. По умолчанию (`skip_children`) dbt пропускает все зависимые модели при сбое. Обратите внимание, что [`--fail-fast`](/reference/global-configs/failing-fast) имеет приоритет &mdash; запуски с `--fail-fast` останавливаются при первом сбое, даже если для модели задано `on_error: continue`.
 
-### Apache Ossie semantic layer support
-- dbt v1.12 supports the [Apache Ossie](https://github.com/apache/ossie) standard for defining semantic models and metrics. You can place Ossie-format `.json` files in an `osi/` directory at the root of your project, and dbt parses them into the manifest alongside any native dbt semantic models. To use a different directory, configure [`osi-paths`](/reference/project-configs/osi-paths) in `dbt_project.yml`. Ossie versions `0.1.0` and `0.1.1` are supported; any other version raises a parse error. For more information, refer to [Ossie semantic layer documents](/docs/build/ossie-semantic-models).
-- dbt writes an `osi_document.json` file to your `target/` directory alongside `semantic_manifest.json` at parse time. This artifact provides an Ossie representation of your project's <Constant name="semantic_layer" />. For more information, refer to [Semantic manifest](/reference/artifacts/sl-manifest#apache-ossie-document).
-
-
-This is separate from the new <Constant name="semantic_layer" /> YAML spec below, which changes how you define semantic models and metrics in native dbt YAML.
-
-### New Semantic Layer YAML spec
-
-dbt v1.12 adds support for the latest <Constant name="semantic_layer" /> YAML specification, which simplifies how you define metrics and dimensions by embedding semantic annotations directly alongside each model.
-
-Key changes in the new spec:
-- `semantic_model` is nested directly under each model instead of being a standalone top-level key.
-- Entities and dimensions are defined at the column level.
-- Measures are replaced with `type: simple` metrics defined within the model.
-- `type_params` is deprecated; its parameters are now top-level keys within each metric definition.
-
-For migration guidance and a comparison between the latest spec and the legacy spec, refer to [Migrate to the latest YAML spec](/docs/build/latest-metrics-spec). For the semantic model reference, refer to [Semantic models](/docs/build/semantic-models).
-
-### `selector` method for named YAML selectors
-You can reference a named selector from `selectors.yml` inside `--select` or `--exclude` using the [`selector` method](/reference/node-selection/methods#selector) (for example, `selector:my_selector`). This makes it easier to compose reusable YAML selectors with other [selection methods](/reference/node-selection/methods), [graph operators](/reference/node-selection/graph-operators), and [set operators](/reference/node-selection/set-operators) on the command line without duplicating logic.
-
-When you use the legacy `--selector` flag together with `--select` or `--exclude`, dbt only uses `--selector` for node selection and ignores `--select` and `--exclude`. Starting in dbt v1.12, dbt also raises a warning when these flags are combined. If you want to combine a selector with `--select` or `--exclude`, use the new `selector:` method instead.
-
-### Support for `vars.yml`
-You can use the [`vars.yml`](/docs/build/project-variables#defining-variables-in-varsyml) file, located at the project root, to define project variables. This keeps variable definitions in one place and helps simplify `dbt_project.yml`. Variables defined in `vars.yml` are parsed _before_ `dbt_project.yml`, so you can reference them in `dbt_project.yml` using `{{ var('...') }}`. You can continue to define variables in `dbt_project.yml` as before, but you cannot define variables in both files. For details and precedence, refer to [Project variables](/docs/build/project-variables).
+### Поддержка семантического слоя Apache Ossie
+- dbt v1.12 поддерживает стандарт [Apache Ossie](https://github.com/apache/ossie) для определения семантических моделей и метрик. Вы можете размещать файлы `.json` в формате Ossie в каталоге `osi/` в корне проекта, и dbt будет разбирать их и включать в манифест вместе с семантическими моделями в собственном формате dbt. Чтобы использовать другой каталог, задайте [`osi-paths`](/reference/project-configs/osi-paths) в `dbt_project.yml`. Поддерживаются версии Ossie `0.1.0` и `0.1.1`; любая другая версия вызывает ошибку разбора. Подробнее см. в разделе [Документы семантического слоя Ossie](/docs/build/ossie-semantic-models).
+- Во время разбора dbt записывает файл `osi_document.json` в каталог `target/` рядом с `semantic_manifest.json`. Этот артефакт предоставляет представление <Constant name="semantic_layer" /> вашего проекта в формате Ossie. Подробнее см. в разделе [Семантический манифест](/reference/artifacts/sl-manifest#apache-ossie-document).
 
 
-### Improved exception handling and error messages
+Эта возможность не связана с новой спецификацией YAML для <Constant name="semantic_layer" />, описанной ниже, которая меняет способ определения семантических моделей и метрик в собственном формате YAML dbt.
 
-dbt v1.12 improves exception handling so error messages are clearer and stack traces are easier to interpret.
+### Новая спецификация YAML для семантического слоя {#new-semantic-layer-yaml-spec}
 
-Previously, some internal failures surfaced as Python errors (for example, `AttributeError`, `KeyError`, `IndexError`, `RuntimeError`), which could be difficult to understand. In dbt v1.12, these are replaced with dbt errors (such as `CompilationError` and `ParsingError`) that include a clear error message. When you need the full Python error output for debugging, use `--debug` or check the logs.
+В dbt v1.12 добавлена поддержка последней спецификации YAML для <Constant name="semantic_layer" />, которая упрощает определение метрик и измерений за счёт размещения семантических аннотаций непосредственно рядом с каждой моделью.
 
-Key improvements:
+Основные изменения в новой спецификации:
+- `semantic_model` размещается непосредственно внутри каждой модели, а не в виде отдельного ключа верхнего уровня.
+- Сущности и измерения определяются на уровне столбцов.
+- Меры заменены метриками с `type: simple`, определёнными внутри модели.
+- `type_params` объявлен устаревшим; его параметры теперь являются ключами верхнего уровня в определении каждой метрики.
 
-- **Cleaner default output**: Built-in Python exceptions (`Exception`, `ValueError`, `RuntimeError`) are replaced with dbt errors, so dbt no longer treats them as internal errors or displays unnecessary stack traces.
-- **Parsing and config validation**: Invalid field values raise a `ParsingError` instead of a raw `InvalidFieldValue` exception when applying `dbt_project.yml` configs to resources. In a generic data test, a `config` value that is a string or a number instead of a set of key-value pairs raises a `TestConfigNotDictError`.
-- **Snapshot validation**: When snapshot validation fails, dbt shows the relevant error message and omits the long Python error output.
-- **`dbt run-operation`**: When a `run-operation` call fails, the exception message is included in `run_results.json`, which makes failures easier to inspect.
-- **Cycle detection**: Dependency graph cycles raise a `CompilationError` instead of the built-in `RuntimeError`.
-- **Semantic model dependencies**: When a semantic model references a disabled or missing model, dbt raises a `CompilationError` instead of an `IndexError`.
-<Expandable alt_header="More scenarios with exception handling improvements">
+Рекомендации по миграции и сравнение последней и прежней спецификаций см. в разделе [Переход на последнюю спецификацию YAML](/docs/build/latest-metrics-spec). Справочную информацию о семантических моделях см. в разделе [Семантические модели](/docs/build/semantic-models).
 
-- A string concatenation in a `doc()` argument (such as `doc('foo' ~ 'bar')`) is skipped during doc block resolution instead of crashing with an `AttributeError`. 
-- A Jinja variable (such as `doc(my_variable)`) raises a `DocTargetNotFoundError`.
-- When a `meta` value in `schema.yml` references an undefined Jinja variable, dbt converts it to `None` instead of raising a `TypeError` during partial parse.
-- When `sources`, `tables`, `exposure` tags, or `packages` are set to `null`, dbt treats them as an empty list instead of raising a `TypeError`.
-- When a model with custom contract constraints is evaluated during `state:modified` selection, dbt returns `None` for unknown constraint types instead of raising a `KeyError`.
+### Метод `selector` для именованных YAML-селекторов
+Вы можете ссылаться на именованный селектор из `selectors.yml` внутри `--select` или `--exclude` с помощью [метода `selector`](/reference/node-selection/methods#selector) (например, `selector:my_selector`). Это упрощает совместное использование повторно используемых YAML-селекторов с другими [методами выбора](/reference/node-selection/methods), [операторами графа](/reference/node-selection/graph-operators) и [операторами множеств](/reference/node-selection/set-operators) в командной строке без дублирования логики.
+
+При использовании прежнего флага `--selector` вместе с `--select` или `--exclude` dbt использует для выбора узлов только `--selector` и игнорирует `--select` и `--exclude`. Начиная с dbt v1.12, dbt также выдаёт предупреждение при таком сочетании флагов. Если вы хотите объединить селектор с `--select` или `--exclude`, используйте вместо этого новый метод `selector:`.
+
+### Поддержка `vars.yml`
+Вы можете использовать файл [`vars.yml`](/docs/build/project-variables#defining-variables-in-varsyml) в корне проекта для определения переменных проекта. Это позволяет хранить определения переменных в одном месте и упрощает `dbt_project.yml`. Переменные из `vars.yml` разбираются _до_ `dbt_project.yml`, поэтому на них можно ссылаться в `dbt_project.yml` через `{{ var('...') }}`. Вы по-прежнему можете определять переменные в `dbt_project.yml`, но определять их одновременно в обоих файлах нельзя. Подробности и порядок приоритетов см. в разделе [Переменные проекта](/docs/build/project-variables).
+
+
+### Улучшенная обработка исключений и сообщения об ошибках
+
+В dbt v1.12 улучшена обработка исключений: сообщения об ошибках стали понятнее, а трассировки стека — проще для интерпретации.
+
+Раньше некоторые внутренние сбои проявлялись как ошибки Python (например, `AttributeError`, `KeyError`, `IndexError`, `RuntimeError`), которые было трудно понять. В dbt v1.12 они заменены ошибками dbt (такими как `CompilationError` и `ParsingError`) с понятным сообщением об ошибке. Если для отладки нужен полный вывод ошибки Python, используйте `--debug` или проверьте журналы.
+
+Основные улучшения:
+
+- **Более понятный вывод по умолчанию**: встроенные исключения Python (`Exception`, `ValueError`, `RuntimeError`) заменены ошибками dbt, поэтому dbt больше не считает их внутренними ошибками и не выводит ненужные трассировки стека.
+- **Разбор и проверка конфигурации**: при применении настроек `dbt_project.yml` к ресурсам недопустимые значения полей вызывают `ParsingError` вместо необработанного исключения `InvalidFieldValue`. Если в обобщённом тесте данных значение `config` является строкой или числом, а не набором пар «ключ — значение», возникает `TestConfigNotDictError`.
+- **Проверка снимков**: если проверка снимка завершается неудачно, dbt показывает соответствующее сообщение об ошибке без длинного вывода ошибки Python.
+- **`dbt run-operation`**: если вызов `run-operation` завершается с ошибкой, сообщение об исключении включается в `run_results.json`, что упрощает анализ сбоев.
+- **Обнаружение циклов**: циклы в графе зависимостей вызывают `CompilationError` вместо встроенного `RuntimeError`.
+- **Зависимости семантических моделей**: если семантическая модель ссылается на отключённую или отсутствующую модель, dbt вызывает `CompilationError` вместо `IndexError`.
+<Expandable alt_header="Другие сценарии с улучшенной обработкой исключений">
+
+- Конкатенация строк в аргументе `doc()` (например, `doc('foo' ~ 'bar')`) пропускается при разрешении блоков doc вместо сбоя с `AttributeError`. 
+- Переменная Jinja (например, `doc(my_variable)`) вызывает `DocTargetNotFoundError`.
+- Если значение `meta` в `schema.yml` ссылается на неопределённую переменную Jinja, dbt преобразует его в `None`, а не вызывает `TypeError` во время частичного разбора.
+- Если `sources`, `tables`, теги `exposure` или `packages` имеют значение `null`, dbt обрабатывает их как пустой список, а не вызывает `TypeError`.
+- Если модель с пользовательскими ограничениями контракта оценивается при выборе `state:modified`, dbt возвращает `None` для неизвестных типов ограничений, а не вызывает `KeyError`.
 </Expandable>
 
-### Managing changes to legacy behaviors
+### Управление изменениями прежнего поведения
 
-dbt v1.12 introduces new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `true` / `false` values, respectively, for `flags` in `dbt_project.yml`.
+В dbt v1.12 появились новые флаги для [управления изменениями прежнего поведения](/reference/global-configs/behavior-changes). Вы можете включить недавно добавленные изменения (отключённые по умолчанию) или отключить устоявшиеся изменения (включённые по умолчанию), задав соответственно значения `true` / `false` в разделе `flags` файла `dbt_project.yml`.
 
-You can read more about each of these behavior changes in the following links:
+Подробнее о каждом из этих изменений поведения можно прочитать по следующим ссылкам:
 
-- (Mature, enabled by default) [`require_all_warnings_handled_by_warn_error`](/reference/global-configs/behavior-flags/require_all_warnings_handled_by_warn_error). All warnings raised during a run are now routed through the `--warn-error` / `--warn-error-options` handler. This only affects projects using `warn_error: true` or `--warn-error`.
-- (Mature, enabled by default) [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-flags/require_batched_execution_for_custom_microbatch_strategy). dbt now executes custom microbatch strategies in batches. If you have a custom microbatch macro and set the flag to `false`, dbt issues a deprecation warning.
-- (Mature, enabled by default) [`require_nested_cumulative_type_params`](/reference/global-configs/behavior-flags/require_nested_cumulative_type_params). dbt now raises an error (instead of a warning) if cumulative metrics use the un-nested syntax. Cumulative-type metrics must be nested under the `cumulative_type_params` field, as required since dbt v1.9.
-- (Mature, enabled by default) [`require_yaml_configuration_for_mf_time_spines`](/reference/global-configs/behavior-flags/require_yaml_configuration_for_mf_time_spines). dbt suppresses the `MFTimespineWithoutYamlConfigurationDeprecation` warning. The legacy SQL file configuration continues to work. This flag has no functional impact.
-- (Mature, enabled by default) [`skip_nodes_if_on_run_start_fails`](/reference/global-configs/behavior-flags/skip_nodes_if_on_run_start_fails). dbt skips all selected resources if there is a failure on an `on-run-start` hook.
-- (Mature, enabled by default) [`state_modified_compare_more_unrendered_values`](/reference/global-configs/behavior-flags/state_modified_compare_more_unrendered_values). dbt uses unrendered values in `state:modified` comparisons, reducing false positives when configs differ by target environment (such as `prod` vs. `dev`).
-- (Mature, enabled by default) [`validate_macro_args`](/reference/global-configs/behavior-flags/validate_macro_args). dbt validates macro arguments by default.
-- (Introduced, disabled by default) [`require_valid_schema_from_generate_schema_name`](/reference/global-configs/behavior-flags/require_valid_schema_from_generate_schema_name). This flag is set to `false` by default. With this setting, dbt raises the [`GenerateSchemaNameNullValueDeprecation`](/reference/deprecations#generateschemanamenullvaluedeprecation) warning when a custom `generate_schema_name` macro returns a `null` value. When set to `true`, dbt enforces stricter validation and raises a parsing error instead of a warning.
-- (Introduced, disabled by default) [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs). When set to `true`, you can set [`sql_header`](/reference/resource-configs/sql_header) in the `config` of a generic data test at the model or column level in your `properties.yml` file. For more information, refer to [Data test configurations](/reference/data-test-configs).
-- (Introduced, disabled by default) [`require_corrected_analysis_fqns`](/reference/global-configs/behavior-flags/require_corrected_analysis_fqns). When set to `true`, dbt applies project-level analysis configuration from `dbt_project.yml`. Previously, dbt silently ignored this configuration. This flag also corrects fully qualified names (FQNs) of analyses by removing the extra path segment, making them consistent with other resource types (for example, `your_project.my_analysis` instead of `your_project.analyses.my_analysis`). For more information, refer to [Analyses](/docs/build/analyses).
-- (Introduced, disabled by default) [`require_source_and_semantic_model_names_without_spaces`](/reference/global-configs/behavior-flags/require_source_and_semantic_model_names_without_spaces). By default, dbt raises a [`ResourceNamesWithSpacesDeprecation`](/reference/deprecations#resourcenameswithspacesdeprecation) warning if it detects a space in a source name or semantic model name. When the flag is set to `true`, dbt raises an error.
-- (Introduced, disabled by default) [`allow_jinja_file_extensions`](/reference/global-configs/behavior-flags/allow_jinja_file_extensions). When set to `True`, dbt recognizes Jinja-style extension suffixes (`.j2`, `.jinja`, `.jinja2`) on `.sql` and `.md` files. This enables Jinja-aware syntax highlighting in IDEs that associate these suffixes with Jinja templating.
-- (Introduced, disabled by default) [`latest_version_pointer_enabled_by_default`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default). When set to `true`, dbt automatically creates a latest version pointer view for every versioned model in your project, without requiring per-model configuration.
+- (Устоявшееся, включено по умолчанию) [`require_all_warnings_handled_by_warn_error`](/reference/global-configs/behavior-flags/require_all_warnings_handled_by_warn_error). Все предупреждения, возникающие во время выполнения, теперь направляются в обработчик `--warn-error` / `--warn-error-options`. Это затрагивает только проекты, использующие `warn_error: true` или `--warn-error`.
+- (Устоявшееся, включено по умолчанию) [`require_batched_execution_for_custom_microbatch_strategy`](/reference/global-configs/behavior-flags/require_batched_execution_for_custom_microbatch_strategy). dbt теперь выполняет пользовательские стратегии микропакетной обработки пакетами. Если у вас есть пользовательский макрос микропакетной обработки и флаг установлен в `false`, dbt выдаёт предупреждение об устаревании.
+- (Устоявшееся, включено по умолчанию) [`require_nested_cumulative_type_params`](/reference/global-configs/behavior-flags/require_nested_cumulative_type_params). dbt теперь выдаёт ошибку (вместо предупреждения), если накопительные метрики используют синтаксис без вложенности. Метрики накопительного типа должны быть вложены в поле `cumulative_type_params`, как требуется начиная с dbt v1.9.
+- (Устоявшееся, включено по умолчанию) [`require_yaml_configuration_for_mf_time_spines`](/reference/global-configs/behavior-flags/require_yaml_configuration_for_mf_time_spines). dbt подавляет предупреждение `MFTimespineWithoutYamlConfigurationDeprecation`. Прежняя конфигурация через SQL-файл продолжает работать. Этот флаг не влияет на функциональность.
+- (Устоявшееся, включено по умолчанию) [`skip_nodes_if_on_run_start_fails`](/reference/global-configs/behavior-flags/skip_nodes_if_on_run_start_fails). dbt пропускает все выбранные ресурсы при сбое в хуке `on-run-start`.
+- (Устоявшееся, включено по умолчанию) [`state_modified_compare_more_unrendered_values`](/reference/global-configs/behavior-flags/state_modified_compare_more_unrendered_values). dbt использует значения до рендеринга при сравнении `state:modified`, уменьшая число ложных срабатываний, когда настройки различаются в зависимости от целевого окружения (например, `prod` и `dev`).
+- (Устоявшееся, включено по умолчанию) [`validate_macro_args`](/reference/global-configs/behavior-flags/validate_macro_args). dbt по умолчанию проверяет аргументы макросов.
+- (Новое, отключено по умолчанию) [`require_valid_schema_from_generate_schema_name`](/reference/global-configs/behavior-flags/require_valid_schema_from_generate_schema_name). По умолчанию этот флаг установлен в `false`. При таком значении dbt выдаёт предупреждение [`GenerateSchemaNameNullValueDeprecation`](/reference/deprecations#generateschemanamenullvaluedeprecation), если пользовательский макрос `generate_schema_name` возвращает `null`. При значении `true` dbt применяет более строгую проверку и выдаёт ошибку разбора вместо предупреждения.
+- (Новое, отключено по умолчанию) [`require_sql_header_in_test_configs`](/reference/global-configs/behavior-flags/require_sql_header_in_test_configs). При значении `true` можно задавать [`sql_header`](/reference/resource-configs/sql_header) в `config` обобщённого теста данных на уровне модели или столбца в файле `properties.yml`. Подробнее см. в разделе [Настройки тестов данных](/reference/data-test-configs).
+- (Новое, отключено по умолчанию) [`require_corrected_analysis_fqns`](/reference/global-configs/behavior-flags/require_corrected_analysis_fqns). При значении `true` dbt применяет настройки анализов уровня проекта из `dbt_project.yml`. Ранее dbt игнорировал эти настройки без каких-либо сообщений. Этот флаг также исправляет полные имена (FQN) анализов, удаляя лишний сегмент пути и приводя их в соответствие с другими типами ресурсов (например, `your_project.my_analysis` вместо `your_project.analyses.my_analysis`). Подробнее см. в разделе [Анализы](/docs/build/analyses).
+- (Новое, отключено по умолчанию) [`require_source_and_semantic_model_names_without_spaces`](/reference/global-configs/behavior-flags/require_source_and_semantic_model_names_without_spaces). По умолчанию dbt выдаёт предупреждение [`ResourceNamesWithSpacesDeprecation`](/reference/deprecations#resourcenameswithspacesdeprecation), если обнаруживает пробел в имени источника или семантической модели. Если флаг установлен в `true`, dbt выдаёт ошибку.
+- (Новое, отключено по умолчанию) [`allow_jinja_file_extensions`](/reference/global-configs/behavior-flags/allow_jinja_file_extensions). При значении `True` dbt распознаёт суффиксы расширений в стиле Jinja (`.j2`, `.jinja`, `.jinja2`) у файлов `.sql` и `.md`. Это позволяет использовать подсветку синтаксиса с учётом Jinja в IDE, которые связывают эти суффиксы с шаблонизацией Jinja.
+- (Новое, отключено по умолчанию) [`latest_version_pointer_enabled_by_default`](/reference/global-configs/behavior-flags/latest_version_pointer_enabled_by_default). При значении `true` dbt автоматически создаёт представление-указатель на последнюю версию для каждой версионируемой модели в проекте, не требуя настройки на уровне отдельных моделей.
 
-## Adapter-specific features and functionalities
+## Возможности и функциональность отдельных адаптеров
 
 ### Snowflake
 
-- You can materialize a model as a Snowflake [interactive table](/reference/resource-configs/snowflake-configs#interactive-tables) by setting `materialized: interactive_table`. Interactive tables are optimized for low-latency queries and support both static and dynamic (auto-refreshing) forms, depending on whether you set [`target_lag`](/reference/resource-configs/snowflake-configs#target-lag-interactive-tables). Unlike dynamic tables, [`cluster_by`](/reference/resource-configs/snowflake-configs#cluster-by-interactive-tables) is required. <Lifecycle status="beta" />
-- You can use the [`snowflake.quote_args`](/reference/resource-configs/quote_args) config on JavaScript UDFs to control whether argument names are quoted in the generated `CREATE FUNCTION` statement. When `true` (default), Snowflake quotes argument names, preserving their exact casing, so you reference arguments using the same case as defined in the YAML inside the function body. When `false`, argument names are unquoted and Snowflake uppercases them, so you must reference them in uppercase inside the function body.
-- You can set the [`iceberg_version`](/docs/build/iceberg/adapters/snowflake-iceberg-support) config on Snowflake Iceberg tables to control which Iceberg format version Snowflake uses. Set it to `3` to use Iceberg V3, which improves `VARIANT` type support and makes row-level changes more efficient by tracking deletions separately instead of rewriting data. The default value is `2`. Note that you cannot change the value of `iceberg_version` after table creation.
-- You can configure the [`scheduler`](/reference/resource-configs/snowflake-configs#scheduler) parameter on Snowflake dynamic tables to control how refreshes are managed. Setting it to `ENABLE` lets Snowflake automatically refresh the dynamic table, while `DISABLE` means dbt manages refreshes during model execution. When `scheduler` is set to `ENABLE`, you must also specify [`target_lag`](/reference/resource-configs/snowflake-configs#target-lag). 
+- Вы можете материализовать модель как [интерактивную таблицу](/reference/resource-configs/snowflake-configs#interactive-tables) Snowflake, задав `materialized: interactive_table`. Интерактивные таблицы оптимизированы для запросов с низкой задержкой и поддерживают как статический, так и динамический (с автоматическим обновлением) варианты в зависимости от того, задан ли [`target_lag`](/reference/resource-configs/snowflake-configs#target-lag-interactive-tables). В отличие от динамических таблиц, [`cluster_by`](/reference/resource-configs/snowflake-configs#cluster-by-interactive-tables) обязателен. <Lifecycle status="beta" />
+- Вы можете использовать настройку [`snowflake.quote_args`](/reference/resource-configs/quote_args) для JavaScript UDF, чтобы управлять заключением имён аргументов в кавычки в создаваемой инструкции `CREATE FUNCTION`. При значении `true` (по умолчанию) Snowflake заключает имена аргументов в кавычки, точно сохраняя регистр, поэтому в теле функции нужно обращаться к аргументам в том же регистре, что и в YAML. При значении `false` имена аргументов не заключаются в кавычки, и Snowflake переводит их в верхний регистр, поэтому в теле функции нужно обращаться к ним в верхнем регистре.
+- Вы можете задать настройку [`iceberg_version`](/docs/build/iceberg/adapters/snowflake-iceberg-support) для таблиц Snowflake Iceberg, чтобы управлять используемой Snowflake версией формата Iceberg. Установите её в `3` для использования Iceberg V3, который улучшает поддержку типа `VARIANT` и повышает эффективность изменений на уровне строк за счёт отдельного отслеживания удалений вместо перезаписи данных. Значение по умолчанию — `2`. Обратите внимание, что изменить значение `iceberg_version` после создания таблицы нельзя.
+- Вы можете настроить параметр [`scheduler`](/reference/resource-configs/snowflake-configs#scheduler) для динамических таблиц Snowflake, чтобы управлять их обновлением. Значение `ENABLE` позволяет Snowflake автоматически обновлять динамическую таблицу, а `DISABLE` означает, что обновлениями управляет dbt во время выполнения модели. Если `scheduler` установлен в `ENABLE`, необходимо также указать [`target_lag`](/reference/resource-configs/snowflake-configs#target-lag). 
 
-    By default, dbt sets `scheduler` to `DISABLE` (unlike Snowflake’s native default of `ENABLE`), so dbt controls the refresh schedule unless you explicitly opt in to Snowflake’s scheduler. If you specify `target_lag` without setting `scheduler`, dbt automatically sets `scheduler` to `ENABLE`.
-- You can use the [`snowflake_initialization_warehouse`](/reference/resource-configs/snowflake-configs#initialization-warehouse) parameter to specify a warehouse for the initial build and reinitialization of a dynamic table, separate from `snowflake_warehouse` which is used for regular incremental refreshes.
-- You can create Snowflake dynamic tables as transient (no [Fail-safe period](https://docs.snowflake.com/en/user-guide/data-failsafe)) by setting the [`transient`](/reference/resource-configs/snowflake-configs#transient-dynamic-tables) config on models. 
+    По умолчанию dbt устанавливает `scheduler` в `DISABLE` (в отличие от собственного значения по умолчанию в Snowflake — `ENABLE`), поэтому dbt управляет расписанием обновлений, пока вы явно не включите планировщик Snowflake. Если вы указываете `target_lag`, не задавая `scheduler`, dbt автоматически устанавливает `scheduler` в `ENABLE`.
+- Вы можете использовать параметр [`snowflake_initialization_warehouse`](/reference/resource-configs/snowflake-configs#initialization-warehouse), чтобы указать вычислительный ресурс warehouse для первоначального создания и повторной инициализации динамической таблицы отдельно от `snowflake_warehouse`, используемого для обычных инкрементальных обновлений.
+- Вы можете создавать динамические таблицы Snowflake как transient (без [периода Fail-safe](https://docs.snowflake.com/en/user-guide/data-failsafe)), задав настройку [`transient`](/reference/resource-configs/snowflake-configs#transient-dynamic-tables) для моделей. 
 
-    When `transient` is not set on a model, the [`snowflake_default_transient_dynamic_tables`](/reference/global-configs/snowflake-changes#the-snowflake_default_transient_dynamic_tables-flag) flag controls the default. Set this flag to `true` to make all dynamic tables transient by default.
+    Если `transient` не задан для модели, значение по умолчанию определяется флагом [`snowflake_default_transient_dynamic_tables`](/reference/global-configs/snowflake-changes#the-snowflake_default_transient_dynamic_tables-flag). Установите этот флаг в `true`, чтобы по умолчанию все динамические таблицы были transient.
 
 ### BigQuery
 
-- BigQuery now supports [parallel microbatch execution](/docs/build/parallel-batch-execution), in addition to Snowflake.
-- Added the [`bigquery_use_standard_sql_for_partitions`](/reference/global-configs/bigquery-changes#%D1%84%D0%BB%D0%B0%D0%B3-bigquery_use_standard_sql_for_partitions) flag, which controls whether `get_partitions_metadata()` uses standard SQL (`INFORMATION_SCHEMA.PARTITIONS`) or legacy SQL (`$__PARTITIONS_SUMMARY__`). The flag defaulted to `false` when first introduced in this release, but has been flipped to `true` by default ahead of BigQuery's [legacy SQL deprecation on June 1, 2026](https://docs.cloud.google.com/bigquery/docs/release-notes#February_25_2026). To revert to legacy SQL, set the flag to `false` in `dbt_project.yml`.
-- Added the [`bigquery_reject_wildcard_metadata_source_freshness`](/reference/global-configs/bigquery-changes#%D1%84%D0%BB%D0%B0%D0%B3-bigquery_reject_wildcard_metadata_source_freshness) flag. When you set this flag to `true`, dbt raises a `DbtRuntimeError` if you run metadata-based source freshness checks with wildcard table identifiers (for example, `events_*`), preventing incorrect freshness results.
-- You can configure BigQuery job link logging with `job_link_info_level_log`. By default, dbt logs job links at the debug level. To log job links at the info level, set `job_link_info_level_log: true` in your BigQuery profile. This makes job links visible in dbt logs for easier access to the BigQuery console. For more information, see [BigQuery setup](/docs/local/connect-data-platform/bigquery-setup?version=1.12#job_link_info_level_log).
-- You can set `job_execution_timeout_seconds` per model, snapshot, seed, or test, in addition to the profile-level configuration. The per-resource value takes precedence over the default value set in the profile level. For more information, refer to [BigQuery setup](/docs/local/connect-data-platform/bigquery-setup?version=1.12#jobexecutiontimeout_seconds).
+- BigQuery теперь поддерживает [параллельное выполнение микропакетов](/docs/build/parallel-batch-execution), как и Snowflake.
+- Добавлен флаг [`bigquery_use_standard_sql_for_partitions`](/reference/global-configs/bigquery-changes#the-bigquery_use_standard_sql_for_partitions-flag), который определяет, использует ли `get_partitions_metadata()` стандартный SQL (`INFORMATION_SCHEMA.PARTITIONS`) или устаревший SQL (`$__PARTITIONS_SUMMARY__`). При первом появлении в этом выпуске значение флага по умолчанию было `false`, но затем его изменили на `true` в преддверии [прекращения поддержки устаревшего SQL в BigQuery 1 июня 2026 года](https://docs.cloud.google.com/bigquery/docs/release-notes#February_25_2026). Чтобы вернуться к устаревшему SQL, установите флаг в `false` в `dbt_project.yml`.
+- Добавлен флаг [`bigquery_reject_wildcard_metadata_source_freshness`](/reference/global-configs/bigquery-changes#the-bigquery_reject_wildcard_metadata_source_freshness-flag). Если он установлен в `true`, dbt вызывает `DbtRuntimeError` при выполнении проверок актуальности источников на основе метаданных с идентификаторами таблиц, содержащими подстановочные знаки (например, `events_*`), предотвращая некорректные результаты проверки актуальности.
+- Вы можете настроить запись ссылок на задания BigQuery в журнал с помощью `job_link_info_level_log`. По умолчанию dbt записывает ссылки на задания на уровне debug. Чтобы записывать их на уровне info, установите `job_link_info_level_log: true` в профиле BigQuery. Благодаря этому ссылки на задания будут видны в журналах dbt, что упростит доступ к консоли BigQuery. Подробнее см. в разделе [Настройка BigQuery](/docs/local/connect-data-platform/bigquery-setup?version=1.12#job_link_info_level_log).
+- Вы можете задавать `job_execution_timeout_seconds` для отдельной модели, снимка, seed или теста, помимо настройки на уровне профиля. Значение для отдельного ресурса имеет приоритет над значением по умолчанию, заданным на уровне профиля. Подробнее см. в разделе [Настройка BigQuery](/docs/local/connect-data-platform/bigquery-setup?version=1.12#jobexecutiontimeout_seconds).
 
 ### Redshift
 
-- The [`redshift_skip_autocommit_transaction_statements`](/reference/global-configs/redshift-changes#redshift_skip_autocommit_transaction_statements-flag) flag defaults to `false`, preserving legacy behavior of sending `BEGIN`/`COMMIT`/`ROLLBACK` statements even when autocommit is enabled. To skip unnecessary transaction statements and improve performance, set the flag to `true`.
-- Added support for the `query_group` session parameter, allowing dbt to tag queries for Redshift Workload Manager routing and query logging. When configured in a profile, dbt sets `query_group` when opening a connection and the value applies for the duration of that session. You can also configure `query_group` at the model level to temporarily override the default value for a specific model, and dbt reverts the value at the end of model materialization. For more information, see [Redshift configurations](/reference/resource-configs/redshift-configs#session-configuration).
+- Флаг [`redshift_skip_autocommit_transaction_statements`](/reference/global-configs/redshift-changes#redshift_skip_autocommit_transaction_statements-flag) по умолчанию имеет значение `false`, сохраняя прежнее поведение: отправку инструкций `BEGIN`/`COMMIT`/`ROLLBACK` даже при включённом autocommit. Чтобы пропускать ненужные инструкции управления транзакциями и повысить производительность, установите флаг в `true`.
+- Добавлена поддержка параметра сеанса `query_group`, позволяющего dbt помечать запросы для маршрутизации в Redshift Workload Manager и журналирования запросов. Если параметр настроен в профиле, dbt задаёт `query_group` при открытии соединения, и это значение действует в течение всего сеанса. Вы также можете настроить `query_group` на уровне модели, чтобы временно переопределить значение по умолчанию для конкретной модели; dbt восстанавливает прежнее значение по завершении материализации модели. Подробнее см. в разделе [Настройки Redshift](/reference/resource-configs/redshift-configs#session-configuration).
 
 ### Databricks
 
-- You can use the [`row_filter`](/reference/resource-configs/databricks-configs#setting-row-filters) config to apply a [Unity Catalog row filter](https://docs.databricks.com/aws/en/tables/row-and-column-filters) to a model, restricting which rows a query returns based on a SQL UDF. Row filters are supported on `table`, `incremental`, `materialized_view`, and `streaming_table` materializations. They are not supported on regular views or Hive Metastore relations.
-- [`databricks_tags`](/reference/resource-configs/databricks-configs#databricks_tags) has two updates in v1.12:
-  - You can now set a tag's value to `''` or `None` to apply a key-only tag with no value.
-  - Configs now merge additively across hierarchy levels (for example, project-level and model-level) instead of lower-level configs completely replacing higher-level ones. When the same tag key is defined at multiple levels, the lower-level value takes precedence.
+- Вы можете использовать настройку [`row_filter`](/reference/resource-configs/databricks-configs#setting-row-filters), чтобы применить к модели [фильтр строк Unity Catalog](https://docs.databricks.com/aws/en/tables/row-and-column-filters), ограничивающий строки, возвращаемые запросом, на основе SQL UDF. Фильтры строк поддерживаются для материализаций `table`, `incremental`, `materialized_view` и `streaming_table`. Они не поддерживаются для обычных представлений и объектов Hive Metastore.
+- В v1.12 внесены два изменения в [`databricks_tags`](/reference/resource-configs/databricks-configs#databricks_tags):
+  - Теперь можно установить значение тега в `''` или `None`, чтобы применить тег, содержащий только ключ без значения.
+  - Настройки теперь объединяются с добавлением значений на разных уровнях иерархии (например, на уровне проекта и модели), а не полностью заменяют настройки более высокого уровня настройками более низкого. Если один и тот же ключ тега определён на нескольких уровнях, приоритет имеет значение с более низкого уровня.
 
 
-## Quick hits
+## Кратко о других изменениях
 
-- dbt now surfaces occasional, non-blocking hints that suggest ways to optimize your project. Hints are enabled by default. Disable them with the [`hints_enabled` flag](/reference/global-configs/about-global-configs).
-- dbt v1.12 now tolerates dbt v2-specific names in [`warn_error_options`](/reference/global-configs/warnings) instead of raising an error. If your config includes a v2-specific name (for example, `StaticAnalysis`, `PackageParsingCompatibility`), <Constant name="core" /> ignores it and emits a note: `<name> is not being used because it's specific to the dbt Fusion engine.` This lets you share `warn_error_options` configs across <Constant name="core" /> and <Constant name="fusion" />.
-- Macros invoked with the [`dbt run-operation`](/reference/commands/run-operation) command can now `ref()` models with `private` or `protected` [access](/reference/resource-configs/access) without raising a `DbtReferenceError`. Because macros are not part of the group and access control system, dbt doesn't enforce group membership when a macro called by `run-operation` references a model.
-- `dbt seed` now supports the [`--empty`](/reference/commands/seed#%D1%84%D0%BB%D0%B0%D0%B3---empty) flag. Use it to create seed tables with the correct schema but without loading any data.
-- <Constant name="core" /> now automatically loads environment variables from a `.env` file in your current working directory. Shell environment variables take precedence over `.env` values. New projects created with `dbt init` include `.env` in the default `.gitignore`. For more information, refer to [About env_var function](/reference/dbt-jinja-functions/env_var#using-the-env-file).
-- `dbt compile` writes compiled SQL for [snapshots](/docs/build/snapshots) to `target/compiled/`, consistent with models, tests, analyses, and functions. Each snapshot gets its own output file, named from the snapshot identifier, so multiple snapshot blocks in the same source file do not share one compiled path. For more information, refer to [About dbt compile](/reference/commands/compile).
+- dbt теперь время от времени показывает подсказки, которые предлагают способы оптимизации проекта и не блокируют выполнение. Подсказки включены по умолчанию. Отключить их можно с помощью [флага `hints_enabled`](/reference/global-configs/about-global-configs).
+- dbt v1.12 теперь допускает имена, специфичные для dbt v2, в [`warn_error_options`](/reference/global-configs/warnings), вместо того чтобы выдавать ошибку. Если в настройках указано имя, специфичное для v2 (например, `StaticAnalysis`, `PackageParsingCompatibility`), <Constant name="core" /> игнорирует его и выводит примечание: `<name> is not being used because it's specific to the dbt Fusion engine.` Это позволяет использовать общие настройки `warn_error_options` в <Constant name="core" /> и <Constant name="fusion" />.
+- Макросы, вызываемые командой [`dbt run-operation`](/reference/commands/run-operation), теперь могут ссылаться через `ref()` на модели с уровнем [доступа](/reference/resource-configs/access) `private` или `protected` без возникновения `DbtReferenceError`. Поскольку макросы не входят в систему групп и управления доступом, dbt не проверяет принадлежность к группе, когда макрос, вызванный через `run-operation`, ссылается на модель.
+- `dbt seed` теперь поддерживает флаг [`--empty`](/reference/commands/seed#the---empty-flag). Используйте его, чтобы создавать seed-таблицы с правильной схемой, но без загрузки данных.
+- <Constant name="core" /> теперь автоматически загружает переменные окружения из файла `.env` в текущем рабочем каталоге. Переменные окружения оболочки имеют приоритет над значениями из `.env`. Новые проекты, созданные с помощью `dbt init`, включают `.env` в стандартный `.gitignore`. Подробнее см. в разделе [О функции env_var](/reference/dbt-jinja-functions/env_var#using-the-env-file).
+- `dbt compile` записывает скомпилированный SQL для [снимков](/docs/build/snapshots) в `target/compiled/`, как и для моделей, тестов, анализов и функций. Каждый снимок получает собственный выходной файл с именем на основе идентификатора снимка, поэтому несколько блоков снимков в одном исходном файле не используют один и тот же путь для скомпилированного результата. Подробнее см. в разделе [О команде dbt compile](/reference/commands/compile).

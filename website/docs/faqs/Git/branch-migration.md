@@ -1,59 +1,59 @@
 ---
-title: "Branches when changing Git providers or repositories"
-sidebar_label: "Branches when changing providers or repositories"
+title: "Ветки при смене Git-провайдера или репозитория"
+sidebar_label: "Ветки при смене провайдера или репозитория"
 id: "branches-when-changing-git-providers"
 slug: branch-migration
 hide_table_of_contents: true
-description: "How Git branch names and commit history carry over when you change providers, repositories, or remotes—for dbt v1 and the dbt platform, including platform-only notes for Studio IDE and repository settings."
+description: "Как переносятся имена веток Git и история коммитов при смене провайдера, репозитория или удалённого репозитория — для dbt v1 и платформы dbt, включая примечания о Studio IDE и настройках репозитория, относящиеся только к платформе."
 tags: [Git]
 ---
 
-This FAQ explains how Git branch names and commit history carry over when you switch Git providers (for example, GitHub or GitLab), start using a new repository, or reconnect your project to a different remote. It is for <Constant name="core" /> and <Constant name="dbt_platform" /> users: general Git behavior about remotes, branches, and history applies to both; sections on the <Constant name="studio_ide" />, managed repositories, and disconnecting a project repository apply only to the <Constant name="dbt_platform" />.
+В этом разделе вопросов и ответов объясняется, как переносятся имена веток Git и история коммитов при смене Git-провайдера (например, GitHub или GitLab), переходе на новый репозиторий или подключении проекта к другому удалённому репозиторию. Он предназначен для пользователей <Constant name="core" /> и <Constant name="dbt_platform" />: общие принципы работы Git с удалёнными репозиториями, ветками и историей применимы к обоим продуктам; разделы о <Constant name="studio_ide" />, управляемых репозиториях и отключении репозитория проекта относятся только к <Constant name="dbt_platform" />.
 
-Your branch names and history only appear on a new Git provider if you copied the entire repository with its history. If you only copied files or created a fresh repository, old branches do not show up. If you use the <Constant name="dbt_platform" /> and the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), work you saved there but have not pushed is separate and could be lost.
+Имена веток и история появятся у нового Git-провайдера, только если вы скопировали весь репозиторий вместе с его историей. Если вы скопировали только файлы или создали репозиторий с нуля, прежние ветки не появятся. Если вы используете <Constant name="dbt_platform" /> и [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), работа, которую вы сохранили там, но ещё не отправили в удалённый репозиторий, хранится отдельно и может быть потеряна.
 
-The following sections cover common scenarios, what to expect in each case, and what action to take to keep your branches and history intact:
+В следующих разделах рассматриваются типичные сценарии, ожидаемые результаты в каждом случае и действия, необходимые для сохранения веток и истории:
 
-<Expandable alt_header="Git provider migration">
+<Expandable alt_header="Смена Git-провайдера">
 
-If you fully migrate the same repository to a new Git provider so all commits and branches are preserved, your branches and history typically carry over.
+Если вы полностью переносите тот же репозиторий к новому Git-провайдеру с сохранением всех коммитов и веток, ветки и история, как правило, переносятся вместе с ним.
 
-If you only copy files, create a new repository with a single initial commit, or import only the default branch, other branches will not appear on the new remote until you push or import them.
+Если вы копируете только файлы, создаёте новый репозиторий с единственным начальным коммитом или импортируете только ветку по умолчанию, остальные ветки не появятся в новом удалённом репозитории, пока вы не отправите или не импортируете их.
 
-For steps to disconnect and reconnect your repository in the <Constant name="dbt_platform" />, refer to [How to migrate git providers](/faqs/Git/git-migration).
-
-</Expandable>
-
-<Expandable alt_header="Branches missing after creating a new repository">
-
-Branches may not appear after you create a new repository.
-
-When you create a brand-new repository, it starts with only the commits and branches that exist in that new remote. Branches from your previous repository do not appear automatically, even if the files look similar.
-
-If you need earlier branches and commit history, migrate the original repository so the full commit history and branches are retained. If you continue with a newly created repository, push any branches you want to keep from your local clone.
-
-If you use the <Constant name="dbt_platform" /> and need to disconnect or reconnect your project repository, follow [How to migrate git providers](/faqs/Git/git-migration).
+Инструкции по отключению и повторному подключению репозитория в <Constant name="dbt_platform" /> см. в разделе [Как сменить Git-провайдера](/faqs/Git/git-migration).
 
 </Expandable>
 
-<Expandable alt_header="Project repository connection">
+<Expandable alt_header="Отсутствие веток после создания нового репозитория">
 
-In the <Constant name="dbt_platform" />, the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) shows branches from the <Constant name="git" /> remote connected to your project. It does not maintain a second, independent copy of your full commit history and branches.
+После создания нового репозитория ветки могут не отображаться.
 
-Before you disconnect the repository integration in <Constant name="dbt_platform" /> or switch to a different remote, save and push work you need to keep. Uncommitted changes are at risk until you **Commit and sync** (push). Until then they will not appear in your Git provider (for example, GitHub).
+Новый репозиторий изначально содержит только те коммиты и ветки, которые существуют в этом новом удалённом репозитории. Ветки из предыдущего репозитория не появляются автоматически, даже если файлы выглядят одинаково.
 
-For disconnect steps, refer to [How to migrate git providers](/faqs/Git/git-migration).
+Если вам нужны прежние ветки и история коммитов, перенесите исходный репозиторий с сохранением полной истории коммитов и всех веток. Если вы продолжаете работать с новым репозиторием, отправьте в него из локального клона все ветки, которые хотите сохранить.
 
-Unsaved edits in the browser can also be lost. **Commit and sync** what you need to keep, or copy it outside the <Constant name="studio_ide" />. For information on how work is stored in the <Constant name="studio_ide" />, refer to [Work retention](/docs/platform/studio-ide/develop-in-studio?version=1.12#about-the-start-up-process-and-work-retention).
+Если вы используете <Constant name="dbt_platform" /> и вам нужно отключить или повторно подключить репозиторий проекта, следуйте инструкциям в разделе [Как сменить Git-провайдера](/faqs/Git/git-migration).
 
-:::tip Pre-cutover verification
-To confirm branches and connectivity before switching over, create a separate project in the <Constant name="dbt_platform" /> pointed at the new repository, verify the branches you expect, then disconnect the old repository and remove the temporary project when finished.
+</Expandable>
+
+<Expandable alt_header="Подключение репозитория проекта">
+
+В <Constant name="dbt_platform" /> среда [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) отображает ветки из удалённого репозитория <Constant name="git" />, подключённого к вашему проекту. Она не хранит вторую, независимую копию полной истории коммитов и веток.
+
+Прежде чем отключать интеграцию с репозиторием в <Constant name="dbt_platform" /> или переключаться на другой удалённый репозиторий, сохраните и отправьте в удалённый репозиторий работу, которую хотите сохранить. Изменения, не зафиксированные в коммите, могут быть потеряны, пока вы не выполните **Commit and sync** (отправку в удалённый репозиторий). До этого они не появятся у вашего Git-провайдера (например, в GitHub).
+
+Инструкции по отключению см. в разделе [Как сменить Git-провайдера](/faqs/Git/git-migration).
+
+Несохранённые изменения в браузере также могут быть потеряны. Выполните **Commit and sync** для изменений, которые нужно сохранить, или скопируйте их за пределы <Constant name="studio_ide" />. Информацию о хранении результатов работы в <Constant name="studio_ide" /> см. в разделе [Сохранение результатов работы](/docs/platform/studio-ide/develop-in-studio?version=1.12#about-the-start-up-process-and-work-retention).
+
+:::tip Проверка перед переключением
+Чтобы проверить наличие веток и подключение перед переключением, создайте в <Constant name="dbt_platform" /> отдельный проект, подключённый к новому репозиторию, убедитесь, что нужные ветки доступны, затем отключите старый репозиторий и удалите временный проект по завершении проверки.
 :::
 
 </Expandable>
 
-<Expandable alt_header="From managed to self-hosted">
+<Expandable alt_header="Переход с управляемого репозитория на собственный">
 
-Exporting a project as a ZIP is a snapshot of files only and does not preserve your <Constant name="git" /> history or branches. To migrate properly and keep your full history, follow [Move from a managed repository to a self-hosted repository](/faqs/Git/managed-repo).
+Экспорт проекта в ZIP-архив сохраняет только снимок файлов, но не историю <Constant name="git" /> и не ветки. Чтобы корректно перенести проект с сохранением полной истории, следуйте инструкциям в разделе [Переход с управляемого репозитория на собственный репозиторий](/faqs/Git/managed-repo).
 
 </Expandable>

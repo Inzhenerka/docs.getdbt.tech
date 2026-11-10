@@ -1,61 +1,61 @@
 ---
-title: "Version compatibility"
+title: "Совместимость версий"
 id: "dbt-version-compatibility"
-description: "Understand how dbt v2, language server, and VS Code extension versions map together, and how to verify compatible binaries."
+description: "Узнайте, как соотносятся версии dbt v2, языкового сервера и расширения для VS Code и как проверить совместимость исполняемых файлов."
 pagination_next: null
 pagination_prev: null
 ---
 
-# Version compatibility
+# Совместимость версий
 
-<Constant name="fusion_engine" />, its language server (<Term id="lsp" />), and the dbt VS Code extension work together to power local development. This page explains how their versions relate, which combinations are compatible, and how to verify you have matching binaries.
+<Constant name="fusion_engine" />, его языковой сервер (<Term id="lsp" />) и расширение dbt для VS Code работают совместно, обеспечивая локальную разработку. На этой странице объясняется, как соотносятся их версии, какие сочетания совместимы и как проверить, что установленные исполняемые файлы соответствуют друг другу.
 
-## How versioning works
+## Как устроено версионирование
 
-<Constant name="fusion" /> ships as a single binary that provides both the command-line interface (CLI) and the language server (LSP). Because the CLI and LSP come from the _same_ binary, they always share the same version and can't be mismatched.
+<Constant name="fusion" /> поставляется в виде единого исполняемого файла, который предоставляет как интерфейс командной строки (CLI), так и языковой сервер (LSP). Поскольку CLI и LSP используют _один и тот же_ исполняемый файл, их версии всегда совпадают и не могут различаться.
 
-The dbt VS Code extension keeps its own release version because it follows the VS Code Marketplace release lifecycle. To make compatibility explicit, each extension release declares the range of <Constant name="fusion_engine" /> versions it supports. When the extension starts the LSP, it checks the installed <Constant name="fusion" /> version against that range and surfaces an [actionable error](#troubleshooting-version-issues) if they don't match.
+Расширение dbt для VS Code имеет собственную версию релиза, поскольку следует циклу выпуска в VS Code Marketplace. Чтобы явно обозначить совместимость, каждый релиз расширения указывает диапазон поддерживаемых версий <Constant name="fusion_engine" />. При запуске LSP расширение проверяет, входит ли установленная версия <Constant name="fusion" /> в этот диапазон, и в случае несоответствия выводит [ошибку с указаниями по устранению](#troubleshooting-version-issues).
 
-| Component | Example versioning |
+| Компонент | Пример версионирования |
 | --------- | ---------- |
-| <Constant name="fusion_engine" /> binary (CLI + LSP) | `2.0.0` |
-| dbt VS Code extension | The extension version (for example, `0.36.0`), with compatible <Constant name="fusion" /> version range |
+| Исполняемый файл <Constant name="fusion_engine" /> (CLI + LSP) | `2.0.0` |
+| Расширение dbt для VS Code | Версия расширения (например, `0.36.0`) с диапазоном совместимых версий <Constant name="fusion" /> |
 
-## Compatibility matrix
+## Матрица совместимости {#compatibility-matrix}
 
-The following table maps each dbt VS Code extension version to the dbt versions it supports. If you let the extension download and manage <Constant name="fusion" /> for you, it always installs a compatible version automatically &mdash; you only need this table if you install or pin binaries manually.
+В следующей таблице каждой версии расширения dbt для VS Code сопоставлены поддерживаемые версии dbt. Если вы позволяете расширению скачивать <Constant name="fusion" /> и управлять им, оно всегда автоматически устанавливает совместимую версию &mdash; эта таблица нужна только в том случае, если вы устанавливаете исполняемые файлы или фиксируете их версии вручную.
 
 
-| dbt VS Code extension | Min <Constant name="fusion" /> version | Max <Constant name="fusion" /> version | Checksums | Notes |
+| Расширение dbt для VS Code | Минимальная версия <Constant name="fusion" /> | Максимальная версия <Constant name="fusion" /> | Контрольные суммы | Примечания |
 | --- | --- | --- | --- | --- |
-| 0.36.x | 2.0.0-preview.90 | &mdash; | `checksums-0.36.txt` | Current |
+| 0.36.x | 2.0.0-preview.90 | &mdash; | `checksums-0.36.txt` | Текущая |
 | 0.35.x | 2.0.0-preview.80 | 2.0.0-preview.89 | `checksums-0.35.txt` | - |
 
-A dash (-) in the **Max** column means there is no upper bound yet. Any <Constant name="fusion" /> release at or above the minimum is supported.
+Прочерк (-) в столбце **Максимальная версия** означает, что верхняя граница пока не задана. Поддерживается любой релиз <Constant name="fusion" /> с версией не ниже минимальной.
 
-## Check your installed versions
+## Проверка установленных версий
 
-To confirm your setup is within the supported range, check the version of <Constant name="fusion_engine" /> you have installed:
+Чтобы убедиться, что ваша конфигурация находится в пределах поддерживаемого диапазона, проверьте установленную версию <Constant name="fusion_engine" />:
 
 ```shell
 dbt --version
 ```
 
-For a machine-readable summary you can paste into a bug report or parse in tooling, add the `--format json` flag:
+Чтобы получить сводку в машиночитаемом формате, которую можно вставить в отчёт об ошибке или обработать с помощью инструментов, добавьте флаг `--format json`:
 
 ```shell
 dbt --version --format json
 ```
 
-For details on the full output, refer to [About dbt --version](/reference/commands/version).
+Подробное описание полного вывода см. в разделе [О команде dbt --version](/reference/commands/version).
 
-## Verify binaries for manual and air-gapped installs
+## Проверка исполняемых файлов при ручной установке и установке в изолированной среде {#verify-binaries-for-manual-and-air-gapped-installs}
 
-If you install <Constant name="fusion" /> manually in an air-gapped or firewall-restricted environment where the extension can't download binaries for you, use the [compatibility matrix](#compatibility-matrix) to pick a version that matches your dbt VS Code extension, then verify the download before you distribute it.
+Если вы устанавливаете <Constant name="fusion" /> вручную в изолированной среде или в среде с ограничениями межсетевого экрана, где расширение не может скачивать исполняемые файлы за вас, используйте [матрицу совместимости](#compatibility-matrix), чтобы выбрать версию, соответствующую вашему расширению dbt для VS Code, а затем проверьте скачанный файл перед его распространением.
 
-1. From the compatibility matrix, note the <Constant name="fusion" /> version range for your extension version.
-2. Download the matching <Constant name="fusion" /> binary and its checksum file.
-3. Verify the checksum before installing or distributing the binary:
+1. Найдите в матрице совместимости диапазон версий <Constant name="fusion" /> для вашей версии расширения.
+2. Скачайте соответствующий исполняемый файл <Constant name="fusion" /> и файл с его контрольной суммой.
+3. Проверьте контрольную сумму перед установкой или распространением исполняемого файла:
 
    <Tabs>
    <TabItem value="mac-linux" label="Mac / Linux">
@@ -71,21 +71,21 @@ If you install <Constant name="fusion" /> manually in an air-gapped or firewall-
    Get-FileHash .\dbt.exe -Algorithm SHA256
    ```
 
-   Compare the printed hash against the value in the checksum file.
+   Сравните выведенный хеш со значением в файле контрольных сумм.
 
    </TabItem>
    </Tabs>
 
-4. Point the dbt VS Code extension at the verified binary using the `dbt.fusionPath` setting. Refer to [dbt extension settings](/docs/configure-dbt-extension#dbt-extension-settings).
+4. Укажите расширению dbt для VS Code путь к проверенному исполняемому файлу с помощью настройки `dbt.fusionPath`. См. раздел [Настройки расширения dbt](/docs/configure-dbt-extension#dbt-extension-settings).
 
-For network and proxy requirements, and how to pre-build an offline bundle, refer to [Networking requirements](/docs/local/dbt-networking-requirements#restricted-network-installation).
+Требования к сети и прокси-серверу, а также инструкции по предварительной подготовке комплекта для автономной установки см. в разделе [Сетевые требования](/docs/local/dbt-networking-requirements#restricted-network-installation).
 
-## Known-bad releases
+## Релизы с известными проблемами {#known-bad-releases}
 
-If a shipped <Constant name="fusion" /> release is later found to contain a regression, dbt Labs flags it as a known-bad release. When you have a flagged version installed, the dbt VS Code extension shows a warning notification telling you which version to update to, even if that version is otherwise within the supported range.
+Если после выпуска релиза <Constant name="fusion" /> в нём обнаруживается регрессия, dbt Labs помечает его как релиз с известными проблемами. Если у вас установлена такая версия, расширение dbt для VS Code показывает предупреждение с указанием версии, до которой следует обновиться, даже если установленная версия входит в поддерживаемый диапазон.
 
-Air-gapped users who don't have outbound network access can distribute the known-bad releases manifest alongside their binary bundle and point the extension at the local copy with the `dbt.badReleasesManifestPath` setting. Refer to [dbt extension settings](/docs/configure-dbt-extension#dbt-extension-settings).
+Пользователи изолированных сред без исходящего доступа к сети могут распространять манифест релизов с известными проблемами вместе с комплектом исполняемых файлов и указать расширению путь к локальной копии с помощью настройки `dbt.badReleasesManifestPath`. См. раздел [Настройки расширения dbt](/docs/configure-dbt-extension#dbt-extension-settings).
 
-## Troubleshooting version issues
+## Устранение проблем с версиями {#troubleshooting-version-issues}
 
-If the extension can't find, start, or verify a compatible <Constant name="fusion" /> binary, it surfaces an actionable error with a link or button to resolve it. Refer to the [dbt VS Code extension troubleshooting](/docs/sign-in-dbt-extension#troubleshooting) section for the full list of messages and fixes.
+Если расширение не может найти, запустить или проверить совместимый исполняемый файл <Constant name="fusion" />, оно выводит ошибку с указаниями по устранению и ссылкой или кнопкой для её исправления. Полный список сообщений и способов устранения см. в разделе [Устранение неполадок расширения dbt для VS Code](/docs/sign-in-dbt-extension#troubleshooting).

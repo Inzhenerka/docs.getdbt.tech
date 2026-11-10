@@ -1,6 +1,6 @@
 ---
 title: "Column-level lineage"
-description: "Use column-level lineage to gain insights about your data at a granular level, in dbt Catalog or locally with dbt v2."
+description: "Как изучать зависимости на уровне столбцов в dbt Catalog или локально в dbt v2."
 tags: ['CLL']
 availability:
   surface:
@@ -14,12 +14,12 @@ availability:
 
 <Lightbox src="/img/docs/collaborate/dbt-explorer/example-overview-cll.png" width="95%" title="Обзор происхождения данных на уровне столбцов"/>
 
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-You can use CLL in two places:
+Зависимости на уровне столбцов доступны в двух вариантах:
 
-- **[<Constant name="catalog" />](/docs/explore/explore-projects) in the <Constant name="dbt_platform" />**:  Requires an Enterprise or Enterprise+ plan with <Constant name="catalog" /> access.
-- **Locally with <Constant name="dbt" /> v2**: Requires [strict static analysis](/docs/build/about-static-analysis#configuring-static_analysis). Available in the [dbt VS Code extension](/docs/dbt-extension-features#rich-lineage-in-context), [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2), or from the command line. For more information, refer to [dbt Information Schema](/docs/build/dbt-information-schema?version=2).
+- **В [<Constant name="catalog" />](/docs/explore/explore-projects) на <Constant name="dbt_platform" />**: нужен тариф Enterprise или Enterprise+ и доступ к <Constant name="catalog" />.
+- **Локально с <Constant name="dbt" /> v2**: требуется [строгий статический анализ](/docs/build/about-static-analysis#configuring-static_analysis). Доступно в [расширении dbt для VS Code](/docs/dbt-extension-features#rich-lineage-in-context), [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2) или в командной строке. Подробнее см. [Информационная схема dbt](/docs/build/dbt-information-schema?version=2).
 
 import ExplorerCourse from '/snippets/_explorer-course-link.md';
 

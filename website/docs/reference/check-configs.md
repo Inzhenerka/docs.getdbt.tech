@@ -1,26 +1,26 @@
 ---
-title: Check configurations
-description: "Configure severity, enabled, selection_filter_on, tags, and meta for checks."
+title: Конфигурации проверок
+description: "Настройте severity, enabled, selection_filter_on, tags и meta для проверок."
 availability:
   engine: v2
 meta:
   resource_type: Checks
 ---
 
-## Related documentation
-- [Checks](/docs/build/checks)
-- [Check properties](/reference/check-properties)
-- [`dbt check` command](/reference/commands/check)
+## Связанная документация
+- [Проверки](/docs/build/checks)
+- [Свойства проверок](/reference/check-properties)
+- [Команда `dbt check`](/reference/commands/check)
 
-## Available configurations
+## Доступные конфигурации
 
 <Tabs
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project YAML file', value: 'project-yaml', },
-    { label: 'Properties YAML file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'YAML-файл проекта', value: 'project-yaml', },
+    { label: 'YAML-файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация в SQL', value: 'config', },
   ]
 }>
 
@@ -87,13 +87,13 @@ where ...
 
 </Tabs>
 
-## Examples
+## Примеры
 
-The following examples show common ways to configure checks.
+Следующие примеры показывают распространённые способы настройки проверок.
 
-### Warn on check failure
+### Предупреждение при неуспешной проверке
 
-You can use `severity: warn` when rolling out a new rule gradually. Issues are logged but the build does not fail.
+Вы можете использовать `severity: warn` при постепенном внедрении нового правила. Проблемы записываются в журнал, но не приводят к ошибке сборки.
 
 <File name='checks/_public_models_have_owners.yml'>
 
@@ -101,14 +101,14 @@ You can use `severity: warn` when rolling out a new rule gradually. Issues are l
 checks:
   - name: public_models_have_owners
     config:
-      severity: warn  # default is error
+      severity: warn  # по умолчанию — error
 ```
 
 </File>
 
-### Filter by a specific column
+### Фильтрация по определённому столбцу
 
-The `edges` table has no `unique_id` column, so checks that query it won't return one. When you use `--select`, dbt looks for a `unique_id` column to scope results and finds none, so the check runs against the whole project regardless of the selector. Set `selection_filter_on` to the columns that contain resource IDs so `--select` scopes rows by those columns. For example, the `multiple_sources_joined` check aggregates by `child_unique_id`, so only that column needs to be set:
+В таблице `edges` нет столбца `unique_id`, поэтому проверки, которые обращаются к ней, не возвращают этот столбец. При использовании `--select` dbt ищет столбец `unique_id`, чтобы ограничить результаты, но не находит его, поэтому проверка выполняется для всего проекта независимо от селектора. Укажите в `selection_filter_on` столбцы, содержащие идентификаторы ресурсов, чтобы `--select` фильтровал строки по этим столбцам. Например, проверка `multiple_sources_joined` выполняет агрегацию по `child_unique_id`, поэтому достаточно указать только этот столбец:
 
 <File name='checks/_multiple_sources_joined.yml'>
 
@@ -120,4 +120,3 @@ checks:
 ```
 
 </File>
-

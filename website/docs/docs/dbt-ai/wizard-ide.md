@@ -1,8 +1,8 @@
 ---
-title: "dbt Wizard in Studio IDE"
+title: "dbt Wizard в Studio IDE"
 id: "wizard-ide"
-description: "Use dbt Wizard in the Studio IDE to write or refactor dbt models from natural language, validate with your dbt engine, and run against your warehouse with full project context."
-sidebar_label: "Wizard in Studio IDE"
+description: "Используйте dbt Wizard в Studio IDE для создания или рефакторинга моделей dbt по запросам на естественном языке, проверки с помощью движка dbt и выполнения запросов в хранилище данных с учетом полного контекста проекта."
+sidebar_label: "Wizard в Studio IDE"
 tags: [AI, Agents, Studio]
 availability: platform_usage
 ---
@@ -13,65 +13,65 @@ import WizardExploreUsage from '/snippets/_wizard-explore-usage.md';
 import WizardModelPicker from '/snippets/_wizard-model-picker.md';
 import WizardVideoCourse from '/snippets/_wizard-video-course.md';
 
-# dbt Wizard in Studio IDE <Lifecycle status="preview"/>
+# dbt Wizard в Studio IDE <Lifecycle status="preview"/>
 
 <IntroText>
-Use <Constant name="wizard" /> in the <Constant name="studio_ide" /> to ship trusted dbt changes faster. It understands your project, answers context-grounded questions, generates models, tests, docs, and <Constant name="semantic_layer" /> definitions, and shows file diffs before changes are persisted.
+Используйте <Constant name="wizard" /> в <Constant name="studio_ide" />, чтобы быстрее вносить надежные изменения в dbt. Он понимает ваш проект, отвечает на вопросы с учетом контекста, генерирует модели, тесты, документацию и определения <Constant name="semantic_layer" />, а также показывает различия в файлах перед сохранением изменений.
 </IntroText>
 
-<Constant name="wizard" /> supports the dbt development lifecycle from investigation to review. Use it to:
+<Constant name="wizard" /> поддерживает весь жизненный цикл разработки dbt — от исследования до проверки изменений. Используйте его, чтобы:
 
-- Ask project-aware questions using lineage, metadata, and catalog context.
-- Build or refactor models from natural-language prompts.
-- Generate and validate YAML for tests, documentation, semantic models, and metrics.
-- Make scoped edits to logic, names, materializations, tests, and related YAML.
-- Investigate job and run failures with dbt Agent Skills.
+- Задавать вопросы о проекте с учетом связей между данными, метаданных и контекста каталога.
+- Создавать модели или выполнять их рефакторинг по запросам на естественном языке.
+- Генерировать и проверять YAML для тестов, документации, семантических моделей и метрик.
+- Вносить целевые изменения в логику, имена, материализации, тесты и связанные YAML-файлы.
+- Исследовать сбои заданий и запусков с помощью dbt Agent Skills.
 
-The agent comes with the following out of the box, meaning no configuration needed:
+Агент включает следующие возможности, доступные сразу и не требующие настройки:
 
-- [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills): dbt-recommended guidance and instructions, managed by dbt Labs.
-- [dbt MCP server Product docs toolset](/docs/dbt-ai/mcp-available-tools#product-docs): Tools for searching and fetching content from dbt's official documentation.
+- [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills): рекомендуемые dbt руководства и инструкции, поддерживаемые dbt Labs.
+- [Набор инструментов Product docs сервера dbt MCP](/docs/dbt-ai/mcp-available-tools#product-docs): инструменты для поиска и получения материалов из официальной документации dbt.
 
-AI features are being enabled by default. They're already on for new accounts and are rolling out soon to existing accounts. If your organization opted out, they'll remain off. Admins can [turn AI off or back on and configure providers](/docs/platform/manage-dbt-ai) anytime.
+Функции ИИ включаются по умолчанию. Они уже включены для новых аккаунтов и вскоре будут включены для существующих. Если ваша организация отказалась от их использования, они останутся выключенными. Администраторы могут в любое время [выключить или снова включить ИИ и настроить провайдеров](/docs/platform/manage-dbt-ai).
 
 <WizardVideoCourse />
 
-### Prerequisites
+### Предварительные требования
 
-- A [<Constant name="dbt_platform" /> account](https://www.getdbt.com/signup) and [Developer seat license](/docs/platform/manage-access/seats-and-users).
-  - [Legacy Team plans](/docs/platform/billing/plans-and-billing#legacy-plans) don't have access to <Constant name="wizard" />. Move to a [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing) to use it.
-- A [development environment](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) and credentials set up in the <Constant name="studio_ide" />.
-- Use a supported AI provider. Refer to [Supported AI providers](/docs/platform/wizard-platform#supported-ai-providers), or the [Model Provider Rate Table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) for the full model list and rates.
+- [Аккаунт <Constant name="dbt_platform" />](https://www.getdbt.com/signup) и [лицензия Developer](/docs/platform/manage-access/seats-and-users).
+  - [Устаревшие тарифы Team](/docs/platform/billing/plans-and-billing#legacy-plans) не предоставляют доступ к <Constant name="wizard" />. Чтобы использовать его, перейдите на [тариф Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing).
+- [Среда разработки](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) и учетные данные, настроенные в <Constant name="studio_ide" />.
+- Используйте поддерживаемого провайдера ИИ. См. [Поддерживаемые провайдеры ИИ](/docs/platform/wizard-platform#supported-ai-providers) или [Таблицу тарифов провайдеров моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model), где приведены полный список моделей и тарифы.
 
-If <Constant name="wizard" /> stops responding, your account may have used up its usage credits. Refer to [Trial and billing](/docs/dbt-ai/pricing-billing/trial-and-billing).
+Если <Constant name="wizard" /> перестал отвечать, возможно, ваш аккаунт исчерпал доступные кредиты на использование. См. [Пробный период и оплата](/docs/dbt-ai/pricing-billing/trial-and-billing).
 
 <WizardIde />
 
-:::tip Best practices for using dbt Wizard
-For recommended workflows on real project tasks &mdash; understanding a project, validating changes, building Semantic Layer definitions, and more &mdash; refer to [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro). Most of these prompts work the same in Studio IDE.
+:::tip Рекомендации по использованию dbt Wizard
+Рекомендуемые рабочие процессы для реальных задач проекта &mdash; изучения проекта, проверки изменений, создания определений Semantic Layer и других &mdash; см. в разделе [Как использовать dbt Wizard в проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro). Большинство этих запросов работают в Studio IDE аналогичным образом.
 :::
 
-## Ask questions in Explore mode
+## Задавайте вопросы в режиме Explore {#ask-questions-in-explore-mode}
 
-Explore mode in <Constant name="studio_ide"/> lets you ask questions of your production data in plain language. <Constant name="wizard" /> in Explore mode answers and explains but never changes your project. This option is great for exploratory data analysis and getting a quick understanding of your data.
+Режим Explore в <Constant name="studio_ide"/> позволяет задавать вопросы о данных производственной среды на обычном языке. <Constant name="wizard" /> в режиме Explore отвечает и дает пояснения, но никогда не изменяет ваш проект. Этот режим отлично подходит для разведочного анализа данных и быстрого знакомства с ними.
 
-Explore mode queries with your personal warehouse credentials.
+В режиме Explore запросы выполняются с использованием ваших личных учетных данных для хранилища данных.
 
 <WizardExploreUsage />
 
-In the <Constant name="studio_ide" />, the answer and its visualization appear inline in the <Constant name="wizard" /> panel alongside your project.
+В <Constant name="studio_ide" /> ответ и его визуализация отображаются непосредственно на панели <Constant name="wizard" /> рядом с вашим проектом.
 
-<Lightbox src="/img/docs/dbt-platform/wizard-ide-explore-viz.png" width="100%" title="Explore mode in the Studio IDE, showing a chart and Chart/Table/SQL toggles in the dbt Wizard panel." />
+<Lightbox src="/img/docs/dbt-platform/wizard-ide-explore-viz.png" width="100%" title="Режим Explore в Studio IDE: диаграмма и переключатели Chart/Table/SQL на панели dbt Wizard." />
 
-## Choose a model
+## Выбор модели
 
 <WizardModelPicker />
 
-## Related docs
+## Связанная документация
 
-- [About dbt Wizard in dbt platform](/docs/platform/wizard-platform)
-- [dbt v2 readiness checklist](/docs/dbt/dbt-readiness)
-- [Develop with dbt Wizard](/docs/platform/studio-ide/develop-studio-ai)
-- [Prompt cookbook](/guides/prompt-cookbook)
-- [Semantic models](/docs/build/semantic-models)
-- [About dbt AI and intelligence](/docs/dbt-ai/about-dbt-ai)
+- [О dbt Wizard на платформе dbt](/docs/platform/wizard-platform)
+- [Контрольный список готовности к dbt v2](/docs/dbt/dbt-readiness)
+- [Разработка с dbt Wizard](/docs/platform/studio-ide/develop-studio-ai)
+- [Сборник примеров запросов](/guides/prompt-cookbook)
+- [Семантические модели](/docs/build/semantic-models)
+- [Об ИИ и интеллектуальных возможностях dbt](/docs/dbt-ai/about-dbt-ai)

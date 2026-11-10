@@ -1,20 +1,20 @@
 ---
-title: "Optimize costs in dbt"
+title: "Оптимизация затрат в dbt"
 id: optimize-costs
-description: "Best practices to optimize model build usage and warehouse costs in dbt."
-sidebar_label: "Optimize costs"
+description: "Рекомендации по оптимизации использования сборок моделей и затрат на хранилище данных в dbt."
+sidebar_label: "Оптимизация затрат"
 availability: everywhere_usage
 ---
 
-<Constant name="dbt" /> offers ways to optimize your model’s built usage and warehouse costs. 
+<Constant name="dbt" /> предлагает способы оптимизации использования сборок моделей и затрат на хранилище данных. 
 
-### Best practices for optimizing cost with dbt State
+### Рекомендации по оптимизации затрат с помощью dbt State
 
-#### Use `lag_tolerance` to reduce unnecessary model execution
+#### Используйте `lag_tolerance`, чтобы сократить количество ненужных запусков моделей
 
-You can save even more time and compute by defining how old your data can be before a model should be triggered. We’ve introduced lag_tolerance so that you can do things like differentiate development needs vs prod. 
+Вы можете сэкономить ещё больше времени и вычислительных ресурсов, определив, насколько устаревшими могут быть данные до того, как потребуется запустить модель. Мы добавили `lag_tolerance`, чтобы вы могли, например, задавать разные требования для среды разработки и производственной среды. 
 
-For example:
+Например:
 
 <File name="dbt_project.yml">
 
@@ -26,39 +26,39 @@ models:
 
 </File>
 
-In this example, models in the `prod` target rebuild only when upstream data is more than 4 hours old. In all other environments, models wait 7 days before rebuilding.
+В этом примере модели в целевом окружении `prod` пересобираются только тогда, когда возраст данных вышестоящих узлов превышает 4 часа. Во всех остальных средах модели ожидают 7 дней перед пересборкой.
 
-For more details, refer to the [`lag_tolerance` config reference](/reference/resource-configs/lag-tolerance).
+Подробности см. в [справочнике по конфигурации `lag_tolerance`](/reference/resource-configs/lag-tolerance).
 
-#### Use selectors with `dbt build` to run limited upstream nodes
+#### Используйте селекторы с `dbt build`, чтобы ограничить запуск вышестоящих узлов
 
-In development, use [selectors](/reference/node-selection/yaml-selectors) with `dbt build` to limit how many upstream nodes run. Nodes that are not selected can be [deferred](/reference/node-selection/defer) instead of rebuilt, which avoids extra dbt State activity on those targets. Automatic `state:modified` selection in development may be supported in a future release.
+В среде разработки используйте [селекторы](/reference/node-selection/yaml-selectors) с `dbt build`, чтобы ограничить количество запускаемых вышестоящих узлов. Для узлов, которые не выбраны, можно использовать [отложенное разрешение ссылок (defer)](/reference/node-selection/defer) вместо пересборки, что позволяет избежать дополнительной активности dbt State в соответствующих целевых окружениях. Автоматический выбор `state:modified` в среде разработки может появиться в одном из будущих выпусков.
 
-#### Avoid conditional materializations
+#### Избегайте условных материализаций
 
-Avoid conditional materialization patterns such as `table` in production and `view` in development for the same model. Different materializations between environments can prevent dbt State from matching targets correctly and reduce skip/clone effectiveness.
+Избегайте схем условной материализации, например использования `table` в производственной среде и `view` в среде разработки для одной и той же модели. Различия в материализациях между средами могут мешать dbt State правильно сопоставлять целевые окружения и снижать эффективность пропуска и клонирования моделей.
 
-### Best practices for optimizing successful models built
+### Рекомендации по оптимизации количества успешно собранных моделей
 
-You can reduce costs from successful models built while still following best practices. Combine the approaches below to fit your needs. If you exclude views from your scheduled job runs, set up a [merge job](#exclude-views-while-running-tests) to deploy updated view logic when changes are detected.
+Вы можете сократить затраты, связанные с количеством успешно собранных моделей, продолжая следовать рекомендуемым практикам. Комбинируйте приведённые ниже подходы в соответствии со своими потребностями. Если вы исключаете представления из запусков заданий по расписанию, настройте [задание слияния](#exclude-views-while-running-tests), чтобы развёртывать обновлённую логику представлений при обнаружении изменений.
 
-#### Exclude views in a dbt job
+#### Исключение представлений из задания dbt
 
-Many <Constant name="dbt" /> users utilize views, which don’t always need to be rebuilt every time you run a job. For any jobs that contain views that _do not_ include macros that dynamically generate code (for example, case statements) based on upstream tables and also _do not_ have tests, you can implement these steps:
+Многие пользователи <Constant name="dbt" /> используют представления, которые не всегда нужно пересобирать при каждом запуске задания. Для заданий, содержащих представления, которые _не_ включают макросы, динамически генерирующие код (например, выражения case) на основе вышестоящих таблиц, и также _не_ имеют тестов, можно выполнить следующие действия:
 
-1. Go to your current production deployment job in <Constant name="dbt" />.
-2. Modify your command to include: `--exclude config.materialized:view`.
-3. Save your job changes.
+1. Откройте текущее задание развёртывания в производственной среде в <Constant name="dbt" />.
+2. Добавьте в команду: `--exclude config.materialized:view`.
+3. Сохраните изменения задания.
 
-If you have views that contain macros with case statements based on upstream tables, these will need to be run each time to account for new values. If you still need to test your views with each run, follow the [Exclude views while still running tests](#exclude-views-while-running-tests) best practice to create a custom selector. 
+Если у вас есть представления, содержащие макросы с выражениями case на основе вышестоящих таблиц, их нужно запускать каждый раз, чтобы учитывать новые значения. Если вам по-прежнему необходимо тестировать представления при каждом запуске, следуйте рекомендациям из раздела [Исключение представлений с сохранением запуска тестов](#exclude-views-while-running-tests), чтобы создать собственный селектор. 
 
-#### Exclude views while running tests
+#### Исключение представлений с сохранением запуска тестов {#exclude-views-while-running-tests}
 
-Running tests for views in every job run can help keep data quality intact and save you from the need to rerun failed jobs. To exclude views from your job run while running tests, you can follow these steps to create a custom [selector](/reference/node-selection/yaml-selectors) for your job command. 
+Запуск тестов для представлений при каждом запуске задания помогает поддерживать качество данных и избавляет от необходимости повторно запускать задания, завершившиеся с ошибкой. Чтобы исключить представления из запуска задания, но при этом выполнять тесты, создайте собственный [селектор](/reference/node-selection/yaml-selectors) для команды задания, выполнив следующие действия. 
 
-1. Open your dbt project in the <Constant name="studio_ide" />.
-2. Add a file called `selectors.yml` in your top-level project folder.
-3. In the file, add the following code:
+1. Откройте проект dbt в <Constant name="studio_ide" />.
+2. Добавьте файл с именем `selectors.yml` в корневую папку проекта.
+3. Добавьте в файл следующий код:
 
    ```yaml 
     selectors:
@@ -80,37 +80,37 @@ Running tests for views in every job run can help keep data quality intact and s
 
     ```
     
-4. Save the file and commit it to your project.
-5. Modify your dbt jobs to include <VersionBlock lastVersion="1.11">`dbt build --selector skip_views_but_test_views`</VersionBlock><VersionBlock firstVersion="1.12">`dbt build --select selector:skip_views_but_test_views`</VersionBlock>.
+4. Сохраните файл и зафиксируйте его в репозитории проекта.
+5. Измените задания dbt, добавив команду <VersionBlock lastVersion="1.11">`dbt build --selector skip_views_but_test_views`</VersionBlock><VersionBlock firstVersion="1.12">`dbt build --select selector:skip_views_but_test_views`</VersionBlock>.
 
-#### Build only changed views
+#### Сборка только изменённых представлений
 
-If you want to ensure that you're building views whenever the logic is changed, create a merge job that gets triggered when code is merged into main: 
+Если вы хотите, чтобы представления собирались при каждом изменении их логики, создайте задание слияния, которое запускается при слиянии кода в main: 
 
-1. Ensure you have a [CI job setup](/docs/deploy/ci-jobs) in your environment.
-2. Create a new [deploy job](/docs/deploy/deploy-jobs#create-and-schedule-jobs) and call it “Merge Job".
-3. Set the  **Environment** to your CI environment. Refer to [Types of environments](/docs/dbt-platform-environments) for more details.
-4. Set **Commands** to: `dbt run -s state:modified+`.
-    Executing `dbt build` in this context is unnecessary because the CI job was used to both run and test the code that just got merged into main.
-5. Under the **Execution Settings**, select the default production job to compare changes against:
-    - **Defer to a previous run state** &mdash; Select the “Merge Job” you created so the job compares and identifies what has changed since the last merge.
-6. Follow [Customizing CI/CD with custom pipelines](/guides/custom-cicd-pipelines) to create a script that triggers the <Constant name="dbt" /> API to run your job after a merge, or watch this [video](https://www.loom.com/share/e7035c61dbed47d2b9b36b5effd5ee78?sid=bcf4dd2e-b249-4e5d-b173-8ca204d9becb).
+1. Убедитесь, что в вашей среде [настроено задание CI](/docs/deploy/ci-jobs).
+2. Создайте новое [задание развёртывания](/docs/deploy/deploy-jobs#create-and-schedule-jobs) и назовите его «Merge Job».
+3. В поле **Environment** укажите свою среду CI. Подробности см. в разделе [Типы сред](/docs/deploy/deploy-environments#types-of-environments).
+4. В поле **Commands** укажите: `dbt run -s state:modified+`.
+    Выполнять `dbt build` в этом случае не требуется, поскольку задание CI уже использовалось и для запуска, и для тестирования кода, который только что был слит в main.
+5. В разделе **Execution Settings** выберите производственное задание по умолчанию для сравнения изменений:
+    - **Defer to a previous run state** &mdash; Выберите созданное задание «Merge Job», чтобы оно сравнивало состояния и определяло, что изменилось с момента последнего слияния.
+6. Следуйте руководству [Настройка CI/CD с помощью собственных конвейеров](/guides/custom-cicd-pipelines), чтобы создать скрипт, который обращается к API <Constant name="dbt" /> для запуска задания после слияния, или посмотрите это [видео](https://www.loom.com/share/e7035c61dbed47d2b9b36b5effd5ee78?sid=bcf4dd2e-b249-4e5d-b173-8ca204d9becb).
 
-The merge job immediately deploys PR changes to production and keeps production views current with your codebase while staying cost-efficient. Decide whether this change is right for your dbt project.
+Задание слияния немедленно развёртывает изменения из PR в производственной среде и поддерживает соответствие производственных представлений вашей кодовой базе, сохраняя экономичность. Оцените, подходит ли такое изменение для вашего проекта dbt.
 
-### Rework inefficient models
+### Переработка неэффективных моделей
 
-#### Job Insights tab
+#### Вкладка Insights задания
 
-To reduce warehouse spend, use the **Insights** tab on the **Job** page to find which models take longest to build. The chart shows each model's average run time over its last 20 runs; the slowest models are prime candidates for optimization. 
+Чтобы сократить расходы на хранилище данных, используйте вкладку **Insights** на странице **Job** для поиска моделей, сборка которых занимает больше всего времени. Диаграмма показывает среднее время выполнения каждой модели за последние 20 запусков; самые медленные модели — основные кандидаты на оптимизацию. 
 
-#### Model Timing tab
+#### Вкладка Model Timing
 
-To see how long each model takes within a specific run, select that run on the **Run History** page and click the **Model Timing** tab. 
+Чтобы узнать, сколько времени занимает выполнение каждой модели в конкретном запуске, выберите этот запуск на странице **Run History** и откройте вкладку **Model Timing**. 
 
-Once you've identified which models could be optimized, check out these other resources that walk through how to optimize your work: 
-* [Build scalable and trustworthy data pipelines with dbt and BigQuery](https://services.google.com/fh/files/misc/dbt_bigquery_whitepaper.pdf) 
-* [Best Practices for Optimizing Your dbt and Snowflake Deployment](https://www.snowflake.com/wp-content/uploads/2021/10/Best-Practices-for-Optimizing-Your-dbt-and-Snowflake-Deployment.pdf) 
-* [How to optimize and troubleshoot dbt models on Databricks](/guides/optimize-dbt-models-on-databricks)
+Определив модели, которые можно оптимизировать, ознакомьтесь с дополнительными материалами, в которых описаны способы оптимизации вашей работы: 
+* [Создание масштабируемых и надёжных конвейеров данных с помощью dbt и BigQuery](https://services.google.com/fh/files/misc/dbt_bigquery_whitepaper.pdf) 
+* [Рекомендации по оптимизации развёртывания dbt и Snowflake](https://www.snowflake.com/wp-content/uploads/2021/10/Best-Practices-for-Optimizing-Your-dbt-and-Snowflake-Deployment.pdf) 
+* [Оптимизация моделей dbt в Databricks и устранение неполадок](/guides/optimize-dbt-models-on-databricks)
 
-For answers to common plan and billing questions, refer to [Billing FAQs](/docs/platform/billing-faqs).
+Ответы на распространённые вопросы о тарифных планах и оплате см. в разделе [Часто задаваемые вопросы об оплате](/docs/platform/billing-faqs).

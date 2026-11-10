@@ -194,7 +194,7 @@ select ...
 
 <div warehouse="Starburst Galaxy (dbt-trino)">
 
-- To sync descriptions to Data Discovery Catalog, configure the [Starburst/Trino metadata profile fields](/reference/resource-configs/trino-configs#persist_docs).
+- Чтобы синхронизировать описания с Data Discovery Catalog, задайте [поля метаданных в профиле Starburst/Trino](/reference/resource-configs/trino-configs#persist_docs).
 
 
 </div>

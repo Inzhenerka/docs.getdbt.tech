@@ -1,8 +1,8 @@
 ---
-title: "Users and licenses"
-description: "Learn how dbt administrators can use licenses and seats to control access in a dbt account."
+title: "Пользователи и лицензии"
+description: "Узнайте, как администраторы dbt могут использовать лицензии и пользовательские места для управления доступом в аккаунте dbt."
 id: "seats-and-users"
-sidebar: "Users and licenses"
+sidebar: "Пользователи и лицензии"
 pagination_next: "docs/platform/manage-access/enterprise-permissions"
 pagination_prev: null
 availability:
@@ -13,206 +13,205 @@ availability:
 
 import LicenseTypes from '/snippets/_cloud-license-types.md';
 
-In <Constant name="dbt" />, _licenses_ are used to allocate users to your account. 
+В <Constant name="dbt" /> _лицензии_ используются для предоставления пользователям мест в вашем аккаунте. 
 
 <LicenseTypes/>
 
-The user's assigned license determines the specific capabilities they can access in <Constant name="dbt" />.
+Назначенная пользователю лицензия определяет, какие возможности <Constant name="dbt" /> ему доступны.
 
-| Functionality | <div style={{width:'125px'}}>Developer or Analyst license** *</div> | <div style={{width:'125px'}}>Read-Only users</div> |<div style={{width:'125px'}}> IT license \*</div> |
+| Возможность | <div style={{width:'125px'}}>Лицензия Developer или Analyst** *</div> | <div style={{width:'125px'}}>Пользователи Read-Only</div> |<div style={{width:'125px'}}> Лицензия IT \*</div> |
 | ------------- | -------------- | --------------- | -------- |
-| Use the <Constant name="studio_ide" /> | ✅ | ❌ | ❌ |
-| Use the <Constant name="dbt" /> CLI | ✅ | ❌ | ❌ |
-| Use [<Constant name="insights" />](/docs/explore/dbt-insights) | ✅ | ❌ | ❌ |
-| Use [<Constant name="wizard" />](/docs/platform/wizard-overview) | ✅ | ✅ ([Explore mode](/docs/platform/wizard-home#ask-questions-in-explore-mode) in the home tab only) | ❌ |
-| Use Jobs | ✅ | ❌ | ❌ |
-| Manage Account | ✅ | ❌ | ✅ |
-| API access <br />(create personal access tokens) | ✅ | ✅ | ✅ |
-| API access <br />(create service tokens) | ✅ | ❌ | ❌ |
-| Use [<Constant name="catalog" />](/docs/explore/explore-projects) | ✅  | ✅ | ❌  |
-| Use [Source Freshness](/docs/deploy/source-freshness) | ✅ | ✅ | ❌ |
-| Use [Docs](/docs/explore/build-and-view-your-docs) | ✅ | ✅ | ❌ |
-| Receive [Job notifications](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ |
-| Use the [dbt MCP server](/docs/dbt-ai/about-mcp) | ✅ | ✅ (with [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set) | ❌ |
-| Manage own warehouse credentials | ✅ | ✅ (with [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set) | ❌ |
-| Use [Cost Insights](/docs/explore/cost-insights) | ✅ | ✅ (with [Cost Insights Viewer](/docs/platform/manage-access/enterprise-permissions#cost-insights-viewer) permission set) | ❌ |
+| Использование <Constant name="studio_ide" /> | ✅ | ❌ | ❌ |
+| Использование <Constant name="dbt" /> CLI | ✅ | ❌ | ❌ |
+| Использование [<Constant name="insights" />](/docs/explore/dbt-insights) | ✅ | ❌ | ❌ |
+| Использование [<Constant name="wizard" />](/docs/platform/wizard-overview) | ✅ | ✅ (только [режим Explore](/docs/platform/wizard-home#ask-questions-in-explore-mode) на главной вкладке) | ❌ |
+| Использование заданий | ✅ | ❌ | ❌ |
+| Управление аккаунтом | ✅ | ❌ | ✅ |
+| Доступ к API <br />(создание персональных токенов доступа) | ✅ | ✅ | ✅ |
+| Доступ к API <br />(создание сервисных токенов) | ✅ | ❌ | ❌ |
+| Использование [<Constant name="catalog" />](/docs/explore/explore-projects) | ✅  | ✅ | ❌  |
+| Использование [проверки актуальности источников](/docs/deploy/source-freshness) | ✅ | ✅ | ❌ |
+| Использование [документации](/docs/explore/build-and-view-your-docs) | ✅ | ✅ | ❌ |
+| Получение [уведомлений о заданиях](/docs/deploy/job-notifications) |  ✅ |  ✅  |  ✅ |
+| Использование [MCP-сервера dbt](/docs/dbt-ai/about-mcp) | ✅ | ✅ (с набором разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read)) | ❌ |
+| Управление собственными учётными данными для хранилища данных | ✅ | ✅ (с набором разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read)) | ❌ |
+| Использование [Cost Insights](/docs/explore/cost-insights) | ✅ | ✅ (с набором разрешений [Cost Insights Viewer](/docs/platform/manage-access/enterprise-permissions#cost-insights-viewer)) | ❌ |
 
 <br />
 
-*The [Analyst license type](/docs/platform/manage-access/about-user-access?version=1.12#licenses) is not available for new purchase.
+*Лицензии [типа Analyst](/docs/platform/manage-access/about-user-access?version=1.12#licenses) больше не доступны для покупки.
 
-**Available on Starter, Enterprise, and Enterprise+ plans only. IT seats are limited to 1 seat per Starter or Enterprise-tier account and don't count toward developer seat usage. 
+**Доступно только на тарифных планах Starter, Enterprise и Enterprise+. Для каждого аккаунта на тарифном плане Starter или уровня Enterprise предусмотрено не более 1 места IT, которое не учитывается при подсчёте используемых мест разработчиков. 
 
-## Licenses
+## Лицензии {#licenses}
 
 import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 <LicenseOverrideNote />
 
-dbt has different [license types](https://www.getdbt.com/pricing) and you can add or remove them by modifying the number of users in your account settings. If you have a Developer plan account and want to add more people to your team, you'll need to upgrade to the Starter plan. Refer to [dbt Pricing Plans](https://www.getdbt.com/pricing/) for more information about licenses available with each plan.
+В dbt доступны различные [типы лицензий](https://www.getdbt.com/pricing), которые можно добавлять или удалять, изменяя количество пользователей в настройках аккаунта. Если вы используете тарифный план Developer и хотите добавить в команду больше участников, вам потребуется перейти на тарифный план Starter. Подробнее о лицензиях, доступных на каждом тарифном плане, см. в разделе [Тарифные планы dbt](https://www.getdbt.com/pricing/).
 
-The following tabs detail steps on how to modify your user license count:
+На следующих вкладках подробно описаны действия для изменения количества пользовательских лицензий:
 
 <Tabs>
 
-<TabItem value="enterprise" label="Enterprise-tier plans">
+<TabItem value="enterprise" label="Тарифные планы уровня Enterprise">
 
-If you're on an Enterprise-tier plan and have the correct [permissions](/docs/platform/manage-access/enterprise-permissions), you can add or remove licenses by adjusting your user seat count. Note, an IT license does not count toward seat usage.
+Если вы используете тарифный план уровня Enterprise и у вас есть соответствующие [разрешения](/docs/platform/manage-access/enterprise-permissions), вы можете добавлять или удалять лицензии, изменяя количество пользовательских мест. Обратите внимание: лицензия IT не учитывается при подсчёте используемых мест.
 
-- To remove a user, click on your account name in the left side menu, click **Account settings** and select **Users**.
-  - Select the user you want to remove, click **Edit**, and then **Delete**. 
-  - This action cannot be undone. However, you can re-invite the user with the same info if you deleted the user in error.<br />
+- Чтобы удалить пользователя, нажмите на название своего аккаунта в левом боковом меню, нажмите **Account settings** и выберите **Users**.
+  - Выберите пользователя, которого хотите удалить, нажмите **Edit**, а затем **Delete**. 
+  - Это действие нельзя отменить. Однако если вы удалили пользователя по ошибке, вы можете повторно пригласить его, указав те же данные.<br />
 
-- To add a user, go to **Account Settings** and select **Users**. 
-  - Click the [**Invite Users**](/docs/platform/manage-access/invite-users) button. 
-  - For fine-grained permission configuration, refer to [Role based access control](/docs/platform/manage-access/about-user-access#role-based-access-control-).
+- Чтобы добавить пользователя, перейдите в **Account Settings** и выберите **Users**. 
+  - Нажмите кнопку [**Invite Users**](/docs/platform/manage-access/invite-users). 
+  - Подробнее о детальной настройке разрешений см. в разделе [Управление доступом на основе ролей](/docs/platform/manage-access/about-user-access#role-based-access-control-).
 
 
 </TabItem>
 
-<TabItem value="starter" label="Starter plans">
+<TabItem value="starter" label="Тарифные планы Starter">
 
-If you're on a Starter plan and have the correct [permissions](/docs/platform/manage-access/self-service-permissions), you can add or remove developers. 
+Если вы используете тарифный план Starter и у вас есть соответствующие [разрешения](/docs/platform/manage-access/self-service-permissions), вы можете добавлять или удалять разработчиков. 
 
-Refer to [Self-service Starter account permissions](/docs/platform/manage-access/self-service-permissions#licenses) for more information on the number of each license type included in the Starter plan.
+Подробнее о количестве лицензий каждого типа, включённых в тарифный план Starter, см. в разделе [Разрешения для аккаунтов Starter с самостоятельным управлением](/docs/platform/manage-access/self-service-permissions#licenses).
 
-You'll need to make two changes:
+Вам потребуется внести два изменения:
 
-- Adjust your developer user seat count, which manages the users invited to your <Constant name="dbt" /> project. 
-- Adjust your developer billing seat count, which manages the number of billable seats. 
+- Изменить количество пользовательских мест разработчиков, определяющее число пользователей, приглашённых в ваш проект <Constant name="dbt" />. 
+- Изменить количество оплачиваемых мест разработчиков, определяющее число мест, за которые взимается плата. 
 
-You can add or remove developers by increasing or decreasing the number of users and billable seats in your account settings:
+Вы можете добавлять или удалять разработчиков, увеличивая или уменьшая количество пользователей и оплачиваемых мест в настройках аккаунта:
 
 <Tabs>
-<TabItem value="addusers" label="Adding users">
+<TabItem value="addusers" label="Добавление пользователей">
 
-To add a user in <Constant name="dbt" />, you must be an account owner or have admin privileges. 
+Чтобы добавить пользователя в <Constant name="dbt" />, необходимо быть владельцем аккаунта или иметь права администратора. 
 
-1. From <Constant name="dbt" />, click on your account name in the left side menu and select **Account settings**.
+1. В <Constant name="dbt" /> нажмите на название своего аккаунта в левом боковом меню и выберите **Account settings**.
 
-<Lightbox src="/img/docs/dbt-platform/Navigate-to-account-settings.png" width="75%" title="Navigate to Account settings" />
+<Lightbox src="/img/docs/dbt-platform/Navigate-to-account-settings.png" width="75%" title="Переход к настройкам аккаунта" />
 
-2. In **Account Settings**, select **Billing**. 
-3. Under **Billing details**, enter the number of developer seats you want and make sure you fill in all the payment details, including the **Billing address** section. Leaving these blank won't allow you to save your changes.
-4. Press **Update Payment Information** to save your changes.
+2. В **Account Settings** выберите **Billing**. 
+3. В разделе **Billing details** укажите нужное количество мест разработчиков и обязательно заполните все платёжные реквизиты, включая раздел **Billing address**. Если оставить эти поля пустыми, сохранить изменения не получится.
+4. Нажмите **Update Payment Information**, чтобы сохранить изменения.
 
-<Lightbox src="/img/docs/dbt-platform/faq-account-settings-billing.png" width="75%" title="Navigate to Account settings -> Billing to modify billing seat count" />
+<Lightbox src="/img/docs/dbt-platform/faq-account-settings-billing.png" width="75%" title="Перейдите в Account settings -> Billing, чтобы изменить количество оплачиваемых мест" />
 
 
-Now that you've updated your billing, you can now [invite users](/docs/platform/manage-access/invite-users) to join your <Constant name="dbt" /> account:
+Теперь, когда вы обновили платёжную информацию, вы можете [пригласить пользователей](/docs/platform/manage-access/invite-users) в свой аккаунт <Constant name="dbt" />:
 
-Great work! After completing those these steps, your <Constant name="dbt" /> user count and billing count should now be the same.
+Отлично! После выполнения этих действий количество пользователей <Constant name="dbt" /> и количество оплачиваемых мест должны совпадать.
 </TabItem>
 
-<TabItem value="deleteusers" label="Deleting users">
+<TabItem value="deleteusers" label="Удаление пользователей">
 
-To delete a user in <Constant name="dbt" />, you must be an account owner or have admin privileges. If the user has a `developer` license type, this will open up their seat for another user or allow the admins to lower the total number of seats. 
+Чтобы удалить пользователя в <Constant name="dbt" />, необходимо быть владельцем аккаунта или иметь права администратора. Если у пользователя лицензия типа `developer`, его место освободится для другого пользователя либо администраторы смогут уменьшить общее количество мест. 
 
-1. From <Constant name="dbt" />, click on your account name in the left side menu and select **Account settings**.
+1. В <Constant name="dbt" /> нажмите на название своего аккаунта в левом боковом меню и выберите **Account settings**.
 
-<Lightbox src="/img/docs/dbt-platform/Navigate-to-account-settings.png" width="85%" title="Navigate to Account settings" />
+<Lightbox src="/img/docs/dbt-platform/Navigate-to-account-settings.png" width="85%" title="Переход к настройкам аккаунта" />
 
-2. In **Account settings**, select **Users**.
-3. Select the user you want to delete, then click **Edit**. 
-4. Click **Delete** in the bottom left. Click **Confirm Delete** to immediately delete the user without additional password prompts. This action cannot be undone. However, you can re-invite the user with the same information if the deletion was made in error. 
+2. В **Account settings** выберите **Users**.
+3. Выберите пользователя, которого хотите удалить, затем нажмите **Edit**. 
+4. Нажмите **Delete** в левом нижнем углу. Нажмите **Confirm Delete**, чтобы немедленно удалить пользователя без дополнительных запросов пароля. Это действие нельзя отменить. Однако если удаление было выполнено по ошибке, вы можете повторно пригласить пользователя, указав те же данные. 
 
-<Lightbox src="/img/docs/dbt-platform/delete_user_20221023.gif" width="75%" title="Deleting a user" />
+<Lightbox src="/img/docs/dbt-platform/delete_user_20221023.gif" width="75%" title="Удаление пользователя" />
 
 import LicenseCount from '/snippets/_license-count.md';
 
 <LicenseCount/>
         
-<Lightbox src="/img/docs/dbt-platform/faq-account-settings-billing.png" width="75%" title="The Billing** page in your **Account settings" />
+<Lightbox src="/img/docs/dbt-platform/faq-account-settings-billing.png" width="75%" title="Страница Billing** в разделе **Account settings" />
 
-Great work! After completing these steps, your <Constant name="dbt" /> user count and billing count should now be the same.
-
-</TabItem>
-</Tabs>
+Отлично! После выполнения этих действий количество пользователей <Constant name="dbt" /> и количество оплачиваемых мест должны совпадать.
 
 </TabItem>
 </Tabs>
 
-## Managing license types
+</TabItem>
+</Tabs>
 
-You can assign licenses to users individually or through group membership. Add users to groups when inviting them or after they join <Constant name="dbt" />.
+## Управление типами лицензий {#managing-license-types}
 
-On Enterprise plans, you can also automatically assign users to groups using [SSO config](/docs/platform/manage-access/sso-overview) and [role-based access control](/docs/platform/manage-access/about-user-access#role-based-access-control-).
+Вы можете назначать лицензии пользователям по отдельности или через членство в группах. Добавляйте пользователей в группы при приглашении или после того, как они присоединятся к <Constant name="dbt" />.
 
-New users receive your account's default license. Admins can check the default and update it as needed. Refer to [set a different default license](#default-license-for-new-users-) for more info.
+На тарифных планах Enterprise вы также можете автоматически назначать пользователей в группы с помощью [настроек SSO](/docs/platform/manage-access/sso-overview) и [управления доступом на основе ролей](/docs/platform/manage-access/about-user-access#role-based-access-control-).
 
-### Manual configuration
+Новые пользователи получают лицензию, установленную по умолчанию для вашего аккаунта. Администраторы могут проверить настройку по умолчанию и при необходимости изменить её. Подробнее см. в разделе [Настройка другой лицензии по умолчанию](#default-license-for-new-users).
 
-To manually assign a specific type of license to a user on your team:
-1. Click on your account name in the left side menu and select **Account settings**.
-2. Navigate to the **Users** page in your **Account settings**. 
-3. Select the user you want to manage and click the **Edit** button.
-4. On the **User details** page, you can select the license type and relevant groups for the user.
+### Ручная настройка
 
-**Note:** You will need to have an available license ready to allocate for the user. If your account does not have an available license to allocate, you will need to add more licenses to your plan to complete the license change.
+Чтобы вручную назначить определённый тип лицензии пользователю из вашей команды:
+1. Нажмите на название своего аккаунта в левом боковом меню и выберите **Account settings**.
+2. Перейдите на страницу **Users** в разделе **Account settings**. 
+3. Выберите пользователя, настройки которого хотите изменить, и нажмите кнопку **Edit**.
+4. На странице **User details** вы можете выбрать тип лицензии и соответствующие группы для пользователя.
 
-<Lightbox src="/img/docs/dbt-platform/access-control/license-manual.png" width="55%" title="Manually assigning licenses"/>
+**Примечание:** У вас должна быть свободная лицензия для назначения пользователю. Если в вашем аккаунте нет свободной лицензии, для завершения смены лицензии потребуется добавить дополнительные лицензии в ваш тарифный план.
 
-### Default license for new users <Lifecycle status="managed,managed_plus" />
+<Lightbox src="/img/docs/dbt-platform/access-control/license-manual.png" width="55%" title="Назначение лицензий вручную"/>
 
-Users who aren't assigned a license through SSO, SCIM, or license mapping receive your account's default license. Admins should check the current default and change it to **Read-Only**, **Developer**, or **Analyst** (if available) as needed.
+<a id="default-license-for-new-users-" />
 
-To set the default license:
+### Лицензия по умолчанию для новых пользователей <Lifecycle status="managed,managed_plus" /> {#default-license-for-new-users}
 
-1. Click your account name in the left side menu and select **Account settings**.
-2. Go to **Groups & Licenses** and scroll to the **Default license type** section.
-3. Click **Edit**.
-4. Select **Developer**, **Read-Only**, or **Analyst**.
-5. Click **Save**.
+Пользователи, которым не назначена лицензия через SSO, SCIM или сопоставление лицензий, получают лицензию по умолчанию для вашего аккаунта. Администраторам следует проверить текущую настройку по умолчанию и при необходимости изменить её на **Read-Only**, **Developer** или **Analyst** (если доступна).
 
-The **IT** license can't be set as the default.
+Чтобы задать лицензию по умолчанию:
 
-<Lightbox src="/img/docs/dbt-platform/access-control/default-license.png" width="90%" title="Set the default license for new users"/>
+1. Нажмите на название своего аккаунта в левом боковом меню и выберите **Account settings**.
+2. Перейдите в **Groups & Licenses** и прокрутите страницу до раздела **Default license type**.
+3. Нажмите **Edit**.
+4. Выберите **Developer**, **Read-Only** или **Analyst**.
+5. Нажмите **Save**.
 
-<a id="mapped-configuration-"></a>
+Лицензию **IT** нельзя установить в качестве лицензии по умолчанию.
 
-### Mapped configuration <Lifecycle status="managed,managed_plus" /> {#mapped-configuration}
+<Lightbox src="/img/docs/dbt-platform/access-control/default-license.png" width="90%" title="Настройка лицензии по умолчанию для новых пользователей"/>
 
-If your account is connected to an Identity Provider (IdP) for [Single Sign On](/docs/platform/manage-access/sso-overview), you can automatically map IdP user groups to specific license types in <Constant name="dbt" />. For SCIM-based license mapping with Okta, see [Automated license mapping](/docs/platform/manage-access/scim-manage-user-licenses#automated-license-mapping).
+### Настройка сопоставлений <Lifecycle status="managed,managed_plus" /> {#mapped-configuration}
 
-#### Configure license mappings
+Если ваш аккаунт подключён к поставщику удостоверений (IdP) для [единого входа](/docs/platform/manage-access/sso-overview), вы можете автоматически сопоставлять группы пользователей IdP с определёнными типами лицензий в <Constant name="dbt" />. О сопоставлении лицензий на основе SCIM с помощью Okta см. в разделе [Автоматическое сопоставление лицензий](/docs/platform/manage-access/scim-manage-user-licenses#automated-license-mapping).
 
-1. Click on your account name in the left side menu and select **Account settings**.
-2. Navigate to **Groups & Licenses** and scroll to the **License mappings** section.
-3. Create or edit SSO mappings for both Read-Only and Developer license types.
-4. Enter a comma-separated list of **IdP group names** that should receive each license type.
+#### Настройка сопоставлений лицензий
 
-<Lightbox src="/img/docs/dbt-platform/access-control/license-mapping.png" width="65%" title="Configuring IdP group license mapping"/>
+1. Нажмите на название своего аккаунта в левом боковом меню и выберите **Account settings**.
+2. Перейдите в **Groups & Licenses** и прокрутите страницу до раздела **License mappings**.
+3. Создайте или измените сопоставления SSO для обоих типов лицензий: Read-Only и Developer.
+4. Введите разделённый запятыми список **имён групп IdP**, которым должен назначаться каждый тип лицензии.
 
-#### Fundamental licensing rules
+<Lightbox src="/img/docs/dbt-platform/access-control/license-mapping.png" width="65%" title="Настройка сопоставления групп IdP с лицензиями"/>
 
-- **Default assignment**: New members without a mapped license receive your account's [default license](#default-license-for-new-users-), unless an admin changes it.
-- **Mapping basis**: License type mappings are based on _IdP groups_ (groups in your identity provider), not _<Constant name="dbt" /> groups_. Check group memberships in your IdP when configuring or troubleshooting.
-- **When changes take effect**: License types are adjusted when users sign into <Constant name="dbt" /> using single sign-on. Changes to license type mappings take effect the next time users sign in.
+#### Основные правила лицензирования
 
-#### Mapping logic and precedence
+- **Назначение по умолчанию**: новые участники, для которых не настроено сопоставление лицензии, получают [лицензию по умолчанию](#default-license-for-new-users) для вашего аккаунта, если администратор не изменит её.
+- **Основа сопоставления**: сопоставления типов лицензий основаны на _группах IdP_ (группах в вашем поставщике удостоверений), а не на _группах <Constant name="dbt" />_. При настройке или устранении неполадок проверяйте членство в группах в вашем IdP.
+- **Когда изменения вступают в силу**: типы лицензий обновляются, когда пользователи входят в <Constant name="dbt" /> с помощью единого входа. Изменения сопоставлений типов лицензий вступают в силу при следующем входе пользователей.
 
-When a user belongs to multiple IdP groups, the Developer license takes precedence. The following table shows how group membership determines the assigned license:
+#### Логика сопоставления и приоритеты
 
-| In a Developer license-mapped group? | In a Read-Only license-mapped group? | License assigned |
+Если пользователь состоит в нескольких группах IdP, лицензия Developer имеет приоритет. В следующей таблице показано, как членство в группах определяет назначаемую лицензию:
+
+| Состоит в группе, сопоставленной с лицензией Developer? | Состоит в группе, сопоставленной с лицензией Read-Only? | Назначаемая лицензия |
 |---|---|---|
-| No | No | Account default license |
-| No | Yes | Read-Only |
-| Yes | No | Developer |
-| Yes | Yes | Developer (Developer takes precedence) |
+| Нет | Нет | Лицензия по умолчанию для аккаунта |
+| Нет | Да | Read-Only |
+| Да | Нет | Developer |
+| Да | Да | Developer (Developer имеет приоритет) |
 
 :::note
-If a user's IdP groups do not match _any_ license type mappings, <Constant name="dbt" /> assigns your account's [default license](#default-license-for-new-users-). Admins can check the default and update as needed.
+Если группы IdP пользователя не соответствуют _ни одному_ сопоставлению типов лицензий, <Constant name="dbt" /> назначает [лицензию по умолчанию](#default-license-for-new-users) для вашего аккаунта. Администраторы могут проверить настройку по умолчанию и при необходимости изменить её.
 :::
 
-## Granular permissioning <Lifecycle status="managed,managed_plus" />
+## Детальная настройка разрешений <Lifecycle status="managed,managed_plus" />
 
-<Constant name="dbt" /> Enterprise-tier plans support role-based access controls for configuring granular in-app permissions. See [access control](/docs/platform/manage-access/about-user-access) for more information on Enterprise permissioning.
+Тарифные планы <Constant name="dbt" /> уровня Enterprise поддерживают управление доступом на основе ролей для детальной настройки разрешений в приложении. Подробнее о разрешениях Enterprise см. в разделе [Управление доступом](/docs/platform/manage-access/about-user-access).
 
-#### Read-Only granular permissions
+#### Детальная настройка разрешений Read-Only
 
-<Constant name="dbt" /> Enterprise-tier plans support granular permissions to help you control which projects your Read-Only users can access by assigning them to specific groups, rather than granting access to the entire account.
+Тарифные планы <Constant name="dbt" /> уровня Enterprise поддерживают детальную настройку разрешений: вы можете управлять тем, к каким проектам имеют доступ пользователи Read-Only, назначая их в определённые группы, а не предоставляя доступ ко всему аккаунту.
 
-Enabling granular permissions is a one-time, permanent change. Before you enable this, make sure your Read-Only users are in a group with a Read-Only permission set that covers all projects. If a user isn't in a group, or their group's permission set only covers some projects, they'll lose access to the projects that aren't covered.
+Включение детальной настройки разрешений — однократное и необратимое изменение. Прежде чем включать эту возможность, убедитесь, что ваши пользователи Read-Only входят в группу с набором разрешений Read-Only, охватывающим все проекты. Если пользователь не входит в группу или набор разрешений его группы охватывает только некоторые проекты, он потеряет доступ к проектам, которые не охвачены этим набором.
 
-For complete setup instructions, refer to [How to enable granular permissions for read-only users](/docs/platform/manage-access/about-user-access#enable-granular-permissions-for-read-only-users-) for the full setup steps.
-
+Полные пошаговые инструкции по настройке см. в разделе [Как включить детальную настройку разрешений для пользователей Read-Only](/docs/platform/manage-access/about-user-access#enable-granular-permissions-for-read-only-users).

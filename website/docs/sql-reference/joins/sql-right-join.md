@@ -1,7 +1,7 @@
 ---
 id: right-join
 title: SQL RIGHT JOIN
-description: Right joins return all rows in the right join database object regardless of match in the database object in the FROM statement. 
+description: "RIGHT JOIN возвращает все строки правого объекта, даже если в объекте из FROM нет совпадения." 
 slug: /sql-reference/right-join
 ---
 

@@ -1,18 +1,18 @@
 ---
-title: "sql_header in data tests"
+title: "sql_header в тестах данных"
 id: "require_sql_header_in_test_configs"
-sidebar_label: "require sql header in test configs"
+sidebar_label: "sql_header в конфигурациях тестов"
 ---
 
 | require_sql_header_in_test_configs | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2026.3 | 1.12.0 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Введён | 2026.3 | 1.12.0 |
+| Стабилизирован (по умолчанию → `true`) | — | — |
+| Удалён | — | — |
 
-Set the `require_sql_header_in_test_configs` flag to `true` to enable support for the [`sql_header`](/reference/resource-configs/sql_header) config for generic data tests. When enabled, you can set `sql_header` in the `config` of a generic data test at the model or column level in your `properties.yml` file. You can use `sql_header` to define SQL that should run before the test executes (for example, to create temporary functions, to set session parameters, or to declare variables required by the test query). dbt runs this SQL before executing the test.
+Установите флаг `require_sql_header_in_test_configs` в значение `true`, чтобы включить поддержку конфигурации [`sql_header`](/reference/resource-configs/sql_header) для универсальных тестов данных. Когда флаг включён, вы можете задать `sql_header` в разделе `config` универсального теста данных на уровне модели или столбца в файле `properties.yml`. С помощью `sql_header` можно определить SQL-код, который должен выполняться перед запуском теста (например, для создания временных функций, установки параметров сеанса или объявления переменных, необходимых для запроса теста). dbt выполняет этот SQL-код перед выполнением теста.
 
-For example:
+Например:
 
 <File name="models/properties.yml">
 
@@ -30,4 +30,4 @@ models:
 
 </File>
 
-For more information, refer to [Data test configurations](/reference/data-test-configs).
+Дополнительную информацию см. в разделе [Конфигурации тестов данных](/reference/data-test-configs).

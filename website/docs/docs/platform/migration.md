@@ -1,8 +1,8 @@
 --- 
-title: "Multi-cell migration checklist"
+title: "Контрольный список миграции в многосекционную архитектуру"
 id: migration 
-sidebar_label: "Multi-cell migration checklist"
-description: "Prepare for account migration to AWS cell-based architecture." 
+sidebar_label: "Контрольный список миграции в многосекционную архитектуру"
+description: "Подготовка к миграции аккаунта на архитектуру AWS с использованием секций."
 pagination_next: null
 pagination_prev: null
 availability:
@@ -10,58 +10,58 @@ availability:
   access: login_required
 ---
 
-dbt Labs is in the process of rolling out a new cell-based architecture for <Constant name="dbt" />. This architecture provides the foundation of <Constant name="dbt" /> for years to come, and brings improved reliability, performance, and consistency to users of <Constant name="dbt" />.
+dbt Labs находится в процессе внедрения новой ячеечной (cell-based) архитектуры для <Constant name="dbt" />. Эта архитектура закладывает основу развития <Constant name="dbt" /> на годы вперёд и обеспечивает повышенную надёжность, производительность и согласованность для пользователей <Constant name="dbt" />.
 
-We're scheduling migrations by account. When we're ready to migrate your account, you will receive a banner or email communication with your migration date. If you have not received this communication, then you don't need to take action at this time. dbt Labs will share information about your migration with you, with appropriate advance notice, when applicable to your account.
+Мы планируем миграции по аккаунтам. Когда мы будем готовы мигрировать ваш аккаунт, вы получите уведомление в виде баннера или электронного письма с датой миграции. Если вы не получили это уведомление, то на данный момент вам не нужно предпринимать никаких действий. dbt Labs предоставит вам информацию о вашей миграции с соответствующим предварительным уведомлением, если это будет применимо к вашему аккаунту.
 
-Your account will be automatically migrated on or after its scheduled date. However, if you use certain features, you must take action before that date to avoid service disruptions.
+Ваш аккаунт будет автоматически мигрирован в назначенную дату или после нее. Однако, если вы используете определенные функции, вам необходимо предпринять действия до этой даты, чтобы избежать сбоев в работе сервиса.
 
-## Recommended actions
+## Рекомендуемые действия {#recommended-actions}
 
-:::info Rescheduling your migration
+:::info Перенос вашей миграции
 
-If you're on the <Constant name="dbt" /> Enterprise tier, you can postpone your account migration by up to 45 days. To reschedule your migration, navigate to **Account Settings** → **Migration guide**.
+Если вы используете тариф <Constant name="dbt" /> Enterprise, вы можете отложить миграцию аккаунта на срок до 45 дней. Чтобы перенести дату миграции, перейдите в **Account Settings** → **Migration guide**.
 
-For help, contact the dbt Support Team at [support@getdbt.com](mailto:support@getdbt.com).
+Для получения помощи свяжитесь с командой поддержки dbt по адресу [support@getdbt.com](mailto:support@getdbt.com).
 :::
 
-We highly recommended you take these actions:
+Мы настоятельно рекомендуем вам выполнить следующие действия:
 
-- Ensure pending user invitations are accepted or note outstanding invitations. Pending user invitations might be voided during the migration. You can resend user invitations after the migration is complete.
-- Commit unsaved changes in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio).  Unsaved changes might be lost during migration.
-- Export and download [audit logs](/docs/platform/manage-access/audit-log) older than 90 days, as they will be unavailable from <Constant name="dbt" /> after the migration is complete. Logs older than 90 days while within the data retention period are not deleted, but you will have to work with the dbt Labs Customer Support team to recover.
+- Убедитесь, что все ожидающие приглашения пользователей приняты, либо зафиксируйте список непринятых приглашений. Ожидающие приглашения пользователей могут быть аннулированы в процессе миграции. После завершения миграции вы сможете повторно отправить приглашения пользователям.
+- Создайте коммит с несохранёнными изменениями в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio). Иначе при миграции эти изменения могут потеряться.
+- Экспортируйте и скачайте [журналы аудита](/docs/platform/manage-access/audit-log) старше 90 дней. После миграции они будут недоступны в <Constant name="dbt" />. Журналы старше 90 дней, срок хранения которых ещё не истёк, можно восстановить через службу поддержки dbt Labs.
 
-## Required actions
+## Обязательные действия {#required-actions}
 
-These actions are required to prevent users from losing access <Constant name="dbt" />:
+Эти действия необходимы, чтобы предотвратить потерю пользователями доступа к <Constant name="dbt" />:
 
-- If you still need to, complete [Auth0 migration for SSO](/docs/platform/manage-access/auth0-migration) before your scheduled migration date to avoid service disruptions. If you've completed the Auth0 migration, your account SSO configurations will be transferred automatically. 
-- Update your IP allow lists. <Constant name="dbt" /> will be using new IPs to access your warehouse post-migration. Allow inbound traffic from all of the following new IPs in your firewall and include them in any database grants:
+- Если вы ещё не выполнили [миграцию Auth0 для SSO](/docs/platform/manage-access/auth0-migration), сделайте это до запланированной даты, чтобы избежать перебоев. Если вы уже её выполнили, настройки SSO аккаунта перенесутся автоматически.
+- Обновите списки разрешённых IP-адресов. После миграции <Constant name="dbt" /> будет использовать новые IP-адреса для доступа к вашему хранилищу данных. Разрешите входящий трафик со всех следующих новых IP-адресов в вашем файрволе и включите их во все необходимые права доступа в базе данных:
 
     - `52.3.77.232` 
     - `3.214.191.130`
     - `34.233.79.135`
 
-    Keep the old <Constant name="dbt" /> IPs listed until the migration is complete.
+    Сохраняйте старые IP-адреса <Constant name="dbt" /> в списке до завершения миграции.
 
-## Run related data retention
+## Хранение данных, связанных с запусками {#run-related-data-retention}
 
-All runs available in <Constant name="dbt"/> will be migrated with your account. This includes metadata about the run, like its status, execution start time, and duration. However, the individual steps associated with a run will not be migrated with your account. Therefore, the <Constant name="dbt"/> commands executed during a run, along with their logs and artifact files, will not be available in <Constant name="dbt"/> after your migration.
+Все запуски, доступные в <Constant name="dbt"/>, будут перенесены вместе с вашей учетной записью. Это включает метаданные о запуске, такие как его статус, время начала выполнения и продолжительность. Однако отдельные шаги, связанные с запуском, перенесены не будут. Поэтому команды <Constant name="dbt"/>, выполнявшиеся в рамках запуска, а также их логи и файлы артефактов, не будут доступны в <Constant name="dbt"/> после миграции.
 
-The [Discovery API](/docs/dbt-apis/discovery-api) will contain a subset of data after your account has been migrated. Metadata generated in the past 7 days will be migrated with your account. A maximum of 20 runs will be available when querying the [job object](/docs/dbt-apis/discovery-schema-job) after migration.
+[Discovery API](/docs/dbt-apis/discovery-api) будет содержать подмножество данных после миграции вашей учетной записи. Метаданные, созданные за последние 7 дней, будут перенесены вместе с учетной записью. При запросе [объекта job](/docs/dbt-apis/discovery-schema-job) после миграции будет доступно не более 20 запусков.
 
-## Post-migration​
+## После миграции {#post-migration}
 
-Complete all of these items to ensure your <Constant name="dbt" /> resources and jobs will continue working without interruption.
+Выполните все эти действия, чтобы ваши ресурсы и задания <Constant name="dbt" /> продолжили работать без перебоев.
 
-Use one of these URL login options:
+Для входа используйте один из следующих адресов:
 
-- [https://login.dbt.com](https://login.dbt.com): Universal login shows the accounts you can access across instances. Account administrators can enable or disable this path with **Enable global account discovery** in [Account settings](/docs/platform/account-settings#enable-global-account-discovery).
-- `us1.dbt.com`: If you previously signed in with a username and password at `login.dbt.com`, plan to sign in at `us1.dbt.com` instead. The original URL still works, but you need to click through to continue after sign-in. If SSO is configured, use the unique URL listed in your SSO account settings, for example, `ACCOUNT_PREFIX.us1.dbt.com`.
-- `ACCOUNT_PREFIX.us1.dbt.com`: A unique URL specifically for your account. If you belong to multiple accounts, each will have a unique URL available as long as they have been migrated to multi-cell. 
-Check out [access, regions, and IP addresses](/docs/platform/about-platform/access-regions-ip-addresses) for more information.
+- [https://login.dbt.com](https://login.dbt.com): единая страница входа показывает аккаунты, к которым у вас есть доступ в разных инстансах. Администратор может включить или отключить этот способ через **Enable global account discovery** в разделе [Account settings](/docs/platform/account-settings#enable-global-account-discovery).
+- `us1.dbt.com`: если раньше вы входили на `login.dbt.com` с именем пользователя и паролем, переходите на `us1.dbt.com`. Исходный адрес продолжит работать, но после входа потребуется дополнительный переход. Если настроен SSO, используйте уникальный адрес из настроек аккаунта SSO, например `ACCOUNT_PREFIX.us1.dbt.com`.
+- `ACCOUNT_PREFIX.us1.dbt.com`: Уникальный URL, предназначенный именно для вашего аккаунта. Если вы состоите в нескольких аккаунтах, у каждого из них будет свой уникальный URL, при условии что они были перенесены в многоячеечную (multi-cell) архитектуру.
+Подробнее см. в разделе [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses).
 
-Remove the following old IP addresses from your firewall and database grants: 
+Удалите следующие старые IP-адреса из вашего файрвола и предоставлений доступа к базе данных:
 
 - `52.45.144.63` 
 - `54.81.134.249`

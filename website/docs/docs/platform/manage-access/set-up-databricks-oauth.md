@@ -1,6 +1,6 @@
 ---
-title: "Set up Databricks OAuth"
-description: "Learn how dbt administrators and users can use Databricks OAuth to control access in a dbt account."
+title: "Настройка Databricks OAuth"
+description: "Узнайте, как администраторы и пользователи dbt могут использовать Databricks OAuth для управления доступом в аккаунте dbt."
 id: "set-up-databricks-oauth"
 availability:
   surface: platform
@@ -8,90 +8,90 @@ availability:
   minPlan: enterprise
 ---
 
-# Set up Databricks OAuth
+# Настройка Databricks OAuth
 
-<Constant name="dbt_platform" /> accounts on Enterprise and Enterprise+ plans support developer OAuth ([OAuth for partner solutions](https://docs.databricks.com/en/integrations/manage-oauth.html)) with Databricks. When you enable Databricks OAuth for a <Constant name="dbt" /> project, all developers must authenticate with Databricks in order to use the <Constant name="studio_ide" />.
+Аккаунты <Constant name="dbt_platform" /> на тарифных планах Enterprise и Enterprise+ поддерживают OAuth для разработчиков ([OAuth для партнёрских решений](https://docs.databricks.com/en/integrations/manage-oauth.html)) при работе с Databricks. При включении Databricks OAuth для проекта <Constant name="dbt" /> все разработчики должны проходить аутентификацию в Databricks, чтобы использовать <Constant name="studio_ide" />.
 
-### Development and deployment authentication
+### Аутентификация для разработки и развёртывания
 
-Databricks OAuth uses user-to-machine (U2M) authentication for interactive development in the <Constant name="studio_ide" />. It applies to development credentials only.
+Databricks OAuth использует аутентификацию user-to-machine (U2M, «пользователь — машина») для интерактивной разработки в <Constant name="studio_ide" />. Она применяется только к учётным данным для разработки.
 
-Deployment environments use separate credentials configured at the environment level. They do not use developer OAuth. For deployment and batch jobs, configure token-based credentials in a [deployment connection profile](/docs/platform/about-profiles). A [service principal](https://docs.databricks.com/en/admin/users-groups/service-principals.html) token is recommended for production and non-production jobs.
+Среды развёртывания используют отдельные учётные данные, настроенные на уровне среды. Они не используют OAuth для разработчиков. Для развёртывания и пакетных заданий настройте учётные данные на основе токенов в [профиле подключения для развёртывания](/docs/platform/about-profiles). Для заданий как в производственных, так и в непроизводственных средах рекомендуется использовать токен [субъекта-службы (service principal)](https://docs.databricks.com/en/admin/users-groups/service-principals.html).
 
-For setup steps, refer to [Defining your dbt deployment environment](/guides/set-up-your-databricks-dbt-project#defining-your-dbt-deployment-environment). For more information on deployment environments, refer to [Deploy environments](/docs/deploy/deploy-environments).
+Инструкции по настройке приведены в разделе [Определение среды развёртывания dbt](/guides/set-up-your-databricks-dbt-project#defining-your-dbt-deployment-environment). Дополнительные сведения о средах развёртывания см. в разделе [Среды развёртывания](/docs/deploy/deploy-environments).
 
-### Configure Databricks OAuth (Databricks admin)
+### Настройка Databricks OAuth (администратор Databricks)
 
-To get started, add dbt as a custom OAuth application in Databricks.
+Для начала добавьте dbt в Databricks в качестве пользовательского OAuth-приложения.
 
-The following steps use the Databricks UI. Alternatively, use the [Databricks CLI](https://docs.databricks.com/en/integrations/enable-disable-oauth.html#enable-custom-oauth-applications-using-the-cli). Use the [redirect URLs for your region](#redirect-urls-by-region) for either method.
+Следующие шаги выполняются в интерфейсе Databricks. В качестве альтернативы используйте [Databricks CLI](https://docs.databricks.com/en/integrations/enable-disable-oauth.html#enable-custom-oauth-applications-using-the-cli). При любом из способов используйте [URL перенаправления для вашего региона](#redirect-urls-by-region).
 
-1. Log in to the [account console](https://accounts.cloud.databricks.com/?_ga=2.255771976.118201544.1712797799-1002575874.1704693634) and click the **Settings** icon in the sidebar.
+1. Войдите в [консоль аккаунта](https://accounts.cloud.databricks.com/?_ga=2.255771976.118201544.1712797799-1002575874.1704693634) и нажмите значок **Settings** на боковой панели.
 
-2. On the **App connections** tab, click **Add connection**.
+2. На вкладке **App connections** нажмите **Add connection**.
 
-3. Enter the following details:
-   - A name for your connection.
-   - The redirect URLs for your OAuth connection. Use both URLs listed for your account region.
-   - For Access scopes, the APIs the application should have access to:
-      - For BI applications, the SQL scope is required to allow the connected app to access Databricks SQL APIs (this is required for SQL models).
-      - For applications that need to access Databricks APIs for purposes other than querying, the ALL APIs scope is required (this is required if running Python models).
-   - The access token time-to-live (TTL) in minutes. Default: 60.
-   - The refresh token time-to-live (TTL) in minutes. Default: 10080.
-4. Select **Generate a client secret**. Copy and securely store the client secret. The client secret will not be available later.
+3. Укажите следующие сведения:
+   - Название подключения.
+   - URL перенаправления для OAuth-подключения. Используйте оба URL, указанных для региона вашего аккаунта.
+   - В поле Access scopes укажите API, к которым приложение должно иметь доступ:
+      - Для BI-приложений требуется область доступа SQL, позволяющая подключённому приложению обращаться к Databricks SQL API (это необходимо для SQL-моделей).
+      - Для приложений, которым нужен доступ к Databricks API не только для выполнения запросов, требуется область доступа ALL APIs (это необходимо при запуске Python-моделей).
+   - Время жизни (TTL) токена доступа в минутах. Значение по умолчанию: 60.
+   - Время жизни (TTL) токена обновления в минутах. Значение по умолчанию: 10080.
+4. Выберите **Generate a client secret**. Скопируйте секрет клиента и сохраните его в безопасном месте. Позже он будет недоступен.
 
-#### Redirect URLs by region
+#### URL перенаправления по регионам \{#redirect-urls-by-region}
 
-Use the redirect URLs that correspond to your dbt account region when configuring Databricks OAuth.
+При настройке Databricks OAuth используйте URL перенаправления, соответствующие региону вашего аккаунта dbt.
 
 <!-- we'll want to remove this callout sometime in 2027 -->
 :::info
-As part of the account-specific URL migration, some customers should update OAuth redirect URLs and other integration settings. Legacy region URLs continue to support integrations until the end-of-support date in the [migration timeline](/docs/platform/about-platform/account-url-migration#migration-timeline). For more migration timing and account-specific URL guidance, refer to the [account URL migration documentation](/docs/platform/about-platform/account-url-migration).
+В рамках перехода на URL, уникальные для каждого аккаунта, некоторым клиентам следует обновить URL перенаправления OAuth и другие настройки интеграций. Прежние региональные URL продолжают поддерживать интеграции до даты окончания поддержки, указанной в [графике перехода](/docs/platform/about-platform/account-url-migration#migration-timeline). Дополнительные сведения о сроках перехода и рекомендации по URL, уникальным для каждого аккаунта, см. в [документации по переходу на новые URL аккаунтов](/docs/platform/about-platform/account-url-migration).
 :::
 
 <SimpleTable>
 
-| Region | Redirect URLs |
+| Регион | URL перенаправления |
 | ------ | ----- |
-| **US multi-tenant** | https://cloud.getdbt.com/callback <br /> https://cloud.getdbt.com/complete/databricks |
-| **US cell 1** | https://us1.dbt.com/callback <br /> https://us1.dbt.com/complete/databricks |
+| **США, мультитенантная среда** | https://cloud.getdbt.com/callback <br /> https://cloud.getdbt.com/complete/databricks |
+| **США, ячейка 1** | https://us1.dbt.com/callback <br /> https://us1.dbt.com/complete/databricks |
 | **EMEA** | https://emea.dbt.com/callback <br /> https://emea.dbt.com/complete/databricks |
 | **APAC** | https://au.dbt.com/callback <br /> https://au.dbt.com/complete/databricks |
-| **Single tenant** | https://INSTANCE_NAME.getdbt.com/callback <br /> https://INSTANCE_NAME.getdbt.com/complete/databricks
+| **Однотенантная среда** | https://INSTANCE_NAME.getdbt.com/callback <br /> https://INSTANCE_NAME.getdbt.com/complete/databricks
 
 </SimpleTable>
 
-### Configure the Connection in dbt (dbt project admin)
+### Настройка подключения в dbt (администратор проекта dbt)
 
-Now that you have an OAuth app set up in Databricks, you'll need to add the client ID and secret to <Constant name="dbt" />. To do so:
+Теперь, когда OAuth-приложение в Databricks настроено, необходимо добавить идентификатор и секрет клиента в <Constant name="dbt" />. Для этого:
 
-1. From <Constant name="dbt" />, click on your account name in the left side menu and select **Account settings**.
-2. Select **Projects** from the menu.
-3. Choose your project from the list.
-4. Click **Connections** and select the Databricks connection.
-5. Click **Edit**.
-6. Under the **Optional settings** section, add the **OAuth Client ID** and **OAuth Client Secret** from the Databricks OAuth app.
+1. В <Constant name="dbt" /> нажмите название своего аккаунта в меню слева и выберите **Account settings**.
+2. Выберите **Projects** в меню.
+3. Выберите свой проект из списка.
+4. Нажмите **Connections** и выберите подключение Databricks.
+5. Нажмите **Edit**.
+6. В разделе **Optional settings** добавьте **OAuth Client ID** и **OAuth Client Secret** из OAuth-приложения Databricks.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/DBX-auth/dbt-databricks-oauth.png" title="Add Databricks OAuth credentials to the connection" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/DBX-auth/dbt-databricks-oauth.png" title="Добавление учётных данных Databricks OAuth в подключение" />
 
-### Authenticating to Databricks (Studio IDE developer)
+### Аутентификация в Databricks (разработчик в Studio IDE)
 
-Once the Databricks OAuth connection is set up for a <Constant name="dbt" /> project, each <Constant name="dbt" /> user will need to authenticate with Databricks in order to use the <Constant name="studio_ide" />. To do so:
+После настройки подключения Databricks OAuth для проекта <Constant name="dbt" /> каждому пользователю <Constant name="dbt" /> потребуется пройти аутентификацию в Databricks, чтобы использовать <Constant name="studio_ide" />. Для этого:
 
-1. From <Constant name="dbt" />, click on your account name in the left side menu and select **Account settings**.
-2. Under **Your profile**, select **Credentials**.
-3. Choose your project from the list and click **Edit**.
-4. Select **OAuth** as the authentication method, and click **Save**.
-5. Finalize by clicking the **Connect Databricks Account** button.
+1. В <Constant name="dbt" /> нажмите название своего аккаунта в меню слева и выберите **Account settings**.
+2. В разделе **Your profile** выберите **Credentials**.
+3. Выберите свой проект из списка и нажмите **Edit**.
+4. Выберите **OAuth** в качестве метода аутентификации и нажмите **Save**.
+5. В завершение нажмите кнопку **Connect Databricks Account**.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/DBX-auth/dbt-databricks-oauth-user.png" title="Connect your Databricks account from development credentials" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dbt-platform-enterprise/DBX-auth/dbt-databricks-oauth-user.png" title="Подключение аккаунта Databricks в настройках учётных данных для разработки" />
 
-You will then be redirected to Databricks and asked to approve the connection. This redirects you back to <Constant name="dbt" />. You should now be an authenticated Databricks user, ready to use the <Constant name="studio_ide" />.
+После этого вы будете перенаправлены в Databricks, где вам предложат подтвердить подключение. Затем вы вернётесь в <Constant name="dbt" />. Теперь вы должны быть аутентифицированы в Databricks и готовы к работе в <Constant name="studio_ide" />.
 
-### Studio OAuth flow
+### Процесс OAuth в Studio
 
-Once a user has authorized <Constant name="dbt" /> with Databricks, Databricks returns a refresh token to the <Constant name="dbt" /> application.
+После того как пользователь разрешит приложению <Constant name="dbt" /> доступ к Databricks, Databricks передаст приложению <Constant name="dbt" /> токен обновления.
 
-At the start of each <Constant name="studio_ide" /> session, <Constant name="dbt" /> exchanges the refresh token for an access token, which it uses to connect to Databricks and execute queries on the user's behalf. <Constant name="dbt" /> does not fetch new access tokens during an active session. When the access token expires (default: 60 minutes), the user must restart the <Constant name="studio_ide" /> to continue development.
+В начале каждого сеанса <Constant name="studio_ide" /> приложение <Constant name="dbt" /> обменивает токен обновления на токен доступа, который используется для подключения к Databricks и выполнения запросов от имени пользователя. <Constant name="dbt" /> не получает новые токены доступа во время активного сеанса. Когда срок действия токена доступа истекает (по умолчанию — через 60 минут), пользователь должен перезапустить <Constant name="studio_ide" />, чтобы продолжить разработку.
 
-The refresh token lifetime is set when you configure the OAuth app in Databricks (default refresh token TTL: 10080 minutes). When a user's refresh token expires, they must click **Connect Databricks Account** again to re-authenticate.
+Срок действия токена обновления задаётся при настройке OAuth-приложения в Databricks (TTL токена обновления по умолчанию: 10080 минут). Когда срок действия токена обновления пользователя истечёт, ему потребуется снова нажать **Connect Databricks Account**, чтобы повторно пройти аутентификацию.

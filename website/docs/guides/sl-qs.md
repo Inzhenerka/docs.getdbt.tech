@@ -55,7 +55,7 @@ import SlConnectYourAi from '/snippets/_sl-connect-your-ai.md';
 - Учетная запись в хранилище данных и образец данных Jaffle Shop. Следуйте инструкциям на вкладке вашей платформы в разделе [Настройка хранилища данных](#set-up-your-warehouse).
 - Базовое понимание SQL и dbt. Например, вы уже использовали dbt или прошли курс [dbt Fundamentals](https://learn.getdbt.com/courses/dbt-fundamentals).
 
-## Set up your warehouse
+## Настройка хранилища {#set-up-your-warehouse}
 
 Откройте вкладку вашей платформы данных, чтобы создать учетную запись, загрузить образцы данных и подключить dbt. Выполните только шаги, перечисленные на вкладке, а затем вернитесь сюда. Не переходите к настройке проекта или созданию моделей в другом руководстве. Эти шаги описаны далее в этом руководстве.
 
@@ -65,14 +65,14 @@ import SlConnectYourAi from '/snippets/_sl-connect-your-ai.md';
 
 <TabItem value="snowflake" label="Snowflake" default>
 
-Create a [trial Snowflake account](https://signup.snowflake.com/):
+Создайте [пробный аккаунт Snowflake](https://signup.snowflake.com/):
 
 - Выберите редакцию Enterprise Snowflake с правами доступа ACCOUNTADMIN. При выборе облачного провайдера учитывайте потребности вашей организации и ознакомьтесь с разделом [Введение в облачные платформы](https://docs.snowflake.com/en/user-guide/intro-cloud-platforms) в документации Snowflake.
 - Выберите облачного провайдера и регион. Подойдут любые облачные провайдеры и регионы, поэтому выбирайте те, которые вам удобнее.
 
 Вы также можете сначала пройти [руководство по быстрому старту с <Constant name="dbt" /> и Snowflake](/guides/snowflake), если предпочитаете более подробное пошаговое руководство, посвящённое только Snowflake.
 
-### Create a Snowflake SQL file
+### Создание SQL-файла Snowflake {#create-a-snowflake-sql-file}
 
 <CreateSnowflakeSqlFile />
 
@@ -838,11 +838,11 @@ models:
 
 <VersionBlock firstVersion="1.12">
 
-The following sections explain [dimensions](/docs/build/dimensions), [entities](/docs/build/entities), and [simple metrics](/docs/build/metrics-overview#simple-metrics) in more detail, showing how they each play a role in semantic models.
+В следующих разделах объясняется роль [измерений](/docs/build/dimensions), [сущностей](/docs/build/entities) и [простых метрик](/docs/build/metrics-overview#simple-metrics) в семантических моделях.
 
-- [Entities](#entities) act as unique identifiers (like ID columns) that link data together from different tables.
-- [Dimensions](#dimensions) categorize and filter data, making it easier to organize.
-- [Simple metrics](#simple-metrics) calculates data using an aggregation function, providing valuable insights through aggregation.
+- [Сущности](#entities) служат уникальными идентификаторами, например столбцами ID, и связывают данные из разных таблиц.
+- [Измерения](#dimensions) позволяют группировать и фильтровать данные.
+- [Простые метрики](#simple-metrics) вычисляют значения с помощью функций агрегирования.
 
 </VersionBlock>
 

@@ -21,10 +21,10 @@ availability: all_users
 | [sources](/docs/build/sources) | Способ именовать и описывать данные, загружаемые в ваше хранилище инструментами Extract и Load. |
 | [exposures](/docs/build/exposures) | Способ определить и описать downstream-использование вашего проекта. |
 | [metrics](/docs/build/build-metrics-intro) | Способ определить метрики для вашего проекта. |
-| [groups](/docs/build/groups) | Groups позволяют совместно организовывать узлы в ограниченных коллекциях. |
+| [Группы](/docs/build/groups) | Объединяют узлы в отдельные группы. |
 | [analysis](/docs/build/analyses) | Способ организовать аналитические SQL-запросы в вашем проекте, например главный бухгалтерский журнал (general ledger) из QuickBooks. |
-| [semantic models](/docs/build/semantic-models) | Semantic models определяют базовые отношения данных в [MetricFlow](/docs/build/about-metricflow) и [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl), позволяя запрашивать метрики с использованием семантического графа. |
-| [saved queries](/docs/build/saved-queries) | Saved queries упорядочивают переиспользуемые запросы, объединяя метрики, измерения и фильтры в узлы, видимые в dbt DAG. |
+| [Семантические модели](/docs/build/semantic-models) | Определяют базовые отношения данных в [MetricFlow](/docs/build/about-metricflow) и [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl), чтобы метрики можно было запрашивать через семантический граф. |
+| [Сохранённые запросы](/docs/build/saved-queries) | Объединяют метрики, измерения и фильтры в переиспользуемые узлы графа dbt. |
 | [user-defined functions](/docs/build/udfs) | Пользовательские функции (UDFs) позволяют создавать переиспользуемые кастомные функции в вашем хранилище, которыми можно делиться между dbt, BI-инструментами, workflow для data science и другими системами.
 
 При создании структуры вашего проекта вы должны учитывать следующие аспекты, влияющие на рабочий процесс вашей организации:

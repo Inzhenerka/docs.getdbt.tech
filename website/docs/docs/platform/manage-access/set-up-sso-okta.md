@@ -131,9 +131,9 @@ src="/img/docs/dbt-platform/dbt-platform-enterprise/okta/okta-3-saml-settings-to
 
 ### Завершение настройки в Okta {#finish-okta-setup}
 
-Выберите *I'm an Okta customer adding an internal app* и затем *This is an
-internal app that we have created*. Нажмите **Finish**, чтобы завершить настройку
-приложения.
+Выберите *I'm an Okta customer adding an internal app*, а затем
+*This is an internal app that we have created*. Нажмите **Finish**, чтобы завершить настройку.
+
 
 <Lightbox
     collapsed={false}

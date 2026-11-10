@@ -43,7 +43,7 @@ dbt создаёт, обновляет и переименовывает UDF в 
 	</TabItem>
 	</Tabs>
 
-:::important UDF support
+:::important Поддержка UDF
 UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.12 и выше на Snowflake и BigQuery.
 
 Другие языки (например, Java, Scala) в настоящее время не поддерживаются для UDF.
@@ -94,7 +94,7 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
     ```
     </File>
 
-    For Databricks, the contents of the `.py` file become the UDF body verbatim, and Databricks evaluates that body directly instead of calling a named entry point. Write the body so its last statement is a top-level `return` that produces the result. Because of that top-level `return`, the Databricks source is a function _body_, not a runnable `.py` module. For example:
+    В Databricks содержимое файла `.py` используется как тело UDF без изменений. Databricks выполняет его напрямую, без вызова именованной точки входа. Последней инструкцией тела должен быть `return` верхнего уровня, который возвращает результат. Из-за такого `return` исходник Databricks представляет собой _тело функции_, а не исполняемый модуль `.py`. Например:
 
     <File name='functions/is_positive_int.py'>
 
@@ -108,11 +108,11 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
     ```
     </File>
 
-    **Note:** Python UDFs on Databricks require [Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/).
+    **Примечание:** Для Python UDF в Databricks требуется [Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/).
 
     </TabItem>
     <TabItem value="JavaScript">
-    Define a JavaScript UDF in a JavaScript file.
+    Определите JavaScript UDF в файле JavaScript.
 
     <File name='functions/is_positive_int.js'>
 
@@ -150,7 +150,7 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
     ```
     </File>
 
-    For Starburst/Trino, set the argument's `data_type` to a valid engine [data type](https://trino.io/docs/current/language/types.html) (such as `varchar` instead of `string`) and omit `default_value`. On Starburst Galaxy, set the database and schema values as `database: galaxy` and `schema: functions`.
+    Для Starburst/Trino укажите в `data_type` аргумента [тип данных](https://trino.io/docs/current/language/types.html), который поддерживает движок, например `varchar` вместо `string`. Не задавайте `default_value`. В Starburst Galaxy задайте `database: galaxy` и `schema: functions`.
 
     </TabItem>
 
@@ -190,9 +190,9 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
 
     В Databricks параметры `runtime_version` и `entry_point` принимаются для совместимости между адаптерами, но ни на что не влияют. Databricks самостоятельно управляет средой выполнения Python и напрямую использует тело функции, поэтому dbt выводит предупреждение, если вы задаёте эти параметры.
 
-    You can specify public third-party PyPI packages for your Python UDF with the optional `packages` config. List package names, such as `numpy` and `pandas`, and optionally pin versions, such as `pandas==1.5.0`. The warehouse installs these packages when it creates the UDF, so your UDF can use functionality from external Python libraries. On Snowflake, some packages are installed from the Anaconda repository, and you may need to [accept Anaconda's Terms of Service](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages#using-third-party-packages-from-anaconda) before you can use them.
+    С помощью необязательной настройки `packages` можно подключить к Python UDF общедоступные пакеты из PyPI. Укажите имена пакетов, например `numpy` и `pandas`. При необходимости закрепите версии, например `pandas==1.5.0`. Хранилище установит пакеты при создании UDF. В Snowflake некоторые пакеты устанавливаются из репозитория Anaconda. Для их использования может потребоваться [принять условия обслуживания Anaconda](https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-packages#using-third-party-packages-from-anaconda).
 
-    The following example shows a Python UDF with the required configs (`runtime_version`, `entry_point`), the optional `packages` config, and other common configs:
+    В примере Python UDF заданы обязательные параметры `runtime_version` и `entry_point`, необязательный параметр `packages` и другие распространённые настройки:
 
     <File name='functions/is_positive_int.yml'>
 
@@ -221,7 +221,7 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
     </TabItem>
     <TabItem value="JavaScript">
 
-    You can optionally set [`snowflake.quote_args`](/reference/resource-configs/quote_args) to control whether argument names are quoted when creating a JavaScript UDF on Snowflake.
+    Параметр [`snowflake.quote_args`](/reference/resource-configs/quote_args) позволяет указать, следует ли заключать имена аргументов в кавычки при создании JavaScript UDF в Snowflake.
 
     <File name='functions/is_positive_int.yml'>
 
@@ -344,7 +344,7 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
     RETURN CASE WHEN regexp_like(a_string, '^[0-9]+$') THEN 1 ELSE 0 END;
     ```
 
-    For more information, refer to [Starburst/Trino configurations](/reference/resource-configs/trino-configs#user-defined-functions).
+    Подробнее см. раздел [Настройки Starburst/Trino](/reference/resource-configs/trino-configs#user-defined-functions).
 
     </TabItem>
 
@@ -401,7 +401,7 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
     $$;
     ```
 
-    Databricks omits the `RUNTIME_VERSION` and `HANDLER` clauses. The runtime is managed internally, and the contents of your `.py` file become the function body verbatim &mdash; including the trailing `return main(a_string)` that produces the result.
+    Databricks не добавляет выражения `RUNTIME_VERSION` и `HANDLER`. Средой выполнения управляет Databricks. Содержимое файла `.py` становится телом функции без изменений, включая завершающую инструкцию `return main(a_string)`, которая возвращает результат.
     </TabItem>
     </Tabs>
     </TabItem>
@@ -461,7 +461,7 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
     </File>
 
     В DAG создаётся узел UDF на основе SQL/Python‑файла и YAML‑описания, и появляется зависимость `is_positive_int` → `my_model`.
-
+    <Lightbox src="/img/docs/building-a-dbt-project/UDF-DAG.png" width="85%" title="Узел UDF в графе зависимостей" />
 После определения UDF ваши изменения применяются к UDF в хранилище при следующем запуске `dbt build`, если вы изменили что-либо из следующего:
 
 - Файл SQL, Python или JavaScript, содержащий тело функции (`is_positive_int.sql`, `is_positive_int.py` или `is_positive_int.js` в этих примерах)
@@ -470,7 +470,7 @@ UDF на JavaScript поддерживаются в <Constant name="dbt" /> v1.1
 
 dbt обнаруживает все эти изменения при использовании [`state:modified`](/reference/node-selection/methods#state).
 
-### Определение перегруженных UDF
+### Определение перегруженных UDF {#defining-overloaded-udfs}
 
 Используйте свойство [`overloads`](/reference/resource-properties/overloads) (доступно в <Constant name="dbt" /> v1.12+), чтобы определить несколько сигнатур аргументов для одной функции. Это позволяет вызывать функцию с одним и тем же именем, передавая входные данные разных типов, без создания отдельных UDF для каждого варианта. `overloads` поддерживается для SQL UDF в Snowflake и Postgres, а также для UDF на Python и JavaScript в Snowflake.
 
@@ -562,11 +562,9 @@ unit_tests:
 
 ## Просмотр и сборка UDF {#listing-and-building-udfs}
 
-Используйте команду [`list`](/reference/commands/list#listing-functions), чтобы вывести список UDF в проекте:  
-`dbt list --select "resource_type:function"` или `dbt list --resource-type function`.
+Используйте команду [`list`](/reference/commands/list#listing-functions), чтобы вывести список UDF в проекте: `dbt list --select "resource_type:function"` или `dbt list --resource-type function`.
 
-Используйте команду [`build`](/reference/commands/build#functions), чтобы выбирать UDF при сборке проекта:  
-`dbt build --select "resource_type:function"`.
+Используйте команду [`build`](/reference/commands/build#functions), чтобы выбирать UDF при сборке проекта: `dbt build --select "resource_type:function"`.
 
 Подробнее о выборе UDF см. в примерах в разделе [Node selector methods](/reference/node-selection/methods#file).
 
@@ -576,11 +574,6 @@ unit_tests:
 - UDF на Python поддерживаются только в Snowflake, BigQuery и Databricks (при использовании <Constant name="core" /> или <Constant name="fusion" />). Другие хранилища данных пока не поддерживаются для UDF на Python.
 - В настоящее время поддерживаются только <Term id="scalar">скалярные</Term> и <Term id="aggregate">агрегатные</Term> функции. Подробнее см. в разделе [Поддерживаемые типы функций](/reference/resource-configs/type#supported-function-types).
 - Свойство `overloads` поддерживается для UDF на SQL в Snowflake и Postgres, а также для UDF на Python и JavaScript в Snowflake.
-
-- Создание UDF на других языках (например, Java, JavaScript или Scala) пока не поддерживается.
-- Python UDF в настоящее время поддерживаются только в Snowflake и BigQuery. Другие хранилища пока не поддерживаются.
-- Поддержка Python UDF в <Constant name="fusion" /> пока недоступна. Актуальные обновления см. в [Fusion Diaries](https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements).
-- В настоящий момент поддерживаются только функции типов <Term id="scalar">scalar</Term> и <Term id="aggregate">aggregate</Term>. Подробнее см. в разделе [Supported function types](/reference/resource-configs/type#supported-function-types).
 
 ## Связанные FAQ {#related-faqs}
 

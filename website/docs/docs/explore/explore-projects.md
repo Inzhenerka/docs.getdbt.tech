@@ -12,7 +12,7 @@ availability:
 ---
  
 
-# Discover data with Catalog
+# Поиск данных в Catalog {#discover-data-with-catalog}
 
 <IntroText>
 
@@ -317,13 +317,13 @@ import ExplorerCourse from '/snippets/_explorer-course-link.md';
 
 ### Пример деталей модели {#example-of-model-details}
 
-To view a model's details page in <Constant name="catalog" />:
+Чтобы открыть страницу модели в <Constant name="catalog" />:
 
-1. Select your project in the sidebar.
-2. Click **Models**.
-3. Under **Models**, select a model (for example, `customers`).
+1. Выберите проект в боковой панели.
+2. Нажмите **Models**.
+3. В разделе **Models** выберите модель, например `customers`.
 
-On the **General** tab, you can review the description, latest status, and lineage graph. Select **Full Lineage** to open the full graph view.
+На вкладке **General** можно посмотреть описание, последний статус и граф зависимостей. Нажмите **Full Lineage**, чтобы открыть полный граф.
 
 <DocCarousel slidesPerView={1}>
 

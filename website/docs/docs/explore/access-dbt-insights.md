@@ -160,21 +160,15 @@ import CopilotWizardDifferences from '/snippets/_copilot-wizard-diff.md';
 
 Чтобы открыть <Constant name="catalog" />, нажмите значок **<Constant name="catalog" />** в [боковом меню консоли запросов](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
 
-Чтобы открыть <Constant name="explorer" />, нажмите на иконку **<Constant name="explorer" />** в [боковом меню Query console](/docs/explore/navigate-dbt-insights#query-console-sidebar-menu).
-
 <Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights, интегрированный с dbt Catalog" />
+
+### Настройка контекста Jinja {#set-jinja-environment}
 
 Задайте среду компиляции, чтобы управлять тем, как обрабатываются функции Jinja. Эта функция:
 - Поддерживает «типизированные» среды, отмеченные как `Production`, `Staging` и/или `Development`.
 - Позволяет выполнять запросы <Constant name="semantic_layer" /> к средам staging (среды разработки не поддерживаются).
 - По-прежнему использует учетные данные конкретного пользователя, поэтому пользователи должны иметь соответствующие права доступа для выполнения запросов к `PROD` и `STG`. 
 - При смене среды меняется контекст представления <Constant name="catalog" /> в <Constant name="insights" />, а также контекст среды при переходе в <Constant name="catalog" /> и <Constant name="canvas" />. Например, если переключиться на `Staging` в <Constant name="insights" /> и выбрать **View in Catalog**, откроется представление `Staging` в <Constant name="catalog" />.
-
-Настройте окружение компиляции, чтобы управлять тем, как рендерятся Jinja‑функции. Эта функция:
-- Поддерживает «типизированные» окружения, помеченные как `Production`, `Staging` и/или `Development`.
-- Позволяет выполнять запросы <Constant name="semantic_layer" /> к staging‑окружениям (development‑окружения не поддерживаются).
-- По‑прежнему использует индивидуальные учётные данные пользователей, поэтому у них должен быть соответствующий доступ для выполнения запросов к `PROD` и `STG`.
-- При смене окружения меняется контекст для представления <Constant name="explorer" /> в <Constant name="query_page" />, а также контекст окружения при переходе в <Constant name="explorer" /> и <Constant name="visual_editor" />. Например, если переключиться на `Staging` в <Constant name="query_page" /> и выбрать **View in Catalog**, откроется представление `Staging` в <Constant name="explorer" />.
 
 <Lightbox src="/img/docs/dbt-insights/insights-jinja-environment.png" width="90%" title="Настройка окружения для Jinja‑контекста" />
 

@@ -1,11 +1,11 @@
 ---
-title: What if my prod environment isn't named prod?
-description: "Learn how to specify a custom defer-to environment for dbt State."
-sidebar_label: "What if my prod environment isn't named prod?"
+title: Что делать, если моя среда prod называется не prod?
+description: "Узнайте, как указать пользовательскую среду для перенаправления ссылок в dbt State."
+sidebar_label: "Что делать, если моя среда prod называется не prod?"
 id: non-prod-environment
 ---
 
-You can specify the defer-to environment using the [`defer_to_target`](/reference/resource-configs/defer-to-target) config in `profiles.yml`:
+Вы можете указать среду для перенаправления ссылок с помощью настройки [`defer_to_target`](/reference/resource-configs/defer-to-target) в `profiles.yml`:
 
 ```yaml
 my_project:
@@ -15,4 +15,4 @@ my_project:
       defer_to_target: production
 ```
 
-`defer_to_target` only applies to self-managed deployments. If you're using the dbt platform, deferral is configured through your environment settings in the UI. For more details, refer to [Configuring deferral](/docs/deploy/dbt-state-deferral).
+`defer_to_target` применяется только к самостоятельно управляемым развертываниям. Если вы используете платформу dbt, перенаправление ссылок настраивается в параметрах среды в пользовательском интерфейсе. Подробнее см. в разделе [Настройка перенаправления ссылок](/docs/deploy/dbt-state-deferral).

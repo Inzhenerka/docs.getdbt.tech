@@ -96,5 +96,5 @@ PrivateSelections="Вы также можете сделать эти выбор
 
 Использование и передача <Constant name="semantic_layer" /> для Sheets, а также передача информации, полученной из Google APIs, в другие приложения осуществляется в соответствии с [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), включая требования Limited Use.
 
-## FAQs {#faqs}
+## Частые вопросы {#faqs}
 <FAQ path="Troubleshooting/sl-alpn-error" />

@@ -26,15 +26,7 @@ availability: platform_login
 - Использовать [кэширование Git-репозитория в <Constant name="dbt" />](/docs/platform/account-settings#git-repository-caching-) для защиты от сбоев сторонних сервисов и повышения надежности выполнения заданий. <Lifecycle status="managed,managed_plus" />
 - Использовать [гибридные проекты](/docs/deploy/hybrid-projects) для загрузки артефактов <Constant name="dbt" /> в <Constant name="dbt_platform" />, чтобы обеспечить централизованный обзор, ссылки между проектами и упростить совместную работу. <Lifecycle status="managed_plus" /> <Lifecycle status="preview"/>
 
-- Поддерживать актуальность production‑данных на регулярной основе  
-- Обеспечивать эффективность CI‑ и production‑пайплайнов  
-- Быстро выявлять первопричины сбоев в окружениях развёртывания  
-- Поддерживать высокое качество кода и данных в production  
-- Получать прозрачность и обзор [состояния](/docs/explore/data-tile) заданий развёртывания, моделей и тестов  
-- Использовать [exports](/docs/use-dbt-semantic-layer/exports) для записи [saved queries](/docs/build/saved-queries) в вашей платформе данных, обеспечивая надёжную и быструю отчётность по метрикам  
-- [Визуализировать](/docs/platform-integrations/downstream-exposures-tableau) и [оркестрировать](/docs/platform-integrations/orchestrate-exposures) downstream‑exposures, чтобы понимать, как модели используются во внешних инструментах, и проактивно обновлять базовые источники данных во время запланированных dbt‑задач. <Lifecycle status="managed,managed_plus" />  
-- Использовать [кэширование Git‑репозиториев <Constant name="cloud" />](/docs/platform/account-settings#git-repository-caching-) для защиты от сбоев сторонних сервисов и повышения надёжности выполнения заданий. <Lifecycle status="managed,managed_plus" />  
-- Использовать [Hybrid projects](/docs/deploy/hybrid-projects) для загрузки артефактов <Constant name="cloud" /> в <Constant name="dbt_platform" /> с целью централизованной видимости, перекрёстных ссылок между проектами и более удобной совместной работы. <Lifecycle status="managed_plus" /> <Lifecycle status="Preview"/>
+Прежде чем продолжить, ознакомьтесь с тем, как dbt использует [окружения развёртывания](/docs/deploy/deploy-environments).
 
 Узнайте, как использовать возможности <Constant name="dbt" />, чтобы вашей команде было проще своевременно предоставлять качественные данные в промышленной среде.
 ## Развертывание с dbt

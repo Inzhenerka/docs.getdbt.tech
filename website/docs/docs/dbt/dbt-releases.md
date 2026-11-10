@@ -1,61 +1,60 @@
 ---
-title: "dbt-releases"
+title: "Релизы dbt"
 id: "dbt-releases"
-sidebar_label: "dbt releases"
-description: "Track current versions and release history for v2."
+sidebar_label: "Релизы dbt"
+description: "Отслеживайте актуальные версии и историю релизов v2."
 pagination_next: null
 pagination_prev: null
 ---
 
 import FusionReleases from '/src/components/fusionReleases';
 
-# Self-hosted dbt releases
+# Релизы dbt для самостоятельного размещения
 
-This page shows release information for local builds of dbt v2 only. v2 releases on the <Constant name="dbt_platform" /> adhere to the [release tracks](/docs/dbt-versions/dbt-release-tracks) categories, giving you control over release cadence and stability.
+На этой странице представлена информация о релизах только для локальных сборок dbt v2. Релизы v2 на <Constant name="dbt_platform" /> следуют категориям [каналов обновления](/docs/dbt-versions/dbt-release-tracks), что позволяет вам управлять частотой обновлений и стабильностью.
 
-Track current versions and full release history for v2. This data updates live from dbt release channels.
+Отслеживайте актуальные версии и полную историю релизов v2. Эти данные обновляются в реальном времени из каналов релизов dbt.
 
-Each of the versions on this page links to the matching section in the [v2 changelog](https://github.com/dbt-labs/dbt/blob/main/CHANGELOG-dbt.md) on GitHub.
+Каждая версия на этой странице содержит ссылку на соответствующий раздел [журнала изменений v2](https://github.com/dbt-labs/dbt/blob/main/CHANGELOG-dbt.md) на GitHub.
 
-## Release channels
+## Каналы релизов
 
-dbt v2 is distributed through three release channels:
+dbt v2 распространяется через три канала релизов:
 
-| Channel | Description | Stability |
+| Канал | Описание | Стабильность |
 |---------|-------------|-----------|
-| `latest` | The known `good` stable version | ✅ Recommended for production |
-| `canary` | The latest version to be officially released | ⚠️ Most recent stable version but still undergoing thorough testing |
-| `dev` | The latest development build | ❌ May be unstable; may not have passed all internal tests |
+| `latest` | Проверенная стабильная версия без известных проблем | ✅ Рекомендуется для производственной среды |
+| `canary` | Последняя официально выпущенная версия | ⚠️ Самая новая стабильная версия, которая всё ещё проходит тщательное тестирование |
+| `dev` | Последняя сборка для разработки | ❌ Может быть нестабильной; возможно, прошла не все внутренние тесты |
 
-## Known-bad releases
+## Релизы с известными проблемами
 
-If a shipped v2 release is later found to contain a regression, dbt Labs flags it as a known-bad release. If you have a flagged version installed, the dbt VS Code extension shows a warning notification telling you which version to update to. To move off a flagged version, update it using your installation method (for example, pip or Homebrew). For details, including how air-gapped users receive these notifications, refer to [Known-bad releases](/docs/dbt-versions/dbt-version-compatibility#known-bad-releases).
+Если после выпуска релиза v2 в нём обнаруживается регрессия, dbt Labs помечает его как релиз с известными проблемами. Если у вас установлена такая версия, расширение dbt для VS Code показывает предупреждение с указанием версии, до которой следует обновиться. Чтобы перейти с версии с известными проблемами, обновите её тем же способом, которым устанавливали (например, с помощью pip или Homebrew). Подробности, в том числе о том, как пользователи изолированных от сети сред получают такие уведомления, см. в разделе [Релизы с известными проблемами](/docs/dbt-versions/dbt-version-compatibility#known-bad-releases).
 
-## dbt platform release tracks
+## Каналы обновления dbt platform
 
-On <Constant name="dbt_platform" />, each [environment](/docs/deploy/deploy-environments) uses the account default or your chosen **release track**. Release tracks control how often that environment receives new v2 builds. They're separate from the local CLI release channels in the previous section.
+На <Constant name="dbt_platform" /> каждая [среда](/docs/deploy/deploy-environments) использует **канал обновления**, заданный по умолчанию для учётной записи или выбранный вами. Каналы обновления определяют, как часто эта среда получает новые сборки v2. Они не связаны с каналами релизов локального CLI, описанными в предыдущем разделе.
 
-For cadence, plan availability, and API values (`nightly`, `stable`, and more), refer to [release tracks](/docs/dbt-versions/dbt-release-tracks#dbt-v2-release-tracks). To change the release track for an environment, follow [Upgrade dbt in dbt platform](/docs/dbt-versions/upgrade-dbt-platform-version).
+Сведения о частоте обновлений, доступности в тарифных планах и значениях API (`nightly`, `stable` и других) см. в разделе [Каналы обновления](/docs/dbt-versions/dbt-release-tracks#dbt-v2-release-tracks). Чтобы изменить канал обновления для среды, следуйте инструкциям в разделе [Обновление dbt в dbt platform](/docs/dbt-versions/upgrade-dbt-platform-version).
 
-:::tip Live data below is for local CLI channels
+:::tip Актуальные данные ниже относятся к каналам локального CLI
 
-The **Current versions** cards and full release list below pull the public v2 manifest used for _local_ installs (`dev`, `canary`, `latest`). You should use [release tracks](/docs/dbt-versions/dbt-release-tracks) for <Constant name="dbt_platform" /> planning.
+Карточки **Текущие версии** и полный список релизов ниже получают данные из общедоступного манифеста v2, используемого для _локальных_ установок (`dev`, `canary`, `latest`). Для планирования обновлений на <Constant name="dbt_platform" /> следует использовать [каналы обновления](/docs/dbt-versions/dbt-release-tracks).
 
 :::
 
 <details>
-    <summary>Updating your self-hosted installation</summary>
-<p>
+    <summary>Обновление самостоятельно размещённой установки</summary>
 
-The following commands apply only to _local_ installations of dbt. They don't affect which v2 build your <Constant name="dbt_platform" /> environments use. Instead, you can set a [release track](https://github.com/docs/dbt-versions/dbt-release-tracks#dbt-v2-release-tracks) per environment in <Constant name="dbt_platform" />.
+Следующие команды применяются только к _локальным_ установкам dbt. Они не влияют на то, какую сборку v2 используют ваши среды на <Constant name="dbt_platform" />. Для этого можно задать [канал обновления](https://github.com/docs/dbt-versions/dbt-release-tracks#dbt-v2-release-tracks) для каждой среды на <Constant name="dbt_platform" />.
 
-Running the system update command without a version flag installs the `latest` stable release:
+Выполнение команды обновления системы без флага версии устанавливает стабильный релиз `latest`:
 
 ```shell
 dbt system update
 ```
 
-To install a specific channel or version, pass the `--version` flag:
+Чтобы установить версию из определённого канала или конкретную версию, передайте флаг `--version`:
 
 ```shell
 dbt system update --version canary    # Install the canary release
@@ -63,7 +62,6 @@ dbt system update --version dev       # Install the dev release
 dbt system update --version 2.0.0     # Install a specific version
 ```
 
-</p>
 
 </details>
 

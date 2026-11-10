@@ -1,6 +1,6 @@
 ---
-title: "Схема объекта Exposures"
-sidebar_label: "Exposures"
+title: "Схема объекта exposures"
+sidebar_label: "Зависимые ресурсы"
 id: "discovery-schema-job-exposures"
 availability:
   surface: platform
@@ -10,19 +10,20 @@ availability:
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-Объект exposures позволяет запрашивать информацию обо всех exposures в рамках конкретного job. Подробнее см. в разделе [Add Exposures to your DAG](/docs/build/exposures).
+Объект exposures позволяет запрашивать информацию обо всех зависимых ресурсах (exposures) в заданном задании. Подробнее см. в разделе [Добавление зависимых ресурсов в DAG](/docs/build/exposures).
 
-### Аргументы {#arguments}
 
-При выполнении запроса `exposures` доступны следующие аргументы.
+### Аргументы
+
+При запросе `exposures` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="exposures" />
 
-Ниже приведены иллюстративные примеры запросов и описание схемы объекта exposures.
+Ниже приведены наглядные примеры запросов и описание схемы объекта exposures.
 
-### Пример запроса {#example-query}
+### Пример запроса
 
-В приведённом ниже примере запрашивается информация обо всех exposures в рамках конкретного job, включая имя и email владельца, URL, а также сведения о родительских sources и родительских models для каждого exposure.
+Пример ниже запрашивает информацию обо всех зависимых ресурсах в заданном задании, включая имя и электронную почту владельца, URL, а также информацию о родительских источниках и моделях для каждого зависимого ресурса.
 
 ```graphql
 {
@@ -63,8 +64,7 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 }
 ```
 
-### Поля {#fields}
-
-При выполнении запроса `exposures` доступны следующие поля:
+### Поля
+При запросе `exposures` доступны следующие поля:
 
 <SchemaTable nodeName="ExposureNode" />

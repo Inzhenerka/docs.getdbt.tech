@@ -29,7 +29,7 @@
 
 3. Сохраните изменения.
 
-#### Часто задаваемые вопросы {#faqs}
+#### Часто задаваемые вопросы {#delete-example-models-faqs}
 
 <FAQ path="Models/removing-deleted-models" />
 <FAQ path="Troubleshooting/unused-model-configurations" />

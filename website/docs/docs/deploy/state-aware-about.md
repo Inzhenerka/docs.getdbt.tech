@@ -173,9 +173,9 @@ select * from joined
     where: <string>
   ```
   
- - **Efficient testing is available only in deploy jobs**. CI and merge jobs currently do not have the option to enable this feature. 
+ - **Оптимизированное тестирование доступно только в заданиях развёртывания.** В заданиях CI и слияния включить его пока нельзя.
 
-## Related FAQs
+## Частые вопросы по теме {#related-faqs}
 
 <FAQ path="Runs/what-happened-to-sao" />
 <FAQ path="Runs/sao-difference-core" />
@@ -186,7 +186,7 @@ select * from joined
 - [Артефакты](/docs/deploy/artifacts)
 - [Jobs непрерывной интеграции (CI)](/docs/deploy/ci-jobs)
 - [`freshness`](/reference/resource-configs/freshness)
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
-- [Migrate to dbt State](/docs/deploy/dbt-state-migration)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Параметры dbt State](/reference/resource-configs/dbt-state-configs)
+- [Переход на dbt State](/docs/deploy/dbt-state-migration)

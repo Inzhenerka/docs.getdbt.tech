@@ -1,52 +1,52 @@
 ---
-title: "Headless mode"
+title: "Неинтерактивный режим"
 id: "wizard-headless"
-description: "Run dbt Wizard in headless mode for scripts, CI pipelines, and automation."
-sidebar_label: "Headless mode"
+description: "Запускайте dbt Wizard в неинтерактивном режиме для скриптов, конвейеров CI и автоматизации."
+sidebar_label: "Неинтерактивный режим"
 tags: [AI, Wizard]
 availability: local_all
 ---
 
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# Headless mode <Lifecycle status="beta"/>
+# Неинтерактивный режим <Lifecycle status="beta"/>
 
 <IntroText>
-<Constant name="wizard" /> can run without the interactive TUI — useful for scripts, CI pipelines, pre-commit hooks, and any workflow where you want a one-shot result without human-in-the-loop approval.
+<Constant name="wizard" /> может работать без интерактивного текстового интерфейса (TUI) — это удобно для скриптов, конвейеров CI, хуков pre-commit и любых рабочих процессов, в которых нужно получить результат за один запуск без подтверждения со стороны пользователя.
 </IntroText>
 
 <WizardFeedbackCallout />
 
-## `exec` — one-shot prompts
+## `exec` — разовые запросы
 
-Run a single prompt and exit:
+Выполните один запрос и завершите работу:
 
 ```bash
 wizard exec "list all models with no tests"
 ```
 
-Pipe input via stdin:
+Передайте входные данные через stdin:
 
 ```bash
 echo "which sources have stale freshness?" | wizard exec -
 ```
 
-Use `exec` in CI to gate on quality checks:
+Используйте `exec` в CI, чтобы выполнять проверки качества перед переходом к следующим этапам:
 
 ```bash
 # Check test coverage before merging
 wizard exec "are there any models in models/marts/ with no tests?"
 ```
 
-### JSON output
+### Вывод в формате JSON
 
-For downstream processing, emit a structured JSON event stream:
+Для последующей обработки выводите структурированный поток событий в формате JSON:
 
 ```bash
 wizard exec --json "summarize test coverage by schema" > coverage.json
 ```
 
-With a JSON Schema to constrain the response shape:
+Используйте JSON Schema, чтобы задать структуру ответа:
 
 ```bash
 wizard exec \
@@ -55,7 +55,7 @@ wizard exec \
   "summarize test coverage by schema"
 ```
 
-Write the final message to a file:
+Запишите итоговое сообщение в файл:
 
 ```bash
 wizard exec \
@@ -63,27 +63,27 @@ wizard exec \
   "review the changes in this branch for correctness"
 ```
 
-## `review` — automated code review
+## `review` — автоматическая проверка кода
 
-Review uncommitted changes:
+Проверьте незакоммиченные изменения:
 
 ```bash
 wizard review --uncommitted
 ```
 
-Review a branch diff in CI:
+Проверьте изменения в ветке относительно базовой ветки в CI:
 
 ```bash
 wizard review --base main
 ```
 
-Review a specific commit:
+Проверьте конкретный коммит:
 
 ```bash
 wizard review --commit abc1234
 ```
 
-### Example: GitHub Actions code review
+### Пример: проверка кода в GitHub Actions
 
 ```yaml
 - name: dbt Wizard review
@@ -94,9 +94,9 @@ wizard review --commit abc1234
     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 ```
 
-## Permissions in headless mode
+## Разрешения в неинтерактивном режиме
 
-In headless `exec` mode, Wizard runs without interactive approval prompts. Pre-grant the sandbox permissions you need:
+В неинтерактивном режиме `exec` Wizard работает без интерактивных запросов на подтверждение. Заранее предоставьте необходимые разрешения для изолированной среды:
 
 ```bash
 # Read-only analysis (default — safe for CI)
@@ -109,9 +109,9 @@ wizard exec -s workspace-write "add not_null tests to all primary keys in stagin
 wizard exec -s workspace-write "compile and validate fct_orders"
 ```
 
-For read-only analysis tasks (coverage checks, impact queries, documentation gaps), the default permissions are sufficient. For tasks that write files or run dbt commands, pass the appropriate flags explicitly.
+Для задач анализа, требующих только чтения (проверки покрытия тестами, запросы для оценки влияния изменений, выявление пробелов в документации), достаточно разрешений по умолчанию. Для задач, которые записывают файлы или выполняют команды dbt, явно указывайте соответствующие флаги.
 
-## Related docs
+## Связанная документация
 
-- [<Constant name="wizard" /> command reference](/docs/dbt-ai/wizard-cli-reference)
-- [Use cases and examples](/docs/dbt-ai/wizard-use-cases)
+- [Справочник команд <Constant name="wizard" />](/docs/dbt-ai/wizard-cli-reference)
+- [Сценарии использования и примеры](/docs/dbt-ai/wizard-use-cases)

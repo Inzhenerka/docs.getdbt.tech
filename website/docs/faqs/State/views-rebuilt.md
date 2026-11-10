@@ -1,33 +1,33 @@
 ---
-title: Why is my model being rebuilt instead of reused?
-description: "Learn the common reasons dbt State rebuilds models instead of reusing them."
-sidebar_label: 'Why is my model being rebuilt instead of reused?'
+title: Почему моя модель пересоздаётся, а не используется повторно?
+description: "Узнайте о распространённых причинах, по которым dbt State пересоздаёт модели вместо их повторного использования."
+sidebar_label: 'Почему моя модель пересоздаётся, а не используется повторно?'
 id: views-rebuilt
 ---
 
-dbt State decides whether to reuse a model by parsing the rendered SQL into a syntax tree and comparing the hash. If the hash has changed (implying the model's logic has changed), dbt State rebuilds the model.
+dbt State решает, можно ли повторно использовать модель, разбирая SQL-код, полученный после рендеринга, в синтаксическое дерево и сравнивая хеш. Если хеш изменился (что указывает на изменение логики модели), dbt State пересоздаёт модель.
 
-dbt State prioritizes safety and precision; if it can't guarantee skipping a node is safe, then it rebuilds the node to be sure. A few patterns that commonly cause overeager rebuilds are listed on this page, along with recommendations to increase reuse rate.
+Для dbt State безопасность и точность имеют приоритет: если нельзя гарантировать, что пропуск узла безопасен, узел пересоздаётся. На этой странице перечислены несколько распространённых ситуаций, которые приводят к избыточному пересозданию моделей, а также рекомендации по увеличению доли повторного использования.
 
-The following patterns commonly cause unexpected rebuilds:
+Следующие ситуации часто приводят к неожиданному пересозданию моделей:
 
-- [Views with `select *`](#views-with-select)
-- [Non-deterministic Jinja templating](#non-deterministic-jinja-templating)
-- [Models with external sources in BigQuery](#models-with-external-sources-on-bigquery)
-- [Models with custom materializations](#models-with-custom-materializations)
+- [Представления с `select *`](#views-with-select)
+- [Недетерминированные шаблоны Jinja](#non-deterministic-jinja-templating)
+- [Модели с внешними источниками в BigQuery](#models-with-external-sources-in-bigquery)
+- [Модели с пользовательскими материализациями](#models-with-custom-materializations)
 
-## Views with `select *` {#views-with-select}
+## Представления с `select *` {#views-with-select}
 
-dbt State reuses a model when its compiled SQL matches the stored hash. When a view uses `select *` directly on a `ref()` or `source()`, dbt can't determine the column list at parse time &mdash; the upstream model or source table might have gained or lost columns since the last run. To be safe, dbt State forces a rebuild.
+dbt State повторно использует модель, когда хеш её скомпилированного SQL-кода совпадает с сохранённым хешем. Если представление использует `select *` непосредственно для `ref()` или `source()`, dbt не может определить список столбцов на этапе разбора &mdash; с момента последнего запуска в вышестоящей модели или исходной таблице могли появиться или исчезнуть столбцы. Чтобы избежать риска, dbt State принудительно пересоздаёт модель.
 
-For example, this view will be rebuilt even if `stg_orders` hasn't changed because dbt can't know at parse time whether `stg_orders` has the same columns as before:
+Например, это представление будет пересоздано, даже если `stg_orders` не изменилась, поскольку на этапе разбора dbt не может определить, остались ли в `stg_orders` те же столбцы, что и раньше:
 
 ```sql
 -- stg_orders_view.sql (materialized: view)
 select * from {{ ref('stg_orders') }}
 ```
 
-However, if you use `select *` on a CTE, dbt can resolve the columns from the CTE definition and safely reuse the view:
+Однако если использовать `select *` для CTE, dbt может определить столбцы из определения CTE и безопасно использовать представление повторно:
 
 ```sql
 with renamed as (
@@ -37,7 +37,7 @@ with renamed as (
 select * from renamed
 ```
 
-If a CTE explicitly names its columns, a `select *` that reads from that CTE won't force a rebuild even if an earlier CTE used `select *` on a `ref()` or `source()`. The typical staging pattern is reused:
+Если в CTE явно указаны имена столбцов, запрос `select *`, читающий из этого CTE, не приведёт к принудительному пересозданию, даже если в предыдущем CTE использовался `select *` для `ref()` или `source()`. Модель с типичной структурой слоя staging будет использоваться повторно:
 
 ```sql
 with source as (
@@ -57,20 +57,20 @@ select * from renamed
 
 
 :::tip
-To avoid forced rebuilds, use explicit column names when selecting directly from a `ref()` or `source()`. You can also exclude views from execution using `--exclude config.materialized:view`.
+Чтобы избежать принудительного пересоздания, явно указывайте имена столбцов при выборке непосредственно из `ref()` или `source()`. Также можно исключить представления из выполнения с помощью `--exclude config.materialized:view`.
 :::
 
-## Non-deterministic Jinja templating
+## Недетерминированные шаблоны Jinja {#non-deterministic-jinja-templating}
 
-Some macros and environment variables can cause unexpected rebuilds. For example, `dbt_utils.get_relations_by_pattern` (an introspective macro) combined with `dbt_utils.union_relations` can return relations in a different order on each run, producing different rendered SQL even when your project logic hasn't changed. Similarly, environment variables that change between runs produce different rendered SQL on every run:
+Некоторые макросы и переменные окружения могут приводить к неожиданному пересозданию моделей. Например, `dbt_utils.get_relations_by_pattern` (макрос для анализа метаданных) в сочетании с `dbt_utils.union_relations` может возвращать объекты базы данных в разном порядке при каждом запуске, формируя разный SQL-код после рендеринга, даже если логика проекта не изменилась. Аналогично, переменные окружения, значения которых меняются между запусками, приводят к формированию разного SQL-кода после рендеринга при каждом запуске:
 
 ```sql
 select '{{ env_var("AIRFLOW_RUN_ID") }}' as airflow_run_id, ...
 ```
 
-Because the query result order or the environment variable's value changes, the rendered SQL differs from the stored hash on every run. dbt State treats this as a code change and rebuilds the model, even though the underlying project logic hasn't changed. This pattern can affect any model type, not just views; if a base or staging model rebuilds on every run, all of its downstream models rebuild, too.
+Поскольку порядок результатов запроса или значение переменной окружения меняется, хеш SQL-кода после рендеринга отличается от сохранённого хеша при каждом запуске. dbt State считает это изменением кода и пересоздаёт модель, хотя основная логика проекта не изменилась. Эта ситуация может затронуть модели любого типа, а не только представления: если базовая модель или модель слоя staging пересоздаётся при каждом запуске, все зависящие от неё модели также пересоздаются.
 
-To avoid these unnecessary rebuilds, enable [`compare_unrendered_code`](/reference/resource-configs/compare-unrendered-code). When enabled, dbt State checks both the Jinja template and rendered SQL; non-deterministic values that don't change the template don't trigger a rebuild. For example:
+Чтобы избежать этих ненужных пересозданий, включите [`compare_unrendered_code`](/reference/resource-configs/compare-unrendered-code). При включённом параметре dbt State проверяет и шаблон Jinja, и SQL-код после рендеринга; недетерминированные значения, которые не меняют шаблон, не вызывают пересоздания. Например:
 
 ```sql
 {{ config(state={"compare_unrendered_code": true}) }}
@@ -78,24 +78,24 @@ To avoid these unnecessary rebuilds, enable [`compare_unrendered_code`](/referen
 select '{{ env_var("AIRFLOW_RUN_ID") }}' as airflow_run_id, ...
 ```
 
-## Models with external sources on BigQuery
+## Модели с внешними источниками в BigQuery {#models-with-external-sources-in-bigquery}
 
-On BigQuery, models that use external sources (such as Google Sheets) always rebuild because BigQuery doesn't expose modification timestamps for external sources, so dbt State can't determine freshness.
+В BigQuery модели, использующие внешние источники (например, Google Sheets), всегда пересоздаются, поскольку BigQuery не предоставляет временные метки изменения внешних источников, и dbt State не может определить актуальность данных.
 
 :::tip
-To prevent external sources from always being considered stale, configure [`loaded_at_field`](/reference/resource-configs/freshness) or [`loaded_at_query`](/reference/resource-configs/freshness) in your source definition to point to a timestamp field. This lets dbt State query a timestamp field directly to determine freshness, rather than relying on warehouse metadata.
+Чтобы внешние источники не считались устаревшими при каждом запуске, настройте [`loaded_at_field`](/reference/resource-configs/freshness) или [`loaded_at_query`](/reference/resource-configs/freshness) в определении источника, указав поле с временной меткой. Это позволит dbt State запрашивать поле с временной меткой напрямую для определения актуальности данных, а не полагаться на метаданные хранилища.
 :::
 
-## Models with custom materializations
+## Модели с пользовательскими материализациями {#models-with-custom-materializations}
 
-Models using custom materializations are always built and are never reused. Custom materializations may have side effects (for example, modifying table properties or writing to other schemas), and dbt State cannot safely determine whether skipping the run would produce the same result.
+Модели с пользовательскими материализациями всегда создаются заново и никогда не используются повторно. Пользовательские материализации могут иметь побочные эффекты (например, изменять свойства таблиц или записывать данные в другие схемы), и dbt State не может с уверенностью определить, приведёт ли пропуск выполнения к тому же результату.
 
-## How to diagnose
+## Как провести диагностику
 
-After a run, use <VersionBlock firstVersion="2.0">[`dbt state explain`](/reference/commands/state-explain)</VersionBlock><VersionBlock lastVersion="1.99">[`dbt-state explain`](/reference/commands/state-explain)</VersionBlock> to see why dbt State rebuilt, reused, or cloned a specific model. For a detailed breakdown, use the `--verbose` flag with `-s` to select your model:
+После запуска используйте <VersionBlock firstVersion="2.0">[`dbt state explain`](/reference/commands/state-explain)</VersionBlock><VersionBlock lastVersion="1.99">[`dbt-state explain`](/reference/commands/state-explain)</VersionBlock>, чтобы узнать, почему dbt State пересоздал, повторно использовал или клонировал конкретную модель. Для подробного разбора используйте флаг `--verbose` вместе с `-s`, чтобы выбрать нужную модель:
 
 :::note
-The command name differs by version: <Constant name="core_v2" /> uses `dbt state explain` (with a space), while <Constant name="core_v1" /> uses `dbt-state explain` (with a hyphen).
+Название команды зависит от версии: в <Constant name="core_v2" /> используется `dbt state explain` (с пробелом), а в <Constant name="core_v1" /> — `dbt-state explain` (с дефисом).
 :::
 
 <VersionBlock firstVersion="2.0">
@@ -114,5 +114,4 @@ dbt-state explain --verbose -s my_model_name
 
 </VersionBlock>
 
-If you use the <Constant name="dbt_platform" />, the same information is available without running a command &mdash; go to the [**Explain** tab](/docs/deploy/dbt-state-interface#explain-tab) on the job run details page to see the full decision breakdown for each node.
-
+Если вы используете <Constant name="dbt_platform" />, та же информация доступна без выполнения команды &mdash; перейдите на [вкладку **Explain**](/docs/deploy/dbt-state-interface#explain-tab) на странице сведений о запуске задания, чтобы увидеть полный разбор принятого решения для каждого узла.

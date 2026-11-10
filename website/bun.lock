@@ -86,6 +86,9 @@
       },
     },
   },
+  "patchedDependencies": {
+    "@docusaurus/core@3.7.0": "patches/@docusaurus%2Fcore@3.7.0.patch",
+  },
   "overrides": {
     "sha.js": "2.4.12",
     "shell-quote": "1.12.0",

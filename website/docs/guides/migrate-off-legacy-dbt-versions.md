@@ -1,8 +1,8 @@
 ---
-title: "Migrate off legacy dbt versions"
+title: "Переход с устаревших версий dbt"
 id: migrate-off-legacy-dbt-versions
-description: "A quickstart for moving environments and jobs off legacy dbt versions to a dbt v1 or v2 release track."
-hoverSnippet: "Move your environments and jobs off legacy dbt versions to a release track."
+description: "Краткое руководство по переводу сред и заданий с устаревших версий dbt на канал выпусков dbt v1 или v2."
+hoverSnippet: "Переведите свои среды и задания с устаревших версий dbt на канал выпусков."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Migration', 'dbt v1', 'dbt platform', 'Upgrade']
@@ -10,100 +10,100 @@ keywords: ['legacy dbt version', 'release track', 'migrate dbt version', 'upgrad
 level: 'Beginner'
 ---
 
-Legacy <Constant name="dbt" /> versions v1.3–v1.7 are being deprecated on <Constant name="legacy_deprecation_date" />. To keep your work running and supported, move your environments and jobs to a [<Constant name="dbt" /> release track](/docs/dbt-versions/dbt-release-tracks) (v1 or v2) now. A release track keeps you on a supported version automatically.
+Поддержка устаревших версий <Constant name="dbt" /> v1.3–v1.7 прекращается <Constant name="legacy_deprecation_date" />. Чтобы ваша работа продолжалась без перебоев и оставалась в рамках поддержки, переведите свои среды и задания на [канал выпусков <Constant name="dbt" />](/docs/dbt-versions/dbt-release-tracks) (v1 или v2) уже сейчас. Канал выпусков автоматически поддерживает актуальную поддерживаемую версию.
 
-:::info Which release track to choose
+:::info Какой канал выпусков выбрать
 
-When migrating off a legacy version:
+При переходе с устаревшей версии:
 
-- **v2 (recommended)**: [dbt v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2) is generally available. Since you're already upgrading, move directly to v2 to get all the powerful features and capabilities it has to offer.
-- **v1 (minimum requirement)**: To keep your environments and jobs running after <Constant name="legacy_deprecation_date" />, move to a v1 release track to stay supported.
+- **v2 (рекомендуется)**: [dbt v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2) общедоступна. Поскольку вы уже выполняете обновление, переходите сразу на v2, чтобы получить все мощные функции и возможности этой версии.
+- **v1 (минимальное требование)**: Чтобы ваши среды и задания продолжали работать после <Constant name="legacy_deprecation_date" />, перейдите на канал выпусков v1 и оставайтесь на поддерживаемой версии.
 
 :::
 
-Your project code, connections, and history stay accessible throughout.
+Код вашего проекта, подключения и история остаются доступными на протяжении всего перехода.
 
-## Identify projects using legacy versions
+## Определите проекты, использующие устаревшие версии {#identify-projects-using-legacy-versions}
 
-What you migrate is driven by a job's effective version: the version pinned on the job if one is set, otherwise the version its environment inherits.
+Необходимые действия зависят от фактически используемой заданием версии: это версия, закреплённая в настройках задания, если она задана, либо версия, наследуемая от среды.
 
-1. Navigate to **Orchestration** > **Environments** and note any environment whose **dbt version** is v1.3–v1.7. The current version is displayed below the environment name. 
-2. Open the jobs in your supported environments and check for any job with a **version override** pinned to v1.3–v1.7.
+1. Перейдите в **Orchestration** > **Environments** и отметьте все среды, у которых **dbt version** — v1.3–v1.7. Текущая версия отображается под названием среды. 
+2. Откройте задания в средах с поддерживаемыми версиями и проверьте, нет ли заданий, у которых с помощью **version override** закреплена версия v1.3–v1.7.
 
-Find the row that matches each environment, then follow the linked steps.
+Для каждой среды найдите подходящую строку, затем выполните действия по ссылке.
 
-| Environment version | Job version | What you do |
+| Версия среды | Версия задания | Что нужно сделать |
 |---------------------|-------------|-------------|
-| Legacy (v1.3–v1.7) | Inherits from environment, or pinned to a legacy version | [Migrate the environment to a release track](/guides/migrate-off-legacy-dbt-versions?step=3&version=2) |
-| Legacy (v1.3–v1.7) | At least one job pinned to a supported version | [Migrate the environment to a release track](/guides/migrate-off-legacy-dbt-versions?step=3&version=2); the supported jobs are retained |
-| Supported | One or more jobs pinned to a legacy version | [Update the job's version](/guides/migrate-off-legacy-dbt-versions?step=5&version=2); the environment is untouched |
-| Legacy and **dormant** (unused 12+ months) | — | [Delete the environment](/guides/migrate-off-legacy-dbt-versions?step=2&version=2), or migrate it if you still need it |
+| Устаревшая (v1.3–v1.7) | Наследуется от среды или закреплена на устаревшей версии | [Переведите среду на канал выпусков](/guides/migrate-off-legacy-dbt-versions?step=3&version=2) |
+| Устаревшая (v1.3–v1.7) | Хотя бы одно задание закреплено на поддерживаемой версии | [Переведите среду на канал выпусков](/guides/migrate-off-legacy-dbt-versions?step=3&version=2); задания на поддерживаемых версиях сохранятся |
+| Поддерживаемая | Одно или несколько заданий закреплены на устаревшей версии | [Обновите версию задания](/guides/migrate-off-legacy-dbt-versions?step=5&version=2); среда останется без изменений |
+| Устаревшая и **неактивная** (не используется 12 месяцев или дольше) | — | [Удалите среду](/guides/migrate-off-legacy-dbt-versions?step=2&version=2) или переведите её на канал выпусков, если она вам ещё нужна |
 
-If you don't migrate a legacy environment or clear a legacy job, it's cleaned up when legacy versions are retired: a legacy environment (and its jobs) is deleted, a legacy environment that already has a job on a supported version is **updated** with only the legacy jobs removed, and a supported environment with legacy-pinned jobs keeps the environment and loses **only those jobs**.
+Если вы не переведёте устаревшую среду на канал выпусков или не устраните использование устаревшей версии в задании, при окончательном выводе устаревших версий из эксплуатации будет выполнена очистка: устаревшая среда (и её задания) будет удалена; устаревшая среда, в которой уже есть задание на поддерживаемой версии, будет **обновлена**, причём будут удалены только задания на устаревших версиях; среда на поддерживаемой версии с заданиями, закреплёнными на устаревших версиях, сохранится и потеряет **только эти задания**.
 
-## Delete a dormant environment
+## Удалите неактивную среду {#delete-a-dormant-environment}
 
-Before you migrate a project off a deprecated version, consider whether it's needed at all. If a legacy environment has been dormant for a year or more, you probably no longer need it, so delete it.
+Прежде чем переводить проект с устаревшей версии, подумайте, нужен ли он вообще. Если среда на устаревшей версии не использовалась год или дольше, скорее всего, она вам больше не нужна — удалите её.
 
 import DeleteEnvironment from '/snippets/_delete-environment.md';
 
 <DeleteEnvironment />
 
-## Migrate an environment to a release track
+## Переведите среду на канал выпусков {#migrate-an-environment-to-a-release-track}
 
-Start with a development or test environment. Moving it to a release track first lets you find and fix any compatibility issues in your project before you touch your other environments.
+Начните со среды разработки или тестирования. Если сначала перевести её на канал выпусков, вы сможете найти и исправить проблемы совместимости в проекте, прежде чем вносить изменения в остальные среды.
 
-1. Navigate to the Settings page of the environment, then click **Edit**.
-2. Click the **dbt version** dropdown and select the recommend **V2 Stable** [release track](/docs/dbt-versions/dbt-release-tracks).  If you need to stay on v1, select the **v1 Latest** release track.
-3. Save your changes.
+1. Перейдите на страницу настроек среды и нажмите **Edit**.
+2. Откройте раскрывающийся список **dbt version** и выберите рекомендуемый [канал выпусков](/docs/dbt-versions/dbt-release-tracks) **V2 Stable**.  Если вам нужно остаться на v1, выберите канал выпусков **v1 Latest**.
+3. Сохраните изменения.
 
-You can also set the version through the [Admin API](/docs/dbt-apis/admin-api) or Terraform. Refer to [Upgrade versions in dbt platform](/docs/dbt-versions/upgrade-dbt-platform-version) for the full walkthrough.
+Версию также можно задать через [Admin API](/docs/dbt-apis/admin-api) или Terraform. Подробные инструкции приведены в разделе [Обновление версий в dbt platform](/docs/dbt-versions/upgrade-dbt-platform-version).
 
-Once the environment is on the new version, fix any compatibility issues it surfaces before you migrate the rest of your environments and jobs.
+После перевода среды на новую версию устраните все выявленные проблемы совместимости, прежде чем переводить остальные среды и задания.
 
-## Fix compatibility issues in your project
+## Устраните проблемы совместимости в проекте {#fix-compatibility-issues-in-your-project}
 
-Moving to a release track can surface deprecation warnings that weren't visible on your legacy version. Resolve these in your project code before you migrate your remaining environments, either by hand or with autofix.
+При переходе на канал выпусков могут появиться предупреждения об использовании устаревших возможностей, которые не отображались в вашей прежней версии. Устраните их причины в коде проекта, вручную или с помощью автоисправления, прежде чем переводить остальные среды.
 
-### Autofix (recommended) {#autofix}
+### Автоисправление (рекомендуется) {#autofix}
 
-Autofix runs the [dbt-autofix](https://github.com/dbt-labs/dbt-autofix) script to resolve many deprecation warnings for you. It's available from both the Studio IDE and the VS Code extension.
+Автоисправление запускает скрипт [dbt-autofix](https://github.com/dbt-labs/dbt-autofix), который устраняет причины многих предупреждений об использовании устаревших возможностей. Оно доступно как в Studio IDE, так и в расширении для VS Code.
 
-#### Studio IDE
+#### Studio IDE {#studio-ide}
 
-1. Open the environment in the [Studio IDE](/docs/platform/studio-ide/develop-in-studio).
-2. Select **[Check & fix deprecations](/docs/platform/studio-ide/autofix-deprecations)** from the IDE's three-dot menu to find and resolve deprecation warnings.
-3. Click **Commit and sync** to commit the changes to your project repository.
+1. Откройте среду в [Studio IDE](/docs/platform/studio-ide/develop-in-studio).
+2. Выберите **[Check & fix deprecations](/docs/platform/studio-ide/autofix-deprecations)** в меню IDE с тремя точками, чтобы найти и устранить причины предупреждений об использовании устаревших возможностей.
+3. Нажмите **Commit and sync**, чтобы зафиксировать изменения в репозитории проекта.
 
-#### dbt VS Code extension
+#### Расширение dbt для VS Code {#dbt-vs-code-extension}
 
-1. In the [dbt VS Code extension](/docs/about-dbt-extension), run `dbt parse` against the updated environment to surface any deprecation warnings. The **Problems** tab will also surface useful information.
-2. Resolve them with the [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) tool, either from the command line or by following the prompts in the extension's upgrade assistant.
-3. If you're moving this project to <Constant name="fusion" /> (recommended), use the extension's [agentic migration](/docs/upgrade-to-dbt-extension#agentic-migration) flow instead, which runs autofix as part of the full v1-to-v2 upgrade.
-
-
-### Manually fix
-
-1. Run `dbt parse --no-partial-parse --show-all-deprecations` to list the deprecations in your project, or view them from the **Dashboard** in your dbt platform account.
-2. Look up each warning in [Deprecations](/reference/deprecations) and update your project code accordingly.
-3. Rerun `dbt parse` to confirm the warnings are resolved, then commit your changes.
+1. В [расширении dbt для VS Code](/docs/about-dbt-extension) выполните `dbt parse` для обновлённой среды, чтобы выявить предупреждения об использовании устаревших возможностей. Полезная информация также появится на вкладке **Problems**.
+2. Устраните их причины с помощью инструмента [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation), запустив его из командной строки или следуя подсказкам помощника по обновлению в расширении.
+3. Если вы переводите этот проект на <Constant name="fusion" /> (рекомендуется), вместо этого используйте [миграцию с помощью ИИ-агента](/docs/upgrade-to-dbt-extension#agentic-migration) в расширении: она запускает автоисправление в рамках полного обновления с v1 до v2.
 
 
-## Update a job's version
+### Исправление вручную {#manually-fix}
 
-To clear or change an override for a job on a supported environment that's pinned to a legacy version:
+1. Выполните `dbt parse --no-partial-parse --show-all-deprecations`, чтобы вывести список предупреждений об использовании устаревших возможностей в проекте, или просмотрите их на **Dashboard** в своей учётной записи dbt platform.
+2. Найдите каждое предупреждение в разделе [Устаревшие возможности](/reference/deprecations) и внесите соответствующие изменения в код проекта.
+3. Повторно выполните `dbt parse`, чтобы убедиться, что предупреждения устранены, затем зафиксируйте изменения.
 
-1. Open the job's settings and find the **dbt version** setting.
-2. Either clear the override so the job inherits the environment's version, or set it to a [release track](/docs/dbt-versions/dbt-release-tracks).
-3. Save your changes.
 
-## Validate your migration
+## Обновите версию задания {#update-a-jobs-version}
 
-Moving from a pinned legacy version to a release track can surface behavior changes, dependency issues, or adapter differences that weren't visible before. To reduce risk:
+Чтобы убрать или изменить переопределение версии для задания, которое находится в среде на поддерживаемой версии, но закреплено на устаревшей версии:
 
-- Test in a development environment before upgrading your production and default development environments.
-- Review your compile, build, and job run results after the change.
-- Establish a fallback path in case you need to roll back.
+1. Откройте настройки задания и найдите параметр **dbt version**.
+2. Уберите переопределение, чтобы задание наследовало версию среды, или задайте для него [канал выпусков](/docs/dbt-versions/dbt-release-tracks).
+3. Сохраните изменения.
 
-## Get help
-If you hit a blocker you can't resolve, [contact Support](mailto:support@getdbt.com) with your project ID, environment ID, affected job run IDs and logs, your current version, and your target release track.
+## Проверьте результаты перехода {#validate-your-migration}
+
+Переход с закреплённой устаревшей версии на канал выпусков может выявить изменения поведения, проблемы с зависимостями или различия в адаптерах, которые раньше не проявлялись. Чтобы снизить риски:
+
+- Выполните тестирование в среде разработки, прежде чем обновлять рабочую среду и среду разработки по умолчанию.
+- Проверьте результаты компиляции, сборки и запусков заданий после изменения.
+- Подготовьте запасной план на случай необходимости отката.
+
+## Получите помощь {#get-help}
+Если вы столкнулись с проблемой, которую не можете решить, [обратитесь в службу поддержки](mailto:support@getdbt.com) и укажите ID проекта, ID среды, ID затронутых запусков заданий и их журналы, текущую версию и целевой канал выпусков.

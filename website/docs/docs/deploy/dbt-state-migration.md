@@ -1,7 +1,7 @@
 ---
-title: "Migrating from state-aware orchestration to dbt State"
-sidebar_label: "Migrate from state-aware orchestration"
-description: "Step-by-step guide for migrating from state-aware orchestration to dbt State."
+title: "Переход с оркестрации с учётом состояния на dbt State"
+sidebar_label: "Переход с оркестрации с учётом состояния"
+description: "Пошаговое руководство по переходу с оркестрации с учётом состояния на dbt State."
 id: "dbt-state-migration"
 tags: ['dbt State'] 
 availability: everywhere_usage
@@ -9,39 +9,39 @@ availability: everywhere_usage
 
 import DbtStateVsSao from '/snippets/_dbt-state-vs-sao.md';
 
-# Migrating from state-aware orchestration to dbt State
+# Переход с оркестрации с учётом состояния на dbt State
 
 <DbtStateVsSao />
 
-## Migrating your configuration
+## Перенос конфигурации
 
-Much of dbt State's configuration will feel familiar if you've used state-aware orchestration, but there is one significant difference: the `build_after` configs have moved out of the `freshness` block and into a new `state` block.
+Многие настройки dbt State покажутся знакомыми, если вы пользовались оркестрацией с учётом состояния, но есть одно существенное отличие: настройки `build_after` перенесены из блока `freshness` в новый блок `state`.
 
-To migrate to dbt State, move your configs from `freshness.build_after` to the new `state` block. Refer to the following table for the full mapping.
+Чтобы перейти на dbt State, перенесите настройки из `freshness.build_after` в новый блок `state`. Полное соответствие настроек приведено в следующей таблице.
 
-| State-aware orchestration | dbt State | Notes |
+| Оркестрация с учётом состояния | dbt State | Примечания |
 |---|---|---|
-| `freshness.build_after.updates_on` | [`state.require_fresh_data_from`](/reference/resource-configs/require-fresh-data-from) | Same `any` and `all` options with the same behavior: <br/>- `any` (default): rebuilds when _any_ direct parent has fresh data <br/>- `all`: rebuilds only when _all_ direct parents have fresh data |
-| `freshness.build_after.count` + `freshness.build_after.period` | [`state.lag_tolerance`](/reference/resource-configs/lag-tolerance) | Combined into a single field with shorthand values (for example, `1800s`, `30m`, `12h`, `1d`, `2w`) or Jinja expressions |
+| `freshness.build_after.updates_on` | [`state.require_fresh_data_from`](/reference/resource-configs/require-fresh-data-from) | Те же варианты `any` и `all` с тем же поведением: <br/>- `any` (по умолчанию): пересборка, когда у _любого_ непосредственного родительского узла есть свежие данные <br/>- `all`: пересборка, только когда у _всех_ непосредственных родительских узлов есть свежие данные |
+| `freshness.build_after.count` + `freshness.build_after.period` | [`state.lag_tolerance`](/reference/resource-configs/lag-tolerance) | Объединены в одно поле с сокращёнными значениями (например, `1800s`, `30m`, `12h`, `1d`, `2w`) или выражениями Jinja |
 
-:::note Backward compatibility in <Constant name="fusion" />
-In <Constant name="fusion_engine" />, you can enable dbt State without updating your project configs first.
+:::note Обратная совместимость в <Constant name="fusion" />
+В <Constant name="fusion_engine" /> можно включить dbt State без предварительного обновления настроек проекта.
 
-- If `lag_tolerance` and `require_fresh_data_from` are not set, dbt State falls back to your existing `build_after` configs until `build_after` is deprecated.
-- If neither `build_after` nor the `state` configs exist, dbt State uses its [default configs](/reference/resource-configs/dbt-state-configs): `lag_tolerance: 45m` and `require_fresh_data_from: any`.
+- Если `lag_tolerance` и `require_fresh_data_from` не заданы, dbt State использует существующие настройки `build_after` до тех пор, пока `build_after` не будет объявлен устаревшим.
+- Если отсутствуют и `build_after`, и настройки `state`, dbt State использует [настройки по умолчанию](/reference/resource-configs/dbt-state-configs): `lag_tolerance: 45m` и `require_fresh_data_from: any`.
 :::
 
-### Examples
+### Примеры
 
-You can set these configs at the project level in `dbt_project.yml` or at the model level in a `.yml` file.
+Эти настройки можно задать на уровне проекта в `dbt_project.yml` или на уровне модели в файле `.yml`.
 
-**Project-level:**
+**На уровне проекта:**
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px', marginBottom: '20px'}}>
 
 <div>
 
-**Before (state-aware orchestration)**
+**До (оркестрация с учётом состояния)**
 
 <File name="dbt_project.yml">
 
@@ -60,7 +60,7 @@ models:
 
 <div>
 
-**After (dbt State)**
+**После (dbt State)**
 
 <File name="dbt_project.yml">
 
@@ -77,13 +77,13 @@ models:
 
 </div>
 
-**Model-level:**
+**На уровне модели:**
 
 <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px', marginBottom: '20px'}}>
 
 <div>
 
-**Before (state-aware orchestration)**
+**До (оркестрация с учётом состояния)**
 
 <File name="models/my_model.yml">
 
@@ -104,7 +104,7 @@ models:
 
 <div>
 
-**After (dbt State)**
+**После (dbt State)**
 
 <File name="models/my_model.yml">
 
@@ -123,16 +123,16 @@ models:
 
 </div>
 
-## Testing the migration
+## Проверка перехода
 
-You can run both configs side by side while validating. State-aware orchestration reads `freshness.build_after` and dbt State reads the `state` block, so they won't interfere with each other. Once you're confident everything looks right, remove the `build_after` configs.
+Во время проверки можно использовать обе конфигурации параллельно. Оркестрация с учётом состояния считывает `freshness.build_after`, а dbt State — блок `state`, поэтому они не мешают друг другу. Убедившись, что всё работает правильно, удалите настройки `build_after`.
 
 <File name="dbt_project.yml">
 
 ```yaml
 models:
   +freshness:
-    build_after:            # state-aware orchestration (remove once migrated)
+    build_after:            # оркестрация с учётом состояния (удалите после перехода)
       count: 1
       period: day
       updates_on: any
@@ -143,29 +143,29 @@ models:
 
 </File>
 
-## Known differences from state-aware orchestration
+## Известные отличия от оркестрации с учётом состояния {#known-differences-from-state-aware-orchestration}
 
-State-aware orchestration and dbt State differ in a few ways:
+Оркестрация с учётом состояния и dbt State имеют несколько отличий:
 
-- **More models rebuilding than expected**: If you notice more rebuilds after you migrate, the most common causes are:
-  - **Views with `select *` on a `ref()` or `source()`**: dbt State can't determine which columns `select *` resolves to without querying the upstream schema, so it rebuilds these views rather than risk reusing a stale result. Views that use `select *` on a CTE are reused, because dbt can resolve the columns from the CTE definition. For more information, refer to [Views with `select *`](/faqs/State/views-rebuilt#views-with-select).
-  - **Non-determinism in Jinja-templated SQL**: Macros like `dbt_utils.get_relations_by_pattern` with `dbt_utils.union_relations` can return relations in a different order on each run, which produces different compiled SQL. dbt State detects a new hash and rebuilds the model. If that model has downstream dependencies, those models rebuild, too.
-  - **Models with external sources on BigQuery**: Models that use external sources (such as Google Sheets) always rebuild because BigQuery doesn't expose modification timestamps for external sources, so dbt State can't determine freshness. 
+- **Пересобирается больше моделей, чем ожидалось**: если после перехода вы заметили увеличение числа пересборок, чаще всего это связано со следующими причинами:
+  - **Представления с `select *` из `ref()` или `source()`**: dbt State не может определить, каким столбцам соответствует `select *`, без запроса к схеме вышестоящего объекта, поэтому пересобирает такие представления, чтобы не рисковать повторным использованием устаревшего результата. Представления, использующие `select *` из CTE, используются повторно, поскольку dbt может определить столбцы из определения CTE. Подробнее см. в разделе [Представления с `select *`](/faqs/State/views-rebuilt#views-with-select).
+  - **Недетерминированность SQL с шаблонами Jinja**: такие макросы, как `dbt_utils.get_relations_by_pattern` в сочетании с `dbt_utils.union_relations`, могут возвращать объекты базы данных в разном порядке при каждом запуске, что приводит к различиям в скомпилированном SQL. dbt State обнаруживает новый хеш и пересобирает модель. Если от этой модели зависят другие модели, они тоже пересобираются.
+  - **Модели с внешними источниками в BigQuery**: модели, использующие внешние источники (например, Google Sheets), всегда пересобираются, поскольку BigQuery не предоставляет временные метки изменения внешних источников и dbt State не может определить свежесть данных. 
   
-  To avoid this, configure [`loaded_at_field`](/reference/resource-configs/freshness) or [`loaded_at_query`](/reference/resource-configs/freshness) in your source definition to point to a timestamp field &mdash; this lets dbt State query a timestamp field directly to determine freshness, instead of relying on warehouse metadata.
+  Чтобы избежать этого, настройте [`loaded_at_field`](/reference/resource-configs/freshness) или [`loaded_at_query`](/reference/resource-configs/freshness) в определении источника, указав поле с временной меткой, &mdash; это позволит dbt State запрашивать это поле напрямую для определения свежести данных, а не полагаться на метаданные хранилища.
 
-  Refer to [Why is my model being rebuilt instead of reused?](/faqs/State/views-rebuilt) for details on each cause and how to diagnose them.
+  Подробнее о каждой причине и способах диагностики см. в разделе [Почему моя модель пересобирается, а не используется повторно?](/faqs/State/views-rebuilt).
 
-- **`build_after` vs `lag_tolerance`**: Both configs reduce how often a model runs when upstream data is frequently fresh, but they work differently:
-  - `freshness.build_after` (for example, `{count: 4, period: hour}`) skips the model unless the configured interval has elapsed _and_ upstream sources have new data since the last run. A SQL change alone does not trigger a rebuild; both conditions must be met.
-  - `state.lag_tolerance` (for example, `4h`) skips the model unless upstream data is newer than the model's last run by at least the configured interval. Unlike `build_after`, a detected SQL change triggers a rebuild.
-- **No concurrent build detection**: In most cases, dbt State handles overlapping nodes the same way as state-aware orchestration: if a node is built by Job 1 before Job 2 starts, Job 2 sees the model as already built and reuses it. If Job 1 finishes building a node after Job 2 starts &mdash; but before Job 2 builds that node &mdash; Job 2 still builds it and uses compute to re-determine there's no new data. However, if Job 2 starts building the same snapshot or incremental model before Job 1 executing the same node, both jobs can detect the same changes in their separate transactions and commit them, which can lead to duplicate records or other data corruption.
+- **`build_after` и `lag_tolerance`**: обе настройки снижают частоту запусков модели при частом обновлении вышестоящих данных, но работают по-разному:
+  - `freshness.build_after` (например, `{count: 4, period: hour}`) пропускает модель, если не истёк заданный интервал _и_ в вышестоящих источниках не появились новые данные с момента последнего запуска. Одно лишь изменение SQL не вызывает пересборку: должны выполняться оба условия.
+  - `state.lag_tolerance` (например, `4h`) пропускает модель, если временная метка вышестоящих данных не превышает время последнего запуска модели как минимум на заданный интервал. В отличие от `build_after`, обнаруженное изменение SQL вызывает пересборку.
+- **Нет обнаружения параллельных сборок**: в большинстве случаев dbt State обрабатывает общие узлы так же, как оркестрация с учётом состояния: если задание 1 собирает узел до начала задания 2, задание 2 видит, что модель уже собрана, и использует её повторно. Если задание 1 завершает сборку узла после начала задания 2, но до того, как задание 2 приступит к сборке этого узла, &mdash; задание 2 всё равно собирает его и тратит вычислительные ресурсы, чтобы повторно определить отсутствие новых данных. Однако если задание 2 начинает сборку того же снимка или инкрементальной модели до выполнения этого узла заданием 1, оба задания могут обнаружить одни и те же изменения в своих отдельных транзакциях и зафиксировать их, что может привести к дублированию записей или другим нарушениям целостности данных.
 
-  To prevent duplicate builds, ensure jobs that share the same nodes don't run at the same time &mdash; whether by configuring job schedules through the [<Constant name="dbt_platform" /> job scheduler](/docs/deploy/job-scheduler) or an external orchestration tool (for example, Airflow or Dagster), or by avoiding manually triggered runs that overlap.
-- **Efficient Testing not yet available**: State-aware orchestration offers Efficient Testing (private beta); dbt State doesn't support it yet.
+  Чтобы предотвратить повторные сборки, убедитесь, что задания с общими узлами не выполняются одновременно: настройте расписания заданий через [планировщик заданий <Constant name="dbt_platform" />](/docs/deploy/job-scheduler) или внешний инструмент оркестрации (например, Airflow или Dagster) либо избегайте запусков вручную, которые пересекаются по времени.
+- **Efficient Testing пока недоступно**: оркестрация с учётом состояния предлагает Efficient Testing (закрытая бета-версия); dbt State пока не поддерживает эту функцию.
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Настройки dbt State](/reference/resource-configs/dbt-state-configs)

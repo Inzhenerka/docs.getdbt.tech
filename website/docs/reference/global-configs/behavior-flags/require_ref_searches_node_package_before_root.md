@@ -1,20 +1,20 @@
 ---
-title: "Package ref search order"
+title: "Порядок поиска ref в пакетах"
 id: "require_ref_searches_node_package_before_root"
-sidebar_label: "require ref searches node package before root"
+sidebar_label: "Поиск ref сначала в пакете узла, затем в корневом проекте"
 ---
 
 | require_ref_searches_node_package_before_root | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2025.12 | 1.11.0 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Введён | 2025.12 | 1.11.0 |
+| Стабилизирован (значение по умолчанию → `true`) | — | — |
+| Удалён | — | — |
 
-The `require_ref_searches_node_package_before_root` flag controls the search order when dbt resolves `ref()` calls defined within a package.
+Флаг `require_ref_searches_node_package_before_root` управляет порядком поиска при разрешении dbt вызовов `ref()`, определённых внутри пакета.
 
-The flag is set to `false` by default in **v1 Latest** and <Constant name="dbt" /> v1.11. When dbt resolves a `ref()` in a package model, it searches for the referenced model in the root project _first_, then in the package where the model is defined.
+По умолчанию флаг имеет значение `false` в **v1 Latest** и <Constant name="dbt" /> v1.11. При разрешении `ref()` в модели пакета dbt _сначала_ ищет модель, на которую указывает ссылка, в корневом проекте, а затем — в пакете, где определена модель.
 
-For example, the following model in the package `my_package` is imported by the project `my_project`:
+Например, следующая модель из пакета `my_package` импортируется проектом `my_project`:
 
 <File name='my_package/model_downstream.sql'>
 
@@ -23,14 +23,14 @@ select * from {{ ref('model_upstream') }}
 ```
 </File>
 
-By default, dbt searches for `model_upstream` in this order:
-1. First in `my_project` (root project)
-2. Then in `my_package` (where the model is defined)
+По умолчанию dbt ищет `model_upstream` в следующем порядке:
+1. Сначала в `my_project` (корневом проекте)
+2. Затем в `my_package` (где определена модель)
 
-When you set the `require_ref_searches_node_package_before_root` flag to `true`, dbt searches the package where the model is defined _before_ searching the root project.
+Если установить флаг `require_ref_searches_node_package_before_root` в `true`, dbt будет искать в пакете, где определена модель, _прежде чем_ искать в корневом проекте.
 
-Using the same example, dbt searches for `model_upstream` in this order:
-1. First in `my_package` (where the model is defined)
-2. Then in `my_project` (root project)
+В том же примере dbt ищет `model_upstream` в следующем порядке:
+1. Сначала в `my_package` (где определена модель)
+2. Затем в `my_project` (корневом проекте)
 
-The current default behavior is considered a [bug in dbt](https://github.com/dbt-labs/dbt/issues/11351) because it can potentially lead to unexpected dependency cycles. However, because this is long-standing behavior, changing the default requires setting `require_ref_searches_node_package_before_root` to `true` to avoid breaking existing projects.
+Текущее поведение по умолчанию считается [ошибкой в dbt](https://github.com/dbt-labs/dbt/issues/11351), поскольку оно может приводить к неожиданным циклическим зависимостям. Однако это поведение существует уже давно, поэтому для изменения порядка поиска требуется установить `require_ref_searches_node_package_before_root` в `true`, чтобы не нарушить работу существующих проектов.

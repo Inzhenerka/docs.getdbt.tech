@@ -1,6 +1,6 @@
 ---
-title: "Схема объекта Exposures"
-sidebar_label: "Exposures"
+title: "Схема объекта exposures"
+sidebar_label: "Потребители данных"
 id: "discovery-schema-environment-applied-exposures"
 availability:
   surface: platform
@@ -10,19 +10,19 @@ availability:
  
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Exposures](/docs/build/exposures) — это ресурсы dbt, которые представляют нисходящее использование вашего проекта, например дашборды, приложения или пайплайны data science. Вы можете запрашивать exposures через Discovery API, чтобы понять, какие активы зависят от ваших моделей.
+[Потребители данных (exposures)](/docs/build/exposures) — это ресурсы dbt, которые представляют последующее использование вашего проекта, например в дашбордах, приложениях или конвейерах обработки данных для задач Data Science. Вы можете запрашивать exposures через Discovery API, чтобы понять, какие объекты зависят от ваших моделей.
 
-[Пример запроса](#example-query) иллюстрирует несколько полей, которые можно запрашивать с помощью объекта `exposures`. Обратитесь к разделу [Поля](#fields), чтобы посмотреть полную схему, которая содержит все возможные поля, доступные для запроса.
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать у объекта `exposures`. В разделе [Поля](#fields) приведена полная схема со всеми полями, доступными для запроса.
 
-### Аргументы {#arguments}
+### Аргументы
 
-При выполнении запроса к `exposures` вы можете использовать следующие аргументы:
+При запросе `exposures` можно использовать следующие аргументы:
 
 <NodeArgsTable parent="AppliedState" name="exposures" />
 
 ### Пример запроса {#example-query}
 
-Вы можете указать `environmentId`, `first: 100` и отфильтровать по `uniqueIds` моделей, чтобы вернуть все downstream exposures (дашборды, приложения и т. д.), которые зависят от модели `customers` в пакете `marketing`, ограничив результат первыми 100 записями:
+Вы можете указать `environmentId`, `first: 100` и фильтр по `uniqueIds` моделей, чтобы получить всех последующих потребителей данных (дашборды, приложения и т. д.), которые зависят от модели `customers` в пакете `marketing`, ограничив выборку первыми 100 результатами:
 
 ```graphql
 query {
@@ -51,10 +51,10 @@ query {
 
 ### Поля {#fields}
 
-При выполнении запроса к `exposures` вы можете использовать следующие поля:
+При запросе `exposures` можно использовать следующие поля:
 
 <SchemaTable nodeName="ExposureAppliedStateNodeConnection" />
 
-### Ключевые поля узлов {#key-fields-from-nodes}
+### Основные поля узлов
 
 <SchemaTable nodeName="ExposureAppliedStateNode" />

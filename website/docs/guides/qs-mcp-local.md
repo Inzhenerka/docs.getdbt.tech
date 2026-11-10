@@ -1,5 +1,5 @@
 ---
-title: "Run dbt MCP locally"
+title: "Запуск dbt MCP локально"
 id: "qs-mcp-local"
 level: 'Beginner'
 icon: 'zap'

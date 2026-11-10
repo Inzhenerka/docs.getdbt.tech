@@ -1,26 +1,26 @@
 ---
-title: "No + prefix on resource paths"
+title: "Без префикса + в путях к ресурсам"
 id: "require_resource_names_without_plus_prefix"
-sidebar_label: "require resource names without plus prefix"
+sidebar_label: "Имена ресурсов без префикса +"
 ---
 
-:::info <Constant name="fusion" />-only flag
+:::info Флаг только для <Constant name="fusion" />
 
-This behavior change flag is specific to <Constant name="fusion" /> and has no equivalent in <Constant name="core" />.
+Этот флаг изменения поведения предназначен только для <Constant name="fusion" /> и не имеет аналога в <Constant name="core" />.
 
 :::
 
 | require_resource_names_without_plus_prefix | <Constant name="fusion" /> |
 |-----------------|------------------|
-| Introduced | 2.0.0-preview.208 |
-| Matured (default → `true`) | — |
-| Removed | — |
+| Введён | 2.0.0-preview.208 |
+| Переведён в стабильный статус (по умолчанию → `true`) | — |
+| Удалён | — |
 
-The `require_resource_names_without_plus_prefix` flag is set to `false` by default.
+По умолчанию флаг `require_resource_names_without_plus_prefix` имеет значение `false`.
 
-In `dbt_project.yml`, the [`+` prefix](/reference/resource-configs/plus-prefix) marks a config, while a key without the prefix is treated as part of a [resource path](/reference/resource-configs/resource-path) (a folder or file name). dbt historically accepted resource paths that start with `+` (for example, a folder named `+my_folder` under `models`) even though the `+` prefix is meant for configs only. This is accidental behavior that produces misleading error messages when a config is missing its `+` prefix, because dbt can't reliably tell whether a `+`-prefixed key is a folder name or a mistyped config.
+В `dbt_project.yml` [префикс `+`](/reference/resource-configs/plus-prefix) обозначает настройку, а ключ без этого префикса рассматривается как часть [пути к ресурсу](/reference/resource-configs/resource-path) (имя папки или файла). Исторически dbt допускал пути к ресурсам, начинающиеся с `+` (например, папку с именем `+my_folder` внутри `models`), хотя префикс `+` предназначен только для настроек. Это непреднамеренное поведение приводит к появлению вводящих в заблуждение сообщений об ошибках, когда у настройки отсутствует префикс `+`, поскольку dbt не может надёжно определить, является ли ключ с префиксом `+` именем папки или ошибочно записанной настройкой.
 
-When the `require_resource_names_without_plus_prefix` flag is set to `false`, dbt raises a warning for each resource path that starts with `+`:
+Когда флаг `require_resource_names_without_plus_prefix` имеет значение `false`, dbt выдаёт предупреждение для каждого пути к ресурсу, начинающегося с `+`:
 
 ```shell
 
@@ -28,7 +28,7 @@ When the `require_resource_names_without_plus_prefix` flag is set to `false`, db
 
 ```
 
-When the flag is set to `true`, dbt treats a `+`-prefixed key as an unrecognized config key and raises an error instead:
+Когда флаг имеет значение `true`, dbt рассматривает ключ с префиксом `+` как нераспознанный ключ настройки и вместо предупреждения выдаёт ошибку:
 
 ```shell
 
@@ -36,9 +36,9 @@ When the flag is set to `true`, dbt treats a `+`-prefixed key as an unrecognized
 
 ```
 
-To resolve the warning or error, remove the + prefix from any folder or file name in dbt_project.yml. For custom keys, nest them under [`+meta`](/reference/resource-configs/meta).
+Чтобы устранить предупреждение или ошибку, удалите префикс + из всех имён папок и файлов в dbt_project.yml. Пользовательские ключи размещайте внутри [`+meta`](/reference/resource-configs/meta).
 
-For example, name the resource path so it doesn't start with `+`:
+Например, задайте путь к ресурсу так, чтобы он не начинался с `+`:
 
 <File name="dbt_project.yml">
 

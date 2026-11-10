@@ -84,9 +84,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 
 Сохраните `aws_access_key_id` и `aws_secret_access_key` для следующего шага.
 
-### Файл AWS credentials {#aws-credentials-file}
-
-### Файл учетных данных AWS
+### Файл учётных данных AWS {#aws-credentials-file}
 
 Чтобы получить файл учетных данных AWS:
 1. Следуйте инструкциям по [настройке файла учетных данных](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html) с помощью AWS CLI
@@ -107,13 +105,7 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
     1. **AWS S3 staging directory** &mdash; Укажите бакет S3, созданный на предыдущих шагах.
 1. Нажмите **Save**
 
-1. Нажмите на **имя вашей учетной записи** в левом боковом меню и выберите **Account settings**.
-1. Перейдите в раздел **Connections** и нажмите **New connection**.
-1. Выберите **Athena** и заполните обязательные поля (а также при необходимости необязательные):
-    1. **AWS region name** &mdash; AWS‑регион, в котором развернута ваша среда.
-    1. **Database (catalog)** &mdash; Укажите имя базы данных, созданной на предыдущих шагах (только в нижнем регистре).
-    1. **AWS S3 staging directory** &mdash; Укажите S3‑бакет, созданный на предыдущих шагах.
-1. Нажмите **Save**
+### Настройка среды {#configure-your-environment}
 
 Чтобы настроить учетные данные Athena в вашей среде:
 1. Нажмите **Deploy** в меню слева, затем выберите **Environments**.
@@ -122,8 +114,6 @@ tags: ['Amazon','Athena', 'dbt platform','Quickstart']
 1. Выберите подключение Athena в раскрывающемся списке **Connection**. 
 1. Укажите `aws_access_key` и `aws_access_id`, сохраненные на предыдущих шагах, а также `Schema`, в которую будут записываться данные. 
 1. Нажмите **Test connection** и после успешной проверки нажмите **Save**, чтобы сохранить среду.
-
-Повторите эти действия, чтобы создать [среду разработки](/docs/dbt-platform-environments#types-of-environments).
 
 Повторите этот процесс, чтобы создать [среду разработки](/docs/dbt-platform-environments#types-of-environments).
 

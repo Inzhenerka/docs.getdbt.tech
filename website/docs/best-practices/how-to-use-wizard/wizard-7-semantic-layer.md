@@ -1,29 +1,29 @@
 ---
-title: "Building Semantic Layer definitions with dbt Wizard"
+title: "Создание определений Semantic Layer с помощью dbt Wizard"
 id: "wizard-7-semantic-layer"
-description: "Use dbt Wizard to plan, write, and validate Semantic Layer entities, dimensions, metrics, and saved queries."
-sidebar_label: "Build Semantic Layer definitions"
+description: "Используйте dbt Wizard для планирования, написания и проверки сущностей, измерений, метрик и сохранённых запросов Semantic Layer."
+sidebar_label: "Создание определений Semantic Layer"
 tags: [AI, Wizard, Semantic Layer]
 ---
 
 <IntroText>
-Use <Constant name="wizard" /> to turn a business question or an existing dbt model into version-compatible <Constant name="semantic_layer" /> definitions. <Constant name="wizard" /> inspects model grain, columns, lineage, and nearby YAML before it proposes entities, dimensions, and metrics.
+Используйте <Constant name="wizard" />, чтобы преобразовать бизнес-вопрос или существующую модель dbt в определения <Constant name="semantic_layer" />, совместимые с вашей версией. Прежде чем предложить сущности, измерения и метрики, <Constant name="wizard" /> изучает уровень детализации модели, столбцы, цепочку зависимостей и связанные YAML-файлы.
 </IntroText>
 
-This workflow uses your project files and available dbt metadata to guide the work. You can also add the `building-dbt-semantic-layer` skill from the [dbt Agent Skills repository](https://github.com/dbt-labs/dbt-agent-skills) for reusable Semantic Layer guidance.
+В этом рабочем процессе для выполнения задач используются файлы вашего проекта и доступные метаданные dbt. Вы также можете добавить навык `building-dbt-semantic-layer` из [репозитория dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills), чтобы использовать готовые рекомендации по работе с Semantic Layer.
 
-The prompts on this page work the same way in <Constant name="dbt_platform" />.
+Промпты на этой странице работают таким же образом в <Constant name="dbt_platform" />.
 
-## Before you begin
+## Прежде чем начать
 
-Identify the following information before you ask <Constant name="wizard" /> to edit files:
+Прежде чем просить <Constant name="wizard" /> редактировать файлы, определите следующее:
 
-- The business question or metric you want to support.
-- The model, or set of candidate models, that contains the relevant data.
-- The grain of each model, when you already know it.
-- Any naming, certification, or ownership conventions your team follows.
+- Бизнес-вопрос или метрику, для которых нужно подготовить определения.
+- Модель или набор подходящих моделей, содержащих нужные данные.
+- Уровень детализации каждой модели, если он вам уже известен.
+- Соглашения об именовании, сертификации и назначении ответственных, принятые в вашей команде.
 
-If you don't know which model to use, start with the business question. For example:
+Если вы не знаете, какую модель использовать, начните с бизнес-вопроса. Например:
 
 ```text
 We need to report gross revenue and order count by customer segment and month.
@@ -31,9 +31,9 @@ Find the best models to build on, explain your choices, and propose the Semantic
 Layer definitions before editing files.
 ```
 
-## Ask Wizard to plan the definitions
+## Попросите Wizard спланировать определения
 
-Give <Constant name="wizard" /> a specific model when you know the starting point:
+Укажите для <Constant name="wizard" /> конкретную модель, если знаете, с чего начать:
 
 ```text
 Build Semantic Layer definitions for fct_orders. First determine the dbt version
@@ -42,30 +42,30 @@ entities, dimensions, and metrics before making changes. Include total revenue,
 order count, and a monthly time dimension.
 ```
 
-<Constant name="wizard" /> should complete these planning steps before editing:
+Перед редактированием <Constant name="wizard" /> должен выполнить следующие шаги планирования:
 
-1. Determine the dbt version from the installed binary, `require-dbt-version`, or manifest metadata.
-2. Inspect the target model's SQL, columns, and upstream and downstream lineage.
-3. Check nearby YAML and existing semantic definitions so the new content follows project conventions.
-4. Identify the model grain and at least one primary entity.
-5. Propose time and categorical dimensions and metrics whose aggregations are meaningful for the underlying data.
+1. Определить версию dbt по установленному исполняемому файлу, `require-dbt-version` или метаданным манифеста.
+2. Изучить SQL-код целевой модели, её столбцы, а также вышестоящие и нижестоящие зависимости.
+3. Проверить связанные YAML-файлы и существующие семантические определения, чтобы новое содержимое соответствовало соглашениям проекта.
+4. Определить уровень детализации модели и хотя бы одну первичную сущность.
+5. Предложить временные и категориальные измерения, а также метрики, агрегации которых имеют смысл для исходных данных.
 
-Ask <Constant name="wizard" /> to sample data only when names, types, and SQL don't establish the meaning of a column. Review and approve the warehouse query before it runs.
+Просите <Constant name="wizard" /> делать выборку данных только тогда, когда названия, типы и SQL-код не позволяют определить смысл столбца. Проверьте и одобрите запрос к хранилищу данных перед его выполнением.
 
-## Review the generated YAML
+## Проверьте сгенерированный YAML
 
-The correct YAML structure depends on the dbt version in your project. Review the generated file for the version-specific patterns in the following table.
+Правильная структура YAML зависит от версии dbt в вашем проекте. Проверьте сгенерированный файл на соответствие шаблонам для вашей версии, приведённым в следующей таблице.
 
 <SimpleTable>
 
-| Project version | Expected structure |
+| Версия проекта | Ожидаемая структура |
 |---|---|
-| [<Constant name="dbt" /> 1.12 and later](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.12?version=2.0#new-semantic-layer-yaml-spec), and the [<Constant name="fusion_engine" />](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2.0) | Configure `semantic_model` on a model, annotate entities and dimensions on columns, and define metrics on the model. Don't use a top-level `semantic_models:` block for new definitions. |
-| [<Constant name="dbt" /> 1.6 through 1.11](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.11?version=2.0) | Define semantic models in a top-level `semantic_models:` block and define metrics with `type_params` that reference measures. |
+| [<Constant name="dbt" /> 1.12 и более поздние версии](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.12?version=2.0#new-semantic-layer-yaml-spec), а также [<Constant name="fusion_engine" />](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2.0) | Настройте `semantic_model` на уровне модели, добавьте аннотации сущностей и измерений к столбцам и определите метрики на уровне модели. Не используйте блок `semantic_models:` верхнего уровня для новых определений. |
+| [<Constant name="dbt" /> с 1.6 по 1.11](/docs/dbt-versions/dbt-upgrade/upgrading-to-v1.11?version=2.0) | Определяйте семантические модели в блоке `semantic_models:` верхнего уровня, а метрики — с помощью `type_params`, ссылающихся на меры. |
 
 </SimpleTable>
 
-For <Constant name="dbt" /> 1.12 and later and <Constant name="fusion_engine" />, a generated definition can resemble the following example:
+Для <Constant name="dbt" /> 1.12 и более поздних версий, а также <Constant name="fusion_engine" /> сгенерированное определение может выглядеть следующим образом:
 
 ```yaml
 models:
@@ -102,7 +102,7 @@ models:
         expr: order_id
 ```
 
-For <Constant name="dbt" /> 1.6 through 1.11, expect the top-level semantic model pattern:
+Для <Constant name="dbt" /> с 1.6 по 1.11 ожидается шаблон с семантической моделью верхнего уровня:
 
 ```yaml
 semantic_models:
@@ -132,11 +132,11 @@ metrics:
       measure: total_revenue
 ```
 
-Confirm that every generated definition has a clear business meaning. A numeric column isn't automatically a useful metric, and an ID isn't automatically the correct primary entity.
+Убедитесь, что каждое сгенерированное определение имеет ясный бизнес-смысл. Числовой столбец не обязательно является полезной метрикой, а идентификатор не обязательно подходит в качестве первичной сущности.
 
-## Validate the definitions
+## Проверьте определения
 
-Ask <Constant name="wizard" /> to validate after you approve the YAML:
+После одобрения YAML попросите <Constant name="wizard" /> выполнить проверку:
 
 ```text
 Validate the Semantic Layer changes. Parse the project, run the supported
@@ -145,19 +145,19 @@ and any checks you couldn't complete. Don't change the definitions to silence
 an error without explaining the root cause.
 ```
 
-At minimum, validation should confirm that:
+Как минимум, проверка должна подтвердить следующее:
 
-- The project parses successfully.
-- Model, column, entity, measure, and metric references resolve.
-- The aggregate time dimension points to a declared time dimension.
-- The selected metric aggregation matches the model grain.
-- Semantic Layer validation passes when the project's dbt runtime supports it.
+- Проект успешно проходит разбор.
+- Ссылки на модели, столбцы, сущности, меры и метрики разрешаются.
+- Временное измерение агрегации указывает на объявленное временное измерение.
+- Выбранная агрегация метрики соответствует уровню детализации модели.
+- Проверка Semantic Layer проходит успешно, если среда выполнения dbt в проекте её поддерживает.
 
-When a validation command isn't available in the current environment, <Constant name="wizard" /> should report that limitation instead of treating the work as fully validated. For a broader validation procedure, refer to [Validating dbt changes with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes).
+Если команда проверки недоступна в текущей среде, <Constant name="wizard" /> должен сообщить об этом ограничении, а не считать работу полностью проверенной. Более подробная процедура проверки описана в разделе [Проверка изменений dbt с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes).
 
-## Extend the first definitions
+## Дополните первоначальные определения
 
-After the initial definitions validate, continue with focused prompts rather than asking for an entire project conversion at once. For example:
+После успешной проверки первоначальных определений продолжайте работу с помощью целевых промптов, а не просите преобразовать весь проект сразу. Например:
 
 ```text
 Add a derived average order value metric using the existing revenue and order
@@ -170,10 +170,10 @@ Create a saved query for monthly revenue and order count grouped by customer
 segment. Reuse existing entities and dimensions, and validate every reference.
 ```
 
-## Related docs
+## Связанная документация
 
-- [Semantic models](/docs/build/semantic-models)
-- [Metrics overview](/docs/build/metrics-overview)
-- [Use cases and examples](/docs/dbt-ai/wizard-use-cases)
-- [Use skills with <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-skills)
-- [Validating dbt changes with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes)
+- [Семантические модели](/docs/build/semantic-models)
+- [Обзор метрик](/docs/build/metrics-overview)
+- [Сценарии использования и примеры](/docs/dbt-ai/wizard-use-cases)
+- [Использование навыков с CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-skills)
+- [Проверка изменений dbt с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-3-validate-changes)

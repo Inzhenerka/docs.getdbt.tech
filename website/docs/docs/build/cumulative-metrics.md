@@ -68,7 +68,7 @@ availability: all_users
 | `cumulative_type_params.grain_to_date`   | Задаёт гранулярность накопления, например `month`, при этом накопление начинается заново в начале каждого периода указанной гранулярности. Нельзя использовать вместе с `window`. | Необязательный  | String |
 | `cumulative_type_params.period_agg`  | Определяет способ агрегации накопительной метрики при обобщении данных до другой гранулярности: `first`, `last` или `average`. Если `window` не указан, по умолчанию используется `first`. | Необязательный  | String |
 
-<Expandable alt_header="Explanation of type_params.measure">
+<Expandable alt_header="Как работает type_params.measure">
 
 Конфигурация `type_params.measure` может быть записана несколькими способами:
 - **Сокращённый синтаксис** &mdash; чтобы указать только имя меры, используйте простое строковое значение. Это сокращённый вариант, применяемый, когда не требуются дополнительные атрибуты.
@@ -155,11 +155,11 @@ metrics:
 
 <VersionBlock firstVersion="1.12">
 
-- `cumulative_order_total`: Calculates the cumulative order total over all time. Uses `input_metric` to specify the simple metric `order_total` to be aggregated.
+- `cumulative_order_total`: рассчитывает накопительную сумму заказов за всё время. Параметр `input_metric` указывает простую метрику `order_total`, которую нужно агрегировать.
 
-- `cumulative_order_total_l1m`: Calculates the trailing 1-month cumulative order total. Uses `window` parameter to specify a window of 1 month.
+- `cumulative_order_total_l1m`: рассчитывает накопительную сумму заказов за последний месяц. Параметр `window` задаёт окно в один месяц.
 
-- `cumulative_order_total_mtd`: Calculates the month-to-date cumulative order total. Uses `grain_to_date` parameter to specify a grain of `month`.
+- `cumulative_order_total_mtd`: рассчитывает накопительную сумму заказов с начала месяца. Параметр `grain_to_date` задаёт период `month`.
 
 <File name='models/marts/fct_orders.yml'>
 
@@ -668,7 +668,7 @@ metrics:
 </File>
 </VersionBlock>
 
-<Expandable alt_header="Разверните, чтобы посмотреть результат компиляции в SQL">
+<Expandable alt_header="Разверните, чтобы посмотреть результат компиляции в SQL" anchor_id="sql-details-2">
 
 ```sql
 with staging as (

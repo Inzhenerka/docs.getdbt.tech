@@ -13,7 +13,7 @@ availability: platform_login
 
 <Card
     title="Cost Insights"
-    body="Track warehouse compute costs and see realized savings from state-aware orchestration across your dbt projects and models."
+    body="Отслеживайте расходы на вычисления в хранилище и экономию от оркестрации с учётом состояния в проектах и моделях dbt."
     link="/docs/explore/cost-insights"
     icon="dbt-bit"/>
 
@@ -30,7 +30,7 @@ body="Выполняйте запросы к данным и проводите 
     icon="dbt-bit"/>
 
 <Card
-    title="Documentation"
+    title="Документация"
     body="Документируйте ваши dbt‑проекты, чтобы стейкхолдеры, инженеры и аналитики могли понять ваши ресурсы и их lineage от начала до конца."
     link="/docs/explore/build-and-view-your-docs"
     icon="dbt-bit"/>

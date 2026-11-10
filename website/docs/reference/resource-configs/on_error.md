@@ -1,6 +1,6 @@
 ---
 title: on_error
-description: "Use the `on_error` config to control whether downstream models are skipped when a model fails."
+description: "Используйте конфигурацию `on_error`, чтобы управлять пропуском нижестоящих моделей при сбое модели."
 id: "on_error"
 resource_types: [models]
 datatype: string
@@ -14,9 +14,9 @@ datatype: string
   groupId="config-languages"
   defaultValue="project-yaml"
   values={[
-    { label: 'Project file', value: 'project-yaml', },
-    { label: 'Property file', value: 'property-yaml', },
-    { label: 'SQL config', value: 'config', },
+    { label: 'Файл проекта', value: 'project-yaml', },
+    { label: 'Файл свойств', value: 'property-yaml', },
+    { label: 'Конфигурация SQL', value: 'config', },
   ]
 }>
 
@@ -65,18 +65,18 @@ models:
 
 </Tabs>
 
-## Definition
+## Определение
 
-The `on_error` config controls what happens to downstream (child) models when a model fails during a run. This config only applies to models; it has no effect on tests. To control whether downstream models run after a test failure, use the [`severity`](/reference/resource-configs/severity) config on your tests instead.
+Конфигурация `on_error` определяет, что происходит с нижестоящими (дочерними) моделями, если во время запуска модель завершается с ошибкой. Эта конфигурация применяется только к моделям и не влияет на тесты. Чтобы управлять выполнением нижестоящих моделей после сбоя теста, используйте конфигурацию [`severity`](/reference/resource-configs/severity) для тестов.
 
-`on_error` accepts two values:
+`on_error` принимает два значения:
 
-- `skip_children` (default): All downstream models are skipped when the model fails.
-- `continue`: Downstream models continue running when the model fails, instead of being skipped.
+- `skip_children` (по умолчанию): все нижестоящие модели пропускаются, если модель завершается с ошибкой.
+- `continue`: нижестоящие модели продолжают выполняться, если модель завершается с ошибкой, а не пропускаются.
 
-## Example
+## Пример
 
-Set `on_error: continue` when downstream models can still run meaningfully even if an upstream model fails (for example, when they have fallback logic or independent data sources).
+Задайте `on_error: continue`, если нижестоящие модели могут корректно выполняться даже при сбое вышестоящей модели (например, если в них предусмотрена резервная логика или используются независимые источники данных).
 
 <File name='models/my_model.sql'>
 
@@ -91,31 +91,31 @@ select 1 as id
 
 </File>
 
-When `on_error` is set to `continue` on a model that fails, dbt runs its downstream models rather than skipping them. The failed model still appears as an error in the run results, and the overall run still fails even if all downstream models succeed.
+Если для модели, завершившейся с ошибкой, задано `on_error: continue`, dbt выполняет нижестоящие модели, а не пропускает их. Модель, завершившаяся с ошибкой, по-прежнему отмечается как ошибочная в результатах запуска, а сам запуск считается неудачным, даже если все нижестоящие модели выполнены успешно.
 
-The [`--fail-fast`](/reference/global-configs/failing-fast) flag takes precedence over `on_error: continue`. When `--fail-fast` is set, dbt stops at the first failure and skips all remaining models, regardless of their `on_error` configuration. 
+Флаг [`--fail-fast`](/reference/global-configs/failing-fast) имеет приоритет над `on_error: continue`. Если задан `--fail-fast`, dbt останавливается при первом сбое и пропускает все оставшиеся модели независимо от их конфигурации `on_error`. 
 
-## Behavior with multiple upstream models
+## Поведение при наличии нескольких вышестоящих моделей
 
-When a model has multiple upstream models, `skip_children` takes precedence over `continue`. If any failed upstream model uses `skip_children`, the downstream model is skipped &mdash; even if other failed upstream models use `continue`.
+Если у модели несколько вышестоящих моделей, `skip_children` имеет приоритет над `continue`. Если хотя бы одна из вышестоящих моделей, завершившихся с ошибкой, использует `skip_children`, нижестоящая модель пропускается &mdash; даже если другие вышестоящие модели, завершившиеся с ошибкой, используют `continue`.
 
-For example, consider a DAG where `model_c` depends on both `model_a` and `model_b`:
+Например, рассмотрим DAG, в котором `model_c` зависит и от `model_a`, и от `model_b`:
 
-- `model_a` uses `on_error: skip_children`
-- `model_b` uses `on_error: continue`
+- `model_a` использует `on_error: skip_children`
+- `model_b` использует `on_error: continue`
 
-The following table shows how `model_c` behaves based on the outcome of its upstream models:
+В следующей таблице показано поведение `model_c` в зависимости от результатов выполнения вышестоящих моделей:
 
 <SimpleTable>
 
-| `model_a` result (`skip_children`) | `model_b` result (`continue`) | `model_c` behavior |
+| Результат `model_a` (`skip_children`) | Результат `model_b` (`continue`) | Поведение `model_c` |
 |---|---|---|
-| Success | Success | Runs |
-| Error | Success | Skipped |
-| Success | Error | Runs |
-| Error | Error | Skipped |
+| Успешно | Успешно | Выполняется |
+| Ошибка | Успешно | Пропускается |
+| Успешно | Ошибка | Выполняется |
+| Ошибка | Ошибка | Пропускается |
 
 </SimpleTable>
 <br/>
 
-When `model_a` errors, `model_c` is always skipped because `model_a` uses `skip_children`. When only `model_b` errors, `model_c` still runs because `model_b` uses `continue`, which does not block downstream models.
+Если `model_a` завершается с ошибкой, `model_c` всегда пропускается, поскольку `model_a` использует `skip_children`. Если с ошибкой завершается только `model_b`, `model_c` всё равно выполняется, поскольку `model_b` использует `continue`, что не блокирует выполнение нижестоящих моделей.

@@ -117,6 +117,8 @@ availability: all_users
 
 Пример использования &mdash; Эта переменная полезна, когда нужно динамически использовать имя Git-ветки в качестве префикса для [схемы разработки](/docs/build/custom-schemas) (`{{ env_var('DBT_CLOUD_GIT_BRANCH') }}`).
 
+<a id="dbt-cloud-context" />
+
 #### Контекст платформы dbt {#dbt-platform-context}
 
 Следующие переменные окружения задаются автоматически:

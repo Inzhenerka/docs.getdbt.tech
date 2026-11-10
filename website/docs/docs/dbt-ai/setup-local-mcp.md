@@ -60,7 +60,7 @@ import StaticSubdomainRequired from '/snippets/_static-subdomain-required.md';
 
 Выберите способ настройки, который лучше всего подходит под ваш рабочий процесс:
 
-### Аутентификация OAuth на платформе dbt <Lifecycle status="self_service, managed, managed_plus" />
+### Аутентификация OAuth на платформе dbt <Lifecycle status="self_service, managed, managed_plus" /> {#dbt-platform-authentication}
 
 Этот метод использует OAuth для аутентификации в вашей учетной записи <Constant name="dbt_platform" />. Это самый простой вариант настройки, который не требует ручного управления токенами или переменными окружения.
 
@@ -317,7 +317,7 @@ DBT_ACCOUNT_ID=12345          # Required when using PAT-based auth
 
 Следуйте инструкциям для вашей ОС, чтобы найти `DBT_PATH`:
 
-<Expandable alt_header="macOS/Linux" >
+<Expandable alt_header="macOS/Linux"  anchor_id="macoslinux-details-2">
 
 Выполните команду в терминале:
 ```bash
@@ -327,7 +327,7 @@ which dbt
 
 </Expandable>
 
-<Expandable alt_header="Windows" >
+<Expandable alt_header="Windows"  anchor_id="windows-details-2">
 
 Выполните команду в Command Prompt или PowerShell:
 ```bash
@@ -360,7 +360,7 @@ where dbt
 
 ### Режим отключения (по умолчанию) {#disable-mode}
 
-All tools are available by default. Set any of these to `true` to turn off a toolset:
+По умолчанию доступны все инструменты. Установите для нужной переменной значение `true`, чтобы отключить соответствующий набор:
 
 | Имя | Значение по умолчанию | Описание |
 | --- | --- | --- |
@@ -376,7 +376,7 @@ All tools are available by default. Set any of these to `true` to turn off a too
 
 ### Режим включения
 
-Use `DBT_MCP_ENABLE_*` variables when you want to explicitly allowlist which toolsets are available. When an enable variable is set, only the enabled toolsets will be active:
+Чтобы явно разрешить только определённые наборы инструментов, используйте переменные `DBT_MCP_ENABLE_*`. Если задана хотя бы одна такая переменная, активны только разрешённые наборы:
 
 | Имя | Значение по умолчанию | Описание |
 | --- | --- | --- |

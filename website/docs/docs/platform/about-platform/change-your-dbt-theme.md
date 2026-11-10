@@ -1,34 +1,33 @@
 ---
-title: "Change your dbt theme" 
+title: "Изменение темы dbt" 
 id: change-your-dbt-theme
-description: "Learn about theme switching in dbt"
-sidebar_label: Change your dbt theme
+description: "Узнайте о переключении тем в dbt"
+sidebar_label: Изменение темы dbt
 image: /img/docs/dbt-platform/using-dbt-platform/light-vs-dark.png
 availability:
   surface: platform
   access: login_required
 ---
 
-# Change your dbt theme 
+# Изменение темы dbt 
 
-<Constant name="dbt" /> supports **Light mode** (default), **Dark mode**, and **System mode** (respects your browser's theme for light or dark mode) under the **Theme** section of your user profile and is available for all [plans](https://www.getdbt.com/pricing). 
+<Constant name="dbt" /> поддерживает **светлую тему** (по умолчанию), **тёмную тему** и **системную тему** (использует светлую или тёмную тему в соответствии с настройками браузера). Выбор темы доступен в разделе **Theme** вашего профиля пользователя на всех [тарифных планах](https://www.getdbt.com/pricing). 
 
-You can seamlessly switch between these modes directly from the profile menu, customizing your viewing experience.
+Вы можете легко переключаться между этими режимами прямо из меню профиля, настраивая внешний вид интерфейса по своему вкусу.
 
-Your selected theme is stored in your user profile, ensuring a consistent experience across <Constant name="dbt" />.
+Выбранная тема сохраняется в вашем профиле пользователя, обеспечивая единообразное оформление во всём <Constant name="dbt" />.
 
-Theme selection applies across all areas of <Constant name="dbt" />, including the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), [<Constant name="catalog" />](/docs/explore/explore-projects), [environments](/docs/environments-in-dbt), [jobs](/docs/deploy/jobs), and more. Learn more about customizing themes in [Change themes in <Constant name="dbt" />](/docs/platform/about-platform/change-your-dbt-theme#change-themes-in-dbt).
+Выбранная тема применяется ко всем разделам <Constant name="dbt" />, включая [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), [<Constant name="catalog" />](/docs/explore/explore-projects), [окружения](/docs/environments-in-dbt), [задания](/docs/deploy/jobs) и другие. Подробнее о настройке тем см. в разделе [Изменение темы в <Constant name="dbt" />](/docs/platform/about-platform/change-your-dbt-theme#change-themes-in-dbt).
 
-## Change themes in dbt
+## Изменение темы в dbt {#change-themes-in-dbt}
 
-To switch to dark mode in the <Constant name="dbt" /> UI, follow these steps:
+Чтобы включить тёмную тему в интерфейсе <Constant name="dbt" />, выполните следующие действия:
 
-1. Navigate to your account name at the bottom left of your account.
-2. Under **Theme**, select **Dark**.
+1. Нажмите на имя своего аккаунта в левом нижнем углу интерфейса.
+2. В разделе **Theme** выберите **Dark**.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dark-mode.png" width="70%" title="Enable dark mode" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/dark-mode.png" width="70%" title="Включение тёмной темы" />
 
-And that’s it! 🎉 Your chosen selected theme will follow you across all devices.
+Вот и всё! 🎉 Выбранная тема будет использоваться на всех ваших устройствах.
 
-To revert to **Light mode** or **System mode**, repeat the same steps and select your preferred theme.
-
+Чтобы вернуться к **светлой теме** или **системной теме**, повторите те же действия и выберите нужную тему.

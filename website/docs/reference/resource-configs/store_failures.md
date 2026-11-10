@@ -1,5 +1,5 @@
 ---
-description: "Set whether a data test always or never stores its failing records in the database."
+description: "Укажите, должен ли тест данных всегда сохранять записи с ошибками в базе данных или никогда их не сохранять."
 resource_types: [tests]
 datatype: boolean
 ---

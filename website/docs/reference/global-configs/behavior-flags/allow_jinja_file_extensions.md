@@ -1,19 +1,19 @@
 ---
-title: "Jinja file extensions"
+title: "Расширения файлов Jinja"
 id: "allow_jinja_file_extensions"
-sidebar_label: "allow jinja file extensions"
+sidebar_label: "Разрешение расширений файлов Jinja"
 ---
 
-| allow_jinja_file_extensions | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
+| allow_jinja_file_extensions | <Constant name="dbt" /> **v1 — последняя версия** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2026.5 | 1.12.0 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Введён | 2026.5 | 1.12.0 |
+| Стабилизирован (по умолчанию → `true`) | — | — |
+| Удалён | — | — |
 
-The `allow_jinja_file_extensions` flag is set to `false` by default.
+По умолчанию флаг `allow_jinja_file_extensions` имеет значение `false`.
 
-When set to `true`, dbt recognizes Jinja-style extension suffixes (for example, `.j2`, `.jinja`, and `.jinja2`) appended to `.sql` and `.md` files. This lets you use Jinja-aware syntax highlighting in IDEs that associate these suffixes with Jinja templating.
+При значении `true` dbt распознаёт суффиксы расширений Jinja (например, `.j2`, `.jinja` и `.jinja2`), добавленные к именам файлов с расширениями `.sql` и `.md`. Это позволяет использовать подсветку синтаксиса с поддержкой Jinja в IDE, которые связывают эти суффиксы с шаблонизацией Jinja.
 
-dbt strips the Jinja suffix when determining node names; resource names remain unchanged regardless of whether the Jinja suffix is present. For example, a [docs block](/docs/build/documentation#using-docs-blocks) file named `my_docs.md.j2` is parsed identically to `my_docs.md`, and a model file named `my_model.sql.j2` is parsed as the model `my_model`.
+При определении имён узлов dbt удаляет суффикс Jinja; имена ресурсов остаются неизменными независимо от наличия суффикса Jinja. Например, файл [блока docs](/docs/build/documentation#using-docs-blocks) с именем `my_docs.md.j2` разбирается точно так же, как `my_docs.md`, а файл модели с именем `my_model.sql.j2` разбирается как модель `my_model`.
 
-When this flag is `false` or unset, dbt ignores files with these suffixes without logging a warning. If you've already added schema properties for that file, you'll see a "Did not find matching node for patch warning on schema.yml" warning.
+Если этот флаг имеет значение `false` или не задан, dbt игнорирует файлы с такими суффиксами, не записывая предупреждение в журнал. Если вы уже добавили свойства схемы для такого файла, вы увидите предупреждение «Did not find matching node for patch warning on schema.yml».

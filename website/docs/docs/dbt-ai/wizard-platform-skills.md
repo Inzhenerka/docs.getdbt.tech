@@ -1,27 +1,27 @@
 ---
-title: "Use skills with dbt Wizard in dbt platform"
+title: "Использование навыков с dbt Wizard на dbt platform"
 id: "wizard-platform-skills"
-description: "Create and use skills to give dbt Wizard in dbt platform reusable, project-specific instructions."
-sidebar_label: "Use skills"
+description: "Создавайте и используйте навыки, чтобы задавать dbt Wizard на dbt platform многократно используемые инструкции, учитывающие особенности проекта."
+sidebar_label: "Использование навыков"
 tags: [AI, Wizard]
 pagination_prev: "docs/platform/wizard-home"
 pagination_next: "docs/dbt-ai/wizard-platform-mcp"
 availability: platform_usage
 ---
 
-# Use skills with <Constant name="wizard" /> in <Constant name="dbt_platform" /> <Lifecycle status="beta"/>
+# Использование навыков с <Constant name="wizard" /> на <Constant name="dbt_platform" /> <Lifecycle status="beta"/>
 
 <IntroText>
-Skills are reusable instructions that help <Constant name="wizard" /> follow your team's SQL conventions, naming rules, modeling patterns, and workflows without repeating them in every prompt.
+Навыки — это многократно используемые инструкции, которые помогают <Constant name="wizard" /> соблюдать принятые в вашей команде соглашения по SQL, правила именования, шаблоны моделирования и рабочие процессы без необходимости повторять их в каждом запросе.
 </IntroText>
 
-<Constant name="wizard" /> also includes built-in skills from [dbt Agent skills](https://github.com/dbt-labs/dbt-agent-skills), maintained by dbt Labs. These are always available, no setup needed.
+<Constant name="wizard" /> также включает встроенные навыки из [dbt Agent skills](https://github.com/dbt-labs/dbt-agent-skills), поддерживаемые dbt Labs. Они всегда доступны и не требуют настройки.
 
-For general project context (`AGENTS.md`, `CLAUDE.md`), refer to [Migrate to dbt Wizard](/docs/dbt-ai/wizard-migrate) — <Constant name="wizard" /> reads those instruction files out of the box.
+Общие сведения о контексте проекта (`AGENTS.md`, `CLAUDE.md`) см. в разделе [Переход на dbt Wizard](/docs/dbt-ai/wizard-migrate) — <Constant name="wizard" /> читает эти файлы инструкций без дополнительной настройки.
 
-## How skills work
+## Как работают навыки
 
-At the start of every session, <Constant name="wizard"/> scans for repo-level skills in the `.agents/skills/` directory in your dbt project root:
+В начале каждого сеанса <Constant name="wizard"/> ищет навыки уровня репозитория в каталоге `.agents/skills/` в корне вашего проекта dbt:
 
 ```text
 .agents/
@@ -30,33 +30,33 @@ At the start of every session, <Constant name="wizard"/> scans for repo-level sk
       SKILL.md
 ```
 
-Custom skills use the [Agent Skills](https://agentskills.io/specification) format, the same format used by [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills) on GitHub. A skill file contains YAML frontmatter (`name`, `description`) and a Markdown body with instructions.
+Пользовательские навыки используют формат [Agent Skills](https://agentskills.io/specification) — тот же формат, который используется в [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills) на GitHub. Файл навыка содержит блок метаданных YAML (`name`, `description`) и основную часть в формате Markdown с инструкциями.
 
-If a custom skill and a built-in skill share the same name, the custom skill takes precedence.
+Если пользовательский и встроенный навыки имеют одинаковое имя, приоритет имеет пользовательский навык.
 
-## Create a skill
+## Создание навыка
 
-In [Studio IDE](/docs/dbt-ai/wizard-ide), use the file explorer to create the skill directory and file:
+В [Studio IDE](/docs/dbt-ai/wizard-ide) используйте проводник файлов, чтобы создать каталог и файл навыка:
 
-1. Create a folder at `.agents/skills/SKILL_NAME/` in your project root.
-2. Add a `SKILL.md` file inside it. A typical `SKILL.md` includes:
-   - YAML frontmatter with at minimum `name` and `description`.
-   - A Markdown body with sections for when to use the skill, workflow steps, and conventions.
-   - Optional `references/` files for extra detail the agent can load when needed.
-3. Optionally add supporting files under `.agents/skills/SKILL_NAME/references/` (for example, `references/naming-conventions.md`) that the agent can read when the skill is active.
-4. Start a new <Constant name="wizard"/> chat — skills are discovered at session start, so mid-session changes won't be picked up until you start a new chat.
+1. Создайте папку `.agents/skills/SKILL_NAME/` в корне проекта.
+2. Добавьте в неё файл `SKILL.md`. Обычно `SKILL.md` включает:
+   - Блок метаданных YAML как минимум с полями `name` и `description`.
+   - Основную часть в формате Markdown с разделами об условиях применения навыка, этапах рабочего процесса и соглашениях.
+   - Необязательные файлы в `references/` с дополнительными сведениями, которые агент может загружать при необходимости.
+3. При необходимости добавьте вспомогательные файлы в `.agents/skills/SKILL_NAME/references/` (например, `references/naming-conventions.md`), которые агент сможет читать, когда навык активен.
+4. Начните новый чат с <Constant name="wizard"/> — навыки обнаруживаются в начале сеанса, поэтому изменения, внесённые во время сеанса, не будут учтены, пока вы не начнёте новый чат.
 
-## Skill file format
+## Формат файла навыка
 
-A skill file has two required parts: YAML frontmatter and a Markdown body.
+Файл навыка состоит из двух обязательных частей: блока метаданных YAML и основной части в формате Markdown.
 
-- **Frontmatter**: Includes at minimum, `name` and `description`. The `description` is especially important: it's how <Constant name="wizard"/> decides when to apply the skill automatically.
-- **Body**: Markdown sections explaining when to use the skill, what it does, and any conventions or constraints.
-- **References** (optional): Supporting `.md` files in a `references/` subfolder for detail that would make `SKILL.md` too long.
+- **Блок метаданных**: содержит как минимум `name` и `description`. Поле `description` особенно важно: именно по нему <Constant name="wizard"/> определяет, когда автоматически применять навык.
+- **Основная часть**: разделы Markdown, объясняющие, когда использовать навык, что он делает, а также какие соглашения или ограничения следует соблюдать.
+- **Справочные материалы** (необязательно): вспомогательные файлы `.md` в подпапке `references/` со сведениями, которые сделали бы `SKILL.md` слишком длинным.
 
-### Example skill file
+### Пример файла навыка
 
-If you're new to skills, start with a small `SKILL.md` like the following example, then grow it over time:
+Если вы только начинаете работать с навыками, создайте небольшой `SKILL.md`, как в примере ниже, а затем постепенно дополняйте его:
 
 ```markdown
 ---
@@ -77,31 +77,31 @@ Use this skill whenever you are changing SQL or YAML under `models/` and the use
 - Document new columns in the same PR as the model change.
 ```
 
-For a full production-style example, refer to dbt's [`adding-dbt-unit-test` skill](https://github.com/dbt-labs/dbt-agent-skills/blob/main/skills/dbt/skills/adding-dbt-unit-test/SKILL.md).
+Полноценный пример для использования в реальном проекте см. в [навыке `adding-dbt-unit-test`](https://github.com/dbt-labs/dbt-agent-skills/blob/main/skills/dbt/skills/adding-dbt-unit-test/SKILL.md) от dbt.
 
-## Use a skill
+## Использование навыка
 
-In the <Constant name="wizard"/> chat panel:
+В панели чата <Constant name="wizard"/>:
 
-1. Prompt the agent and reference the skill by name — for example: `Use my-team-style to refactor this model and update related YAML`.
-2. If needed, use `@` mentions to point to the skill file or supporting `.md` files directly.
-3. Review and approve proposed changes as usual in the <Constant name="wizard"/> panel.
+1. Отправьте агенту запрос и укажите навык по имени — например: `Use my-team-style to refactor this model and update related YAML`.
+2. При необходимости используйте упоминания через `@`, чтобы напрямую указать файл навыка или вспомогательные файлы `.md`.
+3. Просмотрите и подтвердите предложенные изменения в панели <Constant name="wizard"/>, как обычно.
 
-## Built-in dbt skills
+## Встроенные навыки dbt
 
-<Constant name="wizard"/> ships with skills from [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills), maintained by dbt Labs and the community. These capture analytics engineering knowledge for common workflows and all ship bundled with <Constant name="wizard"/>. You don't call them directly as the agent loads whichever one matches your prompt.
+<Constant name="wizard"/> поставляется с навыками из [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills), поддерживаемыми dbt Labs и сообществом. Они содержат знания по аналитической инженерии для типовых рабочих процессов и все входят в комплект <Constant name="wizard"/>. Вам не нужно вызывать их напрямую: агент сам загружает навык, соответствующий вашему запросу.
 
-For the latest catalog, refer to the [dbt Agent Skills repository](https://github.com/dbt-labs/dbt-agent-skills).
+Актуальный каталог см. в [репозитории dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills).
 
-## Tips
+## Советы
 
-- **Keep `SKILL.md` focused.** One skill per concern (style guide, testing conventions, deployment workflow). Smaller skills are loaded more reliably than large monolithic ones.
-- **Use `description` to control when <Constant name="wizard"/> activates the skill.** A precise description ("Use when creating or editing models in models/marts/") means the skill fires when relevant, not on every prompt.
-- **Start a new session after adding or editing a skill.** Skills are discovered at session start — mid-session changes aren't picked up until you start a new chat.
-- **Cross-project sharing isn't supported yet.** To reuse a skill in another repo, copy the skill files manually.
+- **Ограничивайте область применения `SKILL.md`.** Один навык должен решать одну задачу (руководство по стилю, соглашения по тестированию, процесс развёртывания). Небольшие навыки загружаются надёжнее, чем крупные монолитные.
+- **Используйте `description`, чтобы управлять тем, когда <Constant name="wizard"/> активирует навык.** Точное описание («Используйте при создании или редактировании моделей в models/marts/») позволяет применять навык в подходящих случаях, а не при каждом запросе.
+- **Начинайте новый сеанс после добавления или редактирования навыка.** Навыки обнаруживаются в начале сеанса — изменения, внесённые во время сеанса, не учитываются, пока вы не начнёте новый чат.
+- **Совместное использование навыков между проектами пока не поддерживается.** Чтобы повторно использовать навык в другом репозитории, скопируйте файлы навыка вручную.
 
-## Related docs
+## Связанная документация
 
-- [<Constant name="wizard"/> in Studio IDE](/docs/dbt-ai/wizard-ide)
-- [Use skills locally](/docs/dbt-ai/wizard-skills)
-- [How <Constant name="wizard"/> works](/docs/dbt-ai/wizard-how-it-works)
+- [<Constant name="wizard"/> в Studio IDE](/docs/dbt-ai/wizard-ide)
+- [Локальное использование навыков](/docs/dbt-ai/wizard-skills)
+- [Как работает <Constant name="wizard"/>](/docs/dbt-ai/wizard-how-it-works)

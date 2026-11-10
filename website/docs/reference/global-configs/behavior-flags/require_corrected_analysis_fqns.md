@@ -1,5 +1,5 @@
 ---
-title: "Project-level configuration for analyses"
+title: "Конфигурация анализов на уровне проекта"
 id: "require_corrected_analysis_fqns"
 sidebar_label: "require corrected analysis fqns"
 ---
@@ -8,15 +8,15 @@ import AnalysesProjectLevelConfig from '/snippets/_analyses-project-level-config
 
 | require_corrected_analysis_fqns | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2026.3 | 1.12.0 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Введён | 2026.3 | 1.12.0 |
+| Стабилизирован (по умолчанию → `true`) | — | — |
+| Удалён | — | — |
 
-Previously, project-level configuration for [analyses](/docs/build/analyses) in `dbt_project.yml` was silently ignored. Fully qualified names (FQNs) for analyses also contained an extra `analyses` path segment that was inconsistent with other resource types.
+Ранее конфигурация [анализов](/docs/build/analyses) на уровне проекта в `dbt_project.yml` игнорировалась без предупреждения. Полные имена (FQN) анализов также содержали дополнительный сегмент пути `analyses`, что не соответствовало формату имён других типов ресурсов.
 
-When `require_corrected_analysis_fqns` is set to `true`, dbt:
-- Routes analysis configurations from the `analyses` block in `dbt_project.yml`, enabling project-level configurations to take effect.
-- Removes the extra FQN segment so that analysis FQNs are consistent with other resource types (for example, `your_project.my_analysis` instead of `your_project.analyses.my_analysis`).
+Когда для `require_corrected_analysis_fqns` установлено значение `true`, dbt:
+- Применяет настройки анализов из блока `analyses` в `dbt_project.yml`, благодаря чему конфигурация на уровне проекта вступает в силу.
+- Удаляет дополнительный сегмент FQN, чтобы полные имена анализов соответствовали формату имён других типов ресурсов (например, `your_project.my_analysis` вместо `your_project.analyses.my_analysis`).
 
 <AnalysesProjectLevelConfig />
 
@@ -31,4 +31,4 @@ analyses:
 ```
 </File>
 
-For more information, refer to [Analyses](/docs/build/analyses) and [Analysis properties](/reference/analysis-properties).
+Дополнительную информацию см. в разделах [Анализы](/docs/build/analyses) и [Свойства анализов](/reference/analysis-properties).

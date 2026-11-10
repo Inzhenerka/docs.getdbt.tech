@@ -1,6 +1,6 @@
 ---
 title: entry_point
-description: "Specify the Python function that serves as the entry point when dbt creates a Python user-defined function (UDF) on Snowflake and BigQuery."
+description: "Укажите функцию Python, которую dbt использует как точку входа при создании Python UDF в Snowflake и BigQuery."
 sidebar_label: "entry_point"
 id: entry-point
 ---

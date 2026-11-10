@@ -111,8 +111,8 @@ Job commands — это конкретные задачи, которые вып
 
 
 ## Связанные материалы {#related-docs}
-- [Job creation best practices](https://discourse.getdbt.com/t/job-creation-best-practices-in-dbt-cloud-feat-my-moms-lasagna/2980)
-- [dbt Command reference](/reference/dbt-commands)
-- [Job notifications](/docs/deploy/job-notifications)
-- [Source freshness](/docs/deploy/source-freshness)
-- [Build and view your docs](/docs/explore/build-and-view-your-docs)
+- [Рекомендации по созданию заданий](https://discourse.getdbt.com/t/job-creation-best-practices-in-dbt-cloud-feat-my-moms-lasagna/2980)
+- [Справочник команд dbt](/reference/dbt-commands)
+- [Уведомления о заданиях](/docs/deploy/job-notifications)
+- [Актуальность источников](/docs/deploy/source-freshness)
+- [Сборка и просмотр документации](/docs/explore/build-and-view-your-docs)

@@ -1,26 +1,26 @@
 ---
-title: "Package overrides for built-in materializations"
+title: "Переопределение встроенных материализаций пакетами"
 id: "require_explicit_package_overrides_for_builtin_materializations"
-sidebar_label: "require explicit package overrides for builtin materializations"
+sidebar_label: "Явное разрешение пакетам переопределять встроенные материализации"
 ---
 
-:::caution Removed in v2
+:::caution Удалён в v2
 
-This flag was removed in v2. The new behavior is always enabled. If you're upgrading, remove this flag from your `dbt_project.yml`.
+Этот флаг был удалён в v2. Новое поведение теперь включено всегда. При обновлении удалите этот флаг из файла `dbt_project.yml`.
 
 :::
 
-| require_explicit_package_overrides_for_builtin_materializations | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
+| require_explicit_package_overrides_for_builtin_materializations | <Constant name="dbt" /> **Последняя версия v1** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2024.04 | 1.6.14, 1.7.14 |
-| Matured (default → `true`) | 2024.06 | 1.8.0 |
-| Removed | — | v2.0 |
+| Введён | 2024.04 | 1.6.14, 1.7.14 |
+| Стал стандартным (по умолчанию → `true`) | 2024.06 | 1.8.0 |
+| Удалён | — | v2.0 |
 
-Installed packages can no longer override built-in materializations without your explicit opt-in. A materialization defined in a package that matches the name of a built-in materialization is no longer included in the search and resolution order. Unlike macros, materializations don't use the `search_order` defined in the project `dispatch` config.
+Установленные пакеты больше не могут переопределять встроенные материализации без вашего явного разрешения. Материализация, определённая в пакете и совпадающая по имени со встроенной материализацией, больше не учитывается при поиске и выборе реализации. В отличие от макросов, материализации не используют `search_order`, заданный в конфигурации `dispatch` проекта.
 
-The built-in materializations are `'view'`, `'table'`, `'incremental'`, `'materialized_view'` for models, as well as `'test'`, `'unit'`, `'snapshot'`, `'seed'`, and `'clone'`.
+К встроенным материализациям относятся `'view'`, `'table'`, `'incremental'`, `'materialized_view'` для моделей, а также `'test'`, `'unit'`, `'snapshot'`, `'seed'` и `'clone'`.
 
-You can still explicitly override built-in materializations by reimplementing the built-in materialization in your root project and wrapping the package implementation:
+Вы по-прежнему можете явно переопределить встроенные материализации, создав в корневом проекте собственную реализацию встроенной материализации, которая оборачивает вызов реализации из пакета:
 
 <File name='macros/materialization_view.sql'>
 
@@ -32,4 +32,4 @@ You can still explicitly override built-in materializations by reimplementing th
 
 </File>
 
-In the future, we may extend the project-level [`dispatch` configuration](/reference/project-configs/dispatch-config) to support a list of authorized packages for overriding built-in materializations.
+В будущем мы можем расширить [конфигурацию `dispatch` на уровне проекта](/reference/project-configs/dispatch-config), добавив поддержку списка пакетов, которым разрешено переопределять встроенные материализации.

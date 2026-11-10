@@ -1,6 +1,6 @@
 ---
-title: How to use prompts for dbt Wizard
-description: A cookbook of prompts and real-world examples to use dbt Wizard efficiently.
+title: Как использовать промпты для dbt Wizard
+description: Сборник промптов и практических примеров для эффективной работы с dbt Wizard.
 id: prompt-cookbook
 icon: 'dbt-copilot'
 hide_table_of_contents: true
@@ -10,167 +10,167 @@ level: 'Beginner'
 
 <div style={{maxWidth: '900px'}}>
 
-## Overview
+## Обзор
 
 <IntroText>
-Learn how to write effective prompts for dbt <Constant name="wizard" /> to generate accurate SQL, models, metrics, and macros. Each recipe is self-contained with its own realistic example.
+Узнайте, как писать эффективные промпты для dbt <Constant name="wizard" />, чтобы генерировать корректный SQL-код, модели, метрики и макросы. Каждый рецепт самодостаточен и содержит собственный реалистичный пример.
 </IntroText>
 
-dbt <Constant name="wizard" /> is an AI assistant that generates SQL, YAML, documentation, tests, semantic models, and macros based on your project's context. The quality of output depends on the clarity of your prompts.
+dbt <Constant name="wizard" /> — это ИИ-ассистент, который генерирует SQL, YAML, документацию, тесты, семантические модели и макросы с учетом контекста вашего проекта. Качество результата зависит от того, насколько ясно сформулированы ваши промпты.
 
-This cookbook provides independent recipes for common prompting tasks. Jump to any section that matches your current need.
+Этот сборник содержит независимые рецепты для типовых задач, решаемых с помощью промптов. Переходите к любому разделу, который соответствует вашей текущей задаче.
 
-This cookbook covers the following topics:
+В сборнике рассматриваются следующие темы:
 <!-- no toc -->
-- [Prompt best practices](https://docs.getdbt.com/guides/prompt-cookbook?step=2)
-- [Generate SQL queries](https://docs.getdbt.com/guides/prompt-cookbook?step=3)
-- [Use what you already have](https://docs.getdbt.com/guides/prompt-cookbook?step=4)
-- [Create semantic models and metrics](https://docs.getdbt.com/guides/prompt-cookbook?step=5)
-- [Create reusable macros](https://docs.getdbt.com/guides/prompt-cookbook?step=6)
-- [Troubleshoot errors and issues](https://docs.getdbt.com/guides/prompt-cookbook?step=7)
-- [Conclusion](https://docs.getdbt.com/guides/prompt-cookbook?step=8)
+- [Рекомендации по написанию промптов](https://docs.getdbt.com/guides/prompt-cookbook?step=2)
+- [Генерация SQL-запросов](https://docs.getdbt.com/guides/prompt-cookbook?step=3)
+- [Использование имеющихся материалов](https://docs.getdbt.com/guides/prompt-cookbook?step=4)
+- [Создание семантических моделей и метрик](https://docs.getdbt.com/guides/prompt-cookbook?step=5)
+- [Создание переиспользуемых макросов](https://docs.getdbt.com/guides/prompt-cookbook?step=6)
+- [Устранение ошибок и проблем](https://docs.getdbt.com/guides/prompt-cookbook?step=7)
+- [Заключение](https://docs.getdbt.com/guides/prompt-cookbook?step=8)
 
-## Prompt best practices
+## Рекомендации по написанию промптов
 
-Writing effective prompts is about giving <Constant name="wizard" /> the right context and clear direction. Follow these principles:
-- [Provide rich context](#provide-rich-context)
-- [Break complex logic into smaller steps](#break-complex-logic-into-smaller-steps)
-- [State the business question, not just the output](#state-the-business-question-not-just-the-output)
-- [Be clear and explicit about the result](#be-clear-and-explicit-about-the-result)
+Чтобы написать эффективный промпт, нужно предоставить <Constant name="wizard" /> нужный контекст и четкие указания. Следуйте этим принципам:
+- [Предоставляйте подробный контекст](#provide-rich-context)
+- [Разбивайте сложную логику на небольшие шаги](#break-complex-logic-into-smaller-steps)
+- [Формулируйте бизнес-вопрос, а не только желаемый результат](#state-the-business-question-not-just-the-output)
+- [Четко и явно описывайте результат](#be-clear-and-explicit-about-the-result)
 
-### Provide rich context
+### Предоставляйте подробный контекст {#provide-rich-context}
 
-In your prompt, include table names, column types, and example values to describe how they relate to each other.
+Указывайте в промпте имена таблиц, типы столбцов и примеры значений, чтобы описать связи между данными.
 
-Include the following:
+Включайте следующее:
 
-- Table relationships (such as `orders` connects to `customers` on `customer_id`)
-- Data types (such as `signup_date` is a timestamp)
-- Sample values (such as `plan_type` can be "monthly" or "annual")
+- Связи между таблицами (например, `orders` связана с `customers` по `customer_id`)
+- Типы данных (например, `signup_date` имеет тип timestamp)
+- Примеры значений (например, `plan_type` может принимать значения "monthly" или "annual")
 
 :::tip
-The following example uses SQL terminology (like data types and joins) because it's generating a SQL query. However, the principle of providing rich context applies to all <Constant name="wizard" /> tasks—whether you're generating macros, documentation, or YAML configurations.
+В следующем примере используется терминология SQL (например, типы данных и соединения), поскольку задача — сгенерировать SQL-запрос. Однако принцип предоставления подробного контекста применим ко всем задачам <Constant name="wizard" />: генерации макросов, документации или конфигураций YAML.
 :::
 
-**Example: Santi's neighborhood café**
+**Пример: кафе Санти по соседству**
 
-Let's say you run a neighborhood café and folks get a free drink after 10 visits:
+Допустим, вы управляете небольшим кафе, где после 10 посещений гости получают бесплатный напиток:
 
-**Without rich context** (vague):
+**Без подробного контекста** (расплывчато):
 ```text
-I need a query using customers, subscriptions, and activity tables to see weekly regulars.
+Мне нужен запрос к таблицам customers, subscriptions и activity, чтобы определить постоянных гостей, которые приходят каждую неделю.
 ```
 
-**With rich context** (specific):
+**С подробным контекстом** (конкретно):
 
 ```text
-Context: I run a café loyalty program where customers earn a free drink after 10 visits.
+Контекст: я веду программу лояльности кафе, в которой гости получают бесплатный напиток после 10 посещений.
 
-Tables and relationships:
+Таблицы и связи:
 
 - customers (customer_id INT or integer, name STRING, email STRING, signup_date TIMESTAMP)
 - subscriptions (subscription_id INT, customer_id INT, plan_type STRING, start_date DATE, end_date DATE)
-  - Joins to customers on customer_id
-  - plan_type values: "monthly", "annual", null for non-subscribers
+  - Соединяется с customers по customer_id
+  - Значения plan_type: "monthly", "annual", null для гостей без подписки
 - activity (activity_id INT, customer_id INT, visit_date DATE, visit_count INT)
-  - Joins to customers on customer_id
-  - visit_count tracks cumulative visits (resets after redemption)
+  - Соединяется с customers по customer_id
+  - visit_count отслеживает накопленное число посещений (сбрасывается после получения бесплатного напитка)
 
-Business question: Show me which customers visit weekly (3+ times per week for 4+ weeks) 
-and compare conversion rates: do high-frequency punch-card users convert to our 
-'beans of the month' subscription at a higher rate than casual visitors?
+Бизнес-вопрос: покажи, какие гости приходят каждую неделю (3+ раза в неделю на протяжении 4+ недель), 
+и сравни показатели конверсии: оформляют ли активные участники программы лояльности 
+подписку «кофейные зерна месяца» чаще, чем нерегулярные посетители?
 ```
 
-**Why it works:** The AI now knows exact data types, how tables relate, what values to expect, and the specific business logic (3+ visits/week defines "regulars").
+**Почему это работает:** теперь ИИ знает точные типы данных, связи между таблицами, ожидаемые значения и конкретную бизнес-логику (3+ посещения в неделю определяют «постоянных гостей»).
 
-### Break complex logic into smaller steps
+### Разбивайте сложную логику на небольшие шаги {#break-complex-logic-into-smaller-steps}
 
-:::tip Common misconception
-Many users try to ask for everything at once in a single prompt. Breaking your request into smaller, sequential steps consistently produces better results.
+:::tip Распространенное заблуждение
+Многие пользователи пытаются запросить все сразу в одном промпте. Разбиение запроса на небольшие последовательные шаги стабильно дает лучшие результаты.
 :::
 
-For multi-part tasks, write them as a sequence of clear instructions. <Constant name="wizard" /> handles step-by-step logic better than complex, all-in-one requests.
+Если задача состоит из нескольких частей, оформляйте их как последовательность четких инструкций. <Constant name="wizard" /> лучше справляется с пошаговой логикой, чем со сложными запросами, объединяющими все сразу.
 
-**Example:**
+**Пример:**
 
 ```text
-1. Filter the dataset to active users in the last 90 days.
-2. Calculate their average session duration.
-3. Join to subscription data and group by plan tier.
+1. Отфильтруй набор данных, оставив пользователей, активных за последние 90 дней.
+2. Рассчитай среднюю продолжительность их сеансов.
+3. Соедини результат с данными о подписках и сгруппируй по уровню тарифного плана.
 ```
 
-**Why this works:** Each step is clear and actionable. You can always iterate on your prompt to refine results &mdash; start simple, then build complexity.
+**Почему это работает:** каждый шаг понятен и выполним. Вы всегда можете доработать промпт, чтобы уточнить результат, &mdash; начните с простого, затем добавляйте сложность.
 
-### State the business question, not just the output
+### Формулируйте бизнес-вопрос, а не только желаемый результат {#state-the-business-question-not-just-the-output}
 
-Describe the decision or insight the query supports, and avoid only technical-like prompts. This means, instead of "count users", you can say "count active users per week to analyze engagement trends."
+Опишите, какое решение или аналитический вывод должен поддерживать запрос, и избегайте исключительно технических формулировок. Например, вместо «подсчитай пользователей» можно сказать «подсчитай активных пользователей по неделям, чтобы проанализировать динамику вовлеченности».
 
-**Example: The sneaker drop**
+**Пример: выпуск новой коллекции кроссовок**
 
-Let's say you run an online sneaker shop and just launched a new feature: customers can view 3D previews of sneakers before buying.
+Допустим, у вас интернет-магазин кроссовок и вы только что запустили новую функцию: перед покупкой клиенты могут просматривать кроссовки в 3D.
 
 ```text
-We launched a 3D preview feature with our latest limited-edition sneaker drop. 
-Did customers who used the 3D preview convert to buyers at a higher rate than 
-those who only saw photos?
+Одновременно с последним выпуском лимитированной коллекции кроссовок мы запустили функцию 3D-просмотра. 
+Была ли конверсия в покупку у клиентов, использовавших 3D-просмотр, выше, чем 
+у тех, кто смотрел только фотографии?
 
-Show me weekly conversion rates: browsers who became buyers, segmented by whether 
-they used the 3D preview. If preview users convert 20%+ higher, we'll add 3D 
-to all products. If not, we'll improve the feature before expanding.
+Покажи недельные показатели конверсии посетителей в покупателей с разбивкой по тому, 
+использовали ли они 3D-просмотр. Если конверсия у пользователей 3D-просмотра выше на 20% или более, мы добавим 3D 
+для всех товаров. Если нет, мы улучшим функцию, прежде чем расширять ее использование.
 ```
 
-**Why it works:** You've described the feature, the behavior you're measuring, specific success criteria (20%+ lift), and the decision you'll make based on results.
+**Почему это работает:** вы описали функцию, поведение, которое измеряете, конкретные критерии успеха (рост на 20% или более) и решение, которое примете на основе результатов.
 
-### Be clear and explicit about the result
+### Четко и явно описывайте результат {#be-clear-and-explicit-about-the-result}
 
-Define the expected output clearly. Mention the expected columns in the final result and state whether results should be sorted, limited, or filtered.
+Четко определите ожидаемый результат. Перечислите столбцы, которые должны в него входить, и укажите, нужно ли сортировать, ограничивать или фильтровать результаты.
 
-**What to specify:**
+**Что следует указать:**
 
-- Expected column names and formats
-- Sort order and any limits (for example, "top 10 products by revenue")
-- Output format examples (for example, "`conversion_rate` as a percentage")
+- Ожидаемые имена столбцов и форматы
+- Порядок сортировки и ограничения (например, «10 лучших товаров по выручке»)
+- Примеры формата результата (например, «`conversion_rate` в процентах»)
 
-**Example: The fitness challenge**
+**Пример: фитнес-челлендж**
 
-In this example, you run a fitness app with a 2-week challenge, Kimiko's kettlebell challenge.
+В этом примере вы управляете фитнес-приложением с двухнедельным челленджем — тренировками с гирей от Кимико.
 
 ```text
-Give me a weekly trend with the date, active folks, and a simple 'engagement per person.' 
-Then a summary by launch week with 'trial starts,' 'upgrades in 30 days,' 
-and an 'upgrade rate' as a percentage.
+Покажи недельную динамику: дату, число активных участников и простой показатель «вовлеченность на человека». 
+Затем сделай сводку по неделе запуска с показателями «начало пробного периода», «переход на платный тариф за 30 дней» 
+и «доля переходов на платный тариф» в процентах.
 
-Each week, show active challengers and total workouts. By challenge start week, 
-show how many upgraded to paid within 30 days and what their average workouts looked like.
+Для каждой недели покажи число активных участников челленджа и общее число тренировок. По неделе начала челленджа 
+покажи, сколько участников перешли на платный тариф в течение 30 дней и каково было среднее число их тренировок.
 ```
 
-**Why it works:** Specific metrics that are ready to present.
+**Почему это работает:** заданы конкретные метрики, готовые к представлению.
 
-## Generate SQL queries
+## Генерация SQL-запросов
 
-Let's say you want to build a query to find top-spending customers.
+Допустим, вы хотите создать запрос, который найдет клиентов с наибольшими расходами.
 
 ```text
-Context:
-I have two tables:
+Контекст:
+У меня есть две таблицы:
 - customers (customer_id, name, email)
 - orders (order_id, customer_id, order_total, order_date)
 
-Relationship: orders.customer_id connects to customers.customer_id
+Связь: orders.customer_id связана с customers.customer_id
 
-Business question:
-Show me the top 10 customers by total spending in 2024.
+Бизнес-вопрос:
+Покажи 10 клиентов с наибольшей общей суммой покупок за 2024 год.
 
-Output:
+Результат:
 - customer_id
 - customer_name
 - total_spent
 - order_count
 
-Sort by total_spent descending, limit to 10 rows.
+Отсортируй по total_spent по убыванию, ограничь результат 10 строками.
 ```
 
-**What <Constant name="wizard" /> generates:**
+**Что генерирует <Constant name="wizard" />:**
 
 ```sql
 select
@@ -187,99 +187,99 @@ order by total_spent desc
 limit 10
 ```
 
-**Why it works:**
-- Clear context about tables and their relationship
-- Specific business question with a defined time period
-- Explicit output requirements and sorting logic
+**Почему это работает:**
+- Понятный контекст о таблицах и связи между ними
+- Конкретный бизнес-вопрос с определенным временным периодом
+- Явные требования к результату и логике сортировки
 
-**Pro tip:** Start simple, then iterate. If <Constant name="wizard" />'s first attempt isn't perfect, no worries! Refine your prompt with more specific details and let <Constant name="wizard" /> do its magic, it usually gets there in the end ✨
+**Совет от экспертов:** начните с простого, затем дорабатывайте. Если первая попытка <Constant name="wizard" /> неидеальна, ничего страшного! Уточните промпт, добавив конкретные детали, и дайте <Constant name="wizard" /> проявить себя — обычно в итоге он справляется ✨
 
-## Use what you already have
+## Использование имеющихся материалов
 
-You don't need to write everything from scratch. Pull in documentation, definitions, and sample data you already have—it helps <Constant name="wizard" /> understand your specific business context.
+Вам не нужно писать все с нуля. Используйте имеющиеся документацию, определения и примеры данных — это поможет <Constant name="wizard" /> понять специфику вашего бизнеса.
 
-:::tip dbt Insights integration
-When using <Constant name="wizard" /> in [<Constant name="insights" />](/docs/explore/dbt-insights), you can easily cross-reference between <Constant name="wizard" />'s generated SQL and metadata from [dbt Catalog](/docs/explore/explore-projects). This embedded integration makes it seamless to access documentation, definitions, and sample data while building queries.
+:::tip Интеграция с dbt Insights
+При использовании <Constant name="wizard" /> в [<Constant name="insights" />](/docs/explore/dbt-insights) вы можете легко сопоставлять SQL, сгенерированный <Constant name="wizard" />, с метаданными из [dbt Catalog](/docs/explore/explore-projects). Эта встроенная интеграция обеспечивает удобный доступ к документации, определениям и примерам данных при создании запросов.
 :::
 
-### Define your business rules
+### Определите бизнес-правила
 
-Instead of just saying "active customer," explain the rule:
+Вместо того чтобы просто сказать «активный клиент», объясните правило:
 
 ```text
-Active customer = at least one paid purchase in the last 90 days, excluding refunds
-Net revenue = gross sales minus discounts and returns
+Активный клиент = хотя бы одна оплаченная покупка за последние 90 дней, исключая возвраты
+Чистая выручка = валовые продажи за вычетом скидок и возвратов
 ```
 
-**Pull from:** Metrics glossaries, KPI catalogs, product requirement docs, data dictionaries
+**Где взять:** глоссарии метрик, каталоги KPI, документы с требованиями к продукту, словари данных
 
-### Show sample values
+### Покажите примеры значений
 
-Give <Constant name="wizard" /> examples of what the data actually looks like, especially edge cases:
+Дайте <Constant name="wizard" /> примеры того, как на самом деле выглядят данные, особенно в граничных случаях:
 
 ```text
-Order statuses:
+Статусы заказов:
 - `customer_id: C-12, created_at: 2025-05-03T09:07:00Z, status: 'completed'`
 - `customer_id: C-14, created_at: 2025-05-03T09:02:00Z, status: 'cancelled'`
 - `customer_id: C-13, created_at: 2020-01-02T06:40:00Z, status: 'pending'`
 ```
 
-**Pull from:** Data profiling reports, QA test datasets, BI dashboard filters
+**Где взять:** отчеты о профилировании данных, тестовые наборы данных QA, фильтры BI-дашбордов
 
-### Start with a draft, refine later
+### Начните с черновика, доработайте позже
 
-Frame your model first, then iterate. Start with a clean outline that gets the basic structure right:
+Сначала наметьте модель, затем дорабатывайте ее. Начните с простого наброска, который правильно задает базовую структуру:
 
 ```text
-From stg_orders and dim_customers, draft a minimal model with order_id, customer_id, 
-order_date, net_revenue = gross - coalesce(discount, 0), and join to dim_customers 
-on customer_id. Filter to the last 30 days for preview only.
+На основе stg_orders и dim_customers создай минимальную модель с order_id, customer_id, 
+order_date, net_revenue = gross - coalesce(discount, 0) и соединением с dim_customers 
+по customer_id. Только для предварительного просмотра отфильтруй данные за последние 30 дней.
 ```
 
-**Pull from:** Source-to-target mapping sheets (join keys and transformations), data dictionaries (primary and foreign keys)
+**Где взять:** таблицы сопоставления источников и целевых данных (ключи соединения и преобразования), словари данных (первичные и внешние ключи)
 
-## Create semantic models and metrics
+## Создание семантических моделей и метрик
 
-Fast-track your semantic layer strategy with AI-generated YAML using <Constant name="wizard" />.
+Ускорьте реализацию стратегии семантического слоя с помощью YAML, сгенерированного ИИ в <Constant name="wizard" />.
 
-<Constant name="dbt_platform" /> provides built-in generation buttons that automatically  [generate code](/docs/dbt-ai/wizard-ide), [documentation](/docs/build/documentation), [data tests](/docs/build/data-tests), [metrics](/docs/build/metrics-overview), and [semantic models](/docs/build/semantic-models) for you with the click of a button in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-studio-ai) and [<Constant name="insights" />](/docs/explore/dbt-insights).
+<Constant name="dbt_platform" /> предоставляет встроенные кнопки генерации, которые позволяют автоматически [генерировать код](/docs/dbt-ai/wizard-ide), [документацию](/docs/build/documentation), [тесты данных](/docs/build/data-tests), [метрики](/docs/build/metrics-overview) и [семантические модели](/docs/build/semantic-models) одним нажатием в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-studio-ai) и [<Constant name="insights" />](/docs/explore/dbt-insights).
 
-These features understand your model's structure and generate YAML in the correct location.
+Эти функции учитывают структуру вашей модели и генерируют YAML в нужном месте.
 
-**How to generate semantic models:**
+**Как сгенерировать семантические модели:**
 
-1. Navigate to the Studio IDE and select a SQL model file in the **File explorer**
-2. In the **Console** section (under the **Editor**), click the **dbt Wizard** icon to view AI options
-3. Select **Semantic model** to create a semantic model based on your SQL model
-4. Review and refine the generated YAML as needed
+1. Перейдите в Studio IDE и выберите файл SQL-модели в **File explorer**
+2. В разделе **Console** (под **Editor**) нажмите значок **dbt Wizard**, чтобы открыть доступные действия с ИИ
+3. Выберите **Semantic model**, чтобы создать семантическую модель на основе вашей SQL-модели
+4. Проверьте и при необходимости доработайте сгенерированный YAML
 
-You can also use <Constant name="wizard" /> to generate documentation, tests, and metrics.
+Вы также можете использовать <Constant name="wizard" /> для генерации документации, тестов и метрик.
 
-These built-in features automatically understand your model's columns, data types, and relationships, which means you don't need to manually describe your schema or copy-paste between file types.
+Эти встроенные функции автоматически распознают столбцы, типы данных и связи вашей модели, поэтому вам не нужно вручную описывать схему или копировать содержимое между файлами разных типов.
 
-**Typical workflow:**
-1. Build your SQL model using <Constant name="wizard" /> conversational prompts
-2. Use built-in buttons to add documentation, tests, and semantic models
-3. Refine the generated YAML as needed
+**Типичный рабочий процесс:**
+1. Создайте SQL-модель, используя диалоговые промпты для <Constant name="wizard" />
+2. Используйте встроенные кнопки, чтобы добавить документацию, тесты и семантические модели
+3. При необходимости доработайте сгенерированный YAML
 
-For more details, check out the [dbt Wizard](/docs/dbt-ai/wizard-ide) docs.
+Подробнее см. в документации [dbt Wizard](/docs/dbt-ai/wizard-ide).
 
-## Create reusable macros
+## Создание переиспользуемых макросов
 
-In this section, we'll look at how to create reusable macros using <Constant name="wizard" />.
+В этом разделе мы рассмотрим, как создавать переиспользуемые макросы с помощью <Constant name="wizard" />.
 
-- [Turn repetitive code into reusable logic](#turn-repetitive-code-into-reusable-logic)
-- [Lower the barrier to entry](#lower-the-barrier-to-entry)
-- [Accelerate complex logic design](#accelerate-complex-logic-design)
+- [Превращайте повторяющийся код в переиспользуемую логику](#turn-repetitive-code-into-reusable-logic)
+- [Снижайте порог входа](#lower-the-barrier-to-entry)
+- [Ускоряйте разработку сложной логики](#accelerate-complex-logic-design)
 
-### Turn repetitive code into reusable logic
+### Превращайте повторяющийся код в переиспользуемую логику {#turn-repetitive-code-into-reusable-logic}
 
-A junior analyst keeps copy-pasting CASE statements across models.
+Начинающий аналитик постоянно копирует выражения CASE из одной модели в другую.
 
-**What to give <Constant name="wizard" />:**
+**Что передать <Constant name="wizard" />:**
 
 ```text
-Turn this CASE pattern into a reusable macro:
+Преобразуй этот шаблон CASE в переиспользуемый макрос:
 
 CASE 
   WHEN amount >= 1000 THEN 'high'
@@ -287,72 +287,72 @@ CASE
   ELSE 'low'
 END
 
-Macro requirements:
-- Name: categorize_amount
-- Parameters: column name, high threshold (default 1000), medium threshold (default 500)
-- Include docstring with usage example
-- Handle null values by returning 'unknown'
+Требования к макросу:
+- Имя: categorize_amount
+- Параметры: имя столбца, верхний порог (по умолчанию 1000), средний порог (по умолчанию 500)
+- Добавь строку документации с примером использования
+- Обрабатывай значения null, возвращая 'unknown'
 ```
 
-**Why it works:** Clear input (the CASE statement), clear requirements, clear output expectations.
+**Почему это работает:** четкие входные данные (выражение CASE), четкие требования и четкие ожидания от результата.
 
-### Lower the barrier to entry
+### Снижайте порог входа {#lower-the-barrier-to-entry}
 
-You need a macro but don't know Jinja syntax well.
+Вам нужен макрос, но вы плохо знаете синтаксис Jinja.
 
-**What to ask <Constant name="wizard" />:**
+**Что спросить у <Constant name="wizard" />:**
 
 ```text
-I need a macro that calculates the number of days between two date columns, 
-excluding weekends.
+Мне нужен макрос, который вычисляет число дней между двумя столбцами с датами, 
+исключая выходные.
 
-Parameters:
-- start_date_column (required)
-- end_date_column (required)
+Параметры:
+- start_date_column (обязательный)
+- end_date_column (обязательный)
 
-Include a docstring explaining how to use it.
+Добавь строку документации с объяснением использования.
 ```
 
-**Outcome:** <Constant name="wizard" /> generates proper Jinja syntax, handles parameters, and includes documentation. You learn Jinja patterns while getting working code.
+**Результат:** <Constant name="wizard" /> генерирует корректный синтаксис Jinja, обрабатывает параметры и добавляет документацию. Вы изучаете приемы Jinja и одновременно получаете рабочий код.
 
-### Accelerate complex logic design
+### Ускоряйте разработку сложной логики {#accelerate-complex-logic-design}
 
-This is best for advanced users who are comfortable with Jinja.
+Этот подход лучше всего подходит опытным пользователям, уверенно работающим с Jinja.
 
-**What to ask <Constant name="wizard" />:**
+**Что спросить у <Constant name="wizard" />:**
 
 ```text
-I need a macro that builds a grouped aggregation with optional filters.
+Мне нужен макрос, который строит агрегацию с группировкой и необязательными фильтрами.
 
-Parameters:
-- relation (the model/table to query)
-- group_by (list of columns to group by)
-- metrics (list of columns to aggregate)
-- where (optional filter condition)
+Параметры:
+- relation (модель/таблица для запроса)
+- group_by (список столбцов для группировки)
+- metrics (список столбцов для агрегации)
+- where (необязательное условие фильтрации)
 
-Include defaults and guardrails for empty lists.
-Add a docstring with parameter descriptions and usage example.
+Добавь значения по умолчанию и защиту от пустых списков.
+Добавь строку документации с описанием параметров и примером использования.
 ```
-**Why this works:** You've outlined the interface (parameters) and edge cases (empty lists), letting <Constant name="wizard" /> handle the Jinja boilerplate while you focus on design. This approach accelerates iteration so you can refine the structure without getting stuck in syntax details.
+**Почему это работает:** вы описали интерфейс (параметры) и граничные случаи (пустые списки), позволив <Constant name="wizard" /> подготовить шаблонный код Jinja, пока вы сосредоточены на проектировании. Такой подход ускоряет итерации: вы можете дорабатывать структуру, не застревая на деталях синтаксиса.
 
-## Troubleshoot errors and issues
+## Устранение ошибок и проблем
 
-<Constant name="wizard" /> acts as a fast, context-aware reviewer for failing SQL and macros. It reads errors, inspects your query structure, and suggests minimal fixes. Troubleshooting with <Constant name="wizard" /> gives you:
+<Constant name="wizard" /> помогает быстро проверять SQL и макросы, которые завершаются с ошибками, учитывая контекст. Он читает сообщения об ошибках, анализирует структуру запроса и предлагает минимальные исправления. Устранение неполадок с помощью <Constant name="wizard" /> дает вам:
 
-- Faster diagnosis by using plain-language translation of errors with likely root causes
-- Safer fixes by biasing toward small, targeted changes
-- Better learning by generating explanations you can paste into docs or PR descriptions
+- Более быструю диагностику благодаря объяснению ошибок простым языком с указанием вероятных первопричин
+- Более безопасные исправления благодаря предпочтению небольших, точечных изменений
+- Лучшее понимание благодаря объяснениям, которые можно вставить в документацию или описания PR
 
-### Troubleshoot errors
+### Устранение ошибок
 
-When something breaks, give <Constant name="wizard" /> the error message, your code, and what you expected to happen. Here are a couple of examples to show you how to use <Constant name="wizard" /> to troubleshoot errors.
+Когда что-то ломается, передайте <Constant name="wizard" /> сообщение об ошибке, свой код и описание ожидаемого поведения. Вот несколько примеров того, как использовать <Constant name="wizard" /> для устранения ошибок.
 
-**Example: SQL error**
+**Пример: ошибка SQL**
 
 ```text
-Error: "SQL compilation error: Column 'product_name' must appear in GROUP BY"
+Ошибка: "SQL compilation error: Column 'product_name' must appear in GROUP BY"
 
-Query:
+Запрос:
 SELECT 
   product_id,
   product_name,
@@ -360,66 +360,66 @@ SELECT
 FROM inventory
 GROUP BY product_id
 
-Warehouse: Snowflake
-Expected: Group by product and show product name. What's wrong and how do I fix it?
+Хранилище данных: Snowflake
+Ожидаемый результат: сгруппировать по товару и показать название товара. Что не так и как это исправить?
 ```
 
-**Example: Macro not working**
+**Пример: макрос не работает**
 
 ```text
-This macro should calculate discount but returns wrong values:
+Этот макрос должен вычислять скидку, но возвращает неверные значения:
 
 {% macro calculate_discount(amount, rate) %}
   {{ amount }} * {{ rate }}
 {% endmacro %}
 
-When I call {{ calculate_discount(100, 0.1) }} I expect 10 but get an error.
-Show me the rendered SQL from target/compiled and explain what's wrong.
+При вызове {{ calculate_discount(100, 0.1) }} я ожидаю получить 10, но получаю ошибку.
+Покажи сгенерированный SQL из target/compiled и объясни, что не так.
 ```
 
-**Tip:** Include your warehouse type (Snowflake, BigQuery, Databricks and so on.) &mdash; this is because the syntax can vary across data platforms.
+**Совет:** указывайте тип вашего хранилища данных (Snowflake, BigQuery, Databricks и т. д.) &mdash; синтаксис может различаться между платформами данных.
 
-## Conclusion
+## Заключение
 
 <ConfettiTrigger>
-Congrats, you've now learned some tips on how to create and use prompts for dbt <Constant name="wizard" />  🎉! You can:
+Поздравляем! Теперь вы знаете несколько приемов создания и использования промптов для dbt <Constant name="wizard" />  🎉! Вы можете:
 
-- Boost your prompting skills by providing rich context and stating clear business questions. Applicable for SQL, macros, documentation, tests, metrics, and semantic models.
-- Amplify your workflow by using existing documentation and project context
-- Generate Jinja macros to build more scalable and maintainable systems
-- Troubleshoot your code to diagnose issues fast and apply safe, explainable fixes
+- Улучшать навыки написания промптов, предоставляя подробный контекст и формулируя четкие бизнес-вопросы. Это применимо к SQL, макросам, документации, тестам, метрикам и семантическим моделям.
+- Делать рабочий процесс эффективнее, используя существующую документацию и контекст проекта
+- Генерировать макросы Jinja для создания более масштабируемых и удобных в сопровождении систем
+- Находить ошибки в коде, чтобы быстро диагностировать проблемы и применять безопасные, понятные исправления
 
-### Quick reference checklist
+### Краткий контрольный список
 
-When writing prompts for dbt <Constant name="wizard" />:
+При написании промптов для dbt <Constant name="wizard" />:
 
-- ✅ Provide rich context: Table names, columns, data types, relationships, sample values
-- ✅ Break down complex logic: Write multi-part queries as a sequence of steps
-- ✅ State the business question: What decision or insight you're supporting, not just "write a query"
-- ✅ Be clear and explicit: Expected columns, sort order, filters, and output format
-
-
-For troubleshooting:
-
-- ✅ Include complete error messages: Full warehouse error with line numbers
-- ✅ Show the failing code: Both the dbt model and compiled SQL (from `target/compiled/`)
-- ✅ Provide sample data: Representative rows that trigger the issue
-- ✅ State your warehouse: Snowflake, BigQuery, Databricks, etc.
-
-### Next steps
-
-Start with one task—automating documentation, generating a test, or refactoring a model—and build the habit from there. 
-
-The more you use <Constant name="wizard" />, the more you'll discover ways to accelerate your analytics engineering workflow.
+- ✅ Предоставляйте подробный контекст: имена таблиц, столбцы, типы данных, связи, примеры значений
+- ✅ Разбивайте сложную логику: представляйте составные запросы как последовательность шагов
+- ✅ Формулируйте бизнес-вопрос: какое решение или аналитический вывод вам нужен, а не просто «напиши запрос»
+- ✅ Пишите четко и явно: указывайте ожидаемые столбцы, порядок сортировки, фильтры и формат результата
 
 
-Check out the following docs to learn more about how to use <Constant name="wizard" />:
+При устранении неполадок:
 
-- [About dbt Wizard](/docs/platform/wizard-platform)
-- [dbt Wizard in Studio IDE](/docs/dbt-ai/wizard-ide)
-- [Generate resources](/docs/dbt-ai/wizard-ide#using-dbt-wizard)
-- [Build visual models with dbt Wizard](/docs/platform/build-canvas-copilot)
-- [Build queries in dbt Insights](/docs/explore/navigate-dbt-insights)
+- ✅ Приводите полные сообщения об ошибках: полный текст ошибки хранилища данных с номерами строк
+- ✅ Показывайте проблемный код: и модель dbt, и скомпилированный SQL (из `target/compiled/`)
+- ✅ Предоставляйте примеры данных: характерные строки, которые вызывают проблему
+- ✅ Указывайте хранилище данных: Snowflake, BigQuery, Databricks и т. д.
+
+### Следующие шаги
+
+Начните с одной задачи — автоматизации документации, генерации теста или рефакторинга модели — и постепенно сделайте это привычкой. 
+
+Чем больше вы используете <Constant name="wizard" />, тем больше способов ускорить рабочий процесс аналитической инженерии вы найдете.
+
+
+Ознакомьтесь со следующей документацией, чтобы узнать больше об использовании <Constant name="wizard" />:
+
+- [О dbt Wizard](/docs/platform/wizard-platform)
+- [dbt Wizard в Studio IDE](/docs/dbt-ai/wizard-ide)
+- [Генерация ресурсов](/docs/dbt-ai/wizard-ide#panel-controls)
+- [Создание визуальных моделей с dbt Wizard](/docs/platform/build-canvas-copilot)
+- [Создание запросов в dbt Insights](/docs/explore/navigate-dbt-insights)
 
 
 </ConfettiTrigger>

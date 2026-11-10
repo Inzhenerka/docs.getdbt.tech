@@ -1,43 +1,43 @@
 ---
-title: "MetricFlow time spine YAML"
+title: "YAML-конфигурация временной шкалы MetricFlow"
 id: "require_yaml_configuration_for_mf_time_spines"
-sidebar_label: "require yaml configuration for mf time spines"
+sidebar_label: "Требование YAML-конфигурации для временных шкал MetricFlow"
 ---
 
-:::caution Removed in v2
+:::caution Удалён в v2
 
-This flag was removed in v2. The new behavior is always enabled. If you're upgrading, remove this flag from your `dbt_project.yml`.
+Этот флаг удалён в v2. Новое поведение теперь включено всегда. При обновлении удалите этот флаг из `dbt_project.yml`.
 
 :::
 
 
 
-| require_yaml_configuration_for_mf_time_spines | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
+| require_yaml_configuration_for_mf_time_spines | <Constant name="dbt" /> **Последняя версия v1** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2024.10 | 1.9.0 |
-| Matured (default → `true`) | 2026.09 | 1.12.0 |
-| Removed | — | v2.0 |
+| Добавлен | 2024.10 | 1.9.0 |
+| Стабилизирован (по умолчанию → `true`) | 2026.09 | 1.12.0 |
+| Удалён | — | v2.0 |
 
 <br />
 
-In previous versions (<Constant name="dbt" /> 1.8 and earlier), the MetricFlow time spine configuration was stored in a `metricflow_time_spine.sql` file.
+В предыдущих версиях (<Constant name="dbt" /> 1.8 и более ранних) конфигурация временной шкалы MetricFlow хранилась в файле `metricflow_time_spine.sql`.
 
-Starting in <Constant name="dbt" /> v1.12, this flag defaults to `true`, suppressing the `MFTimespineWithoutYamlConfigurationDeprecation` deprecation warning. The legacy SQL file configuration continues to work in both cases.
+Начиная с <Constant name="dbt" /> v1.12, этот флаг по умолчанию имеет значение `true`, что подавляет предупреждение об устаревании `MFTimespineWithoutYamlConfigurationDeprecation`. Прежняя конфигурация в SQL-файле продолжает работать при обоих значениях флага.
 
-The MetricFlow properties YAML file should have the `time_spine:` field. Refer to [MetricFlow timespine](/docs/build/metricflow-time-spine) for more details.
+YAML-файл свойств MetricFlow должен содержать поле `time_spine:`. Подробнее см. в разделе [Временная шкала MetricFlow](/docs/build/metricflow-time-spine).
 
-## Impact
+## Влияние
 
-This flag has no functional impact; the legacy time-spine model continues to work in both cases. The only visible changes are:
+Этот флаг не влияет на функциональность; прежняя модель временной шкалы продолжает работать при обоих значениях флага. Единственные видимые изменения:
 
-- The `MFTimespineWithoutYamlConfigurationDeprecation` warning no longer appears in logs.
-- If you use `--warn-error`, the warning no longer fires and will no longer escalate to an error.
+- Предупреждение `MFTimespineWithoutYamlConfigurationDeprecation` больше не появляется в логах.
+- Если вы используете `--warn-error`, это предупреждение больше не возникает и, соответственно, не преобразуется в ошибку.
 
-<Expandable alt_header="Opting out of this flag">
+<Expandable alt_header="Отключение этого флага">
 
-No action is required for most projects. The legacy `metricflow_time_spine.sql` model continues to work with or without this flag.
+Для большинства проектов никаких действий не требуется. Прежняя модель `metricflow_time_spine.sql` продолжает работать как с этим флагом, так и без него.
 
-If you rely on the `MFTimespineWithoutYamlConfigurationDeprecation` warning firing under `--warn-error` to enforce a YAML migration, you can opt out by setting the flag to `false` in `dbt_project.yml`:
+Если вы полагаетесь на предупреждение `MFTimespineWithoutYamlConfigurationDeprecation` при использовании `--warn-error`, чтобы обеспечить обязательный переход на YAML, вы можете отключить новое поведение, установив для флага значение `false` в `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -48,6 +48,6 @@ flags:
 
 </File>
 
-To remove the deprecation warning permanently, migrate `metricflow_time_spine.sql` to a YAML `time_spine` block under a model entry in `models:`. Refer to [MetricFlow timespine](/docs/build/metricflow-time-spine) for the current syntax.
+Чтобы навсегда устранить предупреждение об устаревании, перенесите конфигурацию из `metricflow_time_spine.sql` в YAML-блок `time_spine` внутри записи модели в `models:`. Актуальный синтаксис см. в разделе [Временная шкала MetricFlow](/docs/build/metricflow-time-spine).
 
 </Expandable>

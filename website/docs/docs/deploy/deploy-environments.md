@@ -1,7 +1,7 @@
 ---
 title: "Среды развертывания"
 id: "deploy-environments"
-description: "Learn about dbt's deployment environment to seamlessly schedule jobs or enable CI."
+description: "Как планировать задания и включать CI в среде развёртывания dbt."
 availability: platform_login
 ---
 
@@ -28,6 +28,8 @@ availability: platform_login
 
 Мы настоятельно рекомендуем использовать тип среды `Производственная` для окончательных, достоверных данных развертывания. Может быть только одна среда, отмеченная для окончательных производственных рабочих процессов, и мы не рекомендуем использовать `Общую` среду для этой цели.
 
+<a id="types-of-environments" />
+
 ## Создание среды развертывания {#create-a-deployment-environment}
 
 Чтобы создать новую среду развертывания <Constant name="dbt" />, перейдите в **Orchestration** > **Environments**, затем нажмите **Create Environment**. Выберите **Deployment** в качестве типа среды. Этот вариант будет недоступен, если у вас уже есть среда разработки.
@@ -44,7 +46,7 @@ availability: platform_login
 
 ### Семантический слой {#semantic-layer}
 
-Для клиентов, использующих <Constant name="semantic_layer" />, следующий раздел настроек окружения посвящён конфигурациям <Constant name="semantic_layer" />. В руководстве по настройке [The <Constant name="semantic_layer" /> setup guide](/docs/use-dbt-semantic-layer/setup-sl) приведены самые актуальные инструкции по установке и настройке.
+Если вы используете <Constant name="semantic_layer" />, в настройках среды есть отдельный раздел для его конфигурации. Актуальные инструкции см. в [руководстве по настройке <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl).
 
 Вы также можете использовать планировщик задач dbt для [проверки ваших семантических узлов в задаче CI](/docs/deploy/ci-jobs#semantic-validations-in-ci), чтобы убедиться, что изменения в коде dbt моделей не нарушают эти метрики.
 
@@ -91,7 +93,7 @@ sources:
 
 **Ускорение разработки благодаря отложенному разрешению ссылок:** Если в `Project B` также настроено промежуточное окружение развертывания, то ссылки на несобранные вышестоящие модели<VersionBlock firstVersion="1.11"> и [пользовательские функции (UDF)](/docs/build/udfs)</VersionBlock> внутри `Project B` будут разрешаться в это окружение с помощью [отложенного разрешения ссылок (deferral)](/docs/platform/about-defer), а не в модели<VersionBlock firstVersion="1.11"> и функции</VersionBlock> в продакшене. Это экономит время разработчиков и снижает затраты на хранилище данных, сохраняя при этом четкое разделение окружений.
 
-Finally, the staging environment has its own view in [<Constant name="catalog" />](/docs/explore/explore-projects), giving you a full view of your prod and pre-prod data.
+Для промежуточной среды в [<Constant name="catalog" />](/docs/explore/explore-projects) есть отдельное представление. Так можно просматривать как производственные, так и предпроизводственные данные.
 
 ### Создание staging‑окружения {#create-a-staging-environment}
 
@@ -143,7 +145,7 @@ Finally, the staging environment has its own view in [<Constant name="catalog" /
 
 <div warehouse="Snowflake">
 
-<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-connection.png" width="85%" title="Snowflake Deployment Connection Settings"/>
+<Lightbox src="/img/docs/collaborate/snowflake-deploy-env-deploy-connection.png" width="85%" title="Настройки подключения Snowflake для среды развёртывания"/>
 
 #### Редактируемые поля {#editable-fields}
 
@@ -167,7 +169,7 @@ Finally, the staging environment has its own view in [<Constant name="catalog" /
 
 <div warehouse="Databricks">
 
-<Lightbox src="/img/docs/collaborate/databricks-deploy-env-deploy-connection.png" width="85%" title="Databricks Deployment Connection Settings"/>
+<Lightbox src="/img/docs/collaborate/databricks-deploy-env-deploy-connection.png" width="85%" title="Настройки подключения Databricks для среды развёртывания"/>
 
 #### Редактируемые поля {#editable-fields-1}
 

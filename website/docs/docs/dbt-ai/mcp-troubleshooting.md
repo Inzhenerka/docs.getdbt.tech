@@ -1,123 +1,123 @@
 ---
-title: "dbt MCP FAQs and troubleshooting"
-sidebar_label: "FAQs and troubleshooting"
-description: "Answers to common questions about the dbt MCP server, plus solutions for common setup and usage issues."
+title: "Частые вопросы о dbt MCP и устранение неполадок"
+sidebar_label: "Частые вопросы и устранение неполадок"
+description: "Ответы на частые вопросы о сервере dbt MCP и решения распространённых проблем с настройкой и использованием."
 id: "mcp-troubleshooting"
 availability: all_users
 ---
 
-Find answers to common questions about the dbt Model Context Protocol (MCP) server and fixes for common setup issues. For client-specific steps, see the troubleshooting sections in the [Get started](/docs/dbt-ai/mcp-quickstart-oauth) and [Setup and config](/docs/dbt-ai/setup-local-mcp) pages.
+Здесь вы найдёте ответы на частые вопросы о сервере dbt Model Context Protocol (MCP) и способы устранения распространённых проблем с настройкой. Инструкции для конкретных клиентов см. в разделах об устранении неполадок на страницах [Начало работы](/docs/dbt-ai/mcp-quickstart-oauth) и [Установка и настройка](/docs/dbt-ai/setup-local-mcp).
 
-## FAQs
+## Частые вопросы
 
 
-The `execute_sql` tool in the dbt MCP server lets your AI assistant run SQL in your warehouse. These FAQs cover how it works and what its limits are.
+Инструмент `execute_sql` на сервере dbt MCP позволяет вашему ИИ-ассистенту выполнять SQL-запросы в вашем хранилище данных. В этом разделе описано, как он работает и какие у него есть ограничения.
 
-<Expandable alt_header="What does execute_sql do?">
+<Expandable alt_header="Что делает execute_sql?">
 
-`execute_sql` lets your AI assistant run a SQL query against your data warehouse and read the results. It's part of the SQL toolset and runs on <Constant name="dbt_platform" />, so you don't need dbt installed locally.
+`execute_sql` позволяет вашему ИИ-ассистенту выполнить SQL-запрос к вашему хранилищу данных и прочитать результаты. Он входит в набор инструментов SQL и работает на <Constant name="dbt_platform" />, поэтому устанавливать dbt локально не нужно.
 
-Here's what happens when your assistant calls it:
+Вот что происходит, когда ассистент вызывает этот инструмент:
 
-1. The assistant writes a SQL query and calls `execute_sql`.
-2. The dbt MCP server forwards the request to <Constant name="dbt_platform" />, along with your token, development environment ID, and user ID.
-3. <Constant name="dbt_platform" /> compiles the SQL (including any Jinja, such as `ref()`) and runs it in your warehouse using your development credentials.
-4. The results come back to your assistant as a table.
+1. Ассистент составляет SQL-запрос и вызывает `execute_sql`.
+2. Сервер dbt MCP передаёт запрос в <Constant name="dbt_platform" /> вместе с вашим токеном, ID среды разработки и ID пользователя.
+3. <Constant name="dbt_platform" /> компилирует SQL (включая конструкции Jinja, например `ref()`) и выполняет его в вашем хранилище данных, используя ваши учётные данные для разработки.
+4. Результаты возвращаются ассистенту в виде таблицы.
 
-<Lightbox src="/img/docs/dbt-ai/mcp-execute-sql-flow.svg" title="The AI assistant calls execute_sql. The dbt MCP server forwards the request to dbt platform, which compiles the SQL, runs it in the warehouse with your development credentials, and returns the results to the assistant." />
-
-</Expandable>
-
-<Expandable alt_header="Is execute_sql the same as dbt show?">
-
-No. `dbt show` runs through the <Constant name="dbt_platform" /> CLI tools and previews a model's output while you develop. `execute_sql` sends SQL to <Constant name="dbt_platform" />, which runs it in your warehouse.
+<Lightbox src="/img/docs/dbt-ai/mcp-execute-sql-flow.svg" title="ИИ-ассистент вызывает execute_sql. Сервер dbt MCP передаёт запрос в dbt platform, которая компилирует SQL, выполняет его в хранилище данных с вашими учётными данными для разработки и возвращает результаты ассистенту." />
 
 </Expandable>
 
-<Expandable alt_header="Whose warehouse credentials does execute_sql use?">
+<Expandable alt_header="execute_sql — это то же самое, что dbt show?">
 
-Your personal development credentials for the project's development environment take priority. If you haven't configured personal credentials, eligible read-only users can use a shared analytics credential. It doesn't use your production deployment credentials.
-
-If no suitable credentials are configured, the query fails. Refer to [Read-only users and warehouse credentials](/docs/dbt-ai/setup-remote-mcp#read-only-users-and-warehouse-credentials) for setup details.
+Нет. `dbt show` выполняется через инструменты CLI <Constant name="dbt_platform" /> и позволяет предварительно просмотреть результат модели во время разработки. `execute_sql` отправляет SQL в <Constant name="dbt_platform" />, которая выполняет его в вашем хранилище данных.
 
 </Expandable>
 
-<Expandable alt_header="Is execute_sql read-only?">
+<Expandable alt_header="Чьи учётные данные для хранилища данных использует execute_sql?" anchor_id="execute_sql-details-2">
 
-No. `execute_sql` doesn't block write statements. What a query can do depends on the permissions of the warehouse credentials it runs with. If those credentials can create or drop tables, so can your assistant.
+Приоритет имеют ваши личные учётные данные для среды разработки проекта. Если вы не настроили личные учётные данные, пользователи с доступом только для чтения, отвечающие соответствующим требованиям, могут использовать общие учётные данные для аналитики. Учётные данные для развёртывания в производственной среде не используются.
 
-To keep things safe:
-
-- **Use least-privilege warehouse roles.** Give each user's development credentials read-only access to production-like data and write access only to their own development schema.
-- **Keep tool approval prompts on.** Your assistant then asks before running SQL, so you can review it first.
-- **Don't count on disabling the tool as a security control.** You can turn off `execute_sql` with the `x-dbt-disable-tools` header, but whoever configures the MCP client sets it, so admins can't enforce it. Warehouse permissions are the control that holds.
+Если подходящие учётные данные не настроены, запрос завершится ошибкой. Подробности настройки см. в разделе [Пользователи с доступом только для чтения и учётные данные хранилища данных](/docs/dbt-ai/setup-remote-mcp#read-only-users-and-warehouse-credentials).
 
 </Expandable>
 
-<Expandable alt_header="Who can use execute_sql?">
+<Expandable alt_header="Работает ли execute_sql только в режиме чтения?" anchor_id="execute_sql-details-3">
 
-Anyone with a developer seat or a read-only seat, as long as they connect with OAuth or a [personal access token (PAT)](/docs/dbt-apis/user-tokens). Service tokens don't work because development credentials belong to a person.
+Нет. `execute_sql` не блокирует операторы записи. Возможности запроса зависят от разрешений учётных данных хранилища, с которыми он выполняется. Если эти учётные данные позволяют создавать или удалять таблицы, ваш ассистент тоже сможет это делать.
 
-Read-only seats can run plain SQL. SQL that contains Jinja, like `ref()` or `source()`, needs a developer seat.
+Для безопасной работы:
 
-For setup details, see [Set up remote MCP](/docs/dbt-ai/setup-remote-mcp).
-
-</Expandable>
-
-<Expandable alt_header="Why doesn't ref() point to my development tables?">
-
-Even though the query runs with your development credentials, `ref('model')` resolves to the production relation. It can't point to a table you built in your own development schema.
-
-To query a development table, use its full name instead, for example `my_dev_schema.my_model`. Avoid `source()` too, and use full table names or `ref()` instead.
+- **Используйте роли хранилища данных с минимальными привилегиями.** Предоставьте учётным данным для разработки каждого пользователя доступ только для чтения к данным, аналогичным производственным, а доступ на запись — только к его собственной схеме разработки.
+- **Не отключайте запросы подтверждения вызовов инструментов.** Тогда ассистент будет запрашивать разрешение перед выполнением SQL, и вы сможете сначала проверить запрос.
+- **Не полагайтесь на отключение инструмента как на меру безопасности.** Вы можете отключить `execute_sql` с помощью заголовка `x-dbt-disable-tools`, но его задаёт тот, кто настраивает MCP-клиент, поэтому администраторы не могут принудительно обеспечить его использование. Надёжный механизм контроля — разрешения в хранилище данных.
 
 </Expandable>
 
-<Expandable alt_header="Are there limits on query size or run time?">
+<Expandable alt_header="Кто может использовать execute_sql?" anchor_id="execute_sql-details-4">
 
-Yes. Long-running queries time out, and dbt caps large result sets. Add filters and `limit` clauses to keep queries small and fast.
+Любой пользователь с лицензией разработчика или лицензией только для чтения, если он подключается через OAuth или с помощью [персонального токена доступа (PAT)](/docs/dbt-apis/user-tokens). Сервисные токены не подходят, поскольку учётные данные для разработки принадлежат конкретному пользователю.
 
-</Expandable>
+Пользователи с лицензией только для чтения могут выполнять обычный SQL. Для SQL с конструкциями Jinja, такими как `ref()` или `source()`, нужна лицензия разработчика.
 
-<Expandable alt_header="Can I see results as a chart or table?">
-
-Yes you can! Your AI tool can ask for results to show as a chart or table in the UI. Otherwise, only your assistant sees the results.
+Подробности настройки см. в разделе [Настройка удалённого MCP](/docs/dbt-ai/setup-remote-mcp).
 
 </Expandable>
 
-<Expandable alt_header="When should I use something other than execute_sql?">
+<Expandable alt_header="Почему ref() не ссылается на мои таблицы разработки?">
+
+Хотя запрос выполняется с вашими учётными данными для разработки, `ref('model')` разрешается в объект производственной среды. Эта функция не может ссылаться на таблицу, которую вы создали в собственной схеме разработки.
+
+Чтобы запросить данные из таблицы разработки, укажите её полное имя, например `my_dev_schema.my_model`. Также избегайте `source()` и используйте полные имена таблиц или `ref()`.
+
+</Expandable>
+
+<Expandable alt_header="Есть ли ограничения на объём запроса или время выполнения?">
+
+Да. Длительные запросы прерываются по тайм-ауту, а dbt ограничивает размер больших наборов результатов. Добавляйте фильтры и предложения `limit`, чтобы запросы оставались небольшими и выполнялись быстро.
+
+</Expandable>
+
+<Expandable alt_header="Можно ли просматривать результаты в виде диаграммы или таблицы?">
+
+Да! Ваш ИИ-инструмент может запросить отображение результатов в виде диаграммы или таблицы в интерфейсе. В противном случае результаты видит только ассистент.
+
+</Expandable>
+
+<Expandable alt_header="Когда стоит использовать что-то другое вместо execute_sql?" anchor_id="execute_sql-details-5">
 
 
 <SimpleTable>
   
-| If you want to... | Use |
+| Если вы хотите... | Используйте |
 | --- | --- |
-| Ask governed business questions with defined metrics | The [Semantic Layer tools](/docs/dbt-ai/mcp-available-tools#semantic-layer), like `query_metrics` |
-| Preview a model's output while you develop | <Constant name="dbt_platform" /> CLI tools, like `show`, `build`, and `run` |
-| Turn a question into SQL without running it | `text_to_sql` |
+| Задавать бизнес-вопросы на основе согласованных определений метрик | [Инструменты Semantic Layer](/docs/dbt-ai/mcp-available-tools#semantic-layer), например `query_metrics` |
+| Предварительно просматривать результат модели во время разработки | Инструменты CLI <Constant name="dbt_platform" />, например `show`, `build` и `run` |
+| Преобразовать вопрос в SQL, не выполняя его | `text_to_sql` |
 
 </SimpleTable>
 </Expandable>
 
-## Troubleshooting
+## Устранение неполадок {#troubleshooting}
 
-<Expandable alt_header="Why can I connect to remote MCP but a tool call is denied?">
+<Expandable alt_header="Почему я могу подключиться к удалённому MCP, но вызов инструмента отклоняется?">
 
-Remote MCP checks permissions for the resource each tool targets. A successful connection or a visible tool doesn't guarantee access to every project, environment, job, or run.
+Удалённый MCP проверяет разрешения для ресурса, к которому обращается каждый инструмент. Успешное подключение или наличие инструмента в списке не гарантирует доступ ко всем проектам, средам, заданиям или запускам.
 
-1. Confirm that the requested resource belongs to the account you connected to.
-2. Ask your admin to check the user or service token's [required permissions](/docs/dbt-ai/setup-remote-mcp#permissions) on that resource. PATs inherit their user's permissions.
-3. For OAuth, also check the scopes and projects approved during consent. Reconnect and update your consent if the required access wasn't included.
-4. For `execute_sql`, plain SQL still needs a development environment and warehouse credentials. SQL containing dbt Jinja also needs develop access; production deferral needs metadata read access.
+1. Убедитесь, что запрашиваемый ресурс принадлежит аккаунту, к которому вы подключились.
+2. Попросите администратора проверить [необходимые разрешения](/docs/dbt-ai/setup-remote-mcp#permissions) пользователя или сервисного токена для этого ресурса. PAT наследуют разрешения своего пользователя.
+3. При использовании OAuth также проверьте области доступа и проекты, одобренные при предоставлении согласия. Если необходимый доступ не был включён, подключитесь заново и обновите своё согласие.
+4. Для `execute_sql` даже обычный SQL требует наличия среды разработки и учётных данных хранилища. Для SQL с конструкциями dbt Jinja также нужны права на разработку; для перенаправления ссылок на производственную среду необходим доступ на чтение метаданных.
 
 </Expandable>
 
-<Expandable alt_header="Why does remote MCP reject my project or environment selection?">
+<Expandable alt_header="Почему удалённый MCP отклоняет выбранный проект или среду?" anchor_id="mcp-details-2">
 
-Use positive numeric IDs rather than URLs. Check that your development and production environment headers select the correct environment types and belong to the same project. Tool arguments must agree with the configured target, except that an explicit `project_id` for `list_jobs` overrides its configured environment filter.
+Используйте положительные числовые ID, а не URL. Убедитесь, что заголовки среды разработки и производственной среды указывают на среды соответствующих типов и что эти среды принадлежат одному проекту. Аргументы инструмента должны соответствовать настроенной целевой среде, за исключением явно указанного `project_id` для `list_jobs`, который переопределяет настроенный фильтр по среде.
 
-If a call reports invalid tool arguments, check the tool's input schema, supply its required arguments, and remove unsupported arguments.
+Если при вызове сообщается о недопустимых аргументах инструмента, проверьте схему входных данных инструмента, укажите обязательные аргументы и удалите неподдерживаемые.
 
-If environment discovery reports that a project has more than 1,000 environments, configure the exact environment header for the tool you're using instead of relying on project-based discovery.
+Если при автоматическом обнаружении сред сообщается, что в проекте более 1 000 сред, задайте заголовок с точным указанием среды для используемого инструмента, вместо того чтобы полагаться на обнаружение сред по проекту.
 
 </Expandable>
 

@@ -1,15 +1,15 @@
 ---
-title: "Connect Firebird to dbt v1"
+title: "Подключение Firebird к dbt v1"
 sidebar_label: "Firebird"
-description: "Read this guide to learn about the Firebird warehouse setup in dbt."
+description: "В этом руководстве описана настройка хранилища данных Firebird в dbt."
 id: "firebird-setup"
 meta:
-  maintained_by: Community
+  maintained_by: Сообщество
   authors: 'Fernando Lozer (https://github.com/flozer)'
   github_repo: 'flozer/dbt-firebird'
   pypi_package: 'dbt-firebird'
   min_core_version: 'v1.8.0'
-  cloud_support: Not Supported
+  cloud_support: Не поддерживается
   min_supported_version: 'Firebird 3.0'
   slack_channel_name: 'n/a'
   slack_channel_link: 'https://www.getdbt.com/community'
@@ -19,9 +19,9 @@ availability: local_free
 ---
 
 
-:::info Community plugin
+:::info Плагин сообщества
 
-Some core functionality may be limited. If you're interested in contributing, check out the source code for each repository listed below.
+Некоторые основные функции могут быть ограничены. Если вы хотите внести свой вклад, ознакомьтесь с исходным кодом в каждом из перечисленных ниже репозиториев.
 
 :::
 
@@ -29,22 +29,22 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} installPackages="dbt-core dbt-firebird">
 
-Note: Installing an adapter doesn't install <Constant name="core" /> automatically. This is because adapters and <Constant name="core" /> versions are decoupled to avoid overwriting <Constant name="core" /> installations. Use the following command for installation:
+Примечание: при установке адаптера <Constant name="core" /> не устанавливается автоматически. Это связано с тем, что версии адаптеров и <Constant name="core" /> независимы друг от друга, чтобы избежать перезаписи установленных версий <Constant name="core" />. Для установки используйте следующую команду:
 
 </SetUpPages>
 
 
-The <a href="https://pypi.org/project/dbt-firebird/">dbt-firebird</a> adapter connects <Constant name="core" /> to <a href="https://firebirdsql.org/">Firebird</a> databases (3.0, 4.0, and 5.0) through the official <a href="https://pypi.org/project/firebird-driver/">firebird-driver</a> package. It supports table, view, incremental, seed, and snapshot (SCD2) materializations, data tests, generated documentation, and an interactive `dbt init` experience.
+Адаптер <a href="https://pypi.org/project/dbt-firebird/">dbt-firebird</a> подключает <Constant name="core" /> к базам данных <a href="https://firebirdsql.org/">Firebird</a> (3.0, 4.0 и 5.0) через официальный пакет <a href="https://pypi.org/project/firebird-driver/">firebird-driver</a>. Он поддерживает материализации table, view, incremental, seed и snapshot (SCD2), тесты данных, генерацию документации и интерактивную настройку с помощью `dbt init`.
 
-The adapter is validated against the official <Constant name="core" /> test suites and a CI matrix covering Firebird 3/4/5 on Python 3.9 to 3.12.
+Адаптер проверен с помощью официальных наборов тестов <Constant name="core" /> и матрицы CI, охватывающей Firebird 3/4/5 на Python версий от 3.9 до 3.12.
 
-## Connecting to Firebird with dbt-firebird
+## Подключение к Firebird с помощью dbt-firebird
 
-Firebird databases are single files. The `path` field is the database file path as seen by the server. If dbt runs on the same machine as the server, this is a normal local path; for a remote server, it is a server-side path (for example, `/data/prod.fdb` on Linux).
+Базы данных Firebird хранятся в отдельных файлах. Поле `path` содержит путь к файлу базы данных с точки зрения сервера. Если dbt работает на том же компьютере, что и сервер, это обычный локальный путь; для удалённого сервера это путь на стороне сервера (например, `/data/prod.fdb` в Linux).
 
-### Local
+### Локальное подключение
 
-Use this profile when Firebird is running on the same computer as dbt. You only need the database file `path`.
+Используйте этот профиль, если Firebird работает на том же компьютере, что и dbt. Достаточно указать путь к файлу базы данных в поле `path`.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -63,9 +63,9 @@ PROFILE_NAME:
 
 </File>
 
-### Remote server
+### Удалённый сервер
 
-Use this profile when Firebird is running on another computer. Include `host`, `port`, and the `path` as that server sees the file.
+Используйте этот профиль, если Firebird работает на другом компьютере. Укажите `host`, `port` и `path` — путь к файлу с точки зрения этого сервера.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -87,52 +87,52 @@ PROFILE_NAME:
 
 </File>
 
-### Description of Firebird profile fields
+### Описание полей профиля Firebird
 
-These fields apply to both local and remote profiles:
+Эти поля применяются как к локальным, так и к удалённым подключениям:
 
-| Field | Description | Required? | Example |
+| Поле | Описание | Обязательное? | Пример |
 |-------|-------------|-----------|---------|
-| type | The specific adapter to use | Required | `firebird` |
-| path | Database file path as seen by the server. Use forward slashes | Required | `C:/data/mydb.fdb` |
-| host | Server hostname or IP. Omit it to connect to a local file directly | Optional | `192.168.0.10` |
-| port | Server TCP port | Optional (default `3050`) | `3050` |
-| user | Database user | Required | `SYSDBA` |
-| password | Password | Required | `masterkey` |
-| charset | Connection character set. Refer to [Character sets](#character-sets) | Optional (default `UTF8`) | `WIN1252` |
-| role | Firebird role, if you use them | Optional | `RDB$ADMIN` |
-| lock_timeout | Seconds a statement waits for a lock held by another transaction before failing. `0` = do not wait, `-1` = wait indefinitely | Optional (default `10`) | `30` |
-| threads | Parallel model executions. `1` is recommended | Optional (default `1`) | `1` |
-| database | Logical label used internally by dbt. Never rendered in SQL. Defaults to the file base name | Optional | `mydb` |
-| schema | Logical label used internally by dbt. Firebird has no schemas, so this is never rendered in SQL. Defaults to `main` | Optional | `main` |
+| type | Используемый адаптер | Да | `firebird` |
+| path | Путь к файлу базы данных с точки зрения сервера. Используйте прямые косые черты | Да | `C:/data/mydb.fdb` |
+| host | Имя хоста или IP-адрес сервера. Не указывайте это поле для прямого подключения к локальному файлу | Нет | `192.168.0.10` |
+| port | TCP-порт сервера | Нет (по умолчанию `3050`) | `3050` |
+| user | Пользователь базы данных | Да | `SYSDBA` |
+| password | Пароль | Да | `masterkey` |
+| charset | Набор символов подключения. См. раздел [Наборы символов](#character-sets) | Нет (по умолчанию `UTF8`) | `WIN1252` |
+| role | Роль Firebird, если вы используете роли | Нет | `RDB$ADMIN` |
+| lock_timeout | Время в секундах, в течение которого оператор ожидает снятия блокировки, удерживаемой другой транзакцией, прежде чем завершиться с ошибкой. `0` = не ждать, `-1` = ждать неограниченно | Нет (по умолчанию `10`) | `30` |
+| threads | Количество параллельных выполнений моделей. Рекомендуется `1` | Нет (по умолчанию `1`) | `1` |
+| database | Логическое имя, используемое внутри dbt. Никогда не включается в SQL. По умолчанию используется имя файла без расширения | Нет | `mydb` |
+| schema | Логическое имя, используемое внутри dbt. В Firebird нет схем, поэтому оно никогда не включается в SQL. По умолчанию — `main` | Нет | `main` |
 
 <br />
 
-`dbt init` also works: it lists `firebird`, asks for every field above, writes the profile, and runs `dbt debug` at the end.
+Команда `dbt init` также работает: она отображает `firebird` в списке, запрашивает все перечисленные выше поля, записывает профиль и в конце запускает `dbt debug`.
 
-## Character sets
+## Наборы символов {#character-sets}
 
-Pick the `charset` value that matches how your Firebird database stores text:
+Выберите значение `charset`, соответствующее способу хранения текста в вашей базе данных Firebird:
 
-| Situation | `charset` |
+| Ситуация | `charset` |
 |-----------|-----------|
-| Database created with `UTF8`, or plain ASCII data | `UTF8` (default) |
-| Legacy/restored databases with character set `NONE` and accented data (for example, WIN1252) | `WIN1252` |
+| База данных создана с набором символов `UTF8` или содержит только данные ASCII | `UTF8` (по умолчанию) |
+| Устаревшие или восстановленные базы данных с набором символов `NONE` и данными, содержащими символы с диакритическими знаками (например, в WIN1252) | `WIN1252` |
 
 <br />
 
-If reads fail with `UnicodeDecodeError: 'utf-8' codec can't decode byte ...`, set `charset: WIN1252`. This is the most common case for legacy Brazilian Firebird databases.
+Если чтение завершается ошибкой `UnicodeDecodeError: 'utf-8' codec can't decode byte ...`, задайте `charset: WIN1252`. Это наиболее распространённый случай для устаревших бразильских баз данных Firebird.
 
-## Object naming and case sensitivity
+## Именование объектов и чувствительность к регистру
 
-Unquoted identifiers in Firebird SQL are stored as UPPERCASE. The dbt adapter creates its objects with quoted, lowercase names (the same convention as the Postgres adapter), so a model named `clientes` becomes the table `"clientes"`:
+Идентификаторы без кавычек в Firebird SQL хранятся в ВЕРХНЕМ РЕГИСТРЕ. Адаптер dbt создаёт объекты с именами в нижнем регистре, заключёнными в кавычки (по тому же принципу, что и адаптер Postgres), поэтому модель с именем `clientes` становится таблицей `"clientes"`:
 
 ```sql
 select * from "clientes";  -- correct (quoted)
 select * from clientes;    -- looks for CLIENTES, which does not exist
 ```
 
-To expose objects in the unquoted/uppercase style, set a model or seed alias in uppercase:
+Чтобы к объектам можно было обращаться без кавычек, используя верхний регистр, задайте псевдоним модели или seed в верхнем регистре:
 
 ```yaml
 seeds:
@@ -141,37 +141,37 @@ seeds:
       +alias: STORE
 ```
 
-## Supported features
+## Поддерживаемые возможности
 
-- Materializations: `table` (atomic swap), `view` (`CREATE OR ALTER`), `incremental` (strategies `append`, `delete+insert`, `merge`), `seed` (atomic data replacement), and `snapshot` (strategies `check` and `timestamp`)
-- `on_schema_change` handling (`ignore`, `fail`, `append_new_columns`, `sync_all_columns`)
-- Data tests, generic and singular
-- `dbt docs generate` and `persist_docs` (writes `COMMENT ON` statements)
-- Automatic retries for lock conflicts and a configurable `lock_timeout`
+- Материализации: `table` (атомарная замена), `view` (`CREATE OR ALTER`), `incremental` (стратегии `append`, `delete+insert`, `merge`), `seed` (атомарная замена данных) и `snapshot` (стратегии `check` и `timestamp`)
+- Обработка `on_schema_change` (`ignore`, `fail`, `append_new_columns`, `sync_all_columns`)
+- Тесты данных: универсальные и специализированные
+- `dbt docs generate` и `persist_docs` (записывает операторы `COMMENT ON`)
+- Автоматические повторные попытки при конфликтах блокировок и настраиваемый параметр `lock_timeout`
 
-### Limitations
+### Ограничения
 
-- The `ephemeral` materialization is not supported: dbt generates inline CTEs with names starting with an underscore, which are invalid as unquoted Firebird identifiers
-- Firebird has no schemas: the `database` and `schema` profile fields are logical labels only
-- Model and seed names should be at most 22 characters on Firebird 3 (dbt appends suffixes like `__dbt_tmp` to the 31-byte identifier limit; Firebird 4+ allows 63)
-- Model contracts (`contract: enforced`) are best effort: declare Firebird-native data types in your YAML
-- Models without a `FROM` clause are invalid in Firebird SQL (for example, use `select 1 as id from rdb$database`)
-- `threads: 1` is recommended; the adapter is resilient to write conflicts, but Firebird applies table-level coordination across parallel writers in the same namespace
+- Материализация `ephemeral` не поддерживается: dbt генерирует встроенные CTE с именами, начинающимися с подчёркивания, которые недопустимы в качестве идентификаторов Firebird без кавычек
+- В Firebird нет схем: поля профиля `database` и `schema` служат только логическими именами
+- Имена моделей и seed должны содержать не более 22 символов в Firebird 3 (dbt добавляет суффиксы наподобие `__dbt_tmp`, которые должны укладываться в ограничение длины идентификатора в 31 байт; Firebird 4+ допускает 63)
+- Поддержка контрактов моделей (`contract: enforced`) не гарантирует полного соблюдения контракта: указывайте в YAML собственные типы данных Firebird
+- Модели без предложения `FROM` недопустимы в Firebird SQL (например, используйте `select 1 as id from rdb$database`)
+- Рекомендуется `threads: 1`; адаптер устойчив к конфликтам записи, но Firebird координирует параллельную запись в одном пространстве имён на уровне таблиц
 
-## Database privileges
+## Права доступа к базе данных
 
-The profile user needs read and write access to the objects dbt manages, plus permission to create and alter tables and views. These grants cover all dbt work: tables, views, seeds, snapshots, and incremental models:
+Пользователю, указанному в профиле, необходимы права на чтение и запись объектов, которыми управляет dbt, а также разрешения на создание и изменение таблиц и представлений. Эти права охватывают все операции dbt: работу с таблицами, представлениями, seed, снимками и инкрементальными моделями:
 
-| Privilege | Purpose |
+| Право | Назначение |
 |-----------|---------|
-| `SELECT` | Read <Term id="table">tables</Term> and <Term id="view">views</Term> |
-| `INSERT` | Load models, [seeds](/docs/build/seeds), and [snapshots](/docs/build/snapshots) |
-| `UPDATE` | Change existing rows ([incremental models](/docs/build/incremental-models) and [snapshots](/docs/build/snapshots)) |
-| `DELETE` | Replace data (table swap and [incremental models](/docs/build/incremental-models)) |
-| `CREATE` | Create <Term id="table">tables</Term> and <Term id="view">views</Term> |
-| `ALTER` | Change <Term id="table">tables</Term> and <Term id="view">views</Term> |
-| `DROP` | Replace objects dbt rebuilds |
+| `SELECT` | Чтение <Term id="table">таблиц</Term> и <Term id="view">представлений</Term> |
+| `INSERT` | Загрузка моделей, [seed](/docs/build/seeds) и [снимков](/docs/build/snapshots) |
+| `UPDATE` | Изменение существующих строк ([инкрементальные модели](/docs/build/incremental-models) и [снимки](/docs/build/snapshots)) |
+| `DELETE` | Замена данных (замена таблиц и [инкрементальные модели](/docs/build/incremental-models)) |
+| `CREATE` | Создание <Term id="table">таблиц</Term> и <Term id="view">представлений</Term> |
+| `ALTER` | Изменение <Term id="table">таблиц</Term> и <Term id="view">представлений</Term> |
+| `DROP` | Замена объектов, которые dbt создаёт заново |
 
 <br />
 
-For SYSDBA or the database owner, no extra grants are needed.
+Для SYSDBA или владельца базы данных дополнительные права не требуются.

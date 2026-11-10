@@ -1,8 +1,8 @@
 ---
-title: "Enterprise permissions"
+title: "Разрешения Enterprise"
 id: "enterprise-permissions"
-description: "Permission sets for Enterprise plans."
-hide_table_of_contents: true #For the sake of the tables on this page
+description: "Наборы разрешений для тарифных планов Enterprise."
+hide_table_of_contents: true #Ради таблиц на этой странице
 pagination_next: null
 availability:
   surface: platform
@@ -10,327 +10,327 @@ availability:
   minPlan: enterprise
 ---
 
-# Enterprise permissions
+# Разрешения Enterprise
 
 import Permissions from '/snippets/_enterprise-permissions-table.md';
 import SetUpPages from '/snippets/_available-enterprise-only.md';
 
 <SetUpPages features={'/snippets/_available-enterprise-only.md'}/>
 
-The <Constant name="dbt" /> Enterprise and Enterprise+ plans support a number of pre-built permission sets to help manage access controls within a <Constant name="dbt" /> account. See the docs on [access control](/docs/platform/manage-access/about-user-access) for more information on Role-Based access control (RBAC).
+Тарифные планы <Constant name="dbt" /> Enterprise и Enterprise+ поддерживают ряд готовых наборов разрешений для управления доступом в аккаунте <Constant name="dbt" />. Дополнительную информацию об управлении доступом на основе ролей (RBAC) см. в документации по [управлению доступом](/docs/platform/manage-access/about-user-access).
 
 
-## Permission sets
+## Наборы разрешений {#permission-sets}
 
-The following permission sets are available for assignment in all <Constant name="dbt" /> Enterprise-tier accounts. They can be granted to <Constant name="dbt" /> groups and then to users. A <Constant name="dbt" /> group can be associated with more than one permission set. Permission assignments with more access take precedence. 
+Следующие наборы разрешений доступны для назначения во всех аккаунтах <Constant name="dbt" /> с тарифными планами уровня Enterprise. Их можно назначать группам <Constant name="dbt" />, а через них — пользователям. С группой <Constant name="dbt" /> может быть связано несколько наборов разрешений. Приоритет имеют назначенные разрешения, предоставляющие более широкий доступ. 
 
-Access to <Constant name="dbt" /> features and functionality is split into `account-level` and `project-level` permission sets. Account-level permissions are primarily for account administration (inviting users, configuring SSO, and creating groups). Project-level permissions are for the configuration and maintenance of the projects themselves (configuring environments, accessing IDE, and running jobs). Account permission sets may have access to project features, and project permission sets may have access to account features. Check out the [permissions tables](/docs/platform/manage-access/enterprise-permissions#account-permissions) to compare sets and their access. 
+Доступ к возможностям и функциям <Constant name="dbt" /> разделён на наборы разрешений уровня аккаунта (`account-level`) и уровня проекта (`project-level`). Разрешения уровня аккаунта предназначены прежде всего для администрирования аккаунта (приглашения пользователей, настройки SSO и создания групп). Разрешения уровня проекта предназначены для настройки и обслуживания самих проектов (настройки окружений, доступа к IDE и запуска заданий). Наборы разрешений уровня аккаунта могут предоставлять доступ к функциям проектов, а наборы разрешений уровня проекта — к функциям аккаунта. Сравнить наборы и предоставляемый ими доступ можно в [таблицах разрешений](/docs/platform/manage-access/enterprise-permissions#account-permissions). 
 
-:::tip Read-Only users
-If you have users with a Read-Only license, you can [enable granular permissions](/docs/platform/manage-access/about-user-access#enable-granular-permissions-for-read-only-users-) for your account. This is a one-time, irreversible setting. After you enable it, Read-Only users keep their project access only if they're in a group with a Read-Only permission set that covers all projects.
+:::tip Пользователи с лицензией Read-Only
+Если у вас есть пользователи с лицензией Read-Only, вы можете [включить детализированные разрешения](/docs/platform/manage-access/about-user-access#enable-granular-permissions-for-read-only-users) для своего аккаунта. Эта настройка включается один раз, и отменить её нельзя. После её включения пользователи Read-Only сохраняют доступ к проектам, только если входят в группу с набором разрешений Read-Only, охватывающим все проекты.
 :::
 
-<Expandable alt_header="Account admin">
+<Expandable alt_header="Администратор аккаунта (Account admin)">
 
-The Account admin permission set is the highest level of access and control over your <Constant name="dbt" /> account and projects. We recommend limiting the number of users and groups assigned the account admin permission set.
+Набор разрешений Account admin предоставляет наивысший уровень доступа и контроля над аккаунтом и проектами <Constant name="dbt" />. Рекомендуем ограничивать количество пользователей и групп, которым назначен набор разрешений Account admin.
 
-Notable features:
-- Account admin is an account-level set.
-- Unrestricted access to every feature.
-- The default permissions for every user who creates a new <Constant name="dbt" /> account.
-- The default permissions assigned to the `Owner` group.
-
-</Expandable>
-<Expandable alt_header="Admin">
-
-The Admin permission set is intended for project administration but with limited account-level access to invite and assign users. 
-
-Notable features:
-- Admin is a project-level set.
-- Unrestricted access to existing projects, but can't create new projects.
-- Can invite new members and assign access but can't create groups.
-- Can access <Constant name="catalog" />.
-- The default permissions assigned to the `Member` group.
+Основные особенности:
+- Account admin — набор разрешений уровня аккаунта.
+- Неограниченный доступ ко всем функциям.
+- Разрешения по умолчанию для каждого пользователя, создающего новый аккаунт <Constant name="dbt" />.
+- Разрешения, назначаемые по умолчанию группе `Owner`.
 
 </Expandable>
+<Expandable alt_header="Администратор (Admin)">
 
-<Expandable alt_header="Account Viewer">
-The Account Viewer permissions set provides read-only access to the <Constant name="dbt" /> account. Useful for any persona who needs insights into your <Constant name="dbt" /> account without access to create or change configurations.
+Набор разрешений Admin предназначен для администрирования проектов, но также предоставляет ограниченный доступ на уровне аккаунта для приглашения пользователей и назначения им доступа. 
 
-The Account Viewer permission set is frequently paired with the [Read-only license-type](/docs/platform/manage-access/seats-and-users).
-
-Notable features:
-- Account Viewer is an account-level set.
-- Read-only access to all settings, projects, environments, and runs.
-- Read-only access to audit logs, including sensitive account-level information.
-- No access to the IDE. 
-- Can access <Constant name="catalog" />
-
-</Expandable>
-<Expandable alt_header="Analyst">
-
-The Analyst permission set is designed for users who need to run and analyze dbt models in the IDE but can't create or edit anything outside the IDE. 
-
-Notable features:
-- Analyst is a project-level set.
-- Full access to the IDE and the ability to configure personal credentials for adapters and Git. 
-- Read-only access to environment configs.
-- Can view jobs but can't edit them.
-- Can access <Constant name="catalog" />.
-
-</Expandable>
-<Expandable alt_header="Analyst read">
-
-The Analyst read permission set is a project-level set designed for users who need read-only access to analyze dbt models and project resources without the ability to develop or make changes. It does not change the user's license.
-
-On Enterprise-tier plans, you can assign Analyst read to Read-Only users. That lets those users manage their own warehouse credentials and use the [dbt MCP server](/docs/dbt-ai/about-mcp). They can connect with OAuth or a personal access token. For MCP authentication options, refer to [Connect dbt MCP server to dbt platform](/docs/dbt-ai/mcp-quickstart-oauth).
-
-Notable features:
-- Analyst read is a project-level set.
-- Read-only access to **Connections** (account and project), **Projects**, repositories (Git repository settings), <Constant name="semantic_layer" /> configuration, **Environments**, custom environment variables, and <Constant name="catalog" /> metadata (Metadata GraphQL API).
-- No read access to jobs or runs.
-- Includes `user_credential_write`, so users can view and edit their own user credentials on **Your profile** > **Credentials** without access to the <Constant name="studio_ide" /> or <Constant name="platform_cli" />. Read-only users need personal user credentials on this page to run warehouse queries in analysis features such as the <Constant name="semantic_layer" />. In <Constant name="wizard" /> [Explore mode](/docs/platform/wizard-home#ask-questions-in-explore-mode), users without personal credentials fall back to the project's [analytics credential](/docs/platform/wizard-read-only-users#set-up-analytics-credentials) instead.
-- No write access and no access to develop in the <Constant name="studio_ide" /> or <Constant name="platform_cli" />.
-
-To access the capabilities of this permission set, you _must_ add users to a group that's assigned the Analyst read permission set. Users won't have access until they're added to the group. For the setup steps, refer to [Set up read-only user access](/docs/platform/manage-access/about-user-access#set-up-read-only-user-access).
-
-</Expandable>
-<Expandable alt_header="Billing admin">
-
-The Billing admin permission set can review product usage information that impacts the final billing of <Constant name="dbt" /> (for example, models run).
-
-Notable features:
-- Billing admin is an account-level set.
-- Unrestricted access to the **Billing** section of your **Account settings**. 
-- Read access to public models. 
-- No other access. 
+Основные особенности:
+- Admin — набор разрешений уровня проекта.
+- Неограниченный доступ к существующим проектам, но без возможности создавать новые.
+- Возможность приглашать новых участников и назначать доступ, но без возможности создавать группы.
+- Доступ к <Constant name="catalog" />.
+- Разрешения, назначаемые по умолчанию группе `Member`.
 
 </Expandable>
 
-<Expandable alt_header="Cost Insights Admin">
+<Expandable alt_header="Просмотр аккаунта (Account Viewer)">
+Набор разрешений Account Viewer предоставляет доступ к аккаунту <Constant name="dbt" /> только для чтения. Подходит всем, кому нужна информация об аккаунте <Constant name="dbt" /> без возможности создавать или изменять конфигурации.
 
-The Cost Insights Admin permission set provides the minimum permissions needed to configure and manage [Cost Insights](/docs/explore/cost-insights) settings and view cost data.
+Набор разрешений Account Viewer часто используется совместно с [лицензией типа Read-only](/docs/platform/manage-access/seats-and-users).
 
-Notable features:
-- Cost Insights Admin is both an account-level and project-level set.
-- Can configure platform metadata credentials and Cost Insights settings in connection settings.
-- Can view cost and savings data across projects, models, and jobs.
-- Read-only access to connections, projects, jobs, and metadata.
-- Can access dbt <Constant name="catalog" />.
+Основные особенности:
+- Account Viewer — набор разрешений уровня аккаунта.
+- Доступ только для чтения ко всем настройкам, проектам, окружениям и запускам.
+- Доступ только для чтения к журналам аудита, включая конфиденциальную информацию уровня аккаунта.
+- Нет доступа к IDE. 
+- Доступ к <Constant name="catalog" />
+
+</Expandable>
+<Expandable alt_header="Аналитик (Analyst)">
+
+Набор разрешений Analyst предназначен для пользователей, которым нужно запускать и анализировать модели dbt в IDE, но которые не могут ничего создавать или редактировать за пределами IDE. 
+
+Основные особенности:
+- Analyst — набор разрешений уровня проекта.
+- Полный доступ к IDE и возможность настраивать личные учётные данные для адаптеров и Git. 
+- Доступ только для чтения к конфигурациям окружений.
+- Возможность просматривать задания, но не редактировать их.
+- Доступ к <Constant name="catalog" />.
+
+</Expandable>
+<Expandable alt_header="Аналитик с доступом для чтения (Analyst read)">
+
+Набор разрешений Analyst read — это набор уровня проекта для пользователей, которым нужен доступ только для чтения для анализа моделей dbt и ресурсов проекта без возможности разработки или внесения изменений. Он не изменяет лицензию пользователя.
+
+В тарифных планах уровня Enterprise можно назначать Analyst read пользователям Read-Only. Это позволяет им управлять собственными учётными данными хранилища данных и использовать [сервер dbt MCP](/docs/dbt-ai/about-mcp). Они могут подключаться через OAuth или с помощью персонального токена доступа. Варианты аутентификации MCP описаны в разделе [Подключение сервера dbt MCP к платформе dbt](/docs/dbt-ai/mcp-quickstart-oauth).
+
+Основные особенности:
+- Analyst read — набор разрешений уровня проекта.
+- Доступ только для чтения к **Connections** (на уровне аккаунта и проекта), **Projects**, репозиториям (настройкам репозиториев Git), конфигурации <Constant name="semantic_layer" />, **Environments**, пользовательским переменным окружения и метаданным <Constant name="catalog" /> (Metadata GraphQL API).
+- Нет доступа для чтения к заданиям и запускам.
+- Включает `user_credential_write`, поэтому пользователи могут просматривать и редактировать собственные учётные данные в разделе **Your profile** > **Credentials** без доступа к <Constant name="studio_ide" /> или <Constant name="platform_cli" />. Пользователям Read-Only нужны личные учётные данные на этой странице, чтобы выполнять запросы к хранилищу данных в аналитических функциях, таких как <Constant name="semantic_layer" />. В [режиме Explore](/docs/platform/wizard-home#ask-questions-in-explore-mode) в <Constant name="wizard" /> для пользователей без личных учётных данных вместо них используются [учётные данные для аналитики](/docs/platform/wizard-read-only-users#set-up-analytics-credentials) проекта.
+- Нет доступа для записи и возможности разработки в <Constant name="studio_ide" /> или <Constant name="platform_cli" />.
+
+Чтобы получить доступ к возможностям этого набора разрешений, пользователей _обязательно_ нужно добавить в группу, которой назначен набор разрешений Analyst read. Пока пользователи не добавлены в группу, доступа у них не будет. Инструкции по настройке см. в разделе [Настройка доступа пользователей только для чтения](/docs/platform/manage-access/about-user-access#set-up-read-only-user-access).
+
+</Expandable>
+<Expandable alt_header="Администратор биллинга (Billing admin)">
+
+Набор разрешений Billing admin позволяет просматривать сведения об использовании продукта, влияющие на итоговую стоимость <Constant name="dbt" /> (например, о запущенных моделях).
+
+Основные особенности:
+- Billing admin — набор разрешений уровня аккаунта.
+- Неограниченный доступ к разделу **Billing** в **Account settings**. 
+- Доступ для чтения к публичным моделям. 
+- Другого доступа нет. 
 
 </Expandable>
 
-<Expandable alt_header="Cost Insights Viewer">
+<Expandable alt_header="Администратор Cost Insights (Cost Insights Admin)">
 
-The Cost Insights Viewer permission set provides read-only access to [Cost Insights](/docs/explore/cost-insights) data with the minimum permissions needed to view estimated cost and reduction information.
+Набор разрешений Cost Insights Admin предоставляет минимальные разрешения, необходимые для настройки [Cost Insights](/docs/explore/cost-insights), управления его параметрами и просмотра данных о затратах.
 
-A Read-Only license is not enough to view Cost Insights. Assign this permission set through a group.
-
-Notable features:
-- Cost Insights Viewer is both an account-level and project-level set.
-- Read-only access to cost and savings data across projects, models, and jobs.
-- Read-only access to connections, platform metadata credentials, projects, jobs, and metadata.
-- Cannot configure or edit Cost Insights settings.
-- Can access dbt <Constant name="catalog" />.
+Основные особенности:
+- Cost Insights Admin — набор разрешений как уровня аккаунта, так и уровня проекта.
+- Возможность настраивать учётные данные для метаданных платформы и параметры Cost Insights в настройках подключения.
+- Возможность просматривать данные о затратах и экономии по проектам, моделям и заданиям.
+- Доступ только для чтения к подключениям, проектам, заданиям и метаданным.
+- Доступ к dbt <Constant name="catalog" />.
 
 </Expandable>
 
-<Expandable alt_header="Database admin">
+<Expandable anchor_id="cost-insights-viewer" alt_header="Просмотр Cost Insights (Cost Insights Viewer)">
 
-Database admins manage configurations between <Constant name="dbt" /> and the underlying databases. 
+Набор разрешений Cost Insights Viewer предоставляет доступ только для чтения к данным [Cost Insights](/docs/explore/cost-insights) с минимальными разрешениями, необходимыми для просмотра информации об оценочных затратах и их сокращении.
 
-Notable features: 
-- Database admin is a project-level set. 
-- Can set up and maintain <Constant name="semantic_layer" /> configs.
-- Write access to data platform configurations within environments (credentials, warehouse, schema per environment), including:
-  - Editing [profile](/docs/platform/about-profiles) configs like profile name, deployment credentials, extended attributes, and connection overrides such as `schema`, `role`, `database`, and so on (fields vary by data platform).
-  - Creating new profiles for projects they have access to, including setting which connection the profile is associated with
-- Helpful for scenarios where your data warehouse admins only need access to <Constant name="dbt" /> to configure data platform settings within environments.
-- Read-only access to account-level connections, Git repo, job, and run settings. 
-- Can access <Constant name="catalog" />.
-- Has limited access to environment variables. Use the following table to see what's allowed at each level:
+Лицензии Read-Only недостаточно для просмотра Cost Insights. Назначьте этот набор разрешений через группу.
 
-| Level | Access |
+Основные особенности:
+- Cost Insights Viewer — набор разрешений как уровня аккаунта, так и уровня проекта.
+- Доступ только для чтения к данным о затратах и экономии по проектам, моделям и заданиям.
+- Доступ только для чтения к подключениям, учётным данным для метаданных платформы, проектам, заданиям и метаданным.
+- Нет возможности настраивать или редактировать параметры Cost Insights.
+- Доступ к dbt <Constant name="catalog" />.
+
+</Expandable>
+
+<Expandable alt_header="Администратор баз данных (Database admin)">
+
+Администраторы баз данных управляют настройками взаимодействия между <Constant name="dbt" /> и используемыми базами данных. 
+
+Основные особенности: 
+- Database admin — набор разрешений уровня проекта. 
+- Возможность настраивать и поддерживать конфигурации <Constant name="semantic_layer" />.
+- Доступ для записи к настройкам платформы данных в окружениях (учётным данным, вычислительным ресурсам хранилища, схеме для каждого окружения), включая:
+  - Редактирование настроек [профиля](/docs/platform/about-profiles), таких как имя профиля, учётные данные развёртывания, расширенные атрибуты и переопределения подключения, например `schema`, `role`, `database` и т. д. (набор полей зависит от платформы данных).
+  - Создание новых профилей для доступных проектов, включая выбор подключения, с которым связан профиль
+- Подходит для случаев, когда администраторам хранилища данных нужен доступ к <Constant name="dbt" /> только для настройки платформы данных в окружениях.
+- Доступ только для чтения к подключениям уровня аккаунта, настройкам репозиториев Git, заданий и запусков. 
+- Доступ к <Constant name="catalog" />.
+- Ограниченный доступ к переменным окружения. В следующей таблице показано, что разрешено на каждом уровне:
+
+| Уровень | Доступ |
 |-------|--------|
-| Job | Can override an environment variable's value on a job |
-| Environment | Read-only. Can't create, edit, or delete environment variables |
-| User credentials | No access, because this set doesn't include <Constant name="studio_ide" /> access |
+| Задание | Возможность переопределить значение переменной окружения для задания |
+| Окружение | Только чтение. Нельзя создавать, редактировать или удалять переменные окружения |
+| Учётные данные пользователя | Нет доступа, поскольку этот набор не включает доступ к <Constant name="studio_ide" /> |
 
-Granting [environment write access](/docs/platform/manage-access/about-user-access#environment-write-access) doesn't change this. It elevates job and run permissions to write, but leaves environment variables read-only.
-
-</Expandable>
-<Expandable alt_header="Developer">
-
-The Developer permission set is intended for users who build and maintain dbt models under development and manage production behavior. This is the primary permission set for users working in the IDE and should not be conflated with the [Developer license](/docs/platform/manage-access/seats-and-users#licenses).
-
-Notable features:
-- Developer is a project-level set.
-- Can create, edit, and test dbt code in the IDE.
-- Read-only access to the underlying configs for environments, jobs, runs, and Git.
-- Users manage their credentials to data warehouses and Git. 
-- Can access <Constant name="catalog" />.
+Предоставление [доступа для записи к окружению](/docs/platform/manage-access/about-user-access#environment-write-access) этого не меняет. Оно расширяет разрешения для заданий и запусков до уровня записи, но доступ к переменным окружения остаётся доступом только для чтения.
 
 </Expandable>
-<Expandable alt_header="v2 Migration Admin">
+<Expandable alt_header="Разработчик (Developer)">
 
-This permission set enables users to interact with <Constant name="fusion"/> upgrade workflows. We recommend limiting this permission to users who are actively [working on migrating](/guides/upgrade-to-v2?step=1) a project to <Constant name="fusion"/>.
+Набор разрешений Developer предназначен для пользователей, которые создают и поддерживают разрабатываемые модели dbt и управляют их работой в рабочей среде. Это основной набор разрешений для пользователей, работающих в IDE; его не следует путать с [лицензией Developer](/docs/platform/manage-access/seats-and-users#licenses).
 
-By default, all users can access the <Constant name="fusion"/> upgrade experience. When the upgrade permissions setting is enabled, only users with the **v2 Migration Admin** or **Account admin** permission set can perform upgrades. If the setting is disabled (no check mark), upgrades are not restricted.
-
-- **v2 Migration Admin** &mdash; Assign to user accounts only. Cannot be assigned to service tokens.
-- **Account admin** &mdash; Assign to user accounts or service tokens. Allows both users and service tokens to perform upgrades.
-
-For more information, refer to [Upgrade to <Constant name="fusion"/>](/docs/dbt-versions/upgrade-dbt-platform-version#dbt-v2).
-
-</Expandable>
-<Expandable alt_header="Git admin">
-
-Git admins manage Git repository integrations and cloning.
-
-Notable features:
-- Git admin is a project-level set.
-- Can create new Git integrations and environment variables.
-- Can edit project settings.
-- Read-only access to account settings (including users and groups). 
-- No access to the IDE.
-- Can access <Constant name="catalog" />.
+Основные особенности:
+- Developer — набор разрешений уровня проекта.
+- Возможность создавать, редактировать и тестировать код dbt в IDE.
+- Доступ только для чтения к базовым настройкам окружений, заданий, запусков и Git.
+- Пользователи управляют своими учётными данными для хранилищ данных и Git. 
+- Доступ к <Constant name="catalog" />.
 
 </Expandable>
-<Expandable alt_header="Job admin">
-Job admin is an administrative permission set for users who create, run, and manage jobs in <Constant name="dbt" />.
+<Expandable anchor_id="v2-migration-admin" alt_header="Администратор миграции на v2 (v2 Migration Admin)">
 
-Notable features:
-- Job admin is a project-level set.
-- Job admins can create and delete environments.
-- Job admins can create and edit jobs, runs, environment variables, and data warehouse configs. 
-- Job admins can set up project integrations, including [Tableau lineage](/docs/platform-integrations/semantic-layer/tableau).
-- Read-only access to project configs. 
-- Read-only access to connections and public models.
-- Can access <Constant name="catalog" />.
+Этот набор разрешений позволяет пользователям выполнять действия в рамках перехода на <Constant name="fusion"/>. Рекомендуем предоставлять это разрешение только пользователям, которые активно [занимаются миграцией](/guides/upgrade-to-v2?step=1) проекта на <Constant name="fusion"/>.
 
-</Expandable>
-<Expandable alt_header="Job creator">
+По умолчанию всем пользователям доступен интерфейс перехода на <Constant name="fusion"/>. Если настройка разрешений на обновление включена, выполнять обновления могут только пользователи с набором разрешений **v2 Migration Admin** или **Account admin**. Если настройка отключена (флажок не установлен), обновления не ограничены.
 
-Job creator is a scoped project-level permission set for users who need to manage jobs within assigned projects without broader administrative access.
+- **v2 Migration Admin** &mdash; назначается только учётным записям пользователей. Нельзя назначать сервисным токенам.
+- **Account admin** &mdash; назначается учётным записям пользователей или сервисным токенам. Позволяет выполнять обновления как пользователям, так и сервисным токенам.
 
-Notable features:
-- Job creator is a project-level set.
-- Can create, edit, and run jobs in environment types where the group has [environment write access](/docs/platform/manage-access/environment-permissions-setup). Without write access, job and run actions are read-only.
-- Cannot create or delete environments or edit environment variables.
-- More limited than [Job admin](#job-admin), which can edit environments, environment variables, and data platform configurations.
+Дополнительную информацию см. в разделе [Переход на <Constant name="fusion"/>](/docs/dbt-versions/upgrade-dbt-platform-version#dbt-v2).
 
 </Expandable>
-<Expandable alt_header="Job runner">
+<Expandable alt_header="Администратор Git (Git admin)">
 
-Job runner is a specialized permission set for users who need access to run jobs and view the outcomes. 
+Администраторы Git управляют интеграциями с репозиториями Git и их клонированием.
 
-Notable features:
-- Job runner is a project-level set.
-- Can run jobs.
-- Has read-only access to jobs, including status and results.
-- No other access to <Constant name="dbt" /> features. 
-
-</Expandable>
-<Expandable alt_header="Job viewer">
-
-Job viewer enables users to monitor and review job executions within <Constant name="dbt" />. Users with this role can see jobs’ status, logs, and outcomes but cannot initiate or modify them. 
-
-Notable features:
-- Job viewer is a project-level set.
-- Read-only access to job results, status, and logs.
-- No other access to <Constant name="dbt" /> features. 
-- Can access <Constant name="catalog" />.
+Основные особенности:
+- Git admin — набор разрешений уровня проекта.
+- Возможность создавать новые интеграции с Git и переменные окружения.
+- Возможность редактировать настройки проекта.
+- Доступ только для чтения к настройкам аккаунта (включая пользователей и группы). 
+- Нет доступа к IDE.
+- Доступ к <Constant name="catalog" />.
 
 </Expandable>
+<Expandable alt_header="Администратор заданий (Job admin)">
+Job admin — административный набор разрешений для пользователей, которые создают, запускают задания в <Constant name="dbt" /> и управляют ими.
 
-<Expandable alt_header="Manage marketplace apps">
-Manage marketplace apps is a specialized permission set associated with <Constant name="dbt" /> marketplace apps. Usually implemented for the Snowflake Native App.
-
-Notable features:
-- Manage marketplace apps is an account-level set.
-- Used exclusively for marketplace app integrations. 
-- Not intended for general user/group assignment.
-
-</Expandable>
-<Expandable alt_header="Metadata (Discovery API only)">
-
-Metadata is intended to be a read-only [Discovery API](/docs/dbt-apis/discovery-api) integration permission set. 
-
-Notable features:
-- Metadata is a project-level set.
-- Grants read-only access to metadata related to dbt models, runs, sources, and tests.
-- No access to modify, execute, or manage dbt jobs, repositories, or users.
-- No other access to <Constant name="dbt" /> features.
+Основные особенности:
+- Job admin — набор разрешений уровня проекта.
+- Администраторы заданий могут создавать и удалять окружения.
+- Администраторы заданий могут создавать и редактировать задания, запуски, переменные окружения и конфигурации хранилищ данных. 
+- Администраторы заданий могут настраивать интеграции проекта, включая [происхождение данных в Tableau](/docs/platform-integrations/semantic-layer/tableau).
+- Доступ только для чтения к конфигурациям проекта. 
+- Доступ только для чтения к подключениям и публичным моделям.
+- Доступ к <Constant name="catalog" />.
 
 </Expandable>
-<Expandable alt_header="Notification Manager">
+<Expandable alt_header="Создатель заданий (Job creator)">
 
-The Notification Manager permission set allows users to configure and manage Slack, Microsoft Teams, and email [job notifications](/docs/deploy/job-notifications) without requiring full Account Admin access. This is ideal for team leads or operations users who need to manage who receives job alerts.
+Job creator — набор разрешений уровня проекта с ограниченной областью действия для пользователей, которым нужно управлять заданиями в назначенных проектах без более широкого административного доступа.
 
-Notable features:
-- Notification Manager is an account-level set.
-- Can create, edit, and delete job notification rules for Slack, Microsoft Teams, and email recipients **across all projects** on the account.
-- Read-only access to members (to populate the recipient picker).
-- Read-only access to Slack and Microsoft Teams OAuth configuration status (for viewing the Slack and Microsoft Teams integration connection).
-- Connecting or disconnecting the Slack or Microsoft Teams integration remains Account Admin-only.
-- No access to other account settings, jobs, runs, or environments.
+Основные особенности:
+- Job creator — набор разрешений уровня проекта.
+- Возможность создавать, редактировать и запускать задания в окружениях тех типов, для которых у группы есть [доступ для записи к окружению](/docs/platform/manage-access/environment-permissions-setup). Без доступа для записи действия с заданиями и запусками ограничены чтением.
+- Нет возможности создавать или удалять окружения либо редактировать переменные окружения.
+- Более ограниченный доступ, чем у [Job admin](#job-admin), который позволяет редактировать окружения, переменные окружения и конфигурации платформы данных.
 
 </Expandable>
-<Expandable alt_header="Project creator">
+<Expandable alt_header="Запуск заданий (Job runner)">
 
-The Project creator permission set can create, configure, and set up new projects. It is recommended for the admin of teams that will own a project. 
+Job runner — специализированный набор разрешений для пользователей, которым нужен доступ для запуска заданий и просмотра результатов. 
 
-Notable features:
-- Project creator is an account-level set.
-- Only permission set other than Account admin that can create projects.
-- Limited account settings access. The project creator can create and edit connections, invite users, create groups, and assign licenses.
-- Unrestricted access to project configurations. 
-- Can access <Constant name="catalog" />
+Основные особенности:
+- Job runner — набор разрешений уровня проекта.
+- Возможность запускать задания.
+- Доступ только для чтения к заданиям, включая их статус и результаты.
+- Другого доступа к функциям <Constant name="dbt" /> нет. 
 
 </Expandable>
-<Expandable alt_header="Security admin">
+<Expandable alt_header="Просмотр заданий (Job viewer)">
 
-Security admins have limited access to the security settings and policies for the <Constant name="dbt" /> account. This is intended for members of a security team who need to ensure compliance with security standards and oversee the implementation of best security practices across the account. The [IT license-type](/docs/platform/manage-access/seats-and-users#licenses) includes this permission set by default. 
+Job viewer позволяет пользователям отслеживать и проверять выполнение заданий в <Constant name="dbt" />. Пользователи с этой ролью могут просматривать статус, журналы и результаты заданий, но не могут запускать или изменять их. 
 
-Notable features:
-- Security admin is an account-level set. 
-- Can create and edit users and groups and assign licenses.
-- Can create and edit authentication and SSO settings. 
-- Can create and edit IP restrictions, view service tokens, and manage user access controls. 
-- No access to jobs, runs, environments, or the IDE.
+Основные особенности:
+- Job viewer — набор разрешений уровня проекта.
+- Доступ только для чтения к результатам, статусу и журналам заданий.
+- Другого доступа к функциям <Constant name="dbt" /> нет. 
+- Доступ к <Constant name="catalog" />.
+
+</Expandable>
+
+<Expandable alt_header="Управление приложениями маркетплейса (Manage marketplace apps)">
+Manage marketplace apps — специализированный набор разрешений, связанный с приложениями маркетплейса <Constant name="dbt" />. Обычно используется для Snowflake Native App.
+
+Основные особенности:
+- Manage marketplace apps — набор разрешений уровня аккаунта.
+- Используется исключительно для интеграций с приложениями маркетплейса. 
+- Не предназначен для обычного назначения пользователям или группам.
+
+</Expandable>
+<Expandable alt_header="Метаданные (только Discovery API)">
+
+Metadata — набор разрешений для интеграций с [Discovery API](/docs/dbt-apis/discovery-api), предоставляющий доступ только для чтения. 
+
+Основные особенности:
+- Metadata — набор разрешений уровня проекта.
+- Доступ только для чтения к метаданным моделей dbt, запусков, источников и тестов.
+- Нет доступа для изменения, выполнения или управления заданиями dbt, репозиториями и пользователями.
+- Другого доступа к функциям <Constant name="dbt" /> нет.
+
+</Expandable>
+<Expandable alt_header="Управление уведомлениями (Notification Manager)">
+
+Набор разрешений Notification Manager позволяет пользователям настраивать [уведомления о заданиях](/docs/deploy/job-notifications) для Slack, Microsoft Teams и электронной почты и управлять ими без полного доступа Account Admin. Он идеально подходит руководителям команд и сотрудникам, отвечающим за эксплуатацию, которым нужно управлять получателями оповещений о заданиях.
+
+Основные особенности:
+- Notification Manager — набор разрешений уровня аккаунта.
+- Возможность создавать, редактировать и удалять правила уведомлений о заданиях для получателей в Slack, Microsoft Teams и по электронной почте **во всех проектах** аккаунта.
+- Доступ только для чтения к участникам (для заполнения списка выбора получателей).
+- Доступ только для чтения к статусу конфигурации OAuth для Slack и Microsoft Teams (для просмотра состояния подключения интеграции со Slack и Microsoft Teams).
+- Подключать и отключать интеграцию со Slack или Microsoft Teams по-прежнему могут только пользователи с разрешениями Account Admin.
+- Нет доступа к другим настройкам аккаунта, заданиям, запускам и окружениям.
+
+</Expandable>
+<Expandable alt_header="Создатель проектов (Project creator)">
+
+Набор разрешений Project creator позволяет создавать, конфигурировать и настраивать новые проекты. Рекомендуется для администраторов команд, которые будут отвечать за проект. 
+
+Основные особенности:
+- Project creator — набор разрешений уровня аккаунта.
+- Единственный набор разрешений, помимо Account admin, позволяющий создавать проекты.
+- Ограниченный доступ к настройкам аккаунта. Создатель проектов может создавать и редактировать подключения, приглашать пользователей, создавать группы и назначать лицензии.
+- Неограниченный доступ к конфигурациям проектов. 
+- Доступ к <Constant name="catalog" />
+
+</Expandable>
+<Expandable alt_header="Администратор безопасности (Security admin)">
+
+Администраторы безопасности имеют ограниченный доступ к настройкам и политикам безопасности аккаунта <Constant name="dbt" />. Этот набор предназначен для сотрудников службы безопасности, которым нужно обеспечивать соблюдение стандартов безопасности и контролировать внедрение передовых практик безопасности во всём аккаунте. [Лицензия типа IT](/docs/platform/manage-access/seats-and-users#licenses) включает этот набор разрешений по умолчанию. 
+
+Основные особенности:
+- Security admin — набор разрешений уровня аккаунта. 
+- Возможность создавать и редактировать пользователей и группы, а также назначать лицензии.
+- Возможность создавать и редактировать настройки аутентификации и SSO. 
+- Возможность создавать и редактировать ограничения по IP-адресам, просматривать сервисные токены и управлять доступом пользователей. 
+- Нет доступа к заданиям, запускам, окружениям и IDE.
   
 </Expandable>
-<Expandable alt_header="Semantic Layer">
+<Expandable alt_header="Семантический слой (Semantic Layer)">
 
-A specialized permission set with strict access to only query the <Constant name="semantic_layer" /> using a service token. 
+Специализированный набор разрешений, строго ограниченный выполнением запросов к <Constant name="semantic_layer" /> с помощью сервисного токена. 
 
-Notable features:
-- <Constant name="semantic_layer" /> is a project-level set.
-- Can only query <Constant name="semantic_layer" />.
-- No other access to <Constant name="dbt" /> features. 
-
-</Expandable>
-<Expandable alt_header="Stakeholder and Read-Only">
-
-The Stakeholder and Read-Only are identical permission sets that are similar to Account Viewer, but without access to sensitive content such as account settings, billing information, or audit logs. Useful for personas who need to monitor projects and their configurations.
-
-Notable features: 
-- Stakeholder is a project-level set.
-- Read-only access to projects, environments, jobs, and runs.
-- Read-only access to user and group information.
-- Can access <Constant name="catalog" />.
-- No access to the IDE.
-- Limited access to audit log content that excludes sensitive information, such as user settings and account-level changes.
+Основные особенности:
+- <Constant name="semantic_layer" /> — набор разрешений уровня проекта.
+- Возможность только выполнять запросы к <Constant name="semantic_layer" />.
+- Другого доступа к функциям <Constant name="dbt" /> нет. 
 
 </Expandable>
-<Expandable alt_header="Team admin">
-Team admin is an administrative permission set intended for team leaders or similar personas. The permissions grants the ability to manage projects for the team. 
+<Expandable alt_header="Заинтересованная сторона и доступ только для чтения (Stakeholder и Read-Only)">
 
-Notable features: 
-- Team admin is a project-level set. 
-- Access to manage the project(s) for a team of users. Limited scope and access can be extended via environment permissions. 
-- Read-only access to many account settings (excluding sensitive content like billing and auth providers).
-- Can access <Constant name="catalog" />.
+Stakeholder и Read-Only — идентичные наборы разрешений, похожие на Account Viewer, но без доступа к конфиденциальным данным, таким как настройки аккаунта, платёжная информация или журналы аудита. Подходят тем, кому нужно отслеживать проекты и их конфигурации.
+
+Основные особенности: 
+- Stakeholder — набор разрешений уровня проекта.
+- Доступ только для чтения к проектам, окружениям, заданиям и запускам.
+- Доступ только для чтения к информации о пользователях и группах.
+- Доступ к <Constant name="catalog" />.
+- Нет доступа к IDE.
+- Ограниченный доступ к содержимому журналов аудита, исключающий конфиденциальную информацию, такую как настройки пользователей и изменения на уровне аккаунта.
+
+</Expandable>
+<Expandable alt_header="Администратор команды (Team admin)">
+Team admin — административный набор разрешений для руководителей команд и пользователей с аналогичными обязанностями. Эти разрешения позволяют управлять проектами команды. 
+
+Основные особенности: 
+- Team admin — набор разрешений уровня проекта. 
+- Доступ для управления проектами команды пользователей. Область действия ограничена, но доступ можно расширить с помощью разрешений для окружений. 
+- Доступ только для чтения ко многим настройкам аккаунта (за исключением конфиденциальных данных, таких как платёжная информация и поставщики аутентификации).
+- Доступ к <Constant name="catalog" />.
 
 </Expandable>
 
@@ -340,9 +340,8 @@ import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 <Permissions feature={'/snippets/_enterprise-permissions-table.md'} />
 
-## Additional resources
+## Дополнительные ресурсы
 
-- [Grant users access](/docs/platform/manage-access/about-user-access#grant-access)
-- [Role-based access control](/docs/platform/manage-access/about-user-access#role-based-access-control-)
-- [Environment-level permissions](/docs/platform/manage-access/environment-permissions)
-
+- [Предоставление доступа пользователям](/docs/platform/manage-access/about-user-access#grant-access)
+- [Управление доступом на основе ролей](/docs/platform/manage-access/about-user-access#role-based-access-control-)
+- [Разрешения уровня окружения](/docs/platform/manage-access/environment-permissions)

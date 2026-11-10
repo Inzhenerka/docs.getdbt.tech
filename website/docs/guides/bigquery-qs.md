@@ -208,7 +208,7 @@ select * from final
 
 Позже вы сможете подключить свои инструменты бизнес-аналитики (BI), например [dbt Charts](https://dbtcharts.com/), к этим представлениям и таблицам, чтобы они считывали только очищенные, а не сырые данные.
 
-#### Часто задаваемые вопросы {#faq-2}
+#### Часто задаваемые вопросы {#faqs}
 
 <FAQ path="Runs/checking-logs" />
 <FAQ path="Project/which-schema" />
@@ -386,7 +386,7 @@ select * from final
     тестировать и документировать «сырые» данные, а также лучше понимать lineage ваших источников данных.  
 
 
-#### FAQs {#faq-2}
+#### Частые вопросы {#faq-2}
 
 <FAQ path="Runs/run-one-model" />
 <FAQ path="Project/unique-resource-names" />

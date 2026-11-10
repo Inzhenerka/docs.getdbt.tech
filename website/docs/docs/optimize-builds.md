@@ -1,26 +1,26 @@
 ---
-title: "Optimize your dbt builds"
+title: "Оптимизация сборок dbt"
 id: "optimize-builds"
-description: "Learn how dbt State, deferral, and dbt clone can help you build more efficiently."
+description: "Узнайте, как dbt State, отложенное разрешение ссылок и dbt clone помогают выполнять сборки эффективнее."
 pagination_prev: null
 pagination_next: null
 ---
 
-# Optimize your dbt builds
+# Оптимизация сборок dbt {#optimize-your-dbt-builds}
 
-By default, dbt rebuilds every selected node on every run &mdash; even if nothing has changed. This makes it easy to get started, but adds up for larger projects: longer job times, higher warehouse costs, and slower feedback during development. dbt has features designed to help you skip unnecessary work and reuse existing results instead.
+По умолчанию dbt пересобирает каждый выбранный узел при каждом запуске &mdash; даже если ничего не изменилось. Это упрощает начало работы, но в крупных проектах приводит к увеличению времени выполнения заданий, росту затрат на хранилище данных и замедлению обратной связи при разработке. В dbt есть возможности, позволяющие пропускать ненужную работу и повторно использовать существующие результаты.
 
-## dbt State
+## dbt State {#dbt-state}
 
-[dbt State](/docs/deploy/dbt-state-about) is a service that makes dbt smarter about what to build. It integrates into any dbt deployment &mdash; including self-hosted deployments using <Constant name="fusion_engine" /> or <Constant name="core" /> &mdash; without requiring a recurring <Constant name="dbt_platform" /> subscription.
+[dbt State](/docs/deploy/dbt-state-about) — это сервис, который помогает dbt более обоснованно выбирать, что нужно собирать. Он интегрируется с любым развертыванием dbt &mdash; в том числе с развертываниями в собственной инфраструктуре на базе <Constant name="fusion_engine" /> или <Constant name="core" /> &mdash; без необходимости оформлять регулярную подписку на <Constant name="dbt_platform" />.
 
-Instead of rebuilding every node on every run, it compares each node's logic and upstream data against the previous run and picks the most efficient path:
+Вместо того чтобы пересобирать каждый узел при каждом запуске, сервис сравнивает логику каждого узла и данные вышестоящих зависимостей с предыдущим запуском и выбирает наиболее эффективный вариант:
 
-- **Skip** &mdash; If the node's logic and upstream data haven't changed, dbt reuses the existing object in your target schema as-is.
-- **Clone** &mdash; If the data is fresh but exists in a different schema (for example, production), dbt clones it rather than rebuilding from scratch.
-- **Build** &mdash; If reuse isn't possible, dbt rebuilds normally and automatically defers unselected upstream nodes to production &mdash; no `--defer` or `--state` flags required.
+- **Пропустить** &mdash; Если логика узла и данные вышестоящих зависимостей не изменились, dbt повторно использует существующий объект в целевой схеме без изменений.
+- **Клонировать** &mdash; Если данные актуальны, но находятся в другой схеме (например, в рабочей среде), dbt клонирует их вместо пересборки с нуля.
+- **Собрать** &mdash; Если повторное использование невозможно, dbt выполняет обычную пересборку и автоматически перенаправляет ссылки на невыбранные вышестоящие узлы в рабочую среду &mdash; флаги `--defer` и `--state` не требуются.
 
-To enable dbt State:
+Чтобы включить dbt State:
 
 - **<Constant name="dbt" /> v1.7–1.12**: 
 
@@ -36,31 +36,31 @@ To enable dbt State:
     dbt login
     ```
 
-Authentication requires a <Constant name="dbt_platform" /> account with a [30-day free trial](/docs/deploy/dbt-state-trial). dbt State pricing is usage-based &mdash; you're billed per target table that dbt State reuses each day, not per <Constant name="dbt_platform" /> seat. For full setup instructions, refer to [Setting up dbt State](/docs/deploy/dbt-state-setup).
+Для аутентификации требуется учетная запись <Constant name="dbt_platform" /> с [бесплатным пробным периодом на 30 дней](/docs/deploy/dbt-state-trial). Стоимость dbt State зависит от использования &mdash; плата взимается за каждую целевую таблицу, которую dbt State повторно использует в течение дня, а не за каждое пользовательское место в <Constant name="dbt_platform" />. Полные инструкции по настройке приведены в разделе [Настройка dbt State](/docs/deploy/dbt-state-setup).
 
-## Deferral
+## Отложенное разрешение ссылок {#deferral}
 
-[Deferral](/reference/node-selection/defer) lets you build a subset of your project without building all upstream dependencies first. Instead of running everything upstream, dbt points unbuilt references at existing objects in another environment &mdash; typically production.
+[Отложенное разрешение ссылок](/reference/node-selection/defer) позволяет собирать часть проекта без предварительной сборки всех вышестоящих зависимостей. Вместо выполнения всех вышестоящих узлов dbt направляет ссылки на несобранные узлы к существующим объектам в другой среде &mdash; обычно в рабочей.
 
-This is useful in development and CI environments, where you want to test one or two models without waiting for a full pipeline run.
+Это полезно в средах разработки и CI, когда нужно протестировать одну или две модели, не дожидаясь выполнения всего пайплайна.
 
 ```bash
 dbt build --select my_model --defer --state path/to/prod/artifacts
 ```
 
-## dbt clone
+## dbt clone {#dbt-clone}
 
-[`dbt clone`](/reference/commands/clone) creates copies of selected nodes in a target schema. On warehouses that support zero-copy cloning (for example, Snowflake), it creates lightweight database clones without duplicating the underlying data. On other warehouses, it creates views pointing at the upstream relations.
+[`dbt clone`](/reference/commands/clone) создает копии выбранных узлов в целевой схеме. В хранилищах данных, поддерживающих клонирование без копирования данных (например, Snowflake), команда создает легковесные клоны объектов базы данных без дублирования лежащих в их основе данных. В других хранилищах она создает представления, ссылающиеся на вышестоящие объекты базы данных.
 
-This is useful in development when you want to quickly populate a dev environment with production-like objects without running the full pipeline.
+Это полезно при разработке, когда нужно быстро наполнить среду разработки объектами, аналогичными объектам рабочей среды, без выполнения всего пайплайна.
 
 ```bash
 dbt clone --select my_model
 ```
 
-## dbt's selection syntax
+## Синтаксис выбора узлов в dbt {#dbts-selection-syntax}
 
-dbt has a [variety of selectors](/reference/node-selection/syntax) you can use to target specific parts of your project instead of building everything every time. For example, `+my_model` selects `my_model` and all of its upstream dependencies, while `my_model+2` selects `my_model` and two levels of downstream dependents. This lets you test your changes in isolation without running your entire project.
+В dbt есть [различные селекторы](/reference/node-selection/syntax), с помощью которых можно выбирать определенные части проекта, вместо того чтобы каждый раз собирать всё. Например, `+my_model` выбирает `my_model` и все ее вышестоящие зависимости, а `my_model+2` выбирает `my_model` и два уровня нижестоящих зависимых узлов. Это позволяет тестировать изменения изолированно, не выполняя весь проект.
 
 ```bash
 dbt build --select +my_model

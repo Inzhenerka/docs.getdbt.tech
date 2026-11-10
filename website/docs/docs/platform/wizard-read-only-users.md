@@ -1,199 +1,197 @@
 ---
-title: "Invite read-only users to dbt Wizard"
+title: "Приглашение пользователей с доступом только для чтения в dbt Wizard"
 id: "wizard-read-only-users"
-description: "Invite business users to dbt Wizard with read-only licenses so they can ask questions of governed production data in Explore mode, without a developer license."
-sidebar_label: "Invite read-only users"
+description: "Пригласите бизнес-пользователей в dbt Wizard с лицензиями только для чтения, чтобы они могли задавать вопросы по управляемым данным производственной среды в режиме Explore без лицензии разработчика."
+sidebar_label: "Приглашение пользователей с доступом только для чтения"
 tags: [AI, Wizard, Platform]
-keywords: ["read-only users", "read-only license", "explore mode", "invite users", "seats", "dbt Wizard"]
+keywords: ["пользователи с доступом только для чтения", "лицензия только для чтения", "режим Explore", "приглашение пользователей", "пользовательские места", "dbt Wizard"]
 availability: platform_usage
 ---
 
-# Invite read-only users to dbt Wizard <Lifecycle status="preview" />
+# Приглашение пользователей с доступом только для чтения в dbt Wizard <Lifecycle status="preview" />
 
 <IntroText>
-Give the people who need answers a way to get them. With a few setup steps, read-only users can ask questions of governed production data in plain language &mdash; no developer license required.
+Дайте тем, кому нужны ответы, возможность их получить. После нескольких шагов настройки пользователи с доступом только для чтения смогут задавать вопросы по управляемым данным производственной среды на естественном языке &mdash; без лицензии разработчика.
 </IntroText>
 
-[Read-only users](/docs/platform/manage-access/seats-and-users) work in the <Constant name="wizard" /> home tab in [Explore mode](/docs/platform/wizard-home#ask-questions-in-explore-mode): the agent queries and explains your data but can't edit files, run builds, or change your project.
+[Пользователи с доступом только для чтения](/docs/platform/manage-access/seats-and-users) работают на главной вкладке <Constant name="wizard" /> в [режиме Explore](/docs/platform/wizard-home#ask-questions-in-explore-mode): агент выполняет запросы к данным и объясняет их, но не может редактировать файлы, запускать сборки или изменять проект.
 
-This page is for admins. It covers which license read-only users need, how to invite them, and how to set your project up for good answers. Users with development access don't need a read-only license &mdash; they get [Explore mode](/docs/dbt-ai/wizard-ide#agent-modes) alongside the authoring modes automatically. 
+Эта страница предназначена для администраторов. Здесь описано, какая лицензия нужна пользователям с доступом только для чтения, как их пригласить и как настроить проект для получения качественных ответов. Пользователям с доступом к разработке лицензия только для чтения не нужна &mdash; они автоматически получают [режим Explore](/docs/dbt-ai/wizard-ide#agent-modes) вместе с режимами работы над проектом. 
 
 :::info
 
-Read-only users see <Constant name="wizard" /> in the home tab as soon as they have access, but they can't query anything until two things are true: credentials exist (either their own or the project's [analytics credential](#set-up-analytics-credentials)), and the project has metadata or <Constant name="semantic_layer" /> definitions to ask questions against.
+Пользователи с доступом только для чтения видят <Constant name="wizard" /> на главной вкладке сразу после получения доступа, но не могут выполнять запросы, пока не выполнены два условия: настроены учётные данные (собственные или [учётные данные для аналитики](#set-up-analytics-credentials) проекта), а в проекте есть метаданные или определения <Constant name="semantic_layer" />, на основе которых можно отвечать на вопросы.
 
 :::
 
-## What read-only users can do
+## Возможности пользователей с доступом только для чтения
 
-A read-only user in <Constant name="wizard" /> can:
+Пользователь с доступом только для чтения в <Constant name="wizard" /> может:
 
--  Ask questions of production data in plain language in the [<Constant name="wizard" /> home tab](/docs/platform/wizard-home), and ask follow-ups in the same conversation. 
-- See the <Constant name="semantic_layer" /> metric definition or SQL behind every answer.
-- See which environment an answer was queried against.
+- Задавать вопросы по данным производственной среды на естественном языке на [главной вкладке <Constant name="wizard" />](/docs/platform/wizard-home) и задавать уточняющие вопросы в том же диалоге. 
+- Просматривать определение метрики <Constant name="semantic_layer" /> или SQL-запрос, на котором основан каждый ответ.
+- Видеть, к какой среде был выполнен запрос для получения ответа.
 
-A read-only user can't:
+Пользователь с доступом только для чтения не может:
 
-- Use <Constant name="wizard" /> in the [<Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide). Read-only users work in the [<Constant name="wizard" /> home tab](/docs/platform/wizard-home) only.
-- Edit files, commit, or open pull requests.
-- Run dbt commands or trigger builds.
-- Switch to **Ask for approval** or **Edit files automatically** mode. Those options are disabled.
-- Access data their [analytics credentials permissions](#set-up-analytics-credentials) don't already allow.
+- Использовать <Constant name="wizard" /> в [<Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide). Пользователи с доступом только для чтения работают исключительно на [главной вкладке <Constant name="wizard" />](/docs/platform/wizard-home).
+- Редактировать файлы, создавать коммиты или открывать pull request.
+- Выполнять команды dbt или запускать сборки.
+- Переключаться в режим **Ask for approval** или **Edit files automatically**. Эти варианты отключены.
+- Получать доступ к данным, которые не разрешены их [учётными данными для аналитики](#set-up-analytics-credentials).
 
-Read-only users only have access to Explore mode and see a simpler UI. The only tools available are analytics tools: project metadata and <Constant name="semantic_layer" /> definitions. Tools that need filesystem or development access, like the context panel and the branch picker, don't appear. Users with development access still see all three [agent modes](/docs/dbt-ai/wizard-ide#agent-modes) and choose between them. 
+Пользователям с доступом только для чтения доступен только режим Explore с упрощённым интерфейсом. Доступны лишь инструменты аналитики: метаданные проекта и определения <Constant name="semantic_layer" />. Инструменты, которым нужен доступ к файловой системе или разработке, такие как панель контекста и средство выбора ветки, не отображаются. Пользователи с доступом к разработке по-прежнему видят все три [режима агента](/docs/dbt-ai/wizard-ide#agent-modes) и могут выбирать между ними. 
 
-## FAQs
+## Часто задаваемые вопросы
 
 
-<Expandable alt_header="Which license does a read-only user need?">
+<Expandable alt_header="Какая лицензия нужна пользователю с доступом только для чтения?">
 
-You can use a Read-only license. For current license types and how they're assigned, refer to [User licenses](/docs/platform/manage-access/about-user-access). 
-
-</Expandable>
-
-<Expandable alt_header="How many read-only users can we invite?">
-
-You can invite any user that has a read-only license! Check out [Invite read-only users](#invite-read-only-users) for instructions on how to invite users. For license availability by plan, refer to [dbt pricing](https://www.getdbt.com/pricing).
+Можно использовать лицензию Read-only. Актуальные типы лицензий и порядок их назначения описаны в разделе [Лицензии пользователей](/docs/platform/manage-access/about-user-access). 
 
 </Expandable>
 
+<Expandable alt_header="Сколько пользователей с доступом только для чтения можно пригласить?">
 
-<Expandable alt_header="Does read-only usage count against our AI usage credits?">
-
-Yes. Questions read-only users ask in Explore mode use dbt-<Term id="managed"/> <Term id="inference"/> and draw from your account's <Constant name="wizard" /> consumption pool, the same as any other <Constant name="wizard" /> usage. Refer to [dbt Wizard billing and access FAQs](/docs/dbt-ai/wizard-billing-faqs) for more information.
-</Expandable>
-
-<Expandable alt_header="Do read-only users need the Analyst read permission set?">
-
-Not to use Explore mode. Anyone without development access who can reach <Constant name="wizard" /> sees Explore mode, whichever read permission set they have.
-
-They do need [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) to set up their own warehouse credentials. Without it, they query through the project's [analytics credential](#set-up-analytics-credentials).
+Вы можете пригласить любого пользователя с лицензией только для чтения! Инструкции по приглашению пользователей приведены в разделе [Приглашение пользователей с доступом только для чтения](#invite-read-only-users). Информацию о доступности лицензий в разных тарифных планах см. на странице [Тарифы dbt](https://www.getdbt.com/pricing).
 
 </Expandable>
 
 
-<Expandable alt_header="Can read-only users use their own warehouse credentials?">
+<Expandable alt_header="Расходуют ли пользователи с доступом только для чтения наши кредиты на использование ИИ?">
 
-Yes, if they have the [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set and <Constant name="wizard" /> uses those instead of the analytics credential.
+Да. Для ответов на вопросы пользователей с доступом только для чтения в режиме Explore используются <Term id="managed"/> <Term id="inference"/> dbt, и соответствующий расход учитывается в общем объёме потребления <Constant name="wizard" /> вашего аккаунта, как и любое другое использование <Constant name="wizard" />. Подробнее см. в разделе [Часто задаваемые вопросы об оплате и доступе к dbt Wizard](/docs/dbt-ai/wizard-billing-faqs).
+</Expandable>
+
+<Expandable alt_header="Нужен ли пользователям с доступом только для чтения набор разрешений Analyst read?">
+
+Для использования режима Explore &mdash; нет. Любой пользователь без доступа к разработке, у которого есть доступ к <Constant name="wizard" />, видит режим Explore независимо от назначенного ему набора разрешений на чтение.
+
+Набор разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) нужен для настройки собственных учётных данных хранилища. Без него пользователи выполняют запросы с использованием [учётных данных для аналитики](#set-up-analytics-credentials) проекта.
+
+</Expandable>
+
+
+<Expandable alt_header="Могут ли пользователи с доступом только для чтения использовать собственные учётные данные хранилища?">
+
+Да, если у них есть набор разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read). В этом случае <Constant name="wizard" /> использует их вместо учётных данных для аналитики.
 
 
 </Expandable>
 
 
-<Expandable alt_header="Which credentials does Explore mode query with?">
+<Expandable alt_header="Какие учётные данные используются для запросов в режиме Explore?">
 
-The user's personal credentials first, if they have any. The project's [analytics credential](#set-up-analytics-credentials) is the fallback. If neither exists, <Constant name="wizard" /> asks the user to set up credentials or contact an admin.
-
-</Expandable>
-
-
-<Expandable alt_header="A read-only user can see dbt Wizard but can't get answers. Why?">
-
-Seeing <Constant name="wizard" /> in the Home tab doesn't mean the account is ready to answer questions. Check that:
-
-- An admin has [set up an analytics credential](#set-up-analytics-credentials) on the connection, and assigned that connection to the project.
-- The project has metadata or <Constant name="semantic_layer" /> definitions to ask questions against. An empty project has nothing to answer from.
-- The credential can reach the data the user is asking about.
+В первую очередь используются личные учётные данные пользователя, если они есть. В качестве запасного варианта используются [учётные данные для аналитики](#set-up-analytics-credentials) проекта. Если нет ни тех, ни других, <Constant name="wizard" /> предлагает пользователю настроить учётные данные или обратиться к администратору.
 
 </Expandable>
 
-## Invite read-only users
 
-This section explains how to invite read-only users to <Constant name="dbt_platform" /> so they can use the Wizard home tab. 
-1. In <Constant name="dbt_platform" />, go to **Account settings** --> **Users**.
-2. Click **Invite users**.
-3. Enter the email addresses of the people you want to invite.
-4. Assign the [read-only license](/docs/platform/manage-access/seats-and-users#licenses) and a group whose [permission set](/docs/platform/manage-access/enterprise-permissions) matches the data they should see. Explore mode isn't limited to one permission set &mdash; anyone without development access who can reach <Constant name="wizard" /> gets it.
-    - Use the [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set if you want these users to configure their own warehouse credentials rather than querying through the analytics credential.
-5. Click **Send invitations**.
+<Expandable alt_header="Пользователь с доступом только для чтения видит dbt Wizard, но не может получить ответы. Почему?">
 
-Invited users log in and should land on the account home, then open <Constant name="wizard" /> home tab from the left sidebar to start asking questions in Explore mode. 
+Наличие <Constant name="wizard" /> на вкладке Home не означает, что аккаунт готов отвечать на вопросы. Убедитесь, что:
 
-These are the read-only specifics. For the full invite flow, seat management, and resending invites, refer to [Invite users](/docs/platform/manage-access/invite-users).
+- Администратор [настроил учётные данные для аналитики](#set-up-analytics-credentials) в подключении и назначил это подключение проекту.
+- В проекте есть метаданные или определения <Constant name="semantic_layer" />, на основе которых можно отвечать на вопросы. В пустом проекте нет информации для ответов.
+- Учётные данные предоставляют доступ к данным, о которых спрашивает пользователь.
 
-## Set up analytics credentials
+</Expandable>
 
-To run a query, Explore mode needs warehouse credentials. Most read-only users don't have their own, so an admin sets up an **analytics credential**: a shared, project-level warehouse credential that read-only users fall back to when they haven't configured personal credentials. Read-only users that have their own credentials can use the [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set.
+## Приглашение пользователей с доступом только для чтения {#invite-read-only-users}
 
-The analytics credential also works with the [remote dbt MCP server](/docs/dbt-ai/setup-remote-mcp#read-only-users-and-warehouse-credentials). Once an admin sets it up, read-only users can query metrics through their MCP client without logging in to <Constant name="dbt_platform" /> to set up their own credentials.
+В этом разделе описано, как пригласить пользователей с доступом только для чтения в <Constant name="dbt_platform" />, чтобы они могли пользоваться главной вкладкой Wizard. 
+1. В <Constant name="dbt_platform" /> перейдите в **Account settings** --> **Users**.
+2. Нажмите **Invite users**.
+3. Введите адреса электронной почты людей, которых хотите пригласить.
+4. Назначьте [лицензию только для чтения](/docs/platform/manage-access/seats-and-users#licenses) и группу, [набор разрешений](/docs/platform/manage-access/enterprise-permissions) которой соответствует данным, доступным этим пользователям. Режим Explore не ограничен одним набором разрешений &mdash; он доступен любому пользователю без доступа к разработке, у которого есть доступ к <Constant name="wizard" />.
+    - Используйте набор разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read), если хотите, чтобы эти пользователи настраивали собственные учётные данные хранилища, а не выполняли запросы с учётными данными для аналитики.
+5. Нажмите **Send invitations**.
 
-At query time, <Constant name="wizard" /> and remote MCP resolve credentials in this order:
+После входа приглашённые пользователи должны попасть на главную страницу аккаунта, а затем открыть главную вкладку <Constant name="wizard" /> на левой боковой панели, чтобы начать задавать вопросы в режиме Explore. 
 
-1. The user's personal warehouse credentials if they have them.
-2. The project's analytics credential, if an admin has [set one up](/docs/platform/wizard-read-only-users#add-an-analytics-credential-to-a-connection).
-3. If neither exists, the query returns an error asking the user to set up personal credentials or contact an admin.
+Здесь приведены особенности для пользователей с доступом только для чтения. Полное описание процесса приглашения, управления пользовательскими местами и повторной отправки приглашений см. в разделе [Приглашение пользователей](/docs/platform/manage-access/invite-users).
+
+## Настройка учётных данных для аналитики {#set-up-analytics-credentials}
+
+Для выполнения запроса в режиме Explore нужны учётные данные хранилища. У большинства пользователей с доступом только для чтения нет собственных учётных данных, поэтому администратор настраивает **учётные данные для аналитики**: общие учётные данные хранилища на уровне проекта, которые используются, если пользователь с доступом только для чтения не настроил личные учётные данные. Пользователи с доступом только для чтения, у которых есть собственные учётные данные, могут использовать набор разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read).
+
+Учётные данные для аналитики также работают с [удалённым сервером dbt MCP](/docs/dbt-ai/setup-remote-mcp#read-only-users-and-warehouse-credentials). После того как администратор их настроит, пользователи с доступом только для чтения смогут запрашивать метрики через свой MCP-клиент без необходимости входить в <Constant name="dbt_platform" /> для настройки собственных учётных данных.
+
+При выполнении запроса <Constant name="wizard" /> и удалённый сервер MCP выбирают учётные данные в следующем порядке:
+
+1. Личные учётные данные хранилища пользователя, если они есть.
+2. Учётные данные для аналитики проекта, если администратор [настроил их](/docs/platform/wizard-read-only-users#add-an-analytics-credential-to-a-connection).
+3. Если нет ни тех, ни других, запрос возвращает ошибку с предложением настроить личные учётные данные или обратиться к администратору.
 
 :::note
-Only an admin can set up the analytics credential. End users can't set it up themselves.
+Настроить учётные данные для аналитики может только администратор. Конечные пользователи не могут настроить их самостоятельно.
 :::
 
-### Prerequisites
+### Предварительные требования
 
-- An [account admin](/docs/platform/manage-access/about-user-access) role.
-- A [connection](/docs/platform/connect-data-platform/about-connections) to one of the supported warehouses: Snowflake, BigQuery, Redshift, or Databricks.
+- Роль [администратора аккаунта](/docs/platform/manage-access/about-user-access).
+- [Подключение](/docs/platform/connect-data-platform/about-connections) к одному из поддерживаемых хранилищ: Snowflake, BigQuery, Redshift или Databricks.
 
-### Add an analytics credential to a connection
+### Добавление учётных данных для аналитики в подключение {#add-an-analytics-credential-to-a-connection}
 
-1. In <Constant name="dbt_platform" />, go to **Account settings** --> **Connections** and select the connection.
-2. Scroll to the **Analytics credential** card and click **Edit**. A connection can have one analytics credential.
-3. Pick an **Auth method** and enter the warehouse credentials <Constant name="wizard" /> should query with, then click **Save**.
+1. В <Constant name="dbt_platform" /> перейдите в **Account settings** --> **Connections** и выберите подключение.
+2. Прокрутите страницу до карточки **Analytics credential** и нажмите **Edit**. У подключения может быть один набор учётных данных для аналитики.
+3. Выберите **Auth method** и введите учётные данные хранилища, с которыми <Constant name="wizard" /> должен выполнять запросы, затем нажмите **Save**.
 
-The fields you see depend on the connection's warehouse and the auth method you pick. The following example uses Snowflake with key pair authentication:
+Отображаемые поля зависят от хранилища, к которому настроено подключение, и выбранного метода аутентификации. В следующем примере используется Snowflake с аутентификацией по паре ключей:
 
-1. Enter the **Username** and **Private key** for the warehouse user <Constant name="wizard" /> queries as. 
-2. Add the **Private key passphrase** if your key is encrypted.
-3. Optionally add a **Role** and **Warehouse** to pin which ones queries run with.
+1. Введите **Username** и **Private key** пользователя хранилища, от имени которого <Constant name="wizard" /> выполняет запросы. 
+2. Добавьте **Private key passphrase**, если ключ зашифрован.
+3. При необходимости укажите **Role** и **Warehouse**, чтобы зафиксировать роль и хранилище для выполнения запросов.
 
-<Lightbox src="/img/docs/dbt-platform/analytics-credential-keypair.png" width="95%" title="Analytics credentials with Key pair selected as the auth method" />
+<Lightbox src="/img/docs/dbt-platform/analytics-credential-keypair.png" width="95%" title="Учётные данные для аналитики с выбранным методом аутентификации Key pair" />
 
 
-<!-- Username and password auth is labeled "(deprecated)" in the platform UI, so we're not publicizing it. Uncomment if PM confirms it should be documented.
+<!-- Аутентификация по имени пользователя и паролю помечена в интерфейсе платформы как "(deprecated)", поэтому мы не описываем её публично. Раскомментируйте, если менеджер продукта подтвердит, что её следует документировать.
 
 <TabItem value="userpass" label="Username and password">
 
-1. Enter the **Username** and **Password** for the warehouse user <Constant name="wizard" /> queries as.
-2. Optionally add a **Role** and **Warehouse** to pin which ones queries run with.
+1. Введите **Username** и **Password** пользователя хранилища, от имени которого <Constant name="wizard" /> выполняет запросы.
+2. При необходимости укажите **Role** и **Warehouse**, чтобы зафиксировать роль и хранилище для выполнения запросов.
 
-<Lightbox src="/img/docs/dbt-platform/analytics-credential-username-password.png" width="95%" title="Analytics credentials with Username and password selected as the auth method" />
+<Lightbox src="/img/docs/dbt-platform/analytics-credential-username-password.png" width="95%" title="Учётные данные для аналитики с выбранным методом аутентификации Username and password" />
 
 -->
 
 
-Give the credential the _least privilege_ it needs to answer questions &mdash; read-only access to the data read-only users should see, and nothing more. It's a shared credential, so anyone querying through it sees whatever it can see, without a per-user trail. If you need per-user access control or auditing at the warehouse, have users configure personal credentials instead &mdash; that requires the [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set.
+Предоставьте учётным данным _минимально необходимые привилегии_ для ответов на вопросы &mdash; доступ только для чтения к данным, которые должны видеть пользователи с доступом только для чтения, и ничего больше. Это общие учётные данные, поэтому любой, кто выполняет запросы с их помощью, видит все доступные им данные, без возможности отследить действия отдельных пользователей. Если вам нужен контроль доступа или аудит на уровне отдельных пользователей в хранилище, предложите пользователям настроить личные учётные данные &mdash; для этого необходим набор разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read).
 
 
-### Assign the connection to a project
+### Назначение подключения проекту
 
-1. Go to **Account settings** --> **Projects** and select the project.
-2. In the **Analytics configuration** section, select a connection that has an analytics credential. Only connections with one appear in the picker.
-3. Click **Save**. 
+1. Перейдите в **Account settings** --> **Projects** и выберите проект.
+2. В разделе **Analytics configuration** выберите подключение с учётными данными для аналитики. В списке отображаются только подключения с такими учётными данными.
+3. Нажмите **Save**. 
 
-Read-only users on that project now query through this credential in Explore mode.
+Теперь пользователи с доступом только для чтения в этом проекте выполняют запросы в режиме Explore с этими учётными данными.
 
-You can reuse the same connection across projects, but each project uses one analytics connection at a time.
+Одно и то же подключение можно использовать в нескольких проектах, но каждый проект одновременно использует только одно подключение для аналитики.
 
-## Control what read-only users can see
+## Управление видимостью данных для пользователей с доступом только для чтения
 
-Explore mode respects your existing access controls. It doesn't create a new permission surface.
+Режим Explore учитывает существующие механизмы контроля доступа. Он не создаёт отдельного уровня разрешений.
 
-- Scope the [analytics credential](#set-up-analytics-credentials) to only the data read-only users should reach, since they all query through it.
-- Use [permission sets and groups](/docs/platform/manage-access/enterprise-permissions) to scope which projects a read-only user can reach.
-- Use [environment-level permissions](/docs/platform/manage-access/environment-permissions) to control which environments they can query.
+- Ограничьте доступ [учётных данных для аналитики](#set-up-analytics-credentials) только теми данными, которые должны быть доступны пользователям с доступом только для чтения, поскольку все они выполняют запросы с этими учётными данными.
+- Используйте [наборы разрешений и группы](/docs/platform/manage-access/enterprise-permissions), чтобы ограничить круг проектов, доступных пользователю с доступом только для чтения.
+- Используйте [разрешения на уровне среды](/docs/platform/manage-access/environment-permissions), чтобы управлять тем, к каким средам пользователи могут выполнять запросы.
 
-## Set your team up for good answers
+## Подготовка команды к получению качественных ответов {#set-your-team-up-for-good-answers}
 
-Explore mode answers are grounded in what your project defines. Here are some things to make the experience easier for users:
+Ответы в режиме Explore опираются на определения в вашем проекте. Вот несколько рекомендаций, которые помогут упростить работу пользователей:
 
-- Define the metrics people ask about in the [<Constant name="semantic_layer" />](/docs/build/about-metricflow). Questions that map to a governed metric return your approved numbers instead of ad-hoc SQL.
-- Document your models and columns by writing up descriptions, which help <Constant name="wizard" /> pick the right table and explain the answer in business terms.
-- Tell users which environment to trust by pointing them at production and explain what development data is, so a work-in-progress number never lands in a business review.
+- Определите метрики, о которых спрашивают пользователи, в [<Constant name="semantic_layer" />](/docs/build/about-metricflow). Если вопрос соответствует управляемой метрике, ответ будет содержать утверждённые вами показатели, а не результат произвольного SQL-запроса.
+- Документируйте модели и столбцы, добавляя описания: они помогают <Constant name="wizard" /> выбрать правильную таблицу и объяснить ответ в бизнес-терминах.
+- Объясните пользователям, какой среде можно доверять: направьте их в производственную среду и расскажите, что представляют собой данные среды разработки, чтобы предварительные показатели не попали в бизнес-отчётность.
 
-## Related docs
+## Связанная документация
 
-- [Agent modes in dbt Wizard](/docs/dbt-ai/wizard-ide#agent-modes) 
-- [dbt Wizard home tab](/docs/platform/wizard-home)
-- [User licenses](/docs/platform/manage-access/about-user-access) 
-- [Invite users](/docs/platform/manage-access/invite-users)
-- [Enable AI features in dbt platform](/docs/platform/manage-dbt-ai)
-
-
+- [Режимы агента в dbt Wizard](/docs/dbt-ai/wizard-ide#agent-modes) 
+- [Главная вкладка dbt Wizard](/docs/platform/wizard-home)
+- [Лицензии пользователей](/docs/platform/manage-access/about-user-access) 
+- [Приглашение пользователей](/docs/platform/manage-access/invite-users)
+- [Включение функций ИИ в dbt platform](/docs/platform/manage-dbt-ai)

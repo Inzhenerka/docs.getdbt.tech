@@ -446,7 +446,7 @@ select * from final
 
 ## Документируйте свои модели
 
-Adding [documentation](/docs/build/documentation) to your project allows you to describe your models in rich detail, and share that information with your team. Here, we're going to add some basic documentation to our project.
+[Документация](/docs/build/documentation) позволяет подробно описывать модели и делиться этими сведениями с командой. Добавим описания в проект:
 
 Обновите файл `models/schema.yml`, добавив описания, например приведённые ниже.
 

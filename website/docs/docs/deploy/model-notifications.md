@@ -141,4 +141,4 @@ models:
 2. В разделе **Email notifications** включите параметр **Enable group/owner notifications on models** в секции **Model notifications**. Затем укажите, по каким статусам вы хотите получать уведомления (Success, Warning и/или Fails).
 3. Нажмите **Save**.
 
-  <Lightbox src="/img/docs/dbt-cloud/example-enable-model-notifications.png" title="Example of the setting Enable group/owner notifications on models" />
+  <Lightbox src="/img/docs/dbt-cloud/example-enable-model-notifications.png" title="Настройка Enable group/owner notifications on models" />

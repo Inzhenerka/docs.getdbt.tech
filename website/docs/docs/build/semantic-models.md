@@ -537,15 +537,15 @@ import MeasuresParameters from '/snippets/\_sl-measures-parameters.md';
 
 <VersionBlock firstVersion="1.12">
 
-### `derived_semantics` in dimensions and entities
+### `derived_semantics` в измерениях и сущностях {#derived_semantics-in-dimensions-and-entities}
 
-Use the `derived_semantics` key in the model YAML entry when you want to create dimensions and entities that don’t match a single, physical column. The `expr` field is required when using `derived_semantics`. For more information, see [Dimensions](/docs/build/dimensions#derived_semantics-in-dimensions) and [Entities](/docs/build/entities#derived_semantics-in-entities).
+Если измерение или сущность не соответствует одному физическому столбцу, используйте ключ `derived_semantics` в YAML-описании модели. При этом поле `expr` обязательно. Подробнее см. [Измерения](/docs/build/dimensions#derived_semantics-in-dimensions) и [Сущности](/docs/build/entities#derived_semantics-in-entities).
 
-### Simple metrics
+### Простые метрики {#simple-metrics}
 
-Simple metrics are direct aggregations over columns in your data warehouse using different aggregation types. They serve as building blocks for more complex metrics and can be filtered by dimensions.
+Простые метрики агрегируют значения столбцов в хранилище данных. Они служат основой для более сложных метрик и поддерживают фильтрацию по измерениям.
 
-Simple metrics have various parameters which are listed in a table along with their descriptions and types. For more information, see [Simple metrics](/docs/build/simple).
+Описание и типы параметров приведены в разделе [Простые метрики](/docs/build/simple).
 
 </VersionBlock>
 

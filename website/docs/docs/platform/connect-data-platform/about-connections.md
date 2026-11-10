@@ -1,42 +1,42 @@
 ---
-title: "About data platform connections"
+title: "О подключениях к платформам данных"
 id: about-connections
-description: "Information about data platform connections"
-sidebar_label: "About data platform connections"
+description: "Информация о подключениях к платформе данных"
+sidebar_label: "Подключения к платформам данных"
 pagination_next: "docs/platform/connect-data-platform/connect-apache-spark"
 pagination_prev: null
 availability: platform_login
 ---
 
-The <Constant name="dbt_platform" /> can connect with a variety of data platform providers. 
+<Constant name="dbt_platform" /> может подключаться к платформам данных различных поставщиков. 
 
 <VersionBlock firstVersion="2.0">
 
-For most supported data platforms, we recommend the v2 experience, which supports the following data platforms:
+Для большинства поддерживаемых платформ данных мы рекомендуем версию v2, которая поддерживает следующие платформы данных:
 
 <SimpleTable>
 
-| Connection | Available on v2  |
+| Подключение | Доступно в v2  |
 |------------|:---------------------:|
 | [Snowflake](/docs/platform/connect-data-platform/connect-snowflake) | ✅ |
 | [Amazon Redshift](/docs/platform/connect-data-platform/connect-redshift) | ✅ |
 | [Databricks](/docs/platform/connect-data-platform/connect-databricks) | ✅ |
 | [Google BigQuery](/docs/platform/connect-data-platform/connect-bigquery) | ✅ |
-| [ClickHouse](/docs/platform/connect-data-platform/connect-clickhouse) | Private beta |
+| [ClickHouse](/docs/platform/connect-data-platform/connect-clickhouse) | Закрытая бета-версия |
 </SimpleTable>
 
-<small> _Adapter lifecycle can differ between the <Constant name="dbt_platform" /> and local development &mdash; an adapter can reach GA in the dbt platform before it reaches GA for local use._ </small> <br /><br />
+<small> _Жизненный цикл адаптера может различаться для <Constant name="dbt_platform" /> и локальной разработки &mdash; адаптер может стать общедоступным (GA) на платформе dbt раньше, чем для локального использования._ </small> <br /><br />
 
-If your data platform isn’t listed yet, support for more data platforms will roll out over time. You can continue using v1 for that project in the meantime.
+Если вашей платформы данных пока нет в списке, со временем будет добавлена поддержка других платформ данных. Пока вы можете продолжать использовать v1 для этого проекта.
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-For projects still on v1, dbt supports the following data platforms:
+Для проектов, которые всё ещё используют v1, dbt поддерживает следующие платформы данных:
 
 
-| Connection | Available on v1 |
+| Подключение | Доступно в v1 |
 |------------|:---------------------:|
 | [AlloyDB](/docs/platform/connect-data-platform/connect-postgresql-alloydb) | ✅ |
 | [Amazon Athena](/docs/platform/connect-data-platform/connect-amazon-athena) | ✅ |
@@ -48,26 +48,26 @@ For projects still on v1, dbt supports the following data platforms:
 | [Microsoft Fabric](/docs/platform/connect-data-platform/connect-microsoft-fabric) | ✅ |
 | [PostgreSQL](/docs/platform/connect-data-platform/connect-postgresql-alloydb) | ✅ |
 | [Snowflake](/docs/platform/connect-data-platform/connect-snowflake) | ✅ |
-| [Starburst or Trino](/docs/platform/connect-data-platform/connect-starburst-trino) | ✅ |
+| [Starburst или Trino](/docs/platform/connect-data-platform/connect-starburst-trino) | ✅ |
 | [Teradata](/docs/platform/connect-data-platform/connect-teradata) | ✅ |
 
 </VersionBlock>
 
 
-## Connect your data platform in dbt
+## Подключите свою платформу данных в dbt {#connect-your-data-platform-in-dbt}
 
-To connect to your database in <Constant name="dbt" />:
+Чтобы подключиться к вашей базе данных в <Constant name="dbt" />:
 
-1. Click your account name at the bottom of the left-side menu and click **Account settings**.
-2. Select **Connections** from the top left, and from there, click **New connection**.
+1. Нажмите на имя вашей учетной записи внизу левого меню и выберите **Account settings**.
+2. Выберите **Connections** в верхней левой части экрана, затем нажмите **New connection**.
 
-<Lightbox src="/img/docs/connect-data-platform/choose-a-connection.png" title="Choose a connection"/>
+<Lightbox src="/img/docs/connect-data-platform/choose-a-connection.png" title="Выберите подключение"/>
 
-These connection instructions provide the basic fields required for configuring a data platform connection in <Constant name="dbt" />. For more detailed guides, which include demo project data, read our [Quickstart guides](/guides).
+Эти инструкции по подключению описывают базовые поля, необходимые для настройки соединения с платформой данных в <Constant name="dbt" />. Более подробные руководства, включающие демонстрационные данные проекта, см. в наших [Quickstart guides](/guides).
 
-### Supported authentication methods
+### Поддерживаемые методы аутентификации {#supported-authentication-methods}
 
-The following tables show which authentication types are supported for each connection available on the <Constant name="dbt_platform" />:
+В следующих таблицах показано, какие типы аутентификации поддерживаются для каждого подключения, доступного в <Constant name="dbt_platform" />:
 
 <VersionBlock firstVersion="2.0">
 
@@ -85,62 +85,62 @@ import AuthTypes from '/snippets/_dbt_connection_support.md';
 
 </VersionBlock>
 
-## Connection management
+## Управление подключениями {#connection-management}
 
-Warehouse connections are an account-level resource. You can find them under **Accounts settings** > **Connections**.
+Подключения к хранилищам данных — это ресурс уровня аккаунта. Вы можете найти их в разделе **Account settings** > **Connections**.
 
-Warehouse connections can be re-used across projects. If multiple projects all connect to the same warehouse, you should re-use the same connection to streamline your management operations. Connections are assigned to a project via an [environment](/docs/dbt-platform-environments). 
+Подключения к хранилищу данных можно повторно использовать в разных проектах. Если несколько проектов подключаются к одному и тому же хранилищу данных, следует повторно использовать одно и то же подключение, чтобы упростить управление. Подключения назначаются проекту через [окружение](/docs/dbt-platform-environments). 
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-new-model.png" width="60%" title="Connection model"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-new-model.png" width="60%" title="Модель подключений"/>
 
-As shown in the image, a project with 2 environments can target between 1 and 2 different connections. If you want to separate your production environment from your non-production environment, assign multiple connections to a single project.
+Как показано на изображении, проект с 2 средами может использовать от 1 до 2 различных подключений. Если вы хотите отделить вашу производственную среду от непроизводственной, назначьте несколько подключений одному проекту.
 
-### Migration from project-level connections to account-level connections
+### Миграция с подключений уровня проекта на подключения уровня аккаунта {#migration-from-project-level-connections-to-account-level-connections}
 
-Rolling out account-level connections will not require any interruption of service in your current usage (<Constant name="studio_ide" />, CLI, jobs, and so on.).
+Внедрение подключений уровня аккаунта не потребует никаких перерывов в работе ваших текущих сценариев использования (<Constant name="studio_ide" />, CLI, jobs и так далее).
 
-:::info Why am I prompted to configure a development environment?
-If your project did not previously have a development environment, you may be redirected to the project setup page. Your project is still intact. Choose a connection for your new development environment, and you can view all your environments again.
+:::info Почему меня просят настроить среду разработки?
+Если в вашем проекте ранее не было среды разработки, вы можете быть перенаправлены на страницу настройки проекта. Ваш проект все еще в целости. Выберите подключение для вашей новой среды разработки, и вы сможете снова просмотреть все ваши среды.
 :::
 
-However, to fully utilize the value of account-level connections, you may have to rethink how you assign and use connections across projects and environments.
+Однако, чтобы полностью использовать преимущества подключений на уровне учетной записи, вам, возможно, придется пересмотреть, как вы назначаете и используете подключения в проектах и средах.
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout.png" width="60%" title="Typical connection setup post rollout"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout.png" width="60%" title="Типичная конфигурация подключений после внедрения"/>
 
-Please consider the following actions, as the steps you take will depend on the desired outcome.
+Пожалуйста, рассмотрите следующие действия, так как шаги, которые вы предпримете, будут зависеть от желаемого результата.
 
-- The initial clean-up of your connection list
-  - Delete unused connections with 0 environments. 
-  - Rename connections with a temporary, descriptive naming scheme to better understand where each is used
+- Первоначальная очистка списка подключений
+  - Удалите неиспользуемые подключения с 0 средами.
+  - Переименуйте подключения с временной, описательной схемой именования, чтобы лучше понять, где каждое используется
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-2.png" width="60%" title="Post initial clean-up"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-2.png" width="60%" title="После первоначальной очистки"/>
 
-- Get granular with your connections
-  - Define an intent for each connection, usually a combination of warehouse/database instance, intended use (dev, prod, etc), and administrative surface (which teams/projects will need to collaborate on the connection)
-  - Aim to minimize the need for local overrides (like extended attributes)
-  - Come to a consensus on a naming convention.  We recommend you name connections after the server hostname and distinct intent/domain/configuration. It will be easier to reuse connections across projects this way
+- Детализация подключений
+  - Определите намерение для каждого подключения, обычно это комбинация экземпляра хранилища/базы данных, предполагаемого использования (разработка, производство и т.д.) и административной поверхности (какие команды/проекты будут нуждаться в совместной работе над подключением)
+  - Стремитесь минимизировать необходимость локальных переопределений (например, расширенных атрибутов)
+  - Придите к консенсусу по поводу соглашения об именах. Мы рекомендуем называть подключения по имени хоста сервера и отличительным намерением/доменом/конфигурацией. Так будет легче повторно использовать подключения в разных проектах
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-3.png" width="60%" title="Granularity determined"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-3.png" width="60%" title="Детализация определена"/>
 
-- Deduplication (connection list + environment details &mdash; not touching extended attributes for now)
-  - Based of the granularity of your connection details, determine which connections should remain among groups of duplicates, and update every relevant environment to leverage that connection
-  - Delete unused connections with 0 environments as you go
-  - Deduplicate thoughtfully. If you want connections to be maintained by two different groups of users, you may want to preserve two identical connections to the same warehouse so each can evolve as each group sees fit without impacting the other group
-  - Do not update extended attributes at this stage
+- Дедупликация (список подключений + детали среды &mdash; пока не касаясь расширенных атрибутов)
+  - На основе детализации ваших подключений определите, какие подключения должны остаться среди групп дубликатов, и обновите каждую соответствующую среду, чтобы использовать это подключение
+  - Удаляйте неиспользуемые подключения с 0 средами по мере продвижения
+  - Дедуплицируйте вдумчиво. Если вы хотите, чтобы подключения поддерживались двумя разными группами пользователей, вы можете сохранить два идентичных подключения к одному и тому же хранилищу, чтобы каждое могло развиваться так, как считает нужным, без влияния на другую группу
+  - Не обновляйте расширенные атрибуты на этом этапе
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-4.png" width="60%"title="Connections de-duplicated"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-4.png" width="60%"title="Дубликаты подключений удалены"/>
 
-- Normalization
-  - Understand how new connections should be created to avoid local overrides. If you currently use extended attributes to override the warehouse instance in your production environment - you should instead create a new connection for that instance, and wire your production environment to it, removing the need for the local overrides
-  - Create new connections, update relevant environments to target these connections, removing now unnecessary local overrides (which may not be all of them!)
-  - Test the new wiring by triggering jobs or starting <Constant name="studio_ide" /> sessions
+- Нормализация
+  - Разберитесь, как следует создавать новые подключения, чтобы избежать локальных переопределений. Если в настоящее время вы используете extended attributes для переопределения экземпляра хранилища данных в production‑окружении, вместо этого следует создать новое подключение для этого экземпляра и привязать к нему production‑окружение, устранив необходимость в локальных переопределениях.
+  - Создайте новые подключения, обновите соответствующие окружения для использования этих подключений, удалив ставшие ненужными локальные переопределения (возможно, не все!)
+  - Протестируйте новую связку, запустив jobs или начав сессии в <Constant name="studio_ide" />
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-5.png" width="60%" title="Connections normalized"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/connections-post-rollout-5.png" width="60%" title="Подключения нормализованы"/>
 
-## IP Restrictions
+## Ограничения по IP {#ip-restrictions}
 
-<Constant name="dbt" /> will always connect to your data platform from the IP addresses specified in the [Regions & IP addresses](/docs/platform/about-platform/access-regions-ip-addresses) page.
+<Constant name="dbt" /> всегда будет подключаться к вашей платформе данных с IP-адресов, указанных на странице [Регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses).
 
-Be sure to allow traffic from these IPs in your firewall, and include them in any database grants.
+Убедитесь, что вы разрешили трафик с этих IP-адресов в вашем файрволе и включили их в любые предоставления базы данных.
 
-Allowing these IP addresses only enables the connection to your <Term id="data-warehouse" />. However, you might want to send API requests from your restricted network to the <Constant name="dbt" /> API. Using the <Constant name="dbt" /> API requires allowing the `cloud.getdbt.com` subdomain. For more on the <Constant name="dbt" /> architecture, see [Deployment architecture](/docs/platform/about-platform/architecture).
+Разрешение этих IP-адресов обеспечивает только подключение к вашему <Term id="data-warehouse" />. Однако вам может потребоваться отправлять API-запросы из вашей сети с ограниченным доступом к API <Constant name="dbt" />. Для использования API <Constant name="dbt" /> необходимо разрешить доступ к поддомену `cloud.getdbt.com`. Подробнее об архитектуре <Constant name="dbt" /> см. в разделе [Архитектура развёртывания](/docs/platform/about-platform/architecture).

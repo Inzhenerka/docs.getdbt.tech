@@ -1,128 +1,128 @@
 ---
-title: "MCP environment variables reference"
-sidebar_label: "Environment variables"
-description: "Condensed reference for all dbt MCP environment variables."
+title: "Справочник переменных окружения MCP"
+sidebar_label: "Переменные окружения"
+description: "Краткий справочник всех переменных окружения dbt MCP."
 id: "mcp-environment-variables"
 availability: local_free
 ---
 
-This page is a condensed reference for all environment variables used by the self-hosted dbt MCP server. For full detail on each variable (including examples), see [Set up self-hosted MCP](/docs/dbt-ai/setup-local-mcp).
+На этой странице приведён краткий справочник всех переменных окружения, используемых сервером dbt MCP, развёрнутым в собственной инфраструктуре. Подробные сведения о каждой переменной (включая примеры) см. в разделе [Настройка MCP в собственной инфраструктуре](/docs/dbt-ai/setup-local-mcp).
 
-## Self-hosted CLI
+## Локальный CLI
 
-These variables are required to use dbt commands through MCP.
-
-<SimpleTable>
-| Variable | Required | Description |
-| --- | --- | --- |
-| `DBT_PROJECT_DIR` | Required | Full path to your dbt project folder (the folder containing `dbt_project.yml`). |
-| `DBT_PATH` | Required | Full path to your dbt executable. Find it by running `which dbt` (macOS/Linux) or `where dbt` (Windows). |
-| `DBT_PROFILES_DIR` | Optional | Path to a custom `profiles.yml` directory. Defaults to `~/.dbt/`. |
-| `DBT_CLI_TIMEOUT` | Optional | Seconds before dbt commands time out. Defaults to `60`. Compile runs the whole project, so large projects may need a higher limit to avoid timeouts. |
-</SimpleTable>
-
-## dbt platform
-
-These variables are required for <Constant name="dbt_platform"/> features (Semantic Layer, Discovery API, Admin API, SQL execution).
+Эти переменные необходимы для выполнения команд dbt через MCP.
 
 <SimpleTable>
-| Variable | Required | Description |
+| Переменная | Обязательность | Описание |
 | --- | --- | --- |
-| `DBT_HOST` | Required | Your <Constant name="dbt_platform"/> [hostname](/docs/platform/about-platform/access-regions-ip-addresses). Accepts both `cloud.getdbt.com` (default) and `https://cloud.getdbt.com`. <br /> <br />Include the full hostname with subdomain — for example, `DBT_HOST=abc123.us1.dbt.com`. You no longer need to separate the prefix using `MULTICELL_ACCOUNT_PREFIX` or `DBT_HOST_PREFIX`. |
-| `DBT_TOKEN` | Required | A service token or Personal Access Token (PAT). <br /> <br />The `execute_sql` tool requires a PAT — service tokens _do not_ work for that tool. |
-| `DBT_PROD_ENV_ID` | Required | Your production environment ID (numeric integer). |
-| `DBT_DEV_ENV_ID` | Required for `execute_sql` | Your development environment ID (numeric integer). |
-| `DBT_USER_ID` | Required for `execute_sql` | Your numeric user ID. |
-| `DBT_ACCOUNT_ID` | Required for Admin API and PAT-based auth | Your numeric account ID. Required when using a Personal Access Token (PAT) as your `DBT_TOKEN`. |
+| `DBT_PROJECT_DIR` | Обязательная | Полный путь к папке вашего проекта dbt (папке, содержащей `dbt_project.yml`). |
+| `DBT_PATH` | Обязательная | Полный путь к исполняемому файлу dbt. Чтобы найти его, выполните `which dbt` (macOS/Linux) или `where dbt` (Windows). |
+| `DBT_PROFILES_DIR` | Необязательная | Путь к пользовательскому каталогу с файлом `profiles.yml`. По умолчанию — `~/.dbt/`. |
+| `DBT_CLI_TIMEOUT` | Необязательная | Время ожидания выполнения команд dbt в секундах. По умолчанию — `60`. Компиляция охватывает весь проект, поэтому для больших проектов может потребоваться увеличить этот предел, чтобы избежать превышения времени ожидания. |
 </SimpleTable>
 
-:::note Legacy prefix variables
-`MULTICELL_ACCOUNT_PREFIX` and `DBT_HOST_PREFIX` are legacy environment variables. They are backwards compatible &mdash; if you already have them set, they will continue to work. However, the recommended approach is to set the full hostname directly in `DBT_HOST` (for example, `DBT_HOST=abc123.us1.dbt.com`).
+## Платформа dbt
+
+Эти переменные необходимы для использования возможностей <Constant name="dbt_platform"/> (Semantic Layer, Discovery API, Admin API, выполнение SQL).
+
+<SimpleTable>
+| Переменная | Обязательность | Описание |
+| --- | --- | --- |
+| `DBT_HOST` | Обязательная | [Имя хоста](/docs/platform/about-platform/access-regions-ip-addresses) вашей <Constant name="dbt_platform"/>. Допускаются как `cloud.getdbt.com` (по умолчанию), так и `https://cloud.getdbt.com`. <br /> <br />Укажите полное имя хоста с поддоменом, например `DBT_HOST=abc123.us1.dbt.com`. Отдельно задавать префикс с помощью `MULTICELL_ACCOUNT_PREFIX` или `DBT_HOST_PREFIX` больше не требуется. |
+| `DBT_TOKEN` | Обязательная | Сервисный токен или персональный токен доступа (PAT). <br /> <br />Для инструмента `execute_sql` требуется PAT — сервисные токены для этого инструмента _не подходят_. |
+| `DBT_PROD_ENV_ID` | Обязательная | Идентификатор вашей производственной среды (целое число). |
+| `DBT_DEV_ENV_ID` | Обязательная для `execute_sql` | Идентификатор вашей среды разработки (целое число). |
+| `DBT_USER_ID` | Обязательная для `execute_sql` | Ваш числовой идентификатор пользователя. |
+| `DBT_ACCOUNT_ID` | Обязательная для Admin API и аутентификации с помощью PAT | Ваш числовой идентификатор аккаунта. Требуется, если в качестве `DBT_TOKEN` используется персональный токен доступа (PAT). |
+</SimpleTable>
+
+:::note Устаревшие переменные префиксов
+`MULTICELL_ACCOUNT_PREFIX` и `DBT_HOST_PREFIX` — устаревшие переменные окружения. Они поддерживаются для обратной совместимости &mdash; если они уже заданы, то продолжат работать. Однако рекомендуется указывать полное имя хоста непосредственно в `DBT_HOST` (например, `DBT_HOST=abc123.us1.dbt.com`).
 :::
 
-See [Finding your IDs](/docs/dbt-ai/mcp-find-ids) for step-by-step instructions on locating each value.
+Пошаговые инструкции по поиску каждого значения см. в разделе [Поиск ваших идентификаторов](/docs/dbt-ai/mcp-find-ids).
 
-## Tool configuration
+## Настройка инструментов
 
-dbt MCP has two modes for controlling which tools are available: disable mode (default) and enable mode (allowlist). 
+В dbt MCP предусмотрено два режима управления доступностью инструментов: режим отключения (по умолчанию) и режим включения (список разрешённых). 
 
-Toolsets may grow over time as new capabilities are added. The naming pattern generalizes to `DISABLE_{TOOLSET}=` and `DBT_MCP_ENABLE_{TOOLSET}=`, so new toolsets follow the same convention. For the latest list of toolset names, refer to the tables below or the [dbt-mcp README](https://github.com/dbt-labs/dbt-mcp).
+По мере добавления новых возможностей наборы инструментов могут расширяться. Общие шаблоны имён переменных — `DISABLE_{TOOLSET}=` и `DBT_MCP_ENABLE_{TOOLSET}=`, поэтому для новых наборов инструментов используется то же соглашение. Актуальный список имён наборов инструментов см. в таблицах ниже или в [README dbt-mcp](https://github.com/dbt-labs/dbt-mcp).
 
-:::tip Which mode should I use?
-- **Disable mode:** Use when you want most tools available and only need to turn a few off.
-- **Enable mode:** Use when you want only a specific set of tools available.
+:::tip Какой режим выбрать?
+- **Режим отключения:** используйте, если вам нужна большая часть инструментов и требуется отключить лишь некоторые из них.
+- **Режим включения:** используйте, если вам нужен только определённый набор инструментов.
 
-Do not mix both modes for the same toolset. For example avoid this pattern:
+Не используйте оба режима для одного и того же набора инструментов. Например, избегайте такой конфигурации:
 
 ```bash
-# ❌ Mixing modes leads to unpredictable behavior
+# ❌ Смешение режимов приводит к непредсказуемому поведению
 DISABLE_SEMANTIC_LAYER=false
 DBT_MCP_ENABLE_SEMANTIC_LAYER=true
 ```
-Also avoid empty `DBT_MCP_ENABLE_*=` lines as they activate enable mode and will silently disable all other toolsets.
+Также избегайте строк `DBT_MCP_ENABLE_*=` с пустым значением: они активируют режим включения и без предупреждения отключают все остальные наборы инструментов.
 :::
 
-### Disable mode (default)
+### Режим отключения (по умолчанию)
 
-All tools are available by default. To disable a toolset, set any of the following variables to `true` in your MCP client configuration:
+По умолчанию доступны все инструменты. Чтобы отключить набор инструментов, задайте для соответствующей переменной из списка ниже значение `true` в конфигурации вашего MCP-клиента:
 
 <SimpleTable>
-| Variable | Default | Description |
+| Переменная | Значение по умолчанию | Описание |
 | --- | --- | --- |
-| `DISABLE_DBT_CLI` | `false` | Disable local dbt CLI tools (<Constant name="dbt" /> v1.x and v2). |
-| `DISABLE_SEMANTIC_LAYER` | `false` | Disable Semantic Layer tools. |
-| `DISABLE_DISCOVERY` | `false` | Disable Discovery API tools. |
-| `DISABLE_ADMIN_API` | `false` | Disable Admin API tools. |
-| `DISABLE_SQL` | `true` | SQL tools are disabled by default. Set to `false` to enable. |
-| `DISABLE_DBT_CODEGEN` | `true` | Codegen tools are disabled by default. Set to `false` to enable (requires dbt-codegen package). |
-| `DISABLE_LSP` | `false` | Disable LSP/dbt v2 tools. |
-| `DISABLE_MCP_SERVER_METADATA` | `true` | Server metadata tools are disabled by default. Set to `false` to enable. |
-| `DISABLE_TOOLS` | `""` | Comma-separated list of specific tool names to disable. |
+| `DISABLE_DBT_CLI` | `false` | Отключает локальные инструменты dbt CLI (<Constant name="dbt" /> v1.x и v2). |
+| `DISABLE_SEMANTIC_LAYER` | `false` | Отключает инструменты Semantic Layer. |
+| `DISABLE_DISCOVERY` | `false` | Отключает инструменты Discovery API. |
+| `DISABLE_ADMIN_API` | `false` | Отключает инструменты Admin API. |
+| `DISABLE_SQL` | `true` | Инструменты SQL отключены по умолчанию. Чтобы включить их, задайте значение `false`. |
+| `DISABLE_DBT_CODEGEN` | `true` | Инструменты генерации кода отключены по умолчанию. Чтобы включить их, задайте значение `false` (требуется пакет dbt-codegen). |
+| `DISABLE_LSP` | `false` | Отключает инструменты LSP/dbt v2. |
+| `DISABLE_MCP_SERVER_METADATA` | `true` | Инструменты метаданных сервера отключены по умолчанию. Чтобы включить их, задайте значение `false`. |
+| `DISABLE_TOOLS` | `""` | Список имён отдельных инструментов для отключения, разделённых запятыми. |
 </SimpleTable>
 
-### Enable mode (allowlist)
+### Режим включения (список разрешённых)
 
-If any `DBT_MCP_ENABLE_*` variable is set, only the explicitly enabled toolsets are active:
+Если задана хотя бы одна переменная `DBT_MCP_ENABLE_*`, активны только явно включённые наборы инструментов:
 
 <SimpleTable>
-| Variable | Description |
+| Переменная | Описание |
 | --- | --- |
-| `DBT_MCP_ENABLE_DBT_CLI` | Set to `true` to enable local dbt CLI tools (<Constant name="dbt" /> v1.x and v2). |
-| `DBT_MCP_ENABLE_SEMANTIC_LAYER` | Set to `true` to enable Semantic Layer tools. |
-| `DBT_MCP_ENABLE_DISCOVERY` | Set to `true` to enable Discovery API tools. |
-| `DBT_MCP_ENABLE_ADMIN_API` | Set to `true` to enable Admin API tools. |
-| `DBT_MCP_ENABLE_SQL` | Set to `true` to enable SQL tools. |
-| `DBT_MCP_ENABLE_DBT_CODEGEN` | Set to `true` to enable codegen tools. |
-| `DBT_MCP_ENABLE_LSP` | Set to `true` to enable LSP/dbt v2 tools. |
-| `DBT_MCP_ENABLE_TOOLS` | Comma-separated list of specific tool names to enable. |
+| `DBT_MCP_ENABLE_DBT_CLI` | Задайте значение `true`, чтобы включить локальные инструменты dbt CLI (<Constant name="dbt" /> v1.x и v2). |
+| `DBT_MCP_ENABLE_SEMANTIC_LAYER` | Задайте значение `true`, чтобы включить инструменты Semantic Layer. |
+| `DBT_MCP_ENABLE_DISCOVERY` | Задайте значение `true`, чтобы включить инструменты Discovery API. |
+| `DBT_MCP_ENABLE_ADMIN_API` | Задайте значение `true`, чтобы включить инструменты Admin API. |
+| `DBT_MCP_ENABLE_SQL` | Задайте значение `true`, чтобы включить инструменты SQL. |
+| `DBT_MCP_ENABLE_DBT_CODEGEN` | Задайте значение `true`, чтобы включить инструменты генерации кода. |
+| `DBT_MCP_ENABLE_LSP` | Задайте значение `true`, чтобы включить инструменты LSP/dbt v2. |
+| `DBT_MCP_ENABLE_TOOLS` | Список имён отдельных инструментов для включения, разделённых запятыми. |
 </SimpleTable>
 
-### Precedence
+### Приоритет
 
-When multiple variables are set, they're evaluated in this order (highest priority first):
+Если задано несколько переменных, они обрабатываются в следующем порядке (от наивысшего приоритета к наименьшему):
 
-1. `DBT_MCP_ENABLE_TOOLS` (enable specific tools by name)
-2. `DISABLE_TOOLS` (disable specific tools by name)
-3. Toolset enable (`DBT_MCP_ENABLE_*=true`)
-4. Toolset disable (`DISABLE_*=true`)
-5. Default behavior
+1. `DBT_MCP_ENABLE_TOOLS` (включение отдельных инструментов по имени)
+2. `DISABLE_TOOLS` (отключение отдельных инструментов по имени)
+3. Включение набора инструментов (`DBT_MCP_ENABLE_*=true`)
+4. Отключение набора инструментов (`DISABLE_*=true`)
+5. Поведение по умолчанию
 
 ## Semantic Layer
 
-These variables control the behavior of Semantic Layer tools.
+Эти переменные управляют поведением инструментов Semantic Layer.
 
 <SimpleTable>
-| Variable | Default | Description |
+| Переменная | Значение по умолчанию | Описание |
 | --- | --- | --- |
-| `DBT_MCP_SL_METRICS_RELATED_MAX` | `10` | Maximum number of metrics for which `list_metrics` also returns dimension and entity names inline, reducing the number of tool calls needed to answer data questions. When the metric count is at or below this value, dimensions and entities are embedded directly in the `list_metrics` response. When above this value, only metric names are returned and the LLM calls `get_dimensions`/`get_entities` separately. Set to `0` to always return metrics only and never inline dimension or entity data. |
-| `DBT_MCP_SL_MAX_RESPONSE_CHARS` | `16000` | Maximum character length of the CSV returned by `list_metrics`. Must be an integer `>= 0`. When the response would exceed this length _and_ the metric count is above `DBT_MCP_SL_METRICS_RELATED_MAX`, the `description` and `metadata` columns are dropped from the response to save tokens. Set to `0` to disable trimming and always return the full response. |
+| `DBT_MCP_SL_METRICS_RELATED_MAX` | `10` | Максимальное количество метрик, при котором `list_metrics` также возвращает имена измерений и сущностей непосредственно в ответе, сокращая количество вызовов инструментов, необходимых для ответа на вопросы о данных. Если количество метрик не превышает это значение, измерения и сущности включаются непосредственно в ответ `list_metrics`. Если количество метрик превышает это значение, возвращаются только имена метрик, а LLM отдельно вызывает `get_dimensions`/`get_entities`. Задайте значение `0`, чтобы всегда возвращать только метрики и никогда не включать данные измерений или сущностей в ответ. |
+| `DBT_MCP_SL_MAX_RESPONSE_CHARS` | `16000` | Максимальная длина CSV, возвращаемого `list_metrics`, в символах. Значение должно быть целым числом `>= 0`. Если длина ответа превышает этот предел _и_ количество метрик превышает `DBT_MCP_SL_METRICS_RELATED_MAX`, столбцы `description` и `metadata` исключаются из ответа для экономии токенов. Задайте значение `0`, чтобы отключить сокращение и всегда возвращать полный ответ. |
 </SimpleTable>
 
-## Logging and debugging
+## Ведение журналов и отладка
 
 <SimpleTable>
-| Variable | Default | Description |
+| Переменная | Значение по умолчанию | Описание |
 | --- | --- | --- |
-| `DBT_MCP_LOG_LEVEL` | `INFO` | Log level for the MCP server. Options: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. Set to `DEBUG` temporarily to diagnose issues. |
-| `MCP_TRANSPORT` | `stdio` | Transport protocol. Set to `streamable-http` for local debugging only (for example, attaching a Python debugger). See the [dbt-mcp CONTRIBUTING guide](https://github.com/dbt-labs/dbt-mcp/blob/main/CONTRIBUTING.md). |
+| `DBT_MCP_LOG_LEVEL` | `INFO` | Уровень журналирования для MCP-сервера. Допустимые значения: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. Для диагностики проблем временно задайте значение `DEBUG`. |
+| `MCP_TRANSPORT` | `stdio` | Транспортный протокол. Задавайте значение `streamable-http` только для локальной отладки (например, для подключения отладчика Python). См. [руководство CONTRIBUTING проекта dbt-mcp](https://github.com/dbt-labs/dbt-mcp/blob/main/CONTRIBUTING.md). |
 </SimpleTable>

@@ -68,9 +68,9 @@ Claude — это ИИ-ассистент от Anthropic с двумя осно�
 
 Дополнительные параметры конфигурации (переменные окружения, сервисные токены, настройки доступа к инструментам) описаны в разделе [Настройка самостоятельно размещённого MCP-сервера](/docs/dbt-ai/setup-local-mcp).
 
-### Set up with remote dbt MCP server {#desktop-remote}
+### Подключение к удалённому MCP-серверу dbt {#desktop-remote}
 
-The remote dbt MCP server runs in <Constant name="dbt_platform" />. For OAuth, Claude Desktop connects over HTTP with a custom connector. For token-based auth, use the `mcp-remote` proxy described in the token tab (Claude Desktop does not accept `"type": "http"` in `claude_desktop_config.json`).
+Удалённый MCP-сервер dbt работает в <Constant name="dbt_platform" />. Для OAuth Claude Desktop подключается по HTTP через пользовательский коннектор. Для аутентификации по токену используйте прокси `mcp-remote`, описанный на вкладке для токенов. Claude Desktop не принимает `"type": "http"` в `claude_desktop_config.json`.
 
 <MCPRemoteOauthBetaCallout />
 
@@ -154,7 +154,7 @@ Claude Desktop не поддерживает `"type": "http"` в `claude_desktop
    - [Переменные окружения](/docs/dbt-ai/setup-local-mcp#environment-variable-configuration) (включая файл `.env`, подключаемый через `--env-file`)
 2. Создайте `.mcp.json` в корне проекта и добавьте запись `dbt` в ключ `mcpServers` верхнего уровня. Выберите вариант, подходящий для вашего сценария использования:
 
-    <McpClaudeLocalJsonExpandables />
+    <McpClaudeLocalJsonExpandables anchorSuffix="-claude-code" />
 
 :::note О команде `claude mcp add`
 CLI Claude Code позволяет регистрировать MCP-серверы с помощью `claude mcp add`, но обычно записывает их в конфигурацию уровня пользователя (`~/.claude.json`), а не в `.mcp.json` проекта. Для dbt MCP мы рекомендуем сохранять `.mcp.json` в вашем репозитории, чтобы конфигурация действовала на уровне проекта и ею было проще делиться.
@@ -169,7 +169,7 @@ Claude Code может подключаться к удалённому серв
 1. Откройте `.mcp.json` в корне проекта (создайте его, если он ещё не существует).
 2. Получите URL вашего MCP-сервера:
 
-    <MCPRemoteServerUrl />
+    <MCPRemoteServerUrl anchorId="construct-mcp-url-claude-code" />
 
 3. Добавьте запись `dbt` в `.mcp.json`, используя вкладку, соответствующую вашему способу аутентификации:
 

@@ -14,9 +14,9 @@ sidebar_label: "static_analysis"
 
 :::
 
-The `static_analysis` config sets how <Constant name="fusion_engine" /> validates SQL before execution—using `strict` analysis, a `baseline` that balances checks with compatibility, or `off` to skip analysis when needed. You can find supported configuration locations for each resource type.
+Настройка `static_analysis` определяет, как <Constant name="fusion_engine" /> проверяет SQL до выполнения. Режим `strict` выполняет строгий анализ, `baseline` сочетает проверки с совместимостью, а `off` отключает анализ. Допустимые места настройки зависят от типа ресурса.
 
-To check out which Snowflake functions are supported in <Constant name="fusion"/> in `strict` mode, refer to [Snowflake function support](/reference/resource-configs/snowflake-function-support). For BigQuery, refer to [BigQuery function support](/reference/resource-configs/bigquery-function-support).
+Какие функции доступны в режиме `strict` в <Constant name="fusion"/>, описано в разделах [Поддержка функций Snowflake](/reference/resource-configs/snowflake-function-support) и [Поддержка функций BigQuery](/reference/resource-configs/bigquery-function-support).
 
 <Tabs>
 
@@ -54,7 +54,7 @@ models:
 
 </TabItem>
 
-<TabItem value="tests" label="Tests">
+<TabItem value="tests" label="Тесты">
 
 <File name='dbt_project.yml'>
 
@@ -82,7 +82,7 @@ models:
 
 </TabItem>
 
-<TabItem value="seeds" label="Seeds">
+<TabItem value="seeds" label="Исходные данные (seeds)">
 
 <File name='dbt_project.yml'>
 
@@ -107,7 +107,7 @@ seeds:
 
 </TabItem>
 
-<TabItem value="snapshots" label="Snapshots">
+<TabItem value="snapshots" label="Снимки">
 
 <File name='dbt_project.yml'>
 
@@ -132,7 +132,7 @@ snapshots:
 
 </TabItem>
 
-<TabItem value="unit tests" label="Unit tests">
+<TabItem value="unit tests" label="Модульные тесты">
 
 <File name='dbt_project.yml'>
 

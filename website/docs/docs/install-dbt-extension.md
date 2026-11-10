@@ -13,9 +13,9 @@ import InstallExtension from '/snippets/_install-dbt-extension.md';
 
 <InstallExtension/>
 
-## Next steps
-Once you've installed the dbt VS Code extension, go to the next pages to get started:
+## Следующие шаги {#next-steps}
+После установки расширения dbt для VS Code:
 
-1. Review the [Upgrade to dbt v2](/docs/upgrade-to-dbt-extension) page to upgrade your dbt project to the next-gen engine today!
-2. [Sign in](/docs/sign-in-dbt-extension) to a <Constant name="dbt_platform" /> account if you want to use the extension's <Constant name="dbt_platform" /> capabilities, such as the **Catalog** tab.
-3. Review the [limitations and unsupported features](/docs/dbt/supported-features#limitations).
+1. [Обновите проект до dbt v2](/docs/upgrade-to-dbt-extension), чтобы перейти на новый движок.
+2. [Войдите](/docs/sign-in-dbt-extension) в аккаунт <Constant name="dbt_platform" />, если хотите использовать возможности платформы в расширении, например вкладку **Catalog**.
+3. Ознакомьтесь с [ограничениями и неподдерживаемыми функциями](/docs/dbt/supported-features#limitations).

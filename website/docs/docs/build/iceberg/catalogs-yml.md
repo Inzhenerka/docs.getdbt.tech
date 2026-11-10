@@ -1,17 +1,17 @@
 ---
-title: "Using catalogs.yml"
+title: "Использование catalogs.yml"
 id: catalogs-yml
-sidebar_label: "Using catalogs.yml"
-description: Understand how Iceberg catalogs fit into your dbt Mesh configurations.
+sidebar_label: "Использование catalogs.yml"
+description: Узнайте, как каталоги Iceberg вписываются в конфигурации dbt Mesh.
 ---
 
-Now that you understand [what an Iceberg catalog is](/docs/build/iceberg/about-catalogs), let's talk about how to use them within dbt.
+Теперь, когда вы знаете, [что такое каталог Iceberg](/docs/build/iceberg/about-catalogs), давайте поговорим о том, как использовать такие каталоги в dbt.
 
-## Getting started: Managed catalogs
+## Начало работы: управляемые каталоги
 
-Several data platforms offer their own "managed" catalogs that support the Iceberg table format out-of-the-box. These include Snowflake Horizon, Databricks Unity, AWS Glue (for Athena + Redshift), and BigLake (for BigQuery).
+Некоторые платформы данных предлагают собственные «управляемые» каталоги, которые поддерживают формат таблиц Iceberg без дополнительной настройки. К ним относятся Snowflake Horizon, Databricks Unity, AWS Glue (для Athena + Redshift) и BigLake (для BigQuery).
 
-If you're using dbt with a data platform that offers a managed Iceberg catalog, then the simplest way to materialize your first dbt model as an Iceberg table is to set the `table_format` configuration:
+Если вы используете dbt с платформой данных, предлагающей управляемый каталог Iceberg, то самый простой способ материализовать первую модель dbt в виде таблицы Iceberg — задать параметр `table_format`:
 
 <File name='models/hello_iceberg.sql'>
 
@@ -26,40 +26,40 @@ select 'hello_iceberg' as message
 
 </File>
 
-That's it. This model is materialized as an Iceberg table, with all the default configurations for this adapter, and stored in the default (managed) catalog offered by this data platform. You can now connect to that catalog using another engine (such as DuckDB) to read this table. Congratulations, you're using Iceberg!
+Вот и всё. Эта модель материализуется в виде таблицы Iceberg со всеми настройками по умолчанию для этого адаптера и сохраняется в каталоге по умолчанию (управляемом), который предоставляет платформа данных. Теперь вы можете подключиться к этому каталогу с помощью другого движка (например, DuckDB), чтобы прочитать эту таблицу. Поздравляем, вы используете Iceberg!
 
 :::note
 
-Most open source query engines, including DuckDB and Apache Spark, can operate well with external catalogs, but they don't come with a "managed" catalog. Instead, their default behavior for materializing Iceberg tables is to write Parquet files and Iceberg metadata to the local filesystem (wherever the query engine is running).
+Большинство движков запросов с открытым исходным кодом, включая DuckDB и Apache Spark, хорошо работают с внешними каталогами, но не предоставляют «управляемого» каталога. Вместо этого при материализации таблиц Iceberg они по умолчанию записывают файлы Parquet и метаданные Iceberg в локальную файловую систему (там, где работает движок запросов).
 
 :::
 
-## Next step: Using catalogs
+## Следующий шаг: использование каталогов
 
-You should start using `catalogs` when:
-- You want a single place to define custom configurations for how dbt should materialize Iceberg tables
-- You want to write to multiple catalogs ("external" as well as built-in / managed)
-- You want to access the same catalog across multiple data platforms / dbt projects
+Вам стоит начать использовать `catalogs`, если:
+- Вы хотите в одном месте определять пользовательские настройки материализации таблиц Iceberg в dbt
+- Вы хотите записывать данные в несколько каталогов (как «внешних», так и встроенных / управляемых)
+- Вы хотите обращаться к одному и тому же каталогу из нескольких платформ данных / проектов dbt
 
 <VersionBlock lastVersion="1.99">
 
-dbt defines `catalogs` in a single top-level file, `catalogs.yml`, that lives in the root of your project directory. We first introduced `catalogs.yml` in <Constant name="dbt" /> v1.10; starting in <Constant name="dbt" /> v1.12, we've introduced a new simpler spec (recommended) behind an opt-in behavior flag.
+dbt определяет `catalogs` в едином файле верхнего уровня `catalogs.yml`, который находится в корне каталога проекта. Мы впервые представили `catalogs.yml` в <Constant name="dbt" /> v1.10; начиная с <Constant name="dbt" /> v1.12 доступна новая, более простая спецификация (рекомендуемая), которую можно включить с помощью флага поведения.
 
 </VersionBlock>
 
 <VersionBlock firstVersion="2.0">
 
-dbt defines `catalogs` in a single top-level file, `catalogs.yml`, that lives in the root of your project directory. We first introduced `catalogs.yml` in <Constant name="dbt" /> v1.10, and <Constant name="dbt" /> v1.12 added a new simpler spec (recommended). In <Constant name="fusion" />, the new spec is the default. To keep using the old spec, set `use_catalogs_v2: false` under `flags:` in `dbt_project.yml`.
+dbt определяет `catalogs` в едином файле верхнего уровня `catalogs.yml`, который находится в корне каталога проекта. Мы впервые представили `catalogs.yml` в <Constant name="dbt" /> v1.10, а в <Constant name="dbt" /> v1.12 добавили новую, более простую спецификацию (рекомендуемую). В <Constant name="fusion" /> новая спецификация используется по умолчанию. Чтобы продолжить использовать старую спецификацию, задайте `use_catalogs_v2: false` в разделе `flags:` файла `dbt_project.yml`.
 
 </VersionBlock>
 
-### New spec (recommended) <VersionBlock lastVersion="1.99"><Lifecycle status="beta" /></VersionBlock>
+### Новая спецификация (рекомендуется) <VersionBlock lastVersion="1.99"><Lifecycle status="beta" /></VersionBlock> {#new-spec-recommended-}
 
-_Available in <Constant name="dbt" /> v1.12+ (including v2). See GitHub discussion [dbt-labs/dbt#12723](https://github.com/dbt-labs/dbt/discussions/12723) for an explanation of the motivations behind the new spec, and an overview of what's changed._
+_Доступна в <Constant name="dbt" /> v1.12+ (включая v2). Объяснение причин появления новой спецификации и обзор изменений см. в обсуждении на GitHub [dbt-labs/dbt#12723](https://github.com/dbt-labs/dbt/discussions/12723)._
 
 <VersionBlock lastVersion="1.99">
 
-To use the new spec, first set this behavior flag:
+Чтобы использовать новую спецификацию, сначала задайте этот флаг поведения:
 
 <File name='dbt_project.yml'>
 
@@ -72,11 +72,11 @@ flags:
 
 </VersionBlock>
 
-Each entry in `catalogs` refers to a specific catalog containing Iceberg tables. Each catalog **should** map to a top-level logical namespace (often called "database" in dbt). Each catalog may be managed or external for this data platform. Each catalog may be accessed (read from and written to) by one or multiple data platforms.
+Каждая запись в `catalogs` ссылается на конкретный каталог, содержащий таблицы Iceberg. Каждый каталог **должен** соответствовать логическому пространству имён верхнего уровня (в dbt его часто называют «базой данных»). Для данной платформы данных каталог может быть управляемым или внешним. К каждому каталогу могут обращаться (для чтения и записи) одна или несколько платформ данных.
 
-For this reason, each catalog's adapter-specific configuration is nested under `ADAPTER` keys (such as `snowflake:` and `databricks:`). If you run the same dbt project, with the same `catalogs.yml`, using different adapters, dbt always uses the catalog configuration for the current active adapter.
+Поэтому настройки каждого каталога, специфичные для адаптера, вложены в ключи `ADAPTER` (например, `snowflake:` и `databricks:`). Если вы запускаете один и тот же проект dbt с одним и тем же файлом `catalogs.yml`, используя разные адаптеры, dbt всегда использует конфигурацию каталога для текущего активного адаптера.
 
-That said, one "catalog" **must** always point to the same actual data (Iceberg tables in object storage), regardless of whether that catalog is external to or managed by the current active adapter.
+При этом один «каталог» **обязательно должен** указывать на одни и те же фактические данные (таблицы Iceberg в объектном хранилище), независимо от того, является ли он внешним по отношению к текущему активному адаптеру или управляется им.
 
 <VersionBlock firstVersion="1.12">
 
@@ -85,37 +85,37 @@ That said, one "catalog" **must** always point to the same actual data (Iceberg 
 ```yml
 catalogs:
   - name: my_iceberg_catalog
-    type: CATALOG_TYPE     # see below
-    table_format: iceberg  # required
+    type: CATALOG_TYPE     # см. ниже
+    table_format: iceberg  # обязательно
     config:
       ADAPTER:
-        # Configuration for a specific adapter to integrate with this catalog.
-        # See available configs for each adapter + catalog combination.
+        # Настройки для интеграции конкретного адаптера с этим каталогом.
+        # См. доступные настройки для каждой комбинации адаптера и каталога.
 ```
 
 </File>
 
 </VersionBlock>
 
-#### Catalog types
+#### Типы каталогов
 
-| catalog `type`    | default for | supported by                  | Notes                                                                                         |
+| `type` каталога   | по умолчанию для | поддерживается в              | Примечания                                                                                    |
 |-------------------|-------------|-------------------------------|-----------------------------------------------------------------------------------------------|
 | horizon           | snowflake   | snowflake, duckdb             |                                                                                               |
-| glue              | athena      | athena, snowflake, duckdb     | Default catalog type for Athena. Refer to [Iceberg catalogs](/reference/resource-configs/athena-configs#iceberg-catalogs). |
-| s3_tables         |             | athena                        | Iceberg catalogs managed by Amazon S3 Tables (`dbt-athena` 1.11.1 and later). Refer to [AWS S3 Tables](/reference/resource-configs/athena-configs#aws-s3-tables). |
-| biglake_metastore | bigquery    | bigquery, snowflake           | Supports BigQuery [Lakehouse Runtime Catalog tables](/docs/build/iceberg/adapters/bigquery-iceberg-support#lakehouse-runtime-catalog-lrc-) through the `lakehouse_catalog` config |
-| unity             | databricks  | databricks, snowflake, duckdb | Supports Iceberg (native), Delta, "Uniform" formats                                           |
-| hive_metastore    |             | databricks                    | Supports Hudi format, in addition to Iceberg + Delta                                          |
+| glue              | athena      | athena, snowflake, duckdb     | Тип каталога по умолчанию для Athena. См. [Каталоги Iceberg](/reference/resource-configs/athena-configs#iceberg-catalogs). |
+| s3_tables         |             | athena                        | Каталоги Iceberg, управляемые Amazon S3 Tables (`dbt-athena` 1.11.1 и более поздние версии). См. [AWS S3 Tables](/reference/resource-configs/athena-configs#aws-s3-tables). |
+| biglake_metastore | bigquery    | bigquery, snowflake           | Поддерживает [таблицы Lakehouse Runtime Catalog](/docs/build/iceberg/adapters/bigquery-iceberg-support#lakehouse-runtime-catalog-lrc) в BigQuery через параметр `lakehouse_catalog` |
+| unity             | databricks  | databricks, snowflake, duckdb | Поддерживает форматы Iceberg (нативный), Delta, «Uniform»                                      |
+| hive_metastore    |             | databricks                    | Поддерживает формат Hudi в дополнение к Iceberg + Delta                                       |
 | ducklake          |             | duckdb                        |                                                                                               |
 | local_filesystem  |             | duckdb                        |                                                                                               |
-| iceberg_rest      |             | snowflake, duckdb             | In theory, this option can support any catalog that implements an Iceberg-compatible REST API |
+| iceberg_rest      |             | snowflake, duckdb             | Теоретически этот вариант может поддерживать любой каталог, реализующий REST API, совместимый с Iceberg |
 
-#### Config inheritance
+#### Наследование настроек
 
-Configurations defined in `catalogs.yml` are lowest in the [model-config precedence](/reference/model-configs). This means that if you set a more-specific config for one model (within its `.sql` or `.py` file), or set a project-level config, those take precedence.
+Настройки, определённые в `catalogs.yml`, имеют самый низкий [приоритет среди настроек модели](/reference/model-configs). Это означает, что более конкретные настройки для отдельной модели (в её файле `.sql` или `.py`) или настройки на уровне проекта имеют приоритет над ними.
 
-For example, you set a default `base_location_root` for all models in the `finance_db` catalog:
+Например, вы задаёте значение `base_location_root` по умолчанию для всех моделей в каталоге `finance_db`:
 
 <File name='catalogs.yml'>
 
@@ -130,7 +130,7 @@ catalogs:
 
 </File>
 
-But then you override that config for one particular model:
+Но затем переопределяете эту настройку для одной конкретной модели:
 
 <File name='models/finance/my_special_model.sql'>
 
@@ -144,25 +144,25 @@ But then you override that config for one particular model:
 
 </File>
 
-Some Iceberg-related configurations are only available at the model configuration level, so they can't be set in `catalogs.yml`. For example, the related config `base_location_subpath` determines the exact write path for a single Iceberg table, so it only makes sense to configure per-model, rather than setting a default for all models in the catalog.
+Некоторые настройки, связанные с Iceberg, доступны только на уровне конфигурации модели, поэтому их нельзя задать в `catalogs.yml`. Например, связанный параметр `base_location_subpath` определяет точный путь записи для отдельной таблицы Iceberg, поэтому его имеет смысл задавать для каждой модели отдельно, а не устанавливать значение по умолчанию для всех моделей в каталоге.
 
-#### The `catalog_database` config
+#### Параметр `catalog_database`
 
-There is a dedicated configuration for the name of the database mapped to this catalog in each adapter. Unlike other catalog-level configurations, the `catalog_database` applies to *all* models configured with this `catalog_name`, it can't be changed for specific models, and it doesn't follow the usual rules about the `database` config or the `generate_database_name` macro.
+Для имени базы данных, сопоставленной с этим каталогом в каждом адаптере, предусмотрен отдельный параметр. В отличие от других настроек уровня каталога, `catalog_database` применяется ко *всем* моделям с данным значением `catalog_name`: его нельзя изменить для отдельных моделей, и на него не распространяются обычные правила работы параметра `database` или макроса `generate_database_name`.
 
-This means that if a model has both a `database` config and a `catalog_name` config, the catalog’s `catalog_database` takes precedence over the model’s database config, to tell dbt where to materialize this model.
+Это означает, что если у модели заданы и `database`, и `catalog_name`, то значение `catalog_database` каталога имеет приоритет над настройкой базы данных модели и указывает dbt, где материализовать эту модель.
 
-Why? We strongly recommend a 1:1 mapping between each Iceberg catalog and the top-level namespace (logical "database") to which it is linked/synced. The namespaces don't have to be identical, but if you can make them the same everywhere, it's simpler to reason about and debug.
+Почему? Мы настоятельно рекомендуем устанавливать соответствие 1:1 между каждым каталогом Iceberg и пространством имён верхнего уровня (логической «базой данных»), с которым он связан или синхронизирован. Имена пространств имён не обязательно должны совпадать, но если сделать их одинаковыми везде, это упростит понимание конфигурации и отладку.
 
-If you don't specify a `catalog_database`, then dbt materializes models based on their `database` config. In this case, the catalog serves as a collection of shared Iceberg configs, but it doesn't map to a consistent namespace containing all its Iceberg tables.
+Если вы не укажете `catalog_database`, dbt будет материализовывать модели на основе их настройки `database`. В этом случае каталог служит набором общих настроек Iceberg, но не соответствует единому пространству имён, содержащему все его таблицы Iceberg.
 
-### Old spec
+### Старая спецификация
 
-_Available in <Constant name="dbt" /> v1.10+_
+_Доступна в <Constant name="dbt" /> v1.10+_
 
 <VersionBlock firstVersion="2.0">
 
-To use the old spec, first set this behavior flag:
+Чтобы использовать старую спецификацию, сначала задайте этот флаг поведения:
 
 <File name='dbt_project.yml'>
 
@@ -175,7 +175,7 @@ flags:
 
 </VersionBlock>
 
-Each catalog configures one or more `write_integrations`, and then specifies an "active" write integration to use for the current invocation / data warehouse.
+В каждом каталоге настраивается одна или несколько интеграций записи `write_integrations`, а затем указывается «активная» интеграция записи для текущего вызова / хранилища данных.
 
 <File name='catalogs.yml'>
 

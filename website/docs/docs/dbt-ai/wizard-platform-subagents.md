@@ -1,8 +1,8 @@
 ---
-title: "Use subagents with dbt Wizard in dbt platform"
+title: "Использование субагентов с dbt Wizard в dbt platform"
 id: "wizard-platform-subagents"
-description: "Delegate work to specialized subagents in dbt Wizard in dbt platform."
-sidebar_label: "Use subagents"
+description: "Делегируйте работу специализированным субагентам в dbt Wizard в dbt platform."
+sidebar_label: "Использование субагентов"
 tags: [AI, Wizard]
 unlisted: true
 availability: platform_usage
@@ -10,59 +10,59 @@ availability: platform_usage
 
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# Use subagents with <Constant name="wizard" /> in <Constant name="dbt_platform" /> <Lifecycle status="beta"/>
+# Использование субагентов с <Constant name="wizard" /> в <Constant name="dbt_platform" /> <Lifecycle status="beta"/>
 
 <IntroText>
-Subagents let <Constant name="wizard" /> spin up focused agents to handle parts of a larger task, such as exploring your project, making changes, or reviewing results. <Constant name="wizard"/> orchestrates them and consolidates the results back into your session.
+Субагенты позволяют <Constant name="wizard" /> запускать специализированных агентов для выполнения отдельных частей более крупной задачи, например изучения проекта, внесения изменений или проверки результатов. <Constant name="wizard"/> координирует их работу и объединяет результаты в вашем сеансе.
 </IntroText>
 
-Use subagents when you can split a task into independent pieces of work. They're useful for reviewing a large pull request, debugging a failed job, adding tests across multiple models, or researching documentation while another agent inspects your project.
+Используйте субагентов, когда задачу можно разделить на независимые части. Они полезны для проверки большого pull request, отладки задания, завершившегося с ошибкой, добавления тестов для нескольких моделей или изучения документации, пока другой агент анализирует ваш проект.
 
-For smaller, direct tasks, you usually don't need subagents. Ask a single question, like "What does this model do?" or "Fix this failing test," without splitting the work across agents.
+Для небольших задач, не требующих разделения работы, субагенты обычно не нужны. Задайте один вопрос, например «Что делает эта модель?» или «Исправь этот тест, который завершается с ошибкой», не распределяя работу между агентами.
 
-Subagents use more tokens than handling the same task in a single-agent session. Use them when the task benefits from dividing the work.
+Субагенты расходуют больше токенов, чем выполнение той же задачи в сеансе с одним агентом. Используйте их, когда разделение работы помогает решить задачу.
 
 <WizardFeedbackCallout />
 
-## How subagents work
+## Как работают субагенты
 
-An agent is a role that describes a type of work, like `explorer`, `worker`, or `test_writer`.
+Агент — это роль, описывающая тип работы, например `explorer`, `worker` или `test_writer`.
 
-A subagent is a running instance of one of those roles. For example, if you start two explorer agents to answer two different questions, you have two subagents that share the same agent role.
+Субагент — это запущенный экземпляр одной из таких ролей. Например, если вы запускаете двух агентов explorer для ответа на два разных вопроса, у вас будет два субагента с одной и той же ролью агента.
 
-<Constant name="wizard"/> handles orchestration for you. It starts subagents, routes work to them, waits for their results, and consolidates their output into your session.
+<Constant name="wizard"/> берёт на себя координацию. Он запускает субагентов, направляет им задачи, ожидает результатов и объединяет их вывод в вашем сеансе.
 
-You can use subagents in the following ways:
+Субагенты могут использоваться следующими способами:
 
 <SimpleTable>
 
-| How subagents start | Example |
+| Как запускаются субагенты | Пример |
 | ------------------- | ------- |
-| You ask to split up the work. | `Review PR #123. Use one agent to map what changed, one to check tests and downstream impact, and one to look up the relevant dbt docs.` |
-| <Constant name="wizard"/> automatically uses a configured agent because your task matches that agent's description. | `Add tests for stg_customers and check whether similar staging models are missing tests.` |
+| Вы просите разделить работу. | `Проверь PR #123. Пусть один агент опишет изменения, второй проверит тесты и влияние на зависимые модели, а третий найдёт подходящую документацию dbt.` |
+| <Constant name="wizard"/> автоматически использует настроенного агента, если задача соответствует его описанию. | `Добавь тесты для stg_customers и проверь, каких тестов не хватает в похожих staging-моделях.` |
 
 </SimpleTable>
 
-## Built-in agents
+## Встроенные агенты
 
-<Constant name="wizard"/> ships with built-in agents that it can spawn without any configuration. Several are purpose-built for dbt work:
+<Constant name="wizard"/> поставляется со встроенными агентами, которых можно запускать без какой-либо настройки. Некоторые из них специально предназначены для работы с dbt:
 
 <SimpleTable>
 
-| Agent | What it's for | Example |
+| Агент | Назначение | Пример |
 |-------|---------------| ------- |
-| `explorer` | Answers specific, well-scoped questions about your project. Fast and read-only &mdash; spawn several in parallel for independent questions. | `Use explorer to explain what depends on fct_orders.` |
-| `worker` | Performs execution and production work, such as implementing part of a feature, fixing tests or bugs, or splitting a large refactor into independent chunks. | `Use worker to update these staging models to follow our naming convention.` |
-| `validation` | Provides dbt validation. After model edits, runs structured validation &mdash; SQL check, `dbt run` with `--defer`, prod vs. dev comparison, and impact analysis &mdash; to validate changes before you merge. | `Use validation to check whether my changes to int_payments are safe to merge.` |
-| `test_writer` | Improves dbt test coverage. Analyzes project metadata and warehouse data to find coverage gaps, validates assumptions with queries, and writes `schema.yml` tests for models with low or no coverage. | `Use test_writer to add tests to stg_customers.` |
+| `explorer` | Отвечает на конкретные вопросы о проекте. Работает быстро и только в режиме чтения. Для независимых вопросов можно запускать несколько таких агентов параллельно. | `Попроси explorer объяснить, что зависит от fct_orders.` |
+| `worker` | Реализует часть функциональности, исправляет тесты и ошибки или разбивает крупный рефакторинг на независимые задачи. | `Попроси worker привести эти staging-модели к нашему соглашению об именовании.` |
+| `validation` | После правок моделей проверяет SQL, запускает `dbt run` с `--defer`, сравнивает среды prod и dev и анализирует влияние перед слиянием. | `Попроси validation проверить, можно ли безопасно слить мои изменения в int_payments.` |
+| `test_writer` | Улучшает покрытие тестами dbt. Анализирует метаданные проекта и данные в хранилище, чтобы выявить пробелы в покрытии, проверяет предположения с помощью запросов и пишет тесты в `schema.yml` для моделей с низким покрытием или без тестов. | `Попроси test_writer добавить тесты to stg_customers.` |
 
 </SimpleTable>
 
-You don't need to declare these &mdash; <Constant name="wizard"/> routes to them automatically when a task fits, or you can ask for one by name.
+Объявлять этих агентов не нужно &mdash; <Constant name="wizard"/> автоматически направляет им подходящие задачи, либо вы можете запросить нужного агента по имени.
 
-## Related docs
+## Связанная документация
 
-- [About <Constant name="wizard" /> in <Constant name="dbt_platform" />](/docs/platform/wizard-platform)
-- [<Constant name="wizard" /> in Studio IDE](/docs/dbt-ai/wizard-ide)
-- [Use subagents locally](/docs/dbt-ai/wizard-subagents)
-- [How <Constant name="wizard" /> works](/docs/dbt-ai/wizard-how-it-works)
+- [О <Constant name="wizard" /> в <Constant name="dbt_platform" />](/docs/platform/wizard-platform)
+- [<Constant name="wizard" /> в Studio IDE](/docs/dbt-ai/wizard-ide)
+- [Локальное использование субагентов](/docs/dbt-ai/wizard-subagents)
+- [Как работает <Constant name="wizard" />](/docs/dbt-ai/wizard-how-it-works)

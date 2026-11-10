@@ -1,38 +1,38 @@
 ---
-title: "Plans and billing"
+title: "Тарифные планы и оплата"
 id: plans-and-billing
-description: "Learn how billing works for each dbt plan."
-sidebar_label: "Plans"
+description: "Узнайте, как устроена оплата на каждом тарифном плане dbt."
+sidebar_label: "Тарифные планы"
 availability: platform
 ---
 
-<Constant name="dbt" /> offers several [plans](https://www.getdbt.com/pricing) with different features that meet your needs. We may make changes to our plan details from time to time. We'll always let you know in advance, so you can be prepared. The following section explains how billing works in each plan.
+<Constant name="dbt" /> предлагает несколько [тарифных планов](https://www.getdbt.com/pricing) с различными возможностями для ваших задач. Время от времени мы можем изменять условия тарифных планов. Мы всегда будем уведомлять вас заранее, чтобы вы могли подготовиться. В следующем разделе объясняется, как устроена оплата на каждом тарифном плане.
 
-### Developer plan billing
+### Оплата на тарифном плане Developer
 
-Developer plans are free and include one Developer license and 3,000 models each month. Models are refreshed at the beginning of each calendar month. If you exceed 3,000 models, any subsequent runs will be canceled until models are refreshed or until you upgrade to a paid plan. The rest of the <Constant name="dbt" /> platform is still accessible, and no work will be lost.
+Тарифный план Developer бесплатен и включает одну лицензию Developer и 3 000 моделей в месяц. Лимит моделей обновляется в начале каждого календарного месяца. Если вы превысите лимит в 3 000 моделей, все последующие запуски будут отменяться до обновления лимита или перехода на платный тарифный план. Остальные возможности платформы <Constant name="dbt" /> останутся доступными, а результаты вашей работы не будут потеряны.
 
-Included model entitlements may differ from what's shown here, depending on the terms when you signed up.
+Количество моделей, включённых в ваш тарифный план, может отличаться от указанного здесь в зависимости от условий, действовавших при регистрации.
 
-### Starter plan billing 
+### Оплата на тарифном плане Starter {#starter-plan-billing}
 
-Starter customers pay monthly via credit card for seats and usage, and accounts include 15,000 models monthly. Seats are charged upfront at the beginning of the month. If you add seats during the month, seats will be prorated and charged on the same day. Seats removed during the month will be reflected on the next invoice and are not eligible for refunds. You can change the credit card information and the number of seats from the billings section anytime. Accounts will receive one monthly invoice that includes the upfront charge for the seats and the usage charged in arrears from the previous month.
+Клиенты Starter ежемесячно оплачивают пользовательские места и использование ресурсов банковской картой; в тарифный план включено 15 000 моделей в месяц. Плата за пользовательские места взимается авансом в начале месяца. Если вы добавите места в течение месяца, плата за них будет рассчитана пропорционально оставшемуся периоду и списана в тот же день. Удаление мест в течение месяца будет отражено в следующем счёте; возврат средств за них не предусмотрен. Вы можете в любое время изменить данные банковской карты и количество мест в разделе оплаты. Для каждого аккаунта ежемесячно выставляется один счёт, включающий авансовую плату за места и плату за использование ресурсов за предыдущий месяц.
 
-Usage is calculated and charged in arrears for the previous month. If you exceed 15,000 models in any month, you will be billed for additional usage on your next invoice. Additional usage is billed at the rates on our [pricing page](https://www.getdbt.com/pricing). 
+Использование ресурсов рассчитывается и оплачивается по итогам предыдущего месяца. Если в каком-либо месяце вы превысите лимит в 15 000 моделей, плата за дополнительное использование будет включена в следующий счёт. Дополнительное использование оплачивается по ставкам, указанным на нашей [странице тарифов](https://www.getdbt.com/pricing). 
 
 
-Included models that are not consumed do not roll over to future months.
+Неиспользованные модели, включённые в тарифный план, не переносятся на следующие месяцы.
 
-Included model entitlements may differ from what's shown here, depending on the terms when you signed up.
+Количество моделей, включённых в ваш тарифный план, может отличаться от указанного здесь в зависимости от условий, действовавших при регистрации.
 
-### Enterprise plan billing
+### Оплата на тарифном плане Enterprise
 
-As an Enterprise customer, you pay annually via invoice, monthly in arrears for additional usage (if applicable), and may benefit from negotiated usage rates. Please refer to your order form or contract for your specific pricing details, or [contact the account team](https://www.getdbt.com/contact-demo) with any questions. 
+Клиенты Enterprise оплачивают тарифный план ежегодно по счёту, а дополнительное использование ресурсов (если применимо) — ежемесячно по итогам прошедшего месяца. Для них также могут действовать индивидуально согласованные ставки за использование ресурсов. Подробные сведения о ваших ценовых условиях см. в бланке заказа или договоре. Если у вас возникли вопросы, [свяжитесь с командой по работе с клиентами](https://www.getdbt.com/contact-demo). 
 
-Enterprise plan billing information is not available in the <Constant name="dbt" /> UI.  Changes are handled through your dbt Labs Solutions Architect or account team manager.
+Информация об оплате на тарифном плане Enterprise недоступна в интерфейсе <Constant name="dbt" />.  Изменения оформляются через вашего архитектора решений dbt Labs или менеджера команды по работе с клиентами.
 
-### Legacy plans
+### Архивные тарифные планы {#legacy-plans}
 
-Customers who purchased the <Constant name="dbt" /> Starter plan (formerly Team) plan before August 11, 2023, remain on a legacy pricing plan as long as your account is in good standing. The legacy pricing plan is based on seats and includes unlimited models, subject to reasonable use. 
+Клиенты, приобретшие тарифный план <Constant name="dbt" /> Starter (ранее — Team) до 11 августа 2023 года, сохраняют прежние ценовые условия, пока их аккаунт соответствует условиям обслуживания. Стоимость архивного тарифного плана зависит от количества пользовательских мест и включает неограниченное количество моделей при условии разумного использования. 
 
-dbt Labs may institute use limits if reasonable use is exceeded. Additional features, upgrades, or updates may be subject to separate charges. Any changes to your current plan pricing will be communicated in advance according to our Terms of Use.
+dbt Labs может установить ограничения на использование, если оно выходит за рамки разумного. За дополнительные возможности, расширения или обновления может взиматься отдельная плата. О любых изменениях стоимости вашего текущего тарифного плана мы сообщим заранее в соответствии с нашими Условиями использования.

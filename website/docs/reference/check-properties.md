@@ -1,10 +1,10 @@
 ---
-title: Check properties
+title: Свойства проверок
 availability:
   engine: v2
 ---
 
-You can declare check properties in `.yml` files in your `checks/` directory (as defined by the [`check-paths` config](/reference/project-configs/check-paths)).
+Вы можете объявлять свойства проверок в файлах `.yml` в каталоге `checks/` (который задаётся [параметром конфигурации `check-paths`](/reference/project-configs/check-paths)).
 
 <File name='checks/_checks.yml'>
 
@@ -15,12 +15,12 @@ checks:
     [config](/reference/check-configs):
       [<check_config>](/reference/check-configs): <config_value>
 
-  - name: ... # declare properties of additional checks
+  - name: ... # объявите свойства дополнительных проверок
 ```
 
 </File>
 
-## Example
+## Пример
 
 <File name='checks/_checks.yml'>
 
@@ -29,7 +29,7 @@ version: 2
 
 checks:
   - name: all_models_have_descriptions
-    description: "Fails if any model is missing a description."
+    description: "Завершается ошибкой, если у какой-либо модели отсутствует описание."
     config:
       severity: error
       tags: ["governance"]
@@ -37,7 +37,7 @@ checks:
         owner: "data-platform-team"
 
   - name: public_models_have_owners
-    description: "Warns if any public model is missing an owner."
+    description: "Выдаёт предупреждение, если у какой-либо публичной модели не указан владелец."
     config:
       severity: warn
 ```

@@ -1,15 +1,15 @@
 ---
-title: "Configuring GCP Private Service Connect to your self-hosted service"
+title: "Настройка GCP Private Service Connect для подключения к сервису в вашей инфраструктуре"
 id: gcp-self-hosted
-description: "Setting up a GCP Private Service Connect connection between dbt and your self-hosted service."
-sidebar_label: "Self-hosted services"
+description: "Настройка подключения GCP Private Service Connect между dbt и сервисом в вашей инфраструктуре."
+sidebar_label: "Сервисы в вашей инфраструктуре"
 availability:
   surface: platform
   access: paid_plan
   minPlan: enterprise_plus
 ---
 
-# Configuring GCP Private Service Connect for a self-hosted service
+# Настройка GCP Private Service Connect для сервиса в вашей инфраструктуре
 
 
 
@@ -17,114 +17,114 @@ import SetUpPages from '/snippets/_available-tiers-enterprise-plus.md';
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-GCP Private Service Connect (PSC) enables secure, private connectivity between <Constant name="dbt" /> and your self-hosted services. These services may include version control systems (VCS), data warehouses, or any other applications you manage. With PSC, you do not need to expose your service to the public internet. All communication occurs over a private network, significantly enhancing security. For more details, refer to the GCP [Private Service Connect documentation](https://cloud.google.com/private-service-connect).
+GCP Private Service Connect (PSC) обеспечивает защищённое частное подключение между <Constant name="dbt" /> и сервисами в вашей инфраструктуре. Это могут быть системы управления версиями (VCS), хранилища данных или любые другие приложения, которыми вы управляете. Благодаря PSC вам не нужно открывать доступ к сервису из общедоступного интернета. Весь обмен данными происходит по частной сети, что значительно повышает безопасность. Подробнее см. в [документации GCP Private Service Connect](https://cloud.google.com/private-service-connect).
 
-## What this guide covers
-The focus of this guide is not on any particular service or [Backend](#terminology) architecture, but on the [Service Attachment](#terminology) that interconnects <Constant name="dbt" /> with your self-hosted service. This attachment process should be standard across most use cases.
+## Что рассматривается в этом руководстве
+В этом руководстве рассматривается не какой-либо конкретный сервис или архитектура [Backend](#terminology), а [Service Attachment](#terminology), который связывает <Constant name="dbt" /> с сервисом в вашей инфраструктуре. Процесс такого подключения должен быть одинаковым для большинства сценариев использования.
 
-<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/scope-of-guide.png" width="90%" title="The scope of this guide" />
+<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/scope-of-guide.png" width="90%" title="Область рассмотрения этого руководства" />
 
-:::note Out of scope
-This guide does not cover the configuration or troubleshooting of your self-hosted service, load balancer, or backend health, due to the virtually limitless ways these environments can be configured. While dbt Support may assist with such issues on a best-effort basis, we recommend engaging [Google Cloud Support](https://cloud.google.com/support) to expedite resolution.
+:::note За рамками руководства
+В этом руководстве не рассматриваются настройка и устранение неполадок сервиса в вашей инфраструктуре, балансировщика нагрузки, а также проблемы с работоспособностью бэкендов, поскольку существует практически неограниченное количество вариантов настройки этих сред. Хотя служба поддержки dbt может по возможности помочь с такими проблемами, для ускорения их решения мы рекомендуем обращаться в [службу поддержки Google Cloud](https://cloud.google.com/support).
 :::
 
-## Audience
-This guide is intended for cloud network administrators or engineers responsible for configuring and maintaining secure network communications within your organization's Google Cloud Platform (GCP) environment.
+## Для кого предназначено это руководство
+Это руководство предназначено для администраторов облачных сетей и инженеров, отвечающих за настройку и поддержание защищённого сетевого взаимодействия в среде Google Cloud Platform (GCP) вашей организации.
 
-## Terminology
-This guide uses several important terms related to Private Service Connect. Understanding these definitions helps ensure successful implementation. For a more detailed explanation of these concepts, refer to the [GCP Private Service Connect documentation](https://cloud.google.com/vpc/docs/private-service-connect#managed-services).
+## Терминология {#terminology}
+В этом руководстве используется несколько важных терминов, связанных с Private Service Connect. Понимание этих определений поможет успешно выполнить настройку. Более подробное объяснение этих понятий см. в [документации GCP Private Service Connect](https://cloud.google.com/vpc/docs/private-service-connect#managed-services).
 
-- **Consumer:** In this context, the Consumer is <Constant name="dbt" />, which establishes the PSC connection as the client.
-- **Published Service:** The service you are exposing via PSC to the dbt platform, such as your version control system (VCS), data warehouse, or another application.
-- **Service Attachment:** Refers to the resource that is shared with consumer(s) of your Published Service, so that they can establish endpoints to it.
-- **Backend:** Can also be referred to as Network Endpoint Groups (NEGs). This is the particular architecture that your service is running on. For example, this may be VMs, GKE Instance Groups, or even on-prem IPs.
+- **Consumer (потребитель):** В данном контексте потребителем является <Constant name="dbt" />, который устанавливает подключение PSC в качестве клиента.
+- **Published Service (опубликованный сервис):** Сервис, к которому вы предоставляете доступ платформе dbt через PSC, например система управления версиями (VCS), хранилище данных или другое приложение.
+- **Service Attachment (подключение сервиса):** Ресурс, который предоставляется потребителям вашего опубликованного сервиса, чтобы они могли создавать конечные точки для подключения к нему.
+- **Backend (бэкенд):** Также может обозначаться как Network Endpoint Groups (NEGs), то есть группы сетевых конечных точек. Это конкретная архитектура, на которой работает ваш сервис. Например, это могут быть виртуальные машины, группы экземпляров GKE или даже IP-адреса в локальной инфраструктуре.
 
-## Prerequisites
-Before you begin, make sure to review the following requirements:
+## Предварительные требования
+Перед началом работы ознакомьтесь со следующими требованиями:
 
-1. **Supported Load Balancer Types**
+1. **Поддерживаемые типы балансировщиков нагрузки**
 
-    dbt has officially validated Private Service Connect (PSC) functionality with the following load balancer types:
+    dbt официально проверила работу Private Service Connect (PSC) со следующими типами балансировщиков нагрузки:
     - Regional Internal Proxy Load Balancer
     - Cross-Regional Internal Proxy Load Balancer
 
-    > While other load balancer types can be compatible with PSC Service Attachments, this guide assumes your service is configured behind one of the officially supported Proxy Load Balancers.
-    > For more details, see the [Proxy Load Balancers documentation](https://docs.cloud.google.com/load-balancing/docs/tcp/internal-proxy).
+    > Хотя другие типы балансировщиков нагрузки могут быть совместимы с ресурсами PSC Service Attachment, в этом руководстве предполагается, что ваш сервис расположен за одним из официально поддерживаемых прокси-балансировщиков нагрузки.
+    > Подробнее см. в [документации по прокси-балансировщикам нагрузки](https://docs.cloud.google.com/load-balancing/docs/tcp/internal-proxy).
 
-2. **Service Health**
+2. **Работоспособность сервиса**
 
-    - Confirm that your service or application is operational and healthy behind the designated load balancer before proceeding.
+    - Прежде чем продолжить, убедитесь, что ваш сервис или приложение работает и находится в исправном состоянии за выбранным балансировщиком нагрузки.
 
-3. **dbt GCP Project ID**
+3. **Идентификатор проекта dbt в GCP**
 
-    - Contact [dbt Support](mailto:support@getdbt.com) to obtain the dbt GCP project ID. You will need this in order to share your service attachment with the dbt platform.
+    - Обратитесь в [службу поддержки dbt](mailto:support@getdbt.com), чтобы получить идентификатор проекта dbt в GCP. Он понадобится, чтобы предоставить платформе dbt доступ к вашему ресурсу Service Attachment.
 
 
-## Instructions
-1. Log in to the Google Cloud Platform [console](https://console.cloud.google.com)
-2. Navigate to the GCP Organization and Project that your self-hosted service is in.
+## Инструкции
+1. Войдите в [консоль](https://console.cloud.google.com) Google Cloud Platform.
+2. Перейдите в организацию и проект GCP, в которых находится сервис в вашей инфраструктуре.
 
-### Create a dedicated service attachment subnet
-3. In the search field at the top-middle of the console, search for **VPC networks** and navigate to its product page.
-4. On the product page, click the VPC network link where your self-hosted service is located.
-5. Select the **Subnets** tab on the next page, and click the **Add subnet** button.
-6. In the subnet creation panel:
+### Создание выделенной подсети для Service Attachment
+3. В поле поиска в верхней центральной части консоли найдите **VPC networks** и перейдите на страницу этого продукта.
+4. На странице продукта нажмите ссылку на сеть VPC, в которой находится сервис в вашей инфраструктуре.
+5. На следующей странице выберите вкладку **Subnets** и нажмите кнопку **Add subnet**.
+6. На панели создания подсети:
 
-    a. **Name:** Provide a descriptive name, such as **service-attachment-subnet**
+    a. **Name:** Укажите понятное имя, например **service-attachment-subnet**
 
-    b. **Description:** This subnet is dedicated to service attachment(s)
+    b. **Description:** Укажите, что эта подсеть предназначена для ресурсов Service Attachment
 
-    c. **Region:** Pick the region of your self-hosted service
+    c. **Region:** Выберите регион, в котором расположен сервис в вашей инфраструктуре
 
-    d. **Purpose:** Choose **Private Service Connect**
+    d. **Purpose:** Выберите **Private Service Connect**
 
-    e. Click **Add** to create the subnet
+    e. Нажмите **Add**, чтобы создать подсеть
 
-<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/service-attach-subnet-creation.png" width="90%" title="Screenshot of step 6: Subnet creation for PSC Service Attachment" />
+<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/service-attach-subnet-creation.png" width="90%" title="Снимок экрана для шага 6: создание подсети для PSC Service Attachment" />
 
-### Create a service attachment
-7. After the subnet creation for the service attachment has completed, in the search field at the top-middle of the console, search for **Private Service Connect**, and click on its product page.
-8. On the product page, select the **Published services** tab, and click the **Publish service** button.
-9. In the Publish service page:
+### Создание Service Attachment
+7. После завершения создания подсети для Service Attachment найдите **Private Service Connect** в поле поиска в верхней центральной части консоли и перейдите на страницу этого продукта.
+8. На странице продукта выберите вкладку **Published services** и нажмите кнопку **Publish service**.
+9. На странице Publish service:
 
-    **Under Target details**
+    **В разделе Target details**
 
-    a. Choose **Load Balancer**
+    a. Выберите **Load Balancer**
 
-    b. The load balancer types that <Constant name="dbt" /> has validated are the **Regional Internal Proxy Load Balancer** and the **Cross-Regional Internal Proxy Load Balancer**. However, the others may work as well, although not officially supported.
+    b. Типы балансировщиков нагрузки, работу с которыми проверила <Constant name="dbt" />, — **Regional Internal Proxy Load Balancer** и **Cross-Regional Internal Proxy Load Balancer**. Другие типы также могут работать, но официально не поддерживаются.
 
-    c. In the **Load balancer** dropdown, choose the load balancer that is in front of your self-hosted service.
+    c. В раскрывающемся списке **Load balancer** выберите балансировщик нагрузки, за которым расположен сервис в вашей инфраструктуре.
 
-    d. Choose the relevant **Forwarding rule** from the dropdown for your load balancer.
+    d. Выберите соответствующее правило **Forwarding rule** в раскрывающемся списке для вашего балансировщика нагрузки.
 
-    **Under Service details**
+    **В разделе Service details**
 
-    e. Give a descriptive **Service Name**, such as **service-to-my-vcs**
+    e. Укажите понятное имя в поле **Service Name**, например **service-to-my-vcs**
 
-    f. In the **Subnets** dropdown, choose the subnet that you created in step 6 above.
+    f. В раскрывающемся списке **Subnets** выберите подсеть, созданную на шаге 6 выше.
 
-    **Under Connection Preference**
+    **В разделе Connection Preference**
 
-    g. Leave the selection on **Accept connections from selected projects**
+    g. Оставьте выбранным вариант **Accept connections from selected projects**
 
-    h. Click the **Add accepted project** button and add dbt's GCP project ID that you acquired from support. Note: This project ID may differ for each configuration.
+    h. Нажмите кнопку **Add accepted project** и добавьте идентификатор проекта dbt в GCP, полученный от службы поддержки. Примечание: этот идентификатор проекта может отличаться для разных конфигураций.
 
-        - Set connection limit to 1
+        - Установите ограничение количества подключений равным 1
 
-    i. Click **Add service**
+    i. Нажмите **Add service**
 
-<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/service-attach-creation.png" width="90%" title="Screenshot of step 9: Creation of PSC Service Attachment" />
+<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/service-attach-creation.png" width="90%" title="Снимок экрана для шага 9: создание PSC Service Attachment" />
 
-10. After the Published Service attachment has been created, click on it to open its details page.
-11. Copy the **Service attachment** URI (_not_ the Service attachment ID).
+10. После создания Service Attachment для опубликованного сервиса нажмите на него, чтобы открыть страницу с подробными сведениями.
+11. Скопируйте URI из поля **Service attachment** (_не_ идентификатор Service Attachment).
 
-<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/service-attach-details.png" width="90%" title="Screenshot of step 11: Copy the Service attachment URI" />
+<Lightbox src="/img/docs/dbt-platform/gcp-self-hosted-psc/service-attach-details.png" width="90%" title="Снимок экрана для шага 11: копирование URI Service Attachment" />
 
-### Providing dbt Support with connection details
+### Предоставление сведений о подключении службе поддержки dbt
 
-12. Add the required information to the template below, and submit your request to [dbt Support](mailto:support@getdbt.com):
+12. Добавьте необходимые сведения в приведённый ниже шаблон и отправьте запрос в [службу поддержки dbt](mailto:support@getdbt.com):
 
-<Expandable alt_header="Support request email template" is_open={true}>
+<Expandable alt_header="Шаблон письма в службу поддержки" is_open={true}>
 
 ```text
 Subject: New GCP Self-hosted Private Service Connect Request
@@ -145,46 +145,46 @@ import PrivateLinkSLA from '/snippets/_private-connection-SLA.md';
 
 <PrivateLinkSLA />
 
-## Troubleshooting
+## Устранение неполадок
 
-If the Private Service Connect endpoint has been provisioned and configured in <Constant name="dbt" /> but connectivity is still failing, check the following in your networking setup to ensure requests and responses can be successfully routed between dbt and your service.
+Если конечная точка Private Service Connect уже создана и настроена в <Constant name="dbt" />, но подключение по-прежнему не работает, проверьте следующие параметры вашей сети, чтобы обеспечить успешную маршрутизацию запросов и ответов между dbt и вашим сервисом.
 
-### Configuration checklist
+### Контрольный список настройки
 
-1. **Service Attachment status**
+1. **Состояние Service Attachment**
 
-   In the Google Cloud Console, navigate to **Network services** → **Private Service Connect** → **Published services**. Select your Service Attachment and verify:
-   - Status is **Active**
-   - dbt's project appears in the **Connected projects** list with status **Accepted**
+   В консоли Google Cloud перейдите в **Network services** → **Private Service Connect** → **Published services**. Выберите свой ресурс Service Attachment и убедитесь, что:
+   - Его состояние — **Active**
+   - Проект dbt отображается в списке **Connected projects** с состоянием **Accepted**
 
-2. **Load balancer backend health**
+2. **Работоспособность бэкендов балансировщика нагрузки**
 
-   Navigate to **Network services** → **Load balancing** and select your load balancer. Check the **Backend services** tab to confirm at least one backend is **Healthy**. Unhealthy backends could indicate the service is down or that firewall rules are blocking health check probes.
+   Перейдите в **Network services** → **Load balancing** и выберите свой балансировщик нагрузки. На вкладке **Backend services** убедитесь, что хотя бы один бэкенд находится в состоянии **Healthy**. Неработоспособность бэкендов может указывать на то, что сервис недоступен или правила межсетевого экрана блокируют проверочные запросы.
 
-3. **NAT subnet configuration**
+3. **Настройка подсети NAT**
 
-   Verify the Private Service Connect subnet has sufficient IP addresses available. GCP uses these IPs for SNAT when routing consumer traffic to your backends.
+   Убедитесь, что в подсети Private Service Connect достаточно свободных IP-адресов. GCP использует эти IP-адреса для SNAT при маршрутизации трафика потребителей к вашим бэкендам.
 
-4. **Firewall rules**
+4. **Правила межсетевого экрана**
 
-   Ensure your VPC firewall rules allow:
-   - Health check traffic from Google's health check ranges (`35.191.0.0/16` and `130.211.0.0/22`)
-   - Traffic from the proxy-only subnet to your backends (for Proxy Load Balancers)
+   Убедитесь, что правила межсетевого экрана вашей VPC разрешают:
+   - Трафик проверок работоспособности из диапазонов адресов Google для таких проверок (`35.191.0.0/16` и `130.211.0.0/22`)
+   - Трафик из подсети, предназначенной только для прокси, к вашим бэкендам (для прокси-балансировщиков нагрузки)
 
-   For more details, see [Firewall rules for health checks](https://cloud.google.com/load-balancing/docs/health-check-concepts#ip-ranges).
+   Подробнее см. в разделе [Правила межсетевого экрана для проверок работоспособности](https://cloud.google.com/load-balancing/docs/health-check-concepts#ip-ranges).
 
-### Monitoring
+### Мониторинг
 
-To help isolate connection issues, use Google Cloud's monitoring tools:
+Чтобы локализовать проблемы с подключением, используйте инструменты мониторинга Google Cloud:
 
-#### Service Attachment metrics
+#### Метрики Service Attachment
 
-In the Google Cloud Console, navigate to **Monitoring** → **Metrics Explorer**. Search for Private Service Connect metrics:
-- `compute.googleapis.com/nat/nat_connections` — Tracks active NAT connections
-- `compute.googleapis.com/nat/sent_bytes_count` — Confirms traffic is flowing
+В консоли Google Cloud перейдите в **Monitoring** → **Metrics Explorer**. Найдите метрики Private Service Connect:
+- `compute.googleapis.com/nat/nat_connections` — отслеживает активные подключения NAT
+- `compute.googleapis.com/nat/sent_bytes_count` — позволяет убедиться, что трафик передаётся
 
-#### Load Balancer logs
+#### Журналы балансировщика нагрузки
 
-Enable logging on your load balancer's backend service to capture request details. Navigate to your backend service, click **Edit**, and enable **Logging** with a sample rate of 1.0 for troubleshooting.
+Включите ведение журналов для бэкенд-сервиса вашего балансировщика нагрузки, чтобы записывать сведения о запросах. Перейдите к бэкенд-сервису, нажмите **Edit** и включите **Logging**, установив долю выборки 1.0 для устранения неполадок.
 
-For more information, see [Private Service Connect monitoring](https://cloud.google.com/vpc/docs/monitor-private-service-connect-connections) and [Load Balancer logging](https://cloud.google.com/load-balancing/docs/https/https-logging-monitoring).
+Подробнее см. в разделах [Мониторинг Private Service Connect](https://cloud.google.com/vpc/docs/monitor-private-service-connect-connections) и [Ведение журналов балансировщика нагрузки](https://cloud.google.com/load-balancing/docs/https/https-logging-monitoring).

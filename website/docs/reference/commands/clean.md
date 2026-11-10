@@ -24,6 +24,8 @@ dbt clean
 dbt clean --help
 ```
 
+<a id="--clean-project-files-only" />
+
 ### --clean-project-files-only {#clean-project-files-only}
 По умолчанию dbt удаляет все пути, указанные в `clean-targets`, которые находятся внутри директории проекта.
 

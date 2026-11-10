@@ -1,15 +1,15 @@
 ---
-title: "DuckDB and Apache Iceberg"
+title: "DuckDB и Apache Iceberg"
 id: duckdb-iceberg-support
-sidebar_label: "DuckDB Iceberg support"
-description: Understand DuckDB support for Apache Iceberg.
+sidebar_label: "Поддержка Iceberg в DuckDB"
+description: Узнайте о поддержке Apache Iceberg в DuckDB.
 ---
 
-# DuckDB and Apache Iceberg
+# DuckDB и Apache Iceberg
 
-:::info <Constant name="fusion" /> only
+:::info Только для <Constant name="fusion" />
 
-DuckDB support for `catalogs.yml` requires [<Constant name="fusion_engine" />](/docs/introduction) with the `use_catalogs_v2` behavior flag enabled. It isn't available in the legacy Python `dbt-duckdb` adapter for <Constant name="core" />.
+Для поддержки `catalogs.yml` в DuckDB требуется [<Constant name="fusion_engine" />](/docs/introduction) с включённым флагом поведения `use_catalogs_v2`. Эта возможность недоступна в устаревшем Python-адаптере `dbt-duckdb` для <Constant name="core" />.
 
 <File name='dbt_project.yml'>
 
@@ -20,22 +20,20 @@ flags:
 
 </File>
 
-:::
+В отличие от Snowflake, Databricks и BigQuery, DuckDB не поставляется с единым встроенным «управляемым» каталогом Iceberg. Это означает, что в DuckDB нельзя обойтись одним лишь `table_format='iceberg'` &mdash; для каждой модели Iceberg требуется `catalog_name`, указывающий на запись в [`catalogs.yml`](/docs/build/iceberg/catalogs-yml).
 
-Unlike Snowflake, Databricks, and BigQuery, DuckDB doesn't ship with a single built-in "managed" Iceberg catalog. This means there's no `table_format='iceberg'`-only shortcut for DuckDB &mdash; every Iceberg model requires a `catalog_name` that points to an entry in [`catalogs.yml`](/docs/build/iceberg/catalogs-yml).
+dbt поддерживает создание таблиц Iceberg для двух материализаций DuckDB:
 
-dbt supports creating Iceberg tables for two DuckDB materializations:
+- [Таблица](/docs/build/materializations#table)
+- [Инкрементальная](/docs/build/materializations#incremental)
 
-- [Table](/docs/build/materializations#table)
-- [Incremental](/docs/build/materializations#incremental)
+## Как DuckDB подключает каталоги
 
-## How DuckDB attaches catalogs
+Когда вы настраиваете каталог с блоком `duckdb` в `catalogs.yml`, dbt самостоятельно формирует и выполняет соответствующий оператор DuckDB [`ATTACH`](https://duckdb.org/docs/sql/statements/attach.html) &mdash; вам не нужно писать SQL с `ATTACH` вручную. Затем dbt сопоставляет любую модель с соответствующим `catalog_name` с этой подключённой базой данных.
 
-When you configure a catalog with a `duckdb` block in `catalogs.yml`, dbt generates and runs the appropriate DuckDB [`ATTACH`](https://duckdb.org/docs/sql/statements/attach.html) statement on your behalf &mdash; you don't need to write `ATTACH` SQL yourself. dbt then resolves any model with a matching `catalog_name` to that attached database.
+## Каталоги Iceberg REST
 
-## Iceberg REST catalogs
-
-DuckDB can attach to any catalog that implements the Iceberg REST protocol, including self-hosted catalogs (such as [Lakekeeper](https://github.com/lakekeeper/lakekeeper) or [Nessie](https://github.com/projectnessie/nessie)), AWS Glue, and AWS S3 Tables.
+DuckDB может подключать любой каталог, реализующий протокол Iceberg REST, включая самостоятельно размещённые каталоги (например, [Lakekeeper](https://github.com/lakekeeper/lakekeeper) или [Nessie](https://github.com/projectnessie/nessie)), AWS Glue и AWS S3 Tables.
 
 <File name='catalogs.yml'>
 
@@ -67,7 +65,7 @@ select * from {{ ref('jaffle_shop_customers') }}
 
 </File>
 
-Run the model with `dbt run -s my_iceberg_model`. Instead of `endpoint`, you can use `endpoint_type: GLUE` or `endpoint_type: S3_TABLES` to attach one of these well-known AWS-managed Iceberg REST endpoints without specifying a URL:
+Запустите модель командой `dbt run -s my_iceberg_model`. Вместо `endpoint` можно использовать `endpoint_type: GLUE` или `endpoint_type: S3_TABLES`, чтобы подключить одну из этих известных конечных точек Iceberg REST, управляемых AWS, без указания URL:
 
 <File name='catalogs.yml'>
 
@@ -84,13 +82,13 @@ catalogs:
 
 </File>
 
-`endpoint` and `endpoint_type` are mutually exclusive.
+Параметры `endpoint` и `endpoint_type` являются взаимоисключающими.
 
-### Writing to S3 Tables
+### Запись в S3 Tables
 
-To write to S3 Tables, use an explicit `endpoint` with `authorization_type: SIGV4`.
+Для записи в S3 Tables используйте явно заданный `endpoint` с `authorization_type: SIGV4`.
 
-In the current v2 preview builds, the `endpoint_type: S3_TABLES` shortcut works for _reading_, but incorrectly defaults to OAuth2 instead of SigV4 when writing. This surfaces as either errors:
+В текущих предварительных сборках v2 сокращённая настройка `endpoint_type: S3_TABLES` работает для _чтения_, но при записи ошибочно использует OAuth2 вместо SigV4 по умолчанию. Это проявляется в виде одной из следующих ошибок:
 
 ```text
 Invalid Configuration Error: AUTHORIZATION_TYPE is 'oauth2', yet no 'secret' was provided...
@@ -100,14 +98,16 @@ Invalid Configuration Error: AUTHORIZATION_TYPE is 'oauth2', yet no 'secret' was
 InvalidArguments: HTTP Error: Failed to retrieve OAuth2 token from  (sqlstate: ...)
 ```
 
-S3 Tables requires SigV4 authentication. Until this is fixed, use the explicit `endpoint` + `authorization_type: SIGV4` config. Refer to [Write to Amazon S3 Tables](#write-to-amazon-s3-tables) for any S3 Tables catalog you write to.
+S3 Tables требует аутентификации SigV4. Пока эта проблема не исправлена, используйте конфигурацию с явно заданным `endpoint` и `authorization_type: SIGV4`. Для любого каталога S3 Tables, в который вы записываете данные, следуйте инструкциям из раздела [Запись в Amazon S3 Tables](#write-to-amazon-s3-tables).
 
-## Write to Amazon S3 Tables
+<a id="amazon-s3-tables-write-path" />
 
-To materialize Iceberg models into an S3 Tables bucket, configure your catalog, AWS credentials, and model as follows.
+## Запись в Amazon S3 Tables {#write-to-amazon-s3-tables}
 
-### Configure your catalog
-In `catalogs.yml`, define an `iceberg_rest` catalog with an explicit endpoint form together with SigV4 authentication, and set the S3 Tables write-compatibility options:
+Чтобы материализовать модели Iceberg в бакете S3 Tables, настройте каталог, учётные данные AWS и модель следующим образом.
+
+### Настройка каталога
+В `catalogs.yml` определите каталог `iceberg_rest` с явно заданной конечной точкой и аутентификацией SigV4, а также задайте параметры совместимости записи для S3 Tables:
 
 <File name='catalogs.yml'>
 
@@ -123,20 +123,20 @@ catalogs:
         authorization_type: SIGV4
         secret: s3_tables_secret
         default_schema: <namespace>
-        stage_create_tables: false        # S3 Tables rejects staged CREATE TABLE AS SELECT
-        disable_multi_table_commit: true  # S3 Tables has no multi-table transaction commit endpoint
-        purge_requested: true             # S3 Tables only allows DROP TABLE with purge enabled
+        stage_create_tables: false        # S3 Tables не поддерживает поэтапное создание через CREATE TABLE AS SELECT
+        disable_multi_table_commit: true  # В S3 Tables нет конечной точки для фиксации транзакций с несколькими таблицами
+        purge_requested: true             # S3 Tables допускает DROP TABLE только с включённым удалением файлов
 ```
 
 </File>
 
-Replace the placeholders with your AWS Region, account ID, table bucket name, and namespace.
+Замените заполнители своим регионом AWS, идентификатором аккаунта, именем бакета таблиц и пространством имён.
 
-`secret` references an `s3` credential-chain secret defined in `profiles.yml` (refer to [Secrets](#secrets)) &mdash; this supplies the SigV4 credentials, not an OAuth2 token.
+`secret` ссылается на секрет типа `s3` с цепочкой поставщиков учётных данных, определённый в `profiles.yml` (см. [Секреты](#secrets)) &mdash; он предоставляет учётные данные SigV4, а не токен OAuth2.
 
-### Configure AWS credentials
+### Настройка учётных данных AWS
 
-In `profiles.yml`, define an `s3` secret with the same name you used in `catalogs.yml`. The `credential_chain` provider supplies AWS credentials for SigV4 authentication.
+В `profiles.yml` определите секрет типа `s3` с тем же именем, которое вы использовали в `catalogs.yml`. Поставщик `credential_chain` предоставляет учётные данные AWS для аутентификации SigV4.
 
 <File name='profiles.yml'>
 
@@ -160,8 +160,8 @@ my_profile:
 
 </File>
 
-### Configure your model
-Set `catalog_name` to your catalog's name and `schema` to your S3 Tables namespace:
+### Настройка модели
+Задайте для `catalog_name` имя вашего каталога, а для `schema` &mdash; пространство имён S3 Tables:
 
 <File name='models/my_s3_tables_model.sql'>
 
@@ -179,11 +179,11 @@ select * from {{ ref('jaffle_shop_customers') }}
 
 </File>
 
-### Match the schema to your namespace
+### Согласование схемы с пространством имён
 
-Because DuckDB's default schema is `main`, dbt's default schema-naming logic concatenates it with your model's custom schema (for example, `main_my_namespace`), which won't match an existing S3 Tables namespace. 
+Поскольку схема DuckDB по умолчанию &mdash; `main`, стандартная логика именования схем в dbt объединяет её с пользовательской схемой модели (например, `main_my_namespace`), и полученное имя не совпадает с существующим пространством имён S3 Tables. 
 
-Add a project-level override so the schema resolves to your namespace exactly:
+Добавьте переопределение на уровне проекта, чтобы итоговое имя схемы точно совпадало с вашим пространством имён:
 
 <File name='macros/generate_schema_name.sql'>
 
@@ -199,13 +199,13 @@ Add a project-level override so the schema resolves to your namespace exactly:
 
 </File>
 
-## Cross-platform Mesh: reading catalogs managed by other platforms
+## Кроссплатформенный Mesh: чтение каталогов, управляемых другими платформами
 
-Because a single catalog entry in `catalogs.yml` can carry configuration for multiple platforms at once, you can point DuckDB at the same physical catalog that Snowflake or Databricks writes to &mdash; enabling [cross-platform Mesh](/docs/mesh/cross-platform-mesh) without copying data.
+Поскольку одна запись каталога в `catalogs.yml` может одновременно содержать конфигурацию для нескольких платформ, вы можете направить DuckDB к тому же физическому каталогу, в который записывает данные Snowflake или Databricks &mdash; это позволяет использовать [кроссплатформенный Mesh](/docs/mesh/cross-platform-mesh) без копирования данных.
 
 ### Snowflake Horizon
 
-[Snowflake Horizon](/docs/build/iceberg/adapters/snowflake-iceberg-support) is Snowflake's managed Iceberg catalog. Add a `duckdb` block alongside the `snowflake` block to let DuckDB attach to the same catalog:
+[Snowflake Horizon](/docs/build/iceberg/adapters/snowflake-iceberg-support) &mdash; это управляемый каталог Iceberg от Snowflake. Добавьте блок `duckdb` рядом с блоком `snowflake`, чтобы DuckDB мог подключить тот же каталог:
 
 <File name='catalogs.yml'>
 
@@ -228,7 +228,7 @@ catalogs:
 
 ### Databricks Unity Catalog
 
-Similarly, for [Databricks Unity Catalog](/docs/build/iceberg/adapters/databricks-iceberg-support):
+Аналогично для [Databricks Unity Catalog](/docs/build/iceberg/adapters/databricks-iceberg-support):
 
 <File name='catalogs.yml'>
 
@@ -249,9 +249,9 @@ catalogs:
 
 </File>
 
-### Read-only vs. read-write
+### Только чтение или чтение и запись
 
-By default, dbt attaches Horizon and Unity catalogs read-write (`read_only: false`) and applies write-compat `ATTACH` defaults for each (for example, disabling multi-table commits on Unity). Writing to these catalogs from DuckDB requires DuckDB 1.5.4+ and [duckdb-iceberg#1017](https://github.com/duckdb/duckdb-iceberg/issues/1017). If you only need to *read* Iceberg tables that another platform wrote, set `read_only: true`:
+По умолчанию dbt подключает каталоги Horizon и Unity в режиме чтения и записи (`read_only: false`) и применяет для каждого из них параметры `ATTACH` по умолчанию, обеспечивающие совместимость записи (например, отключает фиксацию транзакций с несколькими таблицами в Unity). Для записи в эти каталоги из DuckDB требуются DuckDB 1.5.4+ и [duckdb-iceberg#1017](https://github.com/duckdb/duckdb-iceberg/issues/1017). Если вам нужно только *читать* таблицы Iceberg, записанные другой платформой, задайте `read_only: true`:
 
 ```yaml
       duckdb:
@@ -262,7 +262,7 @@ By default, dbt attaches Horizon and Unity catalogs read-write (`read_only: fals
 
 ## DuckLake
 
-[DuckLake](https://ducklake.select/) is a separate open table format (not Apache Iceberg) built for DuckDB, but you configure it the same way, through `catalogs.yml`. Because DuckLake isn't Iceberg, its catalog entries use `table_format: default`.
+[DuckLake](https://ducklake.select/) &mdash; это отдельный открытый формат таблиц (не Apache Iceberg), созданный для DuckDB, но настраивается он точно так же, через `catalogs.yml`. Поскольку DuckLake не является Iceberg, в записях его каталогов используется `table_format: default`.
 
 <File name='catalogs.yml'>
 
@@ -274,7 +274,7 @@ catalogs:
     config:
       duckdb:
         metadata_path: "metadata.ducklake"
-        data_path: "s3://my-bucket/lake" # optional
+        data_path: "s3://my-bucket/lake" # необязательно
 ```
 
 </File>
@@ -294,16 +294,16 @@ select * from {{ ref('jaffle_shop_customers') }}
 
 </File>
 
-dbt installs the DuckLake extension and attaches the catalog before running your model:
+dbt устанавливает расширение DuckLake и подключает каталог перед запуском вашей модели:
 
 ```sql
 INSTALL ducklake
 ATTACH IF NOT EXISTS 'ducklake:metadata.ducklake' AS local_lake (DATA_PATH 's3://my-bucket/lake')
 ```
 
-## Secrets
+## Секреты {#secrets}
 
-The `secret` field in a `duckdb` catalog block references a named secret defined in `profiles.yml`, which dbt turns into a DuckDB [`CREATE SECRET`](https://duckdb.org/docs/configuration/secrets_manager.html) statement:
+Поле `secret` в блоке каталога `duckdb` ссылается на именованный секрет, определённый в `profiles.yml`, который dbt преобразует в оператор DuckDB [`CREATE SECRET`](https://duckdb.org/docs/configuration/secrets_manager.html):
 
 <File name='profiles.yml'>
 
@@ -317,52 +317,52 @@ my_profile:
       secrets:
         - type: iceberg
           name: my_iceberg_secret
-          # additional key-value pairs become CREATE SECRET parameters
-          # (for example, token, client_id, client_secret) -- see DuckDB's
-          # iceberg extension docs for the parameters your catalog needs.
+          # Дополнительные пары ключ-значение становятся параметрами CREATE SECRET
+          # (например, token, client_id, client_secret) — параметры для вашего каталога
+          # см. в документации расширения iceberg для DuckDB.
 ```
 
 </File>
 
-For Amazon S3 Tables specifically, use a `type: s3` / `provider: credential_chain` secret instead (SigV4, not OAuth2/token-based) &mdash; see [Amazon S3 Tables (write path)](#write-to-amazon-s3-tables) above.
+Для Amazon S3 Tables вместо этого используйте секрет с `type: s3` / `provider: credential_chain` (SigV4, а не OAuth2 или аутентификацию по токену) &mdash; см. раздел [Amazon S3 Tables (запись)](#amazon-s3-tables-write-path) выше.
 
-## DuckDB-specific configs for Iceberg catalogs
+## Настройки каталогов Iceberg, специфичные для DuckDB
 
-You can supply these configs, nested under `config.duckdb`, for `horizon`, `unity`, and `iceberg_rest` catalogs:
+Для каталогов `horizon`, `unity` и `iceberg_rest` можно задать следующие настройки внутри `config.duckdb`:
 
-| Field | Required | Description |
+| Поле | Обязательность | Описание |
 | --- | --- | --- |
-| `endpoint` | One of `endpoint`/`endpoint_type` | Full Iceberg REST catalog URL. |
-| `endpoint_type` | One of `endpoint`/`endpoint_type` | `GLUE` or `S3_TABLES`, for well-known AWS-managed endpoints. For writing to S3 Tables, prefer the explicit `endpoint` form (see caution above). |
-| `warehouse` | Required for `horizon`; required for any Amazon S3 Tables catalog (both the `endpoint_type: S3_TABLES` and the explicit `endpoint` write path) | Warehouse identifier passed as the `ATTACH` source. |
-| `secret` | Optional | Name of a DuckDB secret from `profiles.yml` to use for authentication. |
-| `attach_as` | Optional | Overrides the DuckDB attach alias. Defaults to the catalog's `name`. |
-| `default_region` | Optional | AWS region, when applicable. |
-| `default_schema` | Optional | Default schema/namespace within the catalog. |
-| `max_table_staleness` | Optional | How long DuckDB may serve cached metadata before refreshing. |
-| `authorization_type` | Optional | `OAUTH2`, `SIGV4`, or `NONE`. Can't be combined with `endpoint_type`. Required as `SIGV4` when writing to S3 Tables. |
-| `access_delegation_mode` | Optional | `VENDED_CREDENTIALS` or `NONE`. |
-| `read_only` | Optional | Attach the catalog read-only. Defaults to `false` (read-write). |
-| `support_nested_namespaces` | Optional | Whether the catalog supports nested namespaces. |
-| `stage_create_tables` | Optional | Write-compat: stage `CREATE TABLE AS SELECT` writes. Requires DuckDB 1.5.4+. Set to `false` for Amazon S3 Tables. |
-| `disable_multi_table_commit` | Optional | Write-compat: disable multi-table commits. Requires DuckDB 1.5.4+. Set to `true` for Amazon S3 Tables. |
-| `skip_create_table_metadata_updates` | Optional | Write-compat: skip metadata updates on `CREATE TABLE`. Requires DuckDB 1.5.4+. |
-| `remove_files_on_delete` | Optional | Write-compat: remove underlying data files when a table is dropped. Requires DuckDB 1.5.4+. |
-| `purge_requested` | Optional | Purge underlying files when supported by the catalog. Set to `true` for Amazon S3 Tables, which only allows `DROP TABLE` with purge enabled. |
-| `encode_entire_prefix` | Optional | Percent-encode the entire object key prefix. |
+| `endpoint` | Один из параметров `endpoint`/`endpoint_type` | Полный URL каталога Iceberg REST. |
+| `endpoint_type` | Один из параметров `endpoint`/`endpoint_type` | `GLUE` или `S3_TABLES` для известных конечных точек, управляемых AWS. Для записи в S3 Tables предпочтительно явно задавать `endpoint` (см. предупреждение выше). |
+| `warehouse` | Обязательно для `horizon`; обязательно для любого каталога Amazon S3 Tables (как с `endpoint_type: S3_TABLES`, так и с явно заданным `endpoint` для записи) | Идентификатор хранилища, передаваемый в качестве источника для `ATTACH`. |
+| `secret` | Необязательно | Имя секрета DuckDB из `profiles.yml`, используемого для аутентификации. |
+| `attach_as` | Необязательно | Переопределяет псевдоним подключения DuckDB. По умолчанию используется `name` каталога. |
+| `default_region` | Необязательно | Регион AWS, если применимо. |
+| `default_schema` | Необязательно | Схема/пространство имён по умолчанию в каталоге. |
+| `max_table_staleness` | Необязательно | Как долго DuckDB может использовать кешированные метаданные до их обновления. |
+| `authorization_type` | Необязательно | `OAUTH2`, `SIGV4` или `NONE`. Нельзя сочетать с `endpoint_type`. Для записи в S3 Tables обязательно значение `SIGV4`. |
+| `access_delegation_mode` | Необязательно | `VENDED_CREDENTIALS` или `NONE`. |
+| `read_only` | Необязательно | Подключать каталог только для чтения. По умолчанию `false` (чтение и запись). |
+| `support_nested_namespaces` | Необязательно | Поддерживает ли каталог вложенные пространства имён. |
+| `stage_create_tables` | Необязательно | Совместимость записи: использовать поэтапную запись для `CREATE TABLE AS SELECT`. Требуется DuckDB 1.5.4+. Для Amazon S3 Tables задайте `false`. |
+| `disable_multi_table_commit` | Необязательно | Совместимость записи: отключить фиксацию транзакций с несколькими таблицами. Требуется DuckDB 1.5.4+. Для Amazon S3 Tables задайте `true`. |
+| `skip_create_table_metadata_updates` | Необязательно | Совместимость записи: пропускать обновления метаданных при `CREATE TABLE`. Требуется DuckDB 1.5.4+. |
+| `remove_files_on_delete` | Необязательно | Совместимость записи: удалять соответствующие файлы данных при удалении таблицы. Требуется DuckDB 1.5.4+. |
+| `purge_requested` | Необязательно | Удалять соответствующие файлы, если каталог поддерживает эту возможность. Для Amazon S3 Tables задайте `true`, поскольку этот сервис допускает `DROP TABLE` только с включённым удалением файлов. |
+| `encode_entire_prefix` | Необязательно | Применять процентное кодирование ко всему префиксу ключа объекта. |
 
-For `ducklake` catalogs, `config.duckdb` accepts:
+Для каталогов `ducklake` в `config.duckdb` доступны следующие параметры:
 
-| Field | Required | Description |
+| Поле | Обязательность | Описание |
 | --- | --- | --- |
-| `metadata_path` | Required | Path to the DuckLake metadata store, for example `metadata.ducklake` or a database connection string. |
-| `data_path` | Optional | Where DuckLake writes data files. |
-| `attach_as` | Optional | Overrides the DuckDB attach alias. Defaults to the catalog's `name`. |
-| `metadata_schema` | Optional | Schema within the metadata store to use. |
-| `metadata_catalog` | Optional | Catalog/database name within the metadata store. |
-| `data_inlining_row_limit` | Optional | Inline row groups smaller than this many rows into the metadata catalog instead of writing a Parquet file. |
-| `create_if_not_exists` | Optional | Create the DuckLake catalog if it doesn't already exist. |
-| `read_only` | Optional | Attach read-only. |
-| `encrypted` | Optional | Encrypt the DuckLake catalog. |
-| `automatic_migration` | Optional | Automatically migrate the catalog's DuckLake format version on attach. |
-| `override_data_path` | Optional | Allow attaching with a `data_path` that differs from the one recorded in an existing catalog. |
+| `metadata_path` | Обязательно | Путь к хранилищу метаданных DuckLake, например `metadata.ducklake`, или строка подключения к базе данных. |
+| `data_path` | Необязательно | Расположение, в которое DuckLake записывает файлы данных. |
+| `attach_as` | Необязательно | Переопределяет псевдоним подключения DuckDB. По умолчанию используется `name` каталога. |
+| `metadata_schema` | Необязательно | Используемая схема в хранилище метаданных. |
+| `metadata_catalog` | Необязательно | Имя каталога/базы данных в хранилище метаданных. |
+| `data_inlining_row_limit` | Необязательно | Встраивать группы строк, содержащие меньше указанного количества строк, в каталог метаданных вместо записи в файл Parquet. |
+| `create_if_not_exists` | Необязательно | Создавать каталог DuckLake, если он ещё не существует. |
+| `read_only` | Необязательно | Подключать только для чтения. |
+| `encrypted` | Необязательно | Шифровать каталог DuckLake. |
+| `automatic_migration` | Необязательно | Автоматически выполнять миграцию версии формата DuckLake в каталоге при подключении. |
+| `override_data_path` | Необязательно | Разрешать подключение с `data_path`, отличающимся от пути, записанного в существующем каталоге. |

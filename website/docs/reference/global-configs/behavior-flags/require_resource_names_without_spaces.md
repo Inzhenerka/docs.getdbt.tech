@@ -1,24 +1,24 @@
 ---
-title: "No spaces in resource names"
+title: "Имена ресурсов без пробелов"
 id: "require_resource_names_without_spaces"
-sidebar_label: "require resource names without spaces"
+sidebar_label: "Имена ресурсов без пробелов"
 ---
 
-:::caution Removed in v2
+:::caution Удалён в v2
 
-This flag was removed in v2. The new behavior is always enabled. If you're upgrading, remove this flag from your `dbt_project.yml`.
+Этот флаг удалён в v2. Новое поведение теперь включено всегда. При обновлении удалите этот флаг из файла `dbt_project.yml`.
 
 :::
 
-| require_resource_names_without_spaces | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
+| require_resource_names_without_spaces | <Constant name="dbt" /> **Последняя версия v1** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2024.05 | 1.8.0 |
-| Matured (default → `true`) | 2025.05 | 1.10.0 |
-| Removed | — | v2.0 |
+| Добавлен | 2024.05 | 1.8.0 |
+| Включён по умолчанию (значение по умолчанию → `true`) | 2025.05 | 1.10.0 |
+| Удалён | — | v2.0 |
 
-dbt raises an error if it detects a space in a resource name. Resource names should contain letters, numbers, and underscores only.
+dbt выдаёт ошибку, если обнаруживает пробел в имени ресурса. Имена ресурсов должны содержать только буквы, цифры и символы подчёркивания.
 
-dbt raises the [`ResourceNamesWithSpacesDeprecation`](/reference/deprecations#resourcenameswithspacesdeprecation) warning if it detects a space in a resource name. When this flag is set to `true` (now always-on in v2), dbt raises an error instead.
+dbt выдаёт предупреждение [`ResourceNamesWithSpacesDeprecation`](/reference/deprecations#resourcenameswithspacesdeprecation), если обнаруживает пробел в имени ресурса. Когда этот флаг установлен в `true` (в v2 это поведение теперь включено всегда), dbt выдаёт ошибку вместо предупреждения.
 
 <File name='models/model name with spaces.sql'>
 
@@ -28,4 +28,4 @@ dbt raises the [`ResourceNamesWithSpacesDeprecation`](/reference/deprecations#re
 
 </File>
 
-See also [`require_source_and_semantic_model_names_without_spaces`](/reference/global-configs/behavior-flags/require_source_and_semantic_model_names_without_spaces), which extends this behavior to source and semantic model names.
+См. также [`require_source_and_semantic_model_names_without_spaces`](/reference/global-configs/behavior-flags/require_source_and_semantic_model_names_without_spaces), который распространяет это поведение на имена источников и семантических моделей.

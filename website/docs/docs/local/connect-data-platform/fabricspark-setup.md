@@ -1,7 +1,7 @@
 ---
-title: "Connect Microsoft Fabric Lakehouse to dbt v1"
+title: "Подключение Microsoft Fabric Lakehouse к dbt v1"
 sidebar_label: "Microsoft Fabric Lakehouse"
-description: "Read this guide to learn about the Microsoft Fabric spark setup for Lakehouse in dbt."
+description: "Из этого руководства вы узнаете, как настроить Microsoft Fabric Spark для работы с Lakehouse в dbt."
 id: "fabricspark-setup"
 meta:
   maintained_by: Microsoft
@@ -22,9 +22,9 @@ availability: local_free
 <Snippet path="warehouse-setups-cloud-callout" />
 
 
-Below is a guide for use with [Fabric Data Engineering](https://learn.microsoft.com/en-us/fabric/data-engineering/data-engineering-overview), a new product within Microsoft Fabric. This adapter currently supports connecting to a  lakehouse endpoint.
+Ниже приведено руководство по работе с [Fabric Data Engineering](https://learn.microsoft.com/en-us/fabric/data-engineering/data-engineering-overview) — новым продуктом в составе Microsoft Fabric. В настоящее время этот адаптер поддерживает подключение к конечной точке Lakehouse.
 
-To learn how to set up dbt using Fabric Warehouse, refer to [Microsoft Fabric Data Warehouse](/docs/local/connect-data-platform/fabric-setup).
+Чтобы узнать, как настроить dbt для работы с Fabric Warehouse, обратитесь к разделу [Microsoft Fabric Data Warehouse](/docs/local/connect-data-platform/fabric-setup).
 
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
@@ -32,21 +32,21 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 <SetUpPages meta={frontMatter.meta} />
 
 
-<p>For further info, refer to the GitHub repository: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
+<p>Дополнительную информацию см. в репозитории GitHub: <a href={`https://github.com/${frontMatter.meta.github_repo}`}>{frontMatter.meta.github_repo}</a></p>
 
-## Supported authentication types
+## Поддерживаемые типы аутентификации
 
-The Fabric Lakehouse adapter (`dbt-fabricspark`) connects to Fabric Spark through the Livy API. Choose the authentication method that matches where you run <Constant name="core" />.
+Адаптер Fabric Lakehouse (`dbt-fabricspark`) подключается к Fabric Spark через Livy API. Выберите метод аутентификации в зависимости от того, где вы запускаете <Constant name="core" />.
 
 <Tabs>
 
 <TabItem value="Azure CLI">
 
-Use Azure CLI for self-hosted dbt installations. This lets <Constant name="core" /> use credentials from an active `az login` session. To use this method, set `authentication: CLI` in your `profiles.yml` file and run `az login`.
+Используйте Azure CLI для установок dbt в собственной инфраструктуре. Это позволяет <Constant name="core" /> использовать учётные данные из активного сеанса `az login`. Чтобы использовать этот метод, задайте `authentication: CLI` в файле `profiles.yml` и выполните `az login`.
 
-When you authenticate, Azure CLI may open a browser window or prompt you to complete sign-in on the [Microsoft device login](https://microsoft.com/devicelogin) page and enter a one-time code to complete sign-in. Once authentication is successful, dbt automatically reuses the active Azure CLI session for subsequent commands.
+При аутентификации Azure CLI может открыть окно браузера или предложить перейти на [страницу входа Microsoft с устройства](https://microsoft.com/devicelogin) и ввести одноразовый код для завершения входа. После успешной аутентификации dbt автоматически использует активный сеанс Azure CLI для последующих команд.
 
-#### Example Azure CLI configuration
+#### Пример конфигурации Azure CLI
 
 <File name="profiles.yml">
 
@@ -74,14 +74,14 @@ default:
 
 <TabItem value="Service principal">
 
-Use a Microsoft Entra ID service principal for CI/CD and other automated workloads. This method uses app registration credentials, not an active az login session. To use this method, set `authentication: SPN` in your `profiles.yml` file and provide the service principal's client ID, tenant ID, and client secret.
+Используйте субъект-службу Microsoft Entra ID для CI/CD и других автоматизированных рабочих нагрузок. Этот метод использует учётные данные регистрации приложения, а не активный сеанс `az login`. Чтобы использовать этот метод, задайте `authentication: SPN` в файле `profiles.yml` и укажите идентификатор клиента, идентификатор арендатора и секрет клиента для субъекта-службы.
 
-Before you run with service principal authentication, make sure:
+Перед запуском с аутентификацией через субъект-службу убедитесь, что:
 
-- The service principal has access to the Fabric workspace and lakehouse.
-- Service principals can use Fabric APIs is enabled in the Fabric Admin port.
+- У субъекта-службы есть доступ к рабочей области Fabric и Lakehouse.
+- На портале администрирования Fabric включён параметр «Service principals can use Fabric APIs».
 
-#### Example service principal configuration
+#### Пример конфигурации субъекта-службы
 
 <File name="profiles.yml">
 
@@ -112,11 +112,11 @@ default:
 
 <TabItem value="Fabric notebook">
 
-You can authenticate through the Livy API from a Fabric notebook for production workloads and orchestration use cases within the Microsoft Fabric ecosystem. This method uses [`notebookutils.credentials`](https://learn.microsoft.com/en-us/fabric/data-engineering/notebookutils/notebookutils-credentials?tabs=python).
+Вы можете проходить аутентификацию через Livy API из блокнота Fabric для рабочих нагрузок в производственной среде и сценариев оркестрации в экосистеме Microsoft Fabric. Этот метод использует [`notebookutils.credentials`](https://learn.microsoft.com/en-us/fabric/data-engineering/notebookutils/notebookutils-credentials?tabs=python).
 
-Use Python notebooks instead of PySpark notebooks to minimize compute costs because the Livy API starts its own Spark sessions.
+Используйте блокноты Python вместо блокнотов PySpark, чтобы минимизировать затраты на вычислительные ресурсы, поскольку Livy API запускает собственные сеансы Spark.
 
-#### Example Fabric notebook configuration
+#### Пример конфигурации для блокнота Fabric
 
 <File name="profiles.yml">
 
@@ -144,9 +144,9 @@ default:
 
 <TabItem value="Custom TokenCredential">
 
-Use `token_credential` when you need <Constant name="core" /> to load a custom [`azure.core.credentials.TokenCredential`](https://learn.microsoft.com/en-us/python/api/azure-core/azure.core.credentials.tokencredential) implementation, such as a workload identity federation or token broker flow. To use this method, set `authentication: token_credential` and provide the dotted path to your credential class.
+Используйте `token_credential`, если вам нужно, чтобы <Constant name="core" /> загружал пользовательскую реализацию [`azure.core.credentials.TokenCredential`](https://learn.microsoft.com/en-us/python/api/azure-core/azure.core.credentials.tokencredential), например для федерации удостоверений рабочих нагрузок или получения токенов через посредника. Чтобы использовать этот метод, задайте `authentication: token_credential` и укажите путь к своему классу учётных данных через точку.
 
-#### Example custom TokenCredential configuration
+#### Пример конфигурации пользовательского TokenCredential
 
 <File name="profiles.yml">
 
@@ -173,26 +173,26 @@ default:
 
 </File>
 
-Replace `credential_class` and `credential_kwargs` with the class path and keyword arguments your custom credential implementation expects.
+Замените значения `credential_class` и `credential_kwargs` на путь к классу и именованные аргументы, которые ожидает ваша пользовательская реализация учётных данных.
 
 </TabItem>
 
 </Tabs>
 
-## Connection methods
+## Методы подключения
 
-`dbt-fabricspark` can connect to Fabric Spark runtime using Fabric Livy API method. The Fabric Livy API allows submitting jobs in two different modes:  
+`dbt-fabricspark` может подключаться к среде выполнения Fabric Spark с помощью Fabric Livy API. Fabric Livy API позволяет отправлять задания в двух разных режимах:  
 
-- [`session-jobs`](#session-jobs) A Livy session job entails establishing a Spark session that remains active throughout the Spark session. A Spark session, can run multiple jobs (each job is an action), sharing state and cached data between jobs.
-- batch jobs entails submitting a Spark application for a single job execution. In contrast to a Livy session job, a batch job doesn't sustain an ongoing Spark session. With Livy batch jobs, each job initiates a new Spark session that ends when the job finishes.
+- [`session-jobs`](#session-jobs) — задание в сеансе Livy предполагает создание сеанса Spark, который остаётся активным на протяжении всего сеанса. В одном сеансе Spark можно выполнять несколько заданий (каждое задание представляет собой действие), совместно используя состояние и кешированные данные.
+- Пакетные задания предполагают отправку приложения Spark для однократного выполнения задания. В отличие от задания в сеансе Livy, пакетное задание не поддерживает постоянно работающий сеанс Spark. При использовании пакетных заданий Livy каждое задание запускает новый сеанс Spark, который завершается по окончании задания.
 
-:::info Supported mode
-To share the session state among jobs and reduce the overhead of session management,  `dbt-fabricspark` adapter supports only `session-jobs` mode.
+:::info Поддерживаемый режим
+Чтобы совместно использовать состояние сеанса между заданиями и сократить накладные расходы на управление сеансами, адаптер `dbt-fabricspark` поддерживает только режим `session-jobs`.
 :::
 
 ### session-jobs
 
-`session-jobs` is the preferred method when connecting to Fabric Lakehouse.
+`session-jobs` — предпочтительный метод подключения к Fabric Lakehouse.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -233,13 +233,13 @@ your_profile_name:
 
 </File>
 
-## Optional configurations
+## Дополнительные настройки
 
-### Retries
+### Повторные попытки
 
-Intermittent errors can crop up unexpectedly while running queries against Fabric Spark. If `retry_all` is enabled, `dbt-fabricspark` will naively retry any queries that fails, based on the configuration supplied by `connect_timeout` and `connect_retries`. It does not attempt to determine if the query failure was transient or likely to succeed on retry. This configuration is recommended in production environments, where queries ought to be succeeding. The default `connect_retries` configuration is 2. 
+При выполнении запросов к Fabric Spark могут неожиданно возникать временные ошибки. Если включён параметр `retry_all`, `dbt-fabricspark` будет повторно выполнять любые запросы, завершившиеся с ошибкой, в соответствии с настройками `connect_timeout` и `connect_retries`. При этом адаптер не пытается определить, была ли ошибка запроса временной и может ли повторная попытка завершиться успешно. Эта настройка рекомендуется для производственных сред, где запросы должны выполняться успешно. Значение `connect_retries` по умолчанию — 2. 
 
-For instance, this will instruct dbt to retry all failed queries up to 3 times, with a 5 second delay between each retry:
+Например, следующая конфигурация предписывает dbt повторять все запросы, завершившиеся с ошибкой, до 3 раз с задержкой в 5 секунд между попытками:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -252,20 +252,20 @@ connect_retries: 3
 
 
 
-### Spark configuration
+### Настройка Spark
 
-Spark can be customized using [Application Properties](https://spark.apache.org/docs/latest/configuration.html). Using these properties the execution can be customized, for example, to allocate more memory to the driver process. Also, the Spark SQL runtime can be set through these properties. For example, this allows the user to [set a Spark catalogs](https://spark.apache.org/docs/latest/configuration.html#spark-sql).
+Spark можно настроить с помощью [свойств приложения](https://spark.apache.org/docs/latest/configuration.html). Эти свойства позволяют изменять параметры выполнения, например выделять больше памяти процессу драйвера. Кроме того, с помощью этих свойств можно настроить среду выполнения Spark SQL. Например, это позволяет пользователю [задать каталоги Spark](https://spark.apache.org/docs/latest/configuration.html#spark-sql).
 
 
-### Supported functionality
+### Поддерживаемые возможности
 
-Most <Constant name="core" /> functionality is supported, Please refer to [Delta Lake interoperability](https://learn.microsoft.com/en-us/fabric/fundamentals/delta-lake-interoperability).
+Поддерживается большинство возможностей <Constant name="core" />. Подробнее см. в разделе [Совместимость Delta Lake](https://learn.microsoft.com/en-us/fabric/fundamentals/delta-lake-interoperability).
 
-Delta-only features:
-1. Incremental model updates by `unique_key` instead of `partition_by` (see [`merge` strategy](/reference/resource-configs/spark-configs#the-merge-strategy))
-2. [Snapshots](/docs/build/snapshots)
-3. [Persisting](/reference/resource-configs/persist_docs) column-level descriptions as database comments
+Возможности, доступные только для Delta:
+1. Инкрементальное обновление моделей по `unique_key` вместо `partition_by` (см. [стратегию `merge`](/reference/resource-configs/spark-configs#the-merge-strategy))
+2. [Снимки](/docs/build/snapshots)
+3. [Сохранение](/reference/resource-configs/persist_docs) описаний столбцов в виде комментариев в базе данных
 
-### Limitations
+### Ограничения
 
-1. Only Delta, CSV, and Parquet table data formats are supported by Fabric Lakehouse.
+1. Fabric Lakehouse поддерживает только форматы данных таблиц Delta, CSV и Parquet.

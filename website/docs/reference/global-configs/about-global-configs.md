@@ -3,7 +3,7 @@ title: "О флагах (глобальные конфигурации)"
 id: "about-global-configs"
 sidebar: "О флагах (глобальные конфигурации)"
 pagination_next: null
-description: "Configure dbt flags using dbt_project.yml, environment variables, and CLI options."
+description: "Настраивайте флаги dbt через dbt_project.yml, переменные окружения и параметры CLI."
 ---
 
 В dbt «флаги» (также называемые «глобальными настройками» и часто задаваемые с помощью [переменных окружения](/reference/global-configs/environment-variable-configs)) — это настройки для точного управления тем, _как_ dbt выполняет ваш проект. Они отличаются от [настроек отдельных ресурсов](/reference/configs-and-properties), которые указывают dbt, _что_ выполнять.
@@ -158,9 +158,9 @@ on-run-start:
 
 </VersionBlock>
 
-### Common flag examples
+### Примеры распространённых флагов {#common-flag-examples}
 
-Use the `--target` flag to specify which target (environment) to use when running dbt commands. For example:
+Флаг `--target` задаёт целевую среду для команд dbt. Например:
 
 ```bash
 dbt run --target dev
@@ -168,4 +168,4 @@ dbt run --target prod
 dbt build --target staging
 ```
 
-The `--target` flag allows you to run the same dbt project against different environments without modifying your configuration files. Define the target in your `profiles.yml` file. Learn more about [connection profiles and targets](/docs/local/profiles.yml#%D1%86%D0%B5%D0%BB%D0%B5%D0%B2%D1%8B%D0%B5-%D0%BE%D0%BA%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B2-%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8F%D1%85).
+Флаг `--target` позволяет запускать один проект dbt в разных средах без изменения конфигурационных файлов. Определите целевую среду в `profiles.yml`. Подробнее см. [Профили подключения и целевые среды](/docs/local/profiles.yml#%D1%86%D0%B5%D0%BB%D0%B5%D0%B2%D1%8B%D0%B5-%D0%BE%D0%BA%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B2-%D0%BF%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8F%D1%85).

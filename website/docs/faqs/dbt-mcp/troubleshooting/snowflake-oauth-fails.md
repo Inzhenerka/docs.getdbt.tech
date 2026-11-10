@@ -1,11 +1,11 @@
 ---
-title: "The connector won't authorize or the OAuth flow fails"
-sidebar_label: "The connector won't authorize or the OAuth flow fails"
-description: "Troubleshooting: The connector won't authorize or the OAuth flow fails"
+title: "Коннектор не проходит авторизацию или процесс OAuth завершается с ошибкой"
+sidebar_label: "Коннектор не проходит авторизацию или процесс OAuth завершается с ошибкой"
+description: "Устранение неполадок: коннектор не проходит авторизацию или процесс OAuth завершается с ошибкой"
 id: mcp-troubleshoot-snowflake-oauth-fails
 ---
 
-- Confirm your account has a [static subdomain](/docs/platform/about-platform/access-regions-ip-addresses). OAuth with MCP requires one.
-- Verify the host in `API_ALLOWED_PREFIXES`, `OAUTH_TOKEN_ENDPOINT`, `OAUTH_AUTHORIZATION_ENDPOINT`, and `OAUTH_RESOURCE_URL` all match your MCP URL host exactly, and that the integration `ENABLED = TRUE`.
-- AI features are enabled by default and admins can [turn them off or back on anytime](/docs/platform/manage-dbt-ai).
-- Make sure remote MCP OAuth is available for your account plan.
+- Убедитесь, что у вашей учетной записи есть [статический поддомен](/docs/platform/about-platform/access-regions-ip-addresses). Он необходим для OAuth с MCP.
+- Убедитесь, что хост в `API_ALLOWED_PREFIXES`, `OAUTH_TOKEN_ENDPOINT`, `OAUTH_AUTHORIZATION_ENDPOINT` и `OAUTH_RESOURCE_URL` в точности совпадает с хостом вашего URL MCP, а для интеграции задано `ENABLED = TRUE`.
+- Функции ИИ включены по умолчанию, и администраторы могут [отключить или снова включить их в любое время](/docs/platform/manage-dbt-ai).
+- Убедитесь, что OAuth для удаленного MCP доступен в тарифном плане вашей учетной записи.

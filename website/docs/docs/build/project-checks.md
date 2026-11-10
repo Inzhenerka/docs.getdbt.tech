@@ -1,45 +1,45 @@
 ---
-title: "Checks"
-description: "Write SQL rules that enforce project standards."
+title: "Проверки"
+description: "Пишите SQL-правила для обеспечения соблюдения стандартов проекта."
 id: "checks"
 availability:
   engine: v2
 ---
 
-# Checks
+# Проверки
 
-As dbt projects grow and more contributors add models, maintaining consistent standards becomes harder: a model ships without a description, a public model has no owner, a new model ignores naming conventions. None of this breaks anything, so it's not caught, but quality erodes silently.
+По мере роста проектов dbt и увеличения числа участников, добавляющих модели, поддерживать единые стандарты становится сложнее: модель выпускается без описания, у публичной модели нет владельца, новая модель не соответствует соглашениям об именовании. Ничто из этого не нарушает работу, поэтому остаётся незамеченным, но качество незаметно снижается.
 
-Checks are SQL queries that assert rules and standards about your project metadata. Define rules (such as every model must have a description, required tags are set, and so on) and dbt enforces them before any warehouse work runs. 
+Проверки — это SQL-запросы, которые проверяют соблюдение правил и стандартов для метаданных вашего проекта. Определите правила (например, у каждой модели должно быть описание, должны быть заданы обязательные теги и так далее), и dbt обеспечит их соблюдение до начала любых операций в хранилище данных. 
 
-Write your checks in DuckDB SQL, using the [`{{ info_schema() }}` macro](/reference/dbt-jinja-functions/info-schema-macro) to reference the [dbt Information Schema](/docs/build/dbt-information-schema) in your query. Checks run locally in DuckDB, so they don't require a connection to your warehouse. If the project violates a rule, `dbt build` stops before compiling or materializing a single model.
+Пишите проверки на SQL для DuckDB, используя [макрос `{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) для обращения к [dbt Information Schema](/docs/build/dbt-information-schema) в запросе. Проверки выполняются локально в DuckDB, поэтому им не требуется подключение к хранилищу данных. Если проект нарушает правило, `dbt build` останавливается до компиляции или материализации хотя бы одной модели.
 
-Similar to [data tests](/docs/build/data-tests), a check finds any instances in your project that do not meet your expectations. A check passes when the query returns zero rows, and fails when it returns one or more.
+Как и [тесты данных](/docs/build/data-tests), проверка находит в проекте все случаи, которые не соответствуют вашим ожиданиям. Проверка проходит успешно, если запрос возвращает ноль строк, и завершается неудачей, если он возвращает одну или несколько строк.
 
-Checks run automatically with every `dbt build`; you can use `--skip-checks` to skip them. You can also run them on demand with `dbt check`.
+Проверки выполняются автоматически при каждом запуске `dbt build`; их можно пропустить с помощью `--skip-checks`. Также их можно запускать по требованию командой `dbt check`.
 
-## Guidelines for writing SQL check files
+## Рекомендации по написанию SQL-файлов проверок
 
-This section covers the rules and constraints for writing check SQL files and configuring check behavior.
+В этом разделе описаны правила и ограничения для написания SQL-файлов проверок и настройки их поведения.
 
-- A check is a SQL file in your `checks/` directory. You can optionally pair it with a properties YAML file in the same directory to configure it. To use a different directory, set [`check-paths`](/reference/project-configs/check-paths) in `dbt_project.yml`.
-- The filename without the `.sql` extension becomes the check name (for example, `all_models_have_descriptions` is the check name for `checks/all_models_have_descriptions.sql`).
-- Jinja in check files renders at parse time. You can use Jinja, but the result must be valid DuckDB SQL at that point; checks do not go through a separate compile step the way models do.
-- Checks are dbt resources; each check appears in `manifest.json`, supports `tags` and `meta`, and `dbt ls` lists them.
+- Проверка — это SQL-файл в каталоге `checks/`. При необходимости рядом с ним в том же каталоге можно разместить YAML-файл свойств для его настройки. Чтобы использовать другой каталог, задайте [`check-paths`](/reference/project-configs/check-paths) в `dbt_project.yml`.
+- Имя файла без расширения `.sql` становится именем проверки (например, `all_models_have_descriptions` — это имя проверки для `checks/all_models_have_descriptions.sql`).
+- Jinja в файлах проверок обрабатывается на этапе разбора. Вы можете использовать Jinja, но уже на этом этапе результат должен быть корректным SQL для DuckDB; в отличие от моделей, проверки не проходят отдельный этап компиляции.
+- Проверки — это ресурсы dbt; каждая проверка присутствует в `manifest.json`, поддерживает `tags` и `meta` и отображается в выводе `dbt ls`.
 
-### The `info_schema()` macro
+### Макрос `info_schema()`
 
-[`{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) is the supported way to reference the [dbt Information Schema](/docs/build/dbt-information-schema) in a check. Pass the name of the table you want to query (for example, `{{ info_schema('models') }}` for models or `{{ info_schema('edges') }}` for DAG edges). No materialized [Information Schema](/reference/info-schema) files are required; checks run against an intermediate representation built at parse time.
+[`{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) — это поддерживаемый способ обращения к [dbt Information Schema](/docs/build/dbt-information-schema) в проверке. Передайте имя таблицы, к которой хотите выполнить запрос (например, `{{ info_schema('models') }}` для моделей или `{{ info_schema('edges') }}` для рёбер DAG). Материализованные файлы [Information Schema](/reference/info-schema) не требуются; проверки выполняются на основе промежуточного представления, созданного на этапе разбора.
 
-For the full list of available views and columns, refer to [Columns available for checks](/reference/info-schema#columns-available-for-checks).
+Полный список доступных представлений и столбцов приведён в разделе [Столбцы, доступные для проверок](/reference/info-schema#columns-available-for-checks).
 
-## Writing your first check
+## Создание первой проверки
 
-The following steps walk you through creating your first check.
+Следующие шаги помогут вам создать первую проверку.
 
-1. Declare the `info_schema` version in `dbt_project.yml`:
+1. Объявите версию `info_schema` в `dbt_project.yml`:
 
-    The `info_schema.version` pins which version of the info schema the [`{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) macro resolves to. Currently, `1` is the only available version.
+    Параметр `info_schema.version` фиксирует версию info schema, которую использует [макрос `{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro). В настоящее время доступна только версия `1`.
 
     <File name='dbt_project.yml'>
 
@@ -50,9 +50,9 @@ The following steps walk you through creating your first check.
 
     </File>
 
-2. Write a check under `checks/`:
+2. Создайте проверку в каталоге `checks/`:
 
-    Use [`{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) to query project metadata. A check passes if the query returns zero rows. For available views and columns, refer to [Columns available for checks](/reference/info-schema#columns-available-for-checks).
+    Используйте [`{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) для запросов к метаданным проекта. Проверка проходит успешно, если запрос возвращает ноль строк. Доступные представления и столбцы перечислены в разделе [Столбцы, доступные для проверок](/reference/info-schema#columns-available-for-checks).
 
     <File name='checks/all_models_have_descriptions.sql'>
 
@@ -65,7 +65,7 @@ The following steps walk you through creating your first check.
     </File>
 
 
-3. Configure the check in a properties YAML file in your `checks/` directory. 
+3. Настройте проверку в YAML-файле свойств в каталоге `checks/`. 
 
     <File name='checks/_checks.yml'>
 
@@ -73,24 +73,24 @@ The following steps walk you through creating your first check.
     version: 2
     checks:
       - name: all_models_have_descriptions
-        description: "Fails if any model is missing a description."
+        description: "Завершается неудачей, если у какой-либо модели отсутствует описание."
         config:
-          severity: warn   # default is error; 'warn' logs issues but does not fail the execution
+          severity: warn   # по умолчанию используется error; 'warn' регистрирует проблемы, но не прерывает выполнение
     ```
 
     </File>
 
-4. Run your checks:
+4. Запустите проверки:
 
     ```shell
     dbt check
     ```
 
-## Example checks
+## Примеры проверок
 
-The following examples show common project quality rules, each defined as a SQL query against the `info_schema` macros and saved as a `.sql` file under `checks/`.
+В следующих примерах показаны распространённые правила качества проекта: каждое из них определено как SQL-запрос с использованием макросов `info_schema` и сохранено в файле `.sql` в каталоге `checks/`.
 
-- Enforce that all `public` models have a description:
+- Требовать наличия описания у всех моделей с доступом `public`:
 
   <File name='checks/public_models_have_descriptions.sql'>
 
@@ -103,7 +103,7 @@ The following examples show common project quality rules, each defined as a SQL 
 
   </File>
 
-- Flag sources that aren't referenced by models. An unreferenced source has no downstream models, and is either unused or missing a model that should reference it:
+- Выявлять источники, на которые не ссылаются модели. У такого источника нет зависимых моделей: он либо не используется, либо отсутствует модель, которая должна на него ссылаться:
 
   <File name='checks/unused_sources.sql'>
 
@@ -116,7 +116,7 @@ The following examples show common project quality rules, each defined as a SQL 
 
   </File>
 
-- Flag `public` models with no group owner:
+- Выявлять модели с доступом `public`, у группы которых не указан владелец:
 
   <File name='checks/public_models_have_owners.sql'>
 
@@ -136,27 +136,27 @@ The following examples show common project quality rules, each defined as a SQL 
 
   </File>
 
-## Commands
+## Команды
 
-Checks run with `dbt check` and `dbt build`.
+Проверки запускаются командами `dbt check` и `dbt build`.
 
 <SimpleTable>
-| Command | Behavior |
+| Команда | Поведение |
 |---------|----------|
-| `dbt check` | Runs all checks. |
-| `dbt check <name1> <name2> …` | Runs only the named checks. An unknown check name is an error; a disabled check name is accepted and skipped. |
-| `dbt build` | Runs all enabled checks before models compile. A failing check stops the run before any model is compiled or executed. Warn failures are reported and the build continues. Use `--skip-checks` to bypass. |
+| `dbt check` | Запускает все проверки. |
+| `dbt check <name1> <name2> …` | Запускает только указанные проверки. Неизвестное имя проверки вызывает ошибку; имя отключённой проверки принимается, но сама проверка пропускается. |
+| `dbt build` | Запускает все включённые проверки до компиляции моделей. Неудачная проверка останавливает запуск до компиляции или выполнения любой модели. Нарушения с уровнем warn выводятся в отчёте, и сборка продолжается. Для пропуска проверок используйте `--skip-checks`. |
 </SimpleTable>
 
-## Skipping checks on build
+## Пропуск проверок при сборке
 
-To skip all checks, pass the [`--skip-checks` flag](/reference/commands/build?version=2#the---skip-checks-flag) to `dbt build`.
+Чтобы пропустить все проверки, передайте команде `dbt build` [флаг `--skip-checks`](/reference/commands/build?version=2#the---skip-checks-flag).
 
 ```shell
 dbt build --skip-checks
 ```
 
-To skip a specific check, set `enabled: false` in its config block in the YAML file. The check still appears in the manifest but does not run.
+Чтобы пропустить определённую проверку, задайте `enabled: false` в её блоке config в YAML-файле. Проверка по-прежнему будет присутствовать в манифесте, но не будет выполняться.
 
 ```yaml
 checks:
@@ -165,37 +165,37 @@ checks:
       enabled: false
 ```
 
-:::note Disabling at the project level
-Setting `+enabled: false` in `dbt_project.yml` disables the check silently &mdash; nothing in the output shows checks were skipped. A successful `dbt build` in CI doesn't tell you whether the project has no checks or all checks are disabled. Running `dbt check <name>` for a disabled check also succeeds without running the check or returning an error.
+:::note Отключение на уровне проекта
+Настройка `+enabled: false` в `dbt_project.yml` отключает проверку без уведомления &mdash; в выводе ничто не указывает на то, что проверки были пропущены. Успешное выполнение `dbt build` в CI не позволяет определить, отсутствуют ли проверки в проекте или все они отключены. Запуск `dbt check <name>` для отключённой проверки также завершается успешно, не выполняя проверку и не возвращая ошибку.
 :::
 
 
-## Using selectors with checks
+## Использование селекторов с проверками {#using-selectors-with-checks}
 
-With checks, [`--select` and other selector methods](/reference/node-selection/syntax) choose which project resources to evaluate, not which checks run.
+При работе с проверками [`--select` и другие методы выбора](/reference/node-selection/syntax) определяют, какие ресурсы проекта проверять, а не какие проверки запускать.
 
-Why checks work this way:
+Почему проверки работают именно так:
 
-- You generally don't need to exclude checks or run only a subset of them. Checks are fast. Error-severity checks should block execution if violated; if a rule is informational, set it to `warn`. If a check is no longer relevant, disable or delete it.
-- You may want to limit which resources are checked. This lets you incrementally introduce checks in an existing project. In development, run `dbt build --select <the part of your DAG you're working on>` to check only those resources. In CI, your checks run only against modified resources.
-- When developing a new check, you can run one check at a time or optionally select resources:
+- Как правило, нет необходимости исключать проверки или запускать только часть из них. Проверки выполняются быстро. Проверки с уровнем error должны блокировать выполнение при нарушении правила; если правило носит информационный характер, задайте для него `warn`. Если проверка больше не актуальна, отключите или удалите её.
+- Вам может потребоваться ограничить набор проверяемых ресурсов. Это позволяет постепенно внедрять проверки в существующий проект. Во время разработки запускайте `dbt build --select <the part of your DAG you're working on>`, чтобы проверять только соответствующие ресурсы. В CI проверки выполняются только для изменённых ресурсов.
+- При разработке новой проверки можно запускать по одной проверке за раз и при необходимости выбирать ресурсы:
   - `dbt check name_of_check`
   - `dbt check name_of_check --select <resources to check>`  
 
-You can also preview any `info_schema` query directly: `dbt show --inline "select * from {{ info_schema('...') }}"`. For example, to inspect your checks' own metadata, run `dbt show --inline "select * from {{ info_schema('checks') }}"`.
+Также можно напрямую просмотреть результат любого запроса к `info_schema`: `dbt show --inline "select * from {{ info_schema('...') }}"`. Например, чтобы изучить метаданные самих проверок, выполните `dbt show --inline "select * from {{ info_schema('checks') }}"`.
 
 
-### How `selection_filter_on` works
+### Как работает `selection_filter_on`
 
-By default, dbt filters check results to selected resources by matching the `unique_id` column in the output. If the check returns no `unique_id` column, it runs against the whole project.
+По умолчанию dbt фильтрует результаты проверок по выбранным ресурсам, сопоставляя значения столбца `unique_id` в выводе. Если проверка не возвращает столбец `unique_id`, она выполняется для всего проекта.
 
-Use [`selection_filter_on`](/reference/resource-configs/selection-filter-on) when your check returns rows with different ID columns that you want to filter on. It accepts the following values:
+Используйте [`selection_filter_on`](/reference/resource-configs/selection-filter-on), если проверка возвращает строки с другими столбцами идентификаторов, по которым требуется фильтрация. Параметр принимает следующие значения:
 
 import SelectionFilterOnValues from '/snippets/_selection-filter-on-values.md';
 
 <SelectionFilterOnValues />
 
-For example, the following check returns `child_unique_id` instead of `unique_id`, so you must set `selection_filter_on`:
+Например, следующая проверка возвращает `child_unique_id` вместо `unique_id`, поэтому необходимо задать `selection_filter_on`:
 
 <File name='checks/multiple_sources_joined.sql'>
 
@@ -214,7 +214,7 @@ having count(*) > 1
 ```yaml
 checks:
   - name: multiple_sources_joined
-    description: "Fails if any model reads directly from more than one source."
+    description: "Завершается неудачей, если какая-либо модель читает данные напрямую из нескольких источников."
     config:
       selection_filter_on: child_unique_id
 ```
@@ -222,10 +222,10 @@ checks:
 </File>
 
 
-## Related documentation
+## Связанная документация
 
-- [Check properties](/reference/check-properties)
-- [Check configurations](/reference/check-configs)
-- [`dbt check` command](/reference/commands/check)
+- [Свойства проверок](/reference/check-properties)
+- [Конфигурации проверок](/reference/check-configs)
+- [Команда `dbt check`](/reference/commands/check)
 - [`info_schema`](/reference/dbt-jinja-functions/info-schema-macro/)
-- [`check-paths` project config](/reference/project-configs/check-paths)
+- [Настройка проекта `check-paths`](/reference/project-configs/check-paths)

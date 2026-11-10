@@ -1,187 +1,186 @@
 ---
-title: "Release tracks in dbt platform"
-sidebar_label: "About release tracks"
+title: "Каналы релизов на платформе dbt"
+sidebar_label: "О каналах релизов"
 id: "dbt-release-tracks"
-description: "Learn how to get automatic upgrades to dbt in the dbt platform. Access new features and enhancements as soon as they become available."
+description: "Узнайте, как получать автоматические обновления dbt на платформе dbt. Получайте доступ к новым функциям и улучшениям сразу после их появления."
 availability: platform_login
 ---
 
-New capabilities in the dbt framework are delivered continuously to <Constant name="dbt_platform" />. Your projects and environments are upgraded automatically on a cadence that you choose, depending on your <Constant name="dbt" /> plan.
+Новые возможности фреймворка dbt непрерывно поступают в <Constant name="dbt_platform" />. Ваши проекты и среды обновляются автоматически с выбранной вами периодичностью, в зависимости от вашего тарифного плана <Constant name="dbt" />.
 
-## Which release tracks are available?
+## Какие каналы релизов доступны? {#which-release-tracks-are-available}
 
-The release tracks available for your project vary depending on the major version of dbt.
+Набор каналов релизов, доступных для вашего проекта, зависит от основной версии dbt.
 
-### dbt v2 release tracks
+### Каналы релизов dbt v2 {#dbt-v2-release-tracks}
 
-The <Constant name="dbt_platform" /> has four <Constant name="fusion" /> release tracks available to give you control over stability vs. velocity.
+В <Constant name="dbt_platform" /> доступны четыре канала релизов <Constant name="fusion" />, позволяющие выбрать баланс между стабильностью и скоростью получения обновлений.
 
-_`v2 Stable` is the default for all new <Constant name="fusion" />-powered projects._
+_`v2 Stable` используется по умолчанию для всех новых проектов на базе <Constant name="fusion" />._
 
-| Release track | Cadence | Description | [Plan availability](https://www.getdbt.com/pricing) | API value |
+| Канал релизов | Периодичность | Описание | [Доступность по тарифным планам](https://www.getdbt.com/pricing) | Значение для API |
 | ------------- | ------- | ----------- | ----------------- | --------- |
-| **v2 Nightly** | Nightly | The latest nightly build. Includes early access to new features. | All plans | `fusion-nightly` |
-| **v2 Stable** (default) | Weekly | A weekly release that balances stability and feature access. <br /> | All plans | `fusion-stable` |
-| **v2 Extended** | Monthly | The previous month's final v2 Stable release. Designed for those who want maximum stability and additional testing time. | Enterprise, Enterprise+ | `fusion-extended` |
-| **v2 Fallback** | Monthly | The previous month's v2 Extended release. Emergency rollback option for account admins. | Enterprise+ | `fusion-fallback` |
+| **v2 Nightly** | Каждую ночь | Самая свежая ночная сборка. Включает ранний доступ к новым функциям. | Все тарифные планы | `fusion-nightly` |
+| **v2 Stable** (по умолчанию) | Еженедельно | Еженедельный релиз, обеспечивающий баланс между стабильностью и доступом к новым функциям. <br /> | Все тарифные планы | `fusion-stable` |
+| **v2 Extended** | Ежемесячно | Последний релиз v2 Stable за предыдущий месяц. Предназначен для тех, кому нужны максимальная стабильность и дополнительное время на тестирование. | Enterprise, Enterprise+ | `fusion-extended` |
+| **v2 Fallback** | Ежемесячно | Релиз v2 Extended за предыдущий месяц. Вариант экстренного отката для администраторов аккаунта. | Enterprise+ | `fusion-fallback` |
 
 
-### <Constant name="core" /> release tracks {#dbt-v1-release-tracks}
+### Каналы релизов <Constant name="core" /> {#dbt-v1-release-tracks}
 
-| Release track | Description | Plan availability | API value |
+| Канал релизов | Описание | Доступность по тарифным планам | Значение для API |
 | ------------- | ----------- | ----------------- | --------- |
-| **v1 Latest** | Provides a continuous release of the latest functionality in the <Constant name="dbt_platform" /> .<br /><br />Includes early access to new features of the dbt framework before they're available in <Constant name="core" />. | All plans | `latest` |
-| **v1 Compatible** | Provides a monthly release aligned with the most recent open source versions of <Constant name="core" /> and adapters, plus functionality exclusively available in the dbt platform.<br /><br />See [v1 Compatible track changelog](/docs/dbt-versions/compatible-track-changelog) for more information. |  Starter, Enterprise, Enterprise+ | `compatible` |
-| **v1 Extended** | The previous month's **v1 Compatible** release. | Enterprise, Enterprise+ | `extended` |
-| **v1 Fallback** | The previous month's **v1 Extended** release. | Enterprise+ | `fallback` |
+| **v1 Latest** | Обеспечивает непрерывное получение самых новых возможностей в <Constant name="dbt_platform" />.<br /><br />Включает ранний доступ к новым функциям фреймворка dbt до их появления в <Constant name="core" />. | Все тарифные планы | `latest` |
+| **v1 Compatible** | Обеспечивает ежемесячные релизы, согласованные с последними версиями <Constant name="core" /> и адаптеров с открытым исходным кодом, а также функции, доступные исключительно на платформе dbt.<br /><br />Подробнее см. в [журнале изменений канала v1 Compatible](/docs/dbt-versions/compatible-track-changelog). |  Starter, Enterprise, Enterprise+ | `compatible` |
+| **v1 Extended** | Релиз **v1 Compatible** за предыдущий месяц. | Enterprise, Enterprise+ | `extended` |
+| **v1 Fallback** | Релиз **v1 Extended** за предыдущий месяц. | Enterprise+ | `fallback` |
 
-### API release tracks
+### Каналы релизов в API
 
-:::note API naming differences
+:::note Различия в названиях в API
 
-API release track names differ from the names in the UI. They still use legacy names. We plan to add aliases for the new names soon. We'll notify customers when those are available and update this page.
+Названия каналов релизов в API отличаются от названий в интерфейсе. В API по-прежнему используются прежние названия. В ближайшее время мы планируем добавить псевдонимы для новых названий. Когда они станут доступны, мы уведомим клиентов и обновим эту страницу.
 
-Names prefixed with `fusion` are for v2. Names without that prefix are for v1.
+Названия с префиксом `fusion` относятся к v2. Названия без этого префикса относятся к v1.
 
 :::
 
-To configure an environment in the [dbt Admin API](/docs/dbt-apis/admin-api) or [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest) to use a release track, set `dbt_version` to the release track name:
+Чтобы настроить среду на использование канала релизов через [dbt Admin API](/docs/dbt-apis/admin-api) или [Terraform](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest), задайте для `dbt_version` название канала релизов:
 - `fusion-nightly`
-- `fusion-stable` (formerly `latest-fusion`)
+- `fusion-stable` (ранее — `latest-fusion`)
 - `fusion-extended`
 - `fusion-fallback`
 - `latest`
 - `compatible`
 - `extended`
 
-## Which release track should I choose?
+## Какой канал релизов выбрать?
 
-We recommend that all new projects run dbt v2. Projects still on v1 release tracks are eligible for upgrade to v2 and projects on legacy versions of v1.x should [migrate to release tracks](/guides/migrate-off-legacy-dbt-versions).
+Мы рекомендуем использовать dbt v2 во всех новых проектах. Проекты, которые всё ещё используют каналы релизов v1, можно обновить до v2, а проекты на устаревших версиях v1.x следует [перевести на каналы релизов](/guides/migrate-off-legacy-dbt-versions).
 
-### Choosing a dbt v2 release track
+### Выбор канала релизов dbt v2
 
-Choose **v2 Stable** (the default for new projects) for a weekly release cadence that balances stability and feature access. This is the recommended starting point for most customers migrating to <Constant name="fusion_engine" />.
+Выберите **v2 Stable** (канал по умолчанию для новых проектов), чтобы получать еженедельные релизы, обеспечивающие баланс между стабильностью и доступом к новым функциям. Это рекомендуемая отправная точка для большинства клиентов, переходящих на <Constant name="fusion_engine" />.
 
-Choose **v2 Nightly** if you want the latest features and are comfortable with a daily release cadence. This track ideal for teams prioritizing the most recent features.
+Выберите **v2 Nightly**, если хотите получать самые новые функции и готовы к ежедневным релизам. Этот канал идеально подходит командам, для которых приоритетен доступ к самым новым возможностям.
 
-Choose **v2 Extended** if your team needs maximum stability and more time to test before updates roll out. This track generally lags v2 Stable by one month and is available for Enterprise and Enterprise+ accounts.
+Выберите **v2 Extended**, если вашей команде нужны максимальная стабильность и больше времени на тестирование до развертывания обновлений. Этот канал обычно отстаёт от v2 Stable на один месяц и доступен для аккаунтов Enterprise и Enterprise+.
 
-Choose **v2 Fallback** as an emergency measure only. This is a temporary rollback option for Enterprise+ accounts, not for ongoing use.
+Используйте **v2 Fallback** только как экстренную меру. Это вариант временного отката для аккаунтов Enterprise+, не предназначенный для постоянного использования.
 
-Account admins can set the org-wide default release track for new projects via a toggle in **Account Settings**. Individual project owners can then override that default per environment.
+Администраторы аккаунта могут задать для всей организации канал релизов по умолчанию для новых проектов с помощью переключателя в разделе **Account Settings**. Затем владельцы отдельных проектов могут переопределить это значение для каждой среды.
 
-### Choosing a dbt v1 release track
+### Выбор канала релизов dbt v1
 
-Choose the **v1 Latest** release track to continuously receive new features, fixes, performance improvements — latest & greatest dbt. This is the default for all customers on <Constant name="dbt" />.
+Выберите канал релизов **v1 Latest**, чтобы непрерывно получать новые функции, исправления и улучшения производительности — всё самое новое и лучшее в dbt. Этот канал используется по умолчанию для всех клиентов <Constant name="dbt" />.
 
-Choose the **v1 Compatible** and **v1 Extended** release tracks if you need a less-frequent release cadence, the ability to test new dbt releases before they go live in production, and/or ongoing compatibility with the latest open source releases of <Constant name="core" />.
+Выберите каналы релизов **v1 Compatible** и **v1 Extended**, если вам нужны менее частые релизы, возможность тестировать новые релизы dbt до их внедрения в рабочую среду и/или постоянная совместимость с последними релизами <Constant name="core" /> с открытым исходным кодом.
 
-### Using the v2 Fallback release track
+### Использование канала релизов v2 Fallback
 
-The **v2 Fallback** release track provides an emergency rollback option for account admins if you suspect a regression in the "v2 Extended" track. This is available only for <Constant name="fusion_engine" /> in Enterprise+ accounts.
+Канал релизов **v2 Fallback** предоставляет администраторам аккаунта возможность экстренного отката при подозрении на регрессию в канале «v2 Extended». Эта возможность доступна только для <Constant name="fusion_engine" /> в аккаунтах Enterprise+.
 
-1. Go to **Account settings**
-2. Click the **Revert to Fallback** release track button in the <Constant name="dbt_platform" /> interface. This is not accessible through environment settings.
-3. Fill in the details in the **Revert to Fallback** pop-up to confirm and share information with dbt Support.
+1. Перейдите в раздел **Account settings**
+2. Нажмите кнопку **Revert to Fallback** для смены канала релизов в интерфейсе <Constant name="dbt_platform" />. Эта возможность недоступна в настройках среды.
+3. Заполните сведения во всплывающем окне **Revert to Fallback**, чтобы подтвердить действие и передать информацию службе поддержки dbt.
 
-Switching to **v2 Fallback** alerts the dbt Support team, who may reach out to help resolve the issue. This track is meant only as a temporary safety option to unblock you and not for ongoing use. Return to "v2 Extended" or "v2 Stable" (<Constant name="fusion" />) / "v1 Compatible" (<Constant name="core" />) once the issue is resolved.
+Переход на **v2 Fallback** уведомляет службу поддержки dbt, которая может связаться с вами, чтобы помочь решить проблему. Этот канал предназначен только для временной подстраховки, позволяющей продолжить работу, а не для постоянного использования. После устранения проблемы вернитесь на «v2 Extended» или «v2 Stable» (<Constant name="fusion" />) / «v1 Compatible» (<Constant name="core" />).
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-versions/rollback.png" width="80%" title="v2 Fallback release track button in dbt platform"/>
+<Lightbox src="/img/docs/dbt-versions/rollback.png" width="80%" title="Кнопка перехода на канал релизов v2 Fallback на платформе dbt"/>
 
-<Lightbox src="/img/docs/dbt-versions/rollback-popup.png" width="80%" title="v2 Fallback release track popup in dbt platform"/>
+<Lightbox src="/img/docs/dbt-versions/rollback-popup.png" width="80%" title="Всплывающее окно перехода на канал релизов v2 Fallback на платформе dbt"/>
 
 </DocCarousel>
 
 
-### Common architectures
+### Типовые схемы использования
 
-#### dbt v2 track architectures
+#### Схемы использования каналов dbt v2
 
-**Default** &mdash; All plans
-- Prioritize a weekly release cadence that balances stability and new features
-- Leave all environments on the **v2 Stable** release track (default for new projects at GA)
+**По умолчанию** &mdash; Все тарифные планы
+- Отдавайте приоритет еженедельным релизам, обеспечивающим баланс между стабильностью и новыми функциями
+- Оставьте все среды на канале релизов **v2 Stable** (по умолчанию для новых проектов с момента общедоступного выпуска)
 
-**Velocity-focused** &mdash; All plans
-- Prioritize immediate access to the latest v2 features and fixes
-- Configure all environments to use the **v2 Nightly** release track
+**С акцентом на скорость обновлений** &mdash; Все тарифные планы
+- Отдавайте приоритет немедленному доступу к самым новым функциям и исправлениям v2
+- Настройте все среды на использование канала релизов **v2 Nightly**
 
-**Cautious** &mdash; Enterprise, Enterprise+
-- Prioritize maximum stability and additional testing time
-- Configure production environments to use **v2 Extended** (one month behind v2 Stable)
-- Configure development environments to use **v2 Stable** so developers get access to upcoming changes before they reach production
+**Осторожный подход** &mdash; Enterprise, Enterprise+
+- Отдавайте приоритет максимальной стабильности и дополнительному времени на тестирование
+- Настройте рабочие среды на использование **v2 Extended** (отстаёт от v2 Stable на один месяц)
+- Настройте среды разработки на использование **v2 Stable**, чтобы разработчики получали доступ к предстоящим изменениям до их внедрения в рабочую среду
 
-#### dbt v1 track architectures
+#### Схемы использования каналов dbt v1
 
-**Default** &mdash; Majority of customers on all plans
-- Prioritize immediate access to fixes and features
-- Leave all environments on the **v1 Latest** release track (default configuration)
+**По умолчанию** &mdash; Большинство клиентов на всех тарифных планах
+- Отдавайте приоритет немедленному доступу к исправлениям и новым функциям
+- Оставьте все среды на канале релизов **v1 Latest** (конфигурация по умолчанию)
 
-**Hybrid** &mdash; Starter, Enterprise, Enterprise+
-- Prioritize ongoing compatibility between <Constant name="dbt" /> and <Constant name="core" /> for development & deployment using both products in the same dbt projects
-- Configure all environments to use the **v1 Compatible** release track
-- Understand that new features will not be available until they are first released in <Constant name="core" /> OSS (several months after the **v1 Latest** release track)
+**Гибридный подход** &mdash; Starter, Enterprise, Enterprise+
+- Отдавайте приоритет постоянной совместимости между <Constant name="dbt" /> и <Constant name="core" /> для разработки и развертывания с использованием обоих продуктов в одних и тех же проектах dbt
+- Настройте все среды на использование канала релизов **v1 Compatible**
+- Учитывайте, что новые функции станут доступны только после их первого выпуска в <Constant name="core" /> с открытым исходным кодом (через несколько месяцев после появления в канале релизов **v1 Latest**)
 
-**Cautious** &mdash; Enterprise, Enterprise+, Business Critical
-- Prioritize "bake in" time for new features & fixes
-- Configure development & test environments to use the **v1 Compatible** release track
-- Configure pre-production & production environments to use the **v1 Extended** release track
-- Understand that new features will not be available until _a month after_ they are first released in <Constant name="core" /> OSS and the v1 Compatible track. Developers (on **v1 Compatible**) will get access to new features before they can leverage those capabilities in production (on **v1 Extended**), and must be mindful of the additional delay.
+**Осторожный подход** &mdash; Enterprise, Enterprise+, Business Critical
+- Отдавайте приоритет периоду обкатки новых функций и исправлений
+- Настройте среды разработки и тестирования на использование канала релизов **v1 Compatible**
+- Настройте предпроизводственные и рабочие среды на использование канала релизов **v1 Extended**
+- Учитывайте, что новые функции станут доступны только _через месяц после_ их первого выпуска в <Constant name="core" /> с открытым исходным кодом и в канале v1 Compatible. Разработчики (на **v1 Compatible**) получат доступ к новым функциям раньше, чем смогут использовать эти возможности в рабочей среде (на **v1 Extended**), и должны учитывать эту дополнительную задержку.
 
-**Virtual Private dbt or Single Tenant**
-- Changes to all release tracks roll out as part of <Constant name="dbt" /> instance upgrades once per week
+**Virtual Private dbt или Single Tenant**
+- Изменения во всех каналах релизов развертываются в рамках обновлений экземпляра <Constant name="dbt" /> один раз в неделю
 
-## Upgrading from older versions
+## Обновление со старых версий
 
-### How to upgrade {#upgrade-tips}
+### Как обновиться {#upgrade-tips}
 
-If you're running a deprecated version of dbt, we recommend that you upgrade or delete your project. For more information about the right path for you, refer to [Migrate off legacy dbt versions](/guides/migrate-off-legacy-dbt-versions).
+Если вы используете устаревшую версию dbt, мы рекомендуем обновить или удалить ваш проект. Подробнее о подходящем для вас пути см. в разделе [Переход с устаревших версий dbt](/guides/migrate-off-legacy-dbt-versions).
 
-We recommend you start upgrading projects that are smaller, newer, or more familiar for your team first. They'll be faster and easier to troubleshoot and enable you to more efficiently migrate complex projects.
+Мы рекомендуем сначала обновлять проекты меньшего размера, более новые проекты или те, с которыми ваша команда лучше знакома. Диагностировать и устранять проблемы в них будет быстрее и проще, что позволит эффективнее перенести сложные проекты.
 
-### Considerations
+### Что следует учитывать
 
-To learn more about how dbt Labs deploys stable dbt upgrades in a safe manner to <Constant name="dbt" />, we recommend that you read our blog post: [How we're making sure you can confidently switch to the \"Latest\" release track in <Constant name="dbt" />](/blog/latest-dbt-stability).
+Чтобы подробнее узнать, как dbt Labs безопасно развертывает стабильные обновления dbt в <Constant name="dbt" />, рекомендуем прочитать нашу статью в блоге: [Как мы обеспечиваем уверенный переход на канал релизов «Latest» в <Constant name="dbt" />](/blog/latest-dbt-stability).
 
 
-<Expandable alt_header="I'm using an older version of dbt in the dbt platform. What should I do? What happens if I do nothing?" >
+<Expandable alt_header="Я использую старую версию dbt на платформе dbt. Что мне делать? Что произойдёт, если ничего не предпринимать?" >
 
-If you're on version v1.3-v1.7, you need to follow the path for your project(s) as outlined in [Migrate off legacy versions](/guides/migrate-off-legacy-dbt-versions). If you have not migrated by January 31, 2027, you will lose access to these projects. If you have any questions or concerns, please [contact support](/docs/dbt-support) 
-
-</Expandable>
-
-<Expandable alt_header="What are other known issues when upgrading from older v1 versions?" >
-
-If you are upgrading from a very old unsupported version of <Constant name="core" />, you may run into one of these edge cases after the upgrade to a newer version:
-
-- [v1.3] Customers with non-dbt `.py` files defined within their project directories, such as `models/`. Since v1.3, dbt expects these files be valid [Python models](/docs/build/python-models). The customer needs to move these files out of their `models/` directory, or ignore them via `.dbtignore`
-- [v1.5] Customers who have `--m` in their job definitions, instead of `-m` or `--models`. This autocompletion (`--m[odels]` for `--models`) has never been officially documented or supported. It was an implicit behavior of argparse (CLI library used in dbt-core v1.0-1.4) that is not supported by `click` (the CLI library used in dbt-core since v1.5+).
-- [v1.5] Empty invalid `tests` config start raising a validation error](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5). Replace empty `tests` config with `tests: []` or remove it altogether.
-- [v1.6] Performance optimization to `load_result` means you cannot call it on the same query result multiple times. Instead, save it to a local variable once, and reuse that variable (context: [dbt-labs/dbt#7371](https://github.com/dbt-labs/dbt/pull/7371)
-
-You should [contact dbt support](/docs/dbt-support#dbt-platform-support) to request an extension, during which you will need to make those updates.
+Если вы используете версию v1.3–v1.7, необходимо выполнить действия для ваших проектов, описанные в разделе [Переход с устаревших версий](/guides/migrate-off-legacy-dbt-versions). Если вы не завершите переход до 31 января 2027 года, то потеряете доступ к этим проектам. Если у вас есть вопросы или опасения, [обратитесь в службу поддержки](/docs/dbt-support) 
 
 </Expandable>
 
-<Expandable alt_header="I see that my account was migrated to v1 Latest. What should I do" >
+<Expandable alt_header="Какие ещё известные проблемы возникают при обновлении со старых версий v1?" >
 
-For the vast majority of customers, there is no further action needed.
+Если вы обновляетесь с очень старой неподдерживаемой версии <Constant name="core" />, после перехода на более новую версию вы можете столкнуться с одним из следующих особых случаев:
 
-If you see new failures in your scheduled jobs now that they are running on a newer version of dbt, you may need to update your project code to account for one of the edge cases described on this page. You should [contact dbt support](/docs/dbt-support#dbt-platform-support) to request an extension, during which you will need to make those updates.
+- [v1.3] Клиенты, у которых в каталогах проекта, например `models/`, находятся файлы `.py`, не относящиеся к dbt. Начиная с v1.3, dbt ожидает, что эти файлы являются корректными [моделями Python](/docs/build/python-models). Клиенту необходимо переместить эти файлы из каталога `models/` или исключить их с помощью `.dbtignore`
+- [v1.5] Клиенты, у которых в определениях заданий используется `--m` вместо `-m` или `--models`. Такое автодополнение (`--m[odels]` для `--models`) никогда не было официально задокументировано и не поддерживалось. Это было неявное поведение argparse (библиотеки CLI, используемой в dbt-core v1.0–1.4), которое не поддерживается в `click` (библиотеке CLI, используемой в dbt-core начиная с v1.5).
+- [v1.5] Пустая некорректная конфигурация `tests` начинает вызывать ошибку валидации](/docs/dbt-versions/dbt-upgrade/Older%20versions/upgrading-to-v1.5). Замените пустую конфигурацию `tests` на `tests: []` или удалите её полностью.
+- [v1.6] Из-за оптимизации производительности `load_result` эту функцию нельзя вызывать несколько раз для одного и того же результата запроса. Вместо этого один раз сохраните результат в локальную переменную и затем используйте её повторно (подробности: [dbt-labs/dbt#7371](https://github.com/dbt-labs/dbt/pull/7371)
 
-</Expandable>
-
-<Expandable alt_header="What about breaking changes to packages (maintained by dbt Labs or by others)?" >
-
-When we talk about _latest version_, we’re referring to the underlying runtime for dbt, not the versions of packages you’re installing. Our continuous release for dbt includes testing against several popular dbt packages. This ensures that updates we make to `dbt`, adapters, or anywhere else are compatible with the code in those packages.
-
-If a new version of a dbt package includes a breaking change (for example, a change to one of the macros in `dbt_utils`), you don’t have to immediately use the new version. In your `packages` configuration (in `dependencies.yml` or  `packages.yml`), you can still specify which versions or version ranges of packages you want dbt to install. If you're not already doing so, we strongly recommend [checking `package-lock.yml` into version control](/reference/commands/deps#predictable-package-installs) for predictable package installs in deployment environments and a clear change history whenever you install upgrades.
-
-If you upgrade to the **v1 Latest** release track, and immediately see something that breaks, please [contact support](/docs/dbt-support#dbt-platform-support) and, in the meantime, downgrade back to v1.7.
-
-If you’re already on the **v1 Latest** release track, and you observe a breaking change (like something worked yesterday, but today it isn't working, or works in a surprising/different way), please [contact support](/docs/dbt-support#dbt-platform-support) immediately. Depending on your contracted support agreement, the dbt Labs team will respond within our SLA time and we would seek to roll back the change and/or roll out a fix (just as we would for any other part of dbt). This is the same whether or not the root cause of the breaking change is in the project code or in the code of a package.
-
-If the package you’ve installed relies on _undocumented_ functionality of dbt, it doesn't have the same guarantees as functionality that we’ve documented and tested. However, we will still do our best to avoid breaking them.
+Вам следует [обратиться в службу поддержки dbt](/docs/dbt-support#dbt-cloud-support), чтобы запросить дополнительное время, в течение которого нужно будет внести эти изменения.
 
 </Expandable>
 
+<Expandable alt_header="Я вижу, что мой аккаунт переведён на v1 Latest. Что мне делать" >
+
+Для подавляющего большинства клиентов никаких дополнительных действий не требуется.
+
+Если после перехода на более новую версию dbt в заданиях, запускаемых по расписанию, появились новые сбои, возможно, вам потребуется обновить код проекта с учётом одного из особых случаев, описанных на этой странице. Вам следует [обратиться в службу поддержки dbt](/docs/dbt-support#dbt-cloud-support), чтобы запросить дополнительное время, в течение которого нужно будет внести эти изменения.
+
+</Expandable>
+
+<Expandable alt_header="Что насчёт несовместимых изменений в пакетах (поддерживаемых dbt Labs или другими разработчиками)?" >
+
+Говоря о _последней версии_, мы имеем в виду базовую среду выполнения dbt, а не версии устанавливаемых вами пакетов. Непрерывный выпуск обновлений dbt включает тестирование с несколькими популярными пакетами dbt. Это позволяет убедиться, что изменения, которые мы вносим в `dbt`, адаптеры или другие компоненты, совместимы с кодом этих пакетов.
+
+Если новая версия пакета dbt содержит несовместимое изменение (например, изменение одного из макросов в `dbt_utils`), вам не обязательно сразу переходить на эту версию. В конфигурации `packages` (в `dependencies.yml` или  `packages.yml`) вы по-прежнему можете указать, какие версии или диапазоны версий пакетов должен устанавливать dbt. Если вы ещё этого не делаете, настоятельно рекомендуем [добавить `package-lock.yml` в систему контроля версий](/reference/commands/deps#predictable-package-installs), чтобы обеспечить предсказуемую установку пакетов в средах развертывания и понятную историю изменений при каждом обновлении.
+
+Если вы перейдёте на канал релизов **v1 Latest** и сразу обнаружите, что что-то перестало работать, [обратитесь в службу поддержки](/docs/dbt-support#dbt-cloud-support), а на время решения проблемы вернитесь на v1.7.
+
+Если вы уже используете канал релизов **v1 Latest** и заметили несовместимое изменение (например, вчера что-то работало, а сегодня не работает или работает неожиданным либо иным образом), немедленно [обратитесь в службу поддержки](/docs/dbt-support#dbt-cloud-support). В зависимости от условий вашего договора поддержки команда dbt Labs ответит в сроки, установленные нашим SLA, и постарается откатить изменение и/или выпустить исправление (как и для любой другой части dbt). Этот подход применяется независимо от того, находится ли первопричина несовместимого изменения в коде проекта или в коде пакета.
+
+Если установленный вами пакет использует _недокументированные_ возможности dbt, на них не распространяются те же гарантии, что и на возможности, которые мы документируем и тестируем. Однако мы всё равно приложим все усилия, чтобы не нарушить их работу.
+
+</Expandable>

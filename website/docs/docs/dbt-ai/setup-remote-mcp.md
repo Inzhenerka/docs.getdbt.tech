@@ -1,7 +1,7 @@
 ---
 title: "Set up remote MCP"
 sidebar_label: "Set up remote MCP"
-description: "Learn how to set up the remote dbt-mcp server"
+description: "Как настроить удалённый MCP-сервер dbt."
 id: "setup-remote-mcp"
 availability:
   surface: platform
@@ -44,101 +44,101 @@ import MCPRemoteServerUrl from '/snippets/_mcp-remote-server-url.md';
 
 Удалённый MCP проверяет ваши права доступа при подключении, а затем при каждом вызове инструмента проверяет, разрешён ли вам доступ к целевому проекту, среде, заданию или запуску. Эти проверки применяются к OAuth, персональным токенам доступа (PAT) и сервисным токенам. Успешное подключение или отображение инструмента в клиенте не означает, что вы можете использовать этот инструмент для любого ресурса.
 
-You don't need the `Developer` permission set just to connect. Ask your admin to grant the permissions needed for your workflow:
+Для самого подключения набор разрешений `Developer` не требуется. Попросите администратора выдать права, необходимые для вашей работы:
 
 <SimpleTable>
-| Workflow | Required access |
+| Задача | Необходимые права |
 | --- | --- |
-| Explore models and lineage, or generate SQL with `text_to_sql` | Metadata read access on the selected project. `text_to_sql` also requires AI features to be enabled. |
-| Use Semantic Layer tools | Semantic Layer configuration read access on the selected project. |
-| Run plain SQL with `execute_sql` | Semantic Layer configuration read access on the project, a development environment, and warehouse credentials. Connect with OAuth or a PAT. |
-| Run SQL containing dbt Jinja, such as `ref()` or `source()` | The requirements for plain SQL, plus develop access. Production deferral also requires metadata read access. |
-| Read or manage jobs and runs | The corresponding jobs or runs read or write permission for the target resource. Unfiltered account-wide listings require account-wide access. |
+| Изучать модели и граф зависимостей или генерировать SQL через `text_to_sql` | Право на чтение метаданных выбранного проекта. Для `text_to_sql` также должны быть включены функции ИИ. |
+| Использовать инструменты семантического слоя | Право на чтение конфигурации семантического слоя в выбранном проекте. |
+| Выполнять обычный SQL через `execute_sql` | Право на чтение конфигурации семантического слоя в проекте, среда разработки и учётные данные хранилища. Подключитесь через OAuth или PAT. |
+| Выполнять SQL с выражениями Jinja dbt, например `ref()` или `source()` | Требования для обычного SQL и доступ к разработке. Чтобы разрешать ссылки по состоянию производственной среды, также нужно право на чтение метаданных. |
+| Просматривать задания и запуски или управлять ими | Права на чтение или запись для нужного задания или запуска. Для списков без фильтра по проекту нужны соответствующие права на уровне аккаунта. |
 </SimpleTable>
 
-For available permission sets, refer to [Enterprise permissions](/docs/platform/manage-access/enterprise-permissions) and [Service tokens](/docs/dbt-apis/service-tokens#permissions-for-service-account-tokens). PATs inherit the permissions of the user who created them. OAuth also restricts access to the scopes and projects you consented to.
+Доступные наборы разрешений описаны в разделах [Разрешения Enterprise](/docs/platform/manage-access/enterprise-permissions) и [Сервисные токены](/docs/dbt-apis/service-tokens#permissions-for-service-account-tokens). PAT наследует права создавшего его пользователя. OAuth дополнительно ограничивает доступ согласованными областями и проектами.
 
-Service tokens with metadata read access can use `text_to_sql` to generate SQL. They can't use `execute_sql` to run it.
+Сервисный токен с правом чтения метаданных позволяет генерировать SQL через `text_to_sql`. Выполнять SQL через `execute_sql` с таким токеном нельзя.
 
 ## OAuth (remote MCP) <Lifecycle status="beta,self_service,managed,managed_plus" /> {#oauth-remote-mcp}
 
-OAuth lets you connect to the remote MCP server without copying API tokens into your MCP client, when your client supports OAuth for HTTP-based MCP servers.
+Если MCP-клиент поддерживает OAuth для серверов по HTTP, через OAuth можно подключиться к удалённому MCP-серверу без копирования токенов API в клиент.
 
-### Prerequisites
+### Предварительные требования {#prerequisites}
 
-- Starter, Enterprise, or Enterprise+ account
-- An MCP client that supports OAuth for remote (HTTP) MCP servers.
-- Your **MCP URL** from **Account settings** &rarr; **Access URLs** &rarr; **MCP Endpoint URL** in <Constant name="dbt_platform"/>. Check out the next section [MCP URL](#mcp-url) for more information.
+- Аккаунт на тарифе Starter, Enterprise или Enterprise+.
+- MCP-клиент с поддержкой OAuth для удалённых MCP-серверов по HTTP.
+- URL MCP из раздела **Account settings** &rarr; **Access URLs** &rarr; **MCP Endpoint URL** в <Constant name="dbt_platform"/>. Подробнее см. [URL MCP](#mcp-url).
 
-AI features are enabled by default. Admins can [turn them off or back on anytime](/docs/platform/manage-dbt-ai). Turning them off doesn't disable remote MCP &mdash; it only hides the [`text_to_sql` tool](/docs/dbt-ai/mcp-available-tools#tools-that-require-ai-features).
+Функции ИИ включены по умолчанию. Администраторы могут [отключать и снова включать их](/docs/platform/manage-dbt-ai). При отключении удалённый MCP остаётся доступным, но инструмент [`text_to_sql`](/docs/dbt-ai/mcp-available-tools#tools-that-require-ai-features) скрывается.
 
 ### MCP URL {#mcp-url}
 
 <MCPRemoteServerUrl />
 
-### How it works
+### Как это работает {#how-it-works}
 
-1. In your MCP client, navigate to the connector or integrations settings and add your MCP URL (refer to [MCP URL](#mcp-url)). For example, if you used Claude or ChatGPT, you would go to:
+1. Откройте настройки коннекторов или интеграций MCP-клиента и добавьте свой [URL MCP](#mcp-url). Например, для Claude или ChatGPT:
    - **Claude (web)**: **Customize** &rarr; **Connectors** &rarr; **+** &rarr; **Add custom connector**
    - **ChatGPT**: **Settings** &rarr; **Apps** &rarr; **Create App**
-   - For Claude Desktop and Claude Code, refer to [Integrate Claude with dbt MCP](/docs/dbt-ai/integrate-mcp-claude).
-2. When prompted in your MCP client, complete sign-in in the browser and approve the requested scopes on the consent screen.
-3. Return to your MCP client; subsequent requests use the OAuth session according to your client's behavior.
+   - Для Claude Desktop и Claude Code см. [Интеграция Claude с dbt MCP](/docs/dbt-ai/integrate-mcp-claude).
+2. Когда клиент предложит войти, завершите вход в браузере и подтвердите запрошенные области доступа на экране согласия.
+3. Вернитесь в MCP-клиент. Последующие запросы будут использовать сеанс OAuth в соответствии с настройками клиента.
 
-You can use `execute_sql` with OAuth. Add your MCP URL to your client and sign in when your MCP client prompts you. You don't need a personal access token or extra headers.
+`execute_sql` поддерживает OAuth. Добавьте URL MCP в клиент и войдите по его запросу. Персональный токен доступа и дополнительные заголовки не нужны.
 
-### Register your MCP client
+### Регистрация MCP-клиента {#register-your-mcp-client}
 
-OAuth requires every client to be registered with <Constant name="dbt_platform" />. There are two paths:
+Для OAuth каждый клиент нужно зарегистрировать в <Constant name="dbt_platform" />. Это можно сделать двумя способами:
 
-- **Dynamic registration (default)** &mdash; Clients that implement [Dynamic Client Registration (RFC 7591)](/docs/platform/manage-access/connect-apps-oauth#dynamic-registration) self-register the first time a user connects. No admin action required. Most modern MCP clients (such as Claude Desktop, Claude Code, Cursor, and VS Code) support this.
-- **Manual registration** &mdash; For clients that don't support dynamic registration, an account admin registers the client in **Account settings → Integrations → App integrations**. Manually registered clients use [PKCE (RFC 7636)](/docs/platform/manage-access/connect-apps-oauth#manual-registration) instead of a client secret. Refer to [Manual registration](/docs/platform/manage-access/connect-apps-oauth#manual-registration) for the admin walkthrough.
+- **Динамическая регистрация (по умолчанию)** &mdash; клиенты с поддержкой [Dynamic Client Registration (RFC 7591)](/docs/platform/manage-access/connect-apps-oauth#dynamic-registration) регистрируются при первом подключении без участия администратора. Этот способ поддерживают многие современные MCP-клиенты, включая Claude Desktop, Claude Code, Cursor и VS Code.
+- **Ручная регистрация** &mdash; если клиент не поддерживает динамическую регистрацию, администратор аккаунта добавляет его в **Account settings → Integrations → App integrations**. Вручную зарегистрированные клиенты используют [PKCE (RFC 7636)](/docs/platform/manage-access/connect-apps-oauth#manual-registration) вместо секрета клиента. См. [Ручная регистрация](/docs/platform/manage-access/connect-apps-oauth#manual-registration).
 
-Both types appear in **App integrations** in <Constant name="dbt_platform" />, where admins can review and audit each connected client.
+Клиенты, зарегистрированные обоими способами, отображаются в разделе **App integrations** в <Constant name="dbt_platform" />. Администраторы могут просматривать и проверять подключённые клиенты.
 
-### Scopes you'll consent to
+### Области доступа, которые вы подтверждаете {#scopes-youll-consent-to}
 
-The first time you connect, dbt shows a consent screen listing the scopes (the specific permissions the client is allowed to use) the MCP client is requesting. Scopes act as a **filter on your existing permissions** &mdash; they don't grant new access. You can also choose whether the client gets access to all projects or only selected projects.
+При первом подключении dbt показывает экран согласия со списком областей доступа, которые запрашивает клиент. Эти области **ограничивают уже выданные разрешения** и не предоставляют новых прав. Можно разрешить клиенту доступ ко всем проектам или только к выбранным.
 
-For the full list of scopes and what each one allows, refer to [Scopes and consent](/docs/platform/manage-access/connect-apps-oauth#scopes-and-consent). For sessions, refresh tokens, revoking access, and audit logging, refer to [Connect apps with OAuth](/docs/platform/manage-access/connect-apps-oauth).
+Полный список областей доступа и их описание см. в разделе [Области доступа и согласие](/docs/platform/manage-access/connect-apps-oauth#scopes-and-consent). Информацию о сеансах, токенах обновления, отзыве доступа и журнале аудита см. в разделе [Подключение приложений через OAuth](/docs/platform/manage-access/connect-apps-oauth).
 
-### Read-only users and warehouse credentials {#read-only-users-and-warehouse-credentials}
+### Пользователи с доступом на чтение и учётные данные хранилища {#read-only-users-and-warehouse-credentials}
 
-Read-only users need warehouse credentials to run queries, such as `query_metrics`, through remote MCP. They have two options:
+Пользователям с доступом на чтение для запросов через удалённый MCP, например через `query_metrics`, нужны учётные данные хранилища. Есть два варианта:
 
-- **Analytics credential (recommended):** An admin sets up one shared [analytics credential](/docs/platform/wizard-read-only-users#set-up-analytics-credentials) on the connection. Read-only users who haven't set up personal credentials use it automatically, so they never need to log in to <Constant name="dbt_platform" />.
-- **Personal credentials:** Users with the [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set can add their own on **Your profile** &rarr; **Credentials**. If they have personal credentials, those take priority.
+- **Общие учётные данные для аналитики (рекомендуется):** администратор настраивает [учётные данные для аналитики](/docs/platform/wizard-read-only-users#set-up-analytics-credentials) для подключения. Пользователи с доступом на чтение без личных учётных данных используют их автоматически, поэтому им не нужно входить в <Constant name="dbt_platform" />.
+- **Личные учётные данные:** пользователи с набором разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) могут добавить свои данные в **Your profile** &rarr; **Credentials**. Если личные данные настроены, они имеют приоритет.
 
-If a user has neither, the query fails and asks them to set up credentials or contact an admin.
+Если ни один вариант не настроен, запрос завершится ошибкой и предложит настроить учётные данные или обратиться к администратору.
 
-### Limitations
+### Ограничения {#limitations}
 
-- Remote MCP doesn't support self-hosted dbt CLI commands (like `dbt run`, `dbt build`, `dbt test`, and more) or local project access; use the [self-hosted MCP server](/docs/dbt-ai/setup-local-mcp) for those workflows.
+- Удалённый MCP не поддерживает локальные команды dbt CLI, включая `dbt run`, `dbt build` и `dbt test`, и не имеет доступа к локальному проекту. Для такой работы используйте [локальный MCP-сервер](/docs/dbt-ai/setup-local-mcp).
 
-For client-specific steps, refer to [Integrate Claude with MCP](/docs/dbt-ai/integrate-mcp-claude), [Integrate Cursor with MCP](/docs/dbt-ai/integrate-mcp-cursor), [Integrate Snowflake Cortex with MCP](/docs/dbt-ai/integrate-mcp-snowflake-cortex), or [Integrate VS Code with MCP](/docs/dbt-ai/integrate-mcp-vscode).
+Инструкции для конкретных клиентов см. в разделах [Claude](/docs/dbt-ai/integrate-mcp-claude), [Cursor](/docs/dbt-ai/integrate-mcp-cursor), [Snowflake Cortex](/docs/dbt-ai/integrate-mcp-snowflake-cortex) и [VS Code](/docs/dbt-ai/integrate-mcp-vscode).
 
-## Token-based authentication {#token-based-authentication}
+## Аутентификация по токену {#token-based-authentication}
 
-Token-based authentication lets you connect to the remote MCP server without OAuth by passing a PAT or service token in your MCP client config. Use it when your client doesn't support OAuth for HTTP-based MCP servers or when you need a shared or CI setup. To use `execute_sql` with token-based authentication, use a PAT.
+Чтобы подключиться к удалённому MCP без OAuth, укажите PAT или сервисный токен в конфигурации MCP-клиента. Это подходит для клиентов без поддержки OAuth, а также для общих конфигураций и CI. Для вызова `execute_sql` при аутентификации по токену используйте PAT.
 
-Each tool call must satisfy the [permissions for its target](#permissions). Token-based connections can show tools that your token can't use; those calls fail individually. OAuth can also filter the tool list based on its granted permissions.
+Для каждого вызова инструмента нужно иметь [разрешения на целевой ресурс](#permissions). При подключении по токену в списке могут отображаться инструменты, недоступные этому токену. Их вызовы завершаются ошибкой по отдельности. OAuth также может фильтровать список инструментов по выданным разрешениям.
 
-### Setup instructions
+### Настройка {#setup-instructions}
 
-AI features are enabled by default. Admins can [turn them off or back on anytime](/docs/platform/manage-dbt-ai). Turning them off doesn't disable remote MCP &mdash; it only hides the [`text_to_sql` tool](/docs/dbt-ai/mcp-available-tools#tools-that-require-ai-features).
+Функции ИИ включены по умолчанию. Администраторы могут [отключать и снова включать их](/docs/platform/manage-dbt-ai). При отключении удалённый MCP остаётся доступным, но инструмент [`text_to_sql`](/docs/dbt-ai/mcp-available-tools#tools-that-require-ai-features) скрывается.
 
-1. Obtain the following information from <Constant name="dbt_platform"/>:
-  - **<Constant name="dbt_platform"/> host**: Use this to form the full URL. For example, replace `YOUR_DBT_HOST_URL` here: `https://YOUR_DBT_HOST_URL/api/ai/v1/mcp/`. It may look like: `https://cloud.getdbt.com/api/ai/v1/mcp/`. If you have a multi-cell account, the host URL will be in the `ACCOUNT_PREFIX.us1.dbt.com` format. For more information, refer to [Access, Regions, & IP addresses](/docs/platform/about-platform/access-regions-ip-addresses).
-  - **Production environment ID**: From **Orchestration** → **Environments** in <Constant name="dbt_platform"/>. Use this to set an `x-dbt-prod-environment-id` header. Refer to [How to find your dbt MCP IDs](/docs/dbt-ai/mcp-find-ids#dbt-prod-env-id) for step-by-step instructions.
-  - **Token**: Generate either a personal access token (PAT) or a service token with the [permissions for the tools and resources you need](#permissions). For a service token, assign the appropriate permission sets. PATs inherit the permissions of the user who created them.
-  - If you plan to use `execute_sql`, you must use a [Personal Access Token (PAT)](/docs/dbt-apis/user-tokens). Service tokens _do not_ work for this tool. For other tools that require `x-dbt-user-id`, a PAT is also required.
+1. Получите в <Constant name="dbt_platform"/> следующие данные:
+  - **Хост <Constant name="dbt_platform"/>**: используйте его для полного URL. Например, подставьте адрес вместо `YOUR_DBT_HOST_URL` в `https://YOUR_DBT_HOST_URL/api/ai/v1/mcp/`. Пример: `https://cloud.getdbt.com/api/ai/v1/mcp/`. Для аккаунта с несколькими ячейками хост имеет формат `ACCOUNT_PREFIX.us1.dbt.com`. Подробнее см. [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses).
+  - **ID производственной среды**: найдите его в **Orchestration** → **Environments** в <Constant name="dbt_platform"/> и укажите в заголовке `x-dbt-prod-environment-id`. См. [Как найти идентификаторы dbt MCP](/docs/dbt-ai/mcp-find-ids#dbt-prod-env-id).
+  - **Токен**: создайте персональный токен доступа (PAT) или сервисный токен с [правами для нужных инструментов и ресурсов](#permissions). Для сервисного токена назначьте подходящие наборы разрешений. PAT наследует права создавшего его пользователя.
+  - Для `execute_sql` нужен [персональный токен доступа (PAT)](/docs/dbt-apis/user-tokens). Сервисный токен для этого инструмента не подходит. PAT также нужен для других инструментов, которые требуют `x-dbt-user-id`.
 
-2. For the remote MCP, you will pass on headers through the JSON blob to configure required fields:
+2. В конфигурации удалённого MCP укажите обязательные заголовки в JSON:
 
-  #### Configuration for APIs and SQL tools
+  #### Конфигурация для API и SQL-инструментов \{#configuration-for-apis-and-sql-tools}
   
   <SimpleTable>
-  | Header | Required | Description |
+  | Заголовок | Обязательный? | Описание |
   | --- | --- | --- |
 | Authorization | Да | Ваш [персональный токен доступа (PAT)](/docs/dbt-apis/user-tokens) или [сервисный токен](/docs/dbt-apis/service-tokens) из <Constant name="dbt_platform"/> с [необходимыми разрешениями](#permissions). При использовании <Constant name="semantic_layer" /> рекомендуем использовать PAT. <br /><br /> Значение должно быть в формате `Token YOUR_DBT_ACCESS_TOKEN` или `Bearer YOUR_DBT_ACCESS_TOKEN`, где `YOUR_DBT_ACCESS_TOKEN` необходимо заменить вашим фактическим токеном.  |
   | x-dbt-prod-environment-id | Да | Идентификатор вашей производственной среды в <Constant name="dbt_platform"/>. Пошаговые инструкции см. в разделе [Как найти идентификаторы dbt MCP](/docs/dbt-ai/mcp-find-ids#dbt-prod-env-id). |
@@ -156,9 +156,9 @@ AI features are enabled by default. Admins can [turn them off or back on anytime
 
   #### Дополнительная настройка для инструментов dbt v2
 
-By default, <Constant name="fusion"/> tools use the environment you set in `x-dbt-prod-environment-id` for model and table metadata.
+По умолчанию инструменты <Constant name="fusion"/> берут метаданные моделей и таблиц из среды, указанной в `x-dbt-prod-environment-id`.
   <SimpleTable>
-  | Header | Required | Description |
+  | Заголовок | Обязательный? | Описание |
   | --- | --- | --- |
 | x-dbt-dev-environment-id | Обязательный | ID вашей среды разработки <Constant name="dbt_platform"/>. Пошаговые инструкции см. в разделе [Как найти ID для dbt MCP](/docs/dbt-ai/mcp-find-ids#dbt-dev-env-id). |
   | x-dbt-user-id | Обязательный | Ваш ID пользователя <Constant name="dbt_platform"/>. Подробнее см. в разделе [Где найти мой ID пользователя?](/faqs/Accounts/find-user-id). |
@@ -280,8 +280,8 @@ By default, <Constant name="fusion"/> tools use the environment you set in `x-db
 </Tabs>
 
 
-:::warning Use numeric IDs, not full URLs
-Header values like `x-dbt-prod-environment-id` and `x-dbt-user-id` expect numeric IDs, not full URLs. The host in the `url` field should include `https://`, but ID headers must be integers only:
+:::warning Используйте числовые ID
+Заголовки `x-dbt-prod-environment-id` и `x-dbt-user-id` принимают только целые числа. В поле `url` адрес хоста должен начинаться с `https://`:
 
 ```bash
 # ✅ Correct
@@ -295,15 +295,15 @@ Header values like `x-dbt-prod-environment-id` and `x-dbt-user-id` expect numeri
 ```
 :::
 
-For other MCP clients (Codex, Windsurf, and so on), refer to your client's MCP configuration docs for the correct key format.
+Для других MCP-клиентов, например Codex или Windsurf, формат ключа указан в документации клиента.
 
-For self-hosted MCP, use environment variables to configure your setup; refer to the [Environment variables reference](/docs/dbt-ai/mcp-environment-variables).
+Локальный MCP настраивается через переменные окружения. См. [Справочник по переменным окружения](/docs/dbt-ai/mcp-environment-variables).
 
-## Related docs
+## Связанная документация {#related-docs}
 
-Step-by-step client setup (including Cursor, VS Code, and Claude) is in:
+Пошаговые инструкции по настройке клиентов, включая Cursor, VS Code и Claude:
 
-- [Integrate Cursor with MCP](/docs/dbt-ai/integrate-mcp-cursor)
-- [Integrate VS Code with MCP](/docs/dbt-ai/integrate-mcp-vscode)
-- [Integrate Claude with MCP](/docs/dbt-ai/integrate-mcp-claude)
-- [Integrate Snowflake Cortex with MCP](/docs/dbt-ai/integrate-mcp-snowflake-cortex)
+- [Интеграция Cursor с MCP](/docs/dbt-ai/integrate-mcp-cursor)
+- [Интеграция VS Code с MCP](/docs/dbt-ai/integrate-mcp-vscode)
+- [Интеграция Claude с MCP](/docs/dbt-ai/integrate-mcp-claude)
+- [Интеграция Snowflake Cortex с MCP](/docs/dbt-ai/integrate-mcp-snowflake-cortex)

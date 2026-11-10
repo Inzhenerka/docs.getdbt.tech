@@ -1,6 +1,6 @@
 ---
 title: volatility
-description: "Declare the volatility (deterministic, stable, or non-deterministic) of a user-defined function (UDF) so the warehouse can optimize how it runs."
+description: "Укажите категорию изменчивости пользовательской функции (UDF), чтобы хранилище могло оптимизировать её выполнение."
 sidebar_label: "volatility"
 id: volatility
 ---
@@ -35,7 +35,7 @@ import Volatility from '/snippets/_warehouse-volatility.md';
 
 В dbt для конфигурации `volatility` можно использовать следующие значения:
 
-| Value | Description | Example |
+| Значение | Описание | Пример |
 | --- | --- | --- |
 | `deterministic` | Всегда возвращает один и тот же результат для одинаковых входных данных. Безопасно для агрессивных оптимизаций и кэширования. | `substr()` &mdash; Возвращает одну и ту же подстроку при одинаковой строке и параметрах. |
 | `stable` | Возвращает одно и то же значение в рамках одного выполнения запроса, но может изменяться между выполнениями. Поддерживается не всеми хранилищами. Подробнее см. [Warehouse-specific volatility keywords](/reference/resource-configs/volatility#supported-volatility-types). | `now()` &mdash; Возвращает текущее время на момент начала запроса; остаётся постоянным в рамках одного запроса, но отличается между запусками. |

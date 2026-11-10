@@ -1,80 +1,80 @@
 ---
-title: About dbt self-hosted installations
+title: О локальных установках dbt
 id: about-local
-description: "dbt tools and resources that can be installed on your local machine"
-sidebar_label: "About self-hosted installation"
+description: "Инструменты и ресурсы dbt, которые можно установить на локальном компьютере"
+sidebar_label: "О локальной установке"
 pagination_next: "docs/local/install-dbt"
 pagination_prev: null
 availability: local_free
 ---
 
-<!-- TODO: sidebar location may change in Phase 3 -->
-<!-- BADGE: platform_login (added in phase 2) -->
+<!-- TODO: расположение в боковой панели может измениться на этапе 3 -->
+<!-- BADGE: platform_login (добавлено на этапе 2) -->
 
-You can run <Constant name="dbt" /> locally from your terminal with the dbt CLI, or from your code editor with the dbt VS Code extension. Local development lets you build, test, and run dbt projects from your own machine while connecting to your data platform.
+Вы можете запускать <Constant name="dbt" /> локально из терминала с помощью dbt CLI или из редактора кода с помощью расширения dbt для VS Code. Локальная разработка позволяет создавать, тестировать и запускать проекты dbt на собственном компьютере, подключаясь к вашей платформе данных.
 
 <VersionBlock firstVersion="2.0">
 
-## Install dbt
+## Установка dbt
 
-Install <Constant name="dbt" /> locally to run dbt commands from your terminal. You can install it with `pip`:
+Установите <Constant name="dbt" /> локально, чтобы выполнять команды dbt из терминала. Для установки можно использовать `pip`:
 
 ```shell
 python -m pip install dbt
 ```
 
-Or with `curl`:
+Или `curl`:
 
 ```shell
 curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh
 ```
 
-For full installation instructions, including adapter-specific setup, refer to [Install dbt](/docs/local/install-dbt).
+Полные инструкции по установке, включая настройку конкретных адаптеров, приведены в разделе [Установка dbt](/docs/local/install-dbt).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-:::tip Ready for the current version?
-v2 is the current generation of dbt and the recommended choice for most users &mdash; it's faster, adds richer developer tooling, and is free to use with <Constant name="fusion" />. [Upgrade to v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2).
+:::tip Готовы перейти на актуальную версию?
+v2 — актуальное поколение dbt и рекомендуемый выбор для большинства пользователей &mdash; эта версия работает быстрее, предоставляет более широкие возможности для разработчиков и доступна бесплатно с <Constant name="fusion" />. [Перейти на v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2).
 :::
 
-## Install <Constant name="core_v1" />
+## Установка <Constant name="core_v1" />
 
-<Constant name="core_v1" /> is the Python-based distribution and remains maintained. For full installation instructions, refer to [Install dbt](/docs/local/install-dbt?version=1.0).
+<Constant name="core_v1" /> — дистрибутив на базе Python, который продолжает поддерживаться. Полные инструкции по установке приведены в разделе [Установка dbt](/docs/local/install-dbt?version=1.0).
 
 </VersionBlock>
 
-## dbt VS Code extension
+## Расширение dbt для VS Code
 
-The [dbt VS Code extension](/docs/about-dbt-extension) lets you develop dbt projects from VS Code, Cursor, or Windsurf. Use the extension if you want an editor-based local development experience. For installation and setup, refer to the [extension docs](/docs/about-dbt-extension).
+[Расширение dbt для VS Code](/docs/about-dbt-extension) позволяет разрабатывать проекты dbt в VS Code, Cursor или Windsurf. Используйте расширение, если предпочитаете локальную разработку в редакторе кода. Инструкции по установке и настройке приведены в [документации расширения](/docs/about-dbt-extension).
 
 ## dbt Wizard
 
-[<Constant name="wizard" />](/docs/platform/wizard-overview#get-started) is a natural next step for local dbt development. It works with <Constant name="dbt" /> and adds an AI agent that understands your full project through the [dbt Information Schema](/docs/build/dbt-information-schema), a structured view of your [lineage](/docs/explore/explore-projects), model health, test coverage, and semantic definitions.
+[<Constant name="wizard" />](/docs/platform/wizard-overview#get-started) — естественный следующий шаг в локальной разработке с dbt. Он работает с <Constant name="dbt" /> и добавляет ИИ-агента, который понимает весь ваш проект благодаря [dbt Information Schema](/docs/build/dbt-information-schema) — структурированному представлению [происхождения и зависимостей данных](/docs/explore/explore-projects), состояния моделей, покрытия тестами и семантических определений.
 
-- **Build and refactor from natural language:** Describe the change, get a reviewable diff, approve before anything is written.
-- **Validate in a tight loop:** Every proposed change compiles and runs against your warehouse, catching issues before production.
-- **Navigate with full project context:** Traverse the [DAG](/docs/explore/explore-projects), surface downstream impact, and keep tests and YAML in sync as models evolve.
+- **Создавайте и рефакторите с помощью естественного языка:** Опишите изменение, получите набор изменений для проверки и подтвердите его до внесения каких-либо правок.
+- **Проверяйте изменения короткими итерациями:** Каждое предлагаемое изменение компилируется и выполняется в вашем хранилище данных, что позволяет выявлять проблемы до внедрения в рабочую среду.
+- **Ориентируйтесь в проекте с полным пониманием контекста:** Исследуйте [DAG](/docs/explore/explore-projects), выявляйте влияние на зависимые объекты и поддерживайте согласованность тестов и YAML по мере развития моделей.
 
-For data practitioners, <Constant name="wizard" /> adds an AI layer that knows your project, not just your code. Refer to the [dbt Wizard overview](/docs/platform/wizard-overview#get-started) to get started.
+Для специалистов по работе с данными <Constant name="wizard" /> добавляет ИИ-слой, который знает ваш проект, а не только код. Чтобы начать работу, ознакомьтесь с [обзором dbt Wizard](/docs/platform/wizard-overview#get-started).
 
-## dbt MCP server
+## Сервер dbt MCP
 
-The dbt MCP server connects your local dbt project to AI assistants using the [Model Context Protocol](https://modelcontextprotocol.io/). It works with <Constant name="dbt" /> and requires no repository clone.
+Сервер dbt MCP подключает ваш локальный проект dbt к ИИ-ассистентам с помощью [Model Context Protocol](https://modelcontextprotocol.io/). Он работает с <Constant name="dbt" /> и не требует клонирования репозитория.
 
-- **<Constant name="platform_cli" /> tools:** Run `dbt run`, `build`, `test`, `compile`, `list`, `parse`, and `show` directly from your AI assistant's chat interface.
-- **Local project context:** Surface model lineage, node details, and dependency graphs from your local `manifest.json` without leaving your editor.
-- **Code generation:** Auto-generate model YAML, source definitions, and staging SQL from your warehouse schema (requires the codegen toolset to be enabled).
-- **Zero-clone install:** Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and run `uvx dbt-mcp`. No repository clone needed!
+- **Инструменты <Constant name="platform_cli" />:** Выполняйте `dbt run`, `build`, `test`, `compile`, `list`, `parse` и `show` прямо из чата вашего ИИ-ассистента.
+- **Контекст локального проекта:** Получайте сведения о происхождении и зависимостях моделей, подробную информацию об узлах и графы зависимостей из локального файла `manifest.json`, не покидая редактор.
+- **Генерация кода:** Автоматически создавайте YAML для моделей, определения источников и SQL для промежуточных моделей на основе схемы вашего хранилища данных (необходимо включить набор инструментов codegen).
+- **Установка без клонирования репозитория:** Установите [uv](https://docs.astral.sh/uv/getting-started/installation/) и выполните `uvx dbt-mcp`. Клонировать репозиторий не нужно!
 
-[Connect dbt MCP server to your local project](/docs/dbt-ai/mcp-quickstart-cli).
+[Подключить сервер dbt MCP к локальному проекту](/docs/dbt-ai/mcp-quickstart-cli).
 
 
-## Licensing info
-dbt framework has two distributions which can both be installed locally for free, powered by a single engine:
+## Информация о лицензировании
+Фреймворк dbt представлен двумя дистрибутивами на базе единого движка, каждый из которых можно бесплатно установить локально:
 
-- The Apache 2.0 licensed open-source distribution. Both v1 and v2 are available as open source installations.
-- dbt v2 extends the dbt OSS offering with additional advanced capabilities &mdash; all free to use!
+- Дистрибутив с открытым исходным кодом под лицензией Apache 2.0. И v1, и v2 доступны для установки с открытым исходным кодом.
+- dbt v2 расширяет возможности dbt OSS дополнительными продвинутыми функциями &mdash; все они доступны бесплатно!
 
-Refer to [licensing](/docs/dbt-licensing) for more info.
+Дополнительную информацию см. в разделе [Лицензирование](/docs/dbt-licensing).

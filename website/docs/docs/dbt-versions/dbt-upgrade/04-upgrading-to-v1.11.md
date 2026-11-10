@@ -1,73 +1,73 @@
 ---
-title: "Upgrading to v1.11"
+title: "Обновление до v1.11"
 id: upgrading-to-v1.11
-description: New features and changes in dbt v1.11
+description: Новые возможности и изменения в dbt v1.11
 displayed_sidebar: "docs"
 availability:
   engine: v1
   access: free
 ---
 
-# Upgrading to v1.11
+# Обновление до v1.11
 
-## Resources
+## Ресурсы
 
-- [<Constant name="dbt" /> v1.11 changelog](https://github.com/dbt-labs/dbt/blob/1.11.latest/CHANGELOG.md)
-- [<Constant name="core" /> CLI Installation guide](/docs/local/install-dbt)
-- [dbt platform upgrade guide](/docs/dbt-versions/upgrade-dbt-platform-version)
+- [Журнал изменений <Constant name="dbt" /> v1.11](https://github.com/dbt-labs/dbt/blob/1.11.latest/CHANGELOG.md)
+- [Руководство по установке CLI <Constant name="core" />](/docs/local/install-dbt)
+- [Руководство по обновлению платформы dbt](/docs/dbt-versions/upgrade-dbt-platform-version)
 
-## What to know before upgrading
+## Что нужно знать перед обновлением
 
-dbt Labs is committed to providing backward compatibility for all versions 1.x. Any behavior changes will be accompanied by a [behavior change flag](/reference/global-configs/behavior-changes#behavior-change-flags) to provide a migration window for existing projects. If you encounter an error upon upgrading, please let us know by [opening an issue](https://github.com/dbt-labs/dbt/issues/new).
+dbt Labs стремится обеспечивать обратную совместимость для всех версий 1.x. Любые изменения поведения будут сопровождаться [флагом изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags), чтобы предоставить время для миграции существующих проектов. Если после обновления возникнет ошибка, сообщите нам об этом, [создав issue](https://github.com/dbt-labs/dbt/issues/new).
 
-<Constant name="dbt" /> provides the functionality from new versions of <Constant name="core" /> via [release tracks](/docs/dbt-versions/dbt-release-tracks) with automatic upgrades. If you have selected the **v1 Latest** release track in <Constant name="dbt" />, you already have access to all the features, fixes, and other functionality included in the latest <Constant name="core" /> version! If you have selected the **v1 Compatible** release track, you will have access in the next monthly **v1 Compatible** release after the <Constant name="dbt" /> v1.11 final release.
+<Constant name="dbt" /> предоставляет функциональность новых версий <Constant name="core" /> через [каналы выпуска](/docs/dbt-versions/dbt-release-tracks) с автоматическим обновлением. Если вы выбрали канал выпуска **v1 Latest** в <Constant name="dbt" />, вам уже доступны все возможности, исправления и другая функциональность последней версии <Constant name="core" />! Если вы выбрали канал выпуска **v1 Compatible**, вы получите доступ к ним в следующем ежемесячном выпуске **v1 Compatible** после выхода финальной версии <Constant name="dbt" /> v1.11.
 
-## New and changed features and functionality
+## Новые и изменённые возможности и функциональность
 
-New features and functionality available in <Constant name="dbt" /> v1.11
+Новые возможности и функциональность, доступные в <Constant name="dbt" /> v1.11
 
-### User-defined functions (UDFs)
+### Пользовательские функции (UDF)
 
-<Constant name="dbt" /> v1.11 introduces support for user-defined functions (UDFs), which enable you to define and register custom functions in your warehouse. Like macros, UDFs promote code reuse, but they are objects in the warehouse so you can reuse the same logic in tools outside dbt.
+В <Constant name="dbt" /> v1.11 появилась поддержка пользовательских функций (UDF), позволяющая определять и регистрировать собственные функции в хранилище данных. Как и макросы, UDF способствуют повторному использованию кода, но при этом являются объектами хранилища, поэтому одну и ту же логику можно повторно использовать в инструментах за пределами dbt.
 
-Key features include:
+Основные возможности:
 
-- **Define UDFs as first-class dbt resources**: Create UDF files in a `functions/` directory with corresponding YAML configuration.
-- **Execution**: Create, update, and rename UDFs as part of DAG execution using `dbt build --select "resource_type:function"`
-- **DAG integration**: When executing `dbt build`, UDFs are built before models that reference them, ensuring proper dependency management.
-- **New `function()` macro**: Reference UDFs in your models using the `{{ function('function_name') }}` Jinja macro.
-- **Deferral**: When you run a dbt command with `--defer` and `--state`, `function()` calls resolve to the UDF in the state manifest, so you can run models that depend on UDFs without building those UDFs first.
+- **Определение UDF как полноценных ресурсов dbt**: создавайте файлы UDF в каталоге `functions/` с соответствующей конфигурацией YAML.
+- **Выполнение**: создавайте, обновляйте и переименовывайте UDF в рамках выполнения DAG с помощью `dbt build --select "resource_type:function"`
+- **Интеграция с DAG**: при выполнении `dbt build` UDF создаются до моделей, которые на них ссылаются, что обеспечивает корректное управление зависимостями.
+- **Новый макрос `function()`**: ссылайтесь на UDF в моделях с помощью макроса Jinja `{{ function('function_name') }}`.
+- **Отложенное разрешение ссылок**: при запуске команды dbt с `--defer` и `--state` вызовы `function()` разрешаются в UDF из манифеста состояния, поэтому вы можете запускать модели, зависящие от UDF, без предварительного создания этих UDF.
 
-Read more about UDFs, including prerequisites and how to define and use them in the [UDF documentation](/docs/build/udfs).
+Подробнее об UDF, включая предварительные требования, способы определения и использования, читайте в [документации по UDF](/docs/build/udfs).
 
-### `DBT_ENGINE_` prefix for environment variables
+### Префикс `DBT_ENGINE_` для переменных окружения
 
-Engine configuration environment variables use the `DBT_ENGINE_` prefix. For example, `DBT_STATE` becomes `DBT_ENGINE_STATE`, `DBT_PROJECT_DIR` becomes `DBT_ENGINE_PROJECT_DIR`, and so on. Refer to [About flags (global configs)](/reference/global-configs/about-global-configs) for the full mapping.
+Переменные окружения для настройки движка используют префикс `DBT_ENGINE_`. Например, `DBT_STATE` становится `DBT_ENGINE_STATE`, `DBT_PROJECT_DIR` — `DBT_ENGINE_PROJECT_DIR` и так далее. Полное соответствие приведено в разделе [О флагах (глобальные настройки)](/reference/global-configs/about-global-configs).
 
-### Managing changes to legacy behaviors
+### Управление изменениями устаревшего поведения
 
-<Constant name="dbt" /> v1.11 introduces new flags for [managing changes to legacy behaviors](/reference/global-configs/behavior-changes). You may opt into recently introduced changes (disabled by default), or opt out of mature changes (enabled by default), by setting `true` / `false` values, respectively, for `flags` in `dbt_project.yml`.
+В <Constant name="dbt" /> v1.11 появились новые флаги для [управления изменениями устаревшего поведения](/reference/global-configs/behavior-changes). Вы можете включить недавно представленные изменения (отключённые по умолчанию) или отключить устоявшиеся изменения (включённые по умолчанию), задав соответственно значения `true` / `false` для `flags` в `dbt_project.yml`.
 
-You can read more about each of these behavior changes in the following links:
+Подробнее о каждом из этих изменений поведения можно прочитать по следующим ссылкам:
 
-- (Introduced, disabled by default) [`require_unique_project_resource_names`](/reference/global-configs/behavior-flags/require_unique_project_resource_names). This flag is set to `false` by default. With this setting, if two unversioned resources in the same package share the same name, dbt continues to run and raises a [`DuplicateNameDistinctNodeTypesDeprecation`](/reference/deprecations#duplicatenamedistinctnodetypesdeprecation) warning. When set to `true`, dbt raises a `DuplicateResourceNameError` error.
+- (Новый, отключён по умолчанию) [`require_unique_project_resource_names`](/reference/global-configs/behavior-flags/require_unique_project_resource_names). По умолчанию этот флаг имеет значение `false`. При таком значении, если два ресурса без версий в одном пакете имеют одинаковое имя, dbt продолжает работу и выдаёт предупреждение [`DuplicateNameDistinctNodeTypesDeprecation`](/reference/deprecations#duplicatenamedistinctnodetypesdeprecation). При значении `true` dbt выдаёт ошибку `DuplicateResourceNameError`.
 
-- (Introduced, disabled by default) [`require_ref_searches_node_package_before_root`](/reference/global-configs/behavior-flags/require_ref_searches_node_package_before_root). This flag is set to `false` by default. With this setting, when dbt resolves a `ref()` in a package model, it searches for the referenced model in the root project _first_, then in the package where the model is defined. When set to `true`, dbt searches the package where the model is defined _before_ searching the root project.
+- (Новый, отключён по умолчанию) [`require_ref_searches_node_package_before_root`](/reference/global-configs/behavior-flags/require_ref_searches_node_package_before_root). По умолчанию этот флаг имеет значение `false`. При таком значении, когда dbt разрешает `ref()` в модели пакета, он _сначала_ ищет целевую модель в корневом проекте, а затем — в пакете, где определена модель. При значении `true` dbt ищет в пакете, где определена модель, _прежде чем_ искать в корневом проекте.
 
-### Deprecation warnings enabled by default
+### Предупреждения об устаревших возможностях включены по умолчанию
 
-Deprecation warnings from JSON schema validation are now enabled by default when validating your YAML configuration files (such as `schema.yml` and `dbt_project.yml`) for projects running using the Snowflake, Databricks, BigQuery, and Redshift adapters.
+Предупреждения об устаревших возможностях, выявленных при проверке по JSON-схеме, теперь включены по умолчанию при валидации файлов конфигурации YAML (таких как `schema.yml` и `dbt_project.yml`) в проектах, использующих адаптеры Snowflake, Databricks, BigQuery и Redshift.
 
-These warnings help you proactively identify and update deprecated configurations (such as misspelled config keys, deprecated properties, or incorrect data types).
+Эти предупреждения помогают заблаговременно выявлять и обновлять устаревшие настройки (например, ключи конфигурации с опечатками, устаревшие свойства или некорректные типы данных).
 
-You'll see the following deprecation warnings by default:
+По умолчанию вы увидите следующие предупреждения об устаревших возможностях:
 * [CustomKeyInConfigDeprecation](/reference/deprecations#customkeyinconfigdeprecation)
 * [CustomKeyInObjectDeprecation](/reference/deprecations#customkeyinobjectdeprecation)
 * [CustomTopLevelKeyDeprecation](/reference/deprecations#customtoplevelkeydeprecation)
 * [MissingPlusPrefixDeprecation](/reference/deprecations#missingplusprefixdeprecation)
 * [SourceOverrideDeprecation](/reference/deprecations#sourceoverridedeprecation)
 
-Each deprecation type can be silenced using the [warn-error-options](/reference/global-configs/warnings#configuration) project configuration. For example, to silence all of the above deprecations within `dbt_project.yml`: 
+Предупреждения каждого типа можно подавить с помощью настройки проекта [warn-error-options](/reference/global-configs/warnings#configuration). Например, чтобы подавить все перечисленные выше предупреждения, добавьте в `dbt_project.yml`: 
 
 <File name='dbt_project.yml'>
 ```yml
@@ -83,12 +83,12 @@ flags:
 ```
 </File>
 
-Alternatively, the `--warn-error-options` flag can be used to silence specific deprecations from the command line:
+Кроме того, для подавления конкретных предупреждений из командной строки можно использовать флаг `--warn-error-options`:
 ```sh
 dbt parse --warn-error-options '{"silence": ["CustomTopLevelKeyDeprecation", "CustomKeyInConfigDeprecation", "CustomKeyInObjectDeprecation", "MissingPlusPrefixDeprecation", "SourceOverrideDeprecation"]}'
 ```
 
-To silence _all_ deprecation warnings within `dbt_project.yml`:
+Чтобы подавить _все_ предупреждения об устаревших возможностях, добавьте в `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -101,49 +101,47 @@ flags:
 ```
 </File>
 
-Similarly, all deprecation warnings can be silenced via the `--warn-error-options` command line flag:
+Аналогично все предупреждения об устаревших возможностях можно подавить с помощью флага командной строки `--warn-error-options`:
 
 ```sh
 dbt parse --warn-error-options '{"silence": ["Deprecations"]}'
 ```
 
-## Adapter-specific features and functionalities
+## Возможности и функциональность отдельных адаптеров
 
 ### Snowflake
 
-- The Snowflake adapter supports basic table materialization on Iceberg tables registered in a Glue catalog through a [catalog-linked database](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). For more information, see [Glue Data Catalog](/docs/build/iceberg/adapters/snowflake-iceberg-support#external-catalogs).
-- The `cluster_by` configuration is supported in dynamic tables. For more information, see [Dynamic table clustering](/reference/resource-configs/snowflake-configs#dynamic-table-clustering).
-- The `immutable_where` configuration is supported in dynamic tables. For more information, see [Snowflake configurations](/reference/resource-configs/snowflake-configs#immutable-where).
-- You can set [`copy_grants: true`](/reference/resource-configs/snowflake-configs#copy-grants-dynamic-tables) on a dynamic table so dbt adds `COPY GRANTS` when the table is recreated during a `--full-refresh`. The default is `false`.
-- Set the [`refresh_warehouse`](/reference/resource-configs/snowflake-configs#refresh-warehouse) parameter to choose which Snowflake warehouse runs a dynamic table's automatic refreshes. This is separate from `snowflake_warehouse`, which is used for <Term id="ddl" /> execution. For example, you might use a smaller warehouse for refreshes and a larger one for DDL. If `refresh_warehouse` is not set, `snowflake_warehouse` is used for both DDL execution and automatic refreshes.
+- Адаптер Snowflake поддерживает базовую материализацию в виде таблицы для таблиц Iceberg, зарегистрированных в каталоге Glue через [базу данных, связанную с каталогом](https://docs.snowflake.com/en/user-guide/tables-iceberg-catalog-linked-database#label-catalog-linked-db-create). Подробнее см. в разделе [Glue Data Catalog](/docs/build/iceberg/adapters/snowflake-iceberg-support#external-catalogs).
+- В динамических таблицах поддерживается настройка `cluster_by`. Подробнее см. в разделе [Кластеризация динамических таблиц](/reference/resource-configs/snowflake-configs#dynamic-table-clustering).
+- В динамических таблицах поддерживается настройка `immutable_where`. Подробнее см. в разделе [Настройки Snowflake](/reference/resource-configs/snowflake-configs#immutable-where).
+- Вы можете задать [`copy_grants: true`](/reference/resource-configs/snowflake-configs#copy-grants-dynamic-tables) для динамической таблицы, чтобы dbt добавлял `COPY GRANTS` при её повторном создании во время `--full-refresh`. Значение по умолчанию — `false`.
+- Задайте параметр [`refresh_warehouse`](/reference/resource-configs/snowflake-configs#refresh-warehouse), чтобы выбрать, какой вычислительный склад Snowflake будет выполнять автоматические обновления динамической таблицы. Этот параметр независим от `snowflake_warehouse`, который используется для выполнения <Term id="ddl" />. Например, для обновлений можно использовать склад меньшего размера, а для DDL — большего. Если `refresh_warehouse` не задан, `snowflake_warehouse` используется и для выполнения DDL, и для автоматических обновлений.
 
 ### BigQuery
 
-- To improve performance, dbt can issue a single batch query when calculating source freshness through metadata, instead of executing one query per source. To enable this feature, set [bigquery_use_batch_source_freshness](/reference/global-configs/bigquery-changes#the-bigqueryusebatchsourcefreshness-flag) to `true`.
+- Для повышения производительности dbt может выполнять один пакетный запрос при проверке актуальности источников по метаданным вместо отдельного запроса для каждого источника. Чтобы включить эту возможность, задайте для [bigquery_use_batch_source_freshness](/reference/global-configs/bigquery-changes#the-bigquery_use_batch_source_freshness-flag) значение `true`.
 
 ### Redshift
 
-- The new `datasharing` profile credential enables `dbt-redshift` to use Redshift-native metadata commands (`SHOW` commands such as `SHOW TABLES` and `SHOW COLUMNS`) instead of PostgreSQL catalog tables such as `pg_*` and `information_schema`. This supports cross-database and cross-cluster access with [Redshift Datasharing](https://docs.aws.amazon.com/redshift/latest/dg/datashare-overview.html). For configuration details, refer to [Redshift setup](/docs/local/connect-data-platform/redshift-setup?version=1.12#datasharing).
-- The `drop_without_cascade` profile credential emits `DROP TABLE/VIEW/MATERIALIZED VIEW` statements without `CASCADE`. Redshift resolves the `CASCADE` dependency graph on every `DROP`, which adds overhead on large clusters. If your project has no downstream dependents (for example, it uses only unbound views) you can set `drop_without_cascade: true` to skip that cost. When enabled and a dependent object exists, Redshift raises an error. For configuration details, refer to [Redshift setup](/docs/local/connect-data-platform/redshift-setup).
+- Новый параметр подключения профиля `datasharing` позволяет `dbt-redshift` использовать собственные команды Redshift для работы с метаданными (команды `SHOW`, такие как `SHOW TABLES` и `SHOW COLUMNS`) вместо таблиц системного каталога PostgreSQL, таких как `pg_*` и `information_schema`. Это обеспечивает доступ между базами данных и кластерами с помощью [Redshift Datasharing](https://docs.aws.amazon.com/redshift/latest/dg/datashare-overview.html). Подробности настройки см. в разделе [Настройка Redshift](/docs/local/connect-data-platform/redshift-setup?version=1.12#datasharing).
+- Параметр подключения профиля `drop_without_cascade` обеспечивает формирование инструкций `DROP TABLE/VIEW/MATERIALIZED VIEW` без `CASCADE`. Redshift обрабатывает граф зависимостей `CASCADE` при каждом `DROP`, что создаёт дополнительные накладные расходы в больших кластерах. Если у объектов вашего проекта нет зависимых объектов (например, используются только представления без привязки к схеме), можно задать `drop_without_cascade: true`, чтобы избежать этих затрат. Если этот параметр включён и зависимый объект существует, Redshift выдаёт ошибку. Подробности настройки см. в разделе [Настройка Redshift](/docs/local/connect-data-platform/redshift-setup).
 
 ### Spark
 
-- New profile configurations have been added to enhance [retry handling for PyHive connections](/reference/resource-configs/spark-configs#retry-handling-for-pyhive-connections):
-  - `poll_interval`: Controls how frequently the adapter polls the Thrift server to check if an async query has completed.
-  - `query_timeout`: Adds an overall timeout (in seconds) for query execution. If a query exceeds the set duration during polling, it raises a `DbtRuntimeError`. This helps prevent indefinitely hanging queries.
-  - `query_retries`: Handles connection loss during query polling by automatically retrying.
+- Добавлены новые настройки профиля для улучшения [обработки повторных попыток для подключений PyHive](/reference/resource-configs/spark-configs#retry-handling-for-pyhive-connections):
+  - `poll_interval`: определяет, как часто адаптер опрашивает сервер Thrift, чтобы проверить, завершился ли асинхронный запрос.
+  - `query_timeout`: задаёт общий тайм-аут (в секундах) выполнения запроса. Если во время опроса выясняется, что запрос превысил заданную длительность, возникает ошибка `DbtRuntimeError`. Это помогает предотвратить бесконечное зависание запросов.
+  - `query_retries`: обрабатывает потерю соединения во время опроса состояния запроса, автоматически выполняя повторные попытки.
 
 ### Starburst/Trino
 
-- The Starburst/Trino adapter supports scalar SQL [UDFs](/docs/build/udfs). For configuration details and limitations, refer to [Starburst/Trino configurations](/reference/resource-configs/trino-configs#user-defined-functions).
+- Адаптер Starburst/Trino поддерживает скалярные SQL-[UDF](/docs/build/udfs). Подробности настройки и ограничения см. в разделе [Настройки Starburst/Trino](/reference/resource-configs/trino-configs#user-defined-functions).
 
-## Quick hits
+## Другие изменения в кратком обзоре
 
-You will find these quick hits in <Constant name="dbt" /> v1.11:
-- The [`--sqlparse`](/reference/global-configs/sqlparse) flag sets [`sqlparse`](https://sqlparse.readthedocs.io/en/latest/api.html#security-and-performance-considerations) `MAX_GROUPING_DEPTH` and `MAX_GROUPING_TOKENS` when dbt parses SQL during compilation.
-- The `dbt ls` command can now write out nested keys. This makes it easier to debug and troubleshoot your project. Example: `dbt ls --output json --output-keys config.materialized`
-- Manifest metadata now includes `run_started_at`, providing better tracking of when dbt runs were initiated.
-- When a model is disabled, unit tests for that model are automatically disabled as well.
-- You can use the new [`config.meta_get()`](/reference/dbt-jinja-functions/config#configmeta_get) and [`config.meta_require()`](/reference/dbt-jinja-functions/config#configmeta_require) functions to access custom configurations stored under `meta`. These functions have been backported to <Constant name="dbt" /> v1.10. 
-
-
+В <Constant name="dbt" /> v1.11 также доступны следующие изменения:
+- Флаг [`--sqlparse`](/reference/global-configs/sqlparse) задаёт параметры `MAX_GROUPING_DEPTH` и `MAX_GROUPING_TOKENS` библиотеки [`sqlparse`](https://sqlparse.readthedocs.io/en/latest/api.html#security-and-performance-considerations), когда dbt разбирает SQL во время компиляции.
+- Команда `dbt ls` теперь может выводить вложенные ключи. Это упрощает отладку проекта и устранение неполадок. Пример: `dbt ls --output json --output-keys config.materialized`
+- Метаданные манифеста теперь включают `run_started_at`, что позволяет точнее отслеживать время начала запусков dbt.
+- При отключении модели её модульные тесты также автоматически отключаются.
+- Вы можете использовать новые функции [`config.meta_get()`](/reference/dbt-jinja-functions/config#configmeta_get) и [`config.meta_require()`](/reference/dbt-jinja-functions/config#configmeta_require) для доступа к пользовательским настройкам, хранящимся в `meta`. Эти функции также перенесены в <Constant name="dbt" /> v1.10.

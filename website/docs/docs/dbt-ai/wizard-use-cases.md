@@ -1,43 +1,43 @@
 ---
-title: "dbt Wizard use cases"
+title: "Сценарии использования dbt Wizard"
 id: "wizard-use-cases"
-description: "Realistic analytics engineering scenarios for dbt Wizard — from building new models to debugging failures."
-sidebar_label: "Use cases and examples"
+description: "Практические сценарии аналитической инженерии для dbt Wizard — от создания новых моделей до диагностики сбоев."
+sidebar_label: "Сценарии использования и примеры"
 tags: [AI, Wizard]
 availability: all_users
 ---
 
 <IntroText>
-Common use cases for <Constant name="wizard" />, with example prompts and what to expect. No <WizardPopcorn>spellbook</WizardPopcorn> needed.
+Типичные сценарии использования <Constant name="wizard" /> с примерами запросов и описанием ожидаемых результатов. <WizardPopcorn>Книга заклинаний</WizardPopcorn> не понадобится.
 </IntroText>
 
-<Constant name="wizard" /> works best when you give it a clear scope (which dbt model or area), an intent (what you want to change or learn), and any constraints (naming conventions, materialization, tests). The following examples follow that pattern.
+<Constant name="wizard" /> работает лучше всего, когда вы чётко задаёте область задачи (модель dbt или часть проекта), цель (что вы хотите изменить или узнать) и ограничения (соглашения об именовании, материализация, тесты). Приведённые ниже примеры следуют этому подходу.
 
-Start a new [chat or session](/best-practices/how-to-use-wizard/wizard-1-intro#use-one-chat-per-task) for each discrete task. For example, building a model and debugging an unrelated job failure should be two separate conversations.
+Начинайте новый [чат или сеанс](/best-practices/how-to-use-wizard/wizard-1-intro#use-one-chat-per-task) для каждой отдельной задачи. Например, создание модели и диагностика не связанного с ней сбоя задания должны обсуждаться в двух отдельных диалогах.
 
 <!-- no toc -->
-- [Build a new model](#build-a-new-model)
-- [Refactor to incremental](#refactor-to-incremental)
-- [Add tests and docs](#add-tests-and-docs)
-- [Debug a job failure](#debug-a-job-failure)
-- [Assess source impact](#assess-source-impact)
-- [Rename a column project-wide](#rename-a-column-project-wide)
-- [Multi-file changes](#multi-file-changes)
-- [Validate before shipping](#validate-before-shipping)
-- [Add a semantic model](#add-a-semantic-model)
+- [Создание новой модели](#build-a-new-model)
+- [Переход на инкрементальную материализацию](#refactor-to-incremental)
+- [Добавление тестов и документации](#add-tests-and-docs)
+- [Диагностика сбоя задания](#debug-a-job-failure)
+- [Оценка влияния изменений источника](#assess-source-impact)
+- [Переименование столбца во всём проекте](#rename-a-column-project-wide)
+- [Изменения в нескольких файлах](#multi-file-changes)
+- [Проверка перед выпуском](#validate-before-shipping)
+- [Добавление семантической модели](#add-a-semantic-model)
 
-These prompts work the same across surfaces &mdash; the [CLI](/docs/dbt-ai/wizard-cli), the [Wizard Desktop](/docs/dbt-ai/wizard-desktop), and <Constant name="wizard" /> in [<Constant name="dbt_platform" />](/docs/platform/wizard-platform). For examples specific to the Studio IDE, refer to the [Prompt cookbook](/guides/prompt-cookbook). To use <Constant name="wizard" /> in the CLI, use the `wizard` [command reference](/docs/dbt-ai/wizard-cli-reference).
+Эти запросы работают одинаково во всех интерфейсах &mdash; в [CLI](/docs/dbt-ai/wizard-cli), в [Wizard Desktop](/docs/dbt-ai/wizard-desktop) и в <Constant name="wizard" /> на [<Constant name="dbt_platform" />](/docs/platform/wizard-platform). Примеры для Studio IDE приведены в [Сборнике запросов](/guides/prompt-cookbook). Для работы с <Constant name="wizard" /> в CLI используйте [справочник команд](/docs/dbt-ai/wizard-cli-reference) `wizard`.
 
 
-:::tip Best practices for using dbt Wizard
-Once you're set up, refer to [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro) for recommended workflows on real project tasks.
+:::tip Рекомендации по использованию dbt Wizard
+После настройки ознакомьтесь с руководством [Как использовать dbt Wizard в проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro), где описаны рекомендуемые рабочие процессы для реальных задач проекта.
 :::
 
-## Build a new model
+## Создание новой модели {#build-a-new-model}
 
-You have clean source data and want a new mart model without writing all the SQL by hand.
+У вас есть очищенные исходные данные, и вы хотите создать новую модель витрины данных, не прописывая весь SQL вручную.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```text
 Create a model called `fct_monthly_revenue` that joins `stg_orders` and `stg_payments`,
@@ -45,44 +45,44 @@ groups by `month` and `customer_id`, and materializes as a table. Add `not_null`
 to the primary key and a unique test on the grain.
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Reads `stg_orders` and `stg_payments` from your project index to understand the available columns
-2. Generates `fct_monthly_revenue.sql` with the join and aggregation logic
-3. Creates a matching YAML block with the tests you asked for
-4. Shows a diff for both files — you approve before anything is saved
+**Что делает <Constant name="wizard" />:**
+1. Читает `stg_orders` и `stg_payments` из индекса вашего проекта, чтобы определить доступные столбцы
+2. Генерирует `fct_monthly_revenue.sql` с логикой соединения и агрегации
+3. Создаёт соответствующий блок YAML с запрошенными тестами
+4. Показывает различия для обоих файлов — изменения сохраняются только после вашего одобрения
 
-**Tips:**
-- Reference your existing staging models by name so <Constant name="wizard" /> uses the right columns
-- If your project has a team style guide in `.agents/skills/`, <Constant name="wizard" /> picks it up automatically and applies naming and materialization conventions
+**Советы:**
+- Указывайте имена существующих staging-моделей, чтобы <Constant name="wizard" /> использовал нужные столбцы
+- Если в вашем проекте есть командное руководство по стилю в `.agents/skills/`, <Constant name="wizard" /> автоматически находит его и применяет соглашения об именовании и материализации
 
 
-## Refactor to incremental
+## Переход на инкрементальную материализацию {#refactor-to-incremental}
 
-A full-refresh mart is getting slow. You want to switch it to incremental without breaking existing tests.
+Полное обновление витрины данных занимает всё больше времени. Вы хотите перевести её на инкрементальную материализацию, не нарушив работу существующих тестов.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 Refactor `fct_orders` to use incremental materialization with a `unique_key` on `order_id`
 and an updated_at filter. Keep all existing tests and don't change the output schema.
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Reads the current `fct_orders.sql` and its YAML
-2. Rewrites the model with an `{% if is_incremental() %}` filter
-3. Adds the `unique_key` and `materialized = 'incremental'` config
-4. Flags if any existing tests might behave differently on incremental runs
+**Что делает <Constant name="wizard" />:**
+1. Читает текущий файл `fct_orders.sql` и его YAML
+2. Переписывает модель, добавляя фильтр `{% if is_incremental() %}`
+3. Добавляет настройки `unique_key` и `materialized = 'incremental'`
+4. Отмечает существующие тесты, поведение которых может измениться при инкрементальных запусках
 
-**Tips:**
-- Tell <Constant name="wizard" /> which column to use as the high-watermark: it can infer a likely candidate from your schema but an explicit instruction is more reliable
-- Ask it to add a `full_refresh` note to the model description so future maintainers understand the intent
+**Советы:**
+- Укажите <Constant name="wizard" />, какой столбец использовать для отслеживания последнего обработанного значения: он может выбрать подходящий столбец на основе вашей схемы, но явное указание надёжнее
+- Попросите добавить примечание о `full_refresh` в описание модели, чтобы те, кто будет сопровождать её в дальнейшем, понимали замысел
 
 
-## Add tests and docs
+## Добавление тестов и документации {#add-tests-and-docs}
 
-You've inherited a model with no tests or YAML. You want coverage without writing boilerplate.
+Вам досталась модель без тестов и YAML. Вы хотите обеспечить покрытие тестами, не создавая шаблонный код вручную.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 Generate tests and documentation for dim_customers. Add not_null and unique on
@@ -90,135 +90,135 @@ customer_id, not_null on email, and accepted_values on customer_status with valu
 active, churned, and prospect. Write a column description for each.
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Reads `dim_customers.sql` and any existing YAML
-2. Generates a complete `dim_customers.yml` with model description, column descriptions, and the tests you specified
-3. Infers reasonable descriptions from column names — you review and edit before approving
+**Что делает <Constant name="wizard" />:**
+1. Читает `dim_customers.sql` и существующие файлы YAML, если они есть
+2. Генерирует полный файл `dim_customers.yml` с описанием модели, описаниями столбцов и указанными вами тестами
+3. Формулирует подходящие описания на основе имён столбцов — вы проверяете и редактируете их перед одобрением
 
-**Tips:**
-- You can ask <Constant name="wizard" /> to write descriptions in a specific voice or format: "Write the descriptions in plain language, one sentence each"
-- To document a whole layer at once: "Generate documentation for all models in `models/staging/` that don't have a YAML file yet"
+**Советы:**
+- Вы можете попросить <Constant name="wizard" /> писать описания в определённом стиле или формате: «Напиши описания простым языком, по одному предложению на каждое»
+- Чтобы документировать целый слой сразу: «Создай документацию для всех моделей в `models/staging/`, у которых ещё нет файла YAML»
 
-For a workflow that finds coverage gaps and checks candidate assertions against warehouse data, refer to [Add data-informed tests with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-4-data-informed-tests).
+Рабочий процесс поиска пробелов в покрытии тестами и проверки предполагаемых условий на данных хранилища описан в руководстве [Добавление тестов на основе данных с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-4-data-informed-tests).
 
 
-## Debug a job failure
+## Диагностика сбоя задания {#debug-a-job-failure}
 
-A <Constant name="dbt_platform" /> job failed overnight. You want to understand why without digging through logs manually.
+Ночью произошёл сбой задания в <Constant name="dbt_platform" />. Вы хотите понять причину, не просматривая журналы вручную.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 The nightly job failed. What's the root cause and how do I fix it?
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Uses the run evidence you provide, or connected dbt MCP tools, to retrieve and inspect job run details
-2. Identifies the failing model, the error message, and the likely cause
-3. Proposes a fix and shows the diff
-4. Notes if your local branch differs from the job's branch so you have full context
+**Что делает <Constant name="wizard" />:**
+1. Использует предоставленные вами данные о запуске или подключённые инструменты dbt MCP, чтобы получить и изучить подробности запуска задания
+2. Определяет модель, в которой произошёл сбой, сообщение об ошибке и вероятную причину
+3. Предлагает исправление и показывает различия
+4. Сообщает, если ваша локальная ветка отличается от ветки задания, чтобы у вас был полный контекст
 
-**Tips:**
-- You can be more specific: "What caused the failure in `fct_orders` in the last run of the Production job?"
-- Wizard won't apply a fix without your approval, which is especially useful when the failure is in a production model
+**Советы:**
+- Можно задать более конкретный вопрос: «Что вызвало сбой в `fct_orders` при последнем запуске задания Production?»
+- Wizard не применит исправление без вашего одобрения, что особенно полезно, если сбой произошёл в модели рабочей среды
 
-For the evidence-gathering, diagnosis, and validation procedure, refer to [Debug a failed dbt job with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-5-debug-failed-job).
+Процедура сбора диагностических данных, поиска причины и проверки описана в руководстве [Диагностика сбоя задания dbt с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-5-debug-failed-job).
 
 
-## Assess source impact
+## Оценка влияния изменений источника {#assess-source-impact}
 
-Before modifying a stg model, you want to know what other downstream models might be affected.
+Перед изменением модели stg вы хотите узнать, какие зависимые модели могут быть затронуты.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 If I change the grain of stg_payments from one row per payment to one row per
 payment attempt, which downstream models break?
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Runs a lineage and impact query against your project to find all downstream dependents of `stg_payments`
-2. Identifies which models join on payment-level keys and would be affected by a grain change
-3. Lists the models by severity — marts and exposures first, then intermediate models
-4. Suggests which models need to be updated as part of the change
+**Что делает <Constant name="wizard" />:**
+1. Выполняет запрос к графу происхождения данных и анализирует влияние изменений в вашем проекте, чтобы найти все ресурсы, зависящие от `stg_payments`
+2. Определяет, какие модели выполняют соединение по ключам уровня платежа и будут затронуты изменением уровня детализации
+3. Перечисляет модели по степени критичности — сначала витрины данных и exposures, затем промежуточные модели
+4. Предлагает, какие модели нужно обновить в рамках изменения
 
-**Tips:**
-- You don't need to be precise about the change: even a "what depends on stg_payments?" gives you the blast radius
-- Follow up with: "Write a migration plan for making this change safely"
+**Советы:**
+- Необязательно точно описывать изменение: даже вопрос «Что зависит от stg_payments?» позволяет оценить область его влияния
+- Продолжите запросом: «Напиши план миграции для безопасного внесения этого изменения»
 
-## Rename a column project-wide
+## Переименование столбца во всём проекте {#rename-a-column-project-wide}
 
-A source column has been renamed. You need to update all references without missing anything.
+Столбец в источнике переименован. Вам нужно обновить все ссылки на него, ничего не пропустив.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 The source column user_id in raw_customers has been renamed to customer_id.
 Update stg_customers and find any downstream models that reference user_id directly.
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Updates the column alias in `stg_customers.sql`
-2. Searches downstream models for direct references to `user_id`
-3. Proposes updates to any models that would break
-4. Updates YAML column descriptions to match
+**Что делает <Constant name="wizard" />:**
+1. Обновляет псевдоним столбца в `stg_customers.sql`
+2. Ищет прямые ссылки на `user_id` в зависимых моделях
+3. Предлагает обновления для всех моделей, работа которых будет нарушена
+4. Приводит описания столбцов в YAML в соответствие с изменениями
 
-**Tips:**
-- Always run `dbt compile` after <Constant name="wizard" />'s changes to catch any references it might have missed
-- Ask Wizard to "check for user_id in any raw SQL strings or Jinja macros too" for thorough coverage
+**Советы:**
+- Всегда запускайте `dbt compile` после изменений, внесённых <Constant name="wizard" />, чтобы обнаружить ссылки, которые он мог пропустить
+- Для более полного охвата попросите Wizard «также проверить наличие user_id в любых строках с SQL-кодом или макросах Jinja»
 
-## Multi-file changes
+## Изменения в нескольких файлах {#multi-file-changes}
 
-You need to make a change that touches multiple files at once — a model rename, a contract update, or a schema change — and have all the related files stay in sync.
+Вам нужно внести изменение, затрагивающее сразу несколько файлов, — переименовать модель, обновить контракт или изменить схему — и сохранить согласованность всех связанных файлов.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 Rename dim_users to dim_customers. Update the model file, its YAML, every
 downstream ref(), the tests, the documentation, and any exposures that point to it.
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Renames `dim_users.sql` to `dim_customers.sql`
-2. Updates the model name in the corresponding YAML
-3. Searches the project for `ref('dim_users')` and rewrites each occurrence
-4. Updates any tests, docs blocks, and exposures that reference the old name
-5. Compiles the project to confirm every reference resolves before showing you the diff
-6. Flags anything it couldn't update automatically (for example, raw SQL strings or external dashboards)
+**Что делает <Constant name="wizard" />:**
+1. Переименовывает `dim_users.sql` в `dim_customers.sql`
+2. Обновляет имя модели в соответствующем YAML
+3. Ищет в проекте `ref('dim_users')` и переписывает каждое вхождение
+4. Обновляет все тесты, блоки docs и exposures, которые ссылаются на старое имя
+5. Компилирует проект, чтобы убедиться в корректности всех ссылок, прежде чем показать вам различия
+6. Отмечает всё, что не удалось обновить автоматически (например, строки с SQL-кодом или внешние дашборды)
 
-**Tips:**
-- Multi-file changes are coordinated as a single diff: review them together rather than file by file
-- For column type or schema changes, name the new type explicitly: "Change `order_amount` in `fct_orders` from `numeric` to `decimal(18,2)` and update downstream models and tests"
+**Советы:**
+- Изменения в нескольких файлах согласуются как единый набор различий: проверяйте их вместе, а не по отдельным файлам
+- При изменении типа столбца или схемы явно указывайте новый тип: «Измени тип `order_amount` в `fct_orders` с `numeric` на `decimal(18,2)` и обнови зависимые модели и тесты»
 
 
-## Validate before shipping
+## Проверка перед выпуском {#validate-before-shipping}
 
-For changes where correctness matters more than speed, ask <Constant name="wizard" /> to assess impact and validate the result against your project.
+Для изменений, где корректность важнее скорости, попросите <Constant name="wizard" /> оценить влияние и проверить результат в контексте вашего проекта.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 Add not_null and unique tests to the primary key of dim_customers. Use heavy
 validation, investigate any failures, and summarize skipped checks.
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Generates the YAML for the new tests
-2. Assesses the affected resources and proposes a validation plan
-3. Runs the approved compile, build, test, and comparison steps for the selected validation level
-4. Reports failures, differences, unresolved risks, and skipped checks
-5. Shows the proposed changes for you to review
+**Что делает <Constant name="wizard" />:**
+1. Генерирует YAML для новых тестов
+2. Оценивает затронутые ресурсы и предлагает план проверки
+3. Выполняет одобренные шаги компиляции, сборки, тестирования и сравнения для выбранного уровня проверки
+4. Сообщает о сбоях, различиях, неустранённых рисках и пропущенных проверках
+5. Показывает предложенные изменения для вашей проверки
 
-In <Constant name="wizard" /> CLI, choose light, medium, heavy, or skipped validation based on the risk and cost of the change. Follow the [validation workflow](/best-practices/how-to-use-wizard/wizard-3-validate-changes) for the checks included at each level.
+В CLI <Constant name="wizard" /> выбирайте уровень проверки light, medium, heavy или skipped в зависимости от риска и стоимости изменения. Перечень проверок для каждого уровня приведён в [описании процесса проверки](/best-practices/how-to-use-wizard/wizard-3-validate-changes).
 
-**Tips:**
-- State the business behavior that must remain true, not only the commands to run
+**Советы:**
+- Указывайте, какое поведение с точки зрения бизнеса должно сохраниться, а не только какие команды нужно выполнить
 
-## Add a semantic model
+## Добавление семантической модели {#add-a-semantic-model}
 
-You have a mart model and want to expose it via the dbt Semantic Layer.
+У вас есть модель витрины данных, и вы хотите предоставить к ней доступ через dbt Semantic Layer.
 
-**Example prompt:**
+**Пример запроса:**
 
 ```
 Create a semantic model for fct_orders. Include a revenue metric that sums
@@ -226,27 +226,27 @@ order_total, a count of orders, and time dimensions on order_date at day,
 week, and month granularity.
 ```
 
-**What <Constant name="wizard" /> does:**
-1. Reads `fct_orders.sql` and its YAML to understand available columns
-2. Determines the dbt version and selects the compatible Semantic Layer YAML structure
-3. Proposes entities, dimensions, and metrics based on the model grain and business request
-4. Adds the definitions you approve and validates their references
+**Что делает <Constant name="wizard" />:**
+1. Читает `fct_orders.sql` и его YAML, чтобы определить доступные столбцы
+2. Определяет версию dbt и выбирает совместимую структуру YAML для Semantic Layer
+3. Предлагает сущности, измерения и метрики на основе уровня детализации модели и бизнес-запроса
+4. Добавляет одобренные вами определения и проверяет их ссылки
 
-**Tips:**
-- If you're unsure what entities to use, ask first: "What would be good entities for a semantic model on fct_orders?"
-- <Constant name="wizard" /> follows the [dbt Semantic Layer documentation](/docs/build/semantic-models): you can ask it to explain any generated field
+**Советы:**
+- Если вы не уверены, какие сущности использовать, сначала спросите: «Какие сущности подойдут для семантической модели на основе fct_orders?»
+- <Constant name="wizard" /> следует [документации dbt Semantic Layer](/docs/build/semantic-models): вы можете попросить его объяснить любое сгенерированное поле
 
-For version-specific examples and validation steps, refer to [Build Semantic Layer definitions with <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-7-semantic-layer).
+Примеры для конкретных версий и шаги проверки приведены в руководстве [Создание определений Semantic Layer с помощью <Constant name="wizard" />](/best-practices/how-to-use-wizard/wizard-7-semantic-layer).
 
-## Related docs
+## Связанная документация
 
-- [Get started with dbt Wizard](/docs/platform/wizard-overview#get-started)
-- [Understand a dbt project](/best-practices/how-to-use-wizard/wizard-2-understand-project)
-- [Validate dbt changes](/best-practices/how-to-use-wizard/wizard-3-validate-changes)
-- [Add data-informed tests](/best-practices/how-to-use-wizard/wizard-4-data-informed-tests)
-- [Debug a failed job](/best-practices/how-to-use-wizard/wizard-5-debug-failed-job)
-- [Build Semantic Layer definitions](/best-practices/how-to-use-wizard/wizard-7-semantic-layer)
-- [dbt Wizard overview](/docs/dbt-ai/wizard-cli)
-- [Configure BYOK](/docs/dbt-ai/wizard-byok)
-- [dbt Wizard in Studio IDE](/docs/dbt-ai/wizard-ide): same agent, in dbt platform
-- [Prompt cookbook](/guides/prompt-cookbook): more prompt patterns for the dbt Wizard in Studio IDE (many apply to the CLI too)
+- [Начало работы с dbt Wizard](/docs/platform/wizard-overview#get-started)
+- [Изучение проекта dbt](/best-practices/how-to-use-wizard/wizard-2-understand-project)
+- [Проверка изменений dbt](/best-practices/how-to-use-wizard/wizard-3-validate-changes)
+- [Добавление тестов на основе данных](/best-practices/how-to-use-wizard/wizard-4-data-informed-tests)
+- [Диагностика сбоя задания](/best-practices/how-to-use-wizard/wizard-5-debug-failed-job)
+- [Создание определений Semantic Layer](/best-practices/how-to-use-wizard/wizard-7-semantic-layer)
+- [Обзор dbt Wizard](/docs/dbt-ai/wizard-cli)
+- [Настройка BYOK](/docs/dbt-ai/wizard-byok)
+- [dbt Wizard в Studio IDE](/docs/dbt-ai/wizard-ide): тот же агент на платформе dbt
+- [Сборник запросов](/guides/prompt-cookbook): дополнительные шаблоны запросов для dbt Wizard в Studio IDE (многие также подходят для CLI)

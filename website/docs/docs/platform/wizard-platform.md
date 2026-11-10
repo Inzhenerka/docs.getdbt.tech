@@ -1,8 +1,8 @@
 ---
-title: "About dbt Wizard in dbt platform"
+title: "О dbt Wizard на платформе dbt"
 id: "wizard-platform"
-sidebar_label: "Overview"
-description: "dbt Wizard in dbt platform helps teams investigate, change, validate, and ship trusted dbt work with warehouse-aware AI."
+sidebar_label: "Обзор"
+description: "dbt Wizard на платформе dbt помогает командам исследовать, изменять, проверять и выпускать надежные решения на dbt с помощью ИИ, учитывающего контекст хранилища данных."
 hide_table_of_contents: false
 image: /img/docs/dbt-platform/wizard-home-empty.png
 tags: [AI, Wizard]
@@ -15,104 +15,103 @@ import WizardTrialBilling from '/snippets/_wizard-trial-billing.md';
 import CopilotWizardDifferences from '/snippets/_copilot-wizard-diff.md';
 import WizardVideoCourse from '/snippets/_wizard-video-course.md';
 
-# About dbt Wizard in dbt platform <Lifecycle status="preview" />
+# О dbt Wizard на платформе dbt <Lifecycle status="preview" />
 
 <IntroText>
-<Constant name="wizard" /> is dbt's AI agent in <Constant name="dbt_platform" />, helping teams investigate, change, validate, and ship trusted dbt work with warehouse-aware grounding.
+<Constant name="wizard" /> — это ИИ-агент dbt в <Constant name="dbt_platform" />, который помогает командам исследовать, изменять, проверять и выпускать надежные решения на dbt, опираясь на контекст хранилища данных.
 </IntroText>
 
-<Constant name="wizard" /> is more than a general coding agent with access to dbt. Built for governed data development in dbt, it understands lineage, documentation, tests, and semantic definitions, and accounts for dev builds, compute, run time, and post-build inspection. Its suggestions are grounded in your project's actual data _and_ context. Be warned, the wizard has been known to <WizardPopcorn>cast spells</WizardPopcorn>.
+<Constant name="wizard" /> — это не просто универсальный агент для написания кода с доступом к dbt. Он создан для разработки данных в dbt с соблюдением правил управления, понимает зависимости данных, документацию, тесты и семантические определения, а также учитывает сборки в среде разработки, вычислительные ресурсы, время выполнения и проверку результатов сборки. Его предложения основаны на реальных данных вашего проекта _и_ его контексте. Но будьте осторожны: говорят, этот волшебник умеет <WizardPopcorn>творить заклинания</WizardPopcorn>.
 
-AI features are being enabled by default. They're already on for new accounts and are rolling out soon to existing accounts. If your organization opted out, they'll remain off. Admins can [turn AI off or back on and configure providers](/docs/platform/manage-dbt-ai) anytime.
+Функции ИИ включаются по умолчанию. Они уже включены для новых аккаунтов и вскоре будут включены для существующих. Если ваша организация отказалась от их использования, они останутся отключенными. Администраторы могут в любой момент [отключить или снова включить ИИ и настроить провайдеров](/docs/platform/manage-dbt-ai).
 
 <WizardTrialBilling />
 
-## Where you can use dbt Wizard
+## Где можно использовать dbt Wizard
 
-- **[Wizard home tab](/docs/platform/wizard-home):** Ask questions about your project, generate changes, review the diff, and run validations &mdash; all in one place.
-- **[Studio IDE](/docs/dbt-ai/wizard-ide):** Work with <Constant name="wizard" /> alongside the code editor, console, and file explorer.
-- **[Terminal (CLI)](/docs/dbt-ai/wizard-cli):** Use the same agent from your terminal, with or without a <Constant name="dbt_platform" /> account.
-- **[Wizard Desktop](/docs/dbt-ai/wizard-desktop):** A native app for building and validating data, with rich data visualizations, data diffs, and lineage rendered alongside the chat.
+- **[Главная вкладка Wizard](/docs/platform/wizard-home):** Задавайте вопросы о проекте, создавайте изменения, просматривайте различия и запускайте проверки &mdash; всё в одном месте.
+- **[Studio IDE](/docs/dbt-ai/wizard-ide):** Работайте с <Constant name="wizard" /> рядом с редактором кода, консолью и проводником файлов.
+- **[Терминал (CLI)](/docs/dbt-ai/wizard-cli):** Используйте того же агента из терминала, с аккаунтом <Constant name="dbt_platform" /> или без него.
+- **[Wizard Desktop](/docs/dbt-ai/wizard-desktop):** Нативное приложение для создания и проверки данных, в котором рядом с чатом отображаются наглядные визуализации данных, различия в данных и граф зависимостей.
 
-You can teach <Constant name="wizard" /> your team's conventions with [skills](/docs/dbt-ai/wizard-platform-skills), hand off bigger jobs to [subagents](/docs/dbt-ai/wizard-platform-subagents), or connect your project to other AI tools with the [<Constant name="dbt_platform" /> MCP server](/docs/dbt-ai/wizard-platform-mcp).
+Вы можете обучить <Constant name="wizard" /> правилам вашей команды с помощью [навыков](/docs/dbt-ai/wizard-platform-skills), поручить более масштабные задачи [субагентам](/docs/dbt-ai/wizard-platform-subagents) или подключить проект к другим ИИ-инструментам через [MCP-сервер <Constant name="dbt_platform" />](/docs/dbt-ai/wizard-platform-mcp).
 
 
-## What you can do
+## Что вы можете делать
 
-- Ask project-aware questions and get answers grounded in your project's context
-- Generate documentation, semantic models, tests, and metrics
-- Build or refactor models from plain-language prompts
-- Review file changes as diffs before you save them
-- Run end-to-end tasks in [agent mode](/docs/dbt-ai/wizard-ide#agent-modes), either approving each file change or letting <Constant name="wizard" /> edit automatically
-- Ask questions of production data in [Explore mode](/docs/dbt-ai/wizard-ide#agent-modes), including [read-only users](/docs/platform/wizard-read-only-users) with no development access
-- Follow along in the wayfinder bar, which shows your current project and branch and guides you through Git tasks like committing files or creating a branch
-- Get consistent output from [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills), which encode dbt best practices out of the box
+- Задавать вопросы о проекте и получать ответы, основанные на его контексте
+- Создавать документацию, семантические модели, тесты и метрики
+- Создавать модели или выполнять их рефакторинг по запросам на естественном языке
+- Просматривать изменения файлов в виде сравнения версий перед сохранением
+- Выполнять задачи от начала до конца в [режиме агента](/docs/dbt-ai/wizard-ide#agent-modes), подтверждая каждое изменение файла или разрешая <Constant name="wizard" /> вносить изменения автоматически
+- Задавать вопросы о данных рабочей среды в [режиме Explore](/docs/dbt-ai/wizard-ide#agent-modes), в том числе [пользователям с доступом только для чтения](/docs/platform/wizard-read-only-users), у которых нет доступа к разработке
+- Следить за ходом работы на панели навигации wayfinder, которая показывает текущие проект и ветку и помогает выполнять задачи Git, например создавать коммиты файлов или новые ветки
+- Получать согласованные результаты с помощью [dbt Agent Skills](https://github.com/dbt-labs/dbt-agent-skills), в которых уже заложены лучшие практики dbt
 
-For more examples, visit [Use cases and examples](/docs/dbt-ai/wizard-use-cases).
+Больше примеров см. в разделе [Сценарии использования и примеры](/docs/dbt-ai/wizard-use-cases).
 
-:::tip Best practices for using dbt Wizard
-Most of the workflows in [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro) apply here too &mdash; the prompts work the same in <Constant name="studio_ide" /> and the <Constant name="wizard" /> home tab.
+:::tip Лучшие практики использования dbt Wizard
+Большинство рабочих процессов из руководства [Как использовать dbt Wizard в проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro) применимы и здесь &mdash; запросы работают одинаково в <Constant name="studio_ide" /> и на главной вкладке <Constant name="wizard" />.
 :::
 
-## Supported AI providers
+## Поддерживаемые провайдеры ИИ {#supported-ai-providers}
 
 <WizardSupportedProviders />
 
-## Open dbt Wizard
+## Открытие dbt Wizard
 
-1. Sign in to <Constant name="dbt_platform" />.
-2. Select the <Constant name="wizard" /> icon in the navigation menu, or open it in the <Constant name="studio_ide"/>.
-3. Enter a prompt. Try one of these to get a feel for it:
+1. Войдите в <Constant name="dbt_platform" />.
+2. Выберите значок <Constant name="wizard" /> в меню навигации или откройте его в <Constant name="studio_ide"/>.
+3. Введите запрос. Чтобы освоиться, попробуйте один из следующих:
    - `summarize what this project does`
    - `which models in this project have no tests?`
    - `add not_null and unique tests to the primary key of stg_customers`
-4. ..and that's it 🎉!
+4. ...и это всё 🎉!
 
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-lineage.png" width="85%" title="dbt Wizard in the Studio IDE refactoring a model and displaying the lineage inside the chat interface."/>
+<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-lineage.png" width="85%" title="dbt Wizard в Studio IDE выполняет рефакторинг модели и отображает граф зависимостей в интерфейсе чата."/>
 
-<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-diff.png" width="85%" title="Wizard's final refactor result displayed as a diff in the Studio IDE"/>
+<Lightbox src="/img/docs/dbt-platform/wizard-ide-refactor-diff.png" width="85%" title="Итоговый результат рефакторинга Wizard в виде сравнения версий в Studio IDE"/>
 
 </DocCarousel>
 
-For more prompt ideas, refer to the [prompt cookbook](/guides/prompt-cookbook).
+Дополнительные идеи запросов см. в [сборнике запросов](/guides/prompt-cookbook).
 
-If <Constant name="wizard" /> isn't available, confirm that your plan is eligible and that an admin has [enabled account access to AI features](/docs/platform/manage-dbt-ai#manage-ai-features).
+Если <Constant name="wizard" /> недоступен, убедитесь, что ваш тарифный план поддерживает его и что администратор [включил доступ к функциям ИИ для аккаунта](/docs/platform/manage-dbt-ai#manage-ai-features).
 
 <WizardVideoCourse />
 
-## Trial and usage credits
+## Пробный период и кредиты на использование
 
-Every prompt you send to <Constant name="wizard" /> uses AI model tokens. What you pay for those tokens depends on your plan and whether you use a <Constant name="dbt" /> Labs-<Term id="managed" /> model or your own key. If you [bring your own key](/docs/platform/wizard-byok-platform), your AI provider bills you directly and your usage doesn't draw from your consumption pool.
+Каждый запрос, который вы отправляете в <Constant name="wizard" />, расходует токены ИИ-модели. Стоимость этих токенов зависит от вашего тарифного плана и от того, используете ли вы модель под <Term id="managed" /> управлением <Constant name="dbt" /> Labs или собственный ключ. Если вы [используете собственный ключ](/docs/platform/wizard-byok-platform), провайдер ИИ выставляет вам счета напрямую, а использование не списывается из вашего пула потребления.
 
-[Legacy team plans](/docs/platform/billing/plans-and-billing#legacy-plans) don't have access to <Constant name="wizard" />. You can move to a [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing) to use it.
+[Устаревшие тарифные планы Team](/docs/platform/billing/plans-and-billing#legacy-plans) не предоставляют доступ к <Constant name="wizard" />. Чтобы использовать его, можно перейти на [тарифный план Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing).
 
-For steps on how to start your trial and manage your spend, refer to [Start your trial](/docs/dbt-ai/pricing-billing/trial-and-billing#start-your-trial) and [Manage your spend limit](/docs/dbt-ai/pricing-billing/trial-and-billing#manage-your-spend-limit).
+Инструкции по запуску пробного периода и управлению расходами см. в разделах [Начало пробного периода](/docs/dbt-ai/pricing-billing/trial-and-billing#start-your-trial) и [Управление лимитом расходов](/docs/dbt-ai/pricing-billing/trial-and-billing#manage-your-spend-limit).
 
-To choose a provider or bring your own key, refer to [Manage AI features](/docs/platform/manage-dbt-ai#configure-ai-provider).
+Чтобы выбрать провайдера или использовать собственный ключ, см. раздел [Управление функциями ИИ](/docs/platform/manage-dbt-ai#configure-ai-provider).
 
-## Other AI features in dbt platform
+## Другие функции ИИ на платформе dbt
 
-<Constant name="dbt_platform" /> also has AI features that work separately from <Constant name="wizard" />:
+В <Constant name="dbt_platform" /> также есть функции ИИ, которые работают отдельно от <Constant name="wizard" />:
 
-- [dbt Copilot](/docs/dbt-ai/copilot-overview) generates SQL, documentation, tests, and semantic models in one click in <Constant name="studio_ide" /> or <Constant name="insights" />.
-- The [dbt Support Assistant](/docs/dbt-support?version=2#ask-dbt-support-assistant) answers product questions and helps you open a ticket. Contact the [dbt Support team](mailto:support@getdbt.com) for more info.
+- [dbt Copilot](/docs/dbt-ai/copilot-overview) создает SQL, документацию, тесты и семантические модели одним нажатием в <Constant name="studio_ide" /> или <Constant name="insights" />.
+- [dbt Support Assistant](/docs/dbt-support?version=2#ask-dbt-support-assistant) отвечает на вопросы о продукте и помогает создать обращение в поддержку. За дополнительной информацией обращайтесь в [службу поддержки dbt](mailto:support@getdbt.com).
 
-<Expandable alt_header="What's the difference between dbt Wizard and dbt Copilot?">
+<Expandable alt_header="Чем dbt Wizard отличается от dbt Copilot?">
 
 <CopilotWizardDifferences />
 
 </Expandable>
 
-## Related docs
+## Связанная документация
 
-- [<Constant name="wizard" /> home tab](/docs/platform/wizard-home)
-- [<Constant name="wizard" /> in <Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide)
-- [How <Constant name="wizard" /> works](/docs/dbt-ai/wizard-how-it-works#in-dbt-platform) &mdash; architecture and data flow in the <Constant name="dbt_platform" />
-- [Manage AI features in <Constant name="dbt_platform" />](/docs/platform/manage-dbt-ai) &mdash; admin setup for AI access and providers
-- [Configure BYOK in <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform)
-- [Models and pricing](/docs/dbt-ai/pricing-billing/overview)
-- [Data & Privacy in <Constant name="dbt_platform" />](/docs/dbt-ai/dbt-ai-faqs#privacy-and-data)
-
+- [Главная вкладка <Constant name="wizard" />](/docs/platform/wizard-home)
+- [<Constant name="wizard" /> в <Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide)
+- [Как работает <Constant name="wizard" />](/docs/dbt-ai/wizard-how-it-works#in-the-dbt-platform) &mdash; архитектура и потоки данных в <Constant name="dbt_platform" />
+- [Управление функциями ИИ в <Constant name="dbt_platform" />](/docs/platform/manage-dbt-ai) &mdash; настройка доступа к ИИ и провайдеров администратором
+- [Настройка BYOK в <Constant name="dbt_platform" />](/docs/platform/wizard-byok-platform)
+- [Модели и цены](/docs/dbt-ai/pricing-billing/overview)
+- [Данные и конфиденциальность в <Constant name="dbt_platform" />](/docs/dbt-ai/dbt-ai-faqs#privacy-and-data)

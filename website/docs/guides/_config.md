@@ -11,12 +11,12 @@ categories:
       - dbt-platform-local-workflow
       - adapter-creation-v2
 
-  - title: Foundations
+  - title: "Основы"
     guides:
       - terminal-guide
       - clone-jaffle-shop
 
-  - title: Popular
+  - title: "Популярные руководства"
     guides:
       - dbt-charts
       - snowflake

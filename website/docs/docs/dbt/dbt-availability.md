@@ -1,20 +1,20 @@
 ---
-title: "Feature availability"
+title: "Доступность функций"
 id: "dbt-availability"
-sidebar_label: "Feature availability"
-description: "Learn where dbt is available and what you get with v2."
+sidebar_label: "Доступность функций"
+description: "Узнайте, где доступен dbt и какие возможности предоставляет версия v2."
 hide_table_of_contents: true
 ---
 
 import FusionFeatures from '/snippets/_v2-features.md';
 import FusionLifecycle from '/snippets/_v2-lifecycle.md';
 
-Get started with many dbt features right away when you install dbt v2 and the dbt VS Code extension. Access dbt platform-based capabilities when you sign in with any <Constant name="dbt_platform" /> account, even the free developer tier!
+Начните пользоваться многими функциями dbt сразу после установки dbt v2 и расширения dbt для VS Code. Получите доступ к возможностям платформы dbt, войдя в любую учетную запись <Constant name="dbt_platform" />, даже на бесплатном тарифе для разработчиков!
 
 <FusionFeatures/>
 
-## Related docs
+## Связанная документация
 
-- [Install dbt](/docs/local/install-dbt) locally
-- Install the [dbt VS Code extension](/docs/about-dbt-extension)
-- Upgrade environments in the [dbt platform](/docs/dbt-versions/upgrade-dbt-platform-version#dbt-v2)
+- [Установите dbt](/docs/local/install-dbt) локально
+- Установите [расширение dbt для VS Code](/docs/about-dbt-extension)
+- Обновите среды на [платформе dbt](/docs/dbt-versions/upgrade-dbt-platform-version#dbt-v2)

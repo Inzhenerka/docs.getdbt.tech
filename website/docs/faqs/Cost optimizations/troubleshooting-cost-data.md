@@ -1,14 +1,14 @@
 ---
-title: How do I troubleshoot if cost data isn't appearing?
-description: "Troubleshooting steps to resolve missing cost data in Cost Insights"
-sidebar_label: 'Troubleshooting cost data'
+title: Что делать, если данные о затратах не отображаются?
+description: "Действия по устранению проблем с отсутствующими данными о затратах в Cost Insights"
+sidebar_label: 'Устранение проблем с данными о затратах'
 id: troubleshooting-cost-data
 ---
 
-If cost data isn't appearing in Cost Insights, check the following:
+Если данные о затратах не отображаются в Cost Insights, проверьте следующее:
 
-- Verify that platform metadata credentials are configured in your account settings and that the credential test is passing. For more information, see [Set up Cost Insights](/docs/explore/set-up-cost-insights#configure-platform-metadata-credentials).
-- Ensure you have one of the required permissions to view cost data. For more information, see [Assign required permissions](/docs/explore/set-up-cost-insights#assign-required-permissions).
-- Confirm that at least one job is running in a production environment. Cost data only appears after jobs have executed.
-- Cost data refreshes daily and reflects the previous day's usage, which means there is a lag of up to one day between when a job runs and when its cost data appears. If you just ran a job, wait until the next day to see the data.
-- After enabling Cost Insights, dbt looks back 10 days to build baselines for cost reduction calculations. If you don't see cost reduction data, ensure you have sufficient job history within the last 10 days.
+- Убедитесь, что в настройках вашей учетной записи настроены учетные данные для доступа к метаданным платформы и что проверка этих учетных данных проходит успешно. Подробнее см. в разделе [Настройка Cost Insights](/docs/explore/set-up-cost-insights#configure-platform-metadata-credentials).
+- Убедитесь, что у вас есть одно из необходимых разрешений для просмотра данных о затратах. Подробнее см. в разделе [Назначение необходимых разрешений](/docs/explore/set-up-cost-insights#assign-required-permissions).
+- Убедитесь, что хотя бы одно задание выполняется в производственной среде. Данные о затратах появляются только после выполнения заданий.
+- Данные о затратах обновляются ежедневно и отражают использование ресурсов за предыдущий день. Это означает, что между выполнением задания и появлением данных о затратах на него может пройти до одного дня. Если вы только что запустили задание, дождитесь следующего дня, чтобы увидеть данные.
+- После включения Cost Insights dbt использует данные за 10 предыдущих дней, чтобы сформировать базовые показатели для расчета снижения затрат. Если данные о снижении затрат не отображаются, убедитесь, что за последние 10 дней накопилось достаточно данных об истории выполнения заданий.

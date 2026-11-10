@@ -95,18 +95,18 @@ availability:
 <Tabs>
 <TabItem value="omni" label="Omni example">
 
-Follow these steps to embed the data health tile in [Omni](https://omni.co/):
+Чтобы встроить плитку состояния данных в [Omni](https://omni.co/):
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/omni-example.png" width="90%" title="Embed data health tile in Omni"/>
+<Lightbox src="/img/docs/collaborate/dbt-explorer/omni-example.png" width="90%" title="Встраивание плитки состояния данных в Omni"/>
 
-1. Create a dashboard in Omni.
-2. Copy the iFrame snippet available in <Constant name="catalog" />'s **Data health** section, under the **Embed data health into your dashboard** toggle.
-3. Add a new Text or Markdown [element](https://docs.omni.co/visualize-present/dashboards/text-markdown) in your Dashboard with the code from step 2, it should be in the following format:
+1. Создайте дашборд в Omni.
+2. Скопируйте код iFrame из раздела **Data health** в <Constant name="catalog" /> под переключателем **Embed data health into your dashboard**.
+3. Добавьте на дашборд текстовый или Markdown-[элемент](https://docs.omni.co/visualize-present/dashboards/text-markdown) с кодом из предыдущего шага. Он должен выглядеть так:
 
    ```html/text
     <iframe src='https://YOUR_ACCOUNT_PREFIX.metadata.REGION.dbt.com/exposure-tile?uniqueId=exposure.EXPOSURE_NAME&environmentType=production&environmentId=ENV_ID_NUMBER&token=<YOUR_METADATA_TOKEN>' title='Exposure Status Tile'></iframe>
     ```
-4. Save the tile and your Omni dashboard should now have a <Constant name="dbt_platform" /> hosted data health tile that is automatically updated based on the state of your dbt environment.
+4. Сохраните плитку. На дашборде Omni появится плитка состояния данных, размещённая на <Constant name="dbt_platform" />. Она автоматически обновляется в зависимости от состояния среды dbt.
 
 </TabItem>
 
@@ -192,7 +192,7 @@ Follow these steps to embed the data health tile in [Omni](https://omni.co/):
 
 Этот раздел предназначен для устаревших плиток состояния данных, основанных на заданиях. Если вы используете обновленную плитку экспозиции, основанную на окружении, обратитесь к предыдущему разделу. Разверните следующее, чтобы узнать больше об устаревшей плитке состояния данных, основанной на заданиях.
 
-<Expandable alt_header="Job-based data health">  
+<Expandable alt_header="Job-based data health" anchor_id="job-based-data-health-details-1">  
 В <Constant name="dbt" /> [Discovery API](/docs/dbt-apis/discovery-api) позволяет отображать на дашбордах индикаторы состояния на основе заданий. Индикатор состояния размещается на дашборде (точнее, в любом месте, где можно встроить iFrame) и позволяет оценить качество и актуальность данных, используемых в этом дашборде. Это реализуется с помощью [экспозиций (exposures)](/docs/build/exposures) в dbt.
 
 #### Функциональность {#functionality}

@@ -1,6 +1,6 @@
 ---
 title: evaluate_volatile_sql
-description: "Configure whether dbt State stores and compares the runtime results of volatile SQL functions when deciding whether to rebuild a node."
+description: "Настройте, будет ли dbt State сохранять и сравнивать результаты выполнения недетерминированных SQL-функций при принятии решения о пересборке узла."
 id: "evaluate-volatile-sql"
 tags: ['dbt State']
 ---
@@ -8,7 +8,7 @@ tags: ['dbt State']
 # evaluate_volatile_sql
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
 
@@ -22,7 +22,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Properties YAML file">
+<TabItem value="property" label="YAML-файл свойств">
 
 <File name="models/<filename>.yml">
 
@@ -37,7 +37,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="SQL file config">
+<TabItem value="sql" label="Конфигурация в SQL-файле">
 
 <File name="models/<filename>.sql">
 
@@ -53,24 +53,24 @@ models:
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
-dbt State determines whether a node's data has changed based on the freshness of its parents. However, volatile SQL functions like `CURRENT_TIMESTAMP()`, `RANDOM()`, or `UUID_STRING()` can change a node's output from one run to the next even when no upstream data has changed.
+dbt State определяет, изменились ли данные узла, на основе актуальности данных его родительских узлов. Однако недетерминированные SQL-функции, такие как `CURRENT_TIMESTAMP()`, `RANDOM()` или `UUID_STRING()`, могут изменять результат узла от запуска к запуску, даже если данные вышестоящих узлов не изменились.
 
-By default, dbt State treats volatile functions as static parts of the node's compiled code, not as a source of new data. This is the right choice in most cases — otherwise, no node containing `CURRENT_TIMESTAMP()` would ever be reusable.
+По умолчанию dbt State рассматривает недетерминированные функции как статические части скомпилированного кода узла, а не как источник новых данных. В большинстве случаев это правильный выбор — иначе ни один узел, содержащий `CURRENT_TIMESTAMP()`, нельзя было бы использовать повторно.
 
-When `evaluate_volatile_sql` is set to `true`, dbt State stores the _result_ of each volatile function call and uses those stored values for future comparisons. This means the node is rebuilt when the function's output changes &mdash; for example, when `current_date()` returns a new value after midnight.
+Когда для `evaluate_volatile_sql` установлено значение `true`, dbt State сохраняет _результат_ каждого вызова недетерминированной функции и использует эти сохранённые значения для последующих сравнений. Это означает, что узел пересобирается при изменении результата функции &mdash; например, когда `current_date()` возвращает новое значение после полуночи.
 
-| Value | Behavior |
+| Значение | Поведение |
 |-------|----------|
-| `false` (default) | Volatile functions are treated as static code. The node can be reused even if function outputs would differ between runs. |
-| `true` | dbt State stores and compares the runtime result of volatile functions. The node rebuilds when those results change. |
+| `false` (по умолчанию) | Недетерминированные функции рассматриваются как статический код. Узел можно использовать повторно, даже если результаты функций при разных запусках различались бы. |
+| `true` | dbt State сохраняет и сравнивает результаты выполнения недетерминированных функций. Узел пересобирается при изменении этих результатов. |
 
-## Examples
+## Примеры
 
-### Rebuild when the date changes
+### Пересборка при изменении даты
 
-Use `evaluate_volatile_sql: true` for a node whose output is meaningfully affected by the current date:
+Используйте `evaluate_volatile_sql: true` для узла, на результат которого существенно влияет текущая дата:
 
 <File name="models/<filename>.sql">
 
@@ -85,11 +85,11 @@ from {{ ref('dim_customers') }}
 
 </File>
 
-With this config enabled, dbt State stores the result of `current_date()` after each build. On the next run after midnight, the stored value no longer matches and the node is rebuilt, even if `dim_customers` hasn't changed.
+Если эта настройка включена, dbt State сохраняет результат `current_date()` после каждой сборки. При следующем запуске после полуночи сохранённое значение уже не совпадает с текущим, и узел пересобирается, даже если `dim_customers` не изменился.
 
-### Default behavior
+### Поведение по умолчанию
 
-For nodes where volatile function output doesn't affect business logic, no config is required:
+Для узлов, в которых результат недетерминированной функции не влияет на бизнес-логику, дополнительная настройка не требуется:
 
 <File name="models/<filename>.sql">
 
@@ -102,9 +102,9 @@ from {{ ref('dim_customers') }}
 
 </File>
 
-dbt State treats `getdate()` as static code. The node remains reusable as long as its parents haven't changed.
+dbt State рассматривает `getdate()` как статический код. Узел остаётся доступным для повторного использования, пока его родительские узлы не изменились.
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)

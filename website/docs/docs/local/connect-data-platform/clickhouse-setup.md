@@ -1,7 +1,7 @@
 ---
-title: "ClickHouse setup"
+title: "Настройка ClickHouse"
 sidebar_label: "ClickHouse"
-description: "Read this guide to learn about the ClickHouse warehouse setup in dbt."
+description: "Из этого руководства вы узнаете, как настроить хранилище ClickHouse в dbt."
 meta:
   maintained_by: Community
   authors: 'Geoff Genz & Bentsi Leviav'
@@ -19,61 +19,61 @@ availability: local_free
 
 <VersionBlock firstVersion="2.0">
 
-# Connect ClickHouse to <Constant name="fusion" /> <Lifecycle status="beta" />
+# Подключение ClickHouse к <Constant name="fusion" /> <Lifecycle status="beta" />
 
-The ClickHouse adapter for the <Constant name="fusion_engine" /> connects to [ClickHouse](https://clickhouse.com) over HTTP or HTTPS. It supports self-managed single-node ClickHouse and [ClickHouse Cloud](https://clickhouse.com/cloud).
+Адаптер ClickHouse для <Constant name="fusion_engine" /> подключается к [ClickHouse](https://clickhouse.com) по HTTP или HTTPS. Он поддерживает самостоятельно управляемые одноузловые установки ClickHouse и [ClickHouse Cloud](https://clickhouse.com/cloud).
 
-## Installing dbt
+## Установка dbt
 
-The ClickHouse adapter is built into v2. To get started, [install dbt](/docs/local/install-dbt).
+Адаптер ClickHouse встроен в v2. Чтобы начать работу, [установите dbt](/docs/local/install-dbt).
 
-For connection examples and profile settings, refer to [Connecting to ClickHouse](#connecting-to-clickhouse).
+Примеры подключения и настройки профиля приведены в разделе [Подключение к ClickHouse](#connecting-to-clickhouse).
 
-## Authentication
+## Аутентификация
 
-<Constant name="fusion" /> authenticates to ClickHouse with a username and password. Set `secure: true` in your profile to connect over HTTPS (default port 8443), or leave it unset to connect over plain HTTP (default port 8123). ClickHouse Cloud requires `secure: true`.
+<Constant name="fusion" /> использует имя пользователя и пароль для аутентификации в ClickHouse. Установите `secure: true` в профиле для подключения по HTTPS (порт по умолчанию — 8443) или не задавайте этот параметр для подключения по обычному HTTP (порт по умолчанию — 8123). Для ClickHouse Cloud требуется `secure: true`.
 
-## Warehouse permissions
+## Права доступа к хранилищу
 
 import FusionClickHouseWarehousePerms from '/snippets/_v2-warehouse-permissions-clickhouse.md';
 
 <FusionClickHouseWarehousePerms />
 
-## Limitations
+## Ограничения {#limitations}
 
-The ClickHouse adapter for <Constant name="fusion" /> is in beta. Expect some minor bugs, and avoid using it in production environments for now. Some features available in the `dbt-clickhouse` adapter for <Constant name="core" /> are not yet supported.
+Адаптер ClickHouse для <Constant name="fusion" /> находится на стадии бета-тестирования. Возможны небольшие ошибки, поэтому пока не используйте его в производственных средах. Некоторые возможности адаптера `dbt-clickhouse` для <Constant name="core" /> пока не поддерживаются.
 
-The ClickHouse adapter is under active development. If you encounter an issue, please [open it in dbt-core](https://github.com/dbt-labs/dbt-core/issues/new) and add the `adapter:clickhouse` label.
+Адаптер ClickHouse активно разрабатывается. Если вы столкнулись с проблемой, [создайте issue в dbt-core](https://github.com/dbt-labs/dbt-core/issues/new) и добавьте метку `adapter:clickhouse`.
 
-### What works today
+### Что уже работает
 
-On single-node ClickHouse and on ClickHouse Cloud (compatible with multi-node clusters):
+В одноузловых установках ClickHouse и в ClickHouse Cloud (с поддержкой многоузловых кластеров):
 
-- All materializations: table, view, incremental (all strategies and `on_schema_change`), materialized view (including refreshable), dictionary, snapshot, seed, and ephemeral
-- Contracts and constraints, model and query `settings`, projections and indexes
-- Data tests, unit tests, catalog generation, and the `s3` table function
+- Все материализации: table, view, incremental (все стратегии и `on_schema_change`), materialized view (включая обновляемые), dictionary, snapshot, seed и ephemeral
+- Контракты и ограничения, `settings` для моделей и запросов, проекции и индексы
+- Тесты данных, модульные тесты, генерация каталога и табличная функция `s3`
 
-### Not yet supported
+### Что пока не поддерживается
 
-- Self-managed clusters that set `cluster:` in the profile aren't supported yet. `ON CLUSTER` isn't emitted in the data definition language (DDL) instructions, so Replicated engines and the `distributed_table` and `distributed_incremental` materializations don't work.
-- The `grants` config, and the `dbt clone` and `dbt source freshness` commands, aren't supported yet.
-- Smaller gaps remain: `query-comment: null` isn't honored, run results don't include the ClickHouse `query_id`, and `persist_docs` descriptions that contain `;` fail.
-- SQL comprehension features (static analysis and the rest of dbt's SQL intelligence) aren't available yet. Support is coming soon.
-- Minor issues may still be present in general ClickHouse functionality.
+- Самостоятельно управляемые кластеры с параметром `cluster:` в профиле пока не поддерживаются. В инструкции языка определения данных (DDL) не добавляется `ON CLUSTER`, поэтому движки Replicated и материализации `distributed_table` и `distributed_incremental` не работают.
+- Конфигурация `grants`, а также команды `dbt clone` и `dbt source freshness` пока не поддерживаются.
+- Сохраняются и менее значительные ограничения: `query-comment: null` не учитывается, результаты выполнения не включают ClickHouse `query_id`, а описания `persist_docs`, содержащие `;`, приводят к ошибке.
+- Функции анализа SQL (статический анализ и остальные интеллектуальные возможности dbt для работы с SQL) пока недоступны. Поддержка появится в ближайшее время.
+- В основных функциях работы с ClickHouse всё ещё могут встречаться небольшие ошибки.
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-# Connect ClickHouse to <Constant name="core" />
+# Подключение ClickHouse к <Constant name="core" />
 
-<ProductCard text="Fusion compatible" url="/docs/local/connect-data-platform/clickhouse-setup?version=2" />
+<ProductCard text="Совместимо с Fusion" url="/docs/local/connect-data-platform/clickhouse-setup?version=2" />
 
-A <Constant name="fusion" /> connection is also available.
+Также доступно подключение через <Constant name="fusion" />.
 
-:::info Community plugin
+:::info Плагин сообщества
 
-Some core functionality may be limited. If you're interested in contributing, check out the source code for each repository listed below.
+Некоторые основные возможности могут быть ограничены. Если вы хотите внести свой вклад, ознакомьтесь с исходным кодом в каждом из перечисленных ниже репозиториев.
 
 :::
 
@@ -83,10 +83,10 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 </VersionBlock>
 
-## Connecting to ClickHouse
+## Подключение к ClickHouse {#connecting-to-clickhouse}
 
-To connect to ClickHouse from dbt, you'll need to add a [profile](/docs/local/profiles.yml)
-to your `profiles.yml` configuration file. Follow the reference configuration below to set up a ClickHouse profile:
+Чтобы подключиться к ClickHouse из dbt, необходимо добавить [профиль](/docs/local/profiles.yml)
+в файл конфигурации `profiles.yml`. Используйте приведённый ниже пример конфигурации для настройки профиля ClickHouse:
 
 <File name='profiles.yml'>
 ```yaml
@@ -95,78 +95,78 @@ clickhouse-service:
   outputs:
     dev:
       type: clickhouse
-      schema: [ default ]  # ClickHouse database for dbt models
+      schema: [ default ]  # База данных ClickHouse для моделей dbt
 
-      # optional
-      host: [ <your-clickhouse-host> ]  # Your clickhouse cluster url for example, abc123.clickhouse.cloud. Defaults to `localhost`.
-      port: [ 8123 ]  # Defaults to 8123, 8443, 9000, 9440 depending on the secure and driver settings 
-      user: [ default ]  # User for all database operations
-      password: [ <empty string> ]  # Password for the user
-      secure: [ False ]  # Use TLS (native protocol) or HTTPS (http protocol). Must be set to true for ClickHouse Cloud.
+      # необязательные параметры
+      host: [ <your-clickhouse-host> ]  # URL вашего кластера ClickHouse, например abc123.clickhouse.cloud. По умолчанию — `localhost`.
+      port: [ 8123 ]  # По умолчанию — 8123, 8443, 9000 или 9440 в зависимости от настроек secure и driver 
+      user: [ default ]  # Пользователь для всех операций с базой данных
+      password: [ <empty string> ]  # Пароль пользователя
+      secure: [ False ]  # Использовать TLS (протокол native) или HTTPS (протокол http). Для ClickHouse Cloud необходимо установить true.
 
 ```
 
-For a complete list of configuration options, refer to the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt).
+Полный список параметров конфигурации приведён в [документации ClickHouse](https://clickhouse.com/docs/integrations/dbt).
 </File>
 
-### Create a dbt project
-You can now use this profile in one of your existing projects or create a new one using:
+### Создание проекта dbt
+Теперь вы можете использовать этот профиль в одном из существующих проектов или создать новый с помощью команды:
 
 ```sh
 dbt init project_name
 ```
 
-Navigate to the `project_name` directory and update your `dbt_project.yml` file to use the profile you configured to connect to ClickHouse.
+Перейдите в каталог `project_name` и обновите файл `dbt_project.yml`, чтобы использовать профиль, настроенный для подключения к ClickHouse.
 
 ```yaml
 profile: 'clickhouse-service'
 ```
 
-### Test connection
+### Проверка подключения
 
-Execute `dbt debug` with the CLI tool to confirm whether dbt is able to connect to ClickHouse. Confirm the response includes `Connection test: [OK connection ok]`, indicating a successful connection.
+Выполните `dbt debug` в командной строке, чтобы проверить, может ли dbt подключиться к ClickHouse. Убедитесь, что ответ содержит `Connection test: [OK connection ok]`, что указывает на успешное подключение.
 
 <VersionBlock lastVersion="1.99">
 
-## Supported features
+## Поддерживаемые возможности
 
-### dbt features
+### Возможности dbt
 
-Type | Supported? | Details
+Тип | Поддерживается? | Подробности
 -----|------------|----------------
-Contracts | ✅ | 
+Контракты | ✅ | 
 Docs generate | ✅ |
-Most dbt-utils macros | ✅ | (now included in dbt-core) 
+Большинство макросов dbt-utils | ✅ | (теперь включены в dbt-core) 
 Seeds | ✅ | 
-Sources | ✅ | 
-Snapshots | ✅ | 
-Tests | ✅ | 
+Источники | ✅ | 
+Снимки | ✅ | 
+Тесты | ✅ | 
 
-### Materializations
+### Материализации
 
-Type | Supported? | Details
+Тип | Поддерживается? | Подробности
 -----|------------|----------------
-Table | ✅ | Creates a [table](https://clickhouse.com/docs/en/operations/system-tables/tables/).
-View | ✅ | Creates a [view](https://clickhouse.com/docs/en/sql-reference/table-functions/view/).
-Incremental | ✅ | Creates a table if it doesn't exist, and then writes only updates to it.
+Table | ✅ | Создаёт [таблицу](https://clickhouse.com/docs/en/operations/system-tables/tables/).
+View | ✅ | Создаёт [представление](https://clickhouse.com/docs/en/sql-reference/table-functions/view/).
+Incremental | ✅ | Создаёт таблицу, если она не существует, а затем записывает в неё только обновления.
 Microbatch incremental | ✅ | 
-Ephemeral materialization | ✅ | Creates a ephemeral/CTE materialization. This model is internal to dbt and does not create any database objects.
-Materialized View | ✅, Experimental | Creates a [materialized view](https://clickhouse.com/docs/en/materialized-view).
-Distributed table materialization | ✅, Experimental | Creates a [distributed table](https://clickhouse.com/docs/en/engines/table-engines/special/distributed).
-Distributed incremental materialization | ✅, Experimental | Incremental model based on the same idea as distributed table. Note that not all strategies are supported. For more information, refer to the [distributed incremental materialization docs](https://github.com/ClickHouse/dbt-clickhouse?tab=readme-ov-file#distributed-incremental-materialization).
-Dictionary materialization | ✅, Experimental | Creates a [dictionary](https://clickhouse.com/docs/en/engines/table-engines/special/dictionary).
+Материализация ephemeral | ✅ | Создаёт материализацию ephemeral/CTE. Эта модель используется только внутри dbt и не создаёт объектов в базе данных.
+Materialized View | ✅, экспериментальная | Создаёт [материализованное представление](https://clickhouse.com/docs/en/materialized-view).
+Материализация распределённой таблицы | ✅, экспериментальная | Создаёт [распределённую таблицу](https://clickhouse.com/docs/en/engines/table-engines/special/distributed).
+Распределённая инкрементальная материализация | ✅, экспериментальная | Инкрементальная модель, основанная на том же принципе, что и распределённая таблица. Обратите внимание, что поддерживаются не все стратегии. Дополнительные сведения приведены в [документации по распределённой инкрементальной материализации](https://github.com/ClickHouse/dbt-clickhouse?tab=readme-ov-file#distributed-incremental-materialization).
+Материализация словаря | ✅, экспериментальная | Создаёт [словарь](https://clickhouse.com/docs/en/engines/table-engines/special/dictionary).
 
-**Note**: Community-developed features are labeled as experimental. Despite this designation, many of these features, like materialized views, are widely adopted and successfully used in production environments.
+**Примечание**: Возможности, разработанные сообществом, помечены как экспериментальные. Несмотря на это обозначение, многие из них, например материализованные представления, широко распространены и успешно используются в производственных средах.
 
-## Documentation
+## Документация
 
-Refer to the [ClickHouse documentation](https://clickhouse.com/docs/integrations/dbt) for more details on using the `dbt-clickhouse` adapter to manage your data model.
+Дополнительные сведения об использовании адаптера `dbt-clickhouse` для управления моделью данных приведены в [документации ClickHouse](https://clickhouse.com/docs/integrations/dbt).
 
-## Contributing
+## Участие в разработке
 
-We welcome contributions from the community to help improve the `dbt-ClickHouse` adapter. Whether you're fixing a bug,
-adding a new feature, or enhancing the documentation, your efforts are greatly appreciated!
+Мы приветствуем вклад сообщества в улучшение адаптера `dbt-ClickHouse`. Исправляете ли вы ошибку,
+добавляете новую возможность или улучшаете документацию — мы очень ценим ваши усилия!
 
-Please take a moment to read our [Contribution Guide](https://github.com/ClickHouse/dbt-clickhouse/blob/main/CONTRIBUTING.md) to get started. The guide provides detailed instructions on setting up your environment, running tests, and submitting pull requests.
+Для начала ознакомьтесь с нашим [руководством по участию в разработке](https://github.com/ClickHouse/dbt-clickhouse/blob/main/CONTRIBUTING.md). В нём приведены подробные инструкции по настройке окружения, запуску тестов и отправке pull request.
 
 </VersionBlock>

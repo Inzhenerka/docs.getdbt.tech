@@ -1,44 +1,44 @@
 ---
-title: "SQL parse"
+title: "Разбор SQL"
 id: "sqlparse"
 sidebar: "sqlparse"
-description: "Configure sqlparse grouping limits when dbt compiles SQL."
+description: "Настройка ограничений группировки sqlparse при компиляции SQL в dbt."
 ---
 
-dbt uses the Python [`sqlparse`](https://pypi.org/project/sqlparse/) library when it parses SQL. For large or complex queries, you may need to adjust how `sqlparse` groups tokens to avoid performance issues or parsing limits.
+dbt использует библиотеку Python [`sqlparse`](https://pypi.org/project/sqlparse/) для разбора SQL. Для больших или сложных запросов может потребоваться настроить группировку токенов в `sqlparse`, чтобы избежать проблем с производительностью или достижения ограничений при разборе.
 
-You can use the `--sqlparse` flag to adjust how `sqlparse` groups tokens. This maps to the grouping limits described in the [sqlparse Security and Performance Considerations](https://sqlparse.readthedocs.io/en/latest/api.html#security-and-performance-considerations).
+Вы можете использовать флаг `--sqlparse`, чтобы настроить группировку токенов в `sqlparse`. Этот флаг позволяет задать ограничения группировки, описанные в разделе [«Безопасность и производительность» документации sqlparse](https://sqlparse.readthedocs.io/en/latest/api.html#security-and-performance-considerations).
 
-Supported keys:
+Поддерживаемые ключи:
 
 <SimpleTable>
-| Key | What it does |
+| Ключ | Назначение |
 | --- | --- |
-| `MAX_GROUPING_DEPTH` | Sets the maximum nesting depth when grouping tokens |
-| `MAX_GROUPING_TOKENS` | Sets the maximum number of tokens that can be grouped at once |
+| `MAX_GROUPING_DEPTH` | Задаёт максимальную глубину вложенности при группировке токенов |
+| `MAX_GROUPING_TOKENS` | Задаёт максимальное количество токенов, которые можно сгруппировать за один раз |
 </SimpleTable>
 
 <br></br>
 
-Each key accepts a single value: an integer or `null`. The default value for both keys is `null`, which means dbt does not apply a custom limit.
+Каждый ключ принимает одно значение: целое число или `null`. Значение по умолчанию для обоих ключей — `null`, что означает, что dbt не задаёт пользовательское ограничение.
 
-`sqlparse` enforces built-in limits (`MAX_GROUPING_DEPTH = 100` and `MAX_GROUPING_TOKENS = 10000`) to prevent excessive resource usage. Setting a value to `null` disables the limit entirely.
+`sqlparse` применяет встроенные ограничения (`MAX_GROUPING_DEPTH = 100` и `MAX_GROUPING_TOKENS = 10000`), чтобы предотвратить чрезмерное использование ресурсов. Установка значения `null` полностью отключает соответствующее ограничение.
 
-For example, the following command sets both grouping limits:
+Например, следующая команда задаёт оба ограничения группировки:
 
 ```bash
 dbt compile --sqlparse '{"MAX_GROUPING_DEPTH": 200, "MAX_GROUPING_TOKENS": 20000}'
 ```
 
-You can configure only one key to set a single limit. Any unspecified key defaults to `null`. In the following example, only the depth limit is raised to `500`; `MAX_GROUPING_TOKENS` is not set, so `sqlparse` does not apply a token limit for this run.
+Вы можете настроить только один ключ, чтобы задать одно ограничение. Любой неуказанный ключ по умолчанию принимает значение `null`. В следующем примере только ограничение глубины увеличивается до `500`; `MAX_GROUPING_TOKENS` не задан, поэтому `sqlparse` не применяет ограничение количества токенов при этом запуске.
 
 ```bash
 dbt compile --sqlparse '{"MAX_GROUPING_DEPTH": 500}'
 ```
 
-If no keys are provided, both limits remain unset (`null`), and `sqlparse` does not apply any grouping limits.
+Если ключи не указаны, оба ограничения остаются незаданными (`null`), и `sqlparse` не применяет никаких ограничений группировки.
 
-You can use `--sqlparse` with the following commands:
+Вы можете использовать `--sqlparse` со следующими командами:
 
 - [`dbt compile`](/reference/commands/compile)
 - [`dbt run`](/reference/commands/run)
@@ -46,7 +46,6 @@ You can use `--sqlparse` with the following commands:
 - [`dbt test`](/reference/commands/test)
 - [`dbt seed`](/reference/commands/seed)
 - [`dbt snapshot`](/reference/commands/snapshot)
-- [`dbt source freshness`](/reference/commands/source#dbt-source-freshness)
+- [`dbt source freshness`](/reference/commands/source#freshness)
 - [`dbt docs generate`](/reference/commands/cmd-docs?version=1.12#dbt-docs-generate)
 - [`dbt show`](/reference/commands/show)
-

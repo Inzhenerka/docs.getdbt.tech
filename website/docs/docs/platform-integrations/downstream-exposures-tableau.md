@@ -1,7 +1,7 @@
 ---
-title: "Set up automatic downstream exposures"
-sidebar_label: "Set up automatic exposures"
-description: "Set up and visualize exposures automatically by auto-generating them from Tableau dashboards, helping you understand how models are used in downstream tools for a richer lineage."
+title: "Настройка автоматических downstream exposures"
+sidebar_label: "Настройка автоматических exposures"
+description: "Настройте автоматическое создание и визуализацию exposures на основе дашбордов Tableau, чтобы понимать, как модели используются в зависимых инструментах, и получать более полную картину происхождения данных."
 image: /img/docs/platform-integrations/auto-exposures/explorer-lineage2.png
 availability:
   surface: platform
@@ -9,110 +9,108 @@ availability:
   minPlan: enterprise
 ---
 
-# Set up automatic exposures in Tableau
+# Настройка автоматических exposures в Tableau
 
 <IntroText>
-Set up and automatically populate downstream exposures for supported BI tool integrations, like Tableau. Visualize and orchestrate them through <a href="https://docs.getdbt.com/docs/explore/explore-projects">dbt Catalog</a> and the [<Constant name="dbt" /> job scheduler](/docs/deploy/job-scheduler) for a richer experience.
+Настройте автоматическое заполнение downstream exposures для поддерживаемых интеграций с BI-инструментами, такими как Tableau. Визуализируйте их и управляйте их выполнением с помощью <a href="https://docs.getdbt.com/docs/explore/explore-projects">dbt Catalog</a> и [планировщика заданий <Constant name="dbt" />](/docs/deploy/job-scheduler), чтобы расширить возможности работы с ними.
 
 </IntroText>
 
-As a data team, it’s critical that you have context into the downstream use cases and users of your data products. By leveraging automatic downstream [exposures](/docs/build/exposures), you can:
+Команде по работе с данными крайне важно понимать, как и кем используются ее продукты данных в зависимых системах. Автоматические downstream [exposures](/docs/build/exposures) позволяют:
 
-- Gain a better understanding of how models are used in downstream analytics, improving governance and decision-making.
-- Reduce incidents and optimize workflows by linking upstream models to downstream dependencies.
-- Automate exposure tracking for supported BI tools, ensuring lineage is always up to date.
-- [Orchestrate exposures](/docs/platform-integrations/orchestrate-exposures) to refresh the underlying data sources during scheduled dbt jobs, improving timeliness and reducing costs. Orchestrating exposures is a way to ensure that your BI tools are updated regularly using the [<Constant name="dbt" /> job scheduler](/docs/deploy/job-scheduler). See the [previous page](/docs/platform-integrations/downstream-exposures) for more information.
+- Лучше понимать, как модели используются в зависимых аналитических системах, улучшая управление данными и принятие решений.
+- Сокращать количество инцидентов и оптимизировать рабочие процессы, связывая исходные модели с зависимыми от них объектами.
+- Автоматизировать отслеживание exposures для поддерживаемых BI-инструментов, поддерживая актуальность графа происхождения данных.
+- [Оркестрировать exposures](/docs/platform-integrations/orchestrate-exposures) для обновления базовых источников данных во время запланированных заданий dbt, повышая своевременность обновлений и снижая затраты. Оркестрация exposures позволяет обеспечить регулярное обновление BI-инструментов с помощью [планировщика заданий <Constant name="dbt" />](/docs/deploy/job-scheduler). Подробнее см. на [предыдущей странице](/docs/platform-integrations/downstream-exposures).
 
-In <Constant name="dbt" />, you can configure downstream exposures in two ways:
-- Manually &mdash; Declared [explicitly](/docs/build/exposures#declaring-an-exposure) in your project’s YAML files.
-- Automatic &mdash;  <Constant name="dbt" /> [creates and visualizes downstream exposures](/docs/platform-integrations/downstream-exposures) automatically for supported integrations, removing the need for manual YAML definitions. These downstream exposures are stored in dbt’s metadata system, appear in [<Constant name="catalog" />](/docs/explore/explore-projects), and behave like manual exposures. However, they don’t exist in YAML files.
+В <Constant name="dbt" /> можно настроить downstream exposures двумя способами:
+- Вручную &mdash; [Явно объявить](/docs/build/exposures#declaring-an-exposure) их в YAML-файлах проекта.
+- Автоматически &mdash; <Constant name="dbt" /> автоматически [создает и визуализирует downstream exposures](/docs/platform-integrations/downstream-exposures) для поддерживаемых интеграций, устраняя необходимость вручную описывать их в YAML. Эти downstream exposures хранятся в системе метаданных dbt, отображаются в [<Constant name="catalog" />](/docs/explore/explore-projects) и работают так же, как exposures, созданные вручную. Однако в YAML-файлах их нет.
 
 :::info Tableau Server
-If you're using Tableau Server, you need to add the [<Constant name="dbt" /> IP addresses for your region](/docs/platform/about-platform/access-regions-ip-addresses) to your allowlist.
+Если вы используете Tableau Server, необходимо добавить [IP-адреса <Constant name="dbt" /> для вашего региона](/docs/platform/about-platform/access-regions-ip-addresses) в список разрешенных.
 :::
 
-## Prerequisites
+## Предварительные требования
 
-To configure automatic downstream exposures, you should meet the following:
+Для настройки автоматических downstream exposures должны выполняться следующие условия:
 
-1. Your environment and jobs are on a supported [<Constant name="dbt" /> release track](/docs/dbt-versions/dbt-release-tracks).
-2. You have a <Constant name="dbt" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/).
-3. You have set up a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run. 
-4. You have [proper permissions](/docs/platform/manage-access/enterprise-permissions) to edit <Constant name="dbt" /> project or production environment settings.
-5. Use Tableau as your BI tool and enable metadata permissions or work with an admin to do so. Compatible with Tableau Cloud or Tableau Server with the Metadata API enabled.
-6. You have configured a [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) whose creator has permission to view data sources. The PAT inherits the permissions of its creator, so ensure the Tableau user who created the token has [Connect permissions](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_permissions.htm).
+1. Ваша среда и задания используют поддерживаемый [канал выпуска <Constant name="dbt" />](/docs/dbt-versions/dbt-release-tracks).
+2. У вас есть учетная запись <Constant name="dbt" /> с [тарифным планом Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
+3. Для каждого проекта, который вы хотите исследовать, настроена среда развертывания [production](/docs/deploy/deploy-environments#set-as-production-environment), в которой успешно выполнено хотя бы одно задание. 
+4. У вас есть [необходимые разрешения](/docs/platform/manage-access/enterprise-permissions) для изменения настроек проекта или среды production в <Constant name="dbt" />.
+5. Вы используете Tableau в качестве BI-инструмента и включили разрешения на доступ к метаданным самостоятельно или с помощью администратора. Поддерживаются Tableau Cloud и Tableau Server с включенным Metadata API.
+6. Вы настроили [персональный токен доступа Tableau (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm), создатель которого имеет разрешение на просмотр источников данных. PAT наследует разрешения своего создателя, поэтому убедитесь, что у пользователя Tableau, создавшего токен, есть [разрешения Connect](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_permissions.htm).
 
-### Considerations
+### Особенности и ограничения
 import ConsiderationsTableau from '/snippets/_auto-exposures-considerations-tb.md';
 
 <ConsiderationsTableau/>
 
-## Set up downstream exposures
+## Настройка downstream exposures
 
-Set up downstream exposures in [Tableau](#set-up-in-tableau) and [<Constant name="dbt" />](#set-up-in-dbt-cloud) to ensure that your BI tool's extracts are updated automatically.
+Настройте downstream exposures в [Tableau](#set-up-in-tableau) и [<Constant name="dbt" />](#set-up-in-dbt-cloud), чтобы обеспечить автоматическое обновление экстрактов вашего BI-инструмента.
 
-### Set up in Tableau
+### Настройка в Tableau {#set-up-in-tableau}
 
-This section explains the steps to configure the integration in Tableau. A Tableau site admin must complete these steps. 
+В этом разделе описаны шаги настройки интеграции в Tableau. Эти шаги должен выполнить администратор сайта Tableau. 
 
-Once configured in both Tableau and [<Constant name="dbt" />](#set-up-in-dbt-cloud), you can [view downstream exposures](#view-downstream-exposures) in <Constant name="catalog" />. 
+После настройки в Tableau и [<Constant name="dbt" />](#set-up-in-dbt-cloud) вы сможете [просматривать downstream exposures](#view-downstream-exposures) в <Constant name="catalog" />. 
 
-1. Enable [personal access tokens (PATs)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) for your Tableau account.
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tableau-enable-pat.jpg" title="Enable PATs for the account in Tableau"/>
+1. Включите [персональные токены доступа (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) для своей учетной записи Tableau.
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tableau-enable-pat.jpg" title="Включение PAT для учетной записи Tableau"/>
 
-2. Create a PAT to add to <Constant name="dbt" /> to pull in Tableau metadata for the downstream exposures. When creating the token, you must have permission to access collections/folders, as the PAT only grants access matching the creator's existing privileges.
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tableau-create-pat.jpg" title="Create PATs for the account in Tableau"/>
+2. Создайте PAT для добавления в <Constant name="dbt" />, чтобы получать метаданные Tableau для downstream exposures. При создании токена у вас должно быть разрешение на доступ к коллекциям и папкам, поскольку PAT предоставляет доступ только в пределах существующих прав его создателя.
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tableau-create-pat.jpg" title="Создание PAT для учетной записи Tableau"/>
 
-3. Copy the **Secret** and the **Token name** for use in a later step in <Constant name="dbt" />. The secret is only displayed once, so store it in a safe location (like a password manager).
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tableau-copy-token.jpg" title="Copy the secret and token name to enter them in dbt"/>
+3. Скопируйте **Secret** и **Token name** для использования на одном из следующих шагов в <Constant name="dbt" />. Секрет отображается только один раз, поэтому сохраните его в безопасном месте (например, в менеджере паролей).
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tableau-copy-token.jpg" title="Копирование секрета и имени токена для ввода в dbt"/>
 
-4. Copy the **Server URL** and **Sitename**. You can find these in the URL while logged into Tableau.
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tablueau-serverurl.jpg" title="Locate the Server URL and Sitename in Tableau"/>
+4. Скопируйте **Server URL** и **Sitename**. Их можно найти в URL после входа в Tableau.
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/tablueau-serverurl.jpg" title="Поиск Server URL и Sitename в Tableau"/>
 
-   For example, if the full URL is: `10az.online.tableau.com/#/site/dbtlabspartner/explore`:
-   - The **Server URL** is the fully qualified domain name, in this case: `10az.online.tableau.com`
-   - The **Sitename** is the path fragment right after `site` in the URL, in this case: `dbtlabspartner` 
+   Например, если полный URL выглядит так: `10az.online.tableau.com/#/site/dbtlabspartner/explore`:
+   - **Server URL** — это полное доменное имя, в данном случае: `10az.online.tableau.com`
+   - **Sitename** — это фрагмент пути сразу после `site` в URL, в данном случае: `dbtlabspartner` 
 
-5. With the following items copied, you are now ready to set up downstream exposures in <Constant name="dbt" />: 
+5. Скопировав следующие данные, вы можете перейти к настройке downstream exposures в <Constant name="dbt" />: 
       - ServerURL
       - Sitename
       - Token name
       - Secret
 
-<a id="set-up-in-dbt-cloud" />
+### Настройка в dbt {#set-up-in-dbt-cloud}
 
-### Set up in dbt
+1. В <Constant name="dbt" /> перейдите на **Dashboard** проекта, в который хотите добавить downstream exposure, затем выберите **Settings**.
+2. В разделе **Exposures** выберите **Add lineage integration**, чтобы добавить подключение к Tableau.
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/cloud-add-integration.png" title="Выберите Add lineage integration, чтобы добавить подключение к Tableau."/>
+3. Введите данные подключения для exposures, полученные из Tableau на [предыдущем шаге](#set-up-in-tableau), и нажмите **Continue**. Обратите внимание: все поля чувствительны к регистру.
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/cloud-integration-details.png" title="Введите данные подключения для exposures."/>
+4. Выберите коллекции, которые хотите включить в downstream exposures, и нажмите **Save**.
 
-1. In <Constant name="dbt" />, navigate to the **Dashboard** of the project you want to add the downstream exposure to and then select **Settings**.
-2. Under the **Exposures** section, select **Add lineage integration** to add the Tableau connection.
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/cloud-add-integration.png" title="Select Add lineage integration to add the Tableau connection."/>
-3. Enter the details for the exposure connection you collected from Tableau in the [previous step](#set-up-in-tableau) and click **Continue**. Note that all fields are case-sensitive.
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/cloud-integration-details.png" title="Enter the details for the exposure connection."/>
-4. Select the collections you want to include for the downstream exposures and click **Save**.
-
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/cloud-select-collections.png" title="Select the collections you want to include for the downstream exposures."/>
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/cloud-select-collections.png" title="Выберите коллекции, которые хотите включить в downstream exposures."/>
 
       :::info
-      <Constant name="dbt" /> automatically imports and syncs any workbook within the selected collections. New additions to the collections will appear in the lineage in <Constant name="dbt" /> once per day &mdash; after the daily sync and a job run.
+      <Constant name="dbt" /> автоматически импортирует и синхронизирует все рабочие книги из выбранных коллекций. Новые объекты, добавленные в коллекции, появляются на графе происхождения данных в <Constant name="dbt" /> раз в сутки &mdash; после ежедневной синхронизации и выполнения задания.
 
-      <Constant name="dbt" /> immediately starts a sync when you update the selected collections list, capturing new workbooks and removing irrelevant ones.
+      <Constant name="dbt" /> запускает синхронизацию сразу после изменения списка выбранных коллекций, добавляя новые рабочие книги и удаляя те, которые больше не относятся к выбранным коллекциям.
       :::
 
-5. <Constant name="dbt" /> imports everything in the collection(s) and you can continue to [view them](#view-downstream-exposures) in <Constant name="catalog" />. 
+5. <Constant name="dbt" /> импортирует все содержимое выбранных коллекций, после чего вы можете перейти к [его просмотру](#view-downstream-exposures) в <Constant name="catalog" />. 
 
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/explorer-lineage2.png" width="100%" title="View from the dbt Catalog in your Project lineage view, displayed with the Tableau icon."/>
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/explorer-lineage2.png" width="100%" title="Отображение в dbt Catalog на графе происхождения данных проекта со значком Tableau."/>
 
 import ViewExposures from '/snippets/_auto-exposures-view.md';
 
 <ViewExposures/>
 
-## Orchestrate exposures <Lifecycle status="beta,managed,managed_plus"/>
+## Оркестрация exposures <Lifecycle status="beta,managed,managed_plus"/>
 
-[Orchestrate exposures](/docs/platform-integrations/orchestrate-exposures) using the dbt [Cloud job scheduler](/docs/deploy/job-scheduler) to proactively refresh the underlying data sources (extracts) that power your Tableau Workbooks.
+[Оркестрируйте exposures](/docs/platform-integrations/orchestrate-exposures) с помощью [планировщика заданий dbt Cloud](/docs/deploy/job-scheduler), чтобы заблаговременно обновлять базовые источники данных (экстракты), используемые в рабочих книгах Tableau.
 
-This beta capability requires deployment jobs on [**v1 Latest**](/docs/dbt-versions/dbt-release-tracks) with <Constant name="core" /> and _isn't_ available on [**v2 Stable**](/docs/dbt-versions/dbt-release-tracks). For setup details, refer to [Orchestrate exposures](/docs/platform-integrations/orchestrate-exposures).
+Эта возможность в бета-версии требует, чтобы задания развертывания использовали [**v1 Latest**](/docs/dbt-versions/dbt-release-tracks) с <Constant name="core" />, и _недоступна_ в [**v2 Stable**](/docs/dbt-versions/dbt-release-tracks). Подробности настройки см. в разделе [Оркестрация exposures](/docs/platform-integrations/orchestrate-exposures).
 
-- Orchestrating exposures with a `dbt build` job ensures that downstream exposures, like Tableau extracts, are updated regularly and automatically.
-- You can control the frequency of these refreshes by configuring environment variables.
+- Оркестрация exposures с помощью задания `dbt build` обеспечивает регулярное автоматическое обновление downstream exposures, таких как экстракты Tableau.
+- Вы можете управлять частотой этих обновлений, настраивая переменные среды.
 
-To set up and proactively run exposures with the <Constant name="dbt" /> job scheduler, refer to [Orchestrate exposures](/docs/platform-integrations/orchestrate-exposures).
+Инструкции по настройке и заблаговременному запуску exposures с помощью планировщика заданий <Constant name="dbt" /> см. в разделе [Оркестрация exposures](/docs/platform-integrations/orchestrate-exposures).

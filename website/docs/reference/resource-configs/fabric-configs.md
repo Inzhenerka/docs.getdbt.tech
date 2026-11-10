@@ -90,7 +90,7 @@ vars:
 
 </File>
 
-## Views {#views}
+## Представления {#views}
 Вы можете создавать представления (views), используя материализацию `view`:
 
 ```sql
@@ -108,11 +108,11 @@ models:
 
 > **Ограничение:** В материализациях моделей не поддерживаются вложенные CTE (Common Table Expressions). Модели, использующие несколько уровней вложенных CTE, могут завершиться ошибкой на этапе компиляции или выполнения.
 
-## Model contracts
+## Контракты моделей {#model-contracts}
 
-The `dbt-fabric` adapter supports [model contracts](/docs/mesh/govern/model-contracts) and [constraints](/reference/resource-properties/constraints) on `table` and `incremental` models.
+Адаптер `dbt-fabric` поддерживает [контракты моделей](/docs/mesh/govern/model-contracts) и [ограничения](/reference/resource-properties/constraints) для моделей `table` и `incremental`.
 
-| Constraint type | Supported | Checked when the model builds |
+| Тип ограничения | Поддерживается | Проверяется при сборке модели |
 |-----------------|:---------:|:-----------------------------:|
 | `not_null`      | ✅ | ✅ |
 | `primary_key`   | ✅ | ❌ |
@@ -122,9 +122,9 @@ The `dbt-fabric` adapter supports [model contracts](/docs/mesh/govern/model-cont
 
 <br />
 
-Only `not_null` is checked when the model builds. Other supported constraint types are recorded on the table for reference, but Microsoft Fabric does not check them when new data is added. Use [data tests](/docs/build/data-tests) if you need to verify those rules. Define `primary_key`, `foreign_key`, and `unique` at the model level. The adapter ignores those constraint types at the column level.
+При сборке модели проверяется только `not_null`. Другие поддерживаемые ограничения записываются в таблице для справки, но при добавлении данных Microsoft Fabric их не проверяет. Для проверки используйте [тесты данных](/docs/build/data-tests). Задавайте `primary_key`, `foreign_key` и `unique` на уровне модели. На уровне столбца адаптер игнорирует эти ограничения.
 
-Microsoft Fabric does not include all constraints in the initial `create table` statement. dbt creates the table first, then runs separate statements to add model-level constraints. You must provide a `name` for each model-level constraint.
+Microsoft Fabric включает не все ограничения в исходную инструкцию `create table`. dbt сначала создаёт таблицу, затем добавляет ограничения модели отдельными инструкциями. У каждого ограничения модели нужно указать `name`.
 
 <File name='models/dim_customers.yml'>
 
@@ -151,7 +151,7 @@ models:
 
 </File>
 
-For more information, refer to [constraints](/reference/resource-properties/constraints) and [model contracts](/docs/mesh/govern/model-contracts).
+Подробнее см. [Ограничения](/reference/resource-properties/constraints) и [Контракты моделей](/docs/mesh/govern/model-contracts).
 
 ## Снимки (Snapshots) {#snapshots}
 
@@ -233,7 +233,7 @@ select * from raw_events
 - dbt обрабатывает каждый батч независимо, что позволяет эффективно выполнять инкрементальное обновление больших временных рядов.
 - Если `unique_key` не указан, dbt-fabric по умолчанию использует стратегию `append`.
 
-Подробнее см. [Incremental models](/docs/build/incremental-models).
+Подробнее см. [Инкрементальные модели](/docs/build/incremental-models).
 
 ## Разрешения {#permissions}
 

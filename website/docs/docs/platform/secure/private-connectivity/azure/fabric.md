@@ -1,7 +1,7 @@
 ---
-title: "Configuring Private Link for Microsoft Fabric"
+title: "Настройка Private Link для Microsoft Fabric"
 id: azure-fabric
-description: "Configuring Azure Private Link for Microsoft Fabric."
+description: "Настройка Azure Private Link для Microsoft Fabric."
 sidebar_label: "Microsoft Fabric"
 availability:
   surface: platform
@@ -12,71 +12,71 @@ availability:
 import SetUpPages from '/snippets/_available-tiers-enterprise-plus.md';
 import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
-# Configuring Private Link for Microsoft Fabric <Lifecycle status="beta"/>
+# Настройка Private Link для Microsoft Fabric <Lifecycle status="beta"/>
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-The following steps walk you through the setup of a Private Link endpoint for Microsoft Fabric in a <Constant name="dbt" /> multi-tenant environment.
+Следующие шаги помогут настроить конечную точку Private Link для Microsoft Fabric в мультитенантной среде <Constant name="dbt" />.
 
 <CloudProviders type='Microsoft Fabric' />
 
-:::note Workspace-level Private Link
-Microsoft Fabric offers two private connectivity models. Only **workspace-level Private Link** supports cross-tenant connections and is compatible with <Constant name="dbt" />. Tenant-level Private Link is designed for intra-organization access and does not support connections from external services like <Constant name="dbt" />.
+:::note Private Link на уровне рабочей области
+Microsoft Fabric предлагает две модели частного подключения. Только **Private Link на уровне рабочей области** поддерживает подключения между тенантами и совместим с <Constant name="dbt" />. Private Link на уровне тенанта предназначен для доступа внутри организации и не поддерживает подключения из внешних сервисов, таких как <Constant name="dbt" />.
 :::
 
-## Prerequisites
+## Предварительные требования
 
-Before configuring Private Link, make sure you have the following:
+Перед настройкой Private Link убедитесь, что выполнены следующие условия:
 
-- You have Fabric Administrator access
-- You have an Azure subscription with permission to register resource providers and deploy templates
-- You have a Fabric workspace already created
-- You have a service principal set up with the right Fabric permissions (Member or Contributor on the workspace, and Fabric APIs enabled in the Admin portal)
+- У вас есть права Fabric Administrator
+- У вас есть подписка Azure с разрешениями на регистрацию поставщиков ресурсов и развертывание шаблонов
+- У вас уже создана рабочая область Fabric
+- У вас настроен субъект-служба (service principal) с необходимыми разрешениями Fabric (роль Member или Contributor в рабочей области, а также включенный доступ к Fabric API на портале администрирования)
 
-## Configure Fabric Private Link
-Complete the following steps in your Microsoft Fabric and Azure environments before submitting a request to dbt.
+## Настройка Fabric Private Link
+Выполните следующие шаги в средах Microsoft Fabric и Azure, прежде чем отправлять запрос в dbt.
 
-### 1. Enable the workspace-level Private Link tenant setting
+### 1. Включите параметр тенанта для Private Link на уровне рабочей области
 
-A Fabric Administrator must enable workspace-level private link for your tenant before it can be configured on individual workspaces.
+Прежде чем настраивать Private Link для отдельных рабочих областей, администратор Fabric должен включить Private Link на уровне рабочей области для вашего тенанта.
 
-1. Open the [Microsoft Fabric Admin portal](https://app.fabric.microsoft.com/admin-portal).
-2. Navigate to **Tenant settings**.
-3. Search for **Configure workspace-level inbound network rules** and expand the setting.
-4. Toggle the setting to **Enabled**.
-5. Click **Apply**.
+1. Откройте [портал администрирования Microsoft Fabric](https://app.fabric.microsoft.com/admin-portal).
+2. Перейдите в раздел **Tenant settings**.
+3. Найдите **Configure workspace-level inbound network rules** и разверните этот параметр.
+4. Переведите переключатель в положение **Enabled**.
+5. Нажмите **Apply**.
 
-### 2. Configure your workspace network settings
+### 2. Настройте сетевые параметры рабочей области
 
-1. Open your Fabric workspace in the [Microsoft Fabric portal](https://app.fabric.microsoft.com).
-2. Navigate to **Workspace settings** → **Inbound networking**.
-3. Select **Allow connections from selected networks and workspace level private links**.
-4. Click **Save**.
+1. Откройте рабочую область Fabric на [портале Microsoft Fabric](https://app.fabric.microsoft.com).
+2. Перейдите в **Workspace settings** → **Inbound networking**.
+3. Выберите **Allow connections from selected networks and workspace level private links**.
+4. Нажмите **Save**.
 
-:::caution Restricting inbound access may block your own access
-When you select this option, only connections from approved IP addresses and workspace-level private links are allowed. If you or your team need to continue accessing this workspace from the Fabric portal, add your organization's public IP addresses before saving. Consult your network administrator if you're unsure which IP ranges to include.
+:::caution Ограничение входящего доступа может заблокировать ваш собственный доступ
+При выборе этого параметра разрешены только подключения с одобренных IP-адресов и через Private Link на уровне рабочей области. Если вам или вашей команде необходимо сохранить доступ к этой рабочей области через портал Fabric, добавьте общедоступные IP-адреса вашей организации перед сохранением. Если вы не уверены, какие диапазоны IP-адресов следует добавить, обратитесь к сетевому администратору.
 
-If you get locked out, a Fabric Administrator can restore access by navigating to the [Admin portal](https://app.fabric.microsoft.com/admin-portal) → **Tenant settings** → **Advanced networking** → **Configure workspace-level inbound network rules** and toggling the setting to **Disabled**. This reverts all workspaces to their previous network configuration.
+Если вы потеряете доступ, администратор Fabric сможет восстановить его, перейдя на [портал администрирования](https://app.fabric.microsoft.com/admin-portal) → **Tenant settings** → **Advanced networking** → **Configure workspace-level inbound network rules** и переведя переключатель в положение **Disabled**. Это вернет все рабочие области к предыдущей сетевой конфигурации.
 :::
 
-### 3. Register the Microsoft.Fabric resource provider
+### 3. Зарегистрируйте поставщика ресурсов Microsoft.Fabric
 
-The `Microsoft.Fabric` resource provider must be registered in your Azure subscription before you can create Fabric Private Link resources.
+Прежде чем создавать ресурсы Fabric Private Link, необходимо зарегистрировать поставщика ресурсов `Microsoft.Fabric` в вашей подписке Azure.
 
-1. In the [Azure portal](https://portal.azure.com), navigate to your **Subscription** → **Settings** → **Resource providers**.
-2. Search for `Microsoft.Fabric`.
-3. Select it and click **Register** (or **Re-register** if already registered). Wait for the status to change to **Registered**.
+1. На [портале Azure](https://portal.azure.com) перейдите в свою **Subscription** → **Settings** → **Resource providers**.
+2. Найдите `Microsoft.Fabric`.
+3. Выберите его и нажмите **Register** (или **Re-register**, если он уже зарегистрирован). Дождитесь, пока статус изменится на **Registered**.
 
-### 4. Create the Private Link Service resource
+### 4. Создайте ресурс Private Link Service
 
-Fabric workspace-level Private Link uses a dedicated Azure resource (`Microsoft.Fabric/privateLinkServicesForFabric`) to expose your workspace as a private endpoint target. This resource is not available in the Azure portal marketplace, so you must deploy it using a custom template.
+Private Link на уровне рабочей области Fabric использует отдельный ресурс Azure (`Microsoft.Fabric/privateLinkServicesForFabric`), чтобы сделать вашу рабочую область доступной в качестве целевого ресурса для частной конечной точки. Этот ресурс недоступен в каталоге Marketplace на портале Azure, поэтому его необходимо развернуть с помощью пользовательского шаблона.
 
-1. Locate the two IDs you'll need:
-   - **Workspace ID**: found in the workspace URL — `https://app.fabric.microsoft.com/groups/WORKSPACE_ID`. Replace `WORKSPACE_ID` with your value.
-   - **Tenant ID**: found in the [Azure portal](https://portal.azure.com) under **Microsoft Entra ID** → **Overview** → **Tenant ID**. This is the same Directory (tenant) ID used for service principal authentication.
-2. In the [Azure portal](https://portal.azure.com), search for **Deploy a custom template** and select it.
-3. Click **Build your own template in the editor**.
-4. Paste the following template into the editor. Replace `WORKSPACE_NAME`, `WORKSPACE_ID`, and `TENANT_ID` with your values, then click **Save**:
+1. Найдите два идентификатора, которые вам понадобятся:
+   - **Workspace ID**: находится в URL рабочей области — `https://app.fabric.microsoft.com/groups/WORKSPACE_ID`. Замените `WORKSPACE_ID` своим значением.
+   - **Tenant ID**: находится на [портале Azure](https://portal.azure.com) в разделе **Microsoft Entra ID** → **Overview** → **Tenant ID**. Это тот же идентификатор Directory (tenant) ID, который используется для аутентификации субъекта-службы.
+2. На [портале Azure](https://portal.azure.com) найдите **Deploy a custom template** и выберите этот пункт.
+3. Нажмите **Build your own template in the editor**.
+4. Вставьте следующий шаблон в редактор. Замените `WORKSPACE_NAME`, `WORKSPACE_ID` и `TENANT_ID` своими значениями, затем нажмите **Save**:
 
    ```json
    {
@@ -97,17 +97,17 @@ Fabric workspace-level Private Link uses a dedicated Azure resource (`Microsoft.
    }
    ```
 
-5. Select your **Subscription** and **Resource group**, then click **Review + create** → **Create**.
-6. Once the deployment completes, navigate to your **resource group** and select **Manage view** → **Show hidden types** to reveal the Private Link Service resource. Click the resource to open it and copy the **Resource ID** from the overview page. You will need the Resource ID to submit your Private Link request.
+5. Выберите **Subscription** и **Resource group**, затем нажмите **Review + create** → **Create**.
+6. После завершения развертывания перейдите в свою **resource group** и выберите **Manage view** → **Show hidden types**, чтобы отобразить ресурс Private Link Service. Нажмите на ресурс, чтобы открыть его, и скопируйте **Resource ID** со страницы обзора. Идентификатор ресурса понадобится при отправке запроса на Private Link.
 
-   The Resource ID path format is:
+   Формат пути идентификатора ресурса:
    `/subscriptions/SUBSCRIPTION_ID/resourceGroups/RESOURCE_GROUP/providers/Microsoft.Fabric/privateLinkServicesForFabric/NAME`
 
-## Submit a Private Link request to dbt
+## Отправка запроса на Private Link в dbt
 
-Add the required information to the following template and submit your Azure Private Link request to [dbt Support](mailto:support@getdbt.com):
+Добавьте необходимые сведения в следующий шаблон и отправьте запрос на Azure Private Link в [службу поддержки dbt](mailto:support@getdbt.com):
 
-<Expandable alt_header="Support request email template" is_open={true}>
+<Expandable alt_header="Шаблон письма с запросом в службу поддержки" is_open={true}>
 
 ```text
 Subject: New Azure Multi-Tenant Private Link Request
@@ -121,54 +121,54 @@ Subject: New Azure Multi-Tenant Private Link Request
 - Azure region of your Fabric workspace (for example, centralus, westeurope):
 ```
 
-Make sure you replace `SUBSCRIPTION_ID`, `RESOURCE_GROUP`, and `NAME` with your values.
+Обязательно замените `SUBSCRIPTION_ID`, `RESOURCE_GROUP` и `NAME` своими значениями.
 
 </Expandable>
 
-## Approve the Private Link connection
+## Одобрение подключения Private Link
 
-Once dbt Support confirms the private endpoint has been created on our side:
+После того как служба поддержки dbt подтвердит, что частная конечная точка создана на нашей стороне:
 
-1. In the [Azure portal](https://portal.azure.com), search for **Private Link** in the top search bar and select **Private Link Center**.
-2. In the left sidebar, select **Pending connections**.
-3. Verify the correct **Subscription** filter is selected (the subscription containing your Private Link Service resource).
-4. Select the connection from <Constant name="dbt" /> (the name will contain `dbt`).
-5. Click **Approve** and confirm.
-6. Confirm with dbt Support that the connection has been approved so they can validate it and make it available in <Constant name="dbt" />.
+1. На [портале Azure](https://portal.azure.com) найдите **Private Link** в верхней строке поиска и выберите **Private Link Center**.
+2. На левой боковой панели выберите **Pending connections**.
+3. Убедитесь, что в фильтре **Subscription** выбрана нужная подписка (та, в которой находится ваш ресурс Private Link Service).
+4. Выберите подключение от <Constant name="dbt" /> (его имя будет содержать `dbt`).
+5. Нажмите **Approve** и подтвердите действие.
+6. Сообщите службе поддержки dbt, что подключение одобрено, чтобы она могла проверить его и сделать доступным в <Constant name="dbt" />.
 
-:::tip Use Private Link Center, not the PLS resource
-Navigate to the **Private Link Center** service to approve the connection. The Fabric Private Link Service resource blade does not display pending connections. You must use **Private Link Center** → **Pending connections** to see and approve the connection from <Constant name="dbt" />.
+:::tip Используйте Private Link Center, а не ресурс PLS
+Для одобрения подключения перейдите в службу **Private Link Center**. На панели ресурса Fabric Private Link Service не отображаются подключения, ожидающие одобрения. Чтобы увидеть и одобрить подключение от <Constant name="dbt" />, необходимо перейти в **Private Link Center** → **Pending connections**.
 :::
 
-## Create connection in dbt
+## Создание подключения в dbt
 
-Once dbt Support confirms the endpoint is available, configure the connection in <Constant name="dbt" />:
+После того как служба поддержки dbt подтвердит доступность конечной точки, настройте подключение в <Constant name="dbt" />:
 
-1. Navigate to **Settings** → **Create new connection** → select **Microsoft Fabric**.
-2. You will see two radio buttons: **Default Endpoint** and **PrivateLink Endpoint**. Select **PrivateLink Endpoint**.
-3. Select the private endpoint from the dropdown. This populates the **Server** field with the private SQL hostname provided by dbt Support.
-4. Configure the remaining connection details:
+1. Перейдите в **Settings** → **Create new connection** → выберите **Microsoft Fabric**.
+2. Вы увидите два переключателя: **Default Endpoint** и **PrivateLink Endpoint**. Выберите **PrivateLink Endpoint**.
+3. Выберите частную конечную точку из раскрывающегося списка. В поле **Server** автоматически подставится частное имя хоста SQL, предоставленное службой поддержки dbt.
+4. Настройте остальные параметры подключения:
 
     <SimpleTable> 
        
-    | Field | Value |
+    | Поле | Значение |
     |-------|-------|
-    | **Port** | Auto-populated with `1433` |
-    | **Database** | Your Fabric warehouse name |
+    | **Port** | Автоматически заполняется значением `1433` |
+    | **Database** | Имя вашего хранилища Fabric |
     
     </ SimpleTable>
   
-5. Save it and proceed to the next step.
+5. Сохраните подключение и перейдите к следующему шагу.
 
-### Configure authentication
+### Настройка аутентификации
 
-The **Connection** page only includes **Server**, **Port**, and **Database**. Configure the following later when you [set up your development credentials](/docs/dbt-platform-environments#set-user-credentials) or [create a deployment environment](/docs/deploy/deploy-environments):
+На странице **Connection** доступны только поля **Server**, **Port** и **Database**. Настройте следующие параметры позже, когда будете [настраивать учетные данные для разработки](/docs/dbt-platform-environments#set-user-credentials) или [создавать среду развертывания](/docs/deploy/deploy-environments):
     <SimpleTable> 
-    | Field | Value |
+    | Поле | Значение |
     |-------|-------|
-    | **Authentication** | Your Service Principal |
-    | **Tenant ID** | Your Microsoft Entra Directory (tenant) ID |
-    | **Client ID** | Your service principal's application (client) ID |
-    | **Client secret** | Your service principal's client secret |
+    | **Authentication** | Ваш субъект-служба (Service Principal) |
+    | **Tenant ID** | Ваш идентификатор Microsoft Entra Directory (tenant) ID |
+    | **Client ID** | Идентификатор приложения (клиента) вашего субъекта-службы |
+    | **Client secret** | Секрет клиента вашего субъекта-службы |
     </ SimpleTable>
-Add the service principal you use for authentication as a **Member** or **Contributor** on the Fabric workspace. In the Fabric Admin portal, you must also enable **Service principals can use Fabric APIs** under **Tenant settings** → **Developer settings**.
+Добавьте субъект-службу, используемый для аутентификации, в рабочую область Fabric с ролью **Member** или **Contributor**. На портале администрирования Fabric также необходимо включить **Service principals can use Fabric APIs** в разделе **Tenant settings** → **Developer settings**.

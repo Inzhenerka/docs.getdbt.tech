@@ -1,7 +1,7 @@
 ---
-title: "Service principals"
+title: "Субъекты-службы"
 id: "service-principals"
-sidebar_label: "Service principals"
+sidebar_label: "Субъекты-службы"
 description: "TODO"
 availability:
   surface: platform
@@ -11,49 +11,49 @@ availability:
 
 
 <IntroText>
-TODO: One or two sentences on what a service principal is (the identity and permissions for a non-human integration) and why you'd use one instead of a bare service token.
+TODO: Одно-два предложения о том, что такое субъект-служба (идентичность и разрешения для интеграции, не связанной с пользователем-человеком) и почему стоит использовать его вместо отдельного служебного токена.
 </IntroText>
 
-## Service principals vs credentials
+## Субъекты-службы и учетные данные
 
-TODO: Explain the split with a small table. Principal = who the integration is and what it can do. Credential = the secret it uses to log in (service token now, OAuth client credential later).
+TODO: Объяснить различие с помощью небольшой таблицы. Субъект-служба — идентичность интеграции и ее возможности. Учетные данные — секрет, который она использует для входа (сейчас — служебный токен, в будущем — учетные данные клиента OAuth).
 
-## Account vs project service principals
+## Субъекты-службы уровня аккаунта и уровня проекта
 
-TODO: Table comparing who creates each, where it lives in settings, and what permissions it can have. Note that project principals can't mix in account-level permissions.
+TODO: Добавить таблицу со сравнением: кто создает каждый тип, где он находится в настройках и какие разрешения может иметь. Отметить, что субъектам-службам уровня проекта нельзя дополнительно назначать разрешения уровня аккаунта.
 
-## Choose an authentication method
+## Выбор метода аутентификации
 
-TODO: Short table comparing service token, OAuth client credential and PAT. Say when to use each.
+TODO: Добавить краткую таблицу сравнения служебного токена, учетных данных клиента OAuth и PAT. Указать, когда использовать каждый вариант.
 
-## Create a service principal
+## Создание субъекта-службы
 
-TODO: Steps for account admins in account settings. Mention scoping permissions to specific projects or environments.
+TODO: Описать шаги для администраторов аккаунта в настройках аккаунта. Упомянуть ограничение области действия разрешений конкретными проектами или средами.
 
-## Add a credential
+## Добавление учетных данных
 
-TODO: Steps to issue a service token under a principal. Add a note on saving it, since it's shown once. Link OAuth client credentials once they ship.
+TODO: Описать шаги для выпуска служебного токена для субъекта-службы. Добавить примечание о необходимости сохранить его, поскольку он отображается только один раз. Добавить ссылку на учетные данные клиента OAuth, когда они станут доступны.
 
-## Edit a service principal
+## Изменение субъекта-службы
 
-TODO: How to change the name or permissions. Add the warning that new permissions apply to all its credentials, and that credentials aren't revoked.
+TODO: Описать, как изменить имя или разрешения. Добавить предупреждение о том, что новые разрешения применяются ко всем его учетным данным и что учетные данные при этом не отзываются.
 
-## Delete a service principal or revoke a credential
+## Удаление субъекта-службы или отзыв учетных данных
 
-TODO: What the confirmation says, and that deleting a principal deletes all its credentials. Add a note that deleting a project deletes its project-scoped principals.
+TODO: Описать содержание подтверждения и указать, что при удалении субъекта-службы удаляются все его учетные данные. Добавить примечание о том, что при удалении проекта удаляются и его субъекты-службы уровня проекта.
 
-## Permissions
+## Разрешения
 
-TODO: Who can create, view and manage principals at each level, and which permission sets are needed. Check against the new `project_service_principal_*` permissions once they're public.
+TODO: Указать, кто может создавать, просматривать субъекты-службы и управлять ими на каждом уровне, а также какие наборы разрешений для этого нужны. Сверить с новыми разрешениями `project_service_principal_*`, когда они станут общедоступными.
 
-## Existing service tokens
+## Существующие служебные токены
 
-TODO: Say whether customers need to do anything. The PRD says existing tokens migrate with no behavior change. Confirm with the PM.
+TODO: Указать, нужно ли клиентам что-либо делать. В PRD указано, что существующие токены переносятся без изменения поведения. Подтвердить у менеджера продукта.
 
-## Audit log
+## Журнал аудита
 
-TODO: List the events for principal and credential create, update and delete. Link to the audit log page.
+TODO: Перечислить события создания, изменения и удаления субъектов-служб и учетных данных. Добавить ссылку на страницу журнала аудита.
 
-## FAQs
+## Часто задаваемые вопросы
 
-TODO: Add after review. Likely questions are what happens if the creator leaves and who sees project principals.
+TODO: Добавить после проверки. Возможные вопросы: что происходит, если создатель покидает организацию, и кто видит субъекты-службы уровня проекта.

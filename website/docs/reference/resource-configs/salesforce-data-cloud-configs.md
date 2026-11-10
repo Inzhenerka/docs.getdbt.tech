@@ -9,11 +9,11 @@ unlisted: true
 
 ## Поддерживаемые материализации
 
-| Materialization | Supported | Notes |
+| Материализация | Поддерживается | Примечания |
 | --- | --- | --- |
 | View | ❌ |  |
 | Table | ✅ |Создаёт пакетное преобразование данных (batch data transform) и объект Data Lake Object (DLO) |
-| Incremental | ❌ | Coming soon |
+| Incremental | ❌ | Планируется |
 | Ephemeral | ❌ |  |
 | Seeds | ❌ |  |
 | Sources | ✅ | Обязательно |

@@ -86,7 +86,7 @@ __Аргументы__:
 
 Эта функциональность доступна в <Constant name="dbt" /> версии 1.10 и выше.
 
-__Args__:
+__Аргументы__:
 
  - `name`: имя переменной конфигурации, которую нужно получить из `meta` (обязательно)
  - `default`: значение по умолчанию, которое будет использовано, если эта конфигурация не задана (опционально)
@@ -95,7 +95,7 @@ __Args__:
 
 Используйте эту функцию, когда обращаетесь к пользовательским конфигурациям, которые вы определили в `meta` в конфигурации модели или ресурса — по сути, это эквивалент вызова `config.get('meta').get()`.
 
-Note that `config.meta_get` is not yet supported in Python models. In the meantime, Python models should continue using `dbt.config.get("meta").get("<key>")` to access custom meta configurations. `dbt.config.get_meta("<key>")` is an alias for `dbt.config.get("meta").get("<key>")`.
+`config.meta_get` пока не поддерживается в моделях Python. В них используйте `dbt.config.get("meta").get("<key>")` для чтения пользовательских настроек `meta`. Вызов `dbt.config.get_meta("<key>")` — псевдоним `dbt.config.get("meta").get("<key>")`.
 
 Пример использования:
 ```sql
@@ -121,7 +121,7 @@ models:
 
 Эта функциональность доступна в <Constant name="dbt" /> версии 1.10 и выше.
 
-__Args__:
+__Аргументы__:
 
  - `name`: имя переменной конфигурации, которую нужно получить из `meta` (обязательно)
 

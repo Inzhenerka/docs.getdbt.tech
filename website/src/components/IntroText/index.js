@@ -3,9 +3,9 @@ import styles from './styles.module.css';
 
 const IntroText = ({ children }) => {
   return (
-    <p className={styles.introText}>
+    <div className={styles.introText}>
       {children}
-    </p>
+    </div>
   );
 };
 

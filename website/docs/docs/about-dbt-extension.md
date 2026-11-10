@@ -158,8 +158,8 @@ availability: local_all
 
 Расширение доступно всем пользователям. Дополнительную информацию см. в [Лицензионном соглашении на продукты dbt](https://www.getdbt.com/dbt-product-license-agreement).
 
-:::tip Developing locally as a <Constant name="dbt_platform"/> user?
-Refer to the [Hybrid development with <Constant name="dbt_platform"/> and dbt v2](/guides/dbt-platform-local-workflow) guide for how to keep credentials, environment variables, and v2 versions in sync between your local extension and <Constant name="dbt_platform"/>.
+:::tip Разрабатываете локально и пользуетесь <Constant name="dbt_platform"/>?
+В руководстве [Гибридная разработка с <Constant name="dbt_platform"/> и dbt v2](/guides/dbt-platform-local-workflow) описано, как синхронизировать учётные данные, переменные окружения и версии dbt v2 между локальным расширением и <Constant name="dbt_platform"/>.
 :::
 
 import AboutFusion from '/snippets/_about-v2.md';

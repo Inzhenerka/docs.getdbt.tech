@@ -1,8 +1,8 @@
 ---
-title: "Dimension properties"
+title: "Свойства измерений"
 id: dimension-properties
-sidebar_label: "Dimension properties"
-description: "Complete property reference for dbt Semantic Layer dimensions: time and categorical dimensions."
+sidebar_label: "Свойства измерений"
+description: "Полный справочник свойств измерений dbt Semantic Layer: временные и категориальные измерения."
 keywords:
   - dbt semantic layer
   - dimensions
@@ -10,7 +10,7 @@ keywords:
   - MetricFlow
 ---
 
-Dimensions are non-aggregatable expressions that define how metrics can be grouped or sliced. They are always defined within a [semantic model](/reference/semantic-model-properties). See [Dimensions](/docs/build/dimensions) for concepts and examples.
+Измерения — это неагрегируемые выражения, определяющие, как можно группировать метрики или формировать их срезы. Они всегда определяются в рамках [семантической модели](/reference/semantic-model-properties). Основные понятия и примеры приведены в разделе [Измерения](/docs/build/dimensions).
 
 import LatestYamlSpecAvailability from '/snippets/_latest-yaml-spec-availability-versioned.md';
 
@@ -18,76 +18,76 @@ import LatestYamlSpecAvailability from '/snippets/_latest-yaml-spec-availability
 
 <VersionBlock firstVersion="1.12">
 
-## Latest spec (model YAML)
+## Новейшая спецификация (YAML модели)
 
-Dimensions are defined at the column level.
+Измерения определяются на уровне столбцов.
 
-### Column-level placement (latest spec)
+### Размещение на уровне столбцов (новейшая спецификация)
 
-Add these keys to a **column** under the semantic model’s `columns:` list — they are not nested inside the `dimension:` object.
+Добавьте эти ключи к **столбцу** в списке `columns:` семантической модели — они не вкладываются в объект `dimension:`.
 
-| Location | Type | Required | Description |
+| Расположение | Тип | Обязательность | Описание |
 |----------|------|----------|-------------|
-| `dimension:` | block or shorthand | Yes (to define a dimension) | Attaches a dimension to the column. Use a mapping (`dimension:` with `type`, etc.) or the shorthand `dimension: categorical` / `dimension: time`. |
-| `granularity:` | string | Yes for **time** dimensions | Time grain of the underlying column data (for example, `day`, `week`, `month`). Place `granularity:` on the column next to `dimension:`, not inside the `dimension:` block. For **categorical** dimensions, `granularity` is not meaningful; if it appears in YAML, validation should surface an error. |
+| `dimension:` | блок или сокращённая запись | Да (для определения измерения) | Связывает измерение со столбцом. Используйте отображение (`dimension:` с `type` и другими свойствами) или сокращённую запись `dimension: categorical` / `dimension: time`. |
+| `granularity:` | string | Да, для **временных** измерений | Временная детализация исходных данных столбца (например, `day`, `week`, `month`). Размещайте `granularity:` на уровне столбца рядом с `dimension:`, а не внутри блока `dimension:`. Для **категориальных** измерений `granularity` не имеет смысла; если это свойство присутствует в YAML, проверка должна выдать ошибку. |
 
-### Properties inside the `dimension:` block (latest spec)
+### Свойства внутри блока `dimension:` (новейшая спецификация)
 
-| Property | Type | Required | Description |
+| Свойство | Тип | Обязательность | Описание |
 |----------|------|----------|-------------|
-| `type` | string | Yes | `time` or `categorical`. |
-| `name` | string | No | Unique within the semantic model; defaults to column name. |
-| `description` | string | No | Documentation for the dimension. |
-| `label` | string | No | Display value in downstream tools. |
-| `is_partition` | boolean | No | Whether this dimension is a partition dimension for the model (supported for time and categorical dimensions in YAML). |
-| `config` | object | No | Metadata and config. |
-| `validity_params` | object | No | For **time** dimensions: SCD-style validity (for example, `is_start`, `is_end`). |
+| `type` | string | Да | `time` или `categorical`. |
+| `name` | string | Нет | Уникальное имя в пределах семантической модели; по умолчанию используется имя столбца. |
+| `description` | string | Нет | Документация по измерению. |
+| `label` | string | Нет | Отображаемое значение в инструментах, использующих эти данные. |
+| `is_partition` | boolean | Нет | Указывает, является ли это измерение измерением секционирования модели (в YAML поддерживается для временных и категориальных измерений). |
+| `config` | object | Нет | Метаданные и настройки. |
+| `validity_params` | object | Нет | Для **временных** измерений: параметры срока действия в стиле SCD (например, `is_start`, `is_end`). |
 
-**Derived dimensions:** To define dimensions with an `expr` that is not tied to a single column, use the semantic model’s optional `derived_semantics.dimensions` list. That structure is part of the [semantic model](/reference/semantic-model-properties) configuration (alongside `columns:`), not a property nested under a column’s `dimension:` block. See [Semantic models](/docs/build/semantic-models) and [Dimensions](/docs/build/dimensions) for examples.
+**Производные измерения:** Чтобы определить измерения с выражением `expr`, не привязанным к одному столбцу, используйте необязательный список `derived_semantics.dimensions` семантической модели. Эта структура является частью конфигурации [семантической модели](/reference/semantic-model-properties) (наряду с `columns:`), а не свойством, вложенным в блок `dimension:` столбца. Примеры приведены в разделах [Семантические модели](/docs/build/semantic-models) и [Измерения](/docs/build/dimensions).
 
-- **Column-level:** Under the model's `columns:` list, each column can have a `dimension:` block with *time* or *categorical* type, and optional `name`, `description`, `label`, `is_partition`, `config`.
-- **Time dimensions:** The column must also have a top-level `granularity:` (for example, `day`).
-- **Validity (SCD):** Time dimensions can specify `validity_params` (for example, `is_start`, `is_end`).
+- **Уровень столбцов:** В списке `columns:` модели каждый столбец может содержать блок `dimension:` с типом *time* или *categorical* и необязательными свойствами `name`, `description`, `label`, `is_partition`, `config`.
+- **Временные измерения:** У столбца также должно быть свойство `granularity:` верхнего уровня (например, `day`).
+- **Срок действия (SCD):** Для временных измерений можно указать `validity_params` (например, `is_start`, `is_end`).
 
-For concepts and usage patterns, refer to [Dimensions](/docs/build/dimensions). For the latest spec, refer to [Semantic models](/docs/build/semantic-models).
+Основные понятия и способы использования описаны в разделе [Измерения](/docs/build/dimensions). Сведения о новейшей спецификации приведены в разделе [Семантические модели](/docs/build/semantic-models).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.11">
 
-## Legacy spec (standalone semantic model)
+## Прежняя спецификация (отдельная семантическая модель)
 
-Dimensions are defined in a top-level `dimensions:` list on the semantic model.
+Измерения определяются в списке `dimensions:` верхнего уровня семантической модели.
 
-### Available dimension properties (legacy spec)
+### Доступные свойства измерений (прежняя спецификация)
 
-| Property | Type | Required | Description |
+| Свойство | Тип | Обязательность | Описание |
 |----------|------|----------|-------------|
-| name | string | Yes | Unique within the semantic model. Displayed in downstream tools; can act as alias when `expr` differs. |
-| type | string | Yes | `time` or `categorical`. |
-| type_params | object | Yes (time only) | For time dimensions (for example, `time_granularity`, `is_primary`, `time_partitioning_granularity`). Omitted for categorical. |
-| is_partition | boolean | No | Whether this dimension is a partition dimension for the model. |
-| description | string | No | Documentation for the dimension. |
-| expr | string | No | Column or SQL expression. Defaults to the dimension name if omitted. |
-| label | string | No | Display value in downstream tools. |
-| meta | object | No | Metadata key-value pairs. |
+| name | string | Да | Уникальное имя в пределах семантической модели. Отображается в инструментах, использующих эти данные; может служить псевдонимом, если `expr` отличается. |
+| type | string | Да | `time` или `categorical`. |
+| type_params | object | Да (только для временных) | Параметры временных измерений (например, `time_granularity`, `is_primary`, `time_partitioning_granularity`). Для категориальных измерений не указываются. |
+| is_partition | boolean | Нет | Указывает, является ли это измерение измерением секционирования модели. |
+| description | string | Нет | Документация по измерению. |
+| expr | string | Нет | Столбец или SQL-выражение. Если не указано, по умолчанию используется имя измерения. |
+| label | string | Нет | Отображаемое значение в инструментах, использующих эти данные. |
+| meta | object | Нет | Метаданные в виде пар «ключ — значение». |
 
-### Full structure (standalone semantic model, legacy spec)
+### Полная структура (отдельная семантическая модель, прежняя спецификация)
 
 ```yaml
 dimensions:
-  - name: <dimension_name>       # Required
-    type: time | categorical    # Required
-    type_params:                 # Required for time
+  - name: <dimension_name>       # Обязательно
+    type: time | categorical    # Обязательно
+    type_params:                 # Обязательно для time
       time_granularity: day | week | month | quarter | year
       is_primary: true | false
-    is_partition: true | false   # Optional
-    description: <string>        # Optional
-    expr: <column_or_sql>        # Optional, defaults to name
-    label: <display_name>        # Optional
-    meta: {}                     # Optional
+    is_partition: true | false   # Необязательно
+    description: <string>        # Необязательно
+    expr: <column_or_sql>        # Необязательно, по умолчанию используется name
+    label: <display_name>        # Необязательно
+    meta: {}                     # Необязательно
 ```
 
-For the latest spec (column-level and derived dimensions), see [Dimensions](/docs/build/dimensions).
+Сведения о новейшей спецификации (измерения на уровне столбцов и производные измерения) приведены в разделе [Измерения](/docs/build/dimensions).
 
 </VersionBlock>

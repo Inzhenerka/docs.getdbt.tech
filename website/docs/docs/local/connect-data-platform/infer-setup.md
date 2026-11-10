@@ -49,7 +49,7 @@ pip install dbt-infer
 Версионирование dbt-infer следует стандартной схеме версионирования dbt - это означает, что если вы используете dbt 1.2, соответствующий dbt-infer будет называться 1.2.x, где x - это последний номер минорной версии.
 
 Перед использованием SQL-inf в ваших dbt-моделях необходимо настроить аккаунт Infer и сгенерировать API-key для подключения.  
-Подробные инструкции можно найти в [Getting Started Guide](https://docs.getinfer.io/docs/reference/integrations/dbt).
+Подробные инструкции см. в [руководстве по началу работы](https://docs.getinfer.io/docs/reference/integrations/dbt).
 
 Конфигурация профиля в `profiles.yml` для `dbt-infer` должна выглядеть примерно так:
 

@@ -1,30 +1,30 @@
 ---
-title: "Cross-platform Mesh using Iceberg catalogs"
+title: "Кроссплатформенная Mesh с каталогами Iceberg"
 id: cross-platform-mesh
-sidebar_label: "Cross-platform Mesh"
-description: Understand how Iceberg catalogs and dbt Mesh can combine to enable collaboration across multiple data platforms.
+sidebar_label: "Кроссплатформенная Mesh"
+description: Узнайте, как объединить каталоги Iceberg и dbt Mesh для совместной работы на нескольких платформах данных.
 ---
 
-# Cross-platform Mesh using Iceberg catalogs <Lifecycle status="beta" />
+# Кроссплатформенная Mesh с каталогами Iceberg <Lifecycle status="beta" />
 
-If a model is configured with `catalog_name`, dbt uses the current project's [catalog definition](/docs/build/iceberg/about-catalogs) (in `catalogs.yml`), for the current active adapter, to resolve the top-level namespace of that model.
+Если для модели задан параметр `catalog_name`, dbt использует [определение каталога](/docs/build/iceberg/about-catalogs) текущего проекта (в `catalogs.yml`) для текущего активного адаптера, чтобы определить пространство имён верхнего уровня этой модели.
 
-This means that you can materialize a dbt model in your `databricks_project` to an Iceberg table in Unity catalog, and select from it in another model in your `snowflake_project`. You can even materialize that model back to Unity catalog, and then use it for other models in `databricks_project`.
+Это означает, что вы можете материализовать модель dbt из `databricks_project` в таблицу Iceberg в Unity catalog и читать из неё данные в другой модели в `snowflake_project`. Вы даже можете материализовать эту модель обратно в Unity catalog, а затем использовать её в других моделях в `databricks_project`.
 
-The requirement is an automated service for linking or syncing metadata across your Iceberg catalog and connected data platforms. These include [Snowflake catalog-linked databases](https://docs.snowflake.com/en/sql-reference/sql/create-database-catalog-linked), [Databricks catalog federation](https://docs.databricks.com/aws/en/query-federation/catalog-federation), [AWS Glue catalog federation](https://docs.aws.amazon.com/lake-formation/latest/dg/catalog-federation.html), and [GCP Lakehouse runtime catalog](https://docs.cloud.google.com/lakehouse/docs/about-lakehouse-catalogs).
+Для этого необходим автоматизированный сервис, который связывает или синхронизирует метаданные между вашим каталогом Iceberg и подключёнными платформами данных. К таким сервисам относятся [базы данных Snowflake, связанные с каталогом](https://docs.snowflake.com/en/sql-reference/sql/create-database-catalog-linked), [федерация каталогов Databricks](https://docs.databricks.com/aws/en/query-federation/catalog-federation), [федерация каталогов AWS Glue](https://docs.aws.amazon.com/lake-formation/latest/dg/catalog-federation.html) и [каталог среды выполнения GCP Lakehouse](https://docs.cloud.google.com/lakehouse/docs/about-lakehouse-catalogs).
 
-Supported cross-platform combinations include:
-- Snowflake ↔ Databricks using Unity catalog ([Snowflake docs](https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration-rest-unity), [tutorial](https://docs.snowflake.com/en/user-guide/tutorials/tables-iceberg-set-up-bidirectional-access-to-unity-catalog))
-- Snowflake ↔ Athena using Glue catalog ([Snowflake docs](https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration-rest-glue))
-- Snowflake ↔ BigQuery using BigLake catalog ([Snowflake docs](https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration-rest-biglake))
-- Snowflake ↔ DuckDB using Horizon catalog ([example](https://github.com/dataders/dbt_aws_cloud_cost))
-- Databricks ↔ DuckDB using Unity catalog ([example](https://github.com/dataders/dbt_aws_cloud_cost))
+Поддерживаются следующие кроссплатформенные сочетания:
+- Snowflake ↔ Databricks с использованием Unity catalog ([документация Snowflake](https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration-rest-unity), [практическое руководство](https://docs.snowflake.com/en/user-guide/tutorials/tables-iceberg-set-up-bidirectional-access-to-unity-catalog))
+- Snowflake ↔ Athena с использованием Glue catalog ([документация Snowflake](https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration-rest-glue))
+- Snowflake ↔ BigQuery с использованием BigLake catalog ([документация Snowflake](https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-catalog-integration-rest-biglake))
+- Snowflake ↔ DuckDB с использованием Horizon catalog ([пример](https://github.com/dataders/dbt_aws_cloud_cost))
+- Databricks ↔ DuckDB с использованием Unity catalog ([пример](https://github.com/dataders/dbt_aws_cloud_cost))
 
-## Example: Snowflake ↔ Databricks using Unity catalog {#example-snowflake-databricks}
+## Пример: Snowflake ↔ Databricks с использованием Unity catalog {#example-snowflake-databricks}
 
-Let's imagine two "mesh" projects, [`jaffle_finance`](https://github.com/dbt-labs/jaffle-shop-mesh-finance) and [`jaffle_marketing`](https://github.com/dbt-labs/jaffle-shop-mesh-marketing), with a cross-project dependency `jaffle_finance -> jaffle_marketing`.
+Представим два проекта «mesh», [`jaffle_finance`](https://github.com/dbt-labs/jaffle-shop-mesh-finance) и [`jaffle_marketing`](https://github.com/dbt-labs/jaffle-shop-mesh-marketing), с межпроектной зависимостью `jaffle_finance -> jaffle_marketing`.
 
-So long as the `jaffle_finance` project writes its public models to an Iceberg catalog that the `jaffle_marketing` project can read from, and both projects configure that Iceberg catalog in `catalogs.yml` by the same `name` — these projects can now run on **different data platforms.**
+Если проект `jaffle_finance` записывает свои публичные модели в каталог Iceberg, из которого проект `jaffle_marketing` может читать данные, и оба проекта настраивают этот каталог Iceberg в `catalogs.yml` с одинаковым значением `name`, то эти проекты теперь могут работать на **разных платформах данных.**
 
 ```yaml
 # jaffle_finance/dbt_project.yml
@@ -69,15 +69,15 @@ catalogs:
 
 :::note
 
-If you create the [Snowflake catalog-linked database](https://docs.snowflake.com/en/sql-reference/sql/create-database-catalog-linked) with `CATALOG_CASE_SENSITIVITY = CASE_INSENSITIVE`, then you don't need to quote all column and identifier names that Snowflake is reading from or writing to Unity.
+Если вы создадите [базу данных Snowflake, связанную с каталогом](https://docs.snowflake.com/en/sql-reference/sql/create-database-catalog-linked), с параметром `CATALOG_CASE_SENSITIVITY = CASE_INSENSITIVE`, вам не потребуется заключать в кавычки все имена столбцов и идентификаторы объектов, которые Snowflake читает из Unity или записывает в Unity.
 
 :::
 
-What's going on here?
+Что здесь происходит?
 
-- The `jaffle_finance` project, running on Databricks, materializes "mart" models into the `finance_db` database in Unity catalog.
-- This is actually an Iceberg catalog, which we've made accessible to Snowflake through a catalog-linked database. In Snowflake, the catalog-linked database is named `snowflake_cld__finance_db`.
-- When running the `jaffle_marketing` project, dbt sees a cross-project reference to a public model in the `jaffle_finance` project:
+- Проект `jaffle_finance`, работающий на Databricks, материализует модели витрин данных в базу данных `finance_db` в Unity catalog.
+- Фактически это каталог Iceberg, доступ к которому мы предоставили Snowflake через связанную с каталогом базу данных. В Snowflake эта база данных называется `snowflake_cld__finance_db`.
+- При запуске проекта `jaffle_marketing` dbt обнаруживает межпроектную ссылку на публичную модель в проекте `jaffle_finance`:
 
 ```sql
 -- marketing/models/marts/roi_by_channel.sql
@@ -90,14 +90,14 @@ with monthly_revenue as (
 ...
 ```
 
-<img width="691" height="134" alt="Flow chart: The marketing project's ROI by channel model depends on the finance project's monthly revenue model" src="https://github.com/user-attachments/assets/e0a07911-b9d5-4422-9a81-6287e1946ca2" /> 
+<img width="691" height="134" alt="Блок-схема: модель ROI по каналам проекта marketing зависит от модели месячной выручки проекта finance" src="https://github.com/user-attachments/assets/e0a07911-b9d5-4422-9a81-6287e1946ca2" /> 
 
-This works for [both ways of resolving cross-project references](/docs/mesh/govern/project-dependencies):
+Это работает для [обоих способов разрешения межпроектных ссылок](/docs/mesh/govern/project-dependencies):
 
-1. `package` dependencies (supported in <Constant name="core" /> + dbt platform)
-2. `project` dependencies (dbt platform Enterprise; refer to the [advantages of this approach](/docs/mesh/govern/project-dependencies#advantages))
+1. Зависимости `package` (поддерживаются в <Constant name="core" /> и на платформе dbt)
+2. Зависимости `project` (редакция Enterprise платформы dbt; см. [преимущества этого подхода](/docs/mesh/govern/project-dependencies#advantages))
 
-**For `package` dependencies:**
+**Для зависимостей `package`:**
 
 ```yaml
 # dependencies.yml
@@ -105,9 +105,9 @@ packages:
   - git: https://github.com/dbt-labs/jaffle-shop-mesh-finance
 ```
 
-The upstream package model `jaffle_finance.monthly_revenue` is configured with `catalog_name: finance_db`. dbt uses the currently running (root) project's `catalogs.yml` to resolve its three-part relation name. In this project (`jaffle_marketing`) + this platform (Snowflake), that catalog is configured with `database: snowflake_cld__finance_db`. Therefore, dbt resolves the reference to:
+Для модели `jaffle_finance.monthly_revenue` из вышестоящего пакета задан параметр `catalog_name: finance_db`. dbt использует `catalogs.yml` текущего выполняемого (корневого) проекта, чтобы определить полное имя объекта базы данных из трёх частей. В этом проекте (`jaffle_marketing`) на этой платформе (Snowflake) для данного каталога задано `database: snowflake_cld__finance_db`. Поэтому dbt преобразует ссылку следующим образом:
 
-**For `project` dependencies:**
+**Для зависимостей `project`:**
 
 ```yaml
 # dependencies.yml
@@ -115,9 +115,9 @@ projects:
   - name: jaffle_finance
 ```
 
-Previously, if we only used the upstream model's `database` config, then dbt would resolve this to `finance_db.jaffle_finance.monthly_revenue` — which doesn't exist in Snowflake.
+Раньше, если бы мы использовали только настройку `database` вышестоящей модели, dbt преобразовал бы эту ссылку в `finance_db.jaffle_finance.monthly_revenue` — объект, которого нет в Snowflake.
 
-Instead, dbt now **matches up the `catalog_name`** for the referenced model with the entries in `catalogs.yml` for the currently running (root) project. dbt sees that `jaffle_finance.monthly_revenue` has `catalog_name: finance_db`, which for this project (`jaffle_marketing`) + this platform (Snowflake) is configured with `database: snowflake_cld__finance_db`. Therefore, dbt resolves the reference to:
+Теперь вместо этого dbt **сопоставляет `catalog_name`** модели, на которую указывает ссылка, с записями в `catalogs.yml` текущего выполняемого (корневого) проекта. dbt видит, что у `jaffle_finance.monthly_revenue` задано `catalog_name: finance_db`, а для этого каталога в данном проекте (`jaffle_marketing`) на данной платформе (Snowflake) задано `database: snowflake_cld__finance_db`. Поэтому dbt преобразует ссылку следующим образом:
 
 ```sql
 
@@ -132,17 +132,17 @@ with monthly_revenue as (
 
 ```
 
-_And it just works!_
+_И всё просто работает!_
 
-Behind the scenes, Snowflake is syncing Databricks' `finance_db` ↔ Snowflake's `snowflake_cld__finance_db`, with eventual consistency. This means that `finance_db.jaffle_finance.monthly_revenue` in Databricks and `snowflake_cld__finance_db."jaffle_finance"."monthly_revenue"` in Snowflake are pointers to _the exact same Iceberg table_ in the Databricks-managed Unity catalog.
+За кулисами Snowflake синхронизирует `finance_db` в Databricks ↔ `snowflake_cld__finance_db` в Snowflake, обеспечивая согласованность в конечном счёте. Это означает, что `finance_db.jaffle_finance.monthly_revenue` в Databricks и `snowflake_cld__finance_db."jaffle_finance"."monthly_revenue"` в Snowflake указывают на _одну и ту же таблицу Iceberg_ в Unity catalog, управляемом Databricks.
 
-### Alternative approach: catalog federation {#catalog-federation}
+### Альтернативный подход: федерация каталогов {#catalog-federation}
 
-Writes to external Iceberg catalogs are generally slower than writes to managed Iceberg tables, and they can also run into reliability issues at scale. (See our [blog](/blog/catalog-linked-databases) and [benchmark](https://github.com/dbt-labs/snow-dbx-iceberg-benchmark).)
+Запись во внешние каталоги Iceberg обычно медленнее записи в управляемые таблицы Iceberg, а при масштабировании также могут возникать проблемы с надёжностью. (См. нашу [статью в блоге](/blog/catalog-linked-databases) и [сравнительное тестирование](https://github.com/dbt-labs/snow-dbx-iceberg-benchmark).)
 
-Instead of having Snowflake write directly to Unity catalog through a catalog-linked database, you can have Snowflake write to its (managed) Horizon catalog, and use [Databricks catalog federation](https://docs.databricks.com/aws/en/query-federation/catalog-federation) to synchronize the Iceberg metadata for subsequent reads.
+Вместо того чтобы выполнять запись из Snowflake непосредственно в Unity catalog через связанную с каталогом базу данных, можно настроить Snowflake на запись в собственный (управляемый) Horizon catalog и использовать [федерацию каталогов Databricks](https://docs.databricks.com/aws/en/query-federation/catalog-federation) для синхронизации метаданных Iceberg с целью последующего чтения.
 
-<Lightbox src="/img/docs/building-a-dbt-project/snow-dbx-xplat-mesh.png" title="Multi-catalog pattern for Databricks + Snowflake cross-platform Mesh" />
+<Lightbox src="/img/docs/building-a-dbt-project/snow-dbx-xplat-mesh.png" title="Схема с несколькими каталогами для кроссплатформенной Mesh на Databricks и Snowflake" />
 
 <File name='catalogs.yml'>
 

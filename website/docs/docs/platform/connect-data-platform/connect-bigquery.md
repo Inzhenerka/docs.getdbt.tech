@@ -77,7 +77,7 @@ import FusionBigQueryWarehousePerms from '/snippets/_v2-warehouse-permissions-bi
 | Timeout | Устарело; существует для обратной совместимости с более старыми версиями dbt и будет удалено в будущем. | `300` |
 | Location | [Местоположение](https://cloud.google.com/bigquery/docs/locations), где dbt должен создавать наборы данных. | `US`, `EU` |
 
-<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/bigquery-connection.png" title="A valid BigQuery connection"/>
+<Lightbox src="/img/docs/dbt-platform/platform-configuring-dbt-platform/bigquery-connection.png" title="Пример корректного подключения к BigQuery"/>
 
 ### BigQuery OAuth {#bigquery-oauth}
 **Доступно в:** средах разработки, только в планах Enterprise
@@ -97,7 +97,7 @@ import FusionBigQueryWarehousePerms from '/snippets/_v2-warehouse-permissions-bi
 
 Метод аутентификации BigQuery WIF позволяет <Constant name="dbt" /> выполнять запросы при развертывании от имени сервисного аккаунта без настройки файла ключа сервисного аккаунта BigQuery в <Constant name="dbt" />. Дополнительную информацию о первоначальной настройке подключения BigQuery WIF в <Constant name="dbt" /> см. в разделе [Настройка Workload Identity Federation для BigQuery](/docs/platform/manage-access/set-up-bigquery-oauth#set-up-bigquery-workload-identity-federation-).
 
-Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для конкретной платформы данных, в <Constant name="cloud" />, обратитесь к разделу [BigQuery-specific configuration](/reference/resource-configs/bigquery-configs).
+Чтобы узнать, как оптимизировать производительность с помощью конфигураций, специфичных для конкретной платформы данных, в <Constant name="cloud" />, обратитесь к разделу [Настройки BigQuery](/reference/resource-configs/bigquery-configs).
 
 Чтобы узнать, как оптимизировать производительность с помощью настроек для конкретной платформы данных в <Constant name="dbt" />, обратитесь к разделу [Настройки для BigQuery](/reference/resource-configs/bigquery-configs).
 
@@ -178,13 +178,13 @@ import FusionBigQueryWarehousePerms from '/snippets/_v2-warehouse-permissions-bi
 
 <Expandable alt_header="Job retry deadline seconds">
 
-Job retry deadline seconds — это максимальное время, которое BigQuery потратит на повторные попытки выполнения задания, прежде чем оно будет прекращено.
+**Job retry deadline seconds** задаёт общий лимит времени для повторных попыток BigQuery. По истечении лимита BigQuery прекращает повторять задание.
 
 </Expandable>
 
 <Expandable alt_header="Job creation timeout seconds">
 
-Job creation timeout seconds — это максимальное время, которое BigQuery будет ждать для начала выполнения задания. Если задание не начнется в течение этого времени, оно будет прервано.
+**Job creation timeout seconds** задаёт максимальное время ожидания начала задания BigQuery. Если оно не начнётся вовремя, BigQuery прервёт его.
 
 import JobTimeout from '/snippets/_bigquery-timeout.md';
 

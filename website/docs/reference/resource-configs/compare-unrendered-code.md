@@ -1,6 +1,6 @@
 ---
 title: compare_unrendered_code
-description: "Controls whether dbt State checks both the Jinja template (unrendered code) and rendered SQL when deciding whether a model has changed."
+description: "Определяет, проверяет ли dbt State и шаблон Jinja (код до рендеринга), и SQL после рендеринга при определении того, изменилась ли модель."
 id: "compare-unrendered-code"
 tags: ['dbt State']
 ---
@@ -8,7 +8,7 @@ tags: ['dbt State']
 # compare_unrendered_code
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
 
@@ -22,7 +22,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Properties YAML file">
+<TabItem value="property" label="YAML-файл свойств">
 
 <File name="models/<filename>.yml">
 
@@ -37,7 +37,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="SQL file config">
+<TabItem value="sql" label="Конфигурация в SQL-файле">
 
 <File name="models/<filename>.sql">
 
@@ -53,32 +53,32 @@ models:
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
 <SimpleTable>
-| Value | Behavior |
+| Значение | Поведение |
 |-------|----------|
-| `false` (default) | dbt State compares only rendered SQL. Non-deterministic macros or env vars that change the rendered SQL on each run may trigger unnecessary rebuilds. |
-| `true` | dbt State avoids unnecessary rebuilds by checking both the Jinja template and rendered SQL. A rebuild only occurs when both have changed. |
+| `false` (по умолчанию) | dbt State сравнивает только SQL после рендеринга. Недетерминированные макросы или переменные окружения, которые изменяют SQL после рендеринга при каждом запуске, могут вызывать ненужные пересборки. |
+| `true` | dbt State предотвращает ненужные пересборки, проверяя и шаблон Jinja, и SQL после рендеринга. Пересборка выполняется только в том случае, если изменились оба. |
 </SimpleTable>
 
-By default, dbt State compares only rendered SQL and rebuilds when the output differs from the stored hash. How frequently that happens depends on how often the values change. For example:
+По умолчанию dbt State сравнивает только SQL после рендеринга и выполняет пересборку, когда хеш результата отличается от сохранённого хеша. Частота пересборок зависит от того, как часто меняются значения. Например:
 
-- `{{ invocation_id() }}` resolves to a new value on every run, so it always triggers a rebuild.
-- `{{ dbt_utils.get_column_values() }}` only changes if the underlying column values change or return in a different order, so it triggers rebuilds less predictably.
-- `{{ modules.datetime.datetime.now().month }}` only resolves to a new value once a month, so it triggers a rebuild on the next run after the month changes.
+- `{{ invocation_id() }}` принимает новое значение при каждом запуске, поэтому всегда вызывает пересборку.
+- `{{ dbt_utils.get_column_values() }}` меняется только в том случае, если изменяются значения исходного столбца или порядок их возврата, поэтому пересборки происходят менее предсказуемо.
+- `{{ modules.datetime.datetime.now().month }}` принимает новое значение только раз в месяц, поэтому вызывает пересборку при следующем запуске после смены месяца.
 
-Set `compare_unrendered_code: true` to avoid these unnecessary rebuilds. When enabled, dbt State also checks the unrendered Jinja template, and only rebuilds when both the unrendered code _and_ the rendered SQL have changed. This is useful for nodes with non-deterministic macros or environment variables (such as a macro that returns a UUID, or `{{ env_var('AIRFLOW_RUN_ID') }}`) that produce different rendered SQL on every run even when the template itself is unchanged.
+Установите `compare_unrendered_code: true`, чтобы избежать этих ненужных пересборок. Когда этот параметр включён, dbt State также проверяет шаблон Jinja до рендеринга и выполняет пересборку только в том случае, если изменились _и_ код до рендеринга, _и_ SQL после рендеринга. Это полезно для узлов с недетерминированными макросами или переменными окружения (например, с макросом, возвращающим UUID, или с `{{ env_var('AIRFLOW_RUN_ID') }}`), из-за которых SQL после рендеринга меняется при каждом запуске, даже если сам шаблон остаётся неизменным.
 
-## Interaction with `evaluate_volatile_sql`
+## Взаимодействие с `evaluate_volatile_sql`
 
-When `compare_unrendered_code` is enabled, dbt State checks whether the unrendered Jinja template has changed. If the template is unchanged, dbt State skips SQL parsing entirely &mdash; volatile SQL functions are not evaluated and [`evaluate_volatile_sql`](/reference/resource-configs/evaluate-volatile-sql) has no effect. If the unrendered template has changed, dbt State proceeds to parse and compare the rendered SQL, and `evaluate_volatile_sql` applies.
+Когда `compare_unrendered_code` включён, dbt State проверяет, изменился ли шаблон Jinja до рендеринга. Если шаблон не изменился, dbt State полностью пропускает разбор SQL &mdash; волатильные SQL-функции не вычисляются, а [`evaluate_volatile_sql`](/reference/resource-configs/evaluate-volatile-sql) не оказывает никакого влияния. Если шаблон до рендеринга изменился, dbt State переходит к разбору и сравнению SQL после рендеринга, и параметр `evaluate_volatile_sql` применяется.
 
-## Examples
+## Примеры
 
-### Model with a non-deterministic environment variable
+### Модель с недетерминированной переменной окружения
 
-A model with a non-deterministic environment variable is reused as long as neither the model's own Jinja template nor the source of any macros it calls has changed, even if the environment variable (for example, AIRFLOW_RUN_ID) resolves to a different value at runtime:
+Модель с недетерминированной переменной окружения используется повторно, пока не изменились ни собственный шаблон Jinja модели, ни исходный код вызываемых ею макросов, даже если переменная окружения (например, AIRFLOW_RUN_ID) принимает другое значение во время выполнения:
 
 <File name="models/fct_events.sql">
 
@@ -96,9 +96,9 @@ from {{ ref('stg_events') }}
 
 </File>
 
-### Model with dbt run metadata columns
+### Модель со столбцами метаданных запуска dbt
 
-A model that records which dbt run produced each row using [`invocation_id()`](/reference/dbt-jinja-functions/invocation_id) or [`run_started_at`](/reference/dbt-jinja-functions/run_started_at) is reused as long as the template hasn't changed, even though those values resolve differently on every run:
+Модель, которая с помощью [`invocation_id()`](/reference/dbt-jinja-functions/invocation_id) или [`run_started_at`](/reference/dbt-jinja-functions/run_started_at) записывает, при каком запуске dbt была создана каждая строка, используется повторно, пока шаблон не изменился, даже если эти значения различаются при каждом запуске:
 
 <File name="models/fct_orders.sql">
 
@@ -114,8 +114,8 @@ from {{ ref('stg_orders') }}
 
 </File>
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Параметры конфигурации dbt State](/reference/resource-configs/dbt-state-configs)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)

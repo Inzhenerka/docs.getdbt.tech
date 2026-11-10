@@ -1,82 +1,82 @@
 ---
-title: "dbt v2 telemetry and observability"
+title: "Телеметрия и наблюдаемость в dbt v2"
 id: "telemetry-observability"
-sidebar_label: "dbt v2 telemetry and observability"
-description: "dbt v2 support for telemetry and observability"
+sidebar_label: "Телеметрия и наблюдаемость в dbt v2"
+description: "Поддержка телеметрии и наблюдаемости в dbt v2"
 pagination_next: null
 pagination_prev: null
 ---
 
 import SaoDeprecated from '/snippets/_sao-deprecated.md';
 
-<Constant name="fusion_engine" /> provides a comprehensive observability system that replaces [<Constant name="core" />'s structured logging](/reference/events-logging#structured-logging). Built on [OpenTelemetry](https://opentelemetry.io/) conventions and backed by a stable protobuf schema, it enables deep integration with orchestrators, observability platforms, and custom tooling.
+<Constant name="fusion_engine" /> предоставляет комплексную систему наблюдаемости, которая заменяет [структурированное журналирование <Constant name="core" />](/reference/events-logging#structured-logging). Эта система основана на соглашениях [OpenTelemetry](https://opentelemetry.io/) и стабильной схеме protobuf и обеспечивает глубокую интеграцию с оркестраторами, платформами наблюдаемости и пользовательскими инструментами.
 
-For shared CLI logging configs such as `--log-format` and `--log-level`, refer to [Logs](/reference/global-configs/logs).
+Общие настройки журналирования CLI, такие как `--log-format` и `--log-level`, описаны в разделе [Журналы](/reference/global-configs/logs).
 
-This system is separate from the anonymous usage statistics that dbt sends to dbt Labs. To configure anonymous usage statistics, refer to [Anonymous usage stats](/reference/global-configs/usage-stats).
+Эта система не связана с анонимной статистикой использования, которую dbt отправляет в dbt Labs. О настройке анонимной статистики использования см. раздел [Анонимная статистика использования](/reference/global-configs/usage-stats).
 
-This uses the same integration that <Constant name="dbt_platform" /> relies on for orchestration and monitoring, providing proven and production-ready features that work at scale.
+Здесь используется та же интеграция, на которую опирается <Constant name="dbt_platform" /> для оркестрации и мониторинга, что обеспечивает проверенные, готовые к промышленной эксплуатации возможности, работающие при больших масштабах.
 
-## Available output formats
+## Доступные форматы вывода {#available-output-formats}
 
-<Constant name="fusion" /> telemetry supports three output formats, which you can enable independently:
+Телеметрия <Constant name="fusion" /> поддерживает три формата вывода, которые можно включать независимо друг от друга:
 
-| Format      | Use case                                                         | Availability               |
+| Формат      | Сценарий использования                                          | Доступность                |
 | ----------- | ---------------------------------------------------------------- | -------------------------- |
-| **JSONL**   | Real-time monitoring, streaming to downstream systems.            | Written as events occur.    |
-| **Parquet** | Post-run analysis, querying, and long-term storage.               | Written when runs complete. |
-| **OTLP**    | Integration with observability platforms (Datadog, Jaeger, and more). | Streamed in real-time.  |
+| **JSONL**   | Мониторинг в реальном времени, потоковая передача в последующие системы. | Записывается по мере возникновения событий. |
+| **Parquet** | Анализ после выполнения, запросы и долгосрочное хранение.         | Записывается по завершении запусков. |
+| **OTLP**    | Интеграция с платформами наблюдаемости (Datadog, Jaeger и другими). | Передаётся потоком в реальном времени. |
 
-### Enabling telemetry output
+### Включение вывода телеметрии
 
-The following are some examples of options for enabling telemetry output (You can combine multiple outputs in a single run):
+Ниже приведены примеры включения вывода телеметрии (в одном запуске можно объединить несколько вариантов вывода):
 
-Write JSONL to a file (saves to the `logs/` directory):
+Запись JSONL в файл (сохраняется в каталоге `logs/`):
 
 ```bash
 dbtf build --otel-file-name telemetry.jsonl
 ```
 
-Stream JSONL to stdout:
+Потоковый вывод JSONL в stdout:
 ```bash
 dbtf build --log-format otel
 ```
 
-Write a Parquet file (saves to `target/metadata/` directory):
+Запись файла Parquet (сохраняется в каталоге `target/metadata/`):
 ```bash
 dbtf build --otel-parquet-file-name telemetry.parquet
 ```
 
-Write a Parquet file with full trace-level logs (recommended for debugging):
+Запись файла Parquet с полными журналами уровня trace (рекомендуется для отладки):
 
 ```bash
 dbtf build --log-level-file trace --otel-parquet-file-name telemetry.parquet
 ```
 
-Export to an OpenTelemetry collector:
+Экспорт в коллектор OpenTelemetry:
 ```bash
 OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4318" dbtf build --export-to-otlp
 ```
 
-### Download telemetry from platform job runs
+### Скачивание телеметрии запусков заданий на платформе
 
-On the <Constant name="dbt_platform" />, <Constant name="fusion"/> job runs store OTel telemetry as Parquet artifacts for dbt command steps. From a completed run, open the **Run summary** tab, select a step, and click **Download** > **Download OTel log**. The option appears only for <Constant name="fusion"/> runs where the step produced an OTel file. For step-by-step instructions, refer to [Downloading logs](/docs/deploy/run-visibility#access-logs).
+На <Constant name="dbt_platform" /> запуски заданий <Constant name="fusion"/> сохраняют телеметрию OTel в виде артефактов Parquet для шагов с командами dbt. Откройте вкладку **Run summary** завершённого запуска, выберите шаг и нажмите **Download** > **Download OTel log**. Этот пункт появляется только для запусков <Constant name="fusion"/>, в которых шаг создал файл OTel. Пошаговые инструкции приведены в разделе [Скачивание журналов](/docs/deploy/run-visibility#access-logs).
 
-#### Retrieve telemetry using the API
+#### Получение телеметрии через API
 
-You can also retrieve the OTel Parquet artifact for a run step through the [dbt Administrative API v2](/dbt-cloud/api-v2#/operations/Retrieve%20Run%20Artifact), which lets you download artifacts after a job completes. Use this to automate ingestion of node outcomes and test outcomes into a downstream system, such as a data quality framework in your warehouse.
+Артефакт OTel в формате Parquet для шага запуска также можно получить через [dbt Administrative API v2](/dbt-cloud/api-v2#/operations/Retrieve%20Run%20Artifact), который позволяет скачивать артефакты после завершения задания. Используйте эту возможность, чтобы автоматизировать загрузку результатов выполнения узлов и тестов в последующую систему, например во фреймворк контроля качества данных в вашем хранилище.
 
-Each <Constant name="fusion"/> command step that produces telemetry writes a `telemetry-STEP_NUMBER-otel.parquet` artifact. Some steps like `dbt deps` don't produce a Parquet artifact.
+Каждый шаг с командой <Constant name="fusion"/>, который создаёт телеметрию, записывает артефакт `telemetry-STEP_NUMBER-otel.parquet`. Некоторые шаги, например `dbt deps`, не создают артефакт Parquet.
 
-You can use the Retrieve Run Artifact endpoint to fetch this artifact:
+Для получения этого артефакта можно использовать конечную точку Retrieve Run Artifact:
 
   ```bash
   GET https://YOUR_ACCESS_URL/api/v2/accounts/ACCOUNT_ID/runs/RUN_ID/artifacts/metadata/telemetry-STEP_NUMBER-otel.parquet?step=STEP_NUMBER
   ```
 
-Replace `YOUR_ACCESS_URL` with the [Access URL](/docs/platform/about-platform/access-regions-ip-addresses) for your region and plan, and `ACCOUNT_ID`, `RUN_ID`, `STEP_NUMBER` with your values. Authenticate with a [service account token](/docs/dbt-apis/service-tokens) or [personal access token](/docs/dbt-apis/user-tokens). 
+Замените `YOUR_ACCESS_URL` на [URL доступа](/docs/platform/about-platform/access-regions-ip-addresses) для вашего региона и тарифного плана, а `ACCOUNT_ID`, `RUN_ID`, `STEP_NUMBER` — на свои значения. Для аутентификации используйте [токен служебной учётной записи](/docs/dbt-apis/service-tokens) или [персональный токен доступа](/docs/dbt-apis/user-tokens). 
 
-For example, you can do this with `curl`:
+Например, это можно сделать с помощью `curl`:
 
 ```bash
 curl --request GET \
@@ -85,25 +85,25 @@ curl --request GET \
   --output telemetry-4-otel.parquet
 ```
 
-To find which step produced the telemetry artifact you want, list the run's steps by including `run_steps` in the run details request:
+Чтобы определить, какой шаг создал нужный артефакт телеметрии, получите список шагов запуска, включив `run_steps` в запрос сведений о запуске:
 
 ```bash
 GET https://YOUR_ACCESS_URL/api/v2/accounts/ACCOUNT_ID/runs/RUN_ID/?include_related=["run_steps"]
 ```
 
-You can only retrieve this artifact for <Constant name="fusion"/> steps that emitted an OTel log.
+Этот артефакт можно получить только для шагов <Constant name="fusion"/>, которые сформировали журнал OTel.
 
 
-## Telemetry data
+## Данные телеметрии
 
-<Constant name="fusion" /> telemetry contains two types of records:
+Телеметрия <Constant name="fusion" /> содержит два типа записей:
 
-- **Spans** &mdash; Operations with a start and end time (like compiling a model or running a test).
-- **Log records** &mdash; Point-in-time events within a span.
+- **Спаны** &mdash; операции со временем начала и окончания (например, компиляция модели или выполнение теста).
+- **Записи журнала** &mdash; события в определённый момент времени внутри спана.
 
-### Telemetry hierarchy
+### Иерархия телеметрии
 
-Every dbt command creates a hierarchy of spans:
+Каждая команда dbt создаёт иерархию спанов:
 
 ```
 Invocation (dbtf build)
@@ -116,75 +116,75 @@ Invocation (dbtf build)
     └── Node (model.project.orders)
 ```
 
-The `trace_id` (also known as `invocation_id`) remains consistent across all telemetry records for a single dbt command, making it easy to correlate events.
+Значение `trace_id` (также известное как `invocation_id`) остаётся одинаковым во всех записях телеметрии для одной команды dbt, что упрощает сопоставление событий.
 
-## Node outcome
+## Результат выполнения узла {#node-outcome}
 
-Every node produces a result for each phase it participates in. Some phases, such as `parse`, don't involve node-level execution, so they don't produce node spans or node outcomes.
+Каждый узел формирует результат для каждой фазы, в которой он участвует. Некоторые фазы, например `parse`, не предусматривают выполнение на уровне узлов, поэтому для них не создаются спаны узлов или результаты выполнения узлов.
 
- The `node_outcome` field indicates whether or not <Constant name="fusion" /> executed the node's operation. 
+ Поле `node_outcome` указывает, выполнил ли <Constant name="fusion" /> операцию узла. 
 
-| Outcome    | Description                                                    |
+| Результат  | Описание                                                       |
 | ---------- | -------------------------------------------------------------- |
-| `success`  | The node operation was completed with no errors.   |
-| `error`    | The node operation failed to execute (for example, syntax error). |
-| `skipped`  | The node was not evaluated (see [skip reasons](#skip-reasons)). |
-| `canceled` | The node was interrupted (for example, user pressed Ctrl+C).  |
+| `success`  | Операция узла завершена без ошибок.                             |
+| `error`    | Не удалось выполнить операцию узла (например, из-за синтаксической ошибки). |
+| `skipped`  | Узел не обрабатывался (см. [причины пропуска](#skip-reasons)).    |
+| `canceled` | Выполнение узла прервано (например, пользователь нажал Ctrl+C).  |
 
-### Skip reasons
+### Причины пропуска {#skip-reasons}
 
-When <Constant name="fusion" /> skips a node, the telemetry includes a reason:
+Когда <Constant name="fusion" /> пропускает узел, в телеметрию включается причина:
 
-| Skip reason      | Description                                                      |
+| Причина пропуска | Описание                                                         |
 | ---------------- | ---------------------------------------------------------------- |
-| `upstream`       | A dependency failed.                                              |
-| `cached`         | <Constant name="fusion" /> reused results from cache (no changes detected via [dbt State](/docs/deploy/dbt-state-about)). |
-| `phase_disabled` | The phase was disabled (for example, `--static-analysis off`).    |
-| `noop`           | Node doesn't perform work in this phase (for example, ephemeral models). |
+| `upstream`       | Ошибка при выполнении зависимости.                               |
+| `cached`         | <Constant name="fusion" /> повторно использовал результаты из кеша (изменения не обнаружены с помощью [dbt State](/docs/deploy/dbt-state-about)). |
+| `phase_disabled` | Фаза была отключена (например, с помощью `--static-analysis off`). |
+| `noop`           | Узел не выполняет работу в этой фазе (например, эфемерные модели). |
 
-### Test outcomes
+### Результаты тестов
 
-When a test executes successfully (`node_outcome: success`), it reports the test result:
+Когда тест успешно выполняется (`node_outcome: success`), он сообщает результат проверки:
 
-| Test outcome | Description                                   |
+| Результат теста | Описание                                      |
 | ------------ | --------------------------------------------- |
-| `passed`     | No failures detected.                         |
-| `warned`     | Failures detected, but configured as warnings. |
-| `failed`     | Failures detected (data quality issue).        |
+| `passed`     | Нарушений не обнаружено.                       |
+| `warned`     | Обнаружены нарушения, но они настроены как предупреждения. |
+| `failed`     | Обнаружены нарушения (проблема качества данных). |
 
-:::info Test outcomes
+:::info Результаты тестов
 
-A test with `node_outcome: success` and `test_outcome: failed` means <Constant name="fusion" /> successfully ran the test, and the test reported data quality issues. This differs from `node_outcome: error`, which means the test itself couldn't run (for example, invalid SQL).
+Тест с `node_outcome: success` и `test_outcome: failed` означает, что <Constant name="fusion" /> успешно выполнил тест и тест сообщил о проблемах качества данных. Это отличается от `node_outcome: error`, который означает, что сам тест не удалось выполнить (например, из-за некорректного SQL).
 
 :::
 
-## Querying telemetry data
+## Запросы к данным телеметрии {#querying-telemetry-data}
 
-Query the telemetry data to gain deeper insights into your dbt runs.
+Выполняйте запросы к данным телеметрии, чтобы глубже анализировать запуски dbt.
 
-### JSONL examples
+### Примеры для JSONL
 
-The following are some examples of querying the JSONL telemetry data. 
+Ниже приведены примеры запросов к данным телеметрии в формате JSONL. 
 
-Watch for errors in real-time:
+Отслеживание ошибок в реальном времени:
 ```bash
 tail -f telemetry.jsonl | jq 'select(.severity_text == "ERROR")'
 ```
 
-List skipped nodes, reasons, and upstream details:
+Вывод пропущенных узлов, причин пропуска и сведений о предшествующих узлах:
 ```bash
 cat telemetry.jsonl | jq 'select(.attributes.node_outcome == "NODE_OUTCOME_SKIPPED") | {node: .attributes.unique_id, reason: .attributes.node_skip_reason, upstream: .attributes.node_skip_upstream_detail.upstream_unique_id }'
 ```
 
-### Downloading telemetry from the dbt platform
+### Скачивание телеметрии с платформы dbt
 
-If you ran a job in the <Constant name="dbt_platform" />, you can download the OpenTelemetry (OTEL) Parquet artifact from the run page using the **Download** dropdown. The download includes the `telemetry-<step>-otel.parquet` file for each step in the run.
+Если вы запускали задание на <Constant name="dbt_platform" />, артефакт OpenTelemetry (OTEL) в формате Parquet можно скачать со страницы запуска через раскрывающееся меню **Download**. В скачиваемые данные входит файл `telemetry-<step>-otel.parquet` для каждого шага запуска.
 
-### Parquet analysis with DuckDB
+### Анализ Parquet с помощью DuckDB
 
-Leverage DuckDB to better understand your telemetry data stored in Parquet files. 
+Используйте DuckDB, чтобы лучше разобраться в данных телеметрии, хранящихся в файлах Parquet. 
 
-Find slowest nodes by **processing cost** (not wall-clock lifetime at the connection gate):
+Поиск самых медленных узлов по **затратам времени на обработку** (а не по полному времени существования с учётом ожидания допуска по лимиту подключений):
 
 ```python
 import duckdb
@@ -201,18 +201,18 @@ duckdb.sql("""
 """).show()
 ```
 
-:::note Choose the right timing metric
+:::note Выбирайте подходящую метрику времени
 
-Telemetry provides several ways to measure node performance:
+Телеметрия предоставляет несколько способов измерения производительности узлов:
 
-- **Processing time (`attributes.duration_ms`)** measures the time v2 spent actively processing the node, including nested `NodeEvaluated` work. It excludes time spent waiting for upstream nodes or internal backpressure. Use this metric to identify the nodes that take the longest to process.
-- **Node lifetime (`end_time_unix_nano - start_time_unix_nano`)** measures the full time from the start to the end of the span, including time spent waiting at the connection-limit gate. In builds with saturated threads, this metric might surface nodes with the longest queue time rather than the most processing work.
-- **Idle time (`attributes.idle_time_ms`)** measures how long the node spent waiting instead of being actively processed, such as while waiting for an upstream node or available processing capacity. Use it to identify where resource constraints are causing delays.
-- **Warehouse execution time** is the sum of `QueryExecuted` span durations for each `unique_id`. It excludes v2-side work such as compilation and static analysis. Use this metric to compare telemetry with your warehouse query history.
+- **Время обработки (`attributes.duration_ms`)** измеряет время, которое v2 затратил на активную обработку узла, включая вложенную работу `NodeEvaluated`. Оно не включает время ожидания предшествующих узлов или задержки из-за внутреннего механизма ограничения нагрузки. Используйте эту метрику для поиска узлов, обработка которых занимает больше всего времени.
+- **Время существования узла (`end_time_unix_nano - start_time_unix_nano`)** измеряет полное время от начала до конца спана, включая ожидание допуска по лимиту подключений. При сборках с полной загрузкой потоков эта метрика может показывать узлы с самым долгим ожиданием в очереди, а не с наибольшим объёмом обработки.
+- **Время простоя (`attributes.idle_time_ms`)** измеряет, сколько времени узел провёл в ожидании, а не в активной обработке, например в ожидании предшествующего узла или свободных вычислительных ресурсов. Используйте эту метрику, чтобы определить, где ограничения ресурсов вызывают задержки.
+- **Время выполнения в хранилище** — это сумма длительностей спанов `QueryExecuted` для каждого `unique_id`. Оно не включает работу на стороне v2, такую как компиляция и статический анализ. Используйте эту метрику для сравнения телеметрии с историей запросов в хранилище.
 
 :::
 
-Find nodes with the highest warehouse time (optional):
+Поиск узлов с наибольшим временем выполнения в хранилище (необязательно):
 ```python
 duckdb.sql("""
     SELECT
@@ -227,7 +227,7 @@ duckdb.sql("""
 ```
 
 
-Count outcomes by type:
+Подсчёт результатов по типам:
 ```python
 duckdb.sql("""
     SELECT
@@ -239,69 +239,69 @@ duckdb.sql("""
 """).show()
 ```
 
-### Web-based Parquet viewers
+### Веб-инструменты для просмотра Parquet
 
-For ad hoc exploration without a local install, web-based Parquet viewers (such as [PondPilot](https://app.pondpilot.io/)) let you upload a Parquet file and run SQL queries in the browser. Some viewers support LLM-assisted query generation to help you explore an unfamiliar schema.
+Для разового анализа без локальной установки веб-инструменты просмотра Parquet (например, [PondPilot](https://app.pondpilot.io/)) позволяют загрузить файл Parquet и выполнять SQL-запросы в браузере. Некоторые инструменты поддерживают генерацию запросов с помощью LLM, чтобы упростить изучение незнакомой схемы.
 
-## OpenTelemetry integration
+## Интеграция с OpenTelemetry
 
-<Constant name="fusion" />'s native OTLP support lets you send telemetry directly to any OpenTelemetry-compatible receiver, including Datadog, Jaeger, Google Cloud Trace, Grafana Tempo, and Honeycomb.
+Встроенная поддержка OTLP в <Constant name="fusion" /> позволяет отправлять телеметрию напрямую в любой приёмник, совместимый с OpenTelemetry, включая Datadog, Jaeger, Google Cloud Trace, Grafana Tempo и Honeycomb.
 
-This enables:
+Это обеспечивает:
 
-- Integration with existing observability &mdash; No custom integrations needed.
-- Custom alerts that trigger notifications on failures or slow builds.
-- Correlate across systems that links dbt traces with downstream services.
-- Centralized monitoring to view dbt alongside your other infrastructure.
+- Интеграцию с существующей системой наблюдаемости &mdash; без разработки собственных интеграций.
+- Настраиваемые оповещения, отправляющие уведомления при сбоях или медленных сборках.
+- Сопоставление данных между системами, связывающее трассировки dbt с последующими сервисами.
+- Централизованный мониторинг для наблюдения за dbt вместе с остальной инфраструктурой.
 
-<!-- :::tip Community example
+<!-- :::tip Пример от сообщества
 
- "I set up a basic OpenTelemetry collector that sends the dbt traces to Google Cloud Traces, which integrates with our devops observability, alarms, and on-call system. We now have a monitorable data ingestion stack.
+ «Я настроил простой коллектор OpenTelemetry, который отправляет трассировки dbt в Google Cloud Traces, интегрированный с нашей системой наблюдаемости DevOps, оповещениями и системой дежурств. Теперь у нас есть стек загрузки данных, который можно отслеживать.
 
-The traces let us quickly find exactly which step failed, and the error log even provides a quick link into BigQuery showing us the exact generated query that failed."
+Трассировки позволяют быстро определить, какой именно шаг завершился с ошибкой, а журнал ошибок даже содержит прямую ссылку на BigQuery, где виден точный сгенерированный запрос, вызвавший ошибку».
 
 ::: -->
 
-### Setting up OTLP export
+### Настройка экспорта OTLP
 
-The following example configures the OTLP export:
+В следующем примере настраивается экспорт OTLP:
 
 ```bash
 export OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4318"
 dbtf build --export-to-otlp
 ```
 
-## Mapping to <Constant name="core" /> concepts
+## Соответствие понятиям <Constant name="core" />
 
-If you're familiar with <Constant name="core" />'s structured logging, here's how <Constant name="fusion" /> telemetry maps:
+Если вы знакомы со структурированным журналированием <Constant name="core" />, ниже показано, как ему соответствует телеметрия <Constant name="fusion" />:
 
-| <Constant name="core" />            | <Constant name="fusion" /> telemetry                     |
+| <Constant name="core" />            | Телеметрия <Constant name="fusion" />                    |
 | ----------------------------------- | -------------------------------------------------------- |
-| `invocation_id`                     | `trace_id` (same value, different format)                |
-| `run_results.json` status           | `node_outcome` + `skip_reason` or `test_outcome`         |
-| Event `code` (for example, `Q001`)  | `event_type`                                             |
-| `--log-format json`                 | `--log-format otel` or `--otel-file-name`                |
+| `invocation_id`                     | `trace_id` (то же значение, другой формат)               |
+| Статус в `run_results.json`         | `node_outcome` + `skip_reason` или `test_outcome`         |
+| `code` события (например, `Q001`)   | `event_type`                                             |
+| `--log-format json`                 | `--log-format otel` или `--otel-file-name`                |
 
-### Node status mapping
+### Соответствие статусов узлов
 
-| <Constant name="core" /> status | <Constant name="fusion" /> outcome                       |
+| Статус <Constant name="core" /> | Результат <Constant name="fusion" />                     |
 | ------------------------------- | -------------------------------------------------------- |
 | `success`                       | `node_outcome: success`                                  |
 | `error`                         | `node_outcome: error`                                    |
 | `skipped`                       | `node_outcome: skipped`, `skip_reason: upstream`         |
-| `pass` (tests)                  | `node_outcome: success`, `test_outcome: passed`          |
-| `warn` (tests)                  | `node_outcome: success`, `test_outcome: warned`          |
-| `fail` (tests)                  | `node_outcome: success`, `test_outcome: failed`          |
+| `pass` (тесты)                  | `node_outcome: success`, `test_outcome: passed`          |
+| `warn` (тесты)                  | `node_outcome: success`, `test_outcome: warned`          |
+| `fail` (тесты)                  | `node_outcome: success`, `test_outcome: failed`          |
 
-Note that <Constant name="core" />'s `fail` status maps to <Constant name="fusion" />'s `node_outcome: success` because <Constant name="fusion" /> distinguishes between "the test ran successfully and found data issues" versus "the test couldn't run." This separation enables more precise alerting and retry logic.
+Обратите внимание: статус `fail` в <Constant name="core" /> соответствует `node_outcome: success` в <Constant name="fusion" />, поскольку <Constant name="fusion" /> различает ситуации «тест успешно выполнился и обнаружил проблемы с данными» и «тест не удалось выполнить». Такое разделение позволяет точнее настраивать оповещения и логику повторных попыток.
 
-<Constant name="fusion" /> adds `skip_reason: cached` for nodes reused via [dbt State](/docs/deploy/dbt-state-about), which has no <Constant name="core" /> equivalent.
+<Constant name="fusion" /> добавляет `skip_reason: cached` для узлов, результаты которых повторно используются через [dbt State](/docs/deploy/dbt-state-about); в <Constant name="core" /> аналога этому нет.
 
 <SaoDeprecated />
 
-## Record structure
+## Структура записи
 
-Each telemetry record contains envelope fields plus event-specific `attributes`:
+Каждая запись телеметрии содержит общие поля и специфичные для события `attributes`:
 
 ```json
 {
@@ -322,30 +322,30 @@ Each telemetry record contains envelope fields plus event-specific `attributes`:
 }
 ```
 
-| Field | Description |
+| Поле | Описание |
 | ----- | ----------- |
-| `record_type` | `SpanStart`, `SpanEnd`, or `LogRecord` |
-| `trace_id` | Unique identifier for the invocation (same data as `invocation_id` but in OTEL format). |
-| `span_id` / `parent_span_id` | For reconstructing the span hierarchy. |
-| `event_type` | Type identifier for filtering and parsing. |
-| `attributes` | Event-specific data (schema varies by event type, but unlike OTEL conventions, it's strictly backed by a stable protobuf schema). |
+| `record_type` | `SpanStart`, `SpanEnd` или `LogRecord` |
+| `trace_id` | Уникальный идентификатор вызова (те же данные, что и в `invocation_id`, но в формате OTEL). |
+| `span_id` / `parent_span_id` | Для восстановления иерархии спанов. |
+| `event_type` | Идентификатор типа для фильтрации и разбора. |
+| `attributes` | Данные, специфичные для события (схема зависит от типа события, но, в отличие от соглашений OTEL, строго определяется стабильной схемой protobuf). |
 
-## Schema stability
+## Стабильность схемы
 
-Unlike <Constant name="core" />'s structured logging, <Constant name="fusion" /> telemetry is backed by a public protobuf schema with strict compatibility guarantees:
+В отличие от структурированного журналирования <Constant name="core" />, телеметрия <Constant name="fusion" /> основана на общедоступной схеме protobuf со строгими гарантиями совместимости:
 
-- **Additive only** &mdash; New fields and event types may be added, but existing fields are never removed or changed.
-- **Forward compatible** &mdash; Your integrations will continue to work as the schema evolves.
+- **Только добавления** &mdash; могут добавляться новые поля и типы событий, но существующие поля никогда не удаляются и не изменяются.
+- **Совместимость с будущими версиями** &mdash; ваши интеграции продолжат работать по мере развития схемы.
 
-This makes <Constant name="fusion" /> telemetry a reliable foundation for production integrations, orchestrators, and long-term analytics pipelines.
+Это делает телеметрию <Constant name="fusion" /> надёжной основой для интеграций в промышленной эксплуатации, оркестраторов и долгосрочных аналитических конвейеров.
 
-## Official client library
+## Официальная клиентская библиотека
 
-dbt Labs provides an official open-source client library. Built in Rust for performance, it is available as:
+dbt Labs предоставляет официальную клиентскую библиотеку с открытым исходным кодом. Для высокой производительности она написана на Rust и доступна в виде:
 
-- A standalone Rust crate and CLI (`dbt-telemetry-export-cli`).
-- A fully typed Python package wrapping the Rust core, installable via `uv tool install`.
+- Отдельного крейта Rust и CLI (`dbt-telemetry-export-cli`).
+- Полностью типизированного пакета Python, оборачивающего ядро на Rust и устанавливаемого с помощью `uv tool install`.
 
-The library provides type-safe, forward-compatible access to telemetry data. Stream JSONL in real time, query Parquet files, and build custom integrations with confidence that schema changes won't break your code.
+Библиотека предоставляет типобезопасный доступ к данным телеметрии с совместимостью с будущими версиями. Обрабатывайте поток JSONL в реальном времени, выполняйте запросы к файлам Parquet и создавайте собственные интеграции, будучи уверенными, что изменения схемы не нарушат работу вашего кода.
 
-We'll be announcing the public release in the near future.
+Мы объявим о публичном выпуске в ближайшее время.

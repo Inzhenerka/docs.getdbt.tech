@@ -1,91 +1,91 @@
 ---
-title: "How does dbt pricing work?"
+title: "Как устроено ценообразование dbt?"
 id: how-pricing-works
-description: "Learn how dbt pricing works, including seats, usage, and successful models built."
-sidebar_label: "How pricing works"
+description: "Узнайте, как устроено ценообразование dbt, включая лицензии пользователей, использование и успешно построенные модели."
+sidebar_label: "Как устроено ценообразование"
 availability: platform
 ---
 
-As a customer, you pay for the number of seats you have and the amount of usage consumed each month.  Seats are billed primarily on the amount of licenses purchased. 
+Как клиент, вы платите за количество пользовательских лицензий и объём использования за каждый месяц.  Плата за пользовательские лицензии в основном зависит от количества приобретённых лицензий. 
 
-Usage is based on the number of [Successful Models Built](#what-counts-as-a-successful-model-built) and, if purchased and used, <Constant name="semantic_layer" /> [Queried Metrics](#what-counts-as-a-queried-metric) subject to reasonable usage. All billing computations are conducted in Coordinated Universal Time (UTC).
+Использование рассчитывается на основе количества [успешно построенных моделей](#what-counts-as-a-successful-model-built) и, если соответствующая функция приобретена и используется, [запрошенных метрик](#what-counts-as-a-queried-metric) <Constant name="semantic_layer" /> при условии разумного использования. Все расчёты для выставления счетов выполняются по всемирному координированному времени (UTC).
 
-### What counts as a seat license?
-You can learn more about allocating users to your account in [Users and licenses](/docs/platform/manage-access/seats-and-users).
-There are four types of possible seat licenses:
-* **Analyst**\* &mdash; for permission sets assigned and shared amongst those who don't need day-to-day access.
-* **Developer** &mdash; for permission sets that require day-to-day interaction with the <Constant name="dbt_platform" />.
-* **IT** &mdash; for access to specific features related to account management (for example, configuring git integration).
-* **Read-Only** &mdash; for access to view certain documents and reports.
+### Что считается пользовательской лицензией? {/*what-counts-as-a-seat-license*/}
+Подробнее о добавлении пользователей в вашу учётную запись можно узнать в разделе [Пользователи и лицензии](/docs/platform/manage-access/seats-and-users).
+Существует четыре типа пользовательских лицензий:
+* **Analyst**\* &mdash; для наборов разрешений, назначаемых и совместно используемых теми, кому не нужен ежедневный доступ.
+* **Developer** &mdash; для наборов разрешений, требующих ежедневного взаимодействия с <Constant name="dbt_platform" />.
+* **IT** &mdash; для доступа к определённым функциям управления учётной записью (например, настройке интеграции с git).
+* **Read-Only** &mdash; для доступа к просмотру определённых документов и отчётов.
 
-\* The [Analyst license type](/docs/platform/manage-access/about-user-access?version=1.12#licenses) is not available for new purchase.
+\* [Лицензии типа Analyst](/docs/platform/manage-access/about-user-access?version=1.12#licenses) больше не доступны для приобретения.
 
-### What counts as a Successful Model Built?
+### Что считается успешно построенной моделью? {#what-counts-as-a-successful-model-built}
 
-A Successful Model Built is any <Term id="model">model</Term> successfully built in a <Constant name="dbt" /> deployment environment through <Constant name="dbt" />’s orchestration. This includes jobs run via the scheduler, CI builds (triggered by pull requests), and runs kicked off via the <Constant name="dbt" /> API. Models that build successfully are counted even if the overall run later fails. For example, if a job containing 100 models fails after 51 are built, only those 51 are counted.
+Успешно построенная модель — это любая <Term id="model">модель</Term>, успешно построенная в среде развёртывания <Constant name="dbt" /> средствами оркестрации <Constant name="dbt" />. Сюда входят задания, запускаемые по расписанию, сборки CI (инициируемые pull request) и запуски через API <Constant name="dbt" />. Успешно построенные модели учитываются, даже если впоследствии весь запуск завершается ошибкой. Например, если задание, содержащее 100 моделей, завершается ошибкой после построения 51 модели, учитывается только эта 51 модель.
 
-Any models built in a <Constant name="dbt" /> development environment (for example, via the <Constant name="studio_ide" />) do not count towards your usage. Tests, seeds, ephemeral models, and snapshots also do not count. 
+Модели, построенные в среде разработки <Constant name="dbt" /> (например, через <Constant name="studio_ide" />), не учитываются в объёме использования. Тесты, seeds, эфемерные модели и снимки также не учитываются. 
 
-When a dynamic table is initially created, the model is counted (if the creation is successful). However, in subsequent runs, dbt skips these models unless the definition of the dynamic table has changed. This refers not to changes in the SQL logic but to changes in dbt's logic, specifically those governed by [`on_configuration_change config`](/reference/resource-configs/on_configuration_change)). The dynamic table continues to update on a cadence because the adapter is orchestrating that refresh rather than <Constant name="dbt" />. 
+При первоначальном создании динамической таблицы модель учитывается (если создание прошло успешно). Однако при последующих запусках dbt пропускает такие модели, если определение динамической таблицы не изменилось. Речь идёт не об изменениях в SQL-логике, а об изменениях в логике dbt, в частности тех, которые регулируются [параметром `on_configuration_change`](/reference/resource-configs/on_configuration_change)). Динамическая таблица продолжает обновляться с заданной периодичностью, поскольку этим обновлением управляет адаптер, а не <Constant name="dbt" />. 
 
 
-| What counts towards Successful Models Built |                     |
+| Что учитывается в количестве успешно построенных моделей |                     |
 |---------------------------------------------|---------------------|
-| View                                        | ✅                  |
-| Table                                       | ✅                  |
-| Incremental                                 | ✅                  |
-| Ephemeral Models                            | ❌                  |
-| Tests                                       | ❌                  |
+| Представления (View)                        | ✅                  |
+| Таблицы (Table)                              | ✅                  |
+| Инкрементальные модели (Incremental)         | ✅                  |
+| Эфемерные модели                            | ❌                  |
+| Тесты                                       | ❌                  |
 | Seeds                                       | ❌                  |
-| Snapshots                                   | ❌                  |
+| Снимки                                      | ❌                  |
 
 <br />
-When [dbt State](/docs/deploy/dbt-state-about) is enabled, a reused model (skipped or cloned) doesn't count as a Successful Model Built. They're billed separately as daily active target tables (DATTs). For more information, refer to [dbt State usage](/docs/platform/billing/dbt-state-usage).
+Когда включён [dbt State](/docs/deploy/dbt-state-about), повторно используемая модель (пропущенная или клонированная) не учитывается как успешно построенная модель. Такие модели оплачиваются отдельно как ежедневно активные целевые таблицы (DATTs). Подробнее см. в разделе [Использование dbt State](/docs/platform/billing/dbt-state-usage).
 
-### What counts as a Queried Metric?
+### Что считается запрошенной метрикой? {#what-counts-as-a-queried-metric}
 
-The <Constant name="semantic_layer" />, powered by MetricFlow, measures usage in distinct Queried Metrics.
+<Constant name="semantic_layer" />, работающий на базе MetricFlow, измеряет использование в отдельных запрошенных метриках.
 
-- Every successful request you make to render or run SQL to the <Constant name="semantic_layer" /> API counts as at least one queried metric, even if no data is returned. 
-- If the query calculates or renders SQL for multiple metrics, each calculated metric will be counted as a queried metric.
-- If a request to run a query is not executed successfully in the data platform or if a query results in an error without completion, it is not counted as a queried metric. 
-- Requests for metadata from the <Constant name="semantic_layer" /> are also not counted as queried metrics.
+- Каждый успешный запрос к API <Constant name="semantic_layer" /> на формирование или выполнение SQL учитывается как минимум как одна запрошенная метрика, даже если данные не возвращены. 
+- Если запрос вычисляет несколько метрик или формирует SQL для них, каждая вычисляемая метрика учитывается как отдельная запрошенная метрика.
+- Если запрос не выполнен успешно на платформе данных или завершается ошибкой до завершения выполнения, он не учитывается как запрошенная метрика. 
+- Запросы метаданных из <Constant name="semantic_layer" /> также не учитываются как запрошенные метрики.
 
-Examples of queried metrics include:
+Примеры запрошенных метрик:
 
-- Querying one metric, grouping by one or more dimensions → 1 queried metric
+- Запрос одной метрики с группировкой по одному или нескольким измерениям → 1 запрошенная метрика
 
   ```shell
   dbt sl query --metrics revenue --group-by metric_time
   ```
 
-- Querying two metrics, grouping by two dimensions → 2 queried metrics
+- Запрос двух метрик с группировкой по двум измерениям → 2 запрошенные метрики
 
   ```shell
   dbt sl query --metrics revenue,gross_sales --group-by metric_time,user__country
   ```
 
-Compiling metrics counts the same way — one queried metric per metric compiled (for example, `dbt sl query --metrics revenue --compile` → 1 queried metric).
+Компиляция метрик учитывается таким же образом — одна запрошенная метрика на каждую скомпилированную метрику (например, `dbt sl query --metrics revenue --compile` → 1 запрошенная метрика).
 
-### Viewing usage in the product 
+### Просмотр использования в продукте {#viewing-usage-in-the-product}
 
-Viewing usage in the product is restricted to specific roles:
+Просмотр использования в продукте доступен только определённым ролям:
 
-* Starter plan &mdash; Owner group
-* Enterprise and Enterprise+ plans &mdash; Account and billing admin roles
+* Тариф Starter &mdash; группа Owner
+* Тарифы Enterprise и Enterprise+ &mdash; роли Account admin и Billing admin
 
-If you have access to the **Billing** and **Usage** pages in **Account settings**, you can see an estimate of the month's usage, how your account tracks against it, and which projects are building the most models.
+Если у вас есть доступ к страницам **Billing** и **Usage** в разделе **Account settings**, вы можете просматривать оценку использования за месяц, отслеживать использование в вашей учётной записи относительно этой оценки и видеть, в каких проектах строится больше всего моделей.
 
-<Lightbox src="/img/docs/building-a-dbt-project/billing-usage-page.jpg" width="80%" title="To view account-level estimated usage, go to 'Account settings' and then select 'Billing'."/>
+<Lightbox src="/img/docs/building-a-dbt-project/billing-usage-page.jpg" width="80%" title="Чтобы просмотреть оценку использования на уровне учётной записи, перейдите в 'Account settings' и выберите 'Billing'."/>
 
-As a Starter and Developer plan user, you can see how the account is tracking against the included models built. As an Enterprise plan user, you can see how much you have drawn down from your annual commit and how much remains.
+Пользователи тарифов Starter и Developer могут отслеживать использование в учётной записи относительно включённого в тариф количества построенных моделей. Пользователи тарифа Enterprise могут видеть, какая часть годового согласованного объёма уже израсходована и сколько осталось.
 
-On each **Project home** page, any user with project access can see how many models are built each month, with top jobs by models built available on each **Environment** page.
+На каждой странице **Project home** любой пользователь с доступом к проекту может видеть, сколько моделей строится каждый месяц, а на каждой странице **Environment** доступны сведения о заданиях с наибольшим количеством построенных моделей.
 
-<Lightbox src="/img/docs/building-a-dbt-project/billing-project-page.jpg" width="80%" title="Your Project home page displays how many models are built each month."/>
+<Lightbox src="/img/docs/building-a-dbt-project/billing-project-page.jpg" width="80%" title="На странице Project home отображается количество моделей, построенных за каждый месяц."/>
 
-The **Job details** page's **Insights** tab shows models built per month for that job and which take longest to build. 
+На вкладке **Insights** страницы **Job details** отображается количество моделей, построенных за месяц в рамках этого задания, а также модели, построение которых занимает больше всего времени. 
 
-<Lightbox src="/img/docs/building-a-dbt-project/billing-job-page.jpg" width="80%" title="View how many models are being built per month for a particular job by going to the 'Insights' tab in the 'Job details' page."/>
+<Lightbox src="/img/docs/building-a-dbt-project/billing-job-page.jpg" width="80%" title="Чтобы просмотреть количество моделей, построенных за месяц в рамках конкретного задания, откройте вкладку 'Insights' на странице 'Job details'."/>
 
-Usage data shown in <Constant name="dbt" /> is only an estimate and may be delayed, and some visualizations aren't available on legacy plans. Your final monthly usage appears on your monthly statements (Starter and Enterprise-tier plans).
+Данные об использовании, отображаемые в <Constant name="dbt" />, являются лишь оценочными и могут поступать с задержкой, а некоторые визуализации недоступны на устаревших тарифах. Окончательный объём использования за месяц указывается в ежемесячных выписках (для тарифа Starter и тарифов уровня Enterprise).

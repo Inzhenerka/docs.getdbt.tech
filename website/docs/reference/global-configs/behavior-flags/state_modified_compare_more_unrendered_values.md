@@ -1,12 +1,12 @@
 ---
-title: "Source definitions for state:modified"
+title: "Определения источников для state:modified"
 id: "state_modified_compare_more_unrendered_values"
-sidebar_label: "state modified compare more unrendered values"
+sidebar_label: "Сравнение большего числа значений до рендеринга в state:modified"
 ---
 
-:::caution Removed in v2
+:::caution Удалён в v2
 
-This flag was removed in v2. The new behavior is always enabled. If you're upgrading, remove this flag from your `dbt_project.yml`.
+Этот флаг удалён в v2. Новое поведение включено всегда. При обновлении удалите этот флаг из `dbt_project.yml`.
 
 :::
 
@@ -15,9 +15,9 @@ import StateModified from '/snippets/_state-modified-compare.md';
 
 | state_modified_compare_more_unrendered_values | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2024.10 | 1.9.0 |
-| Matured (default → `true`) | 2026.09 | 1.12.0 |
-| Removed | — | v2.0 |
+| Добавлен | 2024.10 | 1.9.0 |
+| Стабилизирован (по умолчанию → `true`) | 2026.09 | 1.12.0 |
+| Удалён | — | v2.0 |
 
 :::info
 
@@ -25,32 +25,32 @@ import StateModified from '/snippets/_state-modified-compare.md';
 
 :::
 
-In dbt v1.12, `state_modified_compare_more_unrendered_values` defaults to `true`, reducing false positives during `state:modified` checks, especially when configs differ by target environment (such as `prod` vs. `dev`).
+В dbt v1.12 флаг `state_modified_compare_more_unrendered_values` по умолчанию имеет значение `true`, что сокращает число ложных срабатываний при проверках `state:modified`, особенно когда конфигурации различаются в зависимости от целевого окружения (например, `prod` и `dev`).
 
-The flag changes the `state:modified` comparison from using rendered values to unrendered values instead, by persisting `unrendered_config` during model parsing and `unrendered_database` and `unrendered_schema` configs during source parsing.
+Флаг переключает сравнение `state:modified` с отрендеренных значений на значения до рендеринга: для этого при разборе моделей сохраняется `unrendered_config`, а при разборе источников — параметры конфигурации `unrendered_database` и `unrendered_schema`.
 
 :::note
-This flag requires rebuilding the state directory (manifest) to take effect.
+Чтобы этот флаг подействовал, необходимо заново создать каталог состояния (манифест).
 :::
 
-## Impact
+## Влияние
 
-This flag silently changes the `state:modified` selection set that most CI, Slim CI, and `dbt build --defer` workflows rely on. There are two ways this surfaces:
+Этот флаг без уведомления меняет набор ресурсов, выбираемых с помощью `state:modified`, на который опирается большинство рабочих процессов CI, Slim CI и `dbt build --defer`. Это проявляется двумя способами:
 
-- **False "modified" on the first run after the flag is set to `true`.** If the baseline manifest was captured before the flag is set (rendered values stored) and the current parse runs after the setting change (literal text stored), every node whose YAML config contains Jinja will appear as `state:modified`, even if nothing has changed. This causes a full rebuild on the first CI run after the upgrade.
-- **New positives going forward.** After both manifests are captured with the flag enabled, `state:modified` will catch cases where two equivalent Jinja expressions render to the same value (for example, switching from `"{{ env_var('MAT', 'view') }}"` to `view`).
+- **Ложное определение ресурсов как изменённых при первом запуске после установки флага в `true`.** Если базовый манифест был создан до установки флага (сохранены отрендеренные значения), а текущий разбор выполняется после изменения настройки (сохраняется исходный текст), каждый узел, в YAML-конфигурации которого есть Jinja, будет определён как `state:modified`, даже если ничего не изменилось. Это приводит к полной пересборке при первом запуске CI после обновления.
+- **Выявление дополнительных изменений в дальнейшем.** После того как оба манифеста будут созданы с включённым флагом, `state:modified` будет выявлять случаи, когда два эквивалентных выражения Jinja дают одинаковое значение при рендеринге (например, при переходе с `"{{ env_var('MAT', 'view') }}"` на `view`).
 
-<Expandable alt_header="What to expect">
+<Expandable alt_header="Чего ожидать">
 
-On the first CI or Slim CI run with this flag enabled, any node whose YAML config uses Jinja (`env_var`, `var`, conditional materialization) may appear as `state:modified` even if nothing changed. This is because the baseline manifest stored rendered values while the new parse stores literal Jinja text — the two sides of the comparison differ on serialization, not on real changes.
+При первом запуске CI или Slim CI с включённым флагом любой узел, в YAML-конфигурации которого используется Jinja (`env_var`, `var`, условный выбор материализации), может быть определён как `state:modified`, даже если ничего не изменилось. Это происходит потому, что в базовом манифесте сохранены отрендеренные значения, а при новом разборе сохраняется исходный текст Jinja — сравниваемые данные различаются способом сериализации, а не фактическими изменениями.
 
-Once your production job runs once on the **v1 Latest** release track and generates a new baseline manifest, both sides of the `state:modified` comparison use the same format and the extra diffs disappear.
+После того как ваше задание в production один раз выполнится на ветке релизов **v1 Latest** и создаст новый базовый манифест, обе стороны сравнения `state:modified` будут использовать один и тот же формат, и лишние различия исчезнут.
 
-No code change is required. The cost is one extra rebuild cycle for affected nodes.
+Изменять код не требуется. Единственные дополнительные затраты — один цикл пересборки затронутых узлов.
 
-This new behavior fixes the legacy behavior. Previously, the comparison silently missed real changes to Jinja expressions (for example, switching from `"{{ env_var('MAT', 'view') }}"` to `view` renders identically and was never caught). With this flag enabled, `state:modified` is more accurate going forward.
+Это новое поведение исправляет недостатки прежнего. Раньше при сравнении незаметно пропускались реальные изменения выражений Jinja (например, переход с `"{{ env_var('MAT', 'view') }}"` на `view` даёт тот же результат рендеринга и никогда не выявлялся). С включённым флагом `state:modified` точнее выявляет изменения в дальнейшем.
 
-To opt out, set the flag to `false` in `dbt_project.yml`:
+Чтобы отключить это поведение, установите флаг в `false` в `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -61,6 +61,6 @@ flags:
 
 </File>
 
-Opting out is recommended during a production deploy freeze or if your project has heavy Jinja in YAML configs and the one-time rebuild would exceed your CI compute budget. Otherwise, enabling this flag is recommended.
+Отключение рекомендуется на время запрета на развёртывание в production, а также если в YAML-конфигурациях вашего проекта активно используется Jinja и однократная пересборка превысит бюджет вычислительных ресурсов CI. В остальных случаях рекомендуется включить этот флаг.
 
 </Expandable>

@@ -20,28 +20,28 @@ import McpToolsFromReadme from '/snippets/_mcp-tools-from-readme.md';
 
 Сервер MCP предоставляет доступ к [<Constant name="wizard" />](/docs/platform/wizard-overview), <Constant name="platform_cli"/>, [API](/docs/dbt-apis/overview), [Discovery API](/docs/dbt-apis/discovery-api) и [Semantic Layer](/docs/use-dbt-semantic-layer/dbt-sl). Он обеспечивает доступ к закрытым API, преобразованию текста в SQL и выполнению SQL-запросов.
 
-Для получения дополнительной информации о MCP см. [Get started with the Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction).
+Подробнее см. [Введение в Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction).
 
 MCP-сервер dbt доступен в двух вариантах: с самостоятельным размещением и удалённый.
 
 - [MCP-сервер с самостоятельным размещением](#local-mcp-server): работает на вашем компьютере и требует установки `uvx` (который устанавливает dbt-mcp локально).
 - [Удалённый MCP-сервер](#remote-mcp-server): использует HTTP-соединение и удалённо вызывает dbt-mcp на управляемой платформе <Constant name="dbt_platform" />. Это решение размещается на стороне dbt и идеально подходит для сценариев потребления данных.
 
-For more details on the server types, refer to [Server access](#server-access).
+Подробнее о типах серверов см. в разделе [Доступ к серверу](#server-access).
 
-## Get started
+## Начало работы {#get-started}
 
-To get started, choose the quickstart that matches your setup:
+Выберите руководство для вашей конфигурации:
 
 <SimpleTable>
-| I want to... | Quickstart | Tool access |
+| Задача | Руководство | Доступ к инструментам |
 | --- | --- | --- |
-| Query data and run <Constant name="platform_cli"/> commands locally while connected to my <Constant name="dbt_platform" /> account (<Constant name="semantic_layer" />, Discovery API, Admin API, SQL, Codegen).  | [Connect to <Constant name="dbt_platform"/>](/docs/dbt-ai/mcp-quickstart-oauth) |  Uses [self-hosted MCP server](#local-mcp-server). |
-| Run <Constant name="platform_cli"/> commands locally, with or without a <Constant name="dbt_platform" /> account; with an account, also query data and explore metadata through the same server. | [Run dbt locally](/docs/dbt-ai/mcp-quickstart-cli) |  Uses [self-hosted MCP server](#local-mcp-server). |
-| Use MCP with zero installation (query data only through dbt-hosted tools; no <Constant name="platform_cli"/> commands).  | [Connect to the remote dbt MCP server](/docs/dbt-ai/mcp-quickstart-remote) |  Uses [remote MCP server](#remote-mcp-server). |
+| Запрашивать данные и запускать команды <Constant name="platform_cli"/> локально с подключением к аккаунту <Constant name="dbt_platform" /> (<Constant name="semantic_layer" />, Discovery API, Admin API, SQL, Codegen). | [Подключиться к <Constant name="dbt_platform"/>](/docs/dbt-ai/mcp-quickstart-oauth) | Использует [локальный MCP-сервер](#local-mcp-server). |
+| Запускать команды <Constant name="platform_cli"/> локально с аккаунтом <Constant name="dbt_platform" /> или без него. Если есть аккаунт, тот же сервер позволяет запрашивать данные и изучать метаданные. | [Запустить dbt локально](/docs/dbt-ai/mcp-quickstart-cli) | Использует [локальный MCP-сервер](#local-mcp-server). |
+| Использовать MCP без установки. Данные доступны через инструменты, размещённые в dbt. Команды <Constant name="platform_cli"/> недоступны. | [Подключиться к удалённому MCP-серверу dbt](/docs/dbt-ai/mcp-quickstart-remote) | Использует [удалённый MCP-сервер](#remote-mcp-server). |
 </SimpleTable>
 
-To configure or disable specific tools (self-hosted MCP), see the [Environment variables reference](/docs/dbt-ai/mcp-environment-variables).
+Настроить или отключить отдельные инструменты локального MCP-сервера можно через [переменные окружения](/docs/dbt-ai/mcp-environment-variables).
 
 ## Доступ к серверу {#server-access}
 
@@ -114,11 +114,11 @@ MCP-сервер dbt интегрируется с любым [MCP-клиент�
 - [Snowflake Cortex](/docs/dbt-ai/integrate-mcp-snowflake-cortex)
 - [Databricks](/docs/dbt-ai/integrate-mcp-databricks)
 
-## Data retention
+## Хранение данных {#data-retention}
 
-The dbt MCP server doesn't store or retain any production data or job run results. It's a read-only access layer that reads metadata, job results, and <Constant name="semantic_layer"/> data from the <Constant name="dbt_platform"/> in real time when a tool is called.
+MCP-сервер dbt не хранит производственные данные и результаты запусков. При вызове инструмента сервер в режиме чтения получает из <Constant name="dbt_platform"/> метаданные, результаты заданий и данные <Constant name="semantic_layer"/>.
 
-Your [dbt platform data retention policy](https://www.getdbt.com/security) determines how long job runs and artifacts are available, not the MCP server. As long as a job or artifact exists in dbt platform, the MCP server can read it.
+Срок доступности запусков и артефактов определяется [политикой хранения данных платформы dbt](https://www.getdbt.com/security). MCP-сервер может читать запуски и артефакты, пока они доступны на платформе.
 
 
 ## Ресурсы

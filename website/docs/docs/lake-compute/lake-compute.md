@@ -1,120 +1,120 @@
 ---
-title: "About Lake Compute"
-description: "About dbt Lake Compute."
+title: "О Lake Compute"
+description: "О dbt Lake Compute."
 id: lake-compute
 slug: /docs/lake-compute
 ---
 
-# About Lake Compute <Lifecycle status="private_beta" />
+# О Lake Compute <Lifecycle status="private_beta" />
 
-:::info Lake Compute is in private beta
+:::info Lake Compute находится на стадии закрытого бета-тестирования
 
-To request access or region support, fill out the [Lake Compute signup form](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform). Lake Compute is in active development and likely to change. Breaking changes may occur, documentation may be incomplete, technical support may be limited, and no service-level agreement covers it during beta. Refer to [Private beta limitations](/docs/lake-compute#private-beta-limitations) before you plan real work around it.
+Чтобы запросить доступ или поддержку региона, заполните [форму регистрации Lake Compute](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform). Lake Compute активно разрабатывается и может изменяться. Возможны изменения, нарушающие обратную совместимость; документация может быть неполной, а техническая поддержка — ограниченной. На период бета-тестирования соглашение об уровне обслуживания не распространяется. Ознакомьтесь с [ограничениями закрытого бета-тестирования](/docs/lake-compute#private-beta-limitations), прежде чем планировать использование Lake Compute в реальных задачах.
 
 :::
 
-Lake Compute is a hosted, serverless compute engine for running dbt models. It is powered by DuckDB and Apache Iceberg, and it is intended to support transformation workloads that do not need the full scale or feature set of a distributed cloud data warehouse.
+Lake Compute — это размещаемый в облаке бессерверный вычислительный движок для выполнения моделей dbt. Он работает на базе DuckDB и Apache Iceberg и предназначен для задач преобразования данных, которым не требуются все возможности или масштаб распределённого облачного хранилища данных.
 
-Lake Compute supports two execution models:
+Lake Compute поддерживает два варианта выполнения:
 
-1. As a "sidecar" alongside your existing data warehouse, such as Snowflake or Databricks. You can choose the execution engine model by model while keeping one dbt project, one DAG, and one `ref` graph.
-2. As the primary compute adapter for new dbt projects, along with an Iceberg catalog (such as Fivetran MDLS).
+1. В качестве вспомогательного движка («sidecar») наряду с существующим хранилищем данных, например Snowflake или Databricks. Вы можете выбирать движок выполнения отдельно для каждой модели, сохраняя единый проект dbt, единый DAG и единый граф `ref`.
+2. В качестве основного вычислительного адаптера для новых проектов dbt совместно с каталогом Iceberg (например, Fivetran MDLS).
 
-Lake Compute doesn't intend to fully replace your cloud data warehouse, and it isn't a general-purpose query engine. Use Lake Compute for dbt transformations only. Keep workloads that need high concurrency, BI connectivity, advanced data warehouse features (such as ML or AI functions), or distributed compute on your primary data warehouse.
+Lake Compute не предназначен для полной замены облачного хранилища данных и не является универсальным движком запросов. Используйте Lake Compute только для преобразований dbt. Задачи, которым необходимы большое число одновременных запросов, подключение BI-инструментов, расширенные возможности хранилища данных (например, функции ML или AI) или распределённые вычисления, оставляйте в основном хранилище данных.
 
-## Why use Lake Compute
+## Зачем использовать Lake Compute
 
-Optionality and flexibility. Simpler and smaller transformations can run on Lake Compute, while your warehouse remains available for workloads that need distributed processing, high concurrency, proprietary functions, or advanced analytics. Lake Compute always reads and writes data in the Iceberg table format, so it’s easy to add in other compute engines.
+Свобода выбора и гибкость. Более простые и небольшие преобразования можно выполнять в Lake Compute, а хранилище данных остаётся доступным для задач, которым необходимы распределённая обработка, большое число одновременных запросов, проприетарные функции или расширенная аналитика. Lake Compute всегда читает и записывает данные в формате таблиц Iceberg, поэтому к работе легко подключать другие вычислительные движки.
 
-## Prerequisites
+## Предварительные требования
 
-To set up Lake Compute, you need:
+Для настройки Lake Compute вам понадобятся:
 
-- Enrollment in the Lake Compute private beta. Request access with the [Lake Compute signup form](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform). The **Compute** tab doesn't appear on your MDLS destination until your account is enrolled.
-- A Fivetran account. You can create a new Fivetran account, and use it indefinitely, since there is not yet billing for MDLS or Lake Compute; or trial full features (including connectors) for 14 days.
-- An existing Fivetran Managed Data Lake Service (MDLS) destination — which includes an MDLS Iceberg catalog (Polaris) and an Amazon S3 storage bucket — already in a supported AWS region, or create a new one with a storage bucket in a supported AWS region. Lake Compute, your storage bucket, and (if using Lake Compute as "sidecar") your primary data must all be in the same region. Lake Compute currently supports AWS regions `us-east-1` and `us-west-2`. If you need a region that isn’t listed, complete the [sign-up form](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform) to request it.
-- Permission to configure the required cloud storage, catalog integration, warehouse access, authentication, and—where applicable—network policy allowlisting.
+- Участие в закрытом бета-тестировании Lake Compute. Запросите доступ через [форму регистрации Lake Compute](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform). Вкладка **Compute** не появится в вашем целевом подключении MDLS, пока ваша учётная запись не будет включена в программу тестирования.
+- Учётная запись Fivetran. Вы можете создать новую учётную запись Fivetran и пользоваться ею неограниченное время, поскольку плата за MDLS и Lake Compute пока не взимается; либо опробовать полный набор возможностей (включая коннекторы) в течение 14 дней.
+- Существующее целевое подключение Fivetran Managed Data Lake Service (MDLS), включающее каталог MDLS Iceberg (Polaris) и бакет Amazon S3, уже находящееся в поддерживаемом регионе AWS, либо новое подключение с бакетом в поддерживаемом регионе AWS. Lake Compute, ваш бакет и (при использовании Lake Compute в режиме «sidecar») ваши основные данные должны находиться в одном регионе. В настоящее время Lake Compute поддерживает регионы AWS `us-east-1` и `us-west-2`. Если вам нужен регион, которого нет в списке, заполните [форму регистрации](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform), чтобы запросить его поддержку.
+- Разрешения на настройку необходимого облачного хранилища, интеграции с каталогом, доступа к хранилищу данных, аутентификации и, где применимо, списков разрешённых адресов в сетевых политиках.
 
-After you complete setup, you need a dbt project running on **dbt v2**. You also need time to identify suitable models, adapt SQL where necessary, and validate results.
+После завершения настройки вам понадобится проект dbt, работающий на **dbt v2**. Также потребуется время, чтобы определить подходящие модели, при необходимости адаптировать SQL и проверить результаты.
 
-### Supported warehouses
+### Поддерживаемые хранилища данных
 
-Snowflake is the only warehouse supported during private beta. Early Databricks support is available to a limited number of design partners. To evaluate Lake Compute with Databricks, fill out the [Lake Compute signup form](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform) and name Databricks as your platform.
+Snowflake — единственное хранилище данных, поддерживаемое во время закрытого бета-тестирования. Предварительная поддержка Databricks доступна ограниченному числу партнёров, участвующих в разработке продукта. Чтобы опробовать Lake Compute с Databricks, заполните [форму регистрации Lake Compute](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform) и укажите Databricks в качестве своей платформы.
 
-In "sidecar" execution, Lake Compute runs alongside your warehouse, reading from and writing/propagating back to the warehouse’s managed Iceberg catalog (Snowflake Horizon or Databricks Unity).
+В режиме «sidecar» Lake Compute работает параллельно с вашим хранилищем данных, читая данные из его управляемого каталога Iceberg (Snowflake Horizon или Databricks Unity) и записывая или передавая результаты обратно в этот каталог.
 
-### Required permissions
+### Необходимые разрешения
 
-Setup requires permissions to:
+Для настройки необходимы разрешения на следующие действия:
 
-- Create a cloud storage bucket
-- Create or configure the MDLS destination in your Fivetran account
+- Создание бакета облачного хранилища
+- Создание или настройка целевого подключения MDLS в вашей учётной записи Fivetran
 
-Depending on your data warehouse, you may also need to:
+В зависимости от вашего хранилища данных также может потребоваться:
 
-- Establish the warehouse catalog integration, and grant catalog integration access to the user or role running dbt
-- Configure key-pair or other required programmatic authentication
-- Allow Lake Compute egress if your warehouse account enforces network policies
+- Настроить интеграцию с каталогом хранилища данных и предоставить доступ к ней пользователю или роли, от имени которых запускается dbt
+- Настроить аутентификацию по паре ключей или другой необходимый способ программной аутентификации
+- Разрешить исходящий трафик Lake Compute, если в вашей учётной записи хранилища данных применяются сетевые политики
 
-For Snowflake, some setup steps require `ACCOUNTADMIN` or equivalent delegated privileges, such as `NETWORK_ADMIN` for network policy changes. Always refer to the [latest setup guide](/docs/lake-compute/compute-onboarding), which may have changed since you initially set up Lake Compute.
+Для Snowflake некоторые шаги настройки требуют роли `ACCOUNTADMIN` или эквивалентных делегированных привилегий, например `NETWORK_ADMIN` для изменения сетевых политик. Всегда обращайтесь к [актуальному руководству по настройке](/docs/lake-compute/compute-onboarding): оно могло измениться с момента первоначальной настройки Lake Compute.
 
-### Required environment variable
+### Обязательная переменная окружения {#required-environment-variable}
 
-dbt gates Lake Compute behind an experimental opt-in. dbt refuses to run any Lake Compute configuration unless you set:
+В dbt использование Lake Compute требует явного включения экспериментальной функции. dbt откажется запускать любую конфигурацию Lake Compute, если вы не зададите:
 
 ```bash
 export DBT_ENGINE_EXPERIMENTAL_MULTI_ADAPTER=true
 ```
 
-One variable gates every surface that selects an adapter:
+Одна переменная управляет доступностью всех способов выбора адаптера:
 
-| Gated | Notes |
+| Что управляется переменной | Примечания |
 |---|---|
-| `type: lakecompute` in `profiles.yml` | Required for **both** the "sidecar" pattern and Lake Compute as your default adapter |
-| The `adapter` config on a node | Applies to models, seeds, snapshots, analyses, functions, and data tests. dbt refuses **any** value while the gate is off, not just `lakecompute` |
-| The `--adapter` command-line flag | — |
+| `type: lakecompute` в `profiles.yml` | Требуется **как** для режима «sidecar», **так и** для использования Lake Compute в качестве адаптера по умолчанию |
+| Конфигурация `adapter` для узла | Применяется к моделям, seeds, снимкам, анализам, функциям и тестам данных. Пока функция отключена, dbt не допускает **никаких** значений, а не только `lakecompute` |
+| Флаг командной строки `--adapter` | — |
 
-For the <Constant name="dbt_platform" />, set this as an environment variable on the environment. Refer to [Onboarding to Lake Compute](/docs/lake-compute/compute-onboarding#dbt-platform).
+Для <Constant name="dbt_platform" /> задайте эту переменную в качестве переменной окружения для соответствующей среды. См. [Подключение к Lake Compute](/docs/lake-compute/compute-onboarding#dbt-platform).
 
-## Private beta limitations
+## Ограничения закрытого бета-тестирования {#private-beta-limitations}
 
-The following are not supported or are intentionally limited during private beta:
+Во время закрытого бета-тестирования следующие возможности не поддерживаются или намеренно ограничены:
 
-- Projects running on dbt v1
-- JDBC or ODBC access and direct BI tool connections.
-- Role-based access control (RBAC) on Iceberg tables within MDLS written by Lake Compute.
-- Warehouse-native AI SQL functions and other proprietary warehouse features.
-- Automatic SQL dialect translation.
-- Distributed or multi-node execution.
-- Large two-sided joins and other workloads that require distributed processing.
-- GCP and Azure storage.
-- BigQuery integration.
-- AWS regions other than the currently supported beta regions.
+- Проекты, работающие на dbt v1
+- Доступ по JDBC или ODBC и прямые подключения BI-инструментов.
+- Управление доступом на основе ролей (RBAC) для таблиц Iceberg в MDLS, записанных Lake Compute.
+- Встроенные в хранилище данных SQL-функции AI и другие проприетарные возможности хранилища.
+- Автоматическое преобразование диалектов SQL.
+- Распределённое или многоузловое выполнение.
+- Соединения двух больших наборов данных и другие задачи, требующие распределённой обработки.
+- Хранилища GCP и Azure.
+- Интеграция с BigQuery.
+- Регионы AWS, отличные от регионов, которые в настоящее время поддерживаются в бета-версии.
 
-Additional capabilities and regions may be introduced over time, but roadmap items and dates are not commitments.
+Со временем могут появиться дополнительные возможности и регионы, но пункты плана развития и указанные в нём сроки не являются обязательствами.
 
-### Which dbt framework features does Lake Compute support during private beta?
+### Какие возможности фреймворка dbt поддерживает Lake Compute во время закрытого бета-тестирования?
 
-You can:
+Вы можете:
 
-- Build dbt models with simple materializations:
-    - `table`, which is the default
-    - `incremental`, with `incremental_strategy: append` or `insert_overwrite` (along with `partition_by`)
-- Use `ephemeral` models
-- Execute data tests, using Lake Compute, against models built with Lake Compute
-- Preview with `dbt show`
+- Создавать модели dbt с простыми материализациями:
+    - `table` — используется по умолчанию
+    - `incremental` с `incremental_strategy: append` или `insert_overwrite` (совместно с `partition_by`)
+- Использовать модели `ephemeral`
+- Выполнять тесты данных с помощью Lake Compute для моделей, созданных с помощью Lake Compute
+- Просматривать предварительные результаты с помощью `dbt show`
     - `dbt show --select MODEL_NAME --adapter lakecompute`
     - `dbt show --inline SQL_QUERY --adapter lakecompute`
 
-Not yet supported:
+Пока не поддерживаются:
 
-- `view` materialization
-- Grants
+- Материализация `view`
+- Выдача прав доступа
 - `persist_docs`
-- Pre-hook / post-hook
-- Unit tests
+- Хуки pre-hook / post-hook
+- Модульные тесты
 
-## Related docs
+## Связанная документация
 
-- [Lake Compute setup](/docs/lake-compute/compute-onboarding)
-- [Lake Compute FAQs](/docs/lake-compute/compute-faq)
+- [Настройка Lake Compute](/docs/lake-compute/compute-onboarding)
+- [Часто задаваемые вопросы о Lake Compute](/docs/lake-compute/compute-faq)

@@ -31,11 +31,11 @@ dbt parse --no-partial-parse --show-all-deprecations
 
 <VersionBlock firstVersion="2.0">
 
-:::note <Constant name="fusion" /> and `dbt parse`
+:::note <Constant name="fusion" /> и `dbt parse`
 
-When you use <Constant name="fusion_engine" />, omit `--no-partial-parse` from the command above. That flag is deprecated in <Constant name="fusion" /> and may log deprecation warning `dbt1700`. Run `dbt parse --show-all-deprecations` without `--no-partial-parse`.
+При использовании <Constant name="fusion_engine" /> уберите `--no-partial-parse` из команды выше. Этот флаг устарел в <Constant name="fusion" /> и может вызвать предупреждение `dbt1700`. Запустите `dbt parse --show-all-deprecations` без `--no-partial-parse`.
 
-For more information, refer to [Deprecated flags](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags) in the guide to upgrading to <Constant name="fusion_engine" />.
+Подробнее см. [Устаревшие флаги](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2#deprecated-flags) в руководстве по переходу на <Constant name="fusion_engine" />.
 
 :::
 
@@ -678,7 +678,7 @@ import MissingPrefix from '/snippets/_missing-prefix.md';
 
 <MissingPrefix />
 
-Example: 
+Пример:
 <File name='CLI'>
 ```bash
 18:16:06  [WARNING][MissingPlusPrefixDeprecation]: Deprecated functionality
@@ -872,7 +872,7 @@ User config should be moved from the 'config' key in profiles.yml to the 'flags'
 
 ### PropertyMovedToConfigDeprecation {#propertymovedtoconfigdeprecation}
 
-Некоторые исторические properties полностью переходят в configs.
+Некоторые прежние свойства полностью переносятся в параметры конфигурации.
 
 Сюда входят: `freshness`, `meta`, `tags`, `docs`, `group` и `access`.
 

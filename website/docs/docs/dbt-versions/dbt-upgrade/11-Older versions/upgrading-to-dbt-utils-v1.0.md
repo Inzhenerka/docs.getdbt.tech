@@ -120,16 +120,12 @@ packages:
 <details>
 	<summary><code>The dbt_utils.surrogate_key has been replaced by dbt_utils.generate_surrogate_key</code></summary>
 	<div>
-		<p>
-      <b>Причина</b>: Макрос <code>surrogate_key()</code> был заменён. 
-    </p>
-		<p>
-      <b>Решение</b>:
+		<p><b>Причина</b>: Макрос <code>surrogate_key()</code> был заменён.</p>
+		<p><b>Решение</b>:</p>
 			<ol>
 				<li>Решите, нужно ли включить обратную совместимость, <a href="#changes-to-surrogate_key">как описано выше</a>.</li>
 				<li>Найдите и замените <code>dbt_utils.surrogate_key</code> на <code>dbt_utils.generate_surrogate_key</code>.</li>
 			</ol>
-		</p>
 	</div>
 </details>
 <details>
@@ -150,6 +146,6 @@ packages:
 	<summary><code>dbt found two tests with the name "XXX".</code></summary>
 	<div>
 		<p><b>Причина</b>: Замена <code>condition</code> на <code>where</code> в тесте <code>expression_is_true</code>, поскольку параметры конфигурации не входят в уникальное имя теста.</p>
-		<p><b>Решение</b>: Задайте <a href="https://docs.getdbt.com/reference/resource-properties/tests#define-a-custom-name-for-one-test">собственное имя для теста</a>.</p>
+		<p><b>Решение</b>: Задайте <a href="/reference/resource-properties/data-tests#custom-data-test-name">собственное имя для теста</a>.</p>
 	</div>
 </details>

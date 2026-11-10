@@ -49,7 +49,7 @@ keywords:
 
 Это руководство предоставляет подробности для нескольких платформ хостинга кода. Где шаги уникальны, они представлены без опции выбора. Если код специфичен для платформы (например, GitHub, GitLab, Bitbucket), вы увидите опцию выбора для каждой.
 
-Конвейеры могут быть запущены различными событиями. Процесс [вебхука dbt Cloud](https://docs.getdbt.tech/docs/dbt-cloud/using-dbt-cloud/cloud-enabling-continuous-integration) уже запускает выполнение, если вы хотите запускать свои задания на запрос слияния, поэтому это руководство сосредоточено на запуске конвейеров для каждого пуша и при слиянии PR. Поскольку пуши происходят часто в проекте, мы сделаем это задание супер простым и быстрым, используя линтинг с SQLFluff. Конвейер, который запускается на запросах слияния, будет запускаться реже и может быть использован для вызова API dbt Cloud для запуска конкретного задания. Это может быть полезно, если у вас есть специфические требования, которые должны выполняться при обновлении кода в продакшене, например, выполнение `--full-refresh` на всех затронутых инкрементальных моделях.
+Конвейеры могут быть запущены различными событиями. Процесс [вебхука dbt Cloud](/docs/deploy/continuous-integration) уже запускает выполнение, если вы хотите запускать свои задания на запрос слияния, поэтому это руководство сосредоточено на запуске конвейеров для каждого пуша и при слиянии PR. Поскольку пуши происходят часто в проекте, мы сделаем это задание супер простым и быстрым, используя линтинг с SQLFluff. Конвейер, который запускается на запросах слияния, будет запускаться реже и может быть использован для вызова API dbt Cloud для запуска конкретного задания. Это может быть полезно, если у вас есть специфические требования, которые должны выполняться при обновлении кода в продакшене, например, выполнение `--full-refresh` на всех затронутых инкрементальных моделях.
 
 Пайплайны могут запускаться по различным событиям. Механизм [вебхуков <Constant name="dbt" />](/docs/deploy/continuous-integration) уже запускает выполнение заданий при создании запроса на слияние, поэтому в этом руководстве основное внимание уделяется запуску пайплайнов при каждом push и при слиянии PR. Поскольку push в проекте выполняются часто, мы сделаем это задание максимально простым и быстрым: оно будет проверять код с помощью SQLFluff. Пайплайн, запускаемый при запросах на слияние, будет выполняться реже, и его можно использовать для вызова API <Constant name="dbt" />, чтобы запустить определённое задание. Это может быть полезно, если при обновлении кода в production необходимо выполнить особые действия, например запустить `--full-refresh` для всех затронутых инкрементальных моделей.
 
@@ -83,9 +83,9 @@ keywords:
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-service-token-page.png" title="View of the dbt page where service tokens are created" width="85%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-service-token-page.png" title="Страница создания сервисных токенов в dbt" width="85%" />
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-new-service-token-page.png" title="Creating a new service token" width="85%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-new-service-token-page.png" title="Создание сервисного токена" width="85%" />
 
 </DocCarousel>
 
@@ -485,9 +485,9 @@ pipelines:
 </TabItem>
 <TabItem value="codecommit">
 
-For CodeCommit, you'll configure a CodeBuild project and an EventBridge rule to trigger a dbt job every time code is pushed to your default branch (for example, when a pull request is merged to `main`).
+Для CodeCommit настройте проект CodeBuild и правило EventBridge, чтобы запускать задание dbt при каждой отправке изменений в ветку по умолчанию, например при слиянии pull request в `main`.
 
-Add the following files to your dbt project:
+Добавьте в проект dbt следующие файлы:
 
 ```
 my_awesome_project
@@ -497,7 +497,7 @@ my_awesome_project
 │   └── run_and_monitor_dbt_cloud_job.py
 ```
 
-**Create `python/run_and_monitor_dbt_cloud_job.py` with the following content:**
+**Создайте `python/run_and_monitor_dbt_cloud_job.py` со следующим содержимым:**
 
 ```python
 import requests
@@ -577,14 +577,14 @@ if __name__ == "__main__":
     main()
 ```
 
-**Create `ci-configuration/buildspec-merge.yml` with the following content:**
+**Создайте `ci-configuration/buildspec-merge.yml` со следующим содержимым:**
 
-Replace the placeholder values with your actual dbt account details:
+Подставьте данные своего аккаунта dbt вместо заполнителей:
 
-- `YOUR_DBT_ACCOUNT_ID`: The number after `accounts/` in your dbt job URL
-- `YOUR_DBT_PROJECT_ID`: The number after `projects/` in your dbt job URL
-- `YOUR_DBT_MERGE_JOB_ID`: The number after `jobs/` in the URL of the dbt job you want to run on merge
-- `YOUR_SSM_PARAMETER_NAME`: The name of the SSM parameter you created in step 2 (for example, `DBT_API_KEY`)
+- `YOUR_DBT_ACCOUNT_ID`: число после `accounts/` в URL задания dbt.
+- `YOUR_DBT_PROJECT_ID`: число после `projects/` в URL задания dbt.
+- `YOUR_DBT_MERGE_JOB_ID`: число после `jobs/` в URL задания dbt, которое должно запускаться при слиянии.
+- `YOUR_SSM_PARAMETER_NAME`: имя параметра SSM, созданного на шаге 2, например `DBT_API_KEY`.
 
 ```yaml
 version: 0.2
@@ -610,15 +610,15 @@ phases:
       - python -u ./python/run_and_monitor_dbt_cloud_job.py
 ```
 
-**Create a CodeBuild project**
+**Создайте проект CodeBuild**
 
-Follow the [AWS CodeBuild documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project-console.html) to create a project. Configure the following settings:
+Создайте проект по [документации AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project-console.html). Укажите следующие настройки:
 
-- **Source**: Select **AWS CodeCommit**, set the reference type to **Branch**, and select your main branch
-- **Environment**: Select **Ubuntu** as the operating system
-- **Buildspec**: Select **Use a buildspec file** and enter `ci-configuration/buildspec-merge.yml` as the path
+- **Source**: выберите **AWS CodeCommit**, укажите тип ссылки **Branch** и выберите основную ветку.
+- **Environment**: выберите **Ubuntu** в качестве операционной системы.
+- **Buildspec**: выберите **Use a buildspec file** и укажите путь `ci-configuration/buildspec-merge.yml`.
 
-Note the service role name shown in the **Environment** section. In **IAM**, find that role and add an inline policy granting permission to read and decrypt the SSM parameter:
+Запишите имя сервисной роли из раздела **Environment**. Найдите её в **IAM** и добавьте встроенную политику, разрешающую чтение и расшифровку параметра SSM:
 
 ```json
 {
@@ -638,11 +638,11 @@ Note the service role name shown in the **Environment** section. In **IAM**, fin
 }
 ```
 
-**Create an EventBridge rule**
+**Создайте правило EventBridge**
 
-1. In the AWS console, go to **Amazon EventBridge** → **Rules** → **Create rule**
-2. Give the rule a name (for example, `dbt-run-on-merge`)
-3. Under **Event pattern**, select **Custom pattern** and paste the following JSON. Substitute `YOUR_AWS_ACCOUNT_ID`, `YOUR_AWS_REGION`, and `YOUR_CODECOMMIT_REPO_NAME` with your values:
+1. В консоли AWS откройте **Amazon EventBridge** → **Rules** → **Create rule**.
+2. Укажите имя правила, например `dbt-run-on-merge`.
+3. В разделе **Event pattern** выберите **Custom pattern** и вставьте следующий JSON. Подставьте свои значения вместо `YOUR_AWS_ACCOUNT_ID`, `YOUR_AWS_REGION` и `YOUR_CODECOMMIT_REPO_NAME`:
 
 ```json
 {
@@ -659,9 +659,9 @@ Note the service role name shown in the **Environment** section. In **IAM**, fin
 }
 ```
 
-4. Under **Target**, select **AWS service** → **CodeBuild** and choose the project you created above
-5. When prompted, allow EventBridge to create a new IAM role for the target automatically
-6. Save the rule
+4. В разделе **Target** выберите **AWS service** → **CodeBuild** и укажите созданный проект.
+5. Когда появится запрос, разрешите EventBridge автоматически создать роль IAM для целевого проекта.
+6. Сохраните правило.
 
 </TabItem>
 </Tabs>
@@ -687,9 +687,9 @@ Note the service role name shown in the **Environment** section. In **IAM**, fin
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-github.png" title="dbt run on merge job in GitHub" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-github.png" title="Запуск задания dbt при слиянии в GitHub" width="80%" />
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-github-triggered.png" title="dbt job showing it was triggered by GitHub" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-github-triggered.png" title="Задание dbt, запущенное из GitHub" width="80%" />
 
 </DocCarousel>
 
@@ -698,9 +698,9 @@ Note the service role name shown in the **Environment** section. In **IAM**, fin
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-gitlab.png" title="dbt run on merge job in GitLab" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-gitlab.png" title="Запуск задания dbt при слиянии в GitLab" width="80%" />
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-gitlab-triggered.png" title="dbt job showing it was triggered by GitLab" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-gitlab-triggered.png" title="Задание dbt, запущенное из GitLab" width="80%" />
 
 </DocCarousel>
 
@@ -709,9 +709,9 @@ Note the service role name shown in the **Environment** section. In **IAM**, fin
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-azure.png" width="85%" title="dbt run on merge job in ADO"/>
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-azure.png" width="85%" title="Запуск задания dbt при слиянии в Azure DevOps"/>
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-azure-triggered.png" width="80" title="ADO-triggered job in dbt"/>
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-azure-triggered.png" width="80" title="Задание dbt, запущенное из Azure DevOps"/>
 
 </DocCarousel>
 
@@ -720,22 +720,22 @@ Note the service role name shown in the **Environment** section. In **IAM**, fin
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-bitbucket.png" title="dbt run on merge job in Bitbucket" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-run-on-merge-bitbucket.png" title="Запуск задания dbt при слиянии в Bitbucket" width="80%" />
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-bitbucket-triggered.png" title="dbt job showing it was triggered by Bitbucket" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/dbt-cloud-job-bitbucket-triggered.png" title="Задание dbt, запущенное из Bitbucket" width="80%" />
 
 </DocCarousel>
 
 </TabItem>
 <TabItem value="codecommit">
 
-To test the pipeline, merge a pull request (or push a commit directly) to your main branch. You should see a new build start in your CodeBuild project within a few seconds. You can monitor the run in the CodeBuild console under **Build history**.
+Чтобы проверить пайплайн, слейте pull request или отправьте коммит прямо в основную ветку. Через несколько секунд в проекте CodeBuild должна начаться сборка. За запуском можно следить в разделе **Build history** консоли CodeBuild.
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/codecommit-run-on-pr.png" title="Find new build under build history of CodeBuild console" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/codecommit-run-on-pr.png" title="Новая сборка в истории запусков консоли CodeBuild" width="80%" />
 
-In dbt, the job will appear in your run history with a cause of "CodeCommit Merge CI Job".
+В истории запусков dbt появится задание с причиной запуска «CodeCommit Merge CI Job».
 
-<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/codecommit-dbt-cloud-pr.png" title="Check dbt run history for CodeCommit build triggered" width="80%" />
+<Lightbox src="/img/guides/orchestration/custom-cicd-pipelines/codecommit-dbt-cloud-pr.png" title="Запуск из CodeCommit в истории запусков dbt" width="80%" />
 
 </TabItem>
 </Tabs>
@@ -767,7 +767,7 @@ In dbt, the job will appear in your run history with a cause of "CodeCommit Merg
 
 Для этой задачи мы настроим запуск с помощью файла `bitbucket-pipelines.yml`, как и на предыдущем шаге. Этот YAML-файл будет очень похож на файл для предыдущей задачи, но необходимые переменные мы передадим в скрипт Python с помощью команд `export`. Измените этот раздел в соответствии с вашей конфигурацией, следуя комментариям в файле.
 
-**Что будет делать этот пайплайн?**  
+**Что делает этот пайплайн?**  
 Приведённая ниже конфигурация будет запускать задачу <Constant name="dbt" /> каждый раз, когда в этом репозитории открывается PR. Кроме того, пайплайн будет запускаться заново при каждом новом коммите в PR, пока тот не будет слит.
 
 Например, если вы откроете PR, запустится пайплайн. Если затем вы решите внести дополнительные изменения и выполните коммит и отправку изменений в ветку PR, запустится новый пайплайн с обновлённым кодом.
@@ -806,27 +806,27 @@ pipelines:
 
 <TabItem value="codecommit">
 
-The setup for CodeCommit follows the same steps as the prior page. Before moving on, follow steps 1–5 from the [prior page](/guides/custom-cicd-pipelines?step=2) to store your API key, add the Python script to your repository, and configure the merge pipeline.
+Для CodeCommit сначала выполните шаги 1–5 на [предыдущей странице](/guides/custom-cicd-pipelines?step=2): сохраните ключ API, добавьте скрипт Python в репозиторий и настройте пайплайн слияния.
 
-:::note Prerequisites
-Before proceeding, make sure you have also:
-- Connected your dbt project to CodeCommit by following the [CodeCommit integration guide](/docs/platform/git/import-a-project-by-git-url#aws-codecommit)
-- Configured the [pull request URL template for CodeCommit](/docs/platform/git/pr-template#aws-codecommit) in your dbt project settings
-- Created a [CI job](/docs/deploy/ci-jobs) in dbt — do not configure it to trigger on pull requests, since this pipeline will trigger it through the API
+:::note Предварительные требования
+Перед продолжением убедитесь, что вы:
+- Подключили проект dbt к CodeCommit по [инструкции по интеграции](/docs/platform/git/import-a-project-by-git-url#aws-codecommit).
+- Настроили [шаблон URL pull request для CodeCommit](/docs/platform/git/pr-template#aws-codecommit) в настройках проекта dbt.
+- Создали [задание CI](/docs/deploy/ci-jobs) в dbt. Не включайте запуск по pull request: этот пайплайн запустит задание через API.
 :::
 
-The pull request pipeline uses a separate CodeBuild project from the merge pipeline, because it runs a different dbt job (your CI job) and requires branch and schema values that are dynamically passed at build time from the pull request event.
+Для pull request нужен отдельный проект CodeBuild. Он запускает другое задание dbt, предназначенное для CI, и получает ветку и схему из события pull request во время сборки.
 
-**1. Add `ci-configuration/buildspec.yml` to your project**
+**1. Добавьте в проект `ci-configuration/buildspec.yml`**
 
-This is separate from the `buildspec-merge.yml` you created in the prior step. It references your CI job and leaves `DBT_JOB_BRANCH` and `DBT_JOB_SCHEMA_OVERRIDE` empty — a Lambda function will pass those values at build time.
+Этот файл используется отдельно от `buildspec-merge.yml` с предыдущего шага. Он ссылается на задание CI. Переменные `DBT_JOB_BRANCH` и `DBT_JOB_SCHEMA_OVERRIDE` остаются пустыми: функция Lambda передаст их во время сборки.
 
-Replace the placeholder values with your actual dbt account details:
+Подставьте данные своего аккаунта dbt вместо заполнителей:
 
-- `YOUR_DBT_ACCOUNT_ID`: The number after `accounts/` in your dbt job URL
-- `YOUR_DBT_PROJECT_ID`: The number after `projects/` in your dbt job URL
-- `YOUR_DBT_PR_JOB_ID`: The number after `jobs/` in the URL of your CI job
-- `YOUR_SSM_PARAMETER_NAME`: The name of the SSM parameter you created in step 2 of the prior page (for example, `DBT_API_KEY`)
+- `YOUR_DBT_ACCOUNT_ID`: число после `accounts/` в URL задания dbt.
+- `YOUR_DBT_PROJECT_ID`: число после `projects/` в URL задания dbt.
+- `YOUR_DBT_PR_JOB_ID`: число после `jobs/` в URL задания CI.
+- `YOUR_SSM_PARAMETER_NAME`: имя параметра SSM, созданного на шаге 2 предыдущей страницы, например `DBT_API_KEY`.
 
 ```yaml
 version: 0.2
@@ -854,15 +854,15 @@ phases:
       - python -u ./python/run_and_monitor_dbt_cloud_job.py
 ```
 
-**2. Create a CodeBuild project for pull requests**
+**2. Создайте проект CodeBuild для pull request**
 
-Follow the [AWS CodeBuild documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project-console.html) to create a second project (separate from the one you created for merge). Configure the following settings:
+По [документации AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project-console.html) создайте второй проект, отдельный от проекта для слияния. Укажите следующие настройки:
 
-- **Source**: Select **AWS CodeCommit**, set the reference type to **Branch**, and select your main branch
-- **Environment**: Select **Ubuntu** as the operating system
-- **Buildspec**: Select **Use a buildspec file** and enter `ci-configuration/buildspec.yml` as the path
+- **Source**: выберите **AWS CodeCommit**, укажите тип ссылки **Branch** и выберите основную ветку.
+- **Environment**: выберите **Ubuntu** в качестве операционной системы.
+- **Buildspec**: выберите **Use a buildspec file** и укажите путь `ci-configuration/buildspec.yml`.
 
-Note the service role name shown in the **Environment** section. In **IAM**, find that role and add an inline policy granting permission to read and decrypt the SSM parameter:
+Запишите имя сервисной роли из раздела **Environment**. Найдите её в **IAM** и добавьте встроенную политику, разрешающую чтение и расшифровку параметра SSM:
 
 ```json
 {
@@ -882,13 +882,13 @@ Note the service role name shown in the **Environment** section. In **IAM**, fin
 }
 ```
 
-**3. Create a Lambda trigger function**
+**3. Создайте функцию Lambda для запуска сборки**
 
-The Lambda function receives the pull request event from EventBridge, extracts the PR branch and PR ID, then starts CodeBuild with those values as environment variable overrides. This is what ensures the dbt CI job runs against your PR branch with a PR-specific schema.
+Функция Lambda получает событие pull request от EventBridge, извлекает ветку и идентификатор PR, а затем запускает CodeBuild с этими значениями в переменных окружения. Так задание CI dbt выполняется в ветке PR и использует отдельную схему для этого PR.
 
-1. In the AWS console, go to **Lambda** → **Create function**
-2. Select **Author from scratch**, name the function (for example, `dbt-ci-trigger`), and choose **Python 3.12** as the runtime
-3. Click **Create function**, then replace the default code with the following:
+1. В консоли AWS откройте **Lambda** → **Create function**.
+2. Выберите **Author from scratch**, укажите имя функции, например `dbt-ci-trigger`, и выберите среду выполнения **Python 3.12**.
+3. Нажмите **Create function**, затем замените код по умолчанию следующим:
 
 ```python
 import boto3
@@ -914,10 +914,10 @@ def lambda_handler(event, context):
     )
 ```
 
-Replace `YOUR_CODEBUILD_PROJECT_NAME` with the name of the CodeBuild project you created above, then click **Deploy**.
+Подставьте имя созданного проекта CodeBuild вместо `YOUR_CODEBUILD_PROJECT_NAME`, затем нажмите **Deploy**.
 
-4. Go to **Configuration** → **Permissions** → click the execution role name to open IAM
-5. Add an inline policy granting permission to start the CodeBuild project:
+4. В разделе **Configuration** → **Permissions** нажмите имя роли выполнения, чтобы открыть IAM.
+5. Добавьте встроенную политику, разрешающую запуск проекта CodeBuild:
 
 ```json
 {
@@ -932,11 +932,11 @@ Replace `YOUR_CODEBUILD_PROJECT_NAME` with the name of the CodeBuild project you
 }
 ```
 
-**4. Create an EventBridge rule**
+**4. Создайте правило EventBridge**
 
-1. In the AWS console, go to **Amazon EventBridge** → **Rules** → **Create rule**
-2. Give the rule a name (for example, `dbt-ci-on-pr-created`)
-3. Under **Event pattern**, select **Custom pattern** and paste the following JSON. Substitute `YOUR_AWS_ACCOUNT_ID`, `YOUR_AWS_REGION`, and `YOUR_CODECOMMIT_REPO_NAME` with your values:
+1. В консоли AWS откройте **Amazon EventBridge** → **Rules** → **Create rule**.
+2. Укажите имя правила, например `dbt-ci-on-pr-created`.
+3. В разделе **Event pattern** выберите **Custom pattern** и вставьте следующий JSON. Подставьте свои значения вместо `YOUR_AWS_ACCOUNT_ID`, `YOUR_AWS_REGION` и `YOUR_CODECOMMIT_REPO_NAME`:
 
     ```json
     {
@@ -952,8 +952,8 @@ Replace `YOUR_CODEBUILD_PROJECT_NAME` with the name of the CodeBuild project you
     }
     ```
 
-4. Under **Target**, select **AWS service** → **Lambda function**, and choose the Lambda function you created above
-5. Save the rule
+4. В разделе **Target** выберите **AWS service** → **Lambda function** и укажите созданную функцию.
+5. Сохраните правило.
 
 </TabItem>
 </Tabs>

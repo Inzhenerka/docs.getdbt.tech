@@ -1,6 +1,6 @@
 ---
 title: "Схема объекта snapshots"
-sidebar_label: "Snapshots"
+sidebar_label: "Снимки"
 id: "discovery-schema-job-snapshots"
 availability:
   surface: platform
@@ -10,26 +10,26 @@ availability:
 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-Объект snapshots позволяет запрашивать информацию обо всех снапшотах в рамках заданного job.
+Объект snapshots позволяет запрашивать информацию обо всех снимках в заданном задании.
 
-### Аргументы {#arguments}
+### Аргументы
 
-При выполнении запроса к `snapshots` доступны следующие аргументы.
+При запросе `snapshots` доступны следующие аргументы.
 
 <NodeArgsTable parent="JobNode" name="snapshots" />
 
-Ниже приведены несколько наглядных примеров запросов, а также описана схема объекта snapshots.
+Ниже приведены наглядные примеры запросов и описание схемы объекта snapshots.
 
-### Пример запроса {#example-query}
+### Пример запроса
 
-Аргументы database, schema и identifier являются необязательными. Это означает, что с помощью этого эндпоинта вы можете:
+Аргументы database, schema и identifier необязательны. Это означает, что с помощью этой конечной точки можно:
 
-- Найти конкретный снапшот, указав `<database>.<schema>.<identifier>`
-- Найти все снапшоты в базе данных и/или схеме, указав `<database>` и/или `<schema>`
+- Найти конкретный снимок, указав `<database>.<schema>.<identifier>`
+- Найти все снимки в базе данных и/или схеме, указав `<database>` и/или `<schema>`
 
-#### Получение информации о снапшотах для job {#find-snapshots-information-for-a-job}
+#### Получение информации о снимках для задания
 
-Пример запроса ниже возвращает информацию обо всех снапшотах в рамках данного job.
+Пример запроса возвращает информацию обо всех снимках в этом задании.
 
 ```graphql
 {
@@ -47,8 +47,8 @@ import { NodeArgsTable, SchemaTable } from "./schema";
 }
 ```
 
-### Поля {#fields}
+### Поля
 
-При выполнении запроса к `snapshots` доступны следующие поля:
+При запросе `snapshots` доступны следующие поля:
 
 <SchemaTable nodeName="SnapshotNode" />

@@ -1,8 +1,8 @@
 ---
-title: "AWS private connectivity"
+title: "Частные подключения в AWS"
 id: aws-overview
-description: "Configure private connections for AWS deployments of the dbt platform."
-sidebar_label: "About AWS PrivateLink"
+description: "Настройка частных подключений для развертываний платформы dbt в AWS."
+sidebar_label: "Об AWS PrivateLink"
 availability:
   surface: platform
   access: paid_plan
@@ -14,12 +14,12 @@ import AWSMatrix from '/snippets/_aws-private-connectivity-matrix.md';
 
 <SetUpPages />
 
-AWS PrivateLink enables secure, private connectivity between <Constant name="dbt" /> and your AWS-hosted services. With PrivateLink, traffic between dbt and your data platforms or self-hosted services stays within the AWS network and does not traverse the public internet.
+AWS PrivateLink обеспечивает безопасное частное подключение между <Constant name="dbt" /> и вашими сервисами, размещенными в AWS. При использовании PrivateLink трафик между dbt и вашими платформами данных или сервисами с самостоятельным размещением остается внутри сети AWS и не проходит через общедоступный интернет.
 
-For more details, refer to the [AWS PrivateLink documentation](https://docs.aws.amazon.com/vpc/latest/privatelink/).
+Дополнительные сведения см. в [документации AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/).
 
 <AWSMatrix />
 
-## Cross-region private connections
+## Межрегиональные частные подключения
 
-dbt Labs has globally connected private networks specifically used to host private endpoints, which are connected to <Constant name="dbt" /> instance environments. This connectivity allows <Constant name="dbt" /> environments to connect to any supported region from any <Constant name="dbt" /> instance within the same cloud provider network. To ensure security, access to these endpoints is protected by security groups, network policies, and application connection safeguards, in addition to the authentication and authorization mechanisms provided by each of the connected platforms.
+dbt Labs располагает частными сетями, связанными между собой по всему миру и специально предназначенными для размещения частных конечных точек, которые подключены к средам экземпляров <Constant name="dbt" />. Такое сетевое взаимодействие позволяет средам <Constant name="dbt" /> подключаться к любому поддерживаемому региону из любого экземпляра <Constant name="dbt" /> в пределах сети одного облачного провайдера. Для обеспечения безопасности доступ к этим конечным точкам защищен группами безопасности, сетевыми политиками и средствами защиты подключений на уровне приложений, дополняющими механизмы аутентификации и авторизации, предоставляемые каждой из подключенных платформ.

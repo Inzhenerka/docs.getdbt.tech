@@ -349,7 +349,9 @@ dbt build --select "source_status:fresher+" --state path/to/prod/artifacts
 
 </VersionBlock>
 
-### state
+<a id="the-state-method" />
+
+### state {#state}
 
 **N.B.** [State-based selection](/reference/node-selection/state-selection) — это мощная и сложная возможность. Обязательно ознакомьтесь с [known caveats and limitations](/reference/node-selection/state-comparison-caveats), связанными с сравнением состояний.
 

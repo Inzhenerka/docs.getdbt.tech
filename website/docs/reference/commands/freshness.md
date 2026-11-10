@@ -1,5 +1,5 @@
 ---
-title: "About dbt freshness command"
+title: "О команде dbt freshness"
 sidebar_label: "freshness"
 id: "freshness"
 availability:
@@ -9,22 +9,22 @@ availability:
 
 # dbt freshness
 
-The `dbt freshness` command evaluates whether sources and models with [freshness](/reference/resource-configs/freshness) configured meet your `warn_after` and `error_after` thresholds, reporting warnings and errors accordingly.
+Команда `dbt freshness` проверяет, соответствуют ли источники и модели с настроенной [проверкой актуальности данных](/reference/resource-configs/freshness) пороговым значениям `warn_after` и `error_after`, и сообщает о предупреждениях и ошибках соответственно.
 
-## Usage
+## Использование
 
 ```bash
 dbt freshness [--select SELECTOR] [--resource-type RESOURCE_TYPE] [--exclude-resource-type RESOURCE_TYPE]
 ```
 
-### Run freshness for all sources and models
+### Запуск проверки актуальности данных для всех источников и моделей
 
 ```bash
 dbt freshness
 ```
 
-### Include or exclude resource types
-Use the flag to specify which resource type you want to include or exclude when running the command:
+### Включение или исключение типов ресурсов
+Используйте флаг, чтобы указать, какой тип ресурса нужно включить или исключить при выполнении команды:
 
 ```bash
 # Include sources only
@@ -37,8 +37,8 @@ dbt freshness --resource-type model
 dbt freshness --exclude-resource-type source
 ```
 
-### Select specific model or source
-Use `--select` to specify which model or source you want to include when running the command:
+### Выбор конкретной модели или источника
+Используйте `--select`, чтобы указать, какую модель или источник нужно включить при выполнении команды:
 
 ```bash
 # Select a specific model 
@@ -51,31 +51,31 @@ dbt freshness --select "source:jaffle_shop"
 dbt freshness --select "source:jaffle_shop.orders"
 ```
 
-## How freshness is evaluated 
+## Как оценивается актуальность данных {#how-freshness-is-evaluated}
 
-`dbt freshness` evaluates sources or models that have `warn_after` or `error_after` set in their [`freshness` config](/reference/resource-configs/freshness?version=2).
+`dbt freshness` проверяет источники или модели, у которых в [конфигурации `freshness`](/reference/resource-configs/freshness?version=2) задан параметр `warn_after` или `error_after`.
 
-dbt retrieves the latest timestamp using one of the following methods, then compares it with the current timestamp to determine the age of the data.
+dbt получает последнюю временную метку одним из следующих способов, а затем сравнивает её с текущей временной меткой, чтобы определить возраст данных.
 
 <SimpleTable>
 
-| Method | When used | How dbt retrieves the timestamp |
+| Способ | Когда используется | Как dbt получает временную метку |
 | --- | --- | --- |
-| `loaded_at_query` | When configured on the resource | Runs the custom SQL expression to retrieve the latest timestamp. |
-| `loaded_at_field` | When configured on the resource | Queries `MAX(<loaded_at_field>)` against the materialized relation. |
-| Adapter metadata | When neither `loaded_at_query` nor `loaded_at_field` is configured | Retrieves the last-modified time from adapter relation metadata. Available for sources, and for models materialized as `table`, `incremental`, `materialized_view`, or `dynamic_table`, where supported by the adapter.  Models materialized as `view` or `external` must use either `loaded_at_field` or `loaded_at_query`. |
+| `loaded_at_query` | Если настроен для ресурса | Выполняет пользовательское SQL-выражение для получения последней временной метки. |
+| `loaded_at_field` | Если настроен для ресурса | Выполняет запрос `MAX(<loaded_at_field>)` к материализованному объекту базы данных. |
+| Метаданные адаптера | Если не настроен ни `loaded_at_query`, ни `loaded_at_field` | Получает время последнего изменения из метаданных объекта базы данных, предоставляемых адаптером. Доступно для источников и для моделей с материализацией `table`, `incremental`, `materialized_view` или `dynamic_table`, если адаптер это поддерживает.  Для моделей с материализацией `view` или `external` необходимо использовать `loaded_at_field` или `loaded_at_query`. |
 
 </SimpleTable>
 
-You can't configure both `loaded_at_query` and `loaded_at_field` on the same resource. Setting both raises a parse error.
+Нельзя настроить одновременно `loaded_at_query` и `loaded_at_field` для одного ресурса. Если заданы оба параметра, возникает ошибка разбора.
 
-## Command output
+## Вывод команды
 
 ### freshness.json
 
-After `dbt freshness` completes, dbt writes results for the evaluated sources and models to `target/freshness.json`. Each entry includes a `resource_type` field that identifies whether the resource is a source or a model.
+После завершения `dbt freshness` dbt записывает результаты проверки источников и моделей в `target/freshness.json`. Каждая запись содержит поле `resource_type`, указывающее, является ли ресурс источником или моделью.
 
-For the full schema, refer to: [`freshness.json`](/reference/artifacts/freshness-json).
+Полную схему см. в разделе [`freshness.json`](/reference/artifacts/freshness-json).
 
 ```json
 {
@@ -111,16 +111,16 @@ For the full schema, refer to: [`freshness.json`](/reference/artifacts/freshness
 }
 ```
 
-### sources.json (legacy) {#sources-json}
+### sources.json (устаревший формат) {#sources-json}
 
-For backward compatibility, whenever sources are included in a `dbt freshness` run, dbt also writes `target/sources.json`. It contains sources only, with no `resource_type` field. If the run includes only models, dbt does not overwrite `sources.json`.
+Для обратной совместимости, если в запуск `dbt freshness` включены источники, dbt также записывает файл `target/sources.json`. Он содержит только источники, без поля `resource_type`. Если запуск включает только модели, dbt не перезаписывает `sources.json`.
 
-For the full schema, refer to [`sources.json`](/reference/artifacts/sources-json).
+Полную схему см. в разделе [`sources.json`](/reference/artifacts/sources-json).
 
-The legacy [`dbt source freshness`](/reference/commands/source) command still works for backward compatibility and produces only `sources.json`.
+Устаревшая команда [`dbt source freshness`](/reference/commands/source) по-прежнему работает для обратной совместимости и создаёт только `sources.json`.
 
-## Related docs
+## Связанная документация
 
-- [Freshness config](/reference/resource-configs/freshness)
-- [Source data freshness](/docs/build/sources#source-data-freshness)
-- [dbt artifacts](/reference/artifacts/dbt-artifacts)
+- [Конфигурация freshness](/reference/resource-configs/freshness)
+- [Актуальность данных источников](/docs/build/sources#source-data-freshness)
+- [Артефакты dbt](/reference/artifacts/dbt-artifacts)

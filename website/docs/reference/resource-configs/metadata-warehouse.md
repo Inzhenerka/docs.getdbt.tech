@@ -1,14 +1,14 @@
 ---
 title: metadata_warehouse
-description: "Specify a dedicated Snowflake warehouse for dbt State metadata lookups to avoid queueing on your main compute warehouse."
+description: "Укажите выделенный warehouse Snowflake для запросов метаданных dbt State, чтобы избежать ожидания в очереди на основном вычислительном warehouse."
 id: "metadata-warehouse"
 tags: ['dbt State']
 ---
 
 # metadata_warehouse
 
-:::note Snowflake only
-This configuration is available in Snowflake only.
+:::note Только для Snowflake
+Эта настройка доступна только в Snowflake.
 :::
 
 <File name="profiles.yml">
@@ -18,7 +18,7 @@ my_project:
   outputs:
     prod:
       type: snowflake
-      # ... other connection settings
+      # ... другие настройки подключения
       warehouse: TRANSFORMING
       metadata_warehouse: METADATA_XS
   target: prod
@@ -26,27 +26,27 @@ my_project:
 
 </File>
 
-## Definition
+## Определение
 
-dbt State performs metadata introspection queries to determine whether models need to be rebuilt. On Snowflake, these queries run against your configured `warehouse` by default, which can cause queuing when your primary warehouse is under heavy load.
+dbt State выполняет запросы для анализа метаданных, чтобы определить, нужно ли пересоздавать модели. В Snowflake эти запросы по умолчанию выполняются на настроенном `warehouse`, что может приводить к ожиданию в очереди при высокой нагрузке на основной warehouse.
 
-`metadata_warehouse` lets you route these queries to a separate, smaller warehouse to keep introspection overhead off your main compute resource. When set, dbt issues multiple, individual queries (one per schema) in parallel on the dedicated warehouse &mdash; faster than the single, consolidated query dbt runs by default when `metadata_warehouse` is not configured.
+`metadata_warehouse` позволяет направлять эти запросы на отдельный warehouse меньшего размера, чтобы не нагружать основной вычислительный ресурс анализом метаданных. Если эта настройка задана, dbt параллельно выполняет несколько отдельных запросов (по одному на каждую схему) на выделенном warehouse &mdash; это быстрее, чем один сводный запрос, который dbt выполняет по умолчанию, когда `metadata_warehouse` не настроен.
 
-If metadata queries on your main warehouse take longer than 15 seconds, dbt emits a warning suggesting you configure a dedicated warehouse.
+Если запросы метаданных на основном warehouse занимают более 15 секунд, dbt выводит предупреждение с предложением настроить выделенный warehouse.
 
-You can also use `metadata_warehouse` on the <Constant name="dbt_platform" /> by adding it as an [extended attribute](/docs/dbt-platform-environments#extended-attributes) on the [connection profile](/docs/platform/about-profiles) for a deployment environment.
+Вы также можете использовать `metadata_warehouse` на <Constant name="dbt_platform" />, добавив его как [расширенный атрибут](/docs/dbt-platform-environments#extended-attributes) в [профиль подключения](/docs/platform/about-profiles) для среды развертывания.
 
 :::note
-This configuration currently applies only to dbt State metadata queries. It might be used more broadly in the future. See [dbt-labs/dbt#12122](https://github.com/dbt-labs/dbt/issues/12122) for the feature request.
+В настоящее время эта настройка применяется только к запросам метаданных dbt State. В будущем область ее применения может быть расширена. Запрос на добавление этой возможности см. в [dbt-labs/dbt#12122](https://github.com/dbt-labs/dbt/issues/12122).
 :::
 
-## Default
+## Значение по умолчанию
 
-Falls back to the `warehouse` setting in `profiles.yml`.
+Используется значение настройки `warehouse` из `profiles.yml`.
 
-## Example
+## Пример
 
-### Separate metadata and execution warehouses
+### Отдельные warehouse для метаданных и выполнения моделей
 
 <File name="profiles.yml">
 
@@ -58,14 +58,14 @@ my_project:
       account: abc12345
       database: ANALYTICS
       schema: DBT_PROD
-      warehouse: TRANSFORMING          # used for model execution
-      metadata_warehouse: METADATA_XS  # used for dbt State introspection
+      warehouse: TRANSFORMING          # используется для выполнения моделей
+      metadata_warehouse: METADATA_XS  # используется для анализа метаданных dbt State
   target: prod
 ```
 
 </File>
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Snowflake configuration](/reference/resource-configs/snowflake-configs)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка Snowflake](/reference/resource-configs/snowflake-configs)

@@ -49,7 +49,7 @@ availability: platform_login
 
 </VersionBlock>
 
-<Expandable alt_header="Для dbt Docs">
+<Expandable alt_header="Для dbt Docs" anchor_id="dbt-docs-details-2">
 
 После настройки <Constant name="dbt" /> обновляет ссылку Documentation на вкладке в верхней части страницы, чтобы она вела на документацию для этого задания. Эта ссылка всегда ведёт на последнюю версию документации вашего проекта.
 
@@ -59,7 +59,7 @@ availability: platform_login
 
 Чтобы просмотреть последний результат проверки свежести источников, ознакомьтесь с подробной информацией в разделе [Создание метаданных](/docs/explore/explore-projects#generate-metadata). Затем перейдите в <Constant name="catalog" /> по ссылке **Explore**.
 
-<Expandable alt_header="Для dbt Docs">
+<Expandable alt_header="Для dbt Docs" anchor_id="dbt-docs-details-3">
 
 Настройка задания с параметром артефакта **Source Freshness** также обновляет ссылку на источник данных в разделе **Orchestration** > **Data sources**. Эта ссылка ведёт к последнему отчёту Source Freshness для выбранного задания.
 

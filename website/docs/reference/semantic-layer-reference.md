@@ -1,7 +1,7 @@
 ---
-title: Semantic Layer configurations
+title: Конфигурации семантического слоя
 id: semantic-layer-reference
-description: "Configuration reference for the Semantic Layer: semantic models, metrics, and dimensions."
+description: "Справочник по конфигурации семантического слоя: семантические модели, метрики и измерения."
 keywords:
   - dbt semantic layer
   - semantic layer configuration
@@ -9,37 +9,37 @@ keywords:
   - dimensions configuration
 ---
 
-The <Constant name="semantic_layer" /> YAML spec defines every property and option for semantic models, metrics, and dimensions. Use it when you need the complete, authoritative list of what you can configure. For example, configurations when defining new objects, validating YAML, or troubleshooting config errors.
+Спецификация YAML для <Constant name="semantic_layer" /> определяет все свойства и параметры семантических моделей, метрик и измерений. Используйте её, когда нужен полный и достоверный перечень доступных настроек. Например, при определении новых объектов, проверке YAML или устранении ошибок конфигурации.
 
-Because this reference provides information about both the *latest spec* (model-embedded) and the *legacy spec* (standalone YAML), you'll need to select the appropriate version from the version picker. [Read the build docs](/docs/build/semantic-models) to find out which applies to your environment. To convert from the legacy spec, see [Migrate to the latest YAML spec](/docs/build/latest-metrics-spec).
+Поскольку этот справочник содержит информацию как об *актуальной спецификации* (встроенной в модель), так и об *устаревшей спецификации* (в отдельном YAML-файле), вам нужно выбрать соответствующую версию с помощью переключателя версий. [Прочитайте документацию по созданию семантических моделей](/docs/build/semantic-models), чтобы узнать, какая спецификация применима к вашей среде. Для перехода с устаревшей спецификации см. [Переход на актуальную спецификацию YAML](/docs/build/latest-metrics-spec).
 
 import LatestYamlSpecAvailability from '/snippets/_latest-yaml-spec-availability.md';
 
 <LatestYamlSpecAvailability />
 
 
-## Property reference
+## Справочник свойств
 
-The property reference pages document each resource type in detail so you can look up allowed values, syntax, and behavior for every property in the full YAML spec. Use the version picker on each page to see *latest spec (model YAML)* or *legacy spec (standalone YAML)* content:
+Страницы справочника свойств подробно описывают каждый тип ресурсов, позволяя узнать допустимые значения, синтаксис и поведение каждого свойства в полной спецификации YAML. Используйте переключатель версий на каждой странице, чтобы просмотреть содержимое для *актуальной спецификации (YAML модели)* или *устаревшей спецификации (отдельный YAML-файл)*:
 
-- [Semantic model properties](/reference/semantic-model-properties)
-- [Metric properties](/reference/metric-properties)
-- [Dimension properties](/reference/dimension-properties) — for the latest spec, distinguishes **column-level** keys (`dimension:`, `granularity:`) from **properties inside** the `dimension:` block; use the version picker on that page for legacy standalone `dimensions:` fields.
+- [Свойства семантических моделей](/reference/semantic-model-properties)
+- [Свойства метрик](/reference/metric-properties)
+- [Свойства измерений](/reference/dimension-properties) — для актуальной спецификации здесь разграничены ключи **уровня столбца** (`dimension:`, `granularity:`) и **свойства внутри** блока `dimension:`; используйте переключатель версий на этой странице, чтобы просмотреть поля `dimensions:` устаревшей спецификации в отдельном YAML-файле.
 
-## Where to define <Constant name="semantic_layer" /> objects
+## Где определять объекты <Constant name="semantic_layer" />
 
-| Object | Latest spec (model YAML) | Legacy spec (standalone YAML) |
+| Объект | Актуальная спецификация (YAML модели) | Устаревшая спецификация (отдельный YAML-файл) |
 |--------|--------------------------|------------------------------|
-| **Semantic models** | Top-level `semantic_model:` block under [models](/reference/model-properties). | Top-level `semantic_models:` list. |
-| **Metrics** | For metrics that only depend on the same semantic model, nest them directly under each model in `models:` (but not nested under `semantic_model`). <br /> <br /> For metrics that depend on metrics or dimensions from a different semantic model, define them under a top-level `metrics:` block (For example, `outside models:`). This can be in the same YAML file or a separate one. | Top-level `metrics:` key in standalone YAML. |
-| **Dimensions** | `dimension:` blocks on model columns (and optional `derived_semantics.dimensions`). Defined within a model's semantic layer configuration. | `dimensions:` list on the semantic model. Defined within a model's semantic layer configuration. |
+| **Семантические модели** | Блок `semantic_model:` верхнего уровня внутри [models](/reference/model-properties). | Список `semantic_models:` верхнего уровня. |
+| **Метрики** | Метрики, которые зависят только от той же семантической модели, размещайте непосредственно внутри каждой модели в `models:` (но не внутри `semantic_model`). <br /> <br /> Метрики, которые зависят от метрик или измерений из другой семантической модели, определяйте в блоке `metrics:` верхнего уровня (например, вне `models:`). Он может находиться в том же YAML-файле или в отдельном. | Ключ `metrics:` верхнего уровня в отдельном YAML-файле. |
+| **Измерения** | Блоки `dimension:` в столбцах модели (и необязательный `derived_semantics.dimensions`). Определяются в конфигурации семантического слоя модели. | Список `dimensions:` в семантической модели. Определяется в конфигурации семантического слоя модели. |
 
-## Related documentation
+## Связанная документация
 
-For the complete structure and examples, refer to these build docs:
+Полную структуру и примеры см. в следующих руководствах по созданию:
 
-- [Build your metrics](/docs/build/build-metrics-intro): Conceptual overview of the <Constant name="semantic_layer" />, metric types, and how to get started.
-- [Semantic models](/docs/build/semantic-models): How to define semantic models (on a model or standalone), structure, and examples.
-- [Creating metrics](/docs/build/metrics-overview): How to create and configure metrics; links to type-specific guides (simple, cumulative, ratio, derived, conversion).
-- [Dimensions](/docs/build/dimensions): How to define time and categorical dimensions within semantic models.
-- [Migrate to the latest YAML spec](/docs/build/latest-metrics-spec): How to migrate from the legacy metrics YAML spec to the latest spec.
+- [Создание метрик](/docs/build/build-metrics-intro): Обзор концепций <Constant name="semantic_layer" />, типов метрик и первых шагов.
+- [Семантические модели](/docs/build/semantic-models): Как определять семантические модели (в модели или отдельно), их структура и примеры.
+- [Создание и настройка метрик](/docs/build/metrics-overview): Как создавать и настраивать метрики; ссылки на руководства по отдельным типам (simple, cumulative, ratio, derived, conversion).
+- [Измерения](/docs/build/dimensions): Как определять временные и категориальные измерения в семантических моделях.
+- [Переход на актуальную спецификацию YAML](/docs/build/latest-metrics-spec): Как перейти с устаревшей спецификации YAML для метрик на актуальную.

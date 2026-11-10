@@ -1,8 +1,8 @@
 ---
-title: Install dbt OSS
+title: Установка dbt OSS
 id: install-dbt-v2
-description: "Install dbt OSS, the open-source foundation behind dbt v2."
-sidebar_label: "Install dbt OSS"
+description: "Установите dbt OSS — основу dbt v2 с открытым исходным кодом."
+sidebar_label: "Установка dbt OSS"
 pagination_next: null
 pagination_prev: null
 availability: local_free
@@ -11,88 +11,88 @@ availability: local_free
 
 <VersionBlock lastVersion="1.99">
 
-This page is for installing dbt OSS, the Apache 2.0 open-source distribution of v2. To view the installation instructions, select **v2** from the version picker in the docs navigation. To install <Constant name="core_v1" />, refer to [Install <Constant name="core_v1" />](/docs/local/install-dbt?version=1.12).
+Эта страница посвящена установке dbt OSS — дистрибутива v2 с открытым исходным кодом под лицензией Apache 2.0. Чтобы просмотреть инструкции по установке, выберите **v2** в переключателе версий в навигации документации. Чтобы установить <Constant name="core_v1" />, обратитесь к разделу [Установка <Constant name="core_v1" />](/docs/local/install-dbt?version=1.12).
 
-To upgrade an existing v1 project to v2, refer to [Upgrade to v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2.0).
+Чтобы обновить существующий проект с v1 до v2, обратитесь к разделу [Обновление до v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2?version=2.0).
 
-To understand the differences between v1 and v2 refer to [dbt licensing](/docs/dbt-licensing?version=2.0).
+Чтобы узнать о различиях между v1 и v2, обратитесь к разделу [Лицензирование dbt](/docs/dbt-licensing?version=2.0).
 
 </VersionBlock>
 
 <VersionBlock firstVersion="2.0">
 
-The open-source v2 foundation is licensed under Apache 2.0. Most users don't need this page &mdash; [install dbt normally](/docs/local/install-dbt) with the standard instructions. This page is for organizations that require the Apache 2.0 codebase specifically.
+Основа v2 с открытым исходным кодом распространяется под лицензией Apache 2.0. Большинству пользователей эта страница не нужна &mdash; [установите dbt обычным способом](/docs/local/install-dbt), следуя стандартным инструкциям. Эта страница предназначена для организаций, которым нужна именно кодовая база под лицензией Apache 2.0.
 
-:::info Use an isolated environment
-Use `uv tool` to install `dbt-oss` in its own isolated environment. Avoid installing `dbt-oss` in the same environment as `dbt` or `dbt-core` because they all use the same entry point. If you already have `dbt` installed, refer to [Run dbt-oss alongside other dbt installs](#run-dbt-oss-alongside-other-dbt-installs).
+:::info Используйте изолированное окружение
+Используйте `uv tool`, чтобы установить `dbt-oss` в отдельном изолированном окружении. Не устанавливайте `dbt-oss` в том же окружении, что и `dbt` или `dbt-core`, поскольку все они используют одну и ту же точку входа. Если у вас уже установлен `dbt`, обратитесь к разделу [Запуск dbt-oss параллельно с другими установленными версиями dbt](#run-dbt-oss-alongside-other-dbt-installs).
 :::
 
-## Install
+## Установка
 
-Before installing dbt OSS, make sure you have [uv](https://docs.astral.sh/uv/getting-started/installation/) installed on your machine.
+Перед установкой dbt OSS убедитесь, что на вашем компьютере установлен [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
-Install `dbt-oss` with `uv tool`:
+Установите `dbt-oss` с помощью `uv tool`:
 
 ```shell
 uv tool install dbt-oss
 ```
 
-Confirm the installed version begins with `2.`:
+Убедитесь, что номер установленной версии начинается с `2.`:
 
 ```shell
 dbt --version
 ```
 
-For adapter install details, refer to the [`dbt` repository](https://github.com/dbt-labs/dbt).
+Подробные сведения об установке адаптеров см. в [репозитории `dbt`](https://github.com/dbt-labs/dbt).
 
-## Run `dbt-oss` alongside other dbt installs
+## Запуск `dbt-oss` параллельно с другими установленными версиями dbt {#run-dbt-oss-alongside-other-dbt-installs}
 
-If you have `dbt` installed and want to run `dbt-oss` alongside it, use `uvx` with a shell alias to avoid conflicts. Using `uvx` ensures dbt OSS runs in its own isolated environment without interfering with your existing dbt installation.
+Если у вас установлен `dbt` и вы хотите запускать `dbt-oss` параллельно с ним, используйте `uvx` с псевдонимом команды в оболочке, чтобы избежать конфликтов. Использование `uvx` обеспечивает запуск dbt OSS в отдельном изолированном окружении, не затрагивая существующую установку dbt.
 
-Add the following to your shell profile. This example uses `dbto`, but you can choose a different name:
+Добавьте следующие строки в файл профиля оболочки. В этом примере используется `dbto`, но вы можете выбрать другое имя:
 
 ```shell
 # ~/.zshrc or ~/.bashrc
 alias dbto='uvx --from dbt-oss dbt'
 ```
 
-Reload your shell profile:
+Повторно загрузите файл профиля оболочки:
 
 ```shell
 source ~/.zshrc   # or source ~/.bashrc
 ```
 
-You can then use `dbto <command>` (or your chosen alias) instead of `dbt <command>` for dbt OSS invocations.
+После этого вы сможете использовать `dbto <command>` (или выбранный вами псевдоним) вместо `dbt <command>` для вызова dbt OSS.
 
-## What's included
+## Что входит в состав
 
-- The open-source, Rust-based dbt runtime.
-- The dbt project language and DAG semantics.
-- The standard dbt command set (`run`, `build`, `test`, `compile`, `parse`, and more).
+- Среда выполнения dbt с открытым исходным кодом, написанная на Rust.
+- Язык проектов dbt и семантика DAG.
+- Стандартный набор команд dbt (`run`, `build`, `test`, `compile`, `parse` и другие).
 
-## What's not included
+## Что не входит в состав
 
-The [standard <Constant name="dbt" /> install](/docs/local/install-dbt) gives you <Constant name="fusion" />, which adds the following on top of the open source layer:
+При [стандартной установке <Constant name="dbt" />](/docs/local/install-dbt) вы получаете <Constant name="fusion" />, который дополняет основу с открытым исходным кодом следующими возможностями:
 
-- SQL comprehension and static analysis
-- <Term id="lsp" /> features (autocomplete, hover info, inline errors)
-- `dbt lint` and error diagnostics
-- dbt VS Code extension integration
+- Понимание SQL и статический анализ
+- Возможности <Term id="lsp" /> (автодополнение, информация при наведении, отображение ошибок прямо в коде)
+- `dbt lint` и диагностика ошибок
+- Интеграция с расширением dbt для VS Code
 
-For the full picture of what you get with dbt, refer to [v2 availability](/docs/dbt/dbt-availability).
+Полный обзор возможностей dbt см. в разделе [Доступность v2](/docs/dbt/dbt-availability).
 
-## Contributing
+## Участие в разработке
 
-To contribute, refer to the [`dbt` repository](https://github.com/dbt-labs/dbt) and its [CONTRIBUTING guide](https://github.com/dbt-labs/dbt/blob/HEAD/CONTRIBUTING.md), or ask in the [dbt Community](/community/resources/getting-help).
+Чтобы внести свой вклад, обратитесь к [репозиторию `dbt`](https://github.com/dbt-labs/dbt) и [руководству CONTRIBUTING](https://github.com/dbt-labs/dbt/blob/HEAD/CONTRIBUTING.md) или задайте вопрос в [сообществе dbt](/community/resources/getting-help).
 
-## License
+## Лицензия
 
-dbt OSS is licensed under Apache 2.0. Refer to the [LICENSE file](https://github.com/dbt-labs/dbt/blob/HEAD/LICENSE) in the repository. Refer to [dbt licensing](/docs/dbt-licensing?version=2.0) for more info.
+dbt OSS распространяется под лицензией Apache 2.0. См. [файл LICENSE](https://github.com/dbt-labs/dbt/blob/HEAD/LICENSE) в репозитории. Дополнительную информацию см. в разделе [Лицензирование dbt](/docs/dbt-licensing?version=2.0).
 
-## Related
+## Связанные материалы
 
-- [Install dbt](/docs/local/install-dbt) (standard install)
-- [Upgrade to v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2)
-- [`dbt` repository on GitHub](https://github.com/dbt-labs/dbt)
+- [Установка dbt](/docs/local/install-dbt) (стандартная установка)
+- [Обновление до v2](/docs/dbt-versions/dbt-upgrade/upgrading-to-v2)
+- [Репозиторий `dbt` на GitHub](https://github.com/dbt-labs/dbt)
 
 </VersionBlock>

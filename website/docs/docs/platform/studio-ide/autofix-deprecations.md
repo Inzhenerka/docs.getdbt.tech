@@ -1,48 +1,48 @@
 ---
-title: "Fix deprecation warnings"
-description: "Learn how you can use the autofix tool in the Studio IDE to update project code."
-sidebar_label: "Fix deprecations"
+title: "Исправление предупреждений об устаревании"
+description: "Узнайте, как использовать инструмент autofix в Studio IDE для обновления кода проекта."
+sidebar_label: "Исправление устареваний"
 availability:
   surface: platform
   access: login_required
 ---
 
 
-You can address deprecation warnings in the <Constant name="dbt_platform" /> by finding and fixing them using the autofix tool in the <Constant name="studio_ide" />. You can run the autofix tool on the [**v1 Compatible** or **v1 Latest** release track](/docs/dbt-versions/dbt-release-tracks) of <Constant name="core" /> before you upgrade to <Constant name="fusion" />!
+Вы можете устранить предупреждения об устаревших возможностях в <Constant name="dbt_platform" />, найдя и исправив их с помощью инструмента автоматического исправления в <Constant name="studio_ide" />. Вы можете запустить инструмент автоматического исправления в [канале выпуска **v1 Compatible** или **v1 Latest**](/docs/dbt-versions/dbt-release-tracks) для <Constant name="core" /> перед переходом на <Constant name="fusion" />!
 
-To find and fix deprecations:
+Чтобы найти и исправить устаревания:
 
-1. Navigate to the <Constant name="studio_ide" /> by clicking **Studio** in the left menu.
-2. Make sure to save and commit your work before proceeding. The autofix tool may overwrite any unsaved changes.
-3. Click the three-dot menu located at the bottom right corner of the <Constant name="studio_ide" />.
-4. Select **Check & fix deprecations**.
-     <Lightbox src="/img/docs/dbt-platform/platform-ide/ide-options-menu-with-save.png" width="90%" title="Access the Studio IDE options menu to autofix deprecation warnings"/>
-        The tool performs a `dbt parse —show-all-deprecations —no-partial-parse` to find the deprecations in your project.
-5. If you don't see the deprecations and the **Autofix warnings** button, click the command history in the bottom left:
-    <Lightbox src="/img/docs/dbt-platform/platform-ide/command-history.png" width="90%" title="Access recent commands to see the autofix button"/>
-6. When the command history opens, click the **Autofix warnings** button:
-    <Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-button.png" width="90%" title="Learn what deprecations need to be auto fixed"/>
-7. When the **Proceed with autofix** dialog opens, click **Continue** to begin resolving project deprecations and start a follow-up parse to show remaining deprecations.
-    <Lightbox src="/img/docs/dbt-platform/platform-ide/proceed-with-autofix.png" width="90%" title="Proceed with autofix"/>
-8. Once complete, a success message appears.
+1. Перейдите в <Constant name="studio_ide" />, нажав **Studio** в левом меню.
+2. Перед продолжением обязательно сохраните и закоммитьте свою работу. Инструмент autofix может перезаписать любые несохранённые изменения.
+3. Нажмите на меню с тремя точками в правом нижнем углу <Constant name="studio_ide" />.
+4. Выберите **Check & fix deprecations**.
+     <Lightbox src="/img/docs/dbt-platform/platform-ide/ide-options-menu-with-save.png" width="90%" title="Откройте меню параметров Studio IDE для автоматического устранения предупреждений об устаревших возможностях"/>
+        Инструмент выполняет команду `dbt parse —show-all-deprecations —no-partial-parse`, чтобы найти устаревания в вашем проекте.
+5. Если вы не видите список устареваний и кнопку **Autofix warnings**, откройте историю команд в левом нижнем углу:
+    <Lightbox src="/img/docs/dbt-platform/platform-ide/command-history.png" width="90%" title="Откройте последние команды, чтобы увидеть кнопку автоматического исправления"/>
+6. Когда откроется история команд, нажмите кнопку **Autofix warnings**:
+    <Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-button.png" width="90%" title="Узнайте, какие устаревшие возможности требуют автоматического исправления"/>
+7. Когда откроется диалоговое окно **Proceed with autofix**, нажмите **Continue**, чтобы начать устранение устареваний в проекте и запустить повторный parse для отображения оставшихся устареваний.
+    <Lightbox src="/img/docs/dbt-platform/platform-ide/proceed-with-autofix.png" width="90%" title="Продолжите автоматическое исправление"/>
+8. После завершения появится сообщение об успешном выполнении.
 
     <VersionBlock lastVersion="1.99">
-    Click **Review changes** to verify the changes.
+    Нажмите **Просмотреть изменения**, чтобы проверить изменения.
     <Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-success.png" width="90%" title="Success"/>
     </VersionBlock>
 
     <VersionBlock firstVersion="2.0">
-    After a successful `dbt parse` command, you'll see a **Compile** button to the right of the **Successfully resolved** result. Use **Compile** to compile your project from the results panel. 
-    <Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-success-v2-compile.png" width="90%" title="Autofix success with Compile in the v2 flow"/>
+    После успешного выполнения команды `dbt parse` справа от результата **Успешно исправлено** появится кнопка **Скомпилировать**. Используйте **Скомпилировать**, чтобы скомпилировать проект из панели результатов. 
+    <Lightbox src="/img/docs/dbt-platform/platform-ide/autofix-success-v2-compile.png" width="90%" title="Успешное автоматическое исправление с компиляцией в процессе v2"/>
 
-    If successful, you'll see a **Successfully compiled** result. If you see any errors, review them and make any necessary changes.
+    В случае успеха вы увидите результат **Успешно скомпилировано**. Если появятся ошибки, изучите их и внесите необходимые изменения.
     </VersionBlock>
 
-9. Click **Commit and sync** in the top left of <Constant name="studio_ide" /> to commit these changes to the project repository.
-10. You are now ready to enable <Constant name="fusion" /> if you [meet the requirements](/docs/dbt/supported-features#requirements)!
+9. Нажмите **Commit and sync** в левом верхнем углу <Constant name="studio_ide" />, чтобы закоммитить эти изменения в репозиторий проекта.
+10. Теперь вы готовы включить <Constant name="fusion" />, если [выполнены требования](/docs/dbt/supported-features#requirements)!
 
-## Related docs
+## Связанные документы {#related-docs}
 
-- [Quickstart guide](/guides)
+- [Руководство по быстрому старту](/guides)
 - [About <Constant name="dbt" />](/docs/platform/about-platform/dbt-platform-features)
-- [Develop in the Cloud](/docs/platform/studio-ide/develop-in-studio)
+- [Разработка в облаке](/docs/platform/studio-ide/develop-in-studio)

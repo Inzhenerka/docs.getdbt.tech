@@ -124,7 +124,7 @@ models:
 
 <VersionBlock firstVersion="1.12" lastVersion="1.99">
 
-Note, most model configurations are defined under `config`, while `build_after` is set under `freshness`.
+Большинство настроек модели задаются в `config`, но `build_after` указывается в `freshness`.
 
 <File name='models/properties.yml'>
 

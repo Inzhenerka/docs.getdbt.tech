@@ -1,7 +1,7 @@
 ---
-title: "Integrate Snowflake Cortex agents with dbt MCP"
-sidebar_label: "Integrate Snowflake Cortex with MCP"
-description: "Connect a Snowflake Cortex agent to the remote dbt MCP server so it can query your dbt Semantic Layer."
+title: "Интеграция агентов Snowflake Cortex с dbt MCP"
+sidebar_label: "Интеграция Snowflake Cortex с MCP"
+description: "Подключите агента Snowflake Cortex к удалённому серверу dbt MCP, чтобы он мог выполнять запросы к вашему dbt Semantic Layer."
 id: "integrate-mcp-snowflake-cortex"
 availability: platform_login
 ---
@@ -11,64 +11,64 @@ import MCPRemoteOauthBetaCallout from '/snippets/_mcp-remote-oauth-beta-callout.
 import StaticSubdomainRequired from '/snippets/_static-subdomain-required.md';
 import MCPCreditUsage from '/snippets/_mcp-credit-usage.md';
 
-[Snowflake Cortex agents](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents) can call external [MCP servers](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp-connectors) as tools. This guide walks you through connecting a Cortex agent to the remote dbt MCP server so it can query your <Constant name="semantic_layer" /> metrics and dimensions in plain English from Snowflake Intelligence.
+[Агенты Snowflake Cortex](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents) могут вызывать внешние [серверы MCP](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp-connectors) в качестве инструментов. В этом руководстве описано, как подключить агента Cortex к удалённому серверу dbt MCP, чтобы он мог запрашивать метрики и измерения вашего <Constant name="semantic_layer" /> на обычном английском языке из Snowflake Intelligence.
 
-The connection uses OAuth: Snowflake registers itself with <Constant name="dbt_platform" /> through Dynamic Client Registration (DCR) with PKCE, so you don't store a client secret in Snowflake. Each user completes their own OAuth consent the first time they use the agent, which means the agent respects each user's existing dbt permissions and project access.
+Подключение использует OAuth: Snowflake самостоятельно регистрируется в <Constant name="dbt_platform" /> с помощью Dynamic Client Registration (DCR) с PKCE, поэтому хранить секрет клиента в Snowflake не требуется. Каждый пользователь самостоятельно предоставляет согласие OAuth при первом использовании агента. Это означает, что агент учитывает существующие разрешения каждого пользователя в dbt и его доступ к проектам.
 
-## Prerequisites
+## Предварительные требования
 
-Before connecting a Cortex agent to the remote dbt MCP server, make sure you have the following in place.
+Перед подключением агента Cortex к удалённому серверу dbt MCP убедитесь, что выполнены следующие требования.
 
-#### In <Constant name="dbt_platform" />
+#### В <Constant name="dbt_platform" />
 
-Make sure the following are set up before connecting from Snowflake:
-- **Account setup**
-  - [Remote MCP OAuth enabled](/docs/dbt-ai/setup-remote-mcp). The remote MCP server is generally available, but the OAuth connection method is in public beta for Starter and Enterprise-tiered accounts.
-  - A [static subdomain](/docs/platform/about-platform/access-regions-ip-addresses) configured, for example `abc123` in `abc123.us1.dbt.com`. If your account doesn't have a subdomain, contact support.
-- **Access and permissions**
-  - Read-only or higher access to <Constant name="dbt_platform" />. The agent inherits each connected user's permissions.
-- **Semantic Layer setup**
-  - A configured [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) with [metrics and dimensions](/docs/build/build-metrics-intro).
-- **MCP endpoint**
+Перед подключением из Snowflake убедитесь, что настроено следующее:
+- **Настройка аккаунта**
+  - [Включён OAuth для удалённого MCP](/docs/dbt-ai/setup-remote-mcp). Удалённый сервер MCP общедоступен, но способ подключения через OAuth находится в стадии публичного бета-тестирования для аккаунтов тарифов Starter и Enterprise.
+  - Настроен [статический поддомен](/docs/platform/about-platform/access-regions-ip-addresses), например `abc123` в `abc123.us1.dbt.com`. Если у вашего аккаунта нет поддомена, обратитесь в службу поддержки.
+- **Доступ и разрешения**
+  - Доступ к <Constant name="dbt_platform" /> уровня «только чтение» или выше. Агент наследует разрешения каждого подключённого пользователя.
+- **Настройка Semantic Layer**
+  - Настроен [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) с [метриками и измерениями](/docs/build/build-metrics-intro).
+- **Конечная точка MCP**
     <MCPRemoteServerUrl />
-    Use the host portion of this URL in the Snowflake SQL, for example `abc123.us1.dbt.com`.
+    Используйте в SQL для Snowflake часть этого URL, содержащую имя хоста, например `abc123.us1.dbt.com`.
 
-#### In Snowflake
-  - Snowflake Intelligence and Cortex agents enabled in your account and region.
-  - External MCP connectors available for your account. Confirm availability with your Snowflake account team.
-  - The `ACCOUNTADMIN` role, or a role with account-level `CREATE INTEGRATION`.
-  - A database, schema, and role for creating the MCP server and agent.
+#### В Snowflake
+  - В вашем аккаунте и регионе включены Snowflake Intelligence и агенты Cortex.
+  - Для вашего аккаунта доступны внешние коннекторы MCP. Уточните доступность у команды Snowflake, сопровождающей ваш аккаунт.
+  - У вас есть роль `ACCOUNTADMIN` или роль с правом `CREATE INTEGRATION` на уровне аккаунта.
+  - У вас есть база данных, схема и роль для создания сервера MCP и агента.
 
-:::tip Optional: native SQL execution
-Cortex agents can compile and execute <Constant name="semantic_layer" /> queries without extra setup. To also allow ad hoc SQL against Snowflake, configure project read credentials in **Settings → Credentials** in <Constant name="dbt_platform" />. Without those credentials, the agent can still compile <Constant name="semantic_layer" /> SQL and execute it natively on Snowflake.
+:::tip Необязательно: выполнение SQL непосредственно в Snowflake
+Агенты Cortex могут компилировать и выполнять запросы <Constant name="semantic_layer" /> без дополнительной настройки. Чтобы также разрешить произвольные SQL-запросы к Snowflake, настройте учётные данные для чтения проекта в разделе **Settings → Credentials** в <Constant name="dbt_platform" />. Без этих учётных данных агент по-прежнему может компилировать SQL для <Constant name="semantic_layer" /> и выполнять его непосредственно в Snowflake.
 :::
 
-## Parameters
+## Параметры
 
-The SQL on this page uses placeholders. Replace each one with your own value before running:
+В SQL на этой странице используются плейсхолдеры. Перед выполнением замените каждый из них своим значением:
 
 <SimpleTable>
 
-| Placeholder | Description |
+| Плейсхолдер | Описание |
 | --- | --- |
-| `YOUR_DBT_HOST_URL` | Your dbt host, with no `https://` (for example, `abc123.us1.dbt.com`). |
-| `INTEGRATION_NAME` | A name for the Snowflake API integration (for example, `dbt_mcp_integration`). |
-| `TARGET_DATABASE.TARGET_SCHEMA` | The database and schema where the MCP server and agent live. |
-| `TARGET_ROLE` | The Snowflake role that uses the agent and MCP server. |
-| `MCP_SERVER_NAME` | A name for the external MCP server object. |
-| `AGENT_NAME` | A name for the Cortex agent. |
-| `CORTEX_MODEL` | The orchestration model for the agent (for example, `claude-4-sonnet`). |
+| `YOUR_DBT_HOST_URL` | Хост вашего dbt без `https://` (например, `abc123.us1.dbt.com`). |
+| `INTEGRATION_NAME` | Имя API-интеграции Snowflake (например, `dbt_mcp_integration`). |
+| `TARGET_DATABASE.TARGET_SCHEMA` | База данных и схема, в которых размещаются сервер MCP и агент. |
+| `TARGET_ROLE` | Роль Snowflake, которая использует агента и сервер MCP. |
+| `MCP_SERVER_NAME` | Имя объекта внешнего сервера MCP. |
+| `AGENT_NAME` | Имя агента Cortex. |
+| `CORTEX_MODEL` | Модель оркестрации для агента (например, `claude-4-sonnet`). |
 
 </SimpleTable>
 
-## Set up the connection
+## Настройка подключения
 
-The following steps register the remote dbt MCP server with Snowflake and connect it to a Cortex agent. Steps 1–3 run as Snowflake SQL. Step 4 starts in Snowflake Intelligence and redirects each user to <Constant name="dbt_platform" /> to complete OAuth authorization.
+Следующие шаги позволяют зарегистрировать удалённый сервер dbt MCP в Snowflake и подключить его к агенту Cortex. Шаги 1–3 выполняются как SQL-запросы в Snowflake. Шаг 4 начинается в Snowflake Intelligence и перенаправляет каждого пользователя в <Constant name="dbt_platform" /> для завершения авторизации OAuth.
 
-### Step 1: Create the API integration
+### Шаг 1. Создайте API-интеграцию
 
 
-In Snowflake, run this as `ACCOUNTADMIN`. The integration tells Snowflake how to reach the remote dbt MCP endpoint and how to complete OAuth using Dynamic Client Registration with PKCE (no client secret).
+В Snowflake выполните этот код от имени роли `ACCOUNTADMIN`. Интеграция определяет, как Snowflake обращается к конечной точке удалённого dbt MCP и выполняет авторизацию OAuth с помощью Dynamic Client Registration с PKCE (без секрета клиента).
 
 ```sql
 -- Create an API integration for the remote dbt MCP server.
@@ -87,11 +87,11 @@ CREATE API INTEGRATION IF NOT EXISTS INTEGRATION_NAME
   ENABLED = TRUE;
 ```
 
-The `OAUTH_TOKEN_ENDPOINT` and `OAUTH_AUTHORIZATION_ENDPOINT` use the same host as your MCP URL. The `user_access` and `offline_access` scopes let the agent act on your behalf and refresh its session without you re-authenticating each time.
+В `OAUTH_TOKEN_ENDPOINT` и `OAUTH_AUTHORIZATION_ENDPOINT` используется тот же хост, что и в URL вашего MCP. Области доступа `user_access` и `offline_access` позволяют агенту действовать от вашего имени и обновлять сеанс без повторной аутентификации при каждом обращении.
 
-### Step 2: Create the external MCP server
+### Шаг 2. Создайте внешний сервер MCP
 
-In Snowflake, grant your role the ability to create an external MCP server, then create one that references the integration from Step 1.
+В Snowflake предоставьте своей роли право создавать внешний сервер MCP, а затем создайте сервер, ссылающийся на интеграцию из шага 1.
 
 ```sql
 GRANT CREATE EXTERNAL MCP SERVER ON SCHEMA TARGET_DATABASE.TARGET_SCHEMA TO ROLE TARGET_ROLE;
@@ -103,9 +103,9 @@ CREATE EXTERNAL MCP SERVER IF NOT EXISTS TARGET_DATABASE.TARGET_SCHEMA.MCP_SERVE
   API_INTEGRATION = INTEGRATION_NAME;
 ```
 
-### Step 3: Create the Cortex agent
+### Шаг 3. Создайте агента Cortex
 
-In Snowflake, grant your role the privileges to create an agent and to use the MCP server and its integration, then create the agent.
+В Snowflake предоставьте своей роли права на создание агента и использование сервера MCP и его интеграции, а затем создайте агента.
 
 ```sql
 GRANT CREATE AGENT ON SCHEMA TARGET_DATABASE.TARGET_SCHEMA TO ROLE TARGET_ROLE;
@@ -136,28 +136,28 @@ CREATE AGENT IF NOT EXISTS TARGET_DATABASE.TARGET_SCHEMA.AGENT_NAME
   $$;
 ```
 
-Update the `instructions` and `sample_questions` to match the metrics and dimensions in your own <Constant name="semantic_layer" />. The `orchestration` instruction steers the agent toward the dbt <Constant name="semantic_layer" /> tools (like `list_metrics`, `get_dimensions`, and `query_metrics`) instead of writing raw SQL.
+Измените `instructions` и `sample_questions` в соответствии с метриками и измерениями вашего <Constant name="semantic_layer" />. Инструкция `orchestration` направляет агента к использованию инструментов dbt <Constant name="semantic_layer" /> (таких как `list_metrics`, `get_dimensions` и `query_metrics`) вместо написания SQL напрямую.
 
-### Step 4: Complete the OAuth flow
+### Шаг 4. Завершите процесс OAuth
 
-The agent can't query dbt until each user authorizes it. Complete the OAuth flow once per user:
+Агент не может выполнять запросы к dbt, пока каждый пользователь не авторизует его. Пройдите процесс OAuth один раз для каждого пользователя:
 
-1. In the Snowflake Intelligence user interface, open your MCP connectors. Depending on your Snowflake version, this is under **Settings → User → MCP Connectors**, or in the **Connectors** panel of the agent's sources.
-2. Find the **dbt Semantic Layer MCP** connector you created and select **Connect**.
-3. Snowflake redirects you to <Constant name="dbt_platform" /> to sign in and approve the requested [scopes](/docs/platform/manage-access/connect-apps-oauth#scopes-and-consent) on the consent screen. You can scope the connection to a specific project (recommended) so the agent only sees that project's data.
-4. After you approve, the connector shows as **Connected** and you're returned to Snowflake.
+1. В пользовательском интерфейсе Snowflake Intelligence откройте свои коннекторы MCP. В зависимости от версии Snowflake они находятся в разделе **Settings → User → MCP Connectors** или на панели **Connectors** среди источников агента.
+2. Найдите созданный вами коннектор **dbt Semantic Layer MCP** и выберите **Connect**.
+3. Snowflake перенаправит вас в <Constant name="dbt_platform" />, чтобы вы вошли в систему и подтвердили запрошенные [области доступа](/docs/platform/manage-access/connect-apps-oauth#scopes-and-consent) на экране согласия. Вы можете ограничить подключение конкретным проектом (рекомендуется), чтобы агент видел данные только этого проекта.
+4. После подтверждения коннектор получит статус **Connected**, и вы вернётесь в Snowflake.
 
-Snowflake self-registers with <Constant name="dbt_platform" /> through Dynamic Client Registration on first connect, so no admin action is needed to register it. 
+При первом подключении Snowflake самостоятельно регистрируется в <Constant name="dbt_platform" /> с помощью Dynamic Client Registration, поэтому для регистрации не требуется никаких действий администратора. 
 
-In <Constant name="dbt_platform"/>, admins can review and audit the connected client, and manage sessions and scopes, in **Account settings → Integrations → App integrations**. For the full registration, consent, and session model, see [Connect apps with OAuth](/docs/platform/manage-access/connect-apps-oauth).
+В <Constant name="dbt_platform"/> администраторы могут просматривать сведения о подключённом клиенте и проводить его аудит, а также управлять сеансами и областями доступа в разделе **Account settings → Integrations → App integrations**. Полное описание модели регистрации, предоставления согласия и сеансов см. в разделе [Подключение приложений с помощью OAuth](/docs/platform/manage-access/connect-apps-oauth).
 
-## Verify the connection
+## Проверка подключения
 
-Open your agent in Snowflake Intelligence and ask one of its sample questions, such as _"What are the top 10 products by revenue this quarter?"_ If the connection is working, the agent calls the dbt <Constant name="semantic_layer" /> tools and returns an answer grounded in your metrics.
+Откройте своего агента в Snowflake Intelligence и задайте один из его примеров вопросов, например _«Какие 10 продуктов принесли наибольшую выручку в этом квартале?»_ Если подключение работает, агент вызовет инструменты dbt <Constant name="semantic_layer" /> и вернёт ответ на основе ваших метрик.
 
 <MCPCreditUsage />
 
-## Troubleshooting
+## Устранение неполадок
 
 <FAQ path="dbt-mcp/troubleshooting/snowflake-oauth-fails" />
 
@@ -165,9 +165,9 @@ Open your agent in Snowflake Intelligence and ask one of its sample questions, s
 
 <FAQ path="dbt-mcp/troubleshooting/snowflake-permission-errors" />
 
-## Related docs
+## Связанная документация
 
-- [Set up the remote MCP server](/docs/dbt-ai/setup-remote-mcp)
-- [Available MCP tools](/docs/dbt-ai/mcp-available-tools)
-- [Connect apps with OAuth](/docs/platform/manage-access/connect-apps-oauth)
-- [Snowflake: MCP Connectors](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp-connectors)
+- [Настройка удалённого сервера MCP](/docs/dbt-ai/setup-remote-mcp)
+- [Доступные инструменты MCP](/docs/dbt-ai/mcp-available-tools)
+- [Подключение приложений с помощью OAuth](/docs/platform/manage-access/connect-apps-oauth)
+- [Snowflake: коннекторы MCP](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-mcp-connectors)

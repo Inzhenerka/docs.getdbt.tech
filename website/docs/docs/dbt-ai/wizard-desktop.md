@@ -1,8 +1,8 @@
 ---
-title: "Get started with Wizard Desktop"
+title: "Начало работы с Wizard Desktop"
 id: "wizard-desktop"
-description: "Download Wizard Desktop and start your first session with rich data visualizations, data diffs, and lineage."
-sidebar_label: "Get started with Desktop"
+description: "Скачайте Wizard Desktop и начните первый сеанс с наглядными визуализациями данных, сравнением данных и графом зависимостей."
+sidebar_label: "Начало работы с Desktop"
 image: /img/wizard/desktop/wizard-desktop-ui.png
 tags: [AI, Agents, dbt Wizard]
 availability: local_all
@@ -11,155 +11,157 @@ availability: local_all
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 import WizardTrialBilling from '/snippets/_wizard-trial-billing.md';
 
-# Get started with Wizard Desktop <Lifecycle status="beta"/>
+# Начало работы с Wizard Desktop <Lifecycle status="beta"/>
 
 <IntroText>
-Wizard Desktop is <Constant name="wizard" /> as a native app. View rich data visualizations, data diffs, lineage, and more to get to your results faster than ever before.
+Wizard Desktop — это <Constant name="wizard" /> в виде нативного приложения. Просматривайте наглядные визуализации данных, различия в данных, граф зависимостей и многое другое, чтобы получать результаты быстрее, чем когда-либо.
 </IntroText>
 
-This page walks you through installing the app, connecting it to the services it needs, and starting your first session. For everything the app can do, refer to [Use Wizard Desktop](/docs/dbt-ai/wizard-desktop-use). Be warned, the wizard has been known to <WizardPopcorn>cast spells</WizardPopcorn>.
+На этой странице описано, как установить приложение, подключить его к необходимым сервисам и начать первый сеанс. Подробнее обо всех возможностях приложения см. в разделе [Использование Wizard Desktop](/docs/dbt-ai/wizard-desktop-use). Но будьте осторожны: известно, что волшебник умеет <WizardPopcorn>творить заклинания</WizardPopcorn>.
 
 <DownloadCard />
 
-Wizard Desktop is powered by the same technology as the [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli), with a visual interface to help you follow the work, guide it, and manage several threads at once:
+Wizard Desktop использует ту же технологию, что и [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli), и предлагает визуальный интерфейс, который помогает следить за работой, направлять её и управлять несколькими задачами одновременно:
 
-- **Parallel chats:** each chat gets its own <Constant name="git" /> <Term id="git-worktree" />, so several pieces of work run at once without conflicts.
-- **Visible validation:** see structured results, including a `dbt-compare` view of what your changes did to the data.
-- **Contextual comments:** hover almost anything to comment on that exact spot, then send several together.
-- **Charts and tables:** ask a question about your data and see the answer inline.
-- **Inline impact:** see which models <Constant name="wizard" />'s changes touch, with diffs you open inline.
-- **Lineage, file, and metrics browsing:** browse your project right alongside the chat.
+- **Параллельные чаты:** каждый чат получает собственное рабочее дерево (<Term id="git-worktree" />) <Constant name="git" />, поэтому несколько задач могут выполняться одновременно без конфликтов.
+- **Наглядная проверка:** просматривайте структурированные результаты, включая представление `dbt-compare`, показывающее, как ваши изменения повлияли на данные.
+- **Контекстные комментарии:** наведите указатель практически на любой элемент, чтобы прокомментировать именно его, а затем отправьте несколько комментариев вместе.
+- **Диаграммы и таблицы:** задайте вопрос о данных и увидите ответ прямо в чате.
+- **Влияние изменений прямо в интерфейсе:** смотрите, какие модели затронуты изменениями <Constant name="wizard" />, и открывайте сравнение версий, не покидая текущего представления.
+- **Просмотр графа зависимостей, файлов и метрик:** изучайте проект прямо рядом с чатом.
 
 
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/wizard/desktop/wizard-desktop-intro.png" width="95%" title="The dbt Wizard home screen"/>
-<Lightbox src="/img/wizard/desktop/wizard-desktop-validation.png" width="95%" title="A session in progress, with a chart in the chat and validation results in the side pane" />
+<Lightbox src="/img/wizard/desktop/wizard-desktop-intro.png" width="95%" title="Главный экран dbt Wizard"/>
+<Lightbox src="/img/wizard/desktop/wizard-desktop-validation.png" width="95%" title="Активный сеанс с диаграммой в чате и результатами проверки на боковой панели" />
 </DocCarousel>
 
 
-## Prerequisites
+## Предварительные требования
 
-To use Wizard Desktop, you'll need:
-- A computer using macOS, Linux, or Windows.
-- A dbt account, if you want to use dbt-managed keys. You can create a free account when you sign in, or use an existing one. If you you use [BYOK](/docs/dbt-ai/wizard-byok), you can use Wizard Desktop without a dbt account.
-- A local copy of your dbt project on your machine if you want <Constant name="wizard" /> to work on project files. The app scans for existing projects, and you can also select a project folder yourself.
-- Warehouse credentials if you want <Constant name="wizard" /> to run your project or query data. You don't need to configure them before opening the app.
+Для использования Wizard Desktop вам понадобятся:
+- Компьютер с macOS, Linux или Windows.
+- Учётная запись dbt, если вы хотите использовать ключи, управляемые dbt. Вы можете создать бесплатную учётную запись при входе или использовать существующую. При использовании [BYOK](/docs/dbt-ai/wizard-byok) можно работать с Wizard Desktop без учётной записи dbt.
+- Локальная копия проекта dbt на вашем компьютере, если вы хотите, чтобы <Constant name="wizard" /> работал с файлами проекта. Приложение ищет существующие проекты, но вы также можете выбрать папку проекта самостоятельно.
+- Учётные данные для хранилища данных, если вы хотите, чтобы <Constant name="wizard" /> запускал ваш проект или выполнял запросы к данным. Настраивать их до открытия приложения не требуется.
 
 
-## Install Wizard Desktop
+<a id="install-and-open-wizard-desktop" />
 
-1. Download the installer for your operating system:
-   - [macOS, Apple silicon (.dmg)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-aarch64-apple-darwin.dmg) or [macOS, Intel (.dmg)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-x86_64-apple-darwin.dmg)
+## Установка Wizard Desktop {#install-wizard-desktop}
+
+1. Скачайте установщик для вашей операционной системы:
+   - [macOS, Apple silicon (.dmg)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-aarch64-apple-darwin.dmg) или [macOS, Intel (.dmg)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-x86_64-apple-darwin.dmg)
    - [Windows, x64 (.exe)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-x86_64-pc-windows-msvc.exe)
-   - [Linux, x86_64 (.deb)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-x86_64-unknown-linux-gnu.deb) or [Linux, ARM64 (.deb)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-aarch64-unknown-linux-gnu.deb) — for Debian-based distributions, such as Ubuntu
+   - [Linux, x86_64 (.deb)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-x86_64-unknown-linux-gnu.deb) или [Linux, ARM64 (.deb)](https://public.cdn.getdbt.com/dbt-wizard/latest/dbt-wizard-app-aarch64-unknown-linux-gnu.deb) — для дистрибутивов на основе Debian, таких как Ubuntu
 
-   On other Linux distributions, install the app with the [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli) instead: run `wizard app`.
-2. Open Wizard Desktop and select **Get started** on the welcome screen.
-3. Follow the onboarding prompts. When prompted, create a free dbt account or sign in to an existing account. When you use your own AI provider credentials ([BYOK](/docs/dbt-ai/wizard-byok), you can skip signing in.
+   В других дистрибутивах Linux установите приложение через [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli): выполните `wizard app`.
+2. Откройте Wizard Desktop и выберите **Get started** на экране приветствия.
+3. Следуйте инструкциям первоначальной настройки. При появлении запроса создайте бесплатную учётную запись dbt или войдите в существующую. Если вы используете собственные учётные данные провайдера ИИ ([BYOK](/docs/dbt-ai/wizard-byok)), вход можно пропустить.
 
-## Add your dbt projects
+## Добавление проектов dbt
 
-On the **Scan for your dbt projects** screen, choose how <Constant name="wizard" /> finds projects:
+На экране **Scan for your dbt projects** выберите, как <Constant name="wizard" /> будет находить проекты:
 
-- **Scan for projects**: <Constant name="wizard" /> searches local <Constant name="git" /> repos and adds any dbt projects it finds. Allow macOS folder access when prompted so projects are discoverable.
-- **Add from <Constant name="dbt_platform" />**: connect your <Constant name="dbt_platform" /> account. <Constant name="wizard" /> authenticates, then lists your platform projects with all of them selected by default. Choose which projects to include and, optionally, the folder to clone them into, then select **Clone**. <Constant name="wizard" /> clones the projects locally so you can work on the files.
-- **Add a folder instead**: pick a project folder from your computer.
-- **Start chatting without one**: skip project setup. A project-free chat doesn't use your project files or warehouse connection, so skip to [Start your first session](#start-your-first-session).
-- Select **Continue** when you're done.
+- **Scan for projects**: <Constant name="wizard" /> ищет локальные репозитории <Constant name="git" /> и добавляет все найденные проекты dbt. При появлении запроса разрешите доступ к папкам macOS, чтобы приложение могло обнаружить проекты.
+- **Add from <Constant name="dbt_platform" />**: подключите свою учётную запись <Constant name="dbt_platform" />. <Constant name="wizard" /> выполнит аутентификацию и покажет список ваших проектов на платформе; по умолчанию будут выбраны все проекты. Выберите проекты для добавления и, при необходимости, папку для их клонирования, затем нажмите **Clone**. <Constant name="wizard" /> клонирует проекты локально, чтобы вы могли работать с файлами.
+- **Add a folder instead**: выберите папку проекта на своём компьютере.
+- **Start chatting without one**: пропустите настройку проекта. Чат без проекта не использует файлы проекта или подключение к хранилищу данных, поэтому переходите к разделу [Начало первого сеанса](#start-your-first-session).
+- Когда закончите, нажмите **Continue**.
 
-## Choose how to access an AI model
+## Выбор способа доступа к модели ИИ
 
-On the **Connect an AI model provider** screen, choose how <Constant name="wizard" /> accesses an AI model:
+На экране **Connect an AI model provider** выберите, как <Constant name="wizard" /> будет получать доступ к модели ИИ:
 
-- **Start free trial with dbt-managed keys**: dbt Labs manages the keys and keeps you on current models from OpenAI, Anthropic, and open source. Usage is metered against your dbt usage credits.
-- **Use my own API key**: bring your own provider credentials with [BYOK](/docs/dbt-ai/wizard-byok) for OpenAI, Anthropic, AWS Bedrock, Azure, Snowflake Cortex, Google Gemini, Databricks, and more. Your provider bills you directly, and this option works without a dbt platform plan.
-- **Skip, I'll do this later**: continue without choosing a provider. To configure one later, go to **Settings** &rarr; **AI providers**.
+- **Start free trial with dbt-managed keys**: dbt Labs управляет ключами и предоставляет доступ к актуальным моделям OpenAI, Anthropic и моделям с открытым исходным кодом. Использование учитывается в рамках ваших кредитов dbt.
+- **Use my own API key**: используйте собственные учётные данные провайдера с помощью [BYOK](/docs/dbt-ai/wizard-byok) для OpenAI, Anthropic, AWS Bedrock, Azure, Snowflake Cortex, Google Gemini, Databricks и других сервисов. Оплату взимает непосредственно ваш провайдер; этот вариант работает без тарифного плана dbt platform.
+- **Skip, I'll do this later**: продолжите без выбора провайдера. Чтобы настроить его позже, перейдите в **Settings** &rarr; **AI providers**.
 
 <WizardTrialBilling />
 
-## Set up your warehouse connection
+## Настройка подключения к хранилищу данных {#set-up-your-warehouse-connection}
 
-To run a project or query its data, <Constant name="wizard" /> needs a warehouse connection. On the home screen, select **Set a connection**. By default <Constant name="wizard" /> connects through your `profiles.yml`, which may not be configured for the project yet. Choose one of:
+Для запуска проекта или выполнения запросов к его данным <Constant name="wizard" /> необходимо подключение к хранилищу данных. На главном экране выберите **Set a connection**. По умолчанию <Constant name="wizard" /> подключается через ваш `profiles.yml`, который может быть ещё не настроен для проекта. Выберите один из вариантов:
 
-- **Set warehouse credentials**: enter your credentials and <Constant name="wizard" /> writes them locally to your [`profiles.yml`](/docs/local/profiles.yml) and connects directly. Use the same developer credentials you'd use to develop in <Constant name="dbt_platform" />. Refer to [Get started with the Studio IDE](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) and [dbt platform environments](/docs/dbt-platform-environments) for what to enter.
-- **Use the dbt platform CLI**: <Constant name="wizard" /> runs through your <Constant name="dbt_platform" /> account, so your credentials stay there. Requires a separate [<Constant name="dbt_platform" /> CLI](/docs/platform/dbt-cli-installation) install.
+- **Set warehouse credentials**: введите свои учётные данные, и <Constant name="wizard" /> сохранит их локально в [`profiles.yml`](/docs/local/profiles.yml) и подключится напрямую. Используйте те же учётные данные разработчика, которые вы использовали бы для разработки в <Constant name="dbt_platform" />. Сведения о том, какие данные вводить, см. в разделах [Начало работы со Studio IDE](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) и [Окружения dbt platform](/docs/dbt-platform-environments).
+- **Use the dbt platform CLI**: <Constant name="wizard" /> работает через вашу учётную запись <Constant name="dbt_platform" />, поэтому учётные данные остаются на платформе. Требуется отдельная установка [<Constant name="dbt_platform" /> CLI](/docs/platform/dbt-cli-installation).
 
-If a connection already exists, either through a live <Constant name="dbt_platform" /> session or a local `profiles.yml`, <Constant name="wizard" /> will then use it and you can continue to the [Start your first session](#start-your-first-session) section.
+Если подключение уже существует — через активный сеанс <Constant name="dbt_platform" /> или локальный `profiles.yml`, — <Constant name="wizard" /> воспользуется им, и вы сможете перейти к разделу [Начало первого сеанса](#start-your-first-session).
 
 
-## Start your first session
+## Начало первого сеанса {#start-your-first-session}
 
-Before sending your first prompt, check the session settings in the prompt area:
+Прежде чем отправить первый запрос, проверьте настройки сеанса в области ввода запроса:
 
-1. Confirm the project you selected, or leave it empty for a project-free chat.
-2. For a project session, select where <Constant name="wizard" /> should run the project, for example `default · dev`. If no options appear, [set up your warehouse connection](#set-up-your-warehouse-connection).
-3. Choose the model and how much reasoning it should use. If no models are available, configure a provider in **Settings** &rarr; **AI providers**.
-4. Choose how much <Constant name="wizard" /> can do before asking for your approval. Available permissions listed in the [next section](#review-and-accept-changes) are **Plan changes**, **Ask for approval**, or **Auto**.
-5. Describe what you want <Constant name="wizard" /> to do, or choose a quick start such as **Audit for test coverage**, **Tell me about this project**, or **Help me refactor a model**.
+1. Убедитесь, что выбран нужный проект, или оставьте поле пустым для чата без проекта.
+2. Для сеанса с проектом выберите, где <Constant name="wizard" /> должен запускать проект, например `default · dev`. Если доступных вариантов нет, [настройте подключение к хранилищу данных](#set-up-your-warehouse-connection).
+3. Выберите модель и глубину её рассуждений. Если доступных моделей нет, настройте провайдера в **Settings** &rarr; **AI providers**.
+4. Выберите, какие действия <Constant name="wizard" /> может выполнять без вашего одобрения. Доступные режимы разрешений, описанные в [следующем разделе](#review-and-accept-changes): **Plan changes**, **Ask for approval** и **Auto**.
+5. Опишите, что вы хотите поручить <Constant name="wizard" />, или выберите вариант быстрого старта, например **Audit for test coverage**, **Tell me about this project** или **Help me refactor a model**.
 
-Some things worth asking on a first run:
+Вот несколько запросов, которые стоит попробовать при первом запуске:
 
 - `Tell me about this project`
 - `Which models have no tests?`
 - `Refactor stg_orders and show me what changes in the data`
 
-A chat is one conversation about your project. Each project chat works in its own copy of your repo on its own branch, called a <Constant name="git" /> worktree, so you can keep a few pieces of work going at once without them stepping on each other.
+Чат — это отдельная беседа о вашем проекте. Каждый чат с проектом работает в собственной копии репозитория и отдельной ветке, используя рабочее дерево <Constant name="git" /> (worktree), поэтому вы можете одновременно вести несколько задач, не мешая одной другой.
 
-Each chat gets a name like `docs-fox`, and its branch and schema are named after it. Refer to [Worktree and schema names](/docs/dbt-ai/wizard-desktop-use#worktree-and-schema-names) for what those names mean.
+Каждый чат получает имя, например `docs-fox`, которое также используется для его ветки и схемы. Подробнее о значении этих имён см. в разделе [Имена рабочих деревьев и схем](/docs/dbt-ai/wizard-desktop-use#worktree-and-schema-names).
 
-## Review and accept changes
+## Проверка и принятие изменений {#review-and-accept-changes}
 
-<Constant name="wizard" /> reads your project's lineage, tests, and metadata, runs tools, and <WizardPopcorn>conjures</WizardPopcorn> changes as a diff. What happens next depends on your [permission mode](/docs/dbt-ai/wizard-desktop-use#permission-modes):
+<Constant name="wizard" /> изучает граф зависимостей, тесты и метаданные вашего проекта, запускает инструменты и <WizardPopcorn>создаёт по волшебству</WizardPopcorn> изменения в виде сравнения версий. Дальнейшие действия зависят от выбранного [режима разрешений](/docs/dbt-ai/wizard-desktop-use#permission-modes):
 
-- **Plan changes**: <Constant name="wizard" /> proposes an approach without editing anything.
-- **Ask for approval**: <Constant name="wizard" /> proposes each change and waits. Nothing is written until you accept.
-- **Auto**: <Constant name="wizard" /> applies edits and shows a change indicator you can open to review them.
+- **Plan changes**: <Constant name="wizard" /> предлагает подход, ничего не редактируя.
+- **Ask for approval**: <Constant name="wizard" /> предлагает каждое изменение и ждёт. Ничего не записывается, пока вы не одобрите изменение.
+- **Auto**: <Constant name="wizard" /> применяет правки и показывает индикатор изменений, который можно открыть для их проверки.
 
-Every change lands as a reviewable diff, and you can comment on an exact line, table cell, or chart to send feedback back into the chat. Refer to [Review changes](/docs/dbt-ai/wizard-desktop-use#review-and-validate-changes).
+Каждое изменение представлено в виде сравнения версий, доступного для проверки. Вы можете прокомментировать конкретную строку, ячейку таблицы или диаграмму, чтобы отправить обратную связь в чат. См. раздел [Проверка изменений](/docs/dbt-ai/wizard-desktop-use#review-what-changed).
 
-## Update the app
+## Обновление приложения {#update-the-app}
 
-When a new version of Wizard Desktop is available, the app generally will tell you a few seconds after launching it. Select **Install** to update, or **Dismiss** to skip it until next launch. 
+Когда появляется новая версия Wizard Desktop, приложение обычно сообщает об этом через несколько секунд после запуска. Нажмите **Install**, чтобы обновить приложение, или **Dismiss**, чтобы отложить обновление до следующего запуска. 
 
-To update at any time:
+Чтобы проверить наличие обновлений в любое время:
 
-1. Go to **Settings** &rarr; **General** &rarr; **Application updates**. This shows the version you're on.
-2. Select **Check for updates**.
-3. If there's a new version, select **Install version** and wait for the install progress to finish.
-4. Select **Restart to finish update**. The app won't restart on its own.
+1. Перейдите в **Settings** &rarr; **General** &rarr; **Application updates**. Здесь отображается текущая версия приложения.
+2. Нажмите **Check for updates**.
+3. Если доступна новая версия, нажмите **Install version** и дождитесь завершения установки.
+4. Нажмите **Restart to finish update**. Приложение не перезапустится автоматически.
 
-You can also enable automatic updates by clicking on the **Automatic updates** toggle in the same section.
+Вы также можете включить автоматические обновления с помощью переключателя **Automatic updates** в том же разделе.
 
-## Coming from the CLI?
+## Переходите с CLI?
 
-It's the same <Constant name="wizard" /> you already know, running the same engine as the [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli). The app has a built-in terminal, so you can keep running dbt commands the way you always have, and you can select **Open in** at any time to jump to the same branch in iTerm, Terminal, VS Code, Cursor, or Finder.
+Это тот же знакомый вам <Constant name="wizard" />, работающий на том же движке, что и [<Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-cli). В приложении есть встроенный терминал, поэтому вы можете запускать команды dbt привычным способом, а также в любой момент выбрать **Open in**, чтобы открыть ту же ветку в iTerm, Terminal, VS Code, Cursor или Finder.
 
-[Download Wizard Desktop](#install-wizard-desktop) and install the app.
+[Скачайте Wizard Desktop](#install-and-open-wizard-desktop) и установите приложение.
 
-Refer to [the config reference](/docs/dbt-ai/wizard-config) for the configuration files used by the CLI.
+Сведения о файлах конфигурации, используемых CLI, см. в [справочнике по конфигурации](/docs/dbt-ai/wizard-config).
 
 
 <SimpleTable>
 
 | | [Wizard Desktop](/docs/dbt-ai/wizard-desktop) | [CLI](/docs/dbt-ai/wizard-cli) | [dbt platform](/docs/platform/wizard-platform) |
 |---|---|---|---|
-| Where it runs | Native app on your machine | Your terminal | Browser |
-| Best for | Seeing and steering the work, several threads at once | Scripting and terminal-native workflows | Full development and business-user analytics |
-| Rendered tables, charts, and diffs | Yes | Plain text in your terminal | Yes |
-| Parallel work | Yes, each chat gets its own worktree | One session per terminal | Yes |
-| Chat history | Kept in the app | Resume a past session with `wizard resume` | Kept in your dbt account |
-| Availability | Public beta, download the app | Public beta, install the CLI | Public preview, in your dbt account |
+| Где работает | Нативное приложение на вашем компьютере | Ваш терминал | Браузер |
+| Лучше всего подходит для | Наблюдения за работой и управления ею, ведения нескольких задач одновременно | Написания скриптов и рабочих процессов в терминале | Полноценной разработки и аналитики для бизнес-пользователей |
+| Визуальное представление таблиц, диаграмм и различий | Да | Обычный текст в терминале | Да |
+| Параллельная работа | Да, каждый чат получает собственное рабочее дерево | Один сеанс на терминал | Да |
+| История чатов | Хранится в приложении | Возобновление предыдущего сеанса с помощью `wizard resume` | Хранится в вашей учётной записи dbt |
+| Доступность | Публичная бета-версия, скачайте приложение | Публичная бета-версия, установите CLI | Публичная предварительная версия, в вашей учётной записи dbt |
 
 </SimpleTable>
 
-## What's next
+## Что дальше
 
-- [Use Wizard Desktop](/docs/dbt-ai/wizard-desktop-use): parallel chats, validation, commenting, diffs, and troubleshooting
-- [Wizard Desktop settings](/docs/dbt-ai/wizard-desktop-settings): providers, connectors, appearance, shortcuts, and GitHub
-- [Use cases and examples](/docs/dbt-ai/wizard-use-cases)
-- [How to use <Constant name="wizard" /> in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro)
-- [Configure BYOK](/docs/dbt-ai/wizard-byok)
+- [Использование Wizard Desktop](/docs/dbt-ai/wizard-desktop-use): параллельные чаты, проверка результатов, комментарии, сравнение версий и устранение неполадок
+- [Настройки Wizard Desktop](/docs/dbt-ai/wizard-desktop-settings): провайдеры, коннекторы, внешний вид, сочетания клавиш и GitHub
+- [Сценарии использования и примеры](/docs/dbt-ai/wizard-use-cases)
+- [Как использовать <Constant name="wizard" /> в проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro)
+- [Настройка BYOK](/docs/dbt-ai/wizard-byok)
 
 <WizardFeedbackCallout />

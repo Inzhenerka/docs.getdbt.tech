@@ -1,30 +1,28 @@
 ---
-title: "OAuth overview"
-description: "Connect development credentials to data platforms using OAuth in the dbt platform."
+title: "Обзор OAuth"
+description: "Подключайте учетные данные для разработки к платформам данных с помощью OAuth в платформе dbt."
 id: "oauth-intro"
-sidebar_label: "OAuth overview"
+sidebar_label: "Обзор OAuth"
 availability:
   surface: platform
   access: paid_plan
   minPlan: enterprise
 ---
 
-# OAuth overview
+# Обзор OAuth
 
-OAuth in <Constant name="dbt_platform" /> lets developers authorize their user credentials with a data platform using that platform’s login or its single sign-on (SSO) instead of storing usernames and passwords in <Constant name="dbt_platform" />. This improves security and aligns with how your team already signs in to the warehouse.
+OAuth в <Constant name="dbt_platform" /> позволяет разработчикам авторизовать свои учетные данные на платформе данных, используя вход на эту платформу или ее систему единого входа (SSO), вместо того чтобы хранить имена пользователей и пароли в <Constant name="dbt_platform" />. Это повышает безопасность и соответствует привычному для вашей команды способу входа в хранилище данных.
 
-**Who it’s for:** Account admins and developers on Enterprise or Enterprise+ plans who connect to supported data platforms. Admins configure the OAuth integration; developers complete a one-time authorization in their profile.
+**Для кого:** Для администраторов аккаунтов и разработчиков на тарифах Enterprise или Enterprise+, которые подключаются к поддерживаемым платформам данных. Администраторы настраивают интеграцию OAuth, а разработчики выполняют однократную авторизацию в своем профиле.
 
-## Available integrations
+## Доступные интеграции
 
-Pick the best documentation for your platform to configure OAuth and have developers authorize their credentials.
+Выберите подходящую документацию для вашей платформы, чтобы настроить OAuth и предоставить разработчикам возможность авторизовать свои учетные данные.
 
-| Platform | Doc | Description |
+| Платформа | Документация | Описание |
 |----------|-----|----------------|
-| **Snowflake** | [Set up Snowflake OAuth](/docs/platform/manage-access/set-up-snowflake-oauth) | Authorize user credentials with Snowflake (or Snowflake SSO). |
-| **Databricks** | [Set up Databricks OAuth](/docs/platform/manage-access/set-up-databricks-oauth) | Authorize user credentials with Databricks. |
-| **BigQuery** | [Set up BigQuery OAuth](/docs/platform/manage-access/set-up-bigquery-oauth) | Authorize user credentials with Google. |
-| **Snowflake (external)** | [Set up external OAuth with Snowflake](/docs/platform/manage-access/snowflake-external-oauth) | Use an external identity provider (IdP) for Snowflake OAuth. |
-| **Redshift (external)** | [Set up external OAuth with Redshift](/docs/platform/manage-access/redshift-external-oauth) | Use an external identity provider (IdP) for Redshift OAuth. |
-
-
+| **Snowflake** | [Настройка OAuth для Snowflake](/docs/platform/manage-access/set-up-snowflake-oauth) | Авторизация учетных данных пользователей через Snowflake (или SSO Snowflake). |
+| **Databricks** | [Настройка OAuth для Databricks](/docs/platform/manage-access/set-up-databricks-oauth) | Авторизация учетных данных пользователей через Databricks. |
+| **BigQuery** | [Настройка OAuth для BigQuery](/docs/platform/manage-access/set-up-bigquery-oauth) | Авторизация учетных данных пользователей через Google. |
+| **Snowflake (внешний OAuth)** | [Настройка внешнего OAuth для Snowflake](/docs/platform/manage-access/snowflake-external-oauth) | Использование внешнего поставщика удостоверений (IdP) для OAuth в Snowflake. |
+| **Redshift (внешний OAuth)** | [Настройка внешнего OAuth для Redshift](/docs/platform/manage-access/redshift-external-oauth) | Использование внешнего поставщика удостоверений (IdP) для OAuth в Redshift. |

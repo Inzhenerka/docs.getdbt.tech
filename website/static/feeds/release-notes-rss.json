@@ -1,7 +1,108 @@
 {
-  "version": "https://jsonfeed.org/version/1",
-  "title": "dbt platform release notes",
-  "home_page_url": "https://docs.getdbt.com/docs/dbt-versions/release-notes",
-  "description": "dbt provides release notes for the dbt platform so you can see recent and historical changes.",
-  "items": []
+    "version": "https://jsonfeed.org/version/1",
+    "title": "dbt platform release notes",
+    "home_page_url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes",
+    "feed_url": "https://docs.getdbt.tech/feeds/release-notes-rss.json",
+    "description": "dbt provides release notes for the dbt platform so you can see recent and historical changes.",
+    "icon": "https://www.getdbt.com/ui/img/blog/dbt-card.jpg",
+    "items": [
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#ноябрь-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#ноябрь-2026",
+            "title": "dbt platform release notes — Ноябрь 2026",
+            "summary": "New dbt platform release notes for Ноябрь 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-10-31T23:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#октябрь-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#октябрь-2026",
+            "title": "dbt platform release notes — Октябрь 2026",
+            "summary": "New dbt platform release notes for Октябрь 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-09-30T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#сентябрь-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#сентябрь-2026",
+            "title": "dbt platform release notes — Сентябрь 2026",
+            "summary": "New dbt platform release notes for Сентябрь 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-08-31T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-dbt-summit-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-dbt-summit-2026",
+            "title": "dbt platform release notes — Анонсы dbt Summit 2026",
+            "summary": "New dbt platform release notes: Анонсы dbt Summit 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-08-31T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#до-dbt-summit",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#до-dbt-summit",
+            "title": "dbt platform release notes — До dbt Summit",
+            "summary": "New dbt platform release notes: До dbt Summit. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-08-31T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#август-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#август-2026",
+            "title": "dbt platform release notes — Август 2026",
+            "summary": "New dbt platform release notes for Август 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-07-31T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#июль-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#июль-2026",
+            "title": "dbt platform release notes — Июль 2026",
+            "summary": "New dbt platform release notes for Июль 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-06-30T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#июнь-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#июнь-2026",
+            "title": "dbt platform release notes — Июнь 2026",
+            "summary": "New dbt platform release notes for Июнь 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-05-31T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-snowflake-summit-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#анонсы-snowflake-summit-2026",
+            "title": "dbt platform release notes — Анонсы Snowflake Summit 2026",
+            "summary": "New dbt platform release notes: Анонсы Snowflake Summit 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-05-31T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#май-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#май-2026",
+            "title": "dbt platform release notes — Май 2026",
+            "summary": "New dbt platform release notes for Май 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-04-30T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#апрель-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#апрель-2026",
+            "title": "dbt platform release notes — Апрель 2026",
+            "summary": "New dbt platform release notes for Апрель 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-03-31T22:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#март-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#март-2026",
+            "title": "dbt platform release notes — Март 2026",
+            "summary": "New dbt platform release notes for Март 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-02-28T23:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#февраль-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#февраль-2026",
+            "title": "dbt platform release notes — Февраль 2026",
+            "summary": "New dbt platform release notes for Февраль 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2026-01-31T23:00:00.000Z"
+        },
+        {
+            "id": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#январь-2026",
+            "url": "https://docs.getdbt.tech/docs/dbt-versions/release-notes#январь-2026",
+            "title": "dbt platform release notes — Январь 2026",
+            "summary": "New dbt platform release notes for Январь 2026. Visit the page to see what's new, updated, and fixed.",
+            "date_modified": "2025-12-31T23:00:00.000Z"
+        }
+    ]
 }

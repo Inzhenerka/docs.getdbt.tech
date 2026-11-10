@@ -1,24 +1,24 @@
 ---
-title: "Mapping project folders to warehouse schemas"
+title: "Сопоставление папок проекта со схемами хранилища"
 id: "6-mapping-folders-to-warehouse"
-description: "Map dbt project folders to warehouse schemas, including how that changes in development and production."
-sidebar_label: "Mapping folders to warehouse schemas"
-displayText: Mapping project folders to warehouse schemas
-hoverSnippet: Map dbt project folders to warehouse schemas.
+description: "Сопоставление папок проекта dbt со схемами хранилища, включая различия между средами разработки и production."
+sidebar_label: "Сопоставление папок со схемами хранилища"
+displayText: Сопоставление папок проекта со схемами хранилища
+hoverSnippet: Сопоставьте папки проекта dbt со схемами хранилища.
 availability: all_users
 ---
 
-Folders organize your code. Schemas (or datasets, in BigQuery) organize the tables and views that code builds in your warehouse. You can map folders to schemas so staging, intermediate, and marts are easy to find. dbt prefixes each schema with your target schema, so development doesn’t overwrite production.
+Папки упорядочивают ваш код. Схемы (или наборы данных в BigQuery) упорядочивают таблицы и представления, которые этот код создает в хранилище. Вы можете сопоставить папки со схемами, чтобы модели подготовительного слоя, промежуточного слоя и витрин было легко найти. dbt добавляет целевую схему в качестве префикса к каждой схеме, чтобы работа в среде разработки не приводила к перезаписи данных в production.
 
-## Map folders to custom schemas
+## Сопоставление папок с пользовательскими схемами
 
-By default, dbt builds every model in your target schema, which comes from the [environment](/docs/dbt-platform-environments) in <Constant name="dbt_platform" /> or from the [profile](/docs/local/dbt-environments) when you run locally (for example, development, CI, or production). To give the models in a folder their own schema, set `+schema` on that folder. dbt calls this a custom schema, which doesn't replace the target schema. Instead it joins the two as `<target_schema>_<custom_schema>`, so development and production build into different schemas. Refer to [Custom schemas](/docs/build/custom-schemas).
+По умолчанию dbt создает все модели в целевой схеме, которая определяется [средой](/docs/dbt-platform-environments) в <Constant name="dbt_platform" /> или [профилем](/docs/local/dbt-environments) при локальном запуске (например, для разработки, CI или production). Чтобы выделить моделям в папке собственную схему, задайте `+schema` для этой папки. В dbt это называется пользовательской схемой, и она не заменяет целевую схему. Вместо этого dbt объединяет их в `<target_schema>_<custom_schema>`, поэтому в средах разработки и production модели создаются в разных схемах. Подробнее см. в разделе [Пользовательские схемы](/docs/build/custom-schemas).
 
-We recommend naming your custom schemas after your project folders, so staging, intermediate, and marts models are easy to find in your warehouse. For example, set `+schema: staging`, `+schema: intermediate`, and `+schema: marts`. If your team already uses different names, use those instead.
+Мы рекомендуем называть пользовательские схемы по именам папок проекта, чтобы модели подготовительного слоя, промежуточного слоя и витрин было легко найти в хранилище. Например, задайте `+schema: staging`, `+schema: intermediate` и `+schema: marts`. Если ваша команда уже использует другие названия, используйте их.
 
-For example, using `analytics_prod` and `alice_dev` as target schemas, dbt builds each folder into these schemas:
+Например, при использовании `analytics_prod` и `alice_dev` в качестве целевых схем dbt создает модели из каждой папки в следующих схемах:
 
-| Folder | Config | Production (`analytics_prod`) | Development (`alice_dev`) |
+| Папка | Настройка | Production (`analytics_prod`) | Разработка (`alice_dev`) |
 | --- | --- | --- | --- |
 | `models/staging/` | `+schema: staging` | `analytics_prod_staging` | `alice_dev_staging` |
 | `models/intermediate/` | `+schema: intermediate` | `analytics_prod_intermediate` | `alice_dev_intermediate` |
@@ -26,15 +26,15 @@ For example, using `analytics_prod` and `alice_dev` as target schemas, dbt build
 
 <br />
 
-Sources point at tables that already exist, typically in `raw`. dbt reads those tables; it does not build them. For more information, refer to [Staging](/best-practices/how-we-structure/2-staging) and [Sources](/docs/build/sources).
+Источники указывают на уже существующие таблицы, обычно в `raw`. dbt читает эти таблицы, а не создает их. Подробнее см. в разделах [Подготовительный слой](/best-practices/how-we-structure/2-staging) и [Источники](/docs/build/sources).
 
 :::note
-The [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) example can load seed data into `raw` when `load_source_data` is enabled. Those seeds use `+schema: raw` and land in the `raw` schema.
+В примере [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) можно загрузить seed-данные в `raw`, если включен параметр `load_source_data`. Эти seed-файлы используют `+schema: raw`, и их данные загружаются в схему `raw`.
 :::
 
-## Set custom schemas in `dbt_project.yml`
+## Настройка пользовательских схем в `dbt_project.yml`
 
-When you set `+schema` on the folder in `dbt_project.yml`, every model in that folder inherits it. Configure a schema on an individual model only when that model should use a different schema.
+Когда вы задаете `+schema` для папки в `dbt_project.yml`, каждая модель в этой папке наследует эту настройку. Задавайте схему для отдельной модели только в том случае, если эта модель должна использовать другую схему.
 
 <File name="dbt_project.yml">
 
@@ -54,40 +54,40 @@ models:
 
 </File>
 
-The `jaffle_shop` key must match the `name` in your `dbt_project.yml`. The [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) example has `staging` and `marts` only; the `intermediate` block is unused until you add that folder.
+Ключ `jaffle_shop` должен совпадать со значением `name` в вашем `dbt_project.yml`. В примере [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) есть только `staging` и `marts`; блок `intermediate` не используется, пока вы не добавите эту папку.
 
-This guide sets defaults on folders instead of on every model. Refer to [The rest of the project](/best-practices/how-we-structure/5-the-rest-of-the-project).
+В этом руководстве настройки по умолчанию задаются для папок, а не для каждой модели. Подробнее см. в разделе [Остальная часть проекта](/best-practices/how-we-structure/5-the-rest-of-the-project).
 
-## Use only the custom schema in production
+## Использование только пользовательской схемы в production
 
-To use `marts` instead of `analytics_prod_marts` in production, use the built-in [`generate_schema_name_for_env`](/docs/build/custom-schemas#a-built-in-alternative-pattern-for-generating-schema-names) pattern. It uses the custom schema alone when `target.name` is `prod`. In every other environment, it ignores custom schemas and builds all models in your target schema (`alice_dev`). Don't change the default macro to drop the target schema everywhere, or development runs can write to the same schemas as production.
+Чтобы использовать в production схему `marts` вместо `analytics_prod_marts`, воспользуйтесь встроенным подходом [`generate_schema_name_for_env`](/docs/build/custom-schemas#a-built-in-alternative-pattern-for-generating-schema-names). Он использует только пользовательскую схему, когда `target.name` равен `prod`. Во всех остальных средах он игнорирует пользовательские схемы и создает все модели в целевой схеме (`alice_dev`). Не изменяйте стандартный макрос так, чтобы он исключал целевую схему во всех средах: иначе запуски в среде разработки могут записывать данные в те же схемы, что и запуски в production.
 
 
-## Use bronze, silver, and gold schema names
+## Использование названий схем bronze, silver и gold
 
-If your warehouse uses bronze, silver, and gold schema names, those names map to the same folders previously discussed. You don't need a different dbt layout.
+Если в вашем хранилище используются названия схем bronze, silver и gold, они сопоставляются с теми же папками, которые обсуждались выше. Менять структуру проекта dbt не нужно.
 
-The following table maps those names to the folders in this guide:
+В следующей таблице показано соответствие этих названий папкам из этого руководства:
 
-| Warehouse name | In this guide |
+| Название в хранилище | В этом руководстве |
 | --- | --- |
-| Bronze | Sources in `raw` (read-only) |
-| Silver | Staging and intermediate |
-| Gold | Marts |
+| Bronze | Источники в `raw` (только для чтения) |
+| Silver | Подготовительный и промежуточный слои |
+| Gold | Витрины |
 
 <br />
 
-Keep `staging`, `intermediate`, and `marts` as the custom schema names in this guide so they match the folders. If your warehouse requires `silver` and `gold` as schema names, set `+schema` to those names instead.
+Сохраните `staging`, `intermediate` и `marts` в качестве названий пользовательских схем в этом руководстве, чтобы они совпадали с именами папок. Если ваше хранилище требует использовать `silver` и `gold` в качестве названий схем, задайте эти названия в `+schema`.
 
-If you set `+schema: silver` on both `staging` and `intermediate`, those models share one schema and you lose a separate intermediate schema. To keep that separation, use two custom schema names.
+Если задать `+schema: silver` и для `staging`, и для `intermediate`, модели из этих папок будут использовать одну общую схему, и отдельной схемы для промежуточного слоя не будет. Чтобы сохранить это разделение, используйте два разных названия пользовательских схем.
 
-## Related docs
+## Связанная документация
 
-- [How we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview)
-- [Custom schemas](/docs/build/custom-schemas)
-- [Staging](/best-practices/how-we-structure/2-staging)
-- [Intermediate](/best-practices/how-we-structure/3-intermediate)
-- [Marts](/best-practices/how-we-structure/4-marts)
-- [The rest of the project](/best-practices/how-we-structure/5-the-rest-of-the-project)
-- [Optimize dbt models on Databricks](/guides/optimize-dbt-models-on-databricks)
-- [Best practices for dbt and Unity Catalog](/best-practices/dbt-unity-catalog-best-practices)
+- [Как мы структурируем наши проекты dbt](/best-practices/how-we-structure/1-guide-overview)
+- [Пользовательские схемы](/docs/build/custom-schemas)
+- [Подготовительный слой](/best-practices/how-we-structure/2-staging)
+- [Промежуточный слой](/best-practices/how-we-structure/3-intermediate)
+- [Витрины](/best-practices/how-we-structure/4-marts)
+- [Остальная часть проекта](/best-practices/how-we-structure/5-the-rest-of-the-project)
+- [Оптимизация моделей dbt в Databricks](/guides/optimize-dbt-models-on-databricks)
+- [Рекомендации по работе с dbt и Unity Catalog](/best-practices/dbt-unity-catalog-best-practices)

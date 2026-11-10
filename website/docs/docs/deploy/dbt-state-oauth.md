@@ -1,6 +1,6 @@
 ---
-title: "OAuth client credentials for dbt State"
-description: "Learn how to configure dbt State authentication using OAuth client credentials for the standalone dbt State app."
+title: "Учетные данные клиента OAuth для dbt State"
+description: "Узнайте, как настроить аутентификацию dbt State с помощью учетных данных клиента OAuth для отдельного приложения dbt State."
 id: "dbt-state-oauth"
 tags: ['dbt State']
 availability: everywhere_usage
@@ -11,65 +11,65 @@ unlisted: true
 
 import DbtStateAppRetirement from '/snippets/_dbt-state-app-retirement.md';
 
-# OAuth client credentials for dbt State <Lifecycle status="Deprecated" />
+# Учетные данные клиента OAuth для dbt State <Lifecycle status="Deprecated" />
 
 <DbtStateAppRetirement />
 
-If you're using the standalone [dbt State web app](https://app.state.dbt.com/), authenticate dbt State with OAuth client credentials.
+Если вы используете отдельное [веб-приложение dbt State](https://app.state.dbt.com/), выполняйте аутентификацию в dbt State с помощью учетных данных клиента OAuth.
 
-## Prerequisites
+## Предварительные требования
 
-- dbt State installed and configured. Refer to [Set up dbt State](/docs/deploy/dbt-state-setup) for more information.
-- A standalone dbt State account at [app.state.dbt.com](https://app.state.dbt.com/).
-- An **Admin** or **Owner** role in your dbt State organization. Refer to [Roles and tab access](#roles-and-tab-access) for details.
+- Установленный и настроенный dbt State. Подробнее см. в разделе [Настройка dbt State](/docs/deploy/dbt-state-setup).
+- Учетная запись в отдельном приложении dbt State на [app.state.dbt.com](https://app.state.dbt.com/).
+- Роль **Admin** или **Owner** в вашей организации dbt State. Подробнее см. в разделе [Роли и доступ к вкладкам](#roles-and-tab-access).
 
-## Roles and tab access
+## Роли и доступ к вкладкам {#roles-and-tab-access}
 
-The dbt State web app has four tabs under **Organization**:
+В веб-приложении dbt State в разделе **Organization** есть четыре вкладки:
 
 <SimpleTable>
-| Tab | Description |
+| Вкладка | Описание |
 |-----|-------------|
-| **Usage** | View your project reuses and compute time saved once dbt State is enabled. |
-| **Users** | Invite team members and grant or revoke access. |
-| **Billing** | View daily active target tables (DATTs) for the current billing period. |
-| **Clients** | Create and manage OAuth clients for CI/CD and other non-interactive environments. |
+| **Usage** | Просмотр данных о повторном использовании результатов в проекте и сэкономленном времени вычислений после включения dbt State. |
+| **Users** | Приглашение участников команды, предоставление и отзыв доступа. |
+| **Billing** | Просмотр целевых таблиц, активных в течение дня (DATT), за текущий расчетный период. |
+| **Clients** | Создание клиентов OAuth и управление ими для CI/CD и других неинтерактивных сред. |
 </SimpleTable>
 <br />
-Your role determines which tabs you can access.
+Ваша роль определяет, к каким вкладкам у вас есть доступ.
 
 <SimpleTable>
-| Role | Access | Notes |
+| Роль | Доступ | Примечания |
 |------|-----------|-------|
-| **Owner** | Usage, Users, Billing, Clients | The user who created the organization is the Owner by default. An Owner can transfer their role to another user, which demotes the original Owner to Admin. |
+| **Owner** | Usage, Users, Billing, Clients | Пользователь, создавший организацию, по умолчанию получает роль Owner. Пользователь с ролью Owner может передать свою роль другому пользователю; при этом роль исходного владельца изменяется на Admin. |
 | **Admin** | Usage, Users, Billing, Clients | — |
-| **Developer** | Usage | Default role when users are added. |
+| **Developer** | Usage | Роль по умолчанию при добавлении пользователей. |
 </SimpleTable>
 
-An existing **Owner** or **Admin** can grant or revoke admin access from the **Users** tab.
+Пользователь с ролью **Owner** или **Admin** может предоставлять или отзывать права администратора на вкладке **Users**.
 
-## Creating an OAuth client
+## Создание клиента OAuth
 
-1. In the [dbt State web app](https://app.state.dbt.com/), navigate to the **Clients** tab.
-2. Click **Add OAuth Client**.
-3. Enter a name and description for the new client and click **Create**.
-4. Copy the client ID and secret to use in your environment configuration.
+1. В [веб-приложении dbt State](https://app.state.dbt.com/) перейдите на вкладку **Clients**.
+2. Нажмите **Add OAuth Client**.
+3. Введите имя и описание нового клиента и нажмите **Create**.
+4. Скопируйте идентификатор и секрет клиента для использования в конфигурации вашей среды.
 
-## Configuring OAuth authentication
+## Настройка аутентификации OAuth
 
-Once you have the client ID and secret, set the following environment variables in your environment. Using environment variables is the recommended approach as it keeps sensitive credentials out of your code repository.
+Получив идентификатор и секрет клиента, задайте в своей среде следующие переменные окружения. Рекомендуется использовать переменные окружения, поскольку это позволяет не хранить конфиденциальные учетные данные в репозитории кода.
 
 ```bash
 DBT_ENGINE_STATE_OAUTH_CLIENT_ID=YOUR_CLIENT_ID
 DBT_ENV_SECRET_STATE_OAUTH_CLIENT_SECRET=YOUR_CLIENT_SECRET
 ```
 
-Replace `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET` with the values from your OAuth client.
+Замените `YOUR_CLIENT_ID` и `YOUR_CLIENT_SECRET` значениями вашего клиента OAuth.
 
-Once configured, [verify dbt State is active](/docs/deploy/dbt-state-cicd#verifying-dbt-state-is-active).
+После настройки [проверьте, что dbt State активен](/docs/deploy/dbt-state-cicd#verifying-dbt-state-is-active).
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [Setting up authentication for non-interactive environments](/docs/deploy/dbt-state-cicd)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Настройка аутентификации для неинтерактивных сред](/docs/deploy/dbt-state-cicd)

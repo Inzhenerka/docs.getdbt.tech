@@ -1,8 +1,8 @@
 ---
-title: "Quickstart for dbt Charts"
+title: "Краткое руководство по dbt Charts"
 id: "dbt-charts"
-description: "Build a dbt project locally, write your first dbt Charts board by hand, and preview it in the browser."
-hoverSnippet: "Build a dbt project locally, write your first dbt Charts board by hand, and preview it in the browser."
+description: "Создайте проект dbt локально, вручную напишите свою первую панель dbt Charts и просмотрите её в браузере."
+hoverSnippet: "Создайте проект dbt локально, вручную напишите свою первую панель dbt Charts и просмотрите её в браузере."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['dbt Charts', 'Quickstart']
@@ -11,85 +11,85 @@ level: 'Beginner'
 
 <div style={{maxWidth: '900px'}}>
 
-## Introduction
+## Введение
 
-dbt Charts is a visualization layer that turns YAML files into interactive dashboards. You define queries, charts, and layouts as text and store them in Git alongside your dbt project. Because dbt Charts queries your dbt models directly, your dashboards stay in sync with the same transformations your team already trusts.
+dbt Charts — это слой визуализации, который превращает YAML-файлы в интерактивные дашборды. Вы определяете запросы, диаграммы и макеты в текстовом виде и храните их в Git вместе с проектом dbt. Поскольку dbt Charts выполняет запросы непосредственно к вашим моделям dbt, дашборды остаются согласованными с теми же преобразованиями, которым ваша команда уже доверяет.
 
-You develop dbt Charts locally with the `dct` command-line tool: it reads a board file, runs its queries against the connection in your dbt `profiles.yml`, and serves the result in your browser with hot reload as you edit.
+Вы разрабатываете панели dbt Charts локально с помощью инструмента командной строки `dct`: он читает файл панели, выполняет её запросы через подключение из вашего dbt-файла `profiles.yml` и отображает результат в браузере с автоматическим обновлением при редактировании.
 
-In this quickstart, you'll learn how to:
+В этом кратком руководстве вы научитесь:
 
-- Create the `charts/` directory and a board file by hand.
-- Write your first five charts &mdash; a line, bar, area, pie, and table &mdash; from your dbt models.
-- Install dbt Charts and preview the board locally.
+- Создавать каталог `charts/` и файл панели вручную.
+- Создавать первые пять визуализаций &mdash; линейную, столбчатую, с областями, круговую диаграммы и таблицу &mdash; на основе моделей dbt.
+- Устанавливать dbt Charts и просматривать панель локально.
 
-This guide uses the [`fusion-jaffle-shop`](https://github.com/matthewshaver/jaffle-shop-multi-adapter) sample project, which is built for v1.12+ and includes marts such as `order_items` and `location_performance`. When you finish, you'll have a board that trends revenue over time, compares performance across store locations, and lists location-level key performance indicators (KPIs).
+В этом руководстве используется пример проекта [`fusion-jaffle-shop`](https://github.com/matthewshaver/jaffle-shop-multi-adapter), рассчитанный на v1.12+ и включающий такие витрины данных, как `order_items` и `location_performance`. По завершении у вас будет панель, которая показывает динамику выручки, сравнивает показатели разных магазинов и отображает ключевые показатели эффективности (KPI) для каждого магазина.
 
-### Prerequisites
+### Предварительные требования
 
-- You have [dbt v1.12+ installed](/docs/local/install-dbt?version=2). This guide assumes <Constant name="fusion" />.
-  - If you're using v2, you must install the v1 adapter for your dbt Charts project to load in your browser. You don't have to do any additional configuration. For example, if you're using Snowflake, run `pip install dbt-snowflake` before installing dbt Charts. As development on dbt Charts continues, this prerequisite will eventually be removed.
-- You have [Git](https://git-scm.com/downloads) and basic familiarity with the command line and YAML.
-- You have [Python](https://www.python.org/downloads/) 3.9 or later and a package manager such as [uv](https://docs.astral.sh/uv/) or `pip`, to install the `dct` tool.
-- You have a working connection to your data platform (Snowflake in this guide) that dbt can build into.
+- У вас [установлен dbt v1.12+](/docs/local/install-dbt?version=2). В этом руководстве предполагается использование <Constant name="fusion" />.
+  - Если вы используете v2, необходимо установить адаптер v1, чтобы проект dbt Charts загружался в браузере. Дополнительная настройка не требуется. Например, если вы используете Snowflake, выполните `pip install dbt-snowflake` перед установкой dbt Charts. По мере развития dbt Charts это требование будет снято.
+- У вас установлен [Git](https://git-scm.com/downloads), и вы знакомы с основами работы в командной строке и с YAML.
+- У вас установлен [Python](https://www.python.org/downloads/) 3.9 или более поздней версии и менеджер пакетов, например [uv](https://docs.astral.sh/uv/) или `pip`, для установки инструмента `dct`.
+- У вас есть рабочее подключение к платформе данных (в этом руководстве используется Snowflake), на которой dbt может создавать модели.
 
-### Related content
+### Связанные материалы
 
-- [Build your dbt models](/docs/build/models)
-- [How we structure our dbt projects](/best-practices/how-we-structure/1-guide-overview)
-- [dbt Charts query types](https://docs.dataface.com/queries/)
-- [dbt Charts documentation](https://docs.dataface.com/)
+- [Создание моделей dbt](/docs/build/models)
+- [Как мы организуем проекты dbt](/best-practices/how-we-structure/1-guide-overview)
+- [Типы запросов dbt Charts](https://docs.dataface.com/queries/)
+- [Документация dbt Charts](https://docs.dataface.com/)
 
-## Clone the sample project and build it
+## Клонирование примера проекта и его сборка
 
-dbt Charts queries tables that already exist in your data platform, so build the project's models before you chart them.
+dbt Charts выполняет запросы к таблицам, которые уже существуют на вашей платформе данных, поэтому сначала создайте модели проекта, а затем стройте на их основе диаграммы.
 
-1. Clone the sample project and change into it:
+1. Клонируйте пример проекта и перейдите в его каталог:
 
     ```bash
     git clone https://github.com/matthewshaver/jaffle-shop-multi-adapter.git
     cd fusion-jaffle-shop
     ```
 
-2. Add a `profiles.yml` for your data platform. The project's `dbt_project.yml` sets `profile: default`, so name your profile `default` and give it a `dev` target. dbt reads a `profiles.yml` in the project root, or falls back to `~/.dbt/profiles.yml`. For platform-specific fields, refer to [Connection profiles](/docs/local/connect-data-platform/about-dbt-connections).
+2. Добавьте `profiles.yml` для вашей платформы данных. В файле `dbt_project.yml` проекта задано `profile: default`, поэтому назовите профиль `default` и добавьте в него целевое окружение `dev`. dbt читает `profiles.yml` из корня проекта, а если его там нет — использует `~/.dbt/profiles.yml`. Поля для конкретной платформы описаны в разделе [Профили подключения](/docs/local/connect-data-platform/about-dbt-connections).
 
-3. Install the project's packages:
+3. Установите пакеты проекта:
 
     ```bash
     dbt deps
     ```
 
-4. Seed the raw CSVs and build the models and tests in one command:
+4. Загрузите исходные CSV-файлы как seed-данные, создайте модели и запустите тесты одной командой:
 
     ```bash
     dbt build
     ```
 
-    The `dbt build` command runs seeds, models, snapshots, and tests in dependency order, so you don't need a separate `dbt seed` step. For the full list of commands, refer to [dbt commands](/reference/dbt-commands).
+    Команда `dbt build` выполняет seed-файлы, модели, снимки и тесты в порядке зависимостей, поэтому отдельный шаг `dbt seed` не нужен. Полный список команд приведён в разделе [Команды dbt](/reference/dbt-commands).
 
-5. Confirm that a mart the charts read returns rows:
+5. Убедитесь, что витрина данных, к которой будут обращаться диаграммы, возвращает строки:
 
     ```bash
     dbt show --inline "select count(*) from {{ ref('order_items') }}"
     ```
 
 :::note
-Record the database and schema that dbt built into &mdash; your chart SQL references them. To find them, run `dbt list --output json` and read each model's `relation_name`.
+Запишите базу данных и схему, в которых dbt создал модели, &mdash; они понадобятся в SQL-запросах диаграмм. Чтобы найти их, выполните `dbt list --output json` и посмотрите значение `relation_name` для каждой модели.
 :::
 
-## Create the charts directory and board file
+## Создание каталога charts и файла панели
 
-The sample project doesn't ship any dbt Charts files, so you create them yourself. dbt Charts needs two things: a project config at the root that declares a data source, and at least one board file under `charts/`.
+Пример проекта не содержит файлов dbt Charts, поэтому вы создадите их самостоятельно. Для dbt Charts нужны две вещи: конфигурационный файл проекта в корневом каталоге, объявляющий источник данных, и хотя бы один файл панели в каталоге `charts/`.
 
-1. From the project root, create the directory that holds your boards:
+1. В корне проекта создайте каталог для панелей:
 
     ```bash
     mkdir charts
     ```
 
-    Every `.yaml`, `.yml`, and `.md` file under `charts/` becomes a served page, and nested directories become nested paths.
+    Каждый файл `.yaml`, `.yml` и `.md` в каталоге `charts/` становится доступной для просмотра страницей, а вложенные каталоги — вложенными путями.
 
-2. Create `dbt_charts.yml` in the project root. Locally, dbt Charts reuses your dbt connection &mdash; there's no separate credential setup. Declare a source that points at a dbt profile and target, and boards reference it by name:
+2. Создайте `dbt_charts.yml` в корне проекта. При локальной работе dbt Charts использует ваше подключение dbt &mdash; отдельная настройка учётных данных не требуется. Объявите источник, указывающий на профиль и целевое окружение dbt, а в панелях ссылайтесь на него по имени:
 
     <File name='dbt_charts.yml'>
 
@@ -103,9 +103,9 @@ The sample project doesn't ship any dbt Charts files, so you create them yoursel
 
     </File>
 
-    The `profile` and `target` match your `profiles.yml` (`default` and `dev` in this project). Credentials stay in `profiles.yml`, including Snowflake key-pair auth through `private_key_path` if your account requires it.
+    Значения `profile` и `target` должны соответствовать вашему `profiles.yml` (`default` и `dev` в этом проекте). Учётные данные остаются в `profiles.yml`, включая аутентификацию Snowflake по паре ключей через `private_key_path`, если она требуется для вашей учётной записи.
 
-3. Create an empty board file at `charts/analytics.yml` and give it a title and a source:
+3. Создайте пустой файл панели `charts/analytics.yml` и укажите в нём заголовок и источник:
 
     <File name='charts/analytics.yml'>
 
@@ -116,19 +116,19 @@ The sample project doesn't ship any dbt Charts files, so you create them yoursel
 
     </File>
 
-Over the next two steps, you add the queries and charts to this file, then the layout that positions them.
+На следующих двух шагах вы добавите в этот файл запросы и диаграммы, а затем макет, определяющий их расположение.
 
-## Add your first five charts
+## Добавление первых пяти диаграмм
 
-Now add five charts to `charts/analytics.yml`, one for each of the most common chart types. Each chart references a SQL query &mdash; defined in a `queries:` block &mdash; and maps that query's output columns to the chart's channels (`x`, `y`, `theta`, `color`).
+Теперь добавьте в `charts/analytics.yml` пять визуализаций — по одной для каждого из наиболее распространённых типов. Каждая диаграмма ссылается на SQL-запрос, определённый в блоке `queries:`, и сопоставляет выходные столбцы этого запроса с каналами диаграммы (`x`, `y`, `theta`, `color`).
 
-Each snippet below shows the query and the chart to add. Charts don't render until you add the layout in the next step, and the complete file appears in [Lay out your board](/guides/dbt-charts?step=5).
+Каждый фрагмент ниже содержит запрос и диаграмму, которые нужно добавить. Диаграммы не отобразятся, пока вы не добавите макет на следующем шаге; полный файл приведён в разделе [Размещение элементов панели](/guides/dbt-charts?step=5).
 
-Each query references its model by fully qualified location. Replace `MY_DATABASE.MY_SCHEMA` with the database and schema that dbt built your marts into. The SQL uses Snowflake syntax, so adjust functions like `date_trunc` if you build on another platform.
+Каждый запрос ссылается на модель по её полному имени. Замените `MY_DATABASE.MY_SCHEMA` на базу данных и схему, в которых dbt создал ваши витрины данных. В SQL используется синтаксис Snowflake, поэтому при работе с другой платформой адаптируйте такие функции, как `date_trunc`.
 
-### 1. Line chart: revenue over time
+### 1. Линейная диаграмма: динамика выручки
 
-Line charts show trends over time. This query aggregates revenue by month from the `order_items` model.
+Линейные диаграммы показывают изменение показателей во времени. Этот запрос агрегирует выручку по месяцам на основе модели `order_items`.
 
 ```yaml
 queries:
@@ -149,9 +149,9 @@ charts:
     title: "Revenue by month"
 ```
 
-### 2. Bar chart: revenue by location
+### 2. Столбчатая диаграмма: выручка по магазинам
 
-Bar charts compare a value across categories. This query reads pre-aggregated revenue per store from the `location_performance` mart.
+Столбчатые диаграммы позволяют сравнивать значения между категориями. Этот запрос получает предварительно агрегированную выручку по каждому магазину из витрины `location_performance`.
 
 ```yaml
 queries:
@@ -171,9 +171,9 @@ charts:
     title: "Revenue by location"
 ```
 
-### 3. Area chart: cumulative revenue
+### 3. Диаграмма с областями: накопленная выручка
 
-Area charts emphasize accumulation over time. This query uses a window function to running-total monthly revenue.
+Диаграммы с областями подчёркивают накопление значений во времени. Этот запрос использует оконную функцию для расчёта выручки нарастающим итогом по месяцам.
 
 ```yaml
 queries:
@@ -198,9 +198,9 @@ charts:
     title: "Cumulative revenue"
 ```
 
-### 4. Pie chart: revenue by product type
+### 4. Круговая диаграмма: выручка по типам продуктов
 
-Pie (sector) charts show part-to-whole comparisons. This query splits revenue into food and drink. A sector chart uses `theta` for the wedge size and `color` for the category.
+Круговые (секторные) диаграммы показывают соотношение частей и целого. Этот запрос разделяет выручку на еду и напитки. Секторная диаграмма использует `theta` для размера сектора и `color` для категории.
 
 ```yaml
 queries:
@@ -221,9 +221,9 @@ charts:
     title: "Revenue by product type"
 ```
 
-### 5. Table: location KPIs
+### 5. Таблица: KPI магазинов
 
-Tables show detailed values. This query lists several columns per location for a scannable KPI table.
+Таблицы показывают подробные значения. Этот запрос выводит несколько столбцов для каждого магазина, формируя удобную для просмотра таблицу KPI.
 
 ```yaml
 queries:
@@ -243,11 +243,11 @@ charts:
     title: "Location KPIs"
 ```
 
-## Lay out your board
+## Размещение элементов панели
 
-Charts don't appear until you reference them in a layout. Boards use `rows:` to stack content vertically and `cols:` to place content side by side. Combine the queries and charts from the previous step under single `queries:` and `charts:` blocks, then add a layout that references each chart by its ID.
+Диаграммы не появятся, пока вы не укажете их в макете. В панелях используется `rows:` для вертикального размещения содержимого и `cols:` для размещения элементов рядом друг с другом. Объедините запросы и диаграммы из предыдущего шага в единые блоки `queries:` и `charts:`, затем добавьте макет, ссылающийся на каждую диаграмму по её ID.
 
-Your complete `charts/analytics.yml` should now look like this, with `MY_DATABASE.MY_SCHEMA` replaced by the database and schema that dbt built your marts into:
+Теперь ваш полный файл `charts/analytics.yml` должен выглядеть следующим образом, причём `MY_DATABASE.MY_SCHEMA` нужно заменить на базу данных и схему, в которых dbt создал ваши витрины данных:
 
 <File name='charts/analytics.yml'>
 
@@ -342,7 +342,7 @@ rows:
 
 </File>
 
-Your project root should now contain:
+Теперь корневой каталог проекта должен содержать:
 
 ```shell
 fusion-jaffle-shop/
@@ -355,70 +355,70 @@ fusion-jaffle-shop/
 └── seeds/
 ```
 
-## Install dbt Charts and view your board
+## Установка dbt Charts и просмотр панели
 
-dbt Charts ships as a Python package with a command-line tool named `dct`.
+dbt Charts поставляется в виде пакета Python с инструментом командной строки `dct`.
 
-1. Install dbt Charts with `uv`:
+1. Установите dbt Charts с помощью `uv`:
 
     ```bash
     uv tool install dbt-charts
     ```
 
-    Or, with `pip`:
+    Или с помощью `pip`:
 
     ```bash
     pip install dbt-charts
     ```
 
-2. From the project root, validate the board to catch YAML, reference, and SQL errors before it renders:
+2. В корне проекта выполните проверку панели, чтобы выявить ошибки YAML, ссылок и SQL до её отображения:
 
     ```bash
     dct validate
     ```
 
-    With no arguments, `dct validate` checks every board under `charts/`. Pass a path &mdash; `dct validate charts/analytics.yml` &mdash; to check one.
+    Без аргументов команда `dct validate` проверяет все панели в каталоге `charts/`. Передайте путь &mdash; `dct validate charts/analytics.yml` &mdash; для проверки одной панели.
 
-3. Start the local development server:
+3. Запустите локальный сервер разработки:
 
     ```bash
     dct serve
     ```
 
-    `dct` walks up from the current directory to find `dbt_charts.yml` or `dbt_project.yml`, infers the SQL dialect from your profile target, and picks a port derived from the project directory.
+    `dct` поднимается от текущего каталога вверх в поисках `dbt_charts.yml` или `dbt_project.yml`, определяет диалект SQL по целевому окружению вашего профиля и выбирает порт на основе каталога проекта.
 
-4. Open the URL `dct` prints. The page lists every board under `charts/`. Select `analytics.yml` to open yours.
+4. Откройте URL, который выведет `dct`. На странице перечислены все панели из каталога `charts/`. Выберите `analytics.yml`, чтобы открыть свою.
 
-    All five charts render across the three rows: the two trend charts side by side, the two location charts below them, and the KPI table at the bottom. The server hot-reloads as you edit YAML, so keep it running while you iterate.
+    Все пять визуализаций отображаются в трёх рядах: две диаграммы динамики рядом друг с другом, две диаграммы по магазинам под ними и таблица KPI внизу. Сервер автоматически обновляет страницу при редактировании YAML, поэтому оставьте его запущенным, пока вносите изменения.
 
-5. Optionally, render static output to share or to inspect the compiled SQL:
+5. При необходимости сформируйте статический результат, чтобы поделиться им или просмотреть скомпилированный SQL:
 
     ```bash
     dct render charts/analytics.yml --format html
     ```
 
-## Troubleshooting
+## Устранение неполадок
 
-- **`dbt_charts.yml` validation error: extra inputs are not permitted** &mdash; `dbt_charts.yml` accepts a fixed set of top-level keys, such as `sources` and `server`. Remove anything else, including a `name` key.
-- **A chart shows no data** &mdash; Confirm your `profiles.yml` connection works (`dbt debug`) and that the profile's role can `SELECT` from the schemas your queries read.
-- **Some charts show data but others are all zeros** &mdash; Check whether the empty charts read a model that your dev target filters. A common pattern limits development data to a recent time window, such as a `limit_in_dev` macro on orders. On a static demo dataset, that window can exclude every row and zero out the models downstream of it, while models without the filter still populate. Anchor the window to the data's own `max()` timestamp, widen it, or build against a target that skips the filter.
-- **Table or view not found** &mdash; Confirm the database and schema prefix on each `FROM` matches where dbt actually builds the model. Run `dbt list --output json` and read `relation_name` to get the exact location.
-- **Column not found** &mdash; A chart's channels (`x`, `y`, `theta`, `color`) must match the column names your query's `SELECT` returns. Alias columns in SQL so the names line up.
-- **A chart renders blank** &mdash; Confirm the chart's `type` supports the channels you set. Sector charts (pie and donut) use `theta` and `color`, not `x` and `y`.
-- **`dct validate` warns about re-aggregation** &mdash; The cumulative revenue query sums an already-aggregated column on purpose, so you can ignore this warning. `dct validate` still exits successfully.
+- **Ошибка проверки `dbt_charts.yml`: extra inputs are not permitted** &mdash; `dbt_charts.yml` принимает фиксированный набор ключей верхнего уровня, таких как `sources` и `server`. Удалите все остальные, включая ключ `name`.
+- **Диаграмма не показывает данные** &mdash; Убедитесь, что подключение из `profiles.yml` работает (`dbt debug`) и что роль, указанная в профиле, имеет право `SELECT` для схем, к которым обращаются ваши запросы.
+- **Некоторые диаграммы показывают данные, а на остальных только нули** &mdash; Проверьте, не обращаются ли пустые диаграммы к модели, данные которой фильтруются в целевом окружении разработки. Часто для разработки данные ограничивают недавним временным интервалом, например с помощью макроса `limit_in_dev` для заказов. В статическом демонстрационном наборе данных такой интервал может исключить все строки и обнулить зависимые модели, тогда как модели без фильтра по-прежнему будут содержать данные. Привяжите интервал к максимальной временной метке самих данных с помощью `max()`, расширьте его или выполните сборку в целевом окружении, где этот фильтр не применяется.
+- **Таблица или представление не найдены** &mdash; Убедитесь, что префикс базы данных и схемы в каждом `FROM` соответствует месту, где dbt фактически создаёт модель. Выполните `dbt list --output json` и посмотрите значение `relation_name`, чтобы узнать точное расположение.
+- **Столбец не найден** &mdash; Каналы диаграммы (`x`, `y`, `theta`, `color`) должны соответствовать именам столбцов, которые возвращает `SELECT` вашего запроса. Задайте псевдонимы столбцов в SQL, чтобы имена совпадали.
+- **Диаграмма отображается пустой** &mdash; Убедитесь, что `type` диаграммы поддерживает заданные вами каналы. Секторные диаграммы (круговые и кольцевые) используют `theta` и `color`, а не `x` и `y`.
+- **`dct validate` предупреждает о повторной агрегации** &mdash; Запрос накопленной выручки намеренно суммирует уже агрегированный столбец, поэтому это предупреждение можно игнорировать. При этом `dct validate` завершается успешно.
 
-## What's next
+## Что дальше
 
 <ConfettiTrigger>
 
-Congratulations 🎉! You built a dbt project locally, created your own dbt Charts directory and board file, wrote five charts from your dbt models, and previewed the board in your browser.
+Поздравляем 🎉! Вы собрали проект dbt локально, создали собственный каталог dbt Charts и файл панели, добавили пять визуализаций на основе моделей dbt и просмотрели панель в браузере.
 
-From here, you can:
+Теперь вы можете:
 
-- Add interactivity with [variables](https://docs.dataface.com/variables/) so viewers can filter by location or date range.
-- Explore more [chart types](https://docs.dataface.com/charts/), such as small multiples, layered charts, and maps.
-- Add more files under `charts/` &mdash; each one becomes its own page, so you can break a large dashboard into focused boards.
-- Chart additional dbt models by adding more SQL queries, or explore other [query types](https://docs.dataface.com/queries/) such as values and HTTP sources.
+- Добавить интерактивность с помощью [переменных](https://docs.dataface.com/variables/), чтобы пользователи могли фильтровать данные по магазину или диапазону дат.
+- Изучить другие [типы диаграмм](https://docs.dataface.com/charts/), например наборы однотипных диаграмм, многослойные диаграммы и карты.
+- Добавить новые файлы в каталог `charts/` &mdash; каждый из них станет отдельной страницей, поэтому большой дашборд можно разделить на тематические панели.
+- Построить диаграммы на основе других моделей dbt, добавив новые SQL-запросы, или изучить другие [типы запросов](https://docs.dataface.com/queries/), например значения и HTTP-источники.
 
 </ConfettiTrigger>
 

@@ -1,8 +1,8 @@
 ---
-title: "Configuring public IP restrictions"
+title: "Настройка ограничений по публичным IP-адресам"
 id: ip-restrictions
-description: "Restrict public access to the dbt platform by allowing only specific IP addresses."
-sidebar_label: "Public IP restrictions"
+description: "Ограничение публичного доступа к платформе dbt по списку разрешённых IP-адресов."
+sidebar_label: "Ограничения по публичным IP-адресам"
 pagination_next: "docs/platform/secure/private-connectivity/private-connectivity"
 pagination_prev: null
 availability:
@@ -11,73 +11,73 @@ availability:
   minPlan: enterprise_plus
 ---
 
-# Configuring public IP restrictions
+# Настройка ограничений для публичных IP-адресов {#configuring-public-ip-restrictions}
 
 import SetUpPages from '/snippets/_available-tiers-enterprise-plus.md';
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-IP restrictions help control which IP addresses can connect to <Constant name="dbt" />. They allow <Constant name="dbt" /> customers to meet security and compliance controls by only allowing approved IPs to connect to their <Constant name="dbt" /> environment. This feature is supported in all regions across NA, Europe, and Asia-Pacific, but contact us if you have questions about availability.
+Ограничения по IP-адресам помогают контролировать, какие IP-адреса могут подключаться к <Constant name="dbt" />. Они позволяют клиентам <Constant name="dbt" /> соблюдать требования безопасности и нормативные требования, разрешая подключение к своей среде <Constant name="dbt" /> только с одобренных IP-адресов. Эта функция поддерживается во всех регионах Северной Америки, Европы и Азиатско-Тихоокеанского региона, но свяжитесь с нами, если у вас есть вопросы о доступности.
 
-## Configuring IP restrictions
+## Настройка ограничений по IP {#configuring-ip-restrictions}
 
-To configure IP restrictions, go to **Account Settings** → **IP Restrictions**. IP restrictions provide two methods for determining which IPs can access <Constant name="dbt" />: an allowlist and a blocklist. IPs in the allowlist can access <Constant name="dbt" />, and IPs in the blocklist are blocked from accessing <Constant name="dbt" />. You can use IP restrictions for a range of use cases, including:
+Чтобы настроить ограничения по IP-адресам, перейдите в **Настройки аккаунта** → **Ограничения по IP-адресам**. Ограничения по IP-адресам предусматривают два способа определения того, какие IP-адреса могут получать доступ к <Constant name="dbt" />: список разрешённых и список заблокированных адресов. IP-адреса из списка разрешённых могут получать доступ к <Constant name="dbt" />, а IP-адресам из списка заблокированных доступ к <Constant name="dbt" /> запрещён. Ограничения по IP-адресам можно использовать для различных задач, включая:
 
-- Allow only corporate VPN traffic and deny all other traffic
-- Deny IPs flagged by the security team
-- Allow only VPN traffic but make an exception for contractors' IP addresses
+- Разрешение только корпоративного VPN-трафика и запрет всего остального трафика
+- Запрет IP-адресов, отмеченных командой безопасности
+- Разрешение только VPN-трафика с исключением для IP-адресов подрядчиков
 
-IP restrictions block all service tokens, user requests made through the API (using personal user tokens), and the UI if they come from blocked IP addresses.
+Ограничения по IP-адресам блокируют все обращения с использованием сервисных токенов, пользовательские запросы через API (с использованием персональных пользовательских токенов) и доступ к пользовательскому интерфейсу, если они поступают с заблокированных IP-адресов.
 
-For any version control system integrations (GitHub, GitLab, ADO, and others) inbound into <Constant name="dbt" />, ensure you add their IP addresses to the allowed list.
+Для любых интеграций с системами контроля версий (GitHub, GitLab, ADO и другими), инициирующих входящие подключения к <Constant name="dbt" />, обязательно добавьте их IP-адреса в список разрешённых.
 
-### Allowing IPs
+### Разрешение IP {#allowing-ips}
 
-To add an IP to the allowlist, from the **IP Restrictions** page:
+Чтобы добавить IP в список разрешенных, на странице **Ограничения по IP**:
 
-1. Click **Edit**.
-2. Click **Add Rule**.
-3. Add a name and description for the rule.
-   - For example, Corporate VPN CIDR Range
-4. Select **Allow**.
-5. Add the ranges in CIDR notation.
-   - For example, 1.1.1.1/8
-   - You can add multiple ranges in the same rule.
-6. Click **Save**.
+1. Нажмите **Изменить**.
+2. Нажмите **Добавить правило**.
+3. Добавьте название и описание правила.
+   - Например, Диапазон CIDR корпоративного VPN
+4. Выберите **Разрешить**.
+5. Добавьте диапазоны в нотации CIDR.
+   - Например, 1.1.1.1/8
+   - Вы можете добавить несколько диапазонов в одно правило.
+6. Нажмите **Сохранить**.
 
-Add multiple IP ranges by clicking the **Add IP range** button to create a new text field.
+Добавьте несколько диапазонов IP, нажав кнопку **Добавить диапазон IP**, чтобы создать новое текстовое поле.
 
-Simply adding the IP ranges does not enforce IP restrictions. For more information, refer to the [Enabling restrictions](#enabling-restrictions) section.
+Само по себе добавление диапазонов IP-адресов не активирует ограничения по IP-адресам. Дополнительные сведения см. в разделе [Включение ограничений](#enabling-restrictions).
 
-If you only want to allow the IP ranges added to this list and deny all other requests, you don't need to add a blocklist. By default, if you only add an allowlist, <Constant name="dbt" /> only allows IPs in the allowable range and denies all other IPs. However, you can add a blocklist if you want to deny specific IP addresses within your allowlist CIDR range.
+Если вы хотите разрешить только диапазоны IP-адресов, добавленные в этот список, и отклонять все остальные запросы, добавлять список заблокированных адресов не нужно. По умолчанию, если добавить только список разрешённых адресов, <Constant name="dbt" /> разрешает доступ только с IP-адресов из разрешённого диапазона и запрещает его со всех остальных IP-адресов. Однако вы можете добавить список заблокированных адресов, если хотите запретить определённые IP-адреса в пределах диапазона CIDR из списка разрешённых.
 
-### Blocking IPs (deny)
+### Блокировка IP (запрет) {#blocking-ips-deny}
 
-If you have IPs defined in the allowlist that need to be denied, you can add those IP ranges to the blocklist:
+Если в списке разрешённых есть IP-адреса, доступ с которых необходимо запретить, вы можете добавить соответствующие диапазоны IP-адресов в список заблокированных:
 
-1. Click **Edit**.
-2. Click **Add Rule**.
-3. Add a name and description for the rule.
-   - For example, "Corporate VPN Deny Range"
-4. Select **Deny**.
-5. Add the ranges or individual IP addresses in CIDR notation.
-6. Click **Save**.
+1. Нажмите **Изменить**.
+2. Нажмите **Добавить правило**.
+3. Добавьте название и описание правила.
+   - Например, "Диапазон запрета корпоративного VPN"
+4. Выберите **Запретить**.
+5. Добавьте диапазоны или отдельные IP-адреса в нотации CIDR.
+6. Нажмите **Сохранить**.
 
-:::note Duplicate IP addresses
+:::note Дублирование IP-адресов
 
-If identical IP addresses are in both the allow and block configurations, the second entry fails to save.
+Если одинаковые IP-адреса указаны и в конфигурации разрешений, и в конфигурации блокировок, вторую запись сохранить не удастся.
 
-You can put an IP range on one list and then a sub-range or IP address that is part of it on the other. Using USA (range) and NY (sub-range) as an example, the expected behavior is:
-- USA is on blocklist and NY is on allowlist &mdash; Traffic from the USA is blocked, but IPs from NY are allowed.
-- USA is on the allowlist and NY is on the blocklist &mdash; USA traffic is allowed, but IPs from NY are blocked.
+Вы можете поместить диапазон IP-адресов в один список, а входящий в него поддиапазон или IP-адрес в другой. На примере США (диапазон) и Нью-Йорка (поддиапазон) ожидаемое поведение будет следующим:
+- США в списке заблокированных, а Нью-Йорк в списке разрешённых &mdash; Трафик из США блокируется, но IP-адреса из Нью-Йорка разрешены.
+- США в списке разрешённых, а Нью-Йорк в списке заблокированных &mdash; Трафик из США разрешён, но IP-адреса из Нью-Йорка заблокированы.
 
 :::
 
-## Enabling restrictions
+## Включение ограничений {#enabling-restrictions}
 
-Once you finish adding all your ranges, you can enable IP restrictions by selecting **Enable IP restrictions** and clicking **Save**. If your IP address is in any of the blocklist ranges, you can't save or enable IP restrictions &mdash; this prevents accidental account lockouts. If you get locked out due to IP changes on your end, reach out to support@getdbt.com.
+Завершив добавление всех диапазонов, вы можете включить ограничения по IP-адресам, выбрав **Включить ограничения по IP-адресам** и нажав **Сохранить**. Если ваш IP-адрес входит в любой из диапазонов списка заблокированных, вы не сможете сохранить или включить ограничения по IP-адресам &mdash; это предотвращает случайную потерю доступа к аккаунту. Если вы потеряете доступ из-за изменения IP-адреса на вашей стороне, обратитесь по адресу support@getdbt.com.
 
-Once enabled, when someone attempts to access <Constant name="dbt" /> from a restricted IP, they encounter one of the following messages depending on whether they use email and password or SSO login:
+После включения ограничений при попытке получить доступ к <Constant name="dbt" /> с IP-адреса, на который распространяется ограничение, пользователь увидит одно из следующих сообщений в зависимости от того, использует ли он для входа электронную почту и пароль или SSO:
 
-- For email logins: "Access denied! Please contact your admin for more details."
-- For SSO logins: "Access denied! Please contact your admin for more details." on a dbt login page
+- При входе с электронной почтой: "Доступ запрещён! Обратитесь к администратору за дополнительной информацией."
+- При входе через SSO: "Доступ запрещён! Обратитесь к администратору за дополнительной информацией." на странице входа в dbt

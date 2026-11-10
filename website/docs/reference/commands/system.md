@@ -1,70 +1,70 @@
 ---
-title: "About dbt system command"
+title: "О команде dbt system"
 sidebar_label: "system"
 id: "system"
-description: "Use dbt system to update or uninstall dbt v2 using the CLI, or pre-install supported ADBC adapter drivers."
+description: "Используйте dbt system для обновления или удаления dbt v2 через CLI, а также для предварительной установки поддерживаемых драйверов адаптеров ADBC."
 ---
 
-# About dbt system command
+# О команде dbt system
 
-`dbt system` provides commands for managing your dbt installation. v2 is a single compiled binary with no dependencies on other libraries. Once installed, `dbt system` lets you update, uninstall, and manage drivers directly without pip, brew, or a Python environment. 
+`dbt system` предоставляет команды для управления установленной версией dbt. Версия v2 представляет собой единый скомпилированный исполняемый файл без зависимостей от других библиотек. После установки `dbt system` позволяет обновлять и удалять dbt, а также управлять драйверами напрямую, без pip, brew или среды Python. 
 
-`dbt system update` and `dbt system uninstall` are only supported for [CDN installations](/docs/local/install-dbt) of <Constant name="fusion" />. If you installed <Constant name="fusion" /> via Pip, Homebrew, or Winget, you'll need to update or uninstall dbt from those tools.
+`dbt system update` и `dbt system uninstall` поддерживаются только для <Constant name="fusion" />, [установленного через CDN](/docs/local/install-dbt). Если вы установили <Constant name="fusion" /> через Pip, Homebrew или Winget, для обновления или удаления dbt необходимо использовать эти инструменты.
 
-<Constant name="core" /> has no equivalent.
+В <Constant name="core" /> аналогичной команды нет.
 
-## Usage
+## Использование
 
 ```shell
 dbt system <subcommand> [flags]
 ```
 
-## Subcommands
+## Подкоманды
 
-| Subcommand | Description |
+| Подкоманда | Описание |
 |---|---|
-| `dbt system update` | Update dbt to the latest (or a specified) version |
-| `dbt system uninstall` | Remove <Constant name="fusion" />  from your system |
-| `dbt system install-drivers` | Pre-install all supported ADBC adapter drivers |
+| `dbt system update` | Обновить dbt до последней (или указанной) версии |
+| `dbt system uninstall` | Удалить <Constant name="fusion" />  из вашей системы |
+| `dbt system install-drivers` | Предварительно установить все поддерживаемые драйверы адаптеров ADBC |
 
 ## dbt system update
 
-`dbt system update` updates the CLI binary in place. By default, it updates to the latest stable release. You can also target a named channel or a specific version number.
+`dbt system update` обновляет исполняемый файл CLI на месте. По умолчанию команда обновляет его до последней стабильной версии. Также можно указать именованный канал или конкретный номер версии.
 
 ```shell
 dbt system update [flags]
 ```
 
-### Options
+### Параметры
 
-| Flag | Description |
+| Флаг | Описание |
 |---|---|
-| `--version VERSION` | Update to a specific version (for example, `2.0.1`) or a named channel (`canary`, `dev`). Defaults to the latest stable release. |
-| `--package PACKAGE` | Which package to update. Accepts `dbt` or `all`. Defaults to `dbt`. |
+| `--version VERSION` | Обновить до конкретной версии (например, `2.0.1`) или версии из именованного канала (`canary`, `dev`). По умолчанию используется последняя стабильная версия. |
+| `--package PACKAGE` | Пакет для обновления. Допустимые значения: `dbt` или `all`. По умолчанию используется `dbt`. |
 
-### Version channels
+### Каналы версий
 
-| Channel | Description |
+| Канал | Описание |
 |---|---|
-| _(none)_ | Latest stable release |
-| `canary` | Most recent preview build (under active testing and may be pulled back) |
-| `dev` | Development build (may be unstable) |
+| _(не указан)_ | Последняя стабильная версия |
+| `canary` | Самая свежая предварительная сборка (проходит активное тестирование и может быть отозвана) |
+| `dev` | Сборка для разработки (может быть нестабильной) |
 
-### Examples
+### Примеры
 
-Update to the latest stable release:
+Обновление до последней стабильной версии:
 
 ```shell
 dbt system update
 ```
 
-Update to a specific version:
+Обновление до конкретной версии:
 
 ```shell
 dbt system update --version 2.0.1
 ```
 
-Update to the canary channel:
+Обновление до версии из канала canary:
 
 ```shell
 dbt system update --version canary
@@ -72,29 +72,29 @@ dbt system update --version canary
 
 ## dbt system uninstall
 
-`dbt system uninstall` removes the CLI binary from your system. On macOS and Linux, it downloads and runs the official `uninstall.sh` script. On Windows, a PowerShell script handles removal after the current process exits (to release the file lock on the running executable).
+`dbt system uninstall` удаляет исполняемый файл CLI из вашей системы. В macOS и Linux команда загружает и запускает официальный скрипт `uninstall.sh`. В Windows удаление выполняет скрипт PowerShell после завершения текущего процесса (чтобы снять блокировку файла запущенной программы).
 
 ```shell
 dbt system uninstall
 ```
 
-This command takes no additional flags.
+Эта команда не принимает дополнительных флагов.
 
 ## dbt system install-drivers
 
-`dbt system install-drivers` downloads and caches all supported ADBC adapter driver libraries (`.dylib`, `.so`, `.dll`) for every supported data platform at once. Normally, dbt downloads drivers on first use when you run a command against a new data platform. Use `dbt system install-drivers` to pre-populate the cache (for example, before going offline or switching between projects that target different warehouses).
+`dbt system install-drivers` загружает и кэширует все поддерживаемые библиотеки драйверов адаптеров ADBC (`.dylib`, `.so`, `.dll`) сразу для всех поддерживаемых платформ данных. Обычно dbt загружает драйверы при первом использовании, когда вы выполняете команду для новой платформы данных. Используйте `dbt system install-drivers` для предварительного заполнения кэша (например, перед переходом в автономный режим или переключением между проектами, использующими разные хранилища данных).
 
 ```shell
 dbt system install-drivers
 ```
 
-This command takes no additional flags.
+Эта команда не принимает дополнительных флагов.
 
-:::tip Networking note
-`dbt system install-drivers` downloads files from `https://public.cdn.getdbt.com`. If your environment restricts outbound network access, make sure this endpoint is allowlisted. See [dbt v2 networking requirements](/docs/local/dbt-networking-requirements) for the full list of endpoints.
+:::tip Примечание о сетевом доступе
+`dbt system install-drivers` загружает файлы с `https://public.cdn.getdbt.com`. Если в вашей среде ограничен исходящий сетевой доступ, убедитесь, что этот адрес добавлен в список разрешённых. Полный список адресов см. в разделе [Требования dbt v2 к сетевому доступу](/docs/local/dbt-networking-requirements).
 :::
 
-## Related commands
+## Связанные команды
 
-- [`dbt debug`](/reference/commands/debug) &mdash; Test your dbt project and connection configuration.
-- [dbt v2 networking requirements](/docs/local/dbt-networking-requirements) &mdash; Review outbound endpoints required by <Constant name="fusion_engine" />.
+- [`dbt debug`](/reference/commands/debug) &mdash; Проверка проекта dbt и конфигурации подключения.
+- [Требования dbt v2 к сетевому доступу](/docs/local/dbt-networking-requirements) &mdash; Список адресов, исходящий доступ к которым необходим для <Constant name="fusion_engine" />.

@@ -369,10 +369,10 @@ savedQuery(environmentId: "123", savedQueryName: "query_name") {
 
 При выполнении запросов к данным необходимо указать _либо_ `groupBy`, _либо_ выборку `metrics`. В следующем разделе приведены примеры того, как выполнять запросы к метрикам:
 
-- [Create query](#create-query)
-- [Fetch query result](#fetch-query-result)
+- [Создать запрос](#create-query)
+- [Получить результат запроса](#fetch-query-result)
 
-#### Create query {#create-query}
+#### Создать запрос {#create-query}
 
 ```graphql
 createQuery(

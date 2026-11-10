@@ -16,7 +16,7 @@ availability:
 - **Исправление:** Исправления ошибок и безопасности
 - **Изменение поведения:** Изменение существующего поведения, которое не подходит под другие категории, например, устаревание функций или изменения настроек по умолчанию
 
-Примечания к выпускам сгруппированы по месяцам для мультитенантных сред и сред в виртуальном частном облаке (VPC). <span><img src="/img/fontawesome/rss.svg" alt="RSS" className="rss-icon" />Подпишитесь на обновления примечаний к выпускам через [RSS](https://docs.getdbt.com/feeds/release-notes-rss.xml), [Atom](https://docs.getdbt.com/feeds/release-notes-atom.xml) или [JSON Feed](https://docs.getdbt.com/feeds/release-notes-rss.json).</span>
+Примечания к выпускам сгруппированы по месяцам для мультитенантных сред и сред в виртуальном частном облаке (VPC). <span><img src="/img/fontawesome/rss.svg" alt="RSS" className="rss-icon" />Подпишитесь на обновления примечаний к выпускам через [RSS](/feeds/release-notes-rss.xml), [Atom](/feeds/release-notes-atom.xml) или [JSON Feed](/feeds/release-notes-rss.json).</span>
 
 Об обновлениях <Constant name="fusion_engine" /> см. в [журнале изменений v2](https://github.com/dbt-labs/dbt/blob/main/CHANGELOG-dbt.md).
 

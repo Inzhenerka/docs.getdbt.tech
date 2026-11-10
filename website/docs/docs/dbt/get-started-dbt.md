@@ -1,59 +1,59 @@
 ---
-title: "Get started with dbt"
-description: "Start using dbt locally to take data transformation to the next level."
-sidebar_label: "Get started"
+title: "Начало работы с dbt"
+description: "Начните использовать dbt локально, чтобы вывести преобразование данных на новый уровень."
+sidebar_label: "Начало работы"
 id: get-started-dbt
 hide_table_of_contents: true
 hide_title: true
 ---
 
-### New to dbt? Start here
+### Впервые работаете с dbt? Начните здесь
 
-Once you've caught up on everything [dbt has to offer](/docs/introduction), start with the path that matches how you want to use dbt.
+Ознакомившись со всеми [возможностями dbt](/docs/introduction), выберите путь, который соответствует тому, как вы хотите использовать dbt.
 
 <div className="grid--3-col">
 
 <Card
-    title="Install dbt"
-    body="Install dbt from your command line."
+    title="Установка dbt"
+    body="Установите dbt из командной строки."
     link="/docs/local/install-dbt"
     icon="dbt-bit"/>
 
 <Card
-    title="Install the dbt VS Code extension"
-    body="Get dbt's performance plus autocomplete, inline errors, and lineage in your editor."
+    title="Установка расширения dbt для VS Code"
+    body="Используйте производительность dbt, автодополнение, отображение ошибок прямо в коде и граф зависимостей данных в своём редакторе."
     link="/docs/about-dbt-extension"
     icon="dbt-bit"/>
 
 <Card
-    title="Sign up for the dbt platform"
-    body="Create a dbt platform account to access dbt platform-based capabilities."
+    title="Регистрация на платформе dbt"
+    body="Создайте учётную запись на платформе dbt, чтобы получить доступ к её возможностям."
     link="https://www.getdbt.com/signup"
     icon="dbt-bit"/>
 
 </div>
 
-### Already using dbt? Start here
+### Уже используете dbt? Начните здесь
 
-Upgrade your existing projects to v2 and learn about the tools available to you once you're there.
+Обновите существующие проекты до v2 и узнайте об инструментах, которые станут вам доступны после обновления.
 
 <div className="grid--3-col">
 
 <Card
-    title="Preparing to upgrade from v1 to v2"
-    body="Step-by-step guide to prepare your dbt platform projects for upgrading to v2."
+    title="Подготовка к обновлению с v1 до v2"
+    body="Пошаговое руководство по подготовке проектов на платформе dbt к обновлению до v2."
     link="/guides/prepare-v2-upgrade"
     icon="dbt-bit" />
 
 <Card
-    title="Upgrade to v2"
-    body="Learn how to upgrade your eligible projects on the dbt platform to v2."
+    title="Обновление до v2"
+    body="Узнайте, как обновить до v2 проекты на платформе dbt, для которых доступно обновление."
     link="/guides/upgrade-to-v2"
     icon="dbt-bit" />
 
 <Card
-    title="Hybrid dbt platform and local workflows"
-    body="Learn how to keep credentials, environment variables, and dbt versions in sync between dbt platform and local development."
+    title="Совместная работа на платформе dbt и локально"
+    body="Узнайте, как синхронизировать учётные данные, переменные окружения и версии dbt между платформой dbt и локальной средой разработки."
     link="/guides/dbt-platform-local-workflow"
     icon="dbt-bit" />
 

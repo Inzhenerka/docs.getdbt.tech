@@ -1,18 +1,18 @@
 ---
-title: "Multi-cell or static subdomain account connection issues"
-sidebar_label: "Multi-cell or static subdomain account connection issues"
-description: "Troubleshooting: Multi-cell or static subdomain account connection issues"
+title: "Проблемы с подключением к аккаунту в multi-cell или со статическим поддоменом"
+sidebar_label: "Проблемы с подключением к аккаунту в multi-cell или со статическим поддоменом"
+description: "Устранение неполадок: проблемы с подключением к аккаунту в multi-cell или со статическим поддоменом"
 id: mcp-troubleshoot-multicell
 ---
 
-**Symptoms:** Connection errors when your account URL includes a prefix (for example, `abc123.us1.dbt.com`).
+**Симптомы:** Ошибки подключения, когда URL вашего аккаунта содержит префикс (например, `abc123.us1.dbt.com`).
 
-**Solution (as of v1.14.0):** Set `DBT_HOST` to the full hostname including the prefix. If you're using PAT-based auth, also set `DBT_ACCOUNT_ID`.
+**Решение (начиная с v1.14.0):** Задайте для `DBT_HOST` полное имя хоста, включая префикс. Если вы используете аутентификацию на основе PAT, также задайте `DBT_ACCOUNT_ID`.
 
 ```bash
-# ✅ Correct
+# ✅ Правильно
 DBT_HOST=abc123.us1.dbt.com
-DBT_ACCOUNT_ID=12345  # required for PAT-based auth
+DBT_ACCOUNT_ID=12345  # требуется для аутентификации на основе PAT
 ```
 
-You no longer need to set `MULTICELL_ACCOUNT_PREFIX` or `DBT_HOST_PREFIX`. If you have these set from an older configuration, remove them.
+Больше не нужно задавать `MULTICELL_ACCOUNT_PREFIX` или `DBT_HOST_PREFIX`. Если эти переменные заданы в вашей старой конфигурации, удалите их.

@@ -103,7 +103,7 @@ require-dbt-version: ">=0.17.2"
 
 ## Шаг 3: Обновите dbt {#step-3-upgrade-dbt}
 
-Если вы используете dbt Cloud, вы можете обновиться [как описано здесь](https://docs.getdbt.tech/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-choosing-a-dbt-version). Мы рекомендуем [создать второй "песочный" проект](https://docs.getdbt.tech/docs/dbt-cloud/cloud-configuring-dbt-cloud/cloud-upgrading-dbt-versions#testing-your-changes-before-upgrading), чтобы ваши эксперименты не повлияли на остальную команду. Для dbt Core инструкции по обновлению будут варьироваться в зависимости от вашего [исходного метода установки](https://docs.getdbt.tech/dbt-cli/installation).
+Если вы используете dbt Cloud, вы можете обновиться [как описано здесь](/docs/dbt-versions/upgrade-dbt-platform-version). Мы рекомендуем [создать второй "песочный" проект](/docs/dbt-versions/upgrade-dbt-platform-version#testing-your-changes-before-upgrading), чтобы ваши эксперименты не повлияли на остальную команду. Для dbt Core инструкции по обновлению будут варьироваться в зависимости от вашего [исходного метода установки](/docs/local/install-dbt).
 
 ## Шаг 4: Попробуйте запустить `dbt compile` {#step-4-try-to-run-dbt-compile}
 
@@ -171,7 +171,7 @@ require-dbt-version: ">=0.17.2"
 
 После этого убедитесь, что ваша среда CI в dbt Cloud или ваш оркестратор находятся на правильной версии dbt, затем откройте PR.
 
-Если вы используете [Slim CI](https://docs.getdbt.tech/docs/best-practices#run-only-modified-models-to-test-changes-slim-ci), имейте в виду, что артефакты не обязательно совместимы от одной версии к другой, так что вы не сможете использовать его, пока задача, на которую вы ссылаетесь, не завершит выполнение с обновленной версией dbt. Это не влияет на наш пример, так как поддержка Slim CI не вышла до 0.18.0.
+Если вы используете [Slim CI](/best-practices/best-practice-workflows#run-only-modified-models-to-test-changes-slim-ci), имейте в виду, что артефакты не обязательно совместимы от одной версии к другой, так что вы не сможете использовать его, пока задача, на которую вы ссылаетесь, не завершит выполнение с обновленной версией dbt. Это не влияет на наш пример, так как поддержка Slim CI не вышла до 0.18.0.
 
 ## Шаг 7. Объедините и сообщите {#step-7-merge-and-communicate}
 

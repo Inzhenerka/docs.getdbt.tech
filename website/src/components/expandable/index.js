@@ -20,7 +20,11 @@ function Expandable({ children, alt_header = null, lifecycle, lifecycle_size, is
 
   const [isOpen, setIsOpen] = useState(is_open);
   const detailsRef = useRef(null);
-  const anchorId = anchor_id ?? slugify(alt_header);
+  const localizedSlug = alt_header.toLowerCase().normalize("NFC")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "");
+  const anchorId = anchor_id ?? (slugify(alt_header) || localizedSlug);
+  const hash = `#${encodeURIComponent(anchorId)}`;
 
   // Handles clicking on the header to expand/collapse
   const handleToggleClick = (event) => {
@@ -32,7 +36,7 @@ function Expandable({ children, alt_header = null, lifecycle, lifecycle_size, is
   const handleCopyClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const url = `${window.location.href.split('#')[0]}#${anchorId}`;
+    const url = `${window.location.href.split('#')[0]}${hash}`;
     navigator.clipboard.writeText(url).then(() => showCopyPopup());
   };
 
@@ -65,7 +69,7 @@ function Expandable({ children, alt_header = null, lifecycle, lifecycle_size, is
   // Auto-expand when linked via hash (URL fragment)
   useEffect(() => {
     const checkHash = () => {
-      if (window.location.hash === `#${anchorId}`) {
+      if (window.location.hash === hash) {
         setIsOpen(true);
         detailsRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
@@ -80,7 +84,7 @@ function Expandable({ children, alt_header = null, lifecycle, lifecycle_size, is
     return () => {
       window.removeEventListener('hashchange', checkHash);
     };
-  }, [anchorId]);
+  }, [hash]);
 
   // Observe search highlight and auto-expand
   useEffect(() => {

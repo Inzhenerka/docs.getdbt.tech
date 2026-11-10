@@ -82,7 +82,7 @@ Time spine — это dbt‑модель, которая генерирует п
     ```
 
 4. Если вы разрабатываете модель в <Constant name="studio_ide" />, вы можете просмотреть результат её выполнения, нажав кнопку **Preview**:
-   <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Preview the time spine model in the Studio IDE" />
+   <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Предпросмотр модели временной шкалы в Studio IDE" />
 
 ## Добавление YAML‑конфигурации для time spine {#add-yaml-configuration-for-the-time-spine}
 
@@ -151,7 +151,7 @@ Time spine — это dbt‑модель, которая генерирует п
    ```
 
 2. Если вы разрабатываете в <Constant name="studio_ide" />, вы можете предварительно просмотреть модель, нажав кнопку **Preview**:
-    <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Preview the time spine model in the Studio IDE" />
+    <Lightbox src="/img/mf-guide-preview-time-spine-table.png" title="Предпросмотр модели временной шкалы в Studio IDE" />
 
 3. Убедитесь, что модель:
    - содержит ровно одну строку на каждый день;
@@ -246,7 +246,7 @@ Time spine — это dbt‑модель, которая генерирует п
    ```
 
 Если вы разрабатываете в <Constant name="studio_ide" />, вы можете просмотреть результат выполнения модели, нажав кнопку **Preview**.
-   <Lightbox src="/img/mf-guide-query.png" title="Validate the metrics and time spine output in the Studio IDE" />
+   <Lightbox src="/img/mf-guide-query.png" title="Проверка метрик и временной шкалы в Studio IDE" />
 
 :::tip Дополнительные баллы!
 Для дополнительной практики попробуйте:
@@ -337,7 +337,7 @@ Time spine — это dbt‑модель, которая генерирует п
    dbt sl query --metrics orders --group-by metric_time__fiscal_year
    ```
 
-   <Lightbox src="/img/mf-guide-fiscal-preview.png" title="Validate the custom calendar metrics and time spine output in the Studio IDE" />
+   <Lightbox src="/img/mf-guide-fiscal-preview.png" title="Проверка метрик и временной шкалы пользовательского календаря в Studio IDE" />
 
 ## Что дальше {#whats-next}
 

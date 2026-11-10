@@ -1,5 +1,5 @@
 ---
-title: "Project state in dbt"
+title: "Состояние проекта в dbt"
 ---
 
 <Constant name="dbt" /> позволяет развертывать dbt с сохранением состояния. Артефакты доступны программно через [Discovery API](/docs/dbt-apis/discovery-querying) на платформе метаданных.

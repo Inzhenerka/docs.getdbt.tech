@@ -8,7 +8,7 @@ id: testing-seeds
 
 Чтобы тестировать и документировать seed-файлы, используйте [файл свойств](/reference/configs-and-properties) и размещайте настройки внутри ключа `seeds:`
 
-## Пример {#example}
+## Пример {#testing-seeds-example}
 
 <File name='seeds/properties.yml'>
 

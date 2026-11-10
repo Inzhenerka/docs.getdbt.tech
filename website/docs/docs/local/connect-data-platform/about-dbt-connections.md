@@ -1,20 +1,20 @@
 ---
-title: "About data platform connections"
+title: "О подключениях к платформам данных"
 id: "about-dbt-connections"
-description: "Learn how to connect dbt to your data platform"
-sidebar_label: "About data platform connections"
+description: "Узнайте, как подключить dbt к вашей платформе данных"
+sidebar_label: "О подключениях к платформам данных"
 hide_table_of_contents: true
 pagination_next: null
 pagination_prev: null
 availability: local_free
 ---
 
-dbt connects to your data platform to run SQL transformations against your data. 
+dbt подключается к вашей платформе данных для выполнения SQL-преобразований ваших данных. 
 <VersionBlock firstVersion="2.0">
 
-## Supported dbt v2 data platforms
+## Платформы данных, поддерживаемые dbt v2
 
-<Constant name="fusion_engine" /> includes built-in support for:
+<Constant name="fusion_engine" /> включает встроенную поддержку следующих платформ:
 
 - [Snowflake](/docs/local/connect-data-platform/snowflake-setup)
 - [Databricks](/docs/local/connect-data-platform/databricks-setup)
@@ -24,23 +24,23 @@ dbt connects to your data platform to run SQL transformations against your data.
 - [Apache Spark](/docs/local/connect-data-platform/spark-setup) <Lifecycle status="beta" />
 - [ClickHouse](/docs/local/connect-data-platform/clickhouse-setup) <Lifecycle status="beta" />
 
-<small> _Adapter lifecycle can differ between the <Constant name="dbt_platform" /> and local development. An adapter can reach GA in the dbt platform before it reaches GA for local use._ </small> <br /><br />
+<small> _Стадии жизненного цикла адаптеров могут различаться в <Constant name="dbt_platform" /> и при локальной разработке. Адаптер может стать общедоступным (GA) в платформе dbt раньше, чем для локального использования._ </small> <br /><br />
 
-<Constant name="fusion" /> uses [ADBC (Arrow Database Connectivity)](https://arrow.apache.org/adbc/) drivers for high-performance connections to these platforms. No separate adapter installation is required.
+<Constant name="fusion" /> использует драйверы [ADBC (Arrow Database Connectivity)](https://arrow.apache.org/adbc/) для высокопроизводительных подключений к этим платформам. Отдельная установка адаптера не требуется.
 
-## Connection profiles
+## Профили подключений
 
-When you run dbt locally, it reads your `dbt_project.yml` file to find the profile name, then looks for a profile with the same name in your `profiles.yml` file. This profile contains the connection details for your data platform.
+При локальном запуске dbt считывает файл `dbt_project.yml`, чтобы определить имя профиля, а затем ищет профиль с таким же именем в файле `profiles.yml`. Этот профиль содержит параметры подключения к вашей платформе данных.
 
-For detailed configuration options, refer to [Connection profiles](/docs/local/profiles.yml).
+Подробные сведения о параметрах настройки см. в разделе [Профили подключений](/docs/local/profiles.yml).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-## Supported <Constant name="core" /> data platforms
+## Платформы данных, поддерживаемые <Constant name="core" />
 
-<Constant name="core" /> connects to data platforms through adapters. Popular platforms include:
+<Constant name="core" /> подключается к платформам данных через адаптеры. Среди популярных платформ:
 
 - [Snowflake](/docs/local/connect-data-platform/snowflake-setup)
 - [Databricks](/docs/local/connect-data-platform/databricks-setup) 
@@ -48,44 +48,44 @@ For detailed configuration options, refer to [Connection profiles](/docs/local/p
 - [Google BigQuery](/docs/local/connect-data-platform/bigquery-setup)
 - [PostgreSQL](/docs/local/connect-data-platform/postgres-setup)
 - [Apache Spark](/docs/local/connect-data-platform/spark-setup) 
-- [Starburst or Trino](/docs/local/connect-data-platform/trino-setup)
+- [Starburst или Trino](/docs/local/connect-data-platform/trino-setup)
 - [Microsoft Fabric](/docs/local/connect-data-platform/fabric-setup)
 - [Azure Synapse](/docs/local/connect-data-platform/azuresynapse-setup)
 
-When you install <Constant name="core" />, you also need to install the specific adapter for your data platform. Adapters are maintained by dbt Labs, partners, and community members. Refer to [community adapters](/docs/community-adapters).
+При установке <Constant name="core" /> также необходимо установить адаптер для вашей платформы данных. Адаптеры поддерживаются dbt Labs, партнёрами и участниками сообщества. См. раздел [Адаптеры сообщества](/docs/community-adapters).
 
-For the full list of supported platforms, refer to [Supported data platforms](/docs/supported-data-platforms).
+Полный список поддерживаемых платформ см. в разделе [Поддерживаемые платформы данных](/docs/supported-data-platforms).
 
-## Connection profiles
+## Профили подключений
 
-When you run dbt from the CLI, it reads your `dbt_project.yml` file to find the profile name, then looks for a profile with the same name in your `profiles.yml` file. This profile contains the connection details for your data platform.
+При запуске dbt из командной строки dbt считывает файл `dbt_project.yml`, чтобы определить имя профиля, а затем ищет профиль с таким же именем в файле `profiles.yml`. Этот профиль содержит параметры подключения к вашей платформе данных.
 
-For detailed configuration options, refer to [Connection profiles](/docs/local/profiles.yml).
+Подробные сведения о параметрах настройки см. в разделе [Профили подключений](/docs/local/profiles.yml).
 
-## Adapter features
+## Возможности адаптеров
 
-The following table lists features available for adapters:
+В следующей таблице перечислены возможности, доступные для адаптеров:
 
-| Adapter | Catalog | Source freshness |
+| Адаптер | Каталог | Актуальность источников |
 |---------|---------|------------------|
-| dbt default configuration | full | `loaded_at_field` |
-| `dbt-bigquery` | partial and full | metadata-based and `loaded_at_field` |
-| `dbt-databricks` | full | metadata-based and `loaded_at_field` |
-| `dbt-postgres` | partial and full | `loaded_at_field` |
-| `dbt-redshift` | partial and full | metadata-based and `loaded_at_field` |
-| `dbt-snowflake` | partial and full | metadata-based and `loaded_at_field` |
-| `dbt-spark` | full | `loaded_at_field` |
+| Конфигурация dbt по умолчанию | полное построение | `loaded_at_field` |
+| `dbt-bigquery` | частичное и полное построение | на основе метаданных и `loaded_at_field` |
+| `dbt-databricks` | полное построение | на основе метаданных и `loaded_at_field` |
+| `dbt-postgres` | частичное и полное построение | `loaded_at_field` |
+| `dbt-redshift` | частичное и полное построение | на основе метаданных и `loaded_at_field` |
+| `dbt-snowflake` | частичное и полное построение | на основе метаданных и `loaded_at_field` |
+| `dbt-spark` | полное построение | `loaded_at_field` |
 
-### Catalog 
+### Каталог 
 
-For adapters that support it, you can partially build the catalog (<Constant name="core_v1" /> only). This builds the catalog for only selected models using `dbt docs generate --select ...`. For adapters that don't support partial catalog generation, run `dbt docs generate` to build the full catalog.
+Для адаптеров, поддерживающих эту возможность, можно частично построить каталог (только в <Constant name="core_v1" />). При этом каталог строится только для выбранных моделей с помощью `dbt docs generate --select ...`. Для адаптеров, которые не поддерживают частичное построение каталога, выполните `dbt docs generate`, чтобы построить полный каталог.
 
-### Source freshness
+### Актуальность источников
 
-You can measure source freshness using warehouse metadata tables on supported adapters. This calculates source freshness without using the [`loaded_at_field`](/reference/resource-configs/freshness) and without querying the table directly. This approach is faster and more flexible (though it might sometimes be inaccurate, depending on how the warehouse tracks altered tables). You can override this with the `loaded_at_field` in the [source config](/reference/source-configs). If the adapter doesn't support this, you can still use the `loaded_at_field`.
+При использовании поддерживаемых адаптеров можно оценивать актуальность источников с помощью таблиц метаданных хранилища. Это позволяет вычислять актуальность источников без использования [`loaded_at_field`](/reference/resource-configs/freshness) и без прямых запросов к таблице. Такой подход быстрее и гибче (хотя иногда он может давать неточные результаты в зависимости от того, как хранилище отслеживает изменения таблиц). Это поведение можно переопределить, указав `loaded_at_field` в [конфигурации источника](/reference/source-configs). Если адаптер не поддерживает этот подход, вы по-прежнему можете использовать `loaded_at_field`.
 
 </VersionBlock>
 
-## Next steps
+## Дальнейшие шаги
 
-For step-by-step setup instructions with demo project data, see our [Quickstart guides](/guides).
+Пошаговые инструкции по настройке с использованием данных демонстрационного проекта см. в наших [руководствах по быстрому началу работы](/guides).

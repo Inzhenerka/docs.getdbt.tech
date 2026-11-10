@@ -1,5 +1,5 @@
 ---
-description: "Use the versions property to define multiple versions of a model and how each one differs."
+description: "Используйте свойство versions, чтобы описать версии модели и различия между ними."
 resource_types: [models]
 datatype: list
 required: no

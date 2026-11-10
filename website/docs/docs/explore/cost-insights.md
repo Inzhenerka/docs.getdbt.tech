@@ -1,7 +1,7 @@
 ---
-title: "Cost Insights in the dbt platform"
-sidebar_label: "About Cost Insights"
-description: "Track warehouse compute costs and understand the impact of optimizations across your dbt projects and models." 
+title: "Cost Insights на платформе dbt"
+sidebar_label: "О Cost Insights"
+description: "Отслеживайте затраты на вычислительные ресурсы хранилища данных и оценивайте эффект оптимизаций для ваших проектов и моделей dbt." 
 id: "cost-insights"
 tags: ['SAO', 'cost savings', 'models built', 'cost insights', 'cost reductions', 'cost optimizations']
 availability:
@@ -14,250 +14,250 @@ import SaoDeprecated from '/snippets/_sao-deprecated.md';
 
 # Cost Insights
 
-Cost Insights shows estimated costs and compute time for your dbt projects and models directly in the <Constant name="dbt_platform" />, so you can measure and share the impact of optimizations like [dbt State](/docs/deploy/dbt-state-about) and [state-aware orchestration](/docs/deploy/state-aware-about).
+Cost Insights показывает оценочные затраты и время использования вычислительных ресурсов для ваших проектов и моделей dbt непосредственно на <Constant name="dbt_platform" />, позволяя измерять эффект таких оптимизаций, как [dbt State](/docs/deploy/dbt-state-about) и [оркестрация с учётом состояния](/docs/deploy/state-aware-about), и делиться результатами.
 
 <SaoDeprecated />
 
-[dbt State](/docs/deploy/dbt-state-about) and [state-aware orchestration](/docs/deploy/state-aware-about) make your dbt workflows more efficient by reusing models and tests instead of running full rebuilds. When either is enabled, Cost Insights helps you demonstrate the resulting cost reductions and efficiency gains. These cost and cost reduction estimates are based on a retroactive analysis of runs after you enable dbt State or state-aware orchestration. They reflect actual historical usage, _not_ forecasts of future costs or cost reductions.
+[dbt State](/docs/deploy/dbt-state-about) и [оркестрация с учётом состояния](/docs/deploy/state-aware-about) повышают эффективность рабочих процессов dbt за счёт повторного использования моделей и тестов вместо их полного пересоздания. Когда включена любая из этих возможностей, Cost Insights помогает продемонстрировать достигнутое сокращение затрат и повышение эффективности. Эти оценки затрат и их сокращения основаны на ретроспективном анализе запусков после включения dbt State или оркестрации с учётом состояния. Они отражают фактическое использование ресурсов в прошлом, а _не_ прогнозы будущих затрат или их сокращения.
 
-With Cost Insights, you can see:
+С помощью Cost Insights вы можете увидеть:
 
-- **How much your dbt models cost to run**: See the compute cost and times for each model and job in your warehouse's native units.
-- **The cost reductions from using dbt State or state-aware orchestration**: Understand the cost reduction when dbt State or state-aware orchestration reuses unchanged models.
-- **Cost trends over time**: Track your warehouse spend and optimization impact across your dbt projects.
-- **Asset type filtering**: On Cost Insights charts (**Cost**, **Usage**, **Query run time**, **Builds**), use the **Assets** dropdown menu to filter data by **Models**, **Tests**, or **All**. Each tab keeps its own selection.
-- **Per-job cost breakdown**: In the Cost Insights table view, use the **All** and **Jobs** buttons to switch between an aggregated view and a per-job cost breakdown.
+- **Сколько стоит выполнение ваших моделей dbt**: просматривайте затраты на вычислительные ресурсы и время их использования для каждой модели и задания в единицах измерения вашего хранилища данных.
+- **Сокращение затрат благодаря dbt State или оркестрации с учётом состояния**: оценивайте снижение затрат при повторном использовании неизменённых моделей с помощью dbt State или оркестрации с учётом состояния.
+- **Динамику затрат во времени**: отслеживайте расходы на хранилище данных и эффект оптимизаций в ваших проектах dbt.
+- **Фильтрацию по типу ресурсов**: на диаграммах Cost Insights (**Cost**, **Usage**, **Query run time**, **Builds**) используйте раскрывающееся меню **Assets**, чтобы отфильтровать данные по **Models**, **Tests** или **All**. На каждой вкладке сохраняется собственный выбор.
+- **Разбивку затрат по заданиям**: в табличном представлении Cost Insights используйте кнопки **All** и **Jobs**, чтобы переключаться между сводным представлением и разбивкой затрат по заданиям.
 
-The Cost Insights section is available in different <Constant name="dbt_platform" /> areas and lets you view your cost data and the impact of dbt State and state-aware orchestration optimizations across various dimensions:
+Раздел Cost Insights доступен в разных областях <Constant name="dbt_platform" /> и позволяет просматривать данные о затратах и эффект оптимизаций dbt State и оркестрации с учётом состояния в различных разрезах:
 
-- [Project dashboard](/docs/explore/explore-cost-data#project-dashboard)
-- [Catalog on Model page](/docs/explore/explore-cost-data#model-performance-in-catalog)
-- [Job details page](/docs/explore/explore-cost-data#job-details) 
+- [Панель проекта](/docs/explore/explore-cost-data#project-dashboard)
+- [Catalog на странице модели](/docs/explore/explore-cost-data#model-performance-in-catalog)
+- [Страница сведений о задании](/docs/explore/explore-cost-data#job-details) 
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-project.png" title="Cost Insights in the project dashboard"/>
+<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-project.png" title="Cost Insights на панели проекта"/>
 
-<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-model.png" title="Cost Insights in Catalog"/>
+<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-model.png" title="Cost Insights в Catalog"/>
 
-<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-job.png" title="Cost Insights in job details"/>
+<Lightbox src="/img/docs/dbt-platform/cost-insights/cost-insights-job.png" title="Cost Insights в сведениях о задании"/>
 
 </DocCarousel>
 
-## Prerequisites
+## Предварительные требования
 
 import ViewCostData from '/snippets/_cost-insights-view.md';
 
 <ViewCostData />
 
-For setup instructions, see [Set up Cost Insights](/docs/explore/set-up-cost-insights).
+Инструкции по настройке приведены в разделе [Настройка Cost Insights](/docs/explore/set-up-cost-insights).
 
-## Understanding cost and reduction estimates
+## Как рассчитываются оценки затрат и их сокращения
 
 :::note
-Cost estimates are intended for visibility and optimization, not billing reconciliation.
+Оценки затрат предназначены для анализа и оптимизации, а не для сверки счетов.
 :::
 
-dbt calculates the cost of running your dbt models using your data warehouse's usage metadata and billing context. dbt computes costs daily using up to the _last seven days of available data_.
+dbt рассчитывает стоимость выполнения ваших моделей dbt, используя метаданные об использовании хранилища данных и сведения о тарификации. dbt рассчитывает затраты ежедневно, используя доступные данные максимум за _последние семь дней_.
 
-### Warehouse-specific logic
+### Особенности расчёта для разных хранилищ данных
 
-The following sections explain how costs are calculated for each supported warehouse. Expand each section to view the details.
+В следующих разделах объясняется, как рассчитываются затраты для каждого поддерживаемого хранилища данных. Разверните нужный раздел, чтобы узнать подробности.
 
 <Expandable alt_header="Snowflake">
 
-dbt computes Snowflake query costs using Snowflake's query attribution data and your credit price (`price_per_credit`). dbt pulls the `price_per_credit` value directly from Snowflake when available; otherwise, dbt uses the configured or default value in the <Constant name="dbt_platform" />. For more information about configuring or viewing these values, see [Configure Cost Insights settings](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional).
+dbt рассчитывает стоимость запросов Snowflake, используя данные Snowflake об отнесении затрат к запросам и вашу цену за кредит (`price_per_credit`). dbt получает значение `price_per_credit` непосредственно из Snowflake, если оно доступно; в противном случае dbt использует настроенное значение или значение по умолчанию на <Constant name="dbt_platform" />. Подробнее о настройке и просмотре этих значений см. в разделе [Настройка параметров Cost Insights](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional).
 
-Formula:
+Формула:
 ```
 credits_per_query * price_per_credit
 ```
 
-Where:
-- `credits_per_query` &mdash; Cloud services, compute, and query acceleration credits attributed to the query. 
-    - For standard and Generation 2 warehouses, dbt sources this value from [`QUERY_ATTRIBUTION_HISTORY`](https://docs.snowflake.com/en/sql-reference/account-usage/query_attribution_history). 
-    - For [Adaptive Warehouses](https://docs.snowflake.com/en/user-guide/warehouses-adaptive), dbt sources this value from [`QUERY_METERING_HISTORY`](https://docs.snowflake.com/en/sql-reference/account-usage/query_metering_history) &mdash; refer to [Configure platform metadata credentials](/docs/explore/set-up-cost-insights#snowflake) for required permissions.
-- `price_per_credit` &mdash; Your Snowflake credit price (from Snowflake system tables when available, otherwise from your configured input or the default rate).
+Где:
+- `credits_per_query` &mdash; кредиты за облачные сервисы, вычислительные ресурсы и ускорение запросов, отнесённые к запросу. 
+    - Для стандартных хранилищ и хранилищ Generation 2 dbt получает это значение из [`QUERY_ATTRIBUTION_HISTORY`](https://docs.snowflake.com/en/sql-reference/account-usage/query_attribution_history). 
+    - Для [Adaptive Warehouses](https://docs.snowflake.com/en/user-guide/warehouses-adaptive) dbt получает это значение из [`QUERY_METERING_HISTORY`](https://docs.snowflake.com/en/sql-reference/account-usage/query_metering_history) &mdash; необходимые разрешения описаны в разделе [Настройка учётных данных для метаданных платформы](/docs/explore/set-up-cost-insights#snowflake).
+- `price_per_credit` &mdash; ваша цена за кредит Snowflake (из системных таблиц Snowflake, если доступна; иначе используется заданное вами значение или тариф по умолчанию).
 
-:::info Snowflake attribution limitation
-Snowflake doesn't attribute cost to queries that run in roughly 100 milliseconds or less. As a result, Cost Insights totals may be _lower_ than the compute spend shown in your Snowflake billing dashboards. For more information, see the [Snowflake documentation](https://docs.snowflake.com/en/sql-reference/account-usage/query_attribution_history#usage-notes).
+:::info Ограничение отнесения затрат в Snowflake
+Snowflake не относит затраты к запросам, которые выполняются примерно за 100 миллисекунд или быстрее. Поэтому итоговые значения Cost Insights могут быть _ниже_ расходов на вычислительные ресурсы, отображаемых на панелях биллинга Snowflake. Подробнее см. в [документации Snowflake](https://docs.snowflake.com/en/sql-reference/account-usage/query_attribution_history#usage-notes).
 :::
 </Expandable>
 
 <Expandable alt_header="BigQuery">
 
-BigQuery does not expose per-query cost directly in system tables. Instead, dbt estimates cost by combining _query usage_ with a _pricing input_ (either from your configuration or the default rate).
+BigQuery не предоставляет стоимость отдельных запросов непосредственно в системных таблицах. Вместо этого dbt оценивает затраты, сочетая _данные об использовании ресурсов запросом_ с _ценовым параметром_ (из ваших настроек или тарифа по умолчанию).
 
-- **On-demand pricing**
+- **Тарификация по запросу (on-demand)**
 
-    The cost is determined by how much data each query processes. The usage shows the amount of that data billed for the query.
+    Стоимость определяется объёмом данных, обрабатываемых каждым запросом. Показатель использования отражает объём этих данных, за который взимается плата при выполнении запроса.
 
-    Formula:
+    Формула:
     ```
     data_processed_per_query * price_per_tib
     ```
 
-    Where:
-    - `data_processed_per_query` - Total data billed for the query (normalized to TiB). dbt sources this value from `information_schema.jobs.total_bytes_billed`. For more information, see the [BigQuery documentation](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs).
-    - `price_per_tib` - BigQuery on-demand price per TiB (from your configuration or the default rate).
+    Где:
+    - `data_processed_per_query` - общий объём данных, за который взимается плата при выполнении запроса (в TiB). dbt получает это значение из `information_schema.jobs.total_bytes_billed`. Подробнее см. в [документации BigQuery](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs).
+    - `price_per_tib` - цена BigQuery за TiB при тарификации on-demand (из ваших настроек или тарифа по умолчанию).
         
-- **Capacity pricing (reservations)**
+- **Тарификация по мощности (резервирование)**
 
-    The cost is determined by how long each query runs on reserved compute. The usage shows the amount of that reserved compute time consumed by a query.
+    Стоимость определяется временем выполнения каждого запроса на зарезервированных вычислительных ресурсах. Показатель использования отражает объём времени зарезервированных вычислительных ресурсов, потреблённого запросом.
 
-    Formula:
+    Формула:
     ```
     compute_time_per_query * price_per_slot_hour
     ```
 
-    Where:
-    - `compute_time_per_query` - Total slot time used by the query (in hours). dbt sources this value from `information_schema.jobs.total_slot_ms`. For more information, see the [BigQuery documentation](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs).
-    - `price_per_slot_hour` - BigQuery capacity price per slot-hour (from your configuration or the default rate)
+    Где:
+    - `compute_time_per_query` - суммарное время использования слотов запросом (в часах). dbt получает это значение из `information_schema.jobs.total_slot_ms`. Подробнее см. в [документации BigQuery](https://docs.cloud.google.com/bigquery/docs/information-schema-jobs).
+    - `price_per_slot_hour` - цена BigQuery за слот-час при тарификации по мощности (из ваших настроек или тарифа по умолчанию)
 
-- **Cached queries**
-    Queries served from cache do not consume compute and are counted as $0.
+- **Кэшированные запросы**
+    Запросы, обслуживаемые из кэша, не потребляют вычислительные ресурсы и учитываются со стоимостью $0.
 
 </Expandable>
 
 <Expandable alt_header="Databricks">
 
-Databricks does not directly attribute usage to individual queries. Instead, dbt estimates per-query cost by proportionally allocating Databricks Units (DBUs) based on how long each query ran during a billing period.
+Databricks не относит использование ресурсов непосредственно к отдельным запросам. Вместо этого dbt оценивает стоимость каждого запроса, пропорционально распределяя единицы Databricks Units (DBU) в зависимости от продолжительности выполнения каждого запроса в течение расчётного периода.
 
-- Queries that run longer receive a larger share of usage.
-- Usage is converted to dollars using your list price.
+- Запросам, которые выполняются дольше, назначается большая доля использованных ресурсов.
+- Использование ресурсов пересчитывается в доллары по вашей прейскурантной цене.
 
-Formula:
+Формула:
 ```
 usage_per_query * cost_per_dbu
 ```
 
-Where:
-- `usage_per_query` - DBUs attributed to the query.
-- `cost_per_dbu` - Dollar cost per DBU for the relevant stock-keeping unit. For information about the pricing system table, see the [Databricks documentation](https://docs.databricks.com/aws/en/admin/system-tables/pricing).
+Где:
+- `usage_per_query` - количество DBU, отнесённых к запросу.
+- `cost_per_dbu` - стоимость одной DBU в долларах для соответствующей товарной позиции (SKU). Сведения о системной таблице цен см. в [документации Databricks](https://docs.databricks.com/aws/en/admin/system-tables/pricing).
 
-Databricks reports usage in billing windows. These windows are periods of time where a compute resource consumed a known number of DBUs. Queries have their own start and end times. For information about the billing usage system table, see the [Databricks documentation](https://docs.databricks.com/aws/en/admin/system-tables/billing).
+Databricks предоставляет данные об использовании ресурсов по расчётным интервалам. Это периоды времени, за которые вычислительный ресурс потребил известное количество DBU. У запросов есть собственное время начала и окончания. Сведения о системной таблице использования ресурсов для тарификации см. в [документации Databricks](https://docs.databricks.com/aws/en/admin/system-tables/billing).
 
-To attribute usage to queries:
+Чтобы отнести использование ресурсов к запросам:
 
-1. dbt identifies which billing windows each query overlaps.
-2. dbt calculates how long the query ran during each window.
-3. dbt allocates DBUs _proportionally_ based on the query’s share of total execution time on that compute resource during the same window.
+1. dbt определяет, с какими расчётными интервалами пересекается каждый запрос.
+2. dbt рассчитывает, сколько времени запрос выполнялся в каждом интервале.
+3. dbt распределяет DBU _пропорционально_ доле запроса в общем времени выполнения запросов на этом вычислительном ресурсе в том же интервале.
 
-Conceptually:
+Концептуально:
 ```
 DBUs_in_window * (query_runtime / total_query_runtime_in_window)
 ```
 
-dbt sums this across all overlapping windows to get `usage_per_query`.
+dbt суммирует эти значения по всем пересекающимся интервалам, чтобы получить `usage_per_query`.
 </Expandable>
 
 <Expandable alt_header="Amazon Redshift" lifecycle="preview" lifecycle_size="75">
 
-Cost Insights supports both Amazon Redshift Serverless and provisioned cluster deployments. dbt detects your deployment type automatically when testing the connection.
+Cost Insights поддерживает как Amazon Redshift Serverless, так и развёртывания с выделенными кластерами. dbt автоматически определяет тип развёртывания при проверке подключения.
 
 :::note
-On Redshift, dbt attributes query costs using the comments it automatically injects into each query. If another process removes or replaces these comments, dbt can't tie the query back to its model, and its cost won't be attributed. Make sure nothing in your Redshift environment removes or replaces dbt's query comments.
+В Redshift dbt относит затраты к запросам с помощью комментариев, которые автоматически добавляет в каждый запрос. Если другой процесс удаляет или заменяет эти комментарии, dbt не может связать запрос с его моделью, и затраты на него не будут отнесены к ней. Убедитесь, что ничто в вашей среде Redshift не удаляет и не заменяет комментарии dbt в запросах.
 :::
 
 - **Redshift Serverless**
 
-    dbt estimates cost by identifying which Redshift Processing Unit (RPU) billing periods overlap with each query's execution time and attributing the proportional share of RPU-hours to the query.
+    dbt оценивает затраты, определяя, какие расчётные периоды Redshift Processing Unit (RPU) пересекаются со временем выполнения каждого запроса, и относя к запросу пропорциональную долю RPU-часов.
 
-    Formula:
+    Формула:
     ```
     rpu_hours_per_query * rpu_price_per_hour
     ```
 
-    Where:
-    - `rpu_hours_per_query` - RPU-hours attributed to the query based on its proportional overlap with each billing period. dbt sources billing period data from `SYS_SERVERLESS_USAGE`. For more information, see the [Amazon Redshift documentation](https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-billing.html).
-    - `rpu_price_per_hour` - Your RPU price per hour (from your configured value in [Cost Insights settings](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional)).
+    Где:
+    - `rpu_hours_per_query` - RPU-часы, отнесённые к запросу пропорционально его пересечению с каждым расчётным периодом. dbt получает данные о расчётных периодах из `SYS_SERVERLESS_USAGE`. Подробнее см. в [документации Amazon Redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-billing.html).
+    - `rpu_price_per_hour` - ваша цена за RPU в час (из значения, заданного в [настройках Cost Insights](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional)).
 
 - **Redshift Provisioned**
 
-    dbt estimates cost based on how long each query ran and how many nodes your cluster has.
+    dbt оценивает затраты на основе продолжительности выполнения каждого запроса и количества узлов в вашем кластере.
 
-    Formula:
+    Формула:
     ```
     elapsed_time_hours * node_count * node_price_per_hour
     ```
 
-    Where:
-    - `elapsed_time_hours` - Query execution time in hours. dbt sources this from `SYS_QUERY_HISTORY`.
-    - `node_count` - Number of nodes in your cluster. dbt sources this from `STV_SLICES`.
-    - `node_price_per_hour` - Your price per node per hour (from your configured value in [Cost Insights settings](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional)).
+    Где:
+    - `elapsed_time_hours` - время выполнения запроса в часах. dbt получает это значение из `SYS_QUERY_HISTORY`.
+    - `node_count` - количество узлов в вашем кластере. dbt получает это значение из `STV_SLICES`.
+    - `node_price_per_hour` - ваша цена за узел в час (из значения, заданного в [настройках Cost Insights](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional)).
 
-**Additional considerations:**
-- **Data retention**: Redshift system tables (`SYS_QUERY_HISTORY`, `SYS_SERVERLESS_USAGE`) retain only seven days of history. Cost data for Redshift may cover a shorter window than other warehouses. dbt calculates costs for whatever data is available within that window.
-- **Pricing required**: There are no default price values for Redshift. Costs will appear as $0 until you configure `rpu_price_per_hour` (serverless) or `node_price_per_hour` (provisioned) in [Cost Insights settings](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional).
+**Дополнительные замечания:**
+- **Хранение данных**: системные таблицы Redshift (`SYS_QUERY_HISTORY`, `SYS_SERVERLESS_USAGE`) хранят историю только за семь дней. Данные о затратах для Redshift могут охватывать более короткий период, чем для других хранилищ данных. dbt рассчитывает затраты по всем данным, доступным за этот период.
+- **Необходимо указать цены**: для Redshift нет значений цен по умолчанию. Затраты будут отображаться как $0, пока вы не зададите `rpu_price_per_hour` (для serverless) или `node_price_per_hour` (для provisioned) в [настройках Cost Insights](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional).
 
-:::info Concurrent query costs
-Redshift attributes cost to each query as if it ran alone on the cluster. If queries run concurrently, the sum of individual query costs may exceed your actual bill.
+:::info Затраты на параллельно выполняемые запросы
+Redshift относит затраты к каждому запросу так, как если бы он выполнялся на кластере в одиночку. Если запросы выполняются параллельно, сумма затрат на отдельные запросы может превышать ваш фактический счёт.
 :::
 
 </Expandable>
 
-### Cost reduction calculation
+### Расчёт сокращения затрат
 
-dbt calculates cost reductions by comparing actual costs to what costs would have been _without model reuse_. To do this, dbt uses data from the last seven days (where available) and performs the following steps:
+dbt рассчитывает сокращение затрат, сравнивая фактические затраты с тем, какими они были бы _без повторного использования моделей_. Для этого dbt использует данные за последние семь дней (при наличии) и выполняет следующие действия:
 
-1. Calculates the average cost per model build.
-2. Counts how many times a model was reused instead of rebuilt. 
-3. Multiplies the reused model count by the average cost per build to determine total cost reduction.
+1. Рассчитывает среднюю стоимость одного построения модели.
+2. Подсчитывает, сколько раз модель была использована повторно вместо повторного построения. 
+3. Умножает количество повторных использований модели на среднюю стоимость одного построения, чтобы определить общее сокращение затрат.
 
-Formula:
+Формула:
 ```
 average_cost_per_build * reuse_count
 ```
 
-dbt calculates reductions per model and per deployment environment (production and staging), based on recent historical runs.
+dbt рассчитывает сокращение затрат для каждой модели и каждой среды развёртывания (production и staging) на основе недавних запусков.
 
-Additional notes:
-- dbt calculates estimated costs and savings daily.
-- Pricing inputs come from warehouse system tables (where available), connection-level configuration, or default list prices.
+Дополнительные примечания:
+- dbt ежедневно рассчитывает оценочные затраты и экономию.
+- Ценовые параметры берутся из системных таблиц хранилища данных (при наличии), настроек на уровне подключения или прейскурантных цен по умолчанию.
 
-#### Example
+#### Пример
 
-The following example shows how dbt calculates cost reductions. Looking back seven days, assuming a model runs on two distinct days:
+Следующий пример показывает, как dbt рассчитывает сокращение затрат. Рассмотрим последние семь дней и предположим, что модель выполнялась в два разных дня:
 
-| Day | Total cost | Total executions |
+| День | Общие затраты | Общее количество выполнений |
 |-----|------------|------------------|
-| Day 1 | $5 | 5 |
-| Day 2 | $10 | 10 |
-| **Total** | **$15** | **15** |
+| День 1 | $5 | 5 |
+| День 2 | $10 | 10 |
+| **Итого** | **$15** | **15** |
 <br></br>
 
-The average cost per execution: $15 ÷ 15 runs = $1 per run
+Средняя стоимость одного выполнения: $15 ÷ 15 запусков = $1 за запуск
 
-If the model was _reused_ eight times instead of rebuilt during this same period, the estimated cost reduction is: $1 average cost per run * 8 reuses = $8
+Если за тот же период модель была _повторно использована_ восемь раз вместо повторного построения, оценочное сокращение затрат составит: $1 средней стоимости за запуск * 8 повторных использований = $8
 
-## Considerations
+## Важные замечания
 
-Keep the following in mind when using Cost Insights:
+При использовании Cost Insights учитывайте следующее:
 
-**Data collection and refresh**
-- Cost Insights uses your platform metadata credentials to access warehouse system tables. No separate credentials are needed beyond the platform metadata setup.
-    - You need sufficient [permissions](/docs/explore/set-up-cost-insights#configure-platform-metadata-credentials) to query warehouse metadata tables.
-- Cost data is calculated _once per day_ by a scheduled job that runs at approximately 17:00 UTC.
-- The data collection job processes completed calendar days only. It does not include the current day because warehouse usage data may still be incomplete.
-    - Jobs that ran yesterday (or earlier) will have cost data available after the next daily refresh.
-    - Jobs that ran today will not have cost data until the following day’s refresh, regardless of what time they ran. 
-- If you don’t see cost data for a recent job, make sure at least one full calendar day has passed since it ran. The **Updated** badge in the **Cost Insights** section shows when the last refresh occurred.
+**Сбор и обновление данных**
+- Cost Insights использует ваши учётные данные для метаданных платформы для доступа к системным таблицам хранилища данных. Помимо настройки метаданных платформы, отдельные учётные данные не требуются.
+    - Вам нужны достаточные [разрешения](/docs/explore/set-up-cost-insights#configure-platform-metadata-credentials) для выполнения запросов к таблицам метаданных хранилища данных.
+- Данные о затратах рассчитываются _один раз в день_ по расписанию заданием, которое запускается примерно в 17:00 UTC.
+- Задание сбора данных обрабатывает только завершённые календарные дни. Текущий день не включается, поскольку данные об использовании хранилища могут быть ещё неполными.
+    - Для заданий, выполнявшихся вчера (или ранее), данные о затратах будут доступны после следующего ежедневного обновления.
+    - Для заданий, выполнявшихся сегодня, данные о затратах появятся только после обновления на следующий день, независимо от времени их выполнения. 
+- Если вы не видите данных о затратах для недавнего задания, убедитесь, что после его выполнения прошёл хотя бы один полный календарный день. Индикатор **Updated** в разделе **Cost Insights** показывает, когда произошло последнее обновление.
 
-**Cost accuracy**
-- dbt calculates costs using warehouse-reported usage data and applies default credit or compute costs based on standard warehouse pricing.
-- If you have custom pricing agreements with your warehouse provider, override the default values in your account settings to ensure accurate cost reporting. For more information, see [Set up Cost Insights](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional).
-- Update your cost variables whenever your warehouse pricing contracts change to maintain accurate tracking.
-- Changes to cost variables only apply to future calculations &mdash; historical cost data remains unchanged.
+**Точность расчёта затрат**
+- dbt рассчитывает затраты на основе данных об использовании ресурсов, предоставленных хранилищем данных, и применяет стоимость кредитов или вычислительных ресурсов по умолчанию в соответствии со стандартными тарифами хранилища.
+- Если у вас есть индивидуальные соглашения о ценах с поставщиком хранилища данных, переопределите значения по умолчанию в настройках аккаунта, чтобы обеспечить точность отчётности о затратах. Подробнее см. в разделе [Настройка Cost Insights](/docs/explore/set-up-cost-insights#configure-cost-insights-settings-optional).
+- Обновляйте ценовые параметры при каждом изменении договоров о тарифах на хранилище данных, чтобы поддерживать точность отслеживания.
+- Изменения ценовых параметров применяются только к будущим расчётам &mdash; исторические данные о затратах остаются неизменными.
 
-**Optimization data**
-- Optimization and usage reduction data is available once dbt State or state-aware orchestration is enabled and begins reusing models across runs.
-- For accounts already using dbt State or state-aware orchestration, run at least one full model build within the last 10 days before enabling Cost Insights to establish a baseline for cost reduction calculations. If you don't see cost reduction data, run a full build to establish the baseline.
-- Cost Insights currently calculates estimated reductions in warehouse compute usage at the model level and will expand to include tests and seeds in the future.
+**Данные об оптимизации**
+- Данные об оптимизации и сокращении использования ресурсов становятся доступны после включения dbt State или оркестрации с учётом состояния и начала повторного использования моделей между запусками.
+- Для аккаунтов, уже использующих dbt State или оркестрацию с учётом состояния, выполните хотя бы одно полное построение моделей в течение последних 10 дней перед включением Cost Insights, чтобы сформировать базовый уровень для расчёта сокращения затрат. Если данные о сокращении затрат не отображаются, выполните полное построение для формирования базового уровня.
+- В настоящее время Cost Insights рассчитывает оценочное сокращение использования вычислительных ресурсов хранилища данных на уровне моделей; в будущем расчёт также будет охватывать тесты и seeds.
 
-**Exporting data**
-- You can export cost data as a CSV file for further analysis and reporting. For more information, see [Explore cost data](/docs/explore/explore-cost-data).
+**Экспорт данных**
+- Вы можете экспортировать данные о затратах в CSV-файл для дальнейшего анализа и подготовки отчётов. Подробнее см. в разделе [Анализ данных о затратах](/docs/explore/explore-cost-data).
 
-## Related FAQs
+## Связанные часто задаваемые вопросы
 
 <FAQ path="Cost optimizations/actual-vs-displayed-costs" />
 <FAQ path="Cost optimizations/cost-data-refresh-frequency" />
@@ -265,5 +265,3 @@ Keep the following in mind when using Cost Insights:
 <FAQ path="Cost optimizations/metadata-warehouse-costs" />
 <FAQ path="Cost optimizations/job-frequency" />
 <FAQ path="Runs/what-happened-to-sao" />
-
-

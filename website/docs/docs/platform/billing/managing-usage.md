@@ -1,24 +1,24 @@
 ---
-title: "Managing usage"
+title: "Управление использованием"
 id: managing-usage
-description: "Learn how to view, monitor, and manage your dbt usage."
-sidebar_label: "Managing usage"
+description: "Узнайте, как просматривать, отслеживать и контролировать использование dbt."
+sidebar_label: "Управление использованием"
 availability: everywhere_usage
 ---
 
-From <Constant name="dbt" />, click on your account name in the left side menu and select **Account settings**. The **Billing** option will be on the left side menu under the **Settings** heading. Here, you can view individual available plans and the features provided for each. 
+В <Constant name="dbt" /> нажмите на название своей учетной записи в левом боковом меню и выберите **Account settings**. Пункт **Billing** находится в левом боковом меню под заголовком **Settings**. Здесь можно просмотреть доступные тарифные планы и функции, предусмотренные каждым из них. 
 
-### Usage notifications 
+### Уведомления об использовании 
 
-Every plan automatically sends email alerts when 75%, 90%, and 100% of usage estimates have been reached.
-- Starter plan &mdash; All users within the Owner group receive alerts. 
-- Enterprise-tier plans &mdash; All users with the Account Admin and Billing Admin [permission sets](/docs/platform/manage-access/enterprise-permissions#permission-sets) receive alerts. 
+На каждом тарифном плане автоматически отправляются уведомления по электронной почте при достижении 75%, 90% и 100% расчетного объема использования.
+- Тарифный план Starter &mdash; уведомления получают все пользователи группы Owner. 
+- Тарифные планы уровня Enterprise &mdash; уведомления получают все пользователи с [наборами разрешений](/docs/platform/manage-access/enterprise-permissions#permission-sets) Account Admin и Billing Admin. 
 
-Users cannot opt out of these emails. To have additional users to receive these alert emails, assign them the applicable permissions mentioned earlier. Note that your usage may already be higher than the percentage indicated in the alert due to your usage pattern and minor latency times.
+Пользователи не могут отказаться от этих писем. Чтобы другие пользователи также получали уведомления по электронной почте, назначьте им соответствующие разрешения, указанные выше. Обратите внимание: из-за характера использования и небольших задержек фактический объем использования уже может превышать процент, указанный в уведомлении.
 
-### How do I stop usage from accruing?
+### Как остановить дальнейшее накопление объема использования?
 
-There are 2 options to disable models from being built and charged:
+Есть 2 способа отключить построение моделей и начисление платы за них:
 
-1. Open the **Job Settings** of every job and navigate to the **Triggers** section. Disable the **Run on Schedule** and set the **Continuous Integration** feature **Run on Pull Requests?**  to **No**. Check your workflows to ensure that you are not triggering any runs via the <Constant name="dbt" /> API. This option will enable you to keep your <Constant name="dbt" /> jobs without building more models. 
-2. Alternatively, you can delete some or all of your <Constant name="dbt" /> jobs. This will ensure that no runs are kicked off, but you will permanently lose your job(s). 
+1. Откройте **Job Settings** для каждого задания и перейдите в раздел **Triggers**. Отключите **Run on Schedule** и установите для параметра **Run on Pull Requests?** функции **Continuous Integration** значение **No**. Проверьте свои рабочие процессы и убедитесь, что они не запускают задания через API <Constant name="dbt" />. Этот вариант позволяет сохранить задания <Constant name="dbt" />, не выполняя дальнейшее построение моделей. 
+2. Кроме того, можно удалить некоторые или все задания <Constant name="dbt" />. Это гарантирует, что запуски не будут выполняться, но задания будут безвозвратно удалены.

@@ -1,6 +1,6 @@
 ---
-title: "About user access in dbt"
-description: "Learn how dbt administrators can use dbt's permissioning model to control user-level access in a dbt account."
+title: "О доступе пользователей в dbt"
+description: "Узнайте, как администраторы dbt могут использовать модель разрешений dbt для управления доступом пользователей в аккаунте dbt."
 id: "about-user-access"
 pagination_next: "docs/platform/manage-access/seats-and-users"
 pagination_prev: null
@@ -11,100 +11,102 @@ availability:
 
 import LicenseTypes from '/snippets/_cloud-license-types.md';
 
-:::info "User access" is not "Model access"
+:::info «Доступ пользователей» — это не «Доступ к моделям»
 
-This page covers user groups and access, including:
-- User licenses, permissions, and group memberships
-- Role-based access controls for projects and environments
-- Single sign-on, and secure authentication
+На этой странице рассматриваются группы пользователей и доступ, в том числе:
+- Лицензии пользователей, разрешения и членство в группах
+- Управление доступом на основе ролей для проектов и окружений
+- Единый вход и безопасная аутентификация
 
-For model-specific access and their availability across projects, refer to [Model access](/docs/mesh/govern/model-access).
-
-:::
-
-# About user access
-
-You can regulate access to <Constant name="dbt" /> by various measures, including licenses, groups, permissions, and role-based access control (RBAC). To understand the possible approaches to user access to <Constant name="dbt" /> features and functionality, you should first know how we approach users and groups.
-
-## Users
-
-Individual users in <Constant name="dbt" /> can be people you [manually invite](/docs/platform/manage-access/invite-users) or grant access via an external identity provider (IdP), such as Microsoft Entra ID, Okta, or Google Workspace.
-
-In either scenario, when you add a user to <Constant name="dbt" />, they are assigned a [license](#licenses). You assign licenses at the individual user or group levels. When you manually invite a user, you will assign the license in the invitation window.
-
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/license-dropdown.png" width="40%" title="Example of the license dropdown in the user invitation window." />
-
-You can edit an existing user's license by navigating to the **Users** section of the **Account settings**, clicking on a user, and clicking **Edit** on the user pane. Delete users from this same window to free up licenses for new users.
-
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/edit-user.png" width="40%" title="Example of the user information window in the user directory" />
-
-### User passwords
-
-By default, new users will be prompted to set a password for their account. All plan tiers support and enforce [multi-factor authentication](/docs/platform/manage-access/mfa) for users with password logins. However, they will still need to configure their password before configuring MFA. Enterprise tier accounts can configure [SSO](#sso-mappings-) and advanced authentication measures. Developer and Starter plans only support user passwords with MFA. 
-
-User passwords must meet the following criteria:
-
-- Be at least nine characters in length
-- Contain at least one uppercase and one lowercase letter
-- Contain at least one number 0-9
-- Contain at least one special character
-
-## Groups
-
-Groups in <Constant name="dbt" /> serve much of the same purpose as they do in traditional directory tools &mdash; to gather individual users together to make bulk assignments of permissions easier. 
-
-The permissions available depends on whether you're on an [Enterprise-tier](/docs/platform/manage-access/enterprise-permissions) or [self-service Starter](/docs/platform/manage-access/self-service-permissions) plan.
-
-- Admins use groups in <Constant name="dbt" /> to assign [licenses](#licenses) and [permissions](#permissions). 
-- The permissions are more granular than licenses, and you only assign them at the group level; _you can’t assign permissions at the user level._
-- Every user in <Constant name="dbt" /> must be assigned to at least one group.
-
-There are three default groups available as soon as you create your <Constant name="dbt" /> account (the person who created the account is added to all three automatically):
-
-- **Owner:** This group is for individuals responsible for the entire account and will give them elevated account admin privileges. You cannot change the permissions. 
-- **Member:** This group is for the general members of your organization. Default permissions are broad, restricting only access to features that can alter billing or security. By default, <Constant name="dbt" /> adds new users to this group.
-- **Everyone:** A general group for all members of your organization. Customize the permissions to fit your organizational needs. By default, <Constant name="dbt" /> adds new users to this group.
-
-:::note default group permissions
-
-The `Owner` and `Member` groups have default permission sets:
-- **Starter plan:** The `Owner` and `Member` groups use the `Owner` and `Member` [permission sets](/docs/platform/manage-access/self-service-permissions#table-of-groups-licenses-and-permissions), respectively.
-- **Enterprise plans:** By default, dbt assigns the `Owner` group an [`Account Admin`](/docs/platform/manage-access/enterprise-permissions#account-admin) permission set, and the `Member` group a `Member` permission set, which doesn't appear in the settings, but has the same privileges as the [`Admin`](/docs/platform/manage-access/enterprise-permissions#admin) permission set.
+Информацию о доступе к отдельным моделям и их доступности в разных проектах см. в разделе [Доступ к моделям](/docs/mesh/govern/model-access).
 
 :::
 
-Default groups are automatically provisioned for all accounts to simplify the initial set up. We recommend  creating your own organizational groups so you can customize the permissions. Once you create your own groups, you can delete the default groups.
+# О доступе пользователей
 
-### Create new groups <Lifecycle status="managed,managed_plus" />
+Вы можете регулировать доступ к <Constant name="dbt" /> с помощью различных механизмов, включая лицензии, группы, разрешения и управление доступом на основе ролей (RBAC). Чтобы разобраться в возможных подходах к управлению доступом пользователей к функциям и возможностям <Constant name="dbt" />, сначала следует ознакомиться с тем, как устроена работа с пользователями и группами.
 
-- Create new groups from the **Groups & Licenses** section of the **Account settings**.
-- If you use an external IdP for SSO, you can sync those SSO groups to <Constant name="dbt" /> from the **Group details** pane when creating or editing existing groups.
+## Пользователи
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/new-group.png" width="60%" title="Example the new group pane in the account settings." />
+Пользователями <Constant name="dbt" /> могут быть люди, которых вы [пригласили вручную](/docs/platform/manage-access/invite-users) или которым предоставили доступ через внешнего поставщика удостоверений (IdP), например Microsoft Entra ID, Okta или Google Workspace.
+
+В обоих случаях при добавлении пользователя в <Constant name="dbt" /> ему назначается [лицензия](#licenses). Лицензии назначаются на уровне отдельных пользователей или групп. При приглашении пользователя вручную вы назначаете лицензию в окне приглашения.
+
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/license-dropdown.png" width="40%" title="Пример раскрывающегося списка лицензий в окне приглашения пользователя." />
+
+Вы можете изменить лицензию существующего пользователя, перейдя в раздел **Users** в **Account settings**, выбрав пользователя и нажав **Edit** на панели пользователя. В этом же окне можно удалять пользователей, чтобы освобождать лицензии для новых пользователей.
+
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/edit-user.png" width="40%" title="Пример окна с информацией о пользователе в каталоге пользователей" />
+
+### Пароли пользователей
+
+По умолчанию новым пользователям предлагается задать пароль для своей учётной записи. Все тарифные планы поддерживают и требуют [многофакторную аутентификацию](/docs/platform/manage-access/mfa) для пользователей, входящих с помощью пароля. Однако прежде чем настроить MFA, им всё равно потребуется задать пароль. В аккаунтах с тарифами уровня Enterprise можно настроить [SSO](#sso-mappings) и расширенные меры аутентификации. Тарифы Developer и Starter поддерживают только вход по паролю с MFA. 
+
+Пароли пользователей должны соответствовать следующим требованиям:
+
+- Содержать не менее девяти символов
+- Содержать хотя бы одну прописную и одну строчную букву
+- Содержать хотя бы одну цифру от 0 до 9
+- Содержать хотя бы один специальный символ
+
+## Группы {#groups}
+
+Группы в <Constant name="dbt" /> служат во многом той же цели, что и в традиционных службах каталогов, &mdash; объединяют отдельных пользователей, чтобы упростить массовое назначение разрешений. 
+
+Доступные разрешения зависят от того, используете ли вы [тариф уровня Enterprise](/docs/platform/manage-access/enterprise-permissions) или [тариф Starter с самостоятельным обслуживанием](/docs/platform/manage-access/self-service-permissions).
+
+- Администраторы используют группы в <Constant name="dbt" /> для назначения [лицензий](#licenses) и [разрешений](#permissions). 
+- Разрешения обеспечивают более детальную настройку доступа, чем лицензии, и назначаются только на уровне групп; _назначать разрешения на уровне пользователей нельзя._
+- Каждый пользователь <Constant name="dbt" /> должен входить хотя бы в одну группу.
+
+Сразу после создания аккаунта <Constant name="dbt" /> доступны три группы по умолчанию (создатель аккаунта автоматически добавляется во все три):
+
+- **Owner:** эта группа предназначена для людей, отвечающих за весь аккаунт, и предоставляет им расширенные права администратора аккаунта. Изменять разрешения этой группы нельзя. 
+- **Member:** эта группа предназначена для обычных участников вашей организации. Разрешения по умолчанию достаточно широки: ограничен только доступ к функциям, которые могут влиять на оплату или безопасность. По умолчанию <Constant name="dbt" /> добавляет новых пользователей в эту группу.
+- **Everyone:** общая группа для всех участников вашей организации. Настройте разрешения в соответствии с потребностями организации. По умолчанию <Constant name="dbt" /> добавляет новых пользователей в эту группу.
+
+:::note Разрешения групп по умолчанию
+
+Группы `Owner` и `Member` имеют наборы разрешений по умолчанию:
+- **Тариф Starter:** группы `Owner` и `Member` используют [наборы разрешений](/docs/platform/manage-access/self-service-permissions#table-of-groups-licenses-and-permissions) `Owner` и `Member` соответственно.
+- **Тарифы Enterprise:** по умолчанию dbt назначает группе `Owner` набор разрешений [`Account Admin`](/docs/platform/manage-access/enterprise-permissions#account-admin), а группе `Member` — набор разрешений `Member`, который не отображается в настройках, но предоставляет те же права, что и набор разрешений [`Admin`](/docs/platform/manage-access/enterprise-permissions#admin).
+
+:::
+
+Группы по умолчанию автоматически создаются для всех аккаунтов, чтобы упростить первоначальную настройку. Мы рекомендуем создавать собственные группы организации, чтобы вы могли настраивать разрешения. После создания собственных групп вы можете удалить группы по умолчанию.
+
+<a id="create-new-groups-" />
+
+### Создание новых групп <Lifecycle status="managed,managed_plus" /> {#create-new-groups}
+
+- Создавайте новые группы в разделе **Groups & Licenses** в **Account settings**.
+- Если вы используете внешнего IdP для SSO, вы можете синхронизировать соответствующие группы SSO с <Constant name="dbt" /> на панели **Group details** при создании или редактировании групп.
+
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/new-group.png" width="60%" title="Пример панели создания новой группы в настройках аккаунта." />
 
 :::important
 
-If a user is assigned licenses and permissions from multiple groups, the group that grants the most access will take precedence. You must assign a permission set to any groups created beyond the three defaults, or users assigned will not have access to features beyond their user profile.
+Если пользователю назначены лицензии и разрешения из нескольких групп, приоритет имеет группа, предоставляющая наиболее широкий доступ. Всем группам, созданным помимо трёх групп по умолчанию, необходимо назначить набор разрешений, иначе входящие в них пользователи не получат доступа к функциям за пределами своего профиля.
 
 :::
 
-### Group access and permissions
+### Доступ и разрешения групп
 
-The **Access & Permissions** section of a group is where you can assign users the right level of access based on their role or responsibilities. You decide:
+В разделе **Access & Permissions** группы можно назначить пользователям подходящий уровень доступа в зависимости от их роли или обязанностей. Вы определяете:
 
-* Projects the group can access
-* Roles that the group members are assigned for each
-* Jobs and runs the group can edit in defined environments
+* Проекты, к которым группа имеет доступ
+* Роли, назначаемые участникам группы для каждого проекта
+* Задания и запуски, которые группа может редактировать в заданных окружениях
 
-This setup provides you with the flexibility to determine the level of access users in any given group will have. For example, you might allow one group of analysts to edit jobs in their project, but only let them view related projects, or you could grant admin-level access to a team that owns a specific project while keeping others restricted to read-only.
+Такая настройка позволяет гибко определять уровень доступа пользователей в каждой группе. Например, вы можете разрешить группе аналитиков редактировать задания в своём проекте, но предоставить им только просмотр связанных проектов, или предоставить права администратора команде, отвечающей за определённый проект, ограничив остальных доступом только для чтения.
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sample-access-policy.png" width="60%" title="Assign a variety of roles and access permissions to user groups." />
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sample-access-policy.png" width="60%" title="Назначение различных ролей и разрешений доступа группам пользователей." />
 
-#### Environment write access
+#### Доступ на запись в окружениях {#environment-write-access}
 
-Some permission sets grant users read-only access to jobs and runs. You can override that if you assign them to a group with **Environment write access**. They can then create, edit, and delete jobs and runs in the environment types you choose.
+Некоторые наборы разрешений предоставляют пользователям доступ к заданиям и запускам только для чтения. Это ограничение можно переопределить, добавив пользователей в группу с **Environment write access**. После этого они смогут создавать, редактировать и удалять задания и запуски в выбранных вами типах окружений.
 
-This setting applies to the permission sets marked with an asterisk in the [project permission sets table](/docs/platform/manage-access/enterprise-permissions#project-access-for-project-permissions):
+Эта настройка применяется к наборам разрешений, отмеченным звёздочкой в [таблице наборов разрешений для проектов](/docs/platform/manage-access/enterprise-permissions#project-access-for-project-permissions):
 
 - Analyst
 - Database admin
@@ -113,244 +115,248 @@ This setting applies to the permission sets marked with an asterisk in the [proj
 - Job creator
 - Team admin
 
-It does not let them create or delete the environment itself.
+Она не позволяет создавать или удалять само окружение.
 
-**Environment write access** does not grant permission to create or delete environments. Users require an elevated permission set (like Admin and Job admin) to take those actions.
+**Environment write access** не предоставляет разрешения на создание или удаление окружений. Для этих действий пользователям нужен набор разрешений с расширенными правами (например, Admin или Job admin).
 
-In the following example, the `analyst` permission set, which by default has read-only access to jobs, is assigned to the group across all projects; however, the **Environment write access** is set to `All Environments`.  This grants all users in this group the ability to create, edit, and delete jobs across all environments and projects. 
+В следующем примере группе назначен набор разрешений `analyst` для всех проектов, который по умолчанию предоставляет доступ к заданиям только для чтения; однако для **Environment write access** выбрано значение `All Environments`. Это позволяет всем пользователям этой группы создавать, редактировать и удалять задания во всех окружениях и проектах. 
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/environment-write.png" width="60%" title="Users assigned environment write access can edit jobs and runs." />
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/environment-write.png" width="60%" title="Пользователи с доступом на запись в окружениях могут редактировать задания и запуски." />
 
-Only use **Environment write access** when you intend to let users create, edit, and delete jobs and runs in those environments. To grant users only the permissions inherent to their set, leave this setting blank (all boxes unchecked).
+Используйте **Environment write access** только в том случае, если хотите разрешить пользователям создавать, редактировать и удалять задания и запуски в этих окружениях. Чтобы предоставить пользователям только разрешения, предусмотренные их набором, оставьте эту настройку пустой (все флажки сняты).
 
-### SSO mappings <Lifecycle status="managed,managed_plus" />
+<a id="sso-mappings-" />
 
-SSO Mappings connect an identity provider (IdP) group membership to a <Constant name="dbt" /> group. When users log into <Constant name="dbt" /> via a supported identity provider, their IdP group memberships sync with <Constant name="dbt" />. Upon logging in successfully, the user's group memberships (and permissions) will automatically adjust within <Constant name="dbt" />.
+### Сопоставления SSO <Lifecycle status="managed,managed_plus" /> {#sso-mappings}
 
-:::tip Creating SSO Mappings
+Сопоставления SSO связывают членство в группе поставщика удостоверений (IdP) с группой <Constant name="dbt" />. Когда пользователи входят в <Constant name="dbt" /> через поддерживаемого поставщика удостоверений, их членство в группах IdP синхронизируется с <Constant name="dbt" />. После успешного входа членство пользователя в группах (и разрешения) автоматически корректируется в <Constant name="dbt" />.
 
-While <Constant name="dbt" /> supports mapping multiple IdP groups to a single <Constant name="dbt" /> group, we recommend using a 1:1 mapping to make administration as simple as possible. Use the same names for your <Constant name="dbt" /> groups and your IdP groups.
+:::tip Создание сопоставлений SSO
+
+Хотя <Constant name="dbt" /> поддерживает сопоставление нескольких групп IdP с одной группой <Constant name="dbt" />, мы рекомендуем использовать сопоставление 1:1, чтобы максимально упростить администрирование. Используйте одинаковые имена для групп <Constant name="dbt" /> и групп IdP.
 
 :::
 
-Create an SSO mapping in the group view:
+Создайте сопоставление SSO на странице группы:
 
-1. Open an existing group to edit or create a new group.
-2. In the **SSO** portion of the group screen, enter the name of the SSO group exactly as it appears in the IdP. If the name is not the same, the users will not be properly placed into the group. 
-3. In the **Users** section, ensure the **Add all users by default** option is disabled.
-4. Save the group configuration. New SSO users will be added to the group upon login, and existing users will be added to the group upon their next login. 
+1. Откройте существующую группу для редактирования или создайте новую.
+2. В разделе **SSO** на странице группы введите имя группы SSO точно так, как оно указано в IdP. Если имя не совпадает, пользователи не будут корректно добавляться в группу. 
+3. В разделе **Users** убедитесь, что параметр **Add all users by default** отключён.
+4. Сохраните конфигурацию группы. Новые пользователи SSO будут добавлены в группу при входе, а существующие — при следующем входе. 
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-mapping.png" width="60%" title="Example of an SSO group mapped to a dbt group." />
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-mapping.png" width="60%" title="Пример группы SSO, сопоставленной с группой dbt." />
 
-Refer to [role-based access control](#role-based-access-control-) for more information about mapping SSO groups for user assignment to <Constant name="dbt" /> groups.
+Дополнительную информацию о сопоставлении групп SSO для добавления пользователей в группы <Constant name="dbt" /> см. в разделе [Управление доступом на основе ролей](#role-based-access-control).
 
-## Grant access
+## Предоставление доступа {#grant-access}
 
-<Constant name="dbt" /> users have both a license (assigned to an individual user or by group membership) and permissions (by group membership only) that determine what actions they can take. Licenses are account-wide, and permissions provide more granular access or restrictions to specific features.
+У пользователей <Constant name="dbt" /> есть лицензия (назначаемая отдельному пользователю или через членство в группе) и разрешения (назначаемые только через членство в группе), которые определяют доступные им действия. Лицензии действуют на уровне всего аккаунта, а разрешения позволяют более детально предоставлять или ограничивать доступ к определённым функциям.
 
-### Licenses
+### Лицензии {#licenses}
 
-Every user in <Constant name="dbt" /> will have a license assigned. Licenses consume "seats" which impact how your account is [billed](/docs/platform/billing), depending on your [service plan](https://www.getdbt.com/pricing).
+Каждому пользователю <Constant name="dbt" /> назначается лицензия. Лицензии занимают «места», которые влияют на [оплату](/docs/platform/billing) вашего аккаунта в зависимости от [тарифного плана](https://www.getdbt.com/pricing).
 
 <LicenseTypes/>
 
-Developer licenses will make up a majority of the users in your environment and have the highest impact on billing, so it's important to monitor how many you have at any given time.
+Лицензии Developer будут составлять большинство лицензий пользователей в вашей среде и сильнее всего влиять на оплату, поэтому важно постоянно отслеживать их количество.
 
-For more information on these license types, see [Seats & Users](/docs/platform/manage-access/seats-and-users)
+Подробнее об этих типах лицензий см. в разделе [Места и пользователи](/docs/platform/manage-access/seats-and-users)
 
 import LicenseOverrideNote from '/snippets/_license-override-note.md';
 
 <LicenseOverrideNote />
 
-#### Enable granular permissions for Read-Only users <Lifecycle status="managed,managed_plus"/>
+#### Включение детальных разрешений для пользователей Read-Only <Lifecycle status="managed,managed_plus"/> {#enable-granular-permissions-for-read-only-users}
 
-Granular permissions let you restrict which projects Read-Only users can access, allowing you to set permissions by group rather than applying the default permissions for Read-Only licenses.
+Детальные разрешения позволяют ограничить список проектов, доступных пользователям Read-Only, и задавать разрешения по группам вместо применения разрешений по умолчанию для лицензий Read-Only.
 
-Note that new accounts don't need this setting as Read-Only users on new accounts get granular permissions by default.
+Обратите внимание: новым аккаунтам эта настройка не требуется, поскольку пользователи Read-Only в новых аккаунтах получают детальные разрешения по умолчанию.
 
-Key things to know before enabling:
-- This setting is only available on Enterprise and Enterprise+ plans.
-- Access stays Read-Only: This setting controls access to projects, not permissions (users remain Read-Only).
-- It's permanent: Enabling this setting is a one-time, irreversible change.
-- Prepare first: Read-Only users keep their project access only if they're in a group with a Read-Only permission set that covers all projects. If a user isn't in a group, or their group's permission set only covers some projects, they'll lose access to the projects that aren't covered.
+Что нужно знать перед включением:
+- Эта настройка доступна только на тарифах Enterprise и Enterprise+.
+- Доступ остаётся только для чтения: настройка управляет доступом к проектам, а не разрешениями (пользователи остаются Read-Only).
+- Изменение необратимо: включить эту настройку можно только один раз, отменить её включение нельзя.
+- Подготовьтесь заранее: пользователи Read-Only сохранят доступ ко всем своим проектам, только если входят в группу с набором разрешений Read-Only, охватывающим все проекты. Если пользователь не входит в группу или набор разрешений его группы охватывает лишь часть проектов, он потеряет доступ к проектам, которые этим набором не охвачены.
 
-To turn on granular permissions:
+Чтобы включить детальные разрешения:
 
-1. Go to **Account settings** &rarr; **Groups & Licenses**.
-2. Click **Enable granular permissions**.
-3. Select the checkbox acknowledging that this setting can't be reversed once enabled.
-4. Click **Enable** to confirm, or **Cancel** to go back without making changes.
+1. Перейдите в **Account settings** &rarr; **Groups & Licenses**.
+2. Нажмите **Enable granular permissions**.
+3. Установите флажок, подтверждающий, что после включения этой настройки изменение нельзя отменить.
+4. Нажмите **Enable** для подтверждения или **Cancel**, чтобы вернуться без внесения изменений.
 
-### Permissions
+### Разрешения {#permissions}
 
-Permissions determine what users can do in your <Constant name="dbt" /> account. By default, members of the `Owner` and `Member` groups have full access to all areas and features. When you want to restrict access to features, assign users to groups with stricter permission sets. Keep in mind that if a user belongs to multiple groups, the most permissive group will take precedence.
+Разрешения определяют, какие действия пользователи могут выполнять в вашем аккаунте <Constant name="dbt" />. По умолчанию участники групп `Owner` и `Member` имеют полный доступ ко всем разделам и функциям. Чтобы ограничить доступ к функциям, добавляйте пользователей в группы с более строгими наборами разрешений. Помните: если пользователь входит в несколько групп, приоритет имеет группа с наиболее широкими разрешениями.
 
-The permissions available depend on whether you're on an [Enterprise, Enterprise+](/docs/platform/manage-access/enterprise-permissions), or [self-service Starter](/docs/platform/manage-access/self-service-permissions) plan. Developer accounts only have a single user, so permissions aren't applicable.
+Доступные разрешения зависят от того, используете ли вы тариф [Enterprise, Enterprise+](/docs/platform/manage-access/enterprise-permissions) или [Starter с самостоятельным обслуживанием](/docs/platform/manage-access/self-service-permissions). В аккаунтах Developer есть только один пользователь, поэтому разрешения к ним неприменимы.
 
-Some access to user settings (for example, **Credentials** settings in **Your profile**) can be granted with additional permissions (such as `user_credential_write`). Refer to [Enterprise permissions](/docs/platform/manage-access/enterprise-permissions) for more information.
+Доступ к некоторым настройкам пользователя (например, к настройкам **Credentials** в **Your profile**) можно предоставить с помощью дополнительных разрешений (таких как `user_credential_write`). Подробнее см. в разделе [Разрешения Enterprise](/docs/platform/manage-access/enterprise-permissions).
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/assign-group-permissions.png" width="60%" title="Example permissions dropdown while editing an existing group." />
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/assign-group-permissions.png" width="60%" title="Пример раскрывающегося списка разрешений при редактировании существующей группы." />
 
-Some permissions (those that don't grant full access, like admins) allow groups to be "assigned" to specific projects and environments only. Read about [environment-level permissions](/docs/platform/manage-access/environment-permissions-setup) for more information on restricting environment access.
+Некоторые разрешения (те, которые, в отличие от административных, не предоставляют полного доступа) позволяют «привязать» группы только к определённым проектам и окружениям. Подробнее об ограничении доступа к окружениям см. в разделе [Разрешения на уровне окружений](/docs/platform/manage-access/environment-permissions-setup).
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/environment-access-control.png" width="60%" title="Example environment access control for a group with Git admin assigned." />
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/environment-access-control.png" width="60%" title="Пример управления доступом к окружениям для группы с назначенным набором разрешений Git admin." />
 
-### Set up read-only user access
+### Настройка доступа пользователей только для чтения {#set-up-read-only-user-access}
 
-To give users read-only access to analyze dbt models and project resources, assign them the [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) permission set through a group. Users won't have access until they're added to a group that's assigned the permission set.
+Чтобы предоставить пользователям доступ только для чтения для анализа моделей dbt и ресурсов проектов, назначьте им набор разрешений [Analyst read](/docs/platform/manage-access/enterprise-permissions#analyst-read) через группу. Пользователи не получат доступ, пока не будут добавлены в группу, которой назначен этот набор разрешений.
 
-:::info Availability
+:::info Доступность
 
-The OAuth integration that lets read-only users connect to analysis features (such as the [dbt MCP server](/docs/dbt-ai/about-mcp)) is available to use.
+Интеграция OAuth, позволяющая пользователям с доступом только для чтения подключаться к функциям анализа (таким как [сервер dbt MCP](/docs/dbt-ai/about-mcp)), доступна для использования.
 
 :::
 
-**1. Create a group with the Analyst read permission set**
+**1. Создайте группу с набором разрешений Analyst read**
 
-You can also add the Analyst read permission set to an existing group.
+Вы также можете добавить набор разрешений Analyst read в существующую группу.
 
-1. Go to **Account settings** &rarr; **Groups & Licenses**.
-2. Give the group a descriptive name.
-3. Click **Add permission** and select the **Analyst read** permission set.
-4. Select the projects the permission set should apply to. **All projects** is the default option.
-5. Click **Save**.
+1. Перейдите в **Account settings** &rarr; **Groups & Licenses**.
+2. Задайте группе понятное имя.
+3. Нажмите **Add permission** и выберите набор разрешений **Analyst read**.
+4. Выберите проекты, к которым должен применяться набор разрешений. По умолчанию выбран вариант **All projects**.
+5. Нажмите **Save**.
 
-**2. Assign users the read-only license and add them to the group**
+**2. Назначьте пользователям лицензию только для чтения и добавьте их в группу**
 
-You can skip or automate this step if license mapping and group mapping are enabled through SSO or SCIM. Use this flow to test with a single user.
+Этот шаг можно пропустить или автоматизировать, если сопоставление лицензий и групп включено через SSO или SCIM. Используйте эту последовательность действий для проверки на одном пользователе.
 
-1. Go to **Account settings** &rarr; **Users**.
-2. Select the user you want to add to the group.
-3. Select the group you want to add the user to and click **Save**.
+1. Перейдите в **Account settings** &rarr; **Users**.
+2. Выберите пользователя, которого хотите добавить в группу.
+3. Выберите группу, в которую хотите добавить пользователя, и нажмите **Save**.
 
-<Lightbox src="/img/docs/dbt-platform/access-control/analyst-read-permission.png" width="75%" title="Assign a user the read-only license and add them to the group" />
+<Lightbox src="/img/docs/dbt-platform/access-control/analyst-read-permission.png" width="75%" title="Назначение пользователю лицензии только для чтения и добавление его в группу" />
 
-For more information, refer to [Grant access](/docs/platform/manage-access/about-user-access#grant-access).
+Подробнее см. в разделе [Предоставление доступа](/docs/platform/manage-access/about-user-access#grant-access).
 
-## Role-based access control <Lifecycle status="managed,managed_plus" />
+<a id="role-based-access-control" />
 
-Role-based access control (RBAC) allows you to grant users access to features and functionality based on their group membership. With this method, you can grant users varying access levels to different projects and environments. You can take access and security to the next level by integrating <Constant name="dbt" /> with a third-party identity provider (IdP) to grant users access when they authenticate with your SSO or OAuth service.
+## Управление доступом на основе ролей <Lifecycle status="managed,managed_plus" /> {#role-based-access-control-}
 
-There are a few things you need to know before you configure RBAC for SSO users:
-- New SSO users join any groups with the **Add all new users by default** option enabled. By default, the `Everyone` and `Member` groups have this option enabled. Disable this option across all groups for the best RBAC experience.
-- You must have the appropriate SSO groups configured in the group details SSO section. If the SSO group name does not match _exactly_, users will not be placed in the group correctly. 
-  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-window-details.png" width="60%" title="The Group details SSO section with a group configured." />
-- dbt Labs recommends that your <Constant name="dbt" /> group names match the IdP group names.
+Управление доступом на основе ролей (RBAC) позволяет предоставлять пользователям доступ к функциям и возможностям на основании их членства в группах. С помощью этого метода можно предоставлять пользователям разные уровни доступа к различным проектам и окружениям. Вы можете вывести управление доступом и безопасность на новый уровень, интегрировав <Constant name="dbt" /> со сторонним поставщиком удостоверений (IdP), чтобы предоставлять пользователям доступ при аутентификации через вашу службу SSO или OAuth.
 
-Let's say you have a new employee being onboarded into your organization using [Okta](/docs/platform/manage-access/set-up-sso-okta) as the IdP and <Constant name="dbt" /> groups with SSO mappings. In this scenario, users are working on `The Big Project` and a new analyst named `Euclid Ean` is joining the group.
+Перед настройкой RBAC для пользователей SSO необходимо учитывать следующее:
+- Новые пользователи SSO добавляются во все группы, в которых включён параметр **Add all new users by default**. По умолчанию этот параметр включён для групп `Everyone` и `Member`. Для наиболее эффективного использования RBAC отключите его во всех группах.
+- В разделе SSO сведений о группе должны быть настроены соответствующие группы SSO. Если имя группы SSO не совпадает _в точности_, пользователи не будут корректно добавляться в группу. 
+  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-window-details.png" width="60%" title="Раздел SSO на панели Group details с настроенной группой." />
+- dbt Labs рекомендует использовать для групп <Constant name="dbt" /> те же имена, что и для групп IdP.
 
-Check out the following example configurations for an idea of how you can implement RBAC for your organization (these examples assume you have already configured [SSO](/docs/platform/manage-access/sso-overview)):
+Допустим, вы подключаете нового сотрудника к своей организации, используя [Okta](/docs/platform/manage-access/set-up-sso-okta) в качестве IdP и группы <Constant name="dbt" /> с сопоставлениями SSO. В этом сценарии пользователи работают над `The Big Project`, и к группе присоединяется новый аналитик по имени `Euclid Ean`.
 
-<Expandable alt_header="Okta configuration"> 
+Ознакомьтесь со следующими примерами конфигурации, чтобы понять, как можно внедрить RBAC в вашей организации (в этих примерах предполагается, что вы уже настроили [SSO](/docs/platform/manage-access/sso-overview)):
 
-You and your IdP team add `Euclid Ean` to your Okta environment and assign them to the `dbt` SSO app via a group called `The Big Project`. 
+<Expandable alt_header="Настройка Okta"> 
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/okta-group-config.png" width="60%" title="The user in the group in Okta." />
+Вы и ваша команда, отвечающая за IdP, добавляете `Euclid Ean` в среду Okta и назначаете ему приложение SSO `dbt` через группу `The Big Project`. 
 
-Configure the group attribute statements the `dbt` application in Okta. The group statements in the following example are set to the group name exactly (`The Big Project`), but yours will likely be a much broader configuration. Companies often use the same prefix across all dbt groups in their IdP. For example `DBT_GROUP_`
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/okta-group-config.png" width="60%" title="Пользователь в группе в Okta." />
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/group-attributes.png" width="60%" title="Group attributes set in the dbt SAML 2.0 app in Okta." />
+Настройте атрибуты групп (Group Attribute Statements) для приложения `dbt` в Okta. В следующем примере условие задано по точному имени группы (`The Big Project`), но ваша конфигурация, скорее всего, будет охватывать больше групп. Компании часто используют одинаковый префикс для всех групп dbt в своём IdP. Например, `DBT_GROUP_`
 
-</Expandable>
-
-<Expandable alt_header="dbt configuration"> 
-
-You and your <Constant name="dbt" /> admin team configure the groups in your account's settings: 
-1. Navigate to the **Account settings** and click **Groups & Licenses** on the left-side menu. 
-2. Click **Create group** or select an existing group and click **Edit**.
-3. Enter the group name in the **SSO** field.
-4. Configure the **Access and permissions** fields to your needs. Select a [permission set](/docs/platform/manage-access/enterprise-permissions), the project they can access, and [environment-level access](/docs/platform/manage-access/environment-permissions).
-
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/dbt-cloud-group-config.png" width="60%" title="The group configuration with SSO field filled out in dbt." />
-
-Euclid is limited to the `Analyst` role, the `Jaffle Shop` project, and the `Development`, `Staging`, and `General` environments of that project. Euclid has no access to the `Production` environment in their role. 
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/group-attributes.png" width="60%" title="Атрибуты групп, заданные в приложении dbt SAML 2.0 в Okta." />
 
 </Expandable>
 
-<Expandable alt_header="The user journey">
+<Expandable alt_header="Настройка dbt"> 
 
-Euclid takes the following steps to log in: 
+Вы и ваша команда администраторов <Constant name="dbt" /> настраиваете группы в настройках аккаунта: 
+1. Перейдите в **Account settings** и нажмите **Groups & Licenses** в меню слева. 
+2. Нажмите **Create group** или выберите существующую группу и нажмите **Edit**.
+3. Введите имя группы в поле **SSO**.
+4. Настройте поля **Access and permissions** в соответствии с вашими потребностями. Выберите [набор разрешений](/docs/platform/manage-access/enterprise-permissions), доступный проект и [доступ на уровне окружений](/docs/platform/manage-access/environment-permissions).
 
-1. Access the SSO URL or the <Constant name="dbt" /> app in their Okta account. The URL can be found on the **SSO & SCIM** configuration page in the **Account settings**. 
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/dbt-cloud-group-config.png" width="60%" title="Настройка группы с заполненным полем SSO в dbt." />
 
-  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-login-url.png" width="60%" title="The SSO login URL in the account settings." />
+Доступ Euclid ограничен ролью `Analyst`, проектом `Jaffle Shop` и окружениями `Development`, `Staging` и `General` этого проекта. В рамках своей роли Euclid не имеет доступа к окружению `Production`. 
 
-2. Log in with their Okta credentials.
+</Expandable>
 
-  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-login.png" width="60%" title="The SSO login screen when using Okta as the identity provider." />
+<Expandable alt_header="Действия пользователя">
 
-3. Since it's their first time logging in with SSO, Euclid Ean is presented with a message and no option to move forward until they check the email address associated with their Okta account. 
+Для входа Euclid выполняет следующие действия: 
 
-  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/post-login-screen.png" width="60%" title="The screen users see after their first SSO login." />
+1. Открывает URL для входа через SSO или приложение <Constant name="dbt" /> в своём аккаунте Okta. URL можно найти на странице настройки **SSO & SCIM** в **Account settings**. 
 
-4. They now open their email and click the link to join dbt Labs.
+  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-login-url.png" width="60%" title="URL для входа через SSO в настройках аккаунта." />
 
-  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sample-email.png" width="60%" title="The email the user receives on first SSO login." />
+2. Входит со своими учётными данными Okta.
 
-5. Their email address is now verified. They click **Authenticate with your enterprise login**, which completes the process. 
+  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sso-login.png" width="60%" title="Экран входа через SSO при использовании Okta в качестве поставщика удостоверений." />
 
-    <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/email-verified.png" width="60%" title="The confirmation that the email address is verified." />
+3. Поскольку Euclid Ean впервые входит через SSO, отображается сообщение, а продолжить работу невозможно, пока он не проверит почту по адресу, связанному с его аккаунтом Okta. 
 
-Euclid is now logged in to their account. They only have access to the `Jaffle Shop` project. Under **Orchestration**, they can configure user credentials.
+  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/post-login-screen.png" width="60%" title="Экран, который пользователи видят после первого входа через SSO." />
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/orchestration-environments.png" width="60%" title="The Orchestration page with the environments." />
+4. Затем он открывает почту и нажимает ссылку, чтобы присоединиться к dbt Labs.
 
-The `Production` environment is visible, but it is `read-only`, and they have full access in the `Staging` environment. 
+  <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/sample-email.png" width="60%" title="Письмо, которое пользователь получает при первом входе через SSO." />
+
+5. Теперь его адрес электронной почты подтверждён. Он нажимает **Authenticate with your enterprise login**, завершая процесс. 
+
+    <Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/email-verified.png" width="60%" title="Подтверждение проверки адреса электронной почты." />
+
+Теперь Euclid вошёл в свой аккаунт. Ему доступен только проект `Jaffle Shop`. В разделе **Orchestration** он может настроить учётные данные пользователя.
+
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/orchestration-environments.png" width="60%" title="Страница Orchestration с окружениями." />
+
+Окружение `Production` отображается, но доступно только в режиме `read-only`, а к окружению `Staging` у него есть полный доступ. 
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/production-restricted.png" width="60%" title="The Production environment landing page with read-only access." />
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/production-restricted.png" width="60%" title="Главная страница окружения Production с доступом только для чтения." />
 
-<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/staging-access.png" width="60%" title="The Staging environment landing page with full access." />
+<Lightbox src="/img/docs/dbt-platform/dbt-platform-enterprise/access-control/staging-access.png" width="60%" title="Главная страница окружения Staging с полным доступом." />
 
 </DocCarousel>
 
 </Expandable>
 
-With RBAC configured, you now have granular control over user access to features across <Constant name="dbt" />.
+После настройки RBAC вы получаете детальный контроль над доступом пользователей к функциям <Constant name="dbt" />.
 
-### SCIM license management
+### Управление лицензиями через SCIM
 
-As part of the SSO configuration for supported IdPs, you can also configure the [System for Cross-Domain Identity Management (SCIM)](/docs/platform/manage-access/scim) settings to add a layer of security to your user lifecycle management. As part of this process, you can integrate user license distribution into the user provisioning process through your IdP. See the [SCIM license management instructions](/docs/platform/manage-access/scim-manage-user-licenses) for more information.
+При настройке SSO для поддерживаемых IdP вы также можете настроить [System for Cross-Domain Identity Management (SCIM)](/docs/platform/manage-access/scim), чтобы повысить безопасность управления жизненным циклом пользователей. В рамках этого процесса можно встроить распределение лицензий пользователей в процесс создания и настройки учётных записей через ваш IdP. Подробнее см. в [инструкциях по управлению лицензиями через SCIM](/docs/platform/manage-access/scim-manage-user-licenses).
 
-## FAQs
+## Часто задаваемые вопросы
 
-<Expandable alt_header="When are IdP group memberships updated for SSO Mapped groups?">
+<Expandable alt_header="Когда обновляется членство в группах IdP для групп с сопоставлениями SSO?">
 
-Group memberships are updated whenever a user logs into <Constant name="dbt" /> via a supported SSO provider. If you've changed group memberships in your identity provider or <Constant name="dbt" />, ask your users to log back into <Constant name="dbt" /> to synchronize these group memberships.
-
-</Expandable>
-
-<Expandable alt_header="Can I set up SSO without RBAC?">
-
-Yes. If a group has no [SSO mappings](#sso-mappings-), it stays unmanaged &mdash; <Constant name="dbt" /> won't change its membership when users log in through your IdP. Admins add and remove those users manually from the **Groups & Licenses** section of **Account settings**.
-
-Add an SSO mapping to an unmanaged group and it becomes managed: from then on, <Constant name="dbt" /> adjusts membership at sign-in based on the user's IdP groups.
+Членство в группах обновляется каждый раз, когда пользователь входит в <Constant name="dbt" /> через поддерживаемого поставщика SSO. Если вы изменили членство в группах у поставщика удостоверений или в <Constant name="dbt" />, попросите пользователей повторно войти в <Constant name="dbt" />, чтобы синхронизировать эти изменения.
 
 </Expandable>
 
-<Expandable alt_header="Can I configure a user's license type based on IdP attributes?">
+<Expandable alt_header="Можно ли настроить SSO без RBAC?">
 
-Yes, see the docs on [managing license types](/docs/platform/manage-access/seats-and-users#managing-license-types) for more information.
+Да. Если у группы нет [сопоставлений SSO](#sso-mappings), она остаётся неуправляемой &mdash; <Constant name="dbt" /> не меняет её состав, когда пользователи входят через ваш IdP. Администраторы вручную добавляют и удаляют этих пользователей в разделе **Groups & Licenses** в **Account settings**.
 
-</Expandable>
-
-<Expandable alt_header="Why can't I edit a user's group membership?">
-
-Don't try to edit your own user, as this isn't allowed for security reasons. You'll need a different user to make changes to your own user's group membership.
+Если добавить сопоставление SSO в неуправляемую группу, она станет управляемой: с этого момента <Constant name="dbt" /> будет корректировать её состав при входе пользователей на основе их групп в IdP.
 
 </Expandable>
 
-<Expandable alt_header="How do I add or remove users?">
+<Expandable alt_header="Можно ли настроить тип лицензии пользователя на основе атрибутов IdP?">
 
-Each <Constant name="dbt" /> plan has a base number of Developer and Read-Only licenses. You can add or remove licenses by modifying the number of users in your account settings. 
-  - If you're on an Enterprise or Enterprise+ plan and have the correct [permissions](/docs/platform/manage-access/enterprise-permissions), you can add or remove developers by adjusting your developer user seat count in **Account settings** -> **Users**.
-  - If you're on a Starter plan and have the correct [permissions](/docs/platform/manage-access/self-service-permissions), you can add or remove developers by making two changes: adjust your developer user seat count AND your developer billing seat count in **Account settings** -> **Users** and then in **Account settings** -> **Billing**.
-
-For detailed steps, refer to [Users and licenses](/docs/platform/manage-access/seats-and-users#licenses).
+Да, подробнее см. в документации по [управлению типами лицензий](/docs/platform/manage-access/seats-and-users#managing-license-types).
 
 </Expandable>
 
-## Learn more
+<Expandable alt_header="Почему я не могу изменить членство пользователя в группах?">
+
+Не пытайтесь редактировать собственную учётную запись пользователя: это запрещено по соображениям безопасности. Чтобы изменить ваше членство в группах, потребуется другой пользователь.
+
+</Expandable>
+
+<Expandable alt_header="Как добавлять или удалять пользователей?">
+
+Каждый тариф <Constant name="dbt" /> включает базовое количество лицензий Developer и Read-Only. Вы можете добавлять или удалять лицензии, изменяя количество пользователей в настройках аккаунта. 
+  - Если вы используете тариф Enterprise или Enterprise+ и у вас есть соответствующие [разрешения](/docs/platform/manage-access/enterprise-permissions), вы можете добавлять или удалять разработчиков, изменяя количество пользовательских мест Developer в **Account settings** -> **Users**.
+  - Если вы используете тариф Starter и у вас есть соответствующие [разрешения](/docs/platform/manage-access/self-service-permissions), для добавления или удаления разработчиков нужно внести два изменения: изменить количество пользовательских мест Developer И количество оплачиваемых мест Developer в **Account settings** -> **Users**, а затем в **Account settings** -> **Billing**.
+
+Подробные инструкции см. в разделе [Пользователи и лицензии](/docs/platform/manage-access/seats-and-users#licenses).
+
+</Expandable>
+
+## Подробнее
 
 <WistiaVideo id="al3w450mcn" paddingTweak="62.25%" />

@@ -1,17 +1,17 @@
 ---
-title: "No spaces in source and semantic model names"
+title: "Отсутствие пробелов в именах источников и семантических моделей"
 id: "require_source_and_semantic_model_names_without_spaces"
-sidebar_label: "require source and semantic model names without spaces"
+sidebar_label: "требовать имена источников и семантических моделей без пробелов"
 ---
 
 | require_source_and_semantic_model_names_without_spaces | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2026.4 | 1.12.0 |
-| Matured (default → `true`) | — | — |
-| Removed | — | — |
+| Добавлен | 2026.4 | 1.12.0 |
+| Переведён в стабильный статус (по умолчанию → `true`) | — | — |
+| Удалён | — | — |
 
-The `require_source_and_semantic_model_names_without_spaces` flag is set to `false` by default.
+По умолчанию флаг `require_source_and_semantic_model_names_without_spaces` установлен в `false`.
 
-Source names and semantic model names should contain letters, numbers, and underscores — _not_ spaces. dbt raises the [`ResourceNamesWithSpacesDeprecation`](/reference/deprecations#resourcenameswithspacesdeprecation) warning if it detects a space in a source name or semantic model name. When the `require_source_and_semantic_model_names_without_spaces` flag is set to `true`, dbt raises an error.
+Имена источников и семантических моделей должны содержать буквы, цифры и символы подчёркивания, но _не_ пробелы. dbt выдаёт предупреждение [`ResourceNamesWithSpacesDeprecation`](/reference/deprecations#resourcenameswithspacesdeprecation), если обнаруживает пробел в имени источника или семантической модели. Если флаг `require_source_and_semantic_model_names_without_spaces` установлен в `true`, dbt выдаёт ошибку.
 
-This flag extends [`require_resource_names_without_spaces`](/reference/global-configs/behavior-flags/require_resource_names_without_spaces) to cover source and semantic model names specifically.
+Этот флаг расширяет действие [`require_resource_names_without_spaces`](/reference/global-configs/behavior-flags/require_resource_names_without_spaces), распространяя его на имена источников и семантических моделей.

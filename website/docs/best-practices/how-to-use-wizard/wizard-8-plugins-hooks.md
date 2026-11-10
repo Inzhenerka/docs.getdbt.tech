@@ -1,41 +1,41 @@
 ---
-title: "Extending dbt Wizard with plugins and hooks"
+title: "Расширение dbt Wizard с помощью плагинов и хуков"
 id: "wizard-8-plugins-hooks"
-description: "Install dbt Wizard CLI plugins from marketplaces and review lifecycle hooks before allowing them to run."
-sidebar_label: "Extend with plugins and hooks"
+description: "Устанавливайте плагины dbt Wizard CLI из маркетплейсов и проверяйте хуки жизненного цикла, прежде чем разрешать их запуск."
+sidebar_label: "Расширение с помощью плагинов и хуков"
 tags: [AI, Wizard]
 ---
 
 
 <IntroText>
-Use plugins to install a coordinated set of <Constant name="wizard" /> CLI extensions from a marketplace. A plugin can bundle skills, Model Context Protocol (MCP) servers, apps, and lifecycle hooks so a team can distribute a complete workflow together.
+Используйте плагины, чтобы устанавливать согласованные наборы расширений <Constant name="wizard" /> CLI из маркетплейса. Плагин может объединять навыки, серверы Model Context Protocol (MCP), приложения и хуки жизненного цикла, позволяя команде распространять все компоненты рабочего процесса вместе.
 </IntroText>
 
-Plugins and hooks are available in interactive <Constant name="wizard" /> CLI sessions. You can't install them in <Constant name="studio_ide" /> or the <Constant name="wizard" /> home tab.
+Плагины и хуки доступны в интерактивных сеансах <Constant name="wizard" /> CLI. Их нельзя установить в <Constant name="studio_ide" /> или на главной вкладке <Constant name="wizard" />.
 
-## Understand plugins, marketplaces, and hooks
+## Основные понятия: плагины, маркетплейсы и хуки
 
-- A **marketplace** is a local or Git source that publishes one or more plugins.
-- A **plugin** is a named bundle with a `.dbt-wizard-plugin/plugin.json` manifest.
-- A **hook** runs a command at a <Constant name="wizard" /> lifecycle event, such as session start, prompt submission, before or after a tool call, a permission request, or session stop.
+- **Маркетплейс** — это локальный источник или Git-репозиторий, в котором опубликован один или несколько плагинов.
+- **Плагин** — это именованный набор компонентов с манифестом `.dbt-wizard-plugin/plugin.json`.
+- **Хук** запускает команду при событии жизненного цикла <Constant name="wizard" />, например при запуске сеанса, отправке запроса, до или после вызова инструмента, при запросе разрешения или завершении сеанса.
 
-Hooks can inspect context, add guidance, or block an action depending on the event. Because a hook can execute a command on your machine, review its source and trust request with the same care you would use for any development tool.
+В зависимости от события хуки могут анализировать контекст, добавлять инструкции или блокировать действие. Поскольку хук может выполнить команду на вашем компьютере, проверяйте его исходный код и запрос на предоставление доверия так же тщательно, как и для любого инструмента разработки.
 
-## Add a marketplace
+## Добавление маркетплейса
 
-Add a marketplace from a GitHub repository:
+Добавьте маркетплейс из репозитория GitHub:
 
 ```bash
 wizard plugin marketplace add OWNER/REPOSITORY --ref main
 ```
 
-You can also add a local marketplace while developing or evaluating it:
+Вы также можете добавить локальный маркетплейс при его разработке или оценке:
 
 ```bash
 wizard plugin marketplace add ./path/to/marketplace
 ```
 
-For a repository that contains a marketplace in a subdirectory, use a sparse checkout path:
+Для репозитория, в котором маркетплейс расположен в подкаталоге, укажите путь для выборочного извлечения (sparse checkout):
 
 ```bash
 wizard plugin marketplace add \
@@ -43,101 +43,101 @@ wizard plugin marketplace add \
   --sparse path/to/plugins
 ```
 
-List the configured sources and their local snapshot locations:
+Выведите список настроенных источников и расположений их локальных снимков:
 
 ```bash
 wizard plugin marketplace list
 ```
 
-Before installing a plugin, inspect the marketplace snapshot and the plugin's `.dbt-wizard-plugin/plugin.json`. Review any referenced skills, MCP server configuration, apps, hook files, and executable scripts.
+Перед установкой плагина проверьте снимок маркетплейса и файл `.dbt-wizard-plugin/plugin.json` плагина. Изучите все указанные в нём навыки, конфигурации серверов MCP, приложения, файлы хуков и исполняемые скрипты.
 
-Use ` wizard plugin --help` to view the rest of the plugin commands in the <Constant name="wizard"/> CLI.
-## Install and inspect a plugin
+Используйте ` wizard plugin --help`, чтобы просмотреть остальные команды управления плагинами в <Constant name="wizard"/> CLI.
+## Установка и проверка плагина
 
-List the available plugins and their installation state:
+Выведите список доступных плагинов и сведения об их установке:
 
 ```bash
 wizard plugin list
 ```
 
-Install a plugin by its `PLUGIN@MARKETPLACE` identifier:
+Установите плагин по его идентификатору `PLUGIN@MARKETPLACE`:
 
 ```bash
 wizard plugin add PLUGIN_NAME@MARKETPLACE_NAME
 ```
 
-The equivalent long form is:
+Эквивалентная полная форма команды:
 
 ```bash
 wizard plugin add PLUGIN_NAME --marketplace MARKETPLACE_NAME
 ```
 
-Start a new interactive session after installation. Use `/plugins` to browse loaded plugins. If the plugin declares hooks, use `/hooks` to inspect the handlers and their trust status before allowing them to run.
+После установки начните новый интерактивный сеанс. Используйте `/plugins` для просмотра загруженных плагинов. Если плагин объявляет хуки, используйте `/hooks`, чтобы проверить обработчики и их статус доверия, прежде чем разрешать их запуск.
 
-:::caution Review hooks before trusting them
-Don't use `--dangerously-bypass-hook-trust` as a routine setup step. It allows enabled hooks to run without persisted review for that invocation. Review each hook and persist its trust decision instead.
+:::caution Проверяйте хуки, прежде чем доверять им
+Не используйте `--dangerously-bypass-hook-trust` как стандартный шаг настройки. Этот параметр позволяет включённым хукам запускаться без сохранённого подтверждения проверки при текущем запуске. Вместо этого проверяйте каждый хук и сохраняйте решение о доверии к нему.
 :::
 
-## Verify the extension
+## Проверка расширения
 
-Test one capability at a time after installation:
+После установки проверяйте возможности по одной:
 
-1. Confirm the plugin is installed and enabled with `wizard plugin list`.
-2. Start a new session so <Constant name="wizard" /> reloads plugins and skills.
-3. Inspect `/plugins` and `/hooks` for load warnings or untrusted hook handlers.
-4. Ask <Constant name="wizard" /> to list the skill or MCP capability you expect the plugin to provide.
-5. Run a read-only prompt that exercises the capability before granting write access or broader tool approvals.
+1. Убедитесь, что плагин установлен и включён, с помощью `wizard plugin list`.
+2. Начните новый сеанс, чтобы <Constant name="wizard" /> заново загрузил плагины и навыки.
+3. Проверьте `/plugins` и `/hooks` на наличие предупреждений о загрузке или обработчиков хуков, которым ещё не предоставлено доверие.
+4. Попросите <Constant name="wizard" /> перечислить навыки или возможности MCP, которые должен предоставлять плагин.
+5. Выполните запрос, использующий эту возможность только для чтения, прежде чем предоставлять доступ на запись или более широкие разрешения на использование инструментов.
 
-If a plugin bundles an MCP server, its tools still follow the [MCP approval settings](/docs/dbt-ai/wizard-mcp#approvals-and-tool-permissions). A plugin doesn't bypass the CLI sandbox or tool approval policy.
+Если плагин включает сервер MCP, его инструменты по-прежнему подчиняются [настройкам разрешений MCP](/docs/dbt-ai/wizard-mcp#approvals-and-tool-permissions). Плагин не обходит изолированную среду CLI или политику разрешений на использование инструментов.
 
-## Update or remove an extension
+## Обновление или удаление расширения
 
-Refresh one configured Git marketplace:
+Обновите один из настроенных Git-маркетплейсов:
 
 ```bash
 wizard plugin marketplace upgrade MARKETPLACE_NAME
 ```
 
-Omit the name to refresh all configured Git marketplaces:
+Не указывайте имя, чтобы обновить все настроенные Git-маркетплейсы:
 
 ```bash
 wizard plugin marketplace upgrade
 ```
 
-Review the updated source before starting a session that allows its hooks to run.
+Проверьте обновлённый исходный код, прежде чем начинать сеанс, в котором разрешён запуск его хуков.
 
-Remove a plugin when you no longer need it:
+Удалите плагин, когда он больше не нужен:
 
 ```bash
 wizard plugin remove PLUGIN_NAME@MARKETPLACE_NAME
 ```
 
-Remove the marketplace source separately:
+Отдельно удалите источник маркетплейса:
 
 ```bash
 wizard plugin marketplace remove MARKETPLACE_NAME
 ```
 
-Removing a marketplace and removing an installed plugin are separate operations. List both after cleanup to confirm the intended state.
+Удаление маркетплейса и удаление установленного плагина — это отдельные операции. После очистки выведите оба списка, чтобы убедиться, что достигнуто нужное состояние.
 
-## Choose the smallest extension mechanism
+## Выбор минимально необходимого механизма расширения
 
-Use a plugin when several capabilities need to be installed and versioned together. For a single concern, a smaller extension is easier to review:
+Используйте плагин, когда несколько возможностей нужно устанавливать и версионировать вместе. Для отдельной задачи проще проверить расширение меньшего масштаба:
 
 <SimpleTable>
 
-| Need | Use |
+| Потребность | Что использовать |
 |---|---|
-| Reusable team instructions | A project [skill](/docs/dbt-ai/wizard-skills) in `.agents/skills/`. |
-| Tools from another service | A configured [MCP server](/docs/dbt-ai/wizard-mcp). |
-| A command that runs at a lifecycle event | A hook, distributed only from a source your team trusts. |
-| Skills, tools, apps, and hooks that must ship together | A plugin from a reviewed marketplace. |
+| Многократно используемые инструкции для команды | Проектный [навык](/docs/dbt-ai/wizard-skills) в `.agents/skills/`. |
+| Инструменты из другого сервиса | Настроенный [сервер MCP](/docs/dbt-ai/wizard-mcp). |
+| Команда, запускаемая при событии жизненного цикла | Хук, распространяемый только из источника, которому доверяет ваша команда. |
+| Навыки, инструменты, приложения и хуки, которые должны поставляться вместе | Плагин из проверенного маркетплейса. |
 
 </SimpleTable>
 
-## Related docs
+## Связанная документация
 
-- [Use skills with <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-skills)
-- [Use MCP servers with <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp)
-- [Approval and sandboxing](/docs/dbt-ai/wizard-how-it-works#approval-and-sandboxing)
-- [<Constant name="wizard" /> command reference](/docs/dbt-ai/wizard-cli-reference)
+- [Использование навыков в <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-skills)
+- [Использование серверов MCP в <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-mcp)
+- [Разрешения и изолированная среда](/docs/dbt-ai/wizard-how-it-works#approval-and-sandboxing)
+- [Справочник команд <Constant name="wizard" />](/docs/dbt-ai/wizard-cli-reference)

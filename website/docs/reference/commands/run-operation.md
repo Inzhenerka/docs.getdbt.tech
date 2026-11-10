@@ -52,7 +52,7 @@ $ dbt run-operation --sql '{sql}'
 
 ## Использование флага `--sql`
 
-Starting <Constant name="dbt" /> v1.12, you can use the `--sql` flag to execute ad hoc database statements directly against your warehouse, without defining a macro. This flag is useful for one-off operations like dropping or altering a table, applying grants, or running a data fix. The statement runs through the full Jinja compilation pipeline, so you have access to `ref()`, `source()`, `var()`, `target`, and all other context variables. When your SQL contains no Jinja, dbt skips manifest compilation entirely, making execution faster.
+Начиная с <Constant name="dbt" /> v1.12, флаг `--sql` позволяет выполнять разовые SQL-команды прямо в хранилище без отдельного макроса. Например, можно удалить или изменить таблицу, выдать права или исправить данные. Выражение проходит полную компиляцию Jinja с доступом к `ref()`, `source()`, `var()`, `target` и другим переменным контекста. Если в SQL нет Jinja, dbt пропускает компиляцию манифеста, поэтому выполнение ускоряется.
 
 Например:
 

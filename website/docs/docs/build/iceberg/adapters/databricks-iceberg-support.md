@@ -1,40 +1,40 @@
 ---
-title: "Databricks and Apache Iceberg"
+title: "Databricks и Apache Iceberg"
 id: databricks-iceberg-support
-sidebar_label: "Databricks Iceberg support"
-description: Understand Databricks support for Apache Iceberg.
+sidebar_label: "Поддержка Iceberg в Databricks"
+description: Узнайте о поддержке Apache Iceberg в Databricks.
 ---
 
 import BaseLocationEnvIsolation from '/snippets/_base-location-env-isolation-warning.md';
 
-dbt supports materializing Iceberg tables in Unity Catalog in two ways:
+dbt поддерживает два способа материализации таблиц Iceberg в Unity Catalog:
 
-- **Simplest:** The model config `table_format = 'iceberg'` instructs dbt to materialize this model as an Iceberg table in Unity Catalog
-- **Extensible:** Define an Iceberg catalog in `catalogs.yml` and configure this model with `catalog_name`
+- **Самый простой:** конфигурация модели `table_format = 'iceberg'` указывает dbt материализовать эту модель как таблицу Iceberg в Unity Catalog
+- **Расширяемый:** определите каталог Iceberg в `catalogs.yml` и настройте эту модель с помощью `catalog_name`
 
-dbt supports creating Iceberg tables for two Databricks materializations:
+dbt поддерживает создание таблиц Iceberg для двух материализаций Databricks:
 
-- [Table](/docs/build/materializations#table)
-- [Incremental](/docs/build/materializations#incremental)
+- [Таблица](/docs/build/materializations#table)
+- [Инкрементальная](/docs/build/materializations#incremental)
 
-## Databricks Iceberg support
+## Поддержка Iceberg в Databricks
 
-Databricks is built on [Delta Lake](https://docs.databricks.com/aws/en/delta/) and stores data in the [Delta table](https://docs.databricks.com/aws/en/introduction/delta-comparison#delta-tables-default-data-table-architecture) format.
+Databricks построен на основе [Delta Lake](https://docs.databricks.com/aws/en/delta/) и хранит данные в формате [таблиц Delta](https://docs.databricks.com/aws/en/introduction/delta-comparison#delta-tables-default-data-table-architecture).
 
-Databricks supports two methods for creating Iceberg tables in its data catalog, [Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/):
+Databricks поддерживает два способа создания таблиц Iceberg в своём каталоге данных [Unity Catalog](https://docs.databricks.com/aws/en/data-governance/unity-catalog/):
 
-- Creating [Unity Catalog managed Iceberg tables](https://docs.databricks.com/aws/en/tables/managed). Databricks Runtime 16.4 LTS and later support this feature.
-- Enabling [Iceberg reads](https://docs.databricks.com/aws/en/delta/uniform) on Delta tables. These tables still use the Delta file format, but generate both Delta and Iceberg-compatible metadata. Databricks Runtime 14.3 LTS and later support this feature.
+- Создание [управляемых таблиц Iceberg в Unity Catalog](https://docs.databricks.com/aws/en/tables/managed). Эта возможность поддерживается в Databricks Runtime 16.4 LTS и более поздних версиях.
+- Включение [чтения в формате Iceberg](https://docs.databricks.com/aws/en/delta/uniform) для таблиц Delta. Эти таблицы по-прежнему используют формат файлов Delta, но генерируют метаданные как для Delta, так и для Iceberg. Эта возможность поддерживается в Databricks Runtime 14.3 LTS и более поздних версиях.
 
-dbt supports both creating managed Iceberg tables and Iceberg-enabled Delta tables (formerly [UniForm](https://www.databricks.com/blog/delta-uniform-universal-format-lakehouse-interoperability)).
+dbt поддерживает создание как управляемых таблиц Iceberg, так и таблиц Delta с поддержкой Iceberg (ранее — [UniForm](https://www.databricks.com/blog/delta-uniform-universal-format-lakehouse-interoperability)).
 
 <VersionBlock lastVersion="1.12">
 
-The behavior flag [`use_managed_iceberg`](/reference/global-configs/databricks-changes#use-managed-iceberg) determines whether dbt creates a managed Iceberg table or a Delta table.
+Флаг поведения [`use_managed_iceberg`](/reference/global-configs/databricks-changes#use-managed-iceberg) определяет, какую таблицу создаёт dbt: управляемую таблицу Iceberg или таблицу Delta.
 
-:::caution `use_uniform` has no effect in dbt v1
+:::caution `use_uniform` не действует в dbt v1
 
-`dbt-databricks` doesn't support the `use_uniform` catalog property yet. If you set it, the adapter logs a warning and ignores the value. Use the `use_managed_iceberg` behavior flag instead.
+`dbt-databricks` пока не поддерживает свойство каталога `use_uniform`. Если вы зададите его, адаптер запишет предупреждение в журнал и проигнорирует значение. Вместо этого используйте флаг поведения `use_managed_iceberg`.
 
 :::
 
@@ -42,28 +42,28 @@ The behavior flag [`use_managed_iceberg`](/reference/global-configs/databricks-c
 
 <VersionBlock firstVersion="2.0">
 
-The [`use_uniform`](#choose-between-managed-iceberg-and-uniform) config determines whether dbt creates a managed Iceberg table or a Delta table. Because `use_uniform` defaults to `false`, setting `table_format: 'iceberg'` creates a managed Iceberg table.
+Параметр конфигурации [`use_uniform`](#choose-between-managed-iceberg-and-uniform) определяет, какую таблицу создаёт dbt: управляемую таблицу Iceberg или таблицу Delta. Поскольку значение `use_uniform` по умолчанию — `false`, при настройке `table_format: 'iceberg'` создаётся управляемая таблица Iceberg.
 
 </VersionBlock>
 
-External Iceberg compute engines can read from and write to these Iceberg tables using Unity Catalog's [Iceberg REST API endpoint](https://docs.databricks.com/aws/en/external-access/iceberg). However, Databricks only has limited support for reading from external Iceberg catalogs (and externally managed Iceberg tables) through [Databricks catalog federation](https://docs.databricks.com/aws/en/query-federation/catalog-federation) (configured outside of dbt).
+Внешние вычислительные движки Iceberg могут читать данные из этих таблиц Iceberg и записывать в них данные через [конечную точку Iceberg REST API](https://docs.databricks.com/aws/en/external-access/iceberg) в Unity Catalog. Однако Databricks предоставляет лишь ограниченную поддержку чтения из внешних каталогов Iceberg (и таблиц Iceberg под внешним управлением) через [федерацию каталогов Databricks](https://docs.databricks.com/aws/en/query-federation/catalog-federation) (настраивается вне dbt).
 
-dbt doesn't yet support enabling [Iceberg v3](https://docs.databricks.com/aws/en/iceberg/iceberg-v3) on managed Iceberg tables.
+dbt пока не поддерживает включение [Iceberg v3](https://docs.databricks.com/aws/en/iceberg/iceberg-v3) для управляемых таблиц Iceberg.
 
 <VersionBlock firstVersion="2.0">
 
-### Choose between managed Iceberg and UniForm
+### Выбор между управляемыми таблицами Iceberg и UniForm {#choose-between-managed-iceberg-and-uniform}
 
-Set `table_format: 'iceberg'` on a model to create a Unity Catalog managed Iceberg table. You don't need a `catalogs.yml` file or a `catalog_name` config.
+Задайте `table_format: 'iceberg'` для модели, чтобы создать управляемую таблицу Iceberg в Unity Catalog. Файл `catalogs.yml` и параметр конфигурации `catalog_name` для этого не нужны.
 
-Two model configs control which kind of Iceberg table dbt creates:
+Два параметра конфигурации модели определяют, какой тип таблицы Iceberg создаёт dbt:
 
-| Config | Type | Required | Description | Default |
+| Параметр | Тип | Обязательный | Описание | По умолчанию |
 | ------ | ---- | -------- | ----------- | ------- |
-| `table_format` | String | Yes, to create an Iceberg table | Set to `iceberg` to materialize the model as an Iceberg table. | `default` |
-| `use_uniform` | Boolean | No | When `false`, dbt creates a Unity Catalog managed Iceberg table (`create table ... using iceberg`). When `true`, dbt creates a Delta table with Iceberg reads enabled (`create table ... using delta tblproperties (...)`). | `false` |
+| `table_format` | String | Да, для создания таблицы Iceberg | Задайте значение `iceberg`, чтобы материализовать модель как таблицу Iceberg. | `default` |
+| `use_uniform` | Boolean | Нет | При значении `false` dbt создаёт управляемую таблицу Iceberg в Unity Catalog (`create table ... using iceberg`). При значении `true` dbt создаёт таблицу Delta с включённым чтением в формате Iceberg (`create table ... using delta tblproperties (...)`). | `false` |
 
-This model creates a managed Iceberg table:
+Эта модель создаёт управляемую таблицу Iceberg:
 
 <File name='models/my_iceberg_model.sql'>
 
@@ -80,7 +80,7 @@ select * from {{ ref('raw_orders') }}
 
 </File>
 
-To create an Iceberg-enabled Delta table instead, set `use_uniform` to `true`:
+Чтобы вместо этого создать таблицу Delta с поддержкой Iceberg, задайте для `use_uniform` значение `true`:
 
 <File name='models/my_uniform_model.sql'>
 
@@ -100,32 +100,32 @@ select * from {{ ref('raw_orders') }}
 
 </VersionBlock>
 
-### External tables
+### Внешние таблицы
 
-dbt also supports creating externally-managed Iceberg tables using the model configuration [`location_root`](/reference/resource-configs/databricks-configs#configuring-tables). Databricks' DDL for creating tables requires a fully qualified `location`. dbt defines this parameter on the user's behalf to streamline usage and enforce basic isolation of table data:
+dbt также поддерживает создание таблиц Iceberg под внешним управлением с помощью параметра конфигурации модели [`location_root`](/reference/resource-configs/databricks-configs#configuring-tables). DDL Databricks для создания таблиц требует полностью заданного пути `location`. dbt определяет этот параметр за пользователя, чтобы упростить использование и обеспечить базовую изоляцию данных таблиц:
 
-- When you set a `location_root` string, dbt generates a `location` string of the form: `{{ location_root }}/{{ model_name }}`.
-- If you set the configuration option `include_full_name_in_path` to `true`, dbt generates a `location` string of the form `{{ location_root }}/{{ database_name}}/{{ schema_name }}/{{ model_name }}`.
+- Если вы задаёте строку `location_root`, dbt генерирует строку `location` вида: `{{ location_root }}/{{ model_name }}`.
+- Если вы задаёте для параметра конфигурации `include_full_name_in_path` значение `true`, dbt генерирует строку `location` вида `{{ location_root }}/{{ database_name}}/{{ schema_name }}/{{ model_name }}`.
 
-In dbt v2, you may set `location_root` within the catalog definition in `catalogs.yml`, under `config.databricks` (in the new catalog spec) or `adapter_properties` (in the old catalog spec).
+В dbt v2 вы можете задать `location_root` в определении каталога в `catalogs.yml`, в разделе `config.databricks` (в новой спецификации каталогов) или `adapter_properties` (в старой спецификации каталогов).
 
-### Catalogs
+### Каталоги
 
-Configure catalogs in order to:
+Настройте каталоги, чтобы:
 
-- Define multiple configurations for Databricks-managed Iceberg tables within one catalog
-- Support cross-platform Mesh
+- Определить несколько конфигураций для таблиц Iceberg под управлением Databricks в одном каталоге
+- Обеспечить поддержку межплатформенного Mesh
 
-Notes:
-- <VersionBlock lastVersion="1.99">Every Databricks catalog configures `table_format`, which accepts the values `default` and `iceberg`.</VersionBlock><VersionBlock firstVersion="2.0">Every Databricks catalog configures `table_format`. `type: unity` requires `iceberg`, and `type: hive_metastore` requires `default`.</VersionBlock>
-- On Databricks, `catalog_name` takes precedence over the `catalog` config when determining the model's top-level namespace.
+Примечания:
+- <VersionBlock lastVersion="1.99">В каждом каталоге Databricks настраивается параметр `table_format`, который принимает значения `default` и `iceberg`.</VersionBlock><VersionBlock firstVersion="2.0">В каждом каталоге Databricks настраивается параметр `table_format`. Для `type: unity` требуется `iceberg`, а для `type: hive_metastore` — `default`.</VersionBlock>
+- В Databricks параметр `catalog_name` имеет приоритет над параметром `catalog` при определении пространства имён верхнего уровня для модели.
 
-## Configure catalog integration for Iceberg tables
+## Настройка интеграции каталога для таблиц Iceberg
 
-1. Create a `catalogs.yml` at the top level of your dbt project. An example of Unity Catalog as the catalog:
+1. Создайте файл `catalogs.yml` в корневой директории вашего проекта dbt. Пример использования Unity Catalog в качестве каталога:
 
 <Tabs defaultValue="new">
-<TabItem value="new" label={<><VersionBlock lastVersion="1.99">New spec (beta)</VersionBlock><VersionBlock firstVersion="2.0">New spec</VersionBlock></>}>
+<TabItem value="new" label={<><VersionBlock lastVersion="1.99">Новая спецификация (бета)</VersionBlock><VersionBlock firstVersion="2.0">Новая спецификация</VersionBlock></>}>
 
 <File name="catalogs.yml">
 
@@ -145,7 +145,7 @@ catalogs:
 
 </TabItem>
 
-<TabItem value="old" label="Old spec">
+<TabItem value="old" label="Старая спецификация">
 
 <File name="catalogs.yml">
 
@@ -169,10 +169,10 @@ catalogs:
 
 </Tabs>
 
-2. Add the `catalog_name` config parameter in either a config block (inside the .sql model file), properties YAML file (model folder), or your project YAML file (`dbt_project.yml`). <br />
+2. Добавьте параметр конфигурации `catalog_name` в блок конфигурации (внутри .sql-файла модели), в YAML-файл свойств (в папке моделей) или в YAML-файл проекта (`dbt_project.yml`). <br />
 <br />
 
-An example of `iceberg_model.sql`:
+Пример файла `iceberg_model.sql`:
 
 ```yaml
 
@@ -188,4 +188,4 @@ select * from {{ ref('jaffle_shop_customers') }}
 
 ```
 
-3. Execute the dbt model with a `dbt run -s iceberg_model`.
+3. Выполните модель dbt с помощью команды `dbt run -s iceberg_model`.

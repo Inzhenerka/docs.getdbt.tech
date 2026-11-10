@@ -1,85 +1,84 @@
 ---
-title: "About AI and dbt"
+title: "Об ИИ и dbt"
 id: "about-dbt-ai"
-description: "Learn about AI-powered features and agents in dbt that help you build, manage, and consume governed data at scale."
-sidebar_label: "About AI and dbt"
+description: "Узнайте о функциях и агентах на базе ИИ в dbt, которые помогают создавать, управлять и использовать данные с централизованным управлением в любом масштабе."
+sidebar_label: "Об ИИ и dbt"
 hide_table_of_contents: true
 tags: [AI, Intelligence]
 availability: all_users
 ---
 
 <IntroText>
-Analytics engineering requires more than code generation &mdash; it requires understanding your data, how it connects, and what breaks when something changes. dbt brings purpose-built AI to that workflow, grounded in your project's lineage, tests, contracts, and metric definitions.
+Аналитическая инженерия требует не только генерации кода &mdash; необходимо понимать свои данные, связи между ними и то, что может сломаться при изменениях. dbt встраивает в этот рабочий процесс специализированный ИИ, который опирается на граф зависимостей, тесты, контракты и определения метрик вашего проекта.
 </IntroText>
 
 import CopilotWizardDifferences from '/snippets/_copilot-wizard-diff.md';
 
 <CopilotWizardDifferences/>
 
-## Explore dbt Wizard and AI
+## Знакомство с dbt Wizard и ИИ
 
 <div style={{maxWidth: '1200px'}} className="grid--3-col">
 
 <Card
-    title="About dbt Wizard"
-    body="Purpose-built AI for governed data development in dbt platform, Desktop, and CLI."
+    title="О dbt Wizard"
+    body="Специализированный ИИ для разработки данных с централизованным управлением в dbt platform, Desktop и CLI."
     link="/docs/platform/wizard-overview"
     icon="wizard"/>    
 
 <Card
-    title="Use dbt Wizard locally"
-    body="Install dbt Wizard locally and start a terminal session."
+    title="Использование dbt Wizard локально"
+    body="Установите dbt Wizard локально и начните сеанс в терминале."
     link="/docs/platform/wizard-overview#get-started"
     icon="wizard"/>
 
 <Card
-    title="dbt Wizard in dbt platform"
-    body="AI is on by default in your dbt platform account. Use dbt Wizard for governed dbt data development and dbt Copilot for inline AI assistance."
+    title="dbt Wizard в dbt platform"
+    body="ИИ включён по умолчанию в вашей учётной записи dbt platform. Используйте dbt Wizard для разработки данных в dbt с централизованным управлением, а dbt Copilot — для встроенной помощи ИИ."
     link="/docs/platform/wizard-platform"
     icon="wizard"/>
 
 <Card
     title="Wizard Desktop"
-    body="A native app for data authors and analysts. View rich data visualizations, data diffs, lineage, and more to get to your results faster than ever before."
+    body="Нативное приложение для разработчиков данных и аналитиков. Просматривайте наглядные визуализации данных, различия в данных, граф зависимостей и многое другое, чтобы получать результаты быстрее, чем когда-либо."
     link="/docs/dbt-ai/wizard-desktop"
     icon="wizard"/>
 
 
 <Card
-    title="Move to dbt Wizard"
-    body="Move from Claude Code, Cursor, or another AI agent to dbt Wizard CLI with native project context."
+    title="Переход на dbt Wizard"
+    body="Перейдите с Claude Code, Cursor или другого ИИ-агента на dbt Wizard CLI со встроенной поддержкой контекста проекта."
     link="/docs/dbt-ai/wizard-migrate"
     icon="wizard"/>
 
 </div>
 
-## Explore dbt Copilot
+## Знакомство с dbt Copilot
 
 <div style={{maxWidth: '1200px'}} className="grid--2-col">
 
 <Card
     title="dbt Copilot"
-    body="dbt's inline AI assistance for single-click generation of SQL, docs, tests, and semantic models."
+    body="Встроенный ИИ-помощник dbt для генерации SQL, документации, тестов и семантических моделей одним нажатием."
     link="/docs/dbt-ai/copilot-overview"
     icon="dbt-copilot"/>
 
 <Card
-    title="dbt Copilot in Insights"
-    body="Chat with your data using dbt Copilot in Insights, powered by the Semantic Layer."
+    title="dbt Copilot в Insights"
+    body="Общайтесь со своими данными с помощью dbt Copilot в Insights на базе Semantic Layer."
     link="/docs/dbt-ai/analyst-agent"
     icon="dbt-copilot"/>
 
 </div>
 
-## Explore the dbt MCP server
+## Знакомство с MCP-сервером dbt
 
 <div style={{maxWidth: '1200px'}} className="grid--2-col">
 
 <Card
-    title="dbt MCP server"
-    body="Bring dbt structured context into any MCP-compatible AI tool."
+    title="MCP-сервер dbt"
+    body="Передавайте структурированный контекст dbt в любой ИИ-инструмент, совместимый с MCP."
     link="/docs/dbt-ai/about-mcp"
     icon="integration"/>
 
 </div>
-

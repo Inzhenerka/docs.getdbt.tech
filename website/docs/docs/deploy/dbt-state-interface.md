@@ -1,7 +1,7 @@
 ---
-title: "Monitoring dbt State activity in dbt platform"
-sidebar_label: "Monitor dbt State activity"
-description: "Learn how to monitor dbt State activity in dbt platform for better visibility into model builds and cost savings."
+title: "Мониторинг активности dbt State на платформе dbt"
+sidebar_label: "Мониторинг активности dbt State"
+description: "Узнайте, как отслеживать активность dbt State на платформе dbt, чтобы лучше понимать процессы построения моделей и экономию затрат."
 id: "dbt-state-interface"
 tags: ['dbt State']
 availability: everywhere_usage
@@ -9,106 +9,106 @@ availability: everywhere_usage
 
 import DbtStateExplainTab from '/snippets/_dbt-state-explain-tab.md';
 
-# Monitor dbt State activity
+# Мониторинг активности dbt State
 
 <IntroText>
-Learn how to monitor dbt State activity in <Constant name="dbt_platform" /> for better visibility into model builds and cost savings.
+Узнайте, как отслеживать активность dbt State на <Constant name="dbt_platform" />, чтобы лучше понимать процессы построения моделей и экономию затрат.
 </IntroText>
 
-dbt State monitoring helps you:
+Мониторинг dbt State помогает:
 
-- **Track effectiveness of dbt State** &mdash; See how dbt State reduces unnecessary model rebuilds by only building models when there are changes to the data or code. dbt State provides transparency into how the optimization works across your projects.
-- **Analyze build patterns** &mdash; Gain insights into your project's build frequency and identify opportunities for further optimization.
+- **Отслеживать эффективность dbt State** &mdash; Узнавайте, как dbt State сокращает количество ненужных повторных построений моделей, выполняя построение только при изменении данных или кода. dbt State позволяет видеть, как работает оптимизация во всех ваших проектах.
+- **Анализировать закономерности построения** &mdash; Получайте информацию о частоте построений в проекте и выявляйте возможности для дальнейшей оптимизации.
 
-## dbt State metrics
+## Метрики dbt State
 
-When you go to **Account settings** > **Billing & Usage** > **Usage-based features**, the **State** tab shows how many days remain in your trial period. Once dbt State is enabled, it displays the following for the current month:
+При переходе в **Account settings** > **Billing & Usage** > **Usage-based features** на вкладке **State** отображается количество дней, оставшихся до конца пробного периода. После включения dbt State на ней отображаются следующие показатели за текущий месяц:
 
-- **Models reused this month**: How many model builds dbt State skipped or cloned instead of rebuilding from scratch.
-- **Total % build reduction**: The overall reduction in model builds across your account.
-- **Total query run time reduction**: The total time dbt State saved by not executing unnecessary model builds.
+- **Models reused this month**: количество построений моделей, которые dbt State пропустил или заменил клонированием вместо повторного построения с нуля.
+- **Total % build reduction**: общее сокращение количества построений моделей в вашем аккаунте.
+- **Total query run time reduction**: общее время, которое dbt State сэкономил, не выполняя ненужные построения моделей.
 
-The **State** tab also displays the following charts:
+На вкладке **State** также отображаются следующие диаграммы:
 
-- **DATT** &mdash; Shows the target tables processed by dbt State, split into **Billable** and **Free**. Daily active target tables (DATTs) are the [billable units](/docs/platform/billing/dbt-state-usage#daily-active-target-tables) for dbt State. During a trial, all DATTs are counted as free.
-- **Asset builds** &mdash; Shows all model builds for the month, including models reused and cloned.
+- **DATT** &mdash; Показывает целевые таблицы, обработанные dbt State, с разделением на **Billable** (платные) и **Free** (бесплатные). Ежедневно активные целевые таблицы (DATT) — это [единицы тарификации](/docs/platform/billing/dbt-state-usage#daily-active-target-tables) dbt State. В течение пробного периода все DATT учитываются как бесплатные.
+- **Asset builds** &mdash; Показывает все построения моделей за месяц, включая повторно использованные и клонированные модели.
 
-## Lag tolerance recommendations
+## Рекомендации по допустимому отставанию данных {#lag-tolerance-recommendations}
 
-The **dbt State** page, which you can access from the left-side menu of the <Constant name="dbt_platform" />, includes a **Lag tolerance recommendations** section that identifies models that could safely tolerate more lag, letting dbt State skip more runs and save additional compute. This is available to all dbt State users, including those running dbt locally, through CI/CD, or through an external orchestrator.
+На странице **dbt State**, доступной в левом меню <Constant name="dbt_platform" />, есть раздел **Lag tolerance recommendations**, в котором указаны модели, допускающие большее отставание данных без негативных последствий. Это позволяет dbt State пропускать больше запусков и дополнительно экономить вычислительные ресурсы. Раздел доступен всем пользователям dbt State, в том числе тем, кто запускает dbt локально, через CI/CD или с помощью внешнего оркестратора.
 
-The recommendations table displays the following columns:
+В таблице рекомендаций отображаются следующие столбцы:
 
 <SimpleTable>
-| Column | Description |
+| Столбец | Описание |
 |--------|-------------|
-| **Model name** | The name of the model that could benefit from a higher `lag_tolerance` value. |
-| **Project** | The dbt project the model belongs to, as set by `name:` in `dbt_project.yml`. This may differ from the project name in the <Constant name="dbt_platform" />. |
-| **Current lag** | The model's current `lag_tolerance` setting. |
-| **Recommended lag** | The `lag_tolerance` value dbt State recommends based on your model's 30-day build history. |
-| **% time saved** | The estimated percentage of build time you'd save by applying the recommended `lag_tolerance`. |
-| **Projected 30d time savings** | The estimated build time you could save over the next 30 days by applying the recommended `lag_tolerance`, based on redundant builds in the previous 30 days. This estimate includes only this model, so actual savings may be higher if downstream models also do not rebuild. |
+| **Model name** | Имя модели, для которой может быть полезно увеличить значение `lag_tolerance`. |
+| **Project** | Проект dbt, к которому относится модель, заданный параметром `name:` в `dbt_project.yml`. Он может отличаться от имени проекта на <Constant name="dbt_platform" />. |
+| **Current lag** | Текущее значение настройки `lag_tolerance` модели. |
+| **Recommended lag** | Значение `lag_tolerance`, которое dbt State рекомендует на основе истории построений модели за 30 дней. |
+| **% time saved** | Оценочная доля времени построения в процентах, которую вы сэкономите, применив рекомендуемое значение `lag_tolerance`. |
+| **Projected 30d time savings** | Оценочное время построения, которое можно сэкономить за следующие 30 дней, применив рекомендуемое значение `lag_tolerance`. Расчёт основан на избыточных построениях за предыдущие 30 дней. Оценка учитывает только эту модель, поэтому фактическая экономия может быть выше, если зависимые модели также не будут перестраиваться. |
 </SimpleTable>
 
-You can search for a specific model using the search bar, or filter recommendations by project using the **Project** dropdown menu.
+Вы можете найти определённую модель с помощью строки поиска или отфильтровать рекомендации по проекту с помощью раскрывающегося меню **Project**.
 
-To apply a recommendation, update the model's `lag_tolerance` config. For configuration syntax and examples, refer to the [`lag_tolerance` config page](/reference/resource-configs/lag-tolerance).
+Чтобы применить рекомендацию, обновите настройку `lag_tolerance` модели. Синтаксис настройки и примеры приведены на [странице настройки `lag_tolerance`](/reference/resource-configs/lag-tolerance).
 
-### How dbt State calculates recommendations
+### Как dbt State рассчитывает рекомендации
 
-dbt State analyzes each model’s build history from the previous 30 days. Models with fewer than 10 recorded builds are excluded because there isn't enough history to make a reliable recommendation.
+dbt State анализирует историю построений каждой модели за предыдущие 30 дней. Модели, для которых зафиксировано менее 10 построений, исключаются, поскольку истории недостаточно для надёжной рекомендации.
 
-For each eligible model, dbt State:
+Для каждой подходящей модели dbt State:
 
-1. Identifies builds where the model’s definition and inputs had not changed since the previous build.
-2. Estimates the build time that different `lag_tolerance` values would have saved.
-3. Recommends the smallest value that would have saved more than 30 minutes, helping reduce redundant builds while keeping data as fresh as possible.
+1. Определяет построения, при которых определение модели и входные данные не изменились с момента предыдущего построения.
+2. Оценивает время построения, которое удалось бы сэкономить при различных значениях `lag_tolerance`.
+3. Рекомендует наименьшее значение, которое позволило бы сэкономить более 30 минут, помогая сократить количество избыточных построений и при этом сохранить максимальную актуальность данных.
 
-A model doesn’t appear in the table if it’s a view or its current `lag_tolerance` value is already equal to or greater than the recommended value. Each account displays 20 models with the highest projected savings.
+Модель не отображается в таблице, если она является представлением или её текущее значение `lag_tolerance` уже равно рекомендуемому значению либо превышает его. Для каждого аккаунта отображаются 20 моделей с наибольшей прогнозируемой экономией.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/lag-tolerance-recommendations.png" width="80%" title="Lag tolerance recommendations" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/lag-tolerance-recommendations.png" width="80%" title="Рекомендации по допустимому отставанию данных" />
 
-## Models built and reused chart
+## Диаграмма построенных и повторно использованных моделей
 
-When you go to your **Account home**, you'll see a chart showing the number of models built and reused, giving you visibility into how dbt State is optimizing your data builds. You can also view the number of reused models per project on **Account home**.
+На странице **Account home** отображается диаграмма с количеством построенных и повторно использованных моделей, которая позволяет увидеть, как dbt State оптимизирует построение ваших данных. На странице **Account home** также можно посмотреть количество повторно использованных моделей по проектам.
 
-## Logs view of built resources
+## Просмотр логов построения ресурсов {#logs-view-of-built-resources}
 
-When you run a job, or when you run `dbt run` or `dbt build` locally, a structured logs view shows which resources were built, skipped, or reused.
+При запуске задания или локальном выполнении `dbt run` либо `dbt build` в структурированном представлении логов отображается, какие ресурсы были построены, пропущены или повторно использованы.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-logs-view.png" title="Logs view of built resources" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-logs-view.png" title="Просмотр логов построения ресурсов" />
 
-1. Each resource has an icon indicating its status.
-2. The **Reused** tab indicates the total number of reused resources.
-3. You can use the search bar or filter the logs to show **All**, **Success**, **Warning**, **Failed**, **Running**, **Skipped**, **Reused**, or **Debugged** messages.
-4. Detailed log messages provide context on why resources were built, reused, or skipped. These messages are highlighted in the logs.
+1. У каждого ресурса есть значок, обозначающий его статус.
+2. На вкладке **Reused** указано общее количество повторно использованных ресурсов.
+3. Можно использовать строку поиска или фильтровать логи, чтобы отображать сообщения категорий **All**, **Success**, **Warning**, **Failed**, **Running**, **Skipped**, **Reused** или **Debugged**.
+4. Подробные сообщения в логах объясняют, почему ресурсы были построены, повторно использованы или пропущены. Эти сообщения выделены в логах.
 
-## Reused tag in the Latest status lens
+## Метка Reused в линзе Latest status
 
-Lineage lenses are interactive visual filters in [dbt <Constant name="catalog" />](/docs/explore/explore-projects#lenses) that show additional context on your lineage graph to understand how resources are defined or performing. When you apply a lens, tags become visible on the nodes in the lineage graph, indicating the layer value along with coloration based on that value. If you're significantly zoomed out, only the tags and their colors are visible in the graph.
+Линзы графа происхождения данных — это интерактивные визуальные фильтры в [dbt <Constant name="catalog" />](/docs/explore/explore-projects#lenses), которые показывают дополнительную информацию на графе происхождения данных и помогают понять, как определены ресурсы и как они работают. При применении линзы на узлах графа появляются метки со значением соответствующего слоя и цветовой индикацией на основе этого значения. Если сильно уменьшить масштаб, на графе будут видны только метки и их цвета.
 
-The **Latest status** lens shows the status from the latest execution of the resource in the current environment. When you use this lens to view your lineage, dbt State tags reused models with **Reused**.
+Линза **Latest status** показывает статус последнего выполнения ресурса в текущей среде. При просмотре графа происхождения данных с этой линзой dbt State помечает повторно использованные модели меткой **Reused**.
 
-<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-latest-status-lens.png" width="90%" title="Latest status lens showing reused models" />
+<Lightbox src="/img/docs/dbt-platform/using-dbt-platform/sao-latest-status-lens.png" width="90%" title="Линза Latest status с повторно использованными моделями" />
 
-To view your lineage with the **Latest status** lens:
+Чтобы просмотреть граф происхождения данных с линзой **Latest status**:
 
-1. From the main menu, go to **Orchestration** > **Runs**.
-2. Select your run.
-3. Go to the **Lineage** tab. You'll see your project's lineage.
-4. In the **Lenses** field, select **Latest status**.
+1. В главном меню перейдите в **Orchestration** > **Runs**.
+2. Выберите нужный запуск.
+3. Перейдите на вкладку **Lineage**. Вы увидите граф происхождения данных вашего проекта.
+4. В поле **Lenses** выберите **Latest status**.
 
-## Explain tab
+## Вкладка Explain {#explain-tab}
 
-To see why dbt State rebuilt, reused, or cloned a specific resource, go to **Orchestration** > **Runs**. Select a run and go to the **Explain** tab.
+Чтобы узнать, почему dbt State перестроил, повторно использовал или клонировал определённый ресурс, перейдите в **Orchestration** > **Runs**. Выберите запуск и перейдите на вкладку **Explain**.
 
 <DbtStateExplainTab />
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [dbt State trial and billing](/docs/deploy/dbt-state-trial)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
-- [`lag_tolerance` config reference](/reference/resource-configs/lag-tolerance)
-- [Migrate from state-aware orchestration](/docs/deploy/dbt-state-migration)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Пробный период и тарификация dbt State](/docs/deploy/dbt-state-trial)
+- [Настройки dbt State](/reference/resource-configs/dbt-state-configs)
+- [Справочник по настройке `lag_tolerance`](/reference/resource-configs/lag-tolerance)
+- [Переход с оркестрации с учётом состояния](/docs/deploy/dbt-state-migration)

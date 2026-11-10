@@ -1,119 +1,121 @@
 ---
-title: "Lint and format your code"
+title: "Проверка и форматирование кода"
 id: "lint-format"
-description: "Integrate with popular linters and formatters like SQLFluff, sqlfmt, Black, and Prettier."
-sidebar_label: "Lint and format"
+description: "Интеграция с линтерами и средствами форматирования SQLFluff, sqlfmt, Black и Prettier."
+sidebar_label: "Проверка и форматирование"
 tags: [IDE]
 availability:
   surface: platform
   access: login_required
 ---
 
-Enhance your development workflow by integrating with popular linters and formatters like [SQLFluff](https://sqlfluff.com/), [sqlfmt](http://sqlfmt.com/), [Black](https://black.readthedocs.io/en/latest/), and [Prettier](https://prettier.io/). Leverage these powerful tools directly in the <Constant name="studio_ide" /> without interrupting your development flow.
+Повысьте эффективность процесса разработки, интегрировав популярные линтеры и форматтеры, такие как [SQLFluff](https://sqlfluff.com/), [sqlfmt](http://sqlfmt.com/), [Black](https://black.readthedocs.io/en/latest/) и [Prettier](https://prettier.io/). Используйте эти мощные инструменты напрямую в <Constant name="studio_ide" />, не прерывая рабочий процесс разработки.
 
 <details>
-<summary>What are linters and formatters? </summary>
-Linters analyze code for errors, bugs, and style issues, while formatters fix style and formatting rules.  Read more about when to use linters or formatters in the <a href="#faqs">FAQs</a>
+<summary>Что такое линтеры и форматтеры? </summary>
+
+Линтеры анализируют код на наличие ошибок, багов и проблем со стилем, в то время как форматтеры исправляют правила стиля и форматирования. Подробнее о том, когда использовать линтеры или форматтеры, читайте в <a href="#faqs">Часто задаваемых вопросах</a>.
+
 </details>
 
 
-In the <Constant name="studio_ide" />, you can perform linting, auto-fix, and formatting on five different file types:
+В <Constant name="studio_ide" /> вы можете выполнять линтинг, автоисправление и форматирование для пяти различных типов файлов:
  
-- SQL: [Lint](#lint) and fix with SQLFluff, and [format](#format) with sqlfmt
-- YAML, Markdown, and JSON: Format with Prettier
-- Python: Format with Black
+- SQL: [Проверка](#lint) и исправление с помощью SQLFluff, а также [форматирование](#format) с помощью sqlfmt
+- YAML, Markdown и JSON: Форматирование с помощью Prettier
+- Python: Форматирование с помощью Black
 
-Each file type has its own unique linting and formatting rules. You can [customize](#customize-linting) the linting process to add more flexibility and enhance problem and style detection.
+Каждый тип файла имеет свои уникальные правила проверки и форматирования. Вы можете [настроить](#customize-linting) процесс проверки, чтобы добавить больше гибкости и улучшить обнаружение проблем и стиля.
 
-By default, the IDE uses sqlfmt rules to format your code, making it convenient to use right away. However, if you have a file named `.sqlfluff` in the root directory of your dbt project, the IDE will default to SQLFluff rules instead.
+По умолчанию IDE использует правила sqlfmt для форматирования вашего кода, что делает его удобным для использования сразу. Однако, если у вас есть файл с именем `.sqlfluff` в корневом каталоге вашего проекта dbt, IDE будет использовать правила SQLFluff по умолчанию.
 
 <DocCarousel slidesPerView={1}>
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfluff.gif" width="100%" title="Use SQLFluff to lint/format your SQL code, and view code errors in the Code quality tab."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfluff.gif" width="100%" title="Используйте SQLFluff для проверки/форматирования SQL-кода и просматривайте ошибки кода на вкладке Качество кода."/>
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfmt.gif" width="95%" title="Use sqlfmt to format your SQL code."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfmt.gif" width="95%" title="Используйте sqlfmt для форматирования SQL-кода."/>
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/prettier.gif" width="95%" title="Format YAML, Markdown, and JSON files using Prettier."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/prettier.gif" width="95%" title="Форматируйте файлы YAML, Markdown и JSON с помощью Prettier."/>
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-sql-popup.png" width="95%" title="Use the Config button to select your tool."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-sql-popup.png" width="95%" title="Используйте кнопку Config для выбора инструмента."/>
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-sqlfluff-config.png" width="95%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-sqlfluff-config.png" width="95%" title="Настройте линтинг с помощью собственных правил проверки кода, включая линтинг/оформление по стандарту dbtonic."/>
 
 </DocCarousel>
 
-## Lint
+## Проверка {#lint}
 
-With the <Constant name="studio_ide" />, you can seamlessly use [SQLFluff](https://sqlfluff.com/), a configurable SQL linter, to warn you of complex functions, syntax, formatting, and compilation errors. This integration allows you to run checks, fix, and display any code errors directly within the <Constant name="studio_ide" />:
+В <Constant name="studio_ide" /> вы можете без труда использовать [SQLFluff](https://sqlfluff.com/), настраиваемый SQL-линтер, который предупреждает о сложных функциях, ошибках синтаксиса, форматирования и компиляции. Эта интеграция позволяет запускать проверки, исправлять и отображать любые ошибки кода непосредственно в <Constant name="studio_ide" />:
 
-- Works with Jinja and SQL.
-- Comes with built-in [linting rules](https://docs.sqlfluff.com/en/stable/rules.html). You can also [customize](#customize-linting) your own linting rules.
-- Empowers you to [enable linting](#enable-linting) with options like **Lint** (displays linting errors and recommends actions) or **Fix** (auto-fixes errors in the <Constant name="studio_ide" />).
-- Displays a **Code quality** tab to view lint and format results. Some editor diagnostics also appear in the **Problems** tab.
+- Работает с Jinja и SQL.
+- Поставляется со встроенными [правилами линтинга](https://docs.sqlfluff.com/en/stable/rules.html). Вы также можете [настроить](#customize-linting) собственные правила линтинга.
+- Позволяет [включить линтинг](#enable-linting) с такими опциями, как **Lint** (отображает ошибки линтинга и рекомендует действия) или **Fix** (автоматически исправляет ошибки в <Constant name="studio_ide" />).
+- Предоставляет вкладку **Качество кода** для просмотра результатов линтинга и форматирования. Некоторые диагностические сообщения редактора также отображаются на вкладке **Проблемы**.
 
-:::info Linting considerations
-- The <Constant name="studio_ide" /> runs linting using the <Constant name="core" /> engine, even when your development environment uses the **v2 Stable** release track. For more information, refer to [<Constant name="fusion" /> limitations](/docs/dbt/supported-features#limitations).
-- Linting doesn't support ephemeral models in dbt v1.5 and lower. Refer to the [FAQs](#faqs) for more info.
+:::info Особенности линтинга
+- <Constant name="studio_ide" /> выполняет линтинг с помощью движка <Constant name="core" />, даже если ваша среда разработки использует канал выпусков **v2 Stable**. Подробнее см. в разделе [Ограничения <Constant name="fusion" />](/docs/dbt/supported-features#limitations).
+- Линтинг не поддерживает эфемерные модели в dbt v1.5 и более ранних версиях. Подробнее см. в разделе [Часто задаваемые вопросы](#faqs).
 :::
 
-### Enable linting
+### Включение проверки {#enable-linting}
 
-Linting is available on all branches, including your protected primary git branch. Since the <Constant name="studio_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Линтинг доступен во всех ветках, включая защищённую основную ветку git. Поскольку <Constant name="studio_ide" /> не позволяет делать коммиты в защищённую ветку, он предложит зафиксировать эти изменения в новой ветке.
 
-1. To enable linting, open a `.sql` file and click the **Code quality** tab.
-2. Click the **`</> Config`** button on the right side of the [console section](/docs/platform/studio-ide/ide-user-interface#console-section), below the **File editor**. 
-3. In the **Code quality tool configuration** dialog, select **SQLFluff (linting & formatting)**.
-4. Click **Save**.
-5. After saving, use the toolbar above the console (below the **File editor**) to select **Lint file** or **Lint and Fix file**:
-    - **Lint**: Displays linting issues in the <Constant name="studio_ide" /> as wavy underlines in the **File editor**. You can hover over an underlined issue to display the details and actions, including a **Quick Fix** option to fix all or specific issues. After linting, you'll see a message confirming the outcome. Linting doesn't rerun after saving. Click **Lint** again to rerun linting.
-    - **Fix**: Automatically fixes linting errors in the **File editor**. When fixing is complete, you'll see a message confirming the outcome. 
-    - Use the **Code quality** tab to view lint results and logs. Check the **Problems** tab for related editor diagnostics.
+1. Чтобы включить линтинг, откройте файл `.sql` и нажмите вкладку **Качество кода**.
+2. Нажмите кнопку **`</> Config`** в правой части [раздела консоли](/docs/platform/studio-ide/ide-user-interface#console-section), под **Редактором файлов**. 
+3. В диалоговом окне **Настройка инструмента проверки качества кода** выберите **SQLFluff (линтинг & форматирование)**.
+4. Нажмите **Сохранить**.
+5. После сохранения на панели инструментов над консолью (под **Редактором файлов**) выберите **Проверить файл** или **Проверить и исправить файл**:
+    - **Проверить**: Показывает проблемы, обнаруженные при линтинге в <Constant name="studio_ide" />, в виде волнистого подчёркивания в **Редакторе файлов**. Наведите указатель на подчёркнутую проблему, чтобы просмотреть подробности и доступные действия, включая опцию **Быстрое исправление** для исправления всех или отдельных проблем. После линтинга появится сообщение с результатом. Линтинг не запускается повторно после сохранения. Нажмите **Проверить** ещё раз, чтобы повторно запустить линтинг.
+    - **Исправить**: Автоматически исправляет ошибки линтинга в **Редакторе файлов**. После завершения исправления появится сообщение с результатом. 
+    - Используйте вкладку **Качество кода** для просмотра результатов линтинга и журналов. Проверяйте вкладку **Проблемы** на наличие связанных диагностических сообщений редактора.
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-lint-format-console.gif" width="90%" title="Use the Lint or Fix button in the console section to lint or auto-fix your code."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-lint-format-console.gif" width="90%" title="Используйте кнопку Проверить или Исправить в разделе консоли для линтинга или автоматического исправления кода."/>
 
-### Lint multiple files
+### Линтинг нескольких файлов {#lint-multiple-files}
 
-You can lint multiple SQL files at once, depending on how you are working with dbt. The behavior differs between the <Constant name="studio_ide" />, <Constant name="core" />, and the <Constant name="platform_cli" />.
+Вы можете выполнять линтинг нескольких SQL-файлов одновременно в зависимости от того, как вы работаете с dbt. Поведение различается в <Constant name="studio_ide" />, <Constant name="core" /> и <Constant name="platform_cli" />.
 
-- **<Constant name="studio_ide" />:** By default, linting runs against all modified `.sql` files in your project on your current branch. Refer to [Snapshot linting](#snapshot-linting) for more information.
+- **<Constant name="studio_ide" />:** По умолчанию линтинг выполняется для всех изменённых файлов `.sql` в проекте в текущей ветке. Подробнее см. в разделе [Линтинг снимков](#snapshot-linting).
 
-- **<Constant name="core" />:** Does not include a built-in linter. To lint SQL files in your project, use a third-party linter such as SQLFluff configured to use the [dbt templater](https://docs.sqlfluff.com/en/stable/configuration/templating/dbt.html). You can lint multiple files by specifying one or more file or directory paths as arguments to the command.
+- **<Constant name="core" />:** Не включает встроенный линтер. Для линтинга SQL-файлов в проекте используйте сторонний линтер, например SQLFluff, настроенный на использование [шаблонизатора dbt](https://docs.sqlfluff.com/en/stable/configuration/templating/dbt.html). Вы можете выполнять линтинг нескольких файлов, указав один или несколько путей к файлам или каталогам в качестве аргументов команды.
 
-- **<Constant name="platform_cli" />:** Supports the same linting [commands](/docs/platform/configure-dbt-cli#lint-sql-files) as <Constant name="core" />:
+- **<Constant name="platform_cli" />:** Поддерживает те же [команды](/docs/platform/configure-dbt-cli#lint-sql-files) линтинга, что и <Constant name="core" />:
 
     ```
     dbt sqlfluff lint [PATHS]... [flags]
     ```
 
-    If no path is specified (for example, `dbt sqlfluff lint`), all SQL files in the project are linted.
+    Если путь не указан (например, `dbt sqlfluff lint`), линтинг выполняется для всех SQL-файлов в проекте.
 
 
 
-### Customize linting
+### Настройка проверки {#customize-linting}
 
-SQLFluff is a configurable SQL linter, which means you can configure your own linting rules instead of using the default linting settings in the IDE. You can exclude files and directories by using a standard `.sqlfluffignore` file. Learn more about the syntax in the [.sqlfluffignore syntax docs](https://docs.sqlfluff.com/en/stable/configuration.html#id2). 
+SQLFluff — это настраиваемый SQL линтер, что означает, что вы можете настроить свои собственные правила проверки вместо использования настроек проверки по умолчанию в IDE. Вы можете исключить файлы и каталоги, используя стандартный файл `.sqlfluffignore`. Узнайте больше о синтаксисе в [документации по синтаксису .sqlfluffignore](https://docs.sqlfluff.com/en/stable/configuration.html#id2).
 
-To configure your own linting rules:
+Чтобы настроить свои собственные правила проверки:
 
-1. Create a new file in the root project directory (the parent or top-level directory for your files). Note: The root project directory is the directory where your `dbt_project.yml` file resides.
-2. Name the file `.sqlfluff` (make sure you add the `.` before `sqlfluff`).
-3. [Create](https://docs.sqlfluff.com/en/stable/configuration/setting_configuration.html#new-project-configuration) and add your custom config code. 
-4. Save and commit your changes.
-5. Restart the <Constant name="studio_ide" />.
-6. Test it out and happy linting!
+1. Создайте новый файл в корневом каталоге проекта (родительском каталоге или каталоге верхнего уровня для ваших файлов). Примечание: Корневой каталог проекта — это каталог, в котором находится файл `dbt_project.yml`.
+2. Назовите файл `.sqlfluff` (обязательно добавьте `.` перед `sqlfluff`).
+3. [Создайте](https://docs.sqlfluff.com/en/stable/configuration/setting_configuration.html#new-project-configuration) и добавьте свой пользовательский код конфигурации.  
+4. Сохраните изменения и закоммитьте их.
+5. Перезапустите <Constant name="studio_ide" />.
+6. Протестируйте и приятного линтинга!
 
-#### Snapshot linting
-By default, <Constant name="dbt" /> lints all modified `.sql` files in your project, including snapshots. [Snapshots](/docs/build/snapshots) can be defined in YAML _and_ `.sql` files, but their SQL isn't lintable and can cause errors during linting.
+#### Линтинг снапшотов {#snapshot-linting}
+По умолчанию <Constant name="dbt" /> выполняет линтинг всех изменённых файлов `.sql` в вашем проекте, включая снапшоты. [Snapshots](/docs/build/snapshots) могут быть определены как в YAML, так и в файлах `.sql`, однако их SQL не подлежит линтингу и может вызывать ошибки в процессе линтинга.
 
-To prevent SQLFluff from linting snapshot files, add the snapshots directory to your `.sqlfluffignore` file (for example `snapshots/`).
+Чтобы SQLFluff не выполнял линтинг файлов снапшотов, добавьте директорию снапшотов в файл `.sqlfluffignore` (например, `snapshots/`).
 
-Note that you should explicitly exclude snapshots in your `.sqlfluffignore` file since <Constant name="dbt" /> doesn't automatically ignore snapshots on the backend.
+Обратите внимание, что вам необходимо явно исключить снапшоты в файле `.sqlfluffignore`, поскольку <Constant name="dbt" /> не игнорирует снапшоты автоматически на стороне бэкенда.
 
-### Configure dbtonic linting rules
+### Настройка правил линтинга dbtonic {#configure-dbtonic-linting-rules}
 
-Refer to the [Jaffle shop SQLFluff config file](https://github.com/dbt-labs/jaffle-shop-template/blob/main/.sqlfluff) for dbt-specific (or dbtonic) linting rules we use for our own projects:
+Обратитесь к [файлу конфигурации SQLFluff для Jaffle shop](https://github.com/dbt-labs/jaffle-shop-template/blob/main/.sqlfluff) для dbt-специфичных (или dbtonic) правил проверки, которые мы используем для наших собственных проектов:
 
 <details>
-<summary>dbtonic config code example provided by dbt Labs</summary>
+<summary>Пример кода конфигурации dbtonic от dbt Labs</summary>
 
 ```
 [sqlfluff]
@@ -157,102 +159,102 @@ group_by_and_order_by_style = implicit
 ```
 </details>
 
-For more information on styling best practices, refer to [How we style our SQL](/best-practices/how-we-style/2-how-we-style-our-sql).
+Подробнее о рекомендациях по оформлению см. в разделе [Как мы оформляем SQL](/best-practices/how-we-style/2-how-we-style-our-sql).
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-sqlfluff-config.png" width="90%" title="Customize linting by configuring your own linting code rules, including dbtonic linting/styling."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/ide-sqlfluff-config.png" width="90%" title="Настройте линтинг с помощью собственных правил проверки кода, включая линтинг/оформление по стандарту dbtonic."/>
 
-## Format
+## Форматирование {#format}
 
-In the <Constant name="studio_ide" />, you can format your code to match style guides with a click of a button. The <Constant name="studio_ide" /> integrates with formatters like sqlfmt, Prettier, and Black to automatically format code on five different file types: SQL, YAML, Markdown, Python, and JSON.
+В <Constant name="studio_ide" /> вы можете форматировать код в соответствии с руководствами по стилю одним нажатием кнопки. <Constant name="studio_ide" /> интегрируется с такими форматтерами, как sqlfmt, Prettier и Black, для автоматического форматирования кода в файлах пяти типов: SQL, YAML, Markdown, Python и JSON.
 
-- SQL: Format with [sqlfmt](http://sqlfmt.com/), which provides one way to format your dbt SQL and Jinja.
-    - **Note**: Custom sqlfmt configuration in the <Constant name="studio_ide" /> is not supported.
-- YAML, Markdown, and JSON: Format with [Prettier](https://prettier.io/). 
-- Python: Format with [Black](https://black.readthedocs.io/en/latest/).
+- SQL: Форматирование с помощью [sqlfmt](http://sqlfmt.com/), который предоставляет единый способ форматирования SQL и Jinja в dbt.
+    - **Примечание**: Пользовательская конфигурация sqlfmt в <Constant name="studio_ide" /> не поддерживается.
+- YAML, Markdown и JSON: Форматирование с помощью [Prettier](https://prettier.io/). 
+- Python: Форматирование с помощью [Black](https://black.readthedocs.io/en/latest/).
 
-The <Constant name="studio_ide" /> formatting integrations take care of manual tasks like code formatting, enabling you to focus on creating quality data models, collaborating, and driving impactful results.
+Интеграции <Constant name="studio_ide" /> с форматтерами берут на себя ручные задачи, такие как форматирование кода, позволяя вам сосредоточиться на создании качественных моделей данных, совместной работе и достижении значимых результатов.
 
-### Format SQL
+### Форматирование SQL {#format-sql}
 
-To format your SQL code, <Constant name="dbt" /> integrates with [sqlfmt](http://sqlfmt.com/), which is an uncompromising SQL query formatter that provides one way to format the SQL query and Jinja.
+Чтобы форматировать ваш SQL-код, <Constant name="dbt" /> интегрируется с [sqlfmt](http://sqlfmt.com/) — это строгий форматтер SQL-запросов, который предлагает единый, однозначный способ форматирования SQL и Jinja.
 
-By default, the <Constant name="studio_ide" /> uses sqlfmt rules to format your code, making the **Format** button available and convenient to use immediately. However, if you have a file named `.sqlfluff` in the root directory of your dbt project, the <Constant name="studio_ide" /> defaults to SQLFluff rules instead.
+По умолчанию <Constant name="studio_ide" /> использует правила sqlfmt для форматирования кода, поэтому кнопка **Форматировать** доступна и готова к использованию сразу. Однако если в корневом каталоге проекта dbt есть файл с именем `.sqlfluff`, <Constant name="studio_ide" /> по умолчанию использует правила SQLFluff.
 
-Formatting is available on all branches, including your protected primary git branch. Since the <Constant name="studio_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Форматирование доступно во всех ветках, включая защищённую основную git‑ветку. Поскольку <Constant name="studio_ide" /> не позволяет делать коммиты напрямую в защищённую ветку, он предложит закоммитить эти изменения в новую ветку.
 
-1. Open a `.sql` file and click the **Code quality** tab.
-2. Click the **`</> Config`** button on the right side of the console.
-3. In the **Code quality tool configuration** dialog, select **sqlfmt (formatting only)**.
-4. Click **Save**.
-5. After saving, use the toolbar above the console (below the **File editor**) to select the **Format** button.
-6. The **Format** button auto-formats your code in the **File editor**. Once you've auto-formatted, you'll see a message confirming the outcome. 
+1. Откройте файл `.sql` и нажмите вкладку **Качество кода**.
+2. Нажмите кнопку **`</> Config`** в правой части консоли.
+3. В диалоговом окне **Настройка инструмента проверки качества кода** выберите **sqlfmt (только форматирование)**.
+4. Нажмите **Сохранить**.
+5. После сохранения на панели инструментов над консолью (под **Редактором файлов**) выберите кнопку **Форматировать**.
+6. Кнопка **Format** автоматически форматирует ваш код в **Редакторе файлов**. После автоматического форматирования вы увидите сообщение, подтверждающее результат.
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfmt.gif" width="90%" title="Use sqlfmt to format your SQL code."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/sqlfmt.gif" width="90%" title="Используйте sqlfmt для форматирования SQL-кода."/>
 
-### Format YAML, Markdown, JSON
+### Форматирование YAML, Markdown, JSON {#format-yaml-markdown-json}
 
-To format your YAML, Markdown, or JSON code, <Constant name="dbt" /> integrates with [Prettier](https://prettier.io/), which is an opinionated code formatter. Formatting is available on all branches, including your protected primary git branch. Since the <Constant name="studio_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Чтобы форматировать код YAML, Markdown или JSON, <Constant name="dbt" /> интегрируется с [Prettier](https://prettier.io/) — форматировщиком кода с жёстко заданными правилами. Форматирование доступно во всех ветках, включая защищённую основную git-ветку. Поскольку <Constant name="studio_ide" /> не позволяет выполнять коммиты в защищённую ветку, он предлагает зафиксировать эти изменения в новой ветке.
 
-1. Open a `.yml`, `.md`, or `.json` file.
-2. In the toolbar above the console (below the **File editor**), select the **Format** button to auto-format your code in the **File editor**. Use the **Code quality** tab to view format results. 
-3. Once you've auto-formatted, you'll see a message confirming the outcome. 
+1. Откройте файл `.yml`, `.md` или `.json`.
+2. На панели инструментов над консолью (под **Редактором файлов**) выберите кнопку **Форматировать**, чтобы автоматически отформатировать код в **Редакторе файлов**. Используйте вкладку **Качество кода** для просмотра результатов форматирования. 
+3. После автоматического форматирования вы увидите сообщение, подтверждающее результат.
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/prettier.gif" width="90%" title="Format YAML, Markdown, and JSON files using Prettier."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/prettier.gif" width="90%" title="Форматируйте файлы YAML, Markdown и JSON с помощью Prettier."/>
 
-You can add a configuration file to customize formatting rules for YAML, Markdown, or JSON files using Prettier. The IDE looks for the configuration file based on an order of precedence. For example, it first checks for a "prettier" key in your `package.json` file.
+Вы можете добавить конфигурационный файл для настройки правил форматирования для файлов YAML, Markdown или JSON с помощью Prettier. IDE ищет конфигурационный файл на основе порядка приоритета. Например, сначала она проверяет наличие ключа "prettier" в вашем файле `package.json`.
 
-For more information on the order of precedence and how to configure files, refer to [Prettier's documentation](https://prettier.io/docs/en/configuration.html). Please note, `.prettierrc.json5`, `.prettierrc.js`, and `.prettierrc.toml` files aren't currently supported.
+Подробнее о порядке приоритетов и настройке файлов см. в [документации Prettier](https://prettier.io/docs/en/configuration.html). Обратите внимание, файлы `.prettierrc.json5`, `.prettierrc.js` и `.prettierrc.toml` в настоящее время не поддерживаются.
 
-### Format Python
+### Форматирование Python {#format-python}
 
-To format your Python code, <Constant name="dbt" /> integrates with [Black](https://black.readthedocs.io/en/latest/), which is an uncompromising Python code formatter. Formatting is available on all branches, including your protected primary git branch. Since the <Constant name="studio_ide" /> prevents commits to the protected branch, it prompts you to commit those changes to a new branch.
+Для форматирования вашего Python-кода <Constant name="dbt" /> интегрируется с [Black](https://black.readthedocs.io/en/latest/) — строгим форматтером кода Python. Форматирование доступно во всех ветках, включая защищённую основную git-ветку. Поскольку <Constant name="studio_ide" /> не позволяет выполнять коммиты в защищённую ветку, он предлагает закоммитить эти изменения в новую ветку.
 
-1. Open a `.py` file.
-2. In the toolbar above the console (below the **File editor**), select the **Format** button to auto-format your code in the **File editor**. 
-3. Once you've auto-formatted, you'll see a message confirming the outcome. 
+1. Откройте файл `.py`.
+2. На панели инструментов над консолью (под **Редактором файлов**) выберите кнопку **Форматировать**, чтобы автоматически отформатировать код в **Редакторе файлов**. 
+3. После автоматического форматирования вы увидите сообщение, подтверждающее результат.
 
-<Lightbox src="/img/docs/dbt-platform/platform-ide/python-black.gif" width="80%" title="Format Python files using Black."/>
+<Lightbox src="/img/docs/dbt-platform/platform-ide/python-black.gif" width="80%" title="Форматируйте файлы Python с помощью Black."/>
 
-## FAQs
+## Часто задаваемые вопросы {#faqs}
 
-<DetailsToggle alt_header="When should I use SQLFluff and when should I use sqlfmt?">
+<DetailsToggle alt_header="Когда следует использовать SQLFluff, а когда sqlfmt?">
 
-SQLFluff and sqlfmt are both tools used for formatting SQL code, but some differences may make one preferable to the other depending on your use case. <br />
+SQLFluff и sqlfmt — это оба инструмента, используемые для форматирования SQL-кода, но некоторые различия могут сделать один из них предпочтительным в зависимости от вашего случая использования. <br />
 
-SQLFluff is a SQL code linter and formatter. This means that it analyzes your code to identify potential issues and bugs, and follows coding standards. It also formats your code according to a set of rules, which are [customizable](#customize-linting), to ensure consistent coding practices. You can also use SQLFluff to keep your SQL code well-formatted and follow styling best practices. <br />
+SQLFluff — это линтер и форматтер SQL-кода. Это означает, что он анализирует ваш код, чтобы выявить потенциальные проблемы и баги, и следует стандартам кодирования. Он также форматирует ваш код в соответствии с набором правил, которые [настраиваемы](#customize-linting), чтобы обеспечить согласованные практики кодирования. Вы также можете использовать SQLFluff, чтобы ваш SQL-код был хорошо отформатирован и следовал лучшим практикам стилизации. <br />
 
-sqlfmt is a SQL code formatter. This means it automatically formats your SQL code according to a set of formatting rules that aren't customizable. It focuses solely on the appearance and layout of the code, which helps ensure consistent indentation, line breaks, and spacing. sqlfmt doesn't analyze your code for errors or bugs and doesn't look at coding issues beyond code formatting. <br />
+sqlfmt — это форматтер SQL-кода. Это означает, что он автоматически форматирует ваш SQL-код в соответствии с набором правил форматирования, которые не настраиваемы. Он сосредоточен исключительно на внешнем виде и макете кода, что помогает обеспечить согласованное отступление, разрывы строк и пробелы. sqlfmt не анализирует ваш код на наличие ошибок или багов и не рассматривает проблемы кодирования за пределами форматирования кода. <br />
 
-You can use either SQLFluff or sqlfmt depending on your preference and what works best for you:
+Вы можете использовать либо SQLFluff, либо sqlfmt в зависимости от ваших предпочтений и того, что лучше всего подходит для вас:
 
-- Use SQLFluff to have your code linted and formatted (meaning analyze fix your code for errors/bugs, and format your styling). It allows you the flexibility to customize your own rules.
+- Используйте SQLFluff, чтобы ваш код был проверен и отформатирован (то есть проанализируйте и исправьте ваш код на наличие ошибок/багов и отформатируйте ваш стиль). Это позволяет вам гибкость в настройке собственных правил.
 
-- Use sqlfmt to only have your code well-formatted without analyzing it for errors and bugs. You can use sqlfmt out of the box, making it convenient to use right away without having to configure it.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="Can I nest `.sqlfluff` files?">
-
-To ensure optimal code quality, consistent code, and styles, it's highly recommended you have one main `.sqlfluff` configuration file in the root folder of your project. Having multiple files can result in various different SQL styles in your project. <br /><br />
-
-However, you can customize and include an additional child `.sqlfluff` configuration file within specific subfolders of your dbt project. <br /><br />By nesting a `.sqlfluff` file in a subfolder, SQLFluff will apply the rules defined in that subfolder's configuration file to any files located within it. The rules specified in the parent `.sqlfluff` file will be used for all other files and folders outside of the subfolder. This hierarchical approach allows for tailored linting rules while maintaining consistency throughout your project. Refer to [SQLFluff documentation](https://docs.sqlfluff.com/en/stable/configuration.html#configuration-files) for more info.
+- Используйте sqlfmt, чтобы ваш код был хорошо отформатирован без анализа на наличие ошибок и багов. Вы можете использовать sqlfmt из коробки, что делает его удобным для использования сразу без необходимости настройки.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Can I run SQLFluff commands from the terminal?">
+<DetailsToggle alt_header="Можно ли размещать файлы `.sqlfluff` во вложенных каталогах?">
 
-Currently, running SQLFluff commands from the terminal isn't supported. 
-</DetailsToggle>
+Для обеспечения оптимального качества кода, его единообразия и согласованности стилей настоятельно рекомендуется иметь один основной файл конфигурации `.sqlfluff` в корневой папке проекта. Наличие нескольких файлов может привести к использованию разных стилей SQL в проекте. <br /><br />
 
-<DetailsToggle alt_header="What are some considerations when using dbt linting?">
-Currently, the <Constant name="studio_ide" /> can lint or fix files up to a certain size and complexity. If you attempt to lint or fix files that are too large, taking more than 60 seconds for the <Constant name="dbt" /> backend to process, you will see an 'Unable to complete linting this file' error. 
-
-To avoid this, break up your model into smaller models (files) so that they are less complex to lint or fix. Note that linting is simpler than fixing so there may be cases where a file can be linted but not fixed. 
+Однако вы можете настроить и включить дополнительный дочерний конфигурационный файл `.sqlfluff` в определенных подпапках вашего проекта dbt. <br /><br />Вложив файл `.sqlfluff` в подпапку, SQLFluff будет применять правила, определенные в конфигурационном файле этой подпапки, к любым файлам, находящимся в ней. Правила, указанные в родительском файле `.sqlfluff`, будут использоваться для всех других файлов и папок за пределами подпапки. Этот иерархический подход позволяет использовать индивидуальные правила проверки, сохраняя при этом согласованность во всем проекте. Обратитесь к [документации SQLFluff](https://docs.sqlfluff.com/en/stable/configuration.html#configuration-files) для получения дополнительной информации.
 
 </DetailsToggle>
 
-## Related docs
+<DetailsToggle alt_header="Можно ли запускать команды SQLFluff из терминала?">
 
-- [User interface](/docs/platform/studio-ide/ide-user-interface)
-- [Keyboard shortcuts](/docs/platform/studio-ide/keyboard-shortcuts)
-- [SQL linting in CI jobs](/docs/deploy/continuous-integration#sql-linting) 
+В настоящее время запуск команд SQLFluff из терминала не поддерживается.
+</DetailsToggle>
+
+<DetailsToggle alt_header="Что следует учитывать при использовании линтинга dbt?">
+В настоящее время <Constant name="studio_ide" /> может выполнять линтинг или исправление файлов до определённого размера и уровня сложности. Если вы попытаетесь проверить или исправить слишком большие файлы, обработка которых на серверной стороне <Constant name="dbt" /> занимает более 60 секунд, вы увидите ошибку 'Не удалось завершить линтинг этого файла'. 
+
+Чтобы избежать этого, разбейте вашу модель на более мелкие модели (файлы), чтобы они были менее сложными для проверки или исправления. Обратите внимание, что проверка проще, чем исправление, поэтому могут быть случаи, когда файл можно проверить, но не исправить.
+
+</DetailsToggle>
+
+## Связанные документы {#related-docs}
+
+- [Пользовательский интерфейс](/docs/platform/studio-ide/ide-user-interface)
+- [Сочетания клавиш](/docs/platform/studio-ide/keyboard-shortcuts)
+- [SQL‑линтинг в CI‑задачах](/docs/deploy/continuous-integration#sql-linting)

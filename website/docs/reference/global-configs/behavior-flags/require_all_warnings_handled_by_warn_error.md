@@ -1,40 +1,40 @@
 ---
-title: "Warn-error handler for all warnings"
+title: "Обработка всех предупреждений через warn-error"
 id: "require_all_warnings_handled_by_warn_error"
-sidebar_label: "require all warnings handled by warn error"
+sidebar_label: "Обработка всех предупреждений через warn-error"
 ---
 
 
 
 | require_all_warnings_handled_by_warn_error | <Constant name="dbt" /> **v1 Latest** | <Constant name="core" /> |
 |---|---|---|
-| Introduced | 2025.06 | 1.10.0 |
-| Matured (default → `true`) | 2026.09 | 1.12.0 |
-| Removed | — | — |
+| Введён | 2025.06 | 1.10.0 |
+| Стабилизирован (по умолчанию → `true`) | 2026.09 | 1.12.0 |
+| Удалён | — | — |
 
 <br />
 
-Starting in <Constant name="dbt" /> v1.12, the `require_all_warnings_handled_by_warn_error` flag defaults to `true`.
+Начиная с <Constant name="dbt" /> v1.12, флаг `require_all_warnings_handled_by_warn_error` по умолчанию имеет значение `true`.
 
-With this flag enabled, all warnings raised during a run are routed through the `--warn-error` / `--warn-error-options` handler. This ensures consistent behavior when promoting warnings to errors or silencing them. When the flag is `false`, only some warnings are processed by the handler while others may bypass it.
+Когда этот флаг включён, все предупреждения, возникающие во время выполнения, направляются в обработчик `--warn-error` / `--warn-error-options`. Это обеспечивает единообразное поведение при преобразовании предупреждений в ошибки или их подавлении. Когда флаг имеет значение `false`, обработчик обрабатывает лишь некоторые предупреждения, а остальные могут его обходить.
 
-Projects that use `--warn-error` (or `--warn-error-options='{"error":"all"}'`) may have builds fail on warnings that were previously ignored.
+В проектах, использующих `--warn-error` (или `--warn-error-options='{"error":"all"}'`), сборки могут завершаться с ошибкой из-за предупреждений, которые ранее игнорировались.
 
-## Impact
+## Влияние
 
-This only affects projects that use `warn_error: true` or `--warn-error` — common in CI or in <Constant name="dbt_platform" /> production jobs configured for strict mode. Projects without `--warn-error` are not affected.
+Это затрагивает только проекты, использующие `warn_error: true` или `--warn-error`, — такие настройки часто применяются в CI или в производственных заданиях <Constant name="dbt_platform" />, настроенных на строгий режим. Проекты без `--warn-error` не затрагиваются.
 
-Example warnings that switch from "log only" to "error" for `warn_error: true` users:
+Примеры предупреждений, которые для пользователей с `warn_error: true` теперь приводят к ошибке, а не просто записываются в журнал:
 
-- `JinjaLogWarning` — emitted for column types declared for non-existent seed columns
-- `WarnStateTargetEqual` — emitted when the `--state` and `--target` directories are the same path
-- `SelectExcludeIgnoredWithSelectorWarning` — emitted when the legacy `--selector` flag is combined with `--select` or `--exclude`
-- `RunResultWarningMessage` — emitted when a test or model returns `WARN` status
-- Various adapter-level warnings not previously handled by `--warn-error`
+- `JinjaLogWarning` — возникает, когда типы столбцов объявлены для несуществующих столбцов seed
+- `WarnStateTargetEqual` — возникает, когда для каталогов `--state` и `--target` указан один и тот же путь
+- `SelectExcludeIgnoredWithSelectorWarning` — возникает, когда устаревший флаг `--selector` используется вместе с `--select` или `--exclude`
+- `RunResultWarningMessage` — возникает, когда тест или модель возвращает статус `WARN`
+- Различные предупреждения на уровне адаптеров, которые ранее не обрабатывались через `--warn-error`
 
-<Expandable alt_header="Recommended actions">
+<Expandable alt_header="Рекомендуемые действия">
 
-If a job using `warn_error: true` or `--warn-error` fails with `EventCompilationError` at parse or run time for an event class that previously only appeared as a log line, you can silence specific warnings with `warn_error_options`:
+Если задание, использующее `warn_error: true` или `--warn-error`, завершается с ошибкой `EventCompilationError` на этапе разбора или выполнения из-за класса событий, который ранее появлялся только в виде строки журнала, вы можете подавить отдельные предупреждения с помощью `warn_error_options`:
 
 <File name='dbt_project.yml'>
 
@@ -50,9 +50,9 @@ flags:
 
 </File>
 
-You can also use the `warn` list to keep specific events as warnings even when `--warn-error` would otherwise escalate them to errors.
+Также можно использовать список `warn`, чтобы оставить определённые события предупреждениями, даже если `--warn-error` в противном случае преобразовал бы их в ошибки.
 
-To opt out of this behavior, set the flag to `false`:
+Чтобы отключить это поведение, установите для флага значение `false`:
 
 <File name='dbt_project.yml'>
 

@@ -1,8 +1,8 @@
 ---
-title: "AWS PrivateLink for single-tenant ingress"
+title: "AWS PrivateLink для входящего доступа к однопользовательскому развертыванию"
 id: aws-ingress
-description: "Configure inbound AWS PrivateLink so your services reach a single-tenant dbt platform instance over a private access URL."
-sidebar_label: "Ingress (access URL)"
+description: "Настройте входящий доступ через AWS PrivateLink, чтобы ваши сервисы подключались к однопользовательскому экземпляру платформы dbt по частному URL доступа."
+sidebar_label: "Входящий доступ (URL доступа)"
 availability:
   surface: platform
   access: paid_plan
@@ -11,98 +11,98 @@ availability:
 
 import SetUpPages from '/snippets/_available-tiers-enterprise-plus.md';
 
-# Configuring AWS PrivateLink for single-tenant ingress <Lifecycle status="beta"/>
+# Настройка AWS PrivateLink для входящего доступа к однопользовательскому развертыванию <Lifecycle status="beta"/>
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-Inbound AWS PrivateLink lets your services reach a single-tenant <Constant name="dbt_platform" /> instance privately over your access URL, without traffic traversing the public internet. You create an interface VPC endpoint in your AWS account that connects to the PrivateLink endpoint service <Constant name="dbt" /> publishes in front of your instance.
+Входящий доступ через AWS PrivateLink позволяет вашим сервисам подключаться к однопользовательскому экземпляру <Constant name="dbt_platform" /> по вашему URL доступа через частную сеть, без передачи трафика через общедоступный интернет. Вы создаете в своей учетной записи AWS интерфейсную конечную точку VPC, которая подключается к сервису конечных точек PrivateLink, опубликованному <Constant name="dbt" /> для доступа к вашему экземпляру.
 
-:::info Single-tenant only, provisioned by dbt Labs
-Ingress PrivateLink is available only for single-tenant deployments; multi-tenant ingress isn't currently supported (refer to the [AWS private connectivity matrix](/docs/platform/secure/private-connectivity/aws/aws-overview)).
+:::info Только для однопользовательских развертываний; предоставляется dbt Labs
+Входящий доступ через PrivateLink доступен только для однопользовательских развертываний; входящий доступ к многопользовательским развертываниям пока не поддерживается (см. [матрицу частных подключений AWS](/docs/platform/secure/private-connectivity/aws/aws-overview)).
 
-dbt Labs provisions it for your instance. To scope it and receive your endpoint service name, contact your **dbt Labs account team or Solutions Architect**. If you don't have a single-tenant deployment yet, [contact our sales team](mailto:sales@getdbt.com).
+dbt Labs настраивает его для вашего экземпляра. Чтобы согласовать параметры подключения и получить имя сервиса конечных точек, обратитесь к **вашей команде по работе с клиентами dbt Labs или архитектору решений**. Если у вас еще нет однопользовательского развертывания, [свяжитесь с нашим отделом продаж](mailto:sales@getdbt.com).
 :::
 
 
-## Roles
+## Роли
 
-This guide uses two roles, matching the AWS PrivateLink model:
+В этом руководстве используются две роли, соответствующие модели AWS PrivateLink:
 
-- **Provider**: (<Constant name="dbt" />) Hosts the VPC endpoint service in front of your single-tenant instance.
-- **Customer**: (You) Creates the interface VPC endpoint in your own AWS account.
+- **Поставщик**: (<Constant name="dbt" />) Размещает сервис конечных точек VPC для доступа к вашему однопользовательскому экземпляру.
+- **Клиент**: (Вы) Создает интерфейсную конечную точку VPC в собственной учетной записи AWS.
 
-## Access URL naming convention
+## Соглашение об именовании URL доступа
 
-Single-tenant ingress uses the domain convention `<customer_name>.private.dbt.com` for your access URL. When you enable private DNS on the endpoint (see [Step 3](#step-3-select-your-vpc-and-enable-private-dns)), AWS provisions a private hosted zone containing a wildcard record for this domain. The wildcard covers the product subdomains served by your instance, such as the semantic layer and metadata (Discovery) endpoints, so a single endpoint serves all of them.
+Для входящего доступа к однопользовательскому развертыванию используется URL доступа с доменом вида `<customer_name>.private.dbt.com`. Когда вы включаете частный DNS для конечной точки (см. [Шаг 3](#step-3-select-your-vpc-and-enable-private-dns)), AWS создает частную размещенную зону с записью с подстановочным знаком для этого домена. Такая запись охватывает поддомены продуктов, обслуживаемые вашим экземпляром, например конечные точки семантического слоя и метаданных (Discovery), поэтому одна конечная точка обеспечивает доступ ко всем ним.
 
-:::info The provider must verify your custom domain first
-Private DNS on the endpoint only works once <Constant name="dbt" /> (the provider) has verified the custom domain on the endpoint service. Confirm with your dbt Labs account team or Solutions Architect that your instance is ready for ingress PrivateLink before you begin.
+:::info Поставщик должен сначала подтвердить ваш пользовательский домен
+Частный DNS для конечной точки работает только после того, как <Constant name="dbt" /> (поставщик) подтвердит пользовательский домен в сервисе конечных точек. Прежде чем начать, уточните у вашей команды по работе с клиентами dbt Labs или архитектора решений, готов ли ваш экземпляр к входящему доступу через PrivateLink.
 :::
 
-## Prerequisites
+## Предварительные требования
 
-- A single-tenant <Constant name="dbt_platform" /> instance with ingress PrivateLink enabled by <Constant name="dbt" />.
-- The **VPC endpoint service name** for your instance, provided by dbt (for example, `com.amazonaws.vpce.us-east-1.vpce-svc-xxxxxxxxxxxxxxxxx`).
-- Your **access URL** for the instance (`<customer_name>.private.dbt.com`).
-- An AWS VPC in the same Region as the endpoint service, with **DNS hostnames** and **DNS resolution** enabled (both are required for the private DNS name feature).
-- Permissions in your AWS account to create interface VPC endpoints and manage the associated security group.
+- Однопользовательский экземпляр <Constant name="dbt_platform" />, для которого <Constant name="dbt" /> включил входящий доступ через PrivateLink.
+- **Имя сервиса конечных точек VPC** для вашего экземпляра, предоставленное dbt (например, `com.amazonaws.vpce.us-east-1.vpce-svc-xxxxxxxxxxxxxxxxx`).
+- Ваш **URL доступа** к экземпляру (`<customer_name>.private.dbt.com`).
+- VPC AWS в том же регионе, что и сервис конечных точек, с включенными параметрами **DNS hostnames** и **DNS resolution** (оба необходимы для использования частного DNS-имени).
+- Разрешения в вашей учетной записи AWS на создание интерфейсных конечных точек VPC и управление связанной группой безопасности.
 
-## Create the interface VPC endpoint
+## Создание интерфейсной конечной точки VPC
 
-### Step 1: Start creating the endpoint
+### Шаг 1: Начните создание конечной точки
 
-1. In the AWS console, go to **VPC → Endpoints** and select **Create endpoint**.
-2. (Optional) Add a **Name tag** to identify the endpoint.
-3. Under **Type**, select **Endpoint services that use NLBs and GWLBs**.
+1. В консоли AWS перейдите в **VPC → Endpoints** и выберите **Create endpoint**.
+2. (Необязательно) Добавьте **Name tag**, чтобы обозначить конечную точку.
+3. В разделе **Type** выберите **Endpoint services that use NLBs and GWLBs**.
 
-<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/create-endpoint-select-type.png" title="Create endpoint page with 'Endpoint services that use NLBs and GWLBs' selected as the type"/>
+<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/create-endpoint-select-type.png" title="Страница создания конечной точки с выбранным типом 'Endpoint services that use NLBs and GWLBs'"/>
 
-### Step 2: Enter and verify the service name
+### Шаг 2: Введите и проверьте имя сервиса
 
-1. In **Service name**, paste the endpoint service name that dbt provided.
-2. Leave **Enable Cross Region endpoint** unchecked — the endpoint is created in the same Region as the service.
-3. Select **Verify service** and confirm you see **Service name verified**.
+1. В поле **Service name** вставьте имя сервиса конечных точек, предоставленное dbt.
+2. Оставьте флажок **Enable Cross Region endpoint** снятым — конечная точка создается в том же регионе, что и сервис.
+3. Выберите **Verify service** и убедитесь, что появилось сообщение **Service name verified**.
 
-<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/verify-service-name.png" title="Service name entered and verified, with Cross Region endpoint left disabled"/>
+<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/verify-service-name.png" title="Имя сервиса введено и проверено, параметр Cross Region endpoint оставлен отключенным"/>
 
-### Step 3: Select your VPC and enable private DNS
+### Шаг 3: Выберите VPC и включите частный DNS {#step-3-select-your-vpc-and-enable-private-dns}
 
-1. Under **Network settings**, select the **VPC** where your workloads run.
-2. Expand **Additional settings** and select **Enable private DNS name**.
+1. В разделе **Network settings** выберите **VPC**, в которой работают ваши приложения.
+2. Разверните **Additional settings** и установите флажок **Enable private DNS name**.
 
-<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/enable-private-dns-name.png" title="Enable private DNS name selected under Additional settings"/>
+<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/enable-private-dns-name.png" title="В разделе Additional settings установлен флажок Enable private DNS name"/>
 
-:::warning Always enable private DNS name
-Selecting **Enable private DNS name** automatically provisions the private hosted zone and record set for your `<customer_name>.private.dbt.com` access URL. This is the standard, recommended configuration. Configuring hostnames manually instead can lead to TLS errors and other issues, so keep this box checked.
+:::warning Всегда включайте частное DNS-имя
+При выборе **Enable private DNS name** автоматически создаются частная размещенная зона и набор записей для вашего URL доступа `<customer_name>.private.dbt.com`. Это стандартная рекомендуемая конфигурация. Ручная настройка имен хостов вместо этого может привести к ошибкам TLS и другим проблемам, поэтому оставьте этот флажок установленным.
 :::
 
-### Step 4: Choose subnets and a security group
+### Шаг 4: Выберите подсети и группу безопасности
 
-1. Select the **subnets** for the endpoint. A single subnet is enough for testing; use subnets across multiple Availability Zones for production.
-2. Choose a **security group** that allows inbound traffic on **port 443** from your workloads.
-3. Select **Create endpoint**.
+1. Выберите **подсети** для конечной точки. Для тестирования достаточно одной подсети; для производственной среды используйте подсети в нескольких зонах доступности.
+2. Выберите **группу безопасности**, которая разрешает входящий трафик на **порт 443** от ваших приложений.
+3. Выберите **Create endpoint**.
 
-### Step 5: Wait for the endpoint to become available
+### Шаг 5: Дождитесь, пока конечная точка станет доступной
 
-The endpoint is created in a **Pending** state while dbt accepts the connection, then moves to **Available**. Once available, the **Private DNS names enabled** field shows **Yes** and the **Private DNS names** list includes your `*.<customer_name>.private.dbt.com` record.
+Конечная точка создается в состоянии **Pending**, пока dbt принимает подключение, а затем переходит в состояние **Available**. Когда она станет доступной, в поле **Private DNS names enabled** отобразится **Yes**, а в списке **Private DNS names** появится ваша запись `*.<customer_name>.private.dbt.com`.
 
-<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/endpoint-available.png" title="Endpoint details page showing status Available, private DNS names enabled, and the private.dbt.com record"/>
+<Lightbox src="/img/docs/dbt-platform/aws-ingress-privatelink/endpoint-available.png" title="Страница сведений о конечной точке: статус Available, частные DNS-имена включены, отображается запись private.dbt.com"/>
 
-### Step 6: (Optional) Configure DNS for on-premises access
+### Шаг 6: (Необязательно) Настройте DNS для доступа из локальной сети
 
-Workloads inside the associated VPC resolve the access URL automatically. Clients connecting from **on-premises** networks over **AWS VPN** or **AWS Direct Connect** need additional DNS configuration so they resolve the access URL to the endpoint's private IPs.
+Приложения внутри связанной VPC автоматически разрешают URL доступа. Клиентам, подключающимся из **локальных сетей** через **AWS VPN** или **AWS Direct Connect**, требуется дополнительная настройка DNS, чтобы URL доступа разрешался в частные IP-адреса конечной точки.
 
-To forward DNS queries from your on-premises network into the VPC, refer to the AWS documentation on [Route 53 Resolver inbound endpoints](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-inbound-queries.html).
+Чтобы перенаправлять DNS-запросы из вашей локальной сети в VPC, обратитесь к документации AWS о [входящих конечных точках Route 53 Resolver](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-forwarding-inbound-queries.html).
 
-If all your users access the instance from inside the VPC, you can skip this step.
+Если все ваши пользователи обращаются к экземпляру изнутри VPC, этот шаг можно пропустить.
 
-## Validate connectivity
+## Проверка подключения
 
-From an instance inside the selected VPC, confirm that:
+С экземпляра внутри выбранной VPC убедитесь, что:
 
-1. Your access URL resolves to a _private_ IP address from the endpoint (not a public address).
-2. The TLS handshake succeeds and the returned certificate matches your access URL.
+1. Ваш URL доступа разрешается в _частный_ IP-адрес конечной точки (а не в общедоступный адрес).
+2. Рукопожатие TLS завершается успешно, а возвращаемый сертификат соответствует вашему URL доступа.
 
-:::warning Clients must send the correct TLS SNI
-The endpoint selects its certificate by TLS **Server Name Indication (SNI)**. Clients must send your access URL as the SNI. Some PrivateLink clients and libraries do not set SNI by default — without it, the endpoint returns a default certificate that will not match your access URL and the handshake fails.
+:::warning Клиенты должны передавать правильное значение TLS SNI
+Конечная точка выбирает сертификат по значению TLS **Server Name Indication (SNI)**. Клиенты должны передавать ваш URL доступа в качестве SNI. Некоторые клиенты и библиотеки PrivateLink по умолчанию не задают SNI — без него конечная точка возвращает сертификат по умолчанию, который не соответствует вашему URL доступа, и рукопожатие завершается ошибкой.
 :::

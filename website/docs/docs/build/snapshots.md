@@ -81,8 +81,8 @@ snapshots:
 | [alias](/reference/resource-configs/alias)   | Указать алиас для snapshot | No | your_custom_snapshot |
 | [strategy](/reference/resource-configs/strategy) | Стратегия snapshot, которую следует использовать. Допустимые значения: `timestamp` или `check` | Yes | timestamp |
 | [unique_key](/reference/resource-configs/unique_key) | Колонка(и) <Term id="primary-key" /> (строка или массив) либо выражение, которое однозначно идентифицирует запись | Yes | `id` или `[order_id, product_id]` |
-| [check_cols](/reference/resource-configs/check_cols) | При использовании стратегии `check` — колонки, которые нужно проверять | Only if using the `check` strategy | ["status"] |
-| [updated_at](/reference/resource-configs/updated_at) | Колонка в результатах snapshot‑запроса, которая указывает, когда каждая запись была обновлена в последний раз. Используется в стратегии `timestamp`. В зависимости от используемой платформы данных может поддерживать строки с датами в формате ISO и целочисленные значения unix epoch. | Only if using the `timestamp` strategy | updated_at |
+| [check_cols](/reference/resource-configs/check_cols) | При использовании стратегии `check` — колонки, которые нужно проверять | Только для стратегии `check` | ["status"] |
+| [updated_at](/reference/resource-configs/updated_at) | Колонка в результатах snapshot‑запроса, которая указывает, когда каждая запись была обновлена в последний раз. Используется в стратегии `timestamp`. В зависимости от используемой платформы данных может поддерживать строки с датами в формате ISO и целочисленные значения unix epoch. | Только для стратегии `timestamp` | updated_at |
 | [dbt_valid_to_current](/reference/resource-configs/dbt_valid_to_current) | Задать пользовательское значение для поля `dbt_valid_to` в актуальных записях snapshot (например, дату в будущем). По умолчанию это значение равно `NULL`. Если настройка задана, dbt будет использовать указанное значение вместо `NULL` для `dbt_valid_to` у текущих записей в таблице snapshot. | No | string |
 | [snapshot_meta_column_names](/reference/resource-configs/snapshot_meta_column_names) | Настроить имена мета‑полей snapshot | No | dictionary |
 | [hard_deletes](/reference/resource-configs/hard-deletes) | Указать, как обрабатывать удалённые строки из источника. Поддерживаемые варианты: `ignore` (по умолчанию), `invalidate` (заменяет устаревший `invalidate_hard_deletes=true`) и `new_record`. | No | string |
@@ -95,7 +95,7 @@ snapshots:
 
 Чтобы добавить снимок в ваш проект, выполните следующие шаги. Для пользователей версий 1.8 и ранее обратитесь к [Настройка снимков в версиях 1.8 и ранее](#configuring-snapshots).
 
-Чтобы добавить snapshot в ваш проект, выполните следующие шаги. Для пользователей версий 1.8 и ниже см. раздел [Legacy snapshot configurations](/reference/resource-configs/snapshots-jinja-legacy).
+Чтобы добавить снимок в проект, выполните следующие шаги. Для dbt 1.8 и более ранних версий см. [Настройки снимков в Jinja](/reference/resource-configs/snapshots-jinja-legacy).
 
 1. Создайте YAML-файл с настройками в каталоге `snapshots`: `snapshots/orders_snapshot.yml` и добавьте в него параметры конфигурации. Также вы можете настроить snapshot из YAML-файла проекта (`dbt_project.yml`) ([docs](/reference/snapshot-configs)).
 
@@ -118,7 +118,7 @@ snapshots:
 
 2. (Необязательно) Примените преобразования с помощью эфемерной модели. По умолчанию снимки ссылаются непосредственно на источник (как показано в YAML на предыдущем шаге). Если вам нужно применить преобразования (например, фильтрацию или дедупликацию), сначала определите эфемерную модель для выполнения этих преобразований и укажите ссылку на неё в поле relation снимка вместо прямого вызова `source()`.
 
-      For example, here's an ephemeral model:
+      Например, вот модель с материализацией `ephemeral`:
     
       <File name="models/ephemeral_orders.sql" >
     
@@ -129,7 +129,7 @@ snapshots:
       ```
       </File>
     
-      This is how to reference the ephemeral model in the `relation` field:
+      Так можно сослаться на модель с материализацией `ephemeral` в поле `relation`:
        
       <File name='snapshots/orders_snapshot.yml'>
     
@@ -430,7 +430,7 @@ snapshots:
 
 - Для стратегии `timestamp` настроенная колонка `updated_at` используется для заполнения колонок `dbt_valid_from`, `dbt_valid_to` и `dbt_updated_at`.
 
-  <Expandable alt_header="Sample results for the timestamp strategy">
+  <Expandable alt_header="Пример результатов для стратегии timestamp" anchor_id="timestamp-details-2">
 
   Результаты snapshot‑запроса на момент `2024-01-01 11:00`
 
@@ -478,26 +478,26 @@ snapshots:
   | -- | ------- |
   | 1  | pending |
 
-  Snapshot results:
+  Результаты снимка:
 
   | id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
   | -- | ------- | ---------------- | ---------------- | ---------------- |
   | 1  | pending | 2024-01-01 11:00 |                  | 2024-01-01 11:00 |
 
-  Query results at `2024-01-01 11:30`:
+  Результаты запроса на момент `2024-01-01 11:30`:
 
   | id | status  |
   | -- | ------- |
   | 1  | shipped |
 
-  Snapshot results:
+  Результаты снимка:
 
   | id | status  | dbt_valid_from   | dbt_valid_to     | dbt_updated_at   |
   | --- | ------- | ---------------- | ---------------- | ---------------- |
   | 1   | pending | 2024-01-01 11:00 | 2024-01-01 11:30 | 2024-01-01 11:00 |
   | 1   | shipped | 2024-01-01 11:30 |                  | 2024-01-01 11:30 |
 
-  Snapshot results with `hard_deletes='new_record'`:
+  Результаты снимка с `hard_deletes='new_record'`:
 
   | id | status  |  dbt_valid_from   | dbt_valid_to     | dbt_updated_at   | dbt_is_deleted |
   |----|---------|------------------|------------------|------------------|----------------|

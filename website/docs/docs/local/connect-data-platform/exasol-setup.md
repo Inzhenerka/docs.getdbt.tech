@@ -1,7 +1,7 @@
 ---
-title: "Connect Exasol to dbt v1"
+title: "Подключение Exasol к dbt v1"
 sidebar_label: "Exasol"
-description: "Read this guide to learn about the Exasol warehouse setup in dbt."
+description: "Из этого руководства вы узнаете, как настроить хранилище данных Exasol в dbt."
 meta:
   maintained_by: Exasol
   authors: 'Torsten Glunde, Ilija Kutle'
@@ -21,13 +21,13 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-### Connecting to Exasol with **dbt-exasol**
+### Подключение к Exasol с помощью **dbt-exasol**
 
-#### User / password authentication
+#### Аутентификация по имени пользователя и паролю
 
-Configure your dbt profile for using Exasol:
+Настройте профиль dbt для работы с Exasol:
 
-##### Exasol connection information
+##### Параметры подключения к Exasol
 
 <File name='profiles.yml'>
 
@@ -47,9 +47,9 @@ dbt-exasol:
 
 </File>
 
-#### OpenID authentication (Exasol SaaS) {#open-id-authentication}
+#### Аутентификация OpenID (Exasol SaaS) {#open-id-authentication}
 
-For Exasol SaaS environments, you can authenticate using OpenID tokens instead of username and password:
+В средах Exasol SaaS для аутентификации можно использовать токены OpenID вместо имени пользователя и пароля:
 
 <File name='profiles.yml'>
 
@@ -62,39 +62,39 @@ dbt-exasol:
       threads: 1
       dsn: HOST:PORT
       user: USERNAME
-      access_token: YOUR_ACCESS_TOKEN  # or use refresh_token
+      access_token: YOUR_ACCESS_TOKEN  # или используйте refresh_token
       dbname: db
       schema: SCHEMA
-      encryption: True  # required for SaaS
+      encryption: True  # обязательно для SaaS
 ```
 
 </File>
 
-- **`access_token`** &mdash; Personal access token for OpenID authentication
-- **`refresh_token`** &mdash; Refresh token for OpenID authentication (alternative to `access_token`)
+- **`access_token`** &mdash; Персональный токен доступа для аутентификации OpenID
+- **`refresh_token`** &mdash; Токен обновления для аутентификации OpenID (альтернатива `access_token`)
 
 :::info
-Use either `access_token` or `refresh_token`, not both. TLS encryption is required when using OpenID authentication with Exasol SaaS.
+Используйте либо `access_token`, либо `refresh_token`, но не оба одновременно. При использовании аутентификации OpenID в Exasol SaaS требуется шифрование TLS.
 :::
 
-#### Optional parameters
+#### Необязательные параметры
 
-- **`connection_timeout`** &mdash; defaults to pyexasol default
-- **`socket_timeout`** &mdash; defaults to pyexasol default
-- **`query_timeout`** &mdash; defaults to pyexasol default
-- **`compression`** &mdash; default: False
-- **`encryption`** &mdash; default: True. Enables SSL/TLS encryption for secure connections. Required for Exasol SaaS
-- **`validate_server_certificate`** &mdash; default: True. Validates the SSL/TLS certificate when encryption is enabled. Set to False only for development/testing with self-signed certificates (not recommended for production)
-- **`protocol_version`** &mdash; default: v3
-- **`row_separator`** &mdash; default: CRLF for windows - LF otherwise
-- **`timestamp_format`** &mdash; default: `YYYY-MM-DDTHH:MI:SS.FF6`
+- **`connection_timeout`** &mdash; по умолчанию используется значение по умолчанию из pyexasol
+- **`socket_timeout`** &mdash; по умолчанию используется значение по умолчанию из pyexasol
+- **`query_timeout`** &mdash; по умолчанию используется значение по умолчанию из pyexasol
+- **`compression`** &mdash; значение по умолчанию: False
+- **`encryption`** &mdash; значение по умолчанию: True. Включает шифрование SSL/TLS для защищённых подключений. Обязательно для Exasol SaaS
+- **`validate_server_certificate`** &mdash; значение по умолчанию: True. Проверяет сертификат SSL/TLS, если шифрование включено. Устанавливайте False только при разработке и тестировании с самоподписанными сертификатами (не рекомендуется для производственной среды)
+- **`protocol_version`** &mdash; значение по умолчанию: v3
+- **`row_separator`** &mdash; значение по умолчанию: CRLF для Windows, LF для остальных систем
+- **`timestamp_format`** &mdash; значение по умолчанию: `YYYY-MM-DDTHH:MI:SS.FF6`
 
-:::info SSL/TLS Certificate Validation
-By default, dbt-exasol validates SSL/TLS certificates when `encryption=True`. For development/testing with self-signed certificates, you can either:
+:::info Проверка сертификатов SSL/TLS
+По умолчанию dbt-exasol проверяет сертификаты SSL/TLS, если `encryption=True`. При разработке и тестировании с самоподписанными сертификатами можно выбрать один из следующих вариантов:
 
-- Set `validate_server_certificate: False` (not recommended for production)
-- Use a certificate fingerprint in the DSN: `dsn: myhost/FINGERPRINT:8563`
-- Use `dsn: myhost/nocertcheck:8563` to skip validation (testing only)
+- Установить `validate_server_certificate: False` (не рекомендуется для производственной среды)
+- Указать отпечаток сертификата в DSN: `dsn: myhost/FINGERPRINT:8563`
+- Использовать `dsn: myhost/nocertcheck:8563`, чтобы пропустить проверку (только для тестирования)
 
-For more information, see the [PyExasol security documentation](https://exasol.github.io/pyexasol/master/user_guide/configuration/security.html).
+Дополнительные сведения см. в [документации PyExasol по безопасности](https://exasol.github.io/pyexasol/master/user_guide/configuration/security.html).
 :::

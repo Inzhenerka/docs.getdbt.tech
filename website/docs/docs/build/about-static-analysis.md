@@ -1,8 +1,8 @@
 ---
-title: "About static analysis"
+title: "О статическом анализе"
 id: "about-static-analysis"
-sidebar_label: "About static analysis"
-description: "New concepts and configurations you will encounter when you install the dbt v2."
+sidebar_label: "О статическом анализе"
+description: "Новые концепции и настройки, с которыми вы столкнётесь при установке dbt v2."
 pagination_next: null
 pagination_prev: null
 ---
@@ -17,95 +17,95 @@ import FusionLifecycle from '/snippets/_v2-lifecycle-callout.md';
 
 <IntroText>
 
-<Constant name="fusion_engine" /> [fully comprehends your project's SQL](/blog/the-levels-of-sql-comprehension), enabling advanced capabilities like dialect-aware validation and precise column-level lineage.
+<Constant name="fusion_engine" /> [полностью понимает SQL вашего проекта](/blog/the-levels-of-sql-comprehension), обеспечивая расширенные возможности, такие как проверка с учётом диалекта и точное отслеживание происхождения данных на уровне столбцов.
 
-It can do this because its compilation step is more comprehensive than that of the <Constant name="dbt" /> v1.x engine. When <Constant name="dbt" /> v1.x referred to _compilation_, it only meant _rendering_ &mdash; converting Jinja-templated strings into a SQL query to send to a database.
+Это возможно благодаря тому, что его этап компиляции более комплексный, чем у движка <Constant name="dbt" /> v1.x. Когда в <Constant name="dbt" /> v1.x говорилось о _компиляции_, подразумевался только _рендеринг_ &mdash; преобразование строк с шаблонами Jinja в SQL-запрос для отправки в базу данных.
 
-<Constant name="fusion_engine" /> can also render Jinja, but then it completes a second phase: _static analysis_, producing and validating a logical plan for every rendered query in the project. This step is the cornerstone of <Constant name="fusion" />'s new capabilities.
+<Constant name="fusion_engine" /> также умеет выполнять рендеринг Jinja, но затем выполняет второй этап: _статический анализ_, создавая и проверяя логический план для каждого запроса проекта после рендеринга. Этот этап лежит в основе новых возможностей <Constant name="fusion" />.
 
 </IntroText>
 
-## Principles of static analysis
+## Принципы статического анализа {#principles-of-static-analysis}
 
-The software engineering concept of [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) describes checks that can be done on code before it runs (static == not running).
+В разработке программного обеспечения понятие [статического анализа](https://en.wikipedia.org/wiki/Static_program_analysis) обозначает проверки, которые можно выполнить над кодом до его запуска (статический == не выполняющийся).
 
-The most rigorous static analysis means you can trust that if the analysis succeeds, the code will run in production without compilation errors.
+Самый строгий статический анализ позволяет быть уверенным: если анализ завершился успешно, код будет выполняться в производственной среде без ошибок компиляции.
 
-Less strict static analysis also surfaces helpful information to developers as they work. There's no free lunch&mdash;what you gain in responsiveness you lose in correctness guarantees.
+Менее строгий статический анализ также предоставляет разработчикам полезную информацию во время работы. Но за всё приходится платить: выигрыш в скорости отклика оборачивается потерей гарантий корректности.
 
-<Constant name="fusion_engine" /> uses the [`static_analysis`](/reference/resource-configs/static-analysis) config to help you control how it performs static analysis for your models.
+<Constant name="fusion_engine" /> использует настройку [`static_analysis`](/reference/resource-configs/static-analysis), чтобы вы могли управлять выполнением статического анализа ваших моделей.
 
-<Constant name="fusion_engine" /> is unique in that it can statically analyze not just a single model in isolation, but every query from one end of your DAG to the other. Even your database can only validate the query in front of it! Concepts like [information flow theory](https://roundup.getdbt.com/i/156064124/beyond-cll-information-flow-theory-and-metadata-propagation) &mdash; although not incorporated into the dbt platform [yet](https://www.getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine) &mdash; rely on stable inputs and the ability to trace columns DAG-wide.
+Уникальность <Constant name="fusion_engine" /> заключается в том, что он может статически анализировать не только отдельную модель изолированно, но и каждый запрос по всей цепочке вашего DAG. Даже ваша база данных может проверить только тот запрос, который ей передали! Такие концепции, как [теория информационных потоков](https://roundup.getdbt.com/i/156064124/beyond-cll-information-flow-theory-and-metadata-propagation), &mdash; хотя они [пока](https://www.getdbt.com/blog/where-we-re-headed-with-the-dbt-fusion-engine) и не реализованы в платформе dbt &mdash; опираются на стабильные входные данные и возможность отслеживать столбцы по всему DAG.
 
-### Baseline mode: A smooth transition from <Constant name="core" />
+### Режим baseline: плавный переход с <Constant name="core" />
 
-<Constant name="fusion_engine" /> defaults to `static_analysis: baseline` mode, inspired by similar type-checking and linting tools like [TypeScript's migration approach](https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html), [basedpyright's baseline feature](https://docs.basedpyright.com/latest/benefits-over-pyright/baseline/), and [Pydantic's strict/lax modes](https://docs.pydantic.dev/latest/why/#strict-lax).
+<Constant name="fusion_engine" /> по умолчанию использует режим `static_analysis: baseline`, созданный по аналогии с подходами инструментов проверки типов и линтинга, такими как [подход TypeScript к миграции](https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html), [функция baseline в basedpyright](https://docs.basedpyright.com/latest/benefits-over-pyright/baseline/) и [строгий и нестрогий режимы Pydantic](https://docs.pydantic.dev/latest/why/#strict-lax).
 
-The philosophy behind the above-mentioned tools and <Constant name="fusion" />'s baseline mode is:
+В основе перечисленных инструментов и режима baseline в <Constant name="fusion" /> лежат следующие принципы:
 
-- **Smooth transition**: Provide a familiar first-time experience for users coming from <Constant name="core" />.
-- **Incremental opt-in**: Offer a clear pathway to adopt more <Constant name="fusion" /> features over time.
-- **Pragmatic validation**: Catch most SQL errors without requiring a complete project overhaul.
+- **Плавный переход**: обеспечить привычный опыт при первом использовании для пользователей, переходящих с <Constant name="core" />.
+- **Постепенное подключение**: предложить понятный путь к освоению дополнительных возможностей <Constant name="fusion" /> со временем.
+- **Практичная проверка**: выявлять большинство ошибок SQL без необходимости полностью перерабатывать проект.
 
-Use this style of gradual typing to start with lightweight validation, then incrementally adopt strict guarantees as your project is ready.
+Используйте такой подход к постепенной типизации, чтобы начать с облегчённой проверки, а затем по мере готовности проекта постепенно вводить строгие гарантии.
 
-#### What baseline mode changes
+#### Что меняет режим baseline
 
-Baseline mode introduces several fundamental behavior changes compared to the previous binary (off/on) approach:
+Режим baseline вносит несколько принципиальных изменений в поведение по сравнению с прежним двоичным подходом (выключено/включено):
 
-- **No downloading of remote schemas** &mdash; Baseline mode does not fetch schemas from the warehouse.
-- **Unit tests work without strict mode** &mdash; Previously, unit tests required static analysis to be fully on. In baseline mode, they work out of the box.
-- **No unsafe introspection warnings** &mdash; We no longer warn about unsafe introspection, though we'd still love to help you assess it in the future.
+- **Без загрузки удалённых схем** &mdash; режим baseline не получает схемы из хранилища данных.
+- **Модульные тесты работают без режима strict** &mdash; ранее для модульных тестов требовалось полностью включить статический анализ. В режиме baseline они работают сразу.
+- **Без предупреждений о небезопасной интроспекции** &mdash; мы больше не предупреждаем о небезопасной интроспекции, хотя в будущем по-прежнему хотели бы помочь вам оценивать её.
 
-The following table shows how baseline mode expands what's available without requiring strict mode.
+Следующая таблица показывает, как режим baseline расширяет доступные возможности без необходимости использовать режим strict.
 
-### LSP feature comparison
+### Сравнение возможностей LSP
 
-Baseline mode unlocks a meaningful set of features without requiring strict mode. We're also investing in moving more features into baseline over time.
+Режим baseline открывает значительный набор возможностей без необходимости использовать режим strict. Мы также работаем над тем, чтобы со временем сделать в baseline доступными и другие возможности.
 
-VS Code extension features by static analysis configuration:
+Возможности расширения VS Code в зависимости от настройки статического анализа:
 
-✅ = Available | ❌ = Not available
+✅ = Доступно | ❌ = Недоступно
 
-| Feature | off | baseline | strict |
+| Возможность | off | baseline | strict |
 |---------|-----|----------|--------|
-| Go-to-definition/reference (except columns) | ✅ | ✅ | ✅ |
-| Table lineage | ✅ | ✅ | ✅ |
-| YAML validation | ✅ | ✅ | ✅ |
-| Render + preview SQL | ✅ | ✅ | ✅ |
-| Unit tests | ✅ | ✅ | ✅ |
-| Detect syntax errors | ❌ | ✅ | ✅ |
-| Preview CTE results | ❌ | ✅ | ✅ |
-| Go-to-definition/reference (columns) | ❌ | ❌ | ✅ |
-| Automatic refactor column names | ❌ | ❌ | ✅ |
-| Column-level lineage | ❌ | ❌ | ✅ |
-| Detect data type and function signature errors | ❌ | ❌ | ✅ |
+| Переход к определению/ссылке (кроме столбцов) | ✅ | ✅ | ✅ |
+| Отслеживание происхождения данных на уровне таблиц | ✅ | ✅ | ✅ |
+| Проверка YAML | ✅ | ✅ | ✅ |
+| Рендеринг и предварительный просмотр SQL | ✅ | ✅ | ✅ |
+| Модульные тесты | ✅ | ✅ | ✅ |
+| Обнаружение синтаксических ошибок | ❌ | ✅ | ✅ |
+| Предварительный просмотр результатов CTE | ❌ | ✅ | ✅ |
+| Переход к определению/ссылке (столбцы) | ❌ | ❌ | ✅ |
+| Автоматический рефакторинг имён столбцов | ❌ | ❌ | ✅ |
+| Отслеживание происхождения данных на уровне столбцов | ❌ | ❌ | ✅ |
+| Обнаружение ошибок типов данных и сигнатур функций | ❌ | ❌ | ✅ |
 
-- dbt VS Code extension features in this table are available to all users &mdash; what you get depends on your static analysis mode, not your account.
+- Возможности расширения dbt для VS Code в этой таблице доступны всем пользователям &mdash; их доступность зависит от режима статического анализа, а не от вашей учётной записи.
 
-:::tip Supported Snowflake functions
-To check out which Snowflake functions are supported in <Constant name="fusion"/> in `strict` mode, refer to [Snowflake function support](/reference/resource-configs/snowflake-function-support)
+:::tip Поддерживаемые функции Snowflake
+Чтобы узнать, какие функции Snowflake поддерживаются в <Constant name="fusion"/> в режиме `strict`, обратитесь к разделу [Поддержка функций Snowflake](/reference/resource-configs/snowflake-function-support)
 :::
 
-:::tip CodeLens visibility
-The VS Code extension and Studio IDE provide CodeLens even when static analysis is off, giving you visibility into which models have static analysis disabled and why.
+:::tip Отображение CodeLens
+Расширение VS Code и Studio IDE предоставляют CodeLens даже при выключенном статическом анализе, позволяя видеть, для каких моделей статический анализ отключён и почему.
 :::
 
-Ultimately, we want everyone developing in strict mode for maximum guarantees. We acknowledge this isn't a change that can happen overnight &mdash; baseline exists to smooth the transition. Many planned features (like local compute) require strict mode. We're also exploring inferring column types on your behalf, which would enable more functionality in baseline mode without requiring you to manually provide type information.
+В конечном счёте мы хотим, чтобы все разрабатывали в режиме strict для получения максимальных гарантий. Мы понимаем, что такой переход не может произойти мгновенно, &mdash; baseline существует, чтобы сделать его плавным. Многие запланированные возможности (например, локальные вычисления) требуют режима strict. Мы также изучаем возможность автоматически определять типы столбцов за вас: это позволит расширить функциональность режима baseline без необходимости вручную предоставлять информацию о типах.
 
-### Introspection handling in baseline mode
+### Обработка интроспекции в режиме baseline
 
-In `baseline` mode, all static analysis findings are warnings, not errors &mdash; your project can continue running even when the compiler flags invalid or problematic SQL. This section is a good example of why that design exists.
+В режиме `baseline` все результаты статического анализа считаются предупреждениями, а не ошибками &mdash; проект может продолжать выполняться, даже если компилятор обнаруживает некорректный или проблемный SQL. Этот раздел хорошо иллюстрирует, зачем нужен такой подход.
 
-Previously, with `strict` mode, the system assumed local schemas of your compiled models would be available. In `baseline` mode, we can no longer assume the full local schema is available and complete, so `baseline` uses the remote database as the source of truth &mdash; similar to <Constant name="core"/>.
+Ранее в режиме `strict` система предполагала, что локальные схемы скомпилированных моделей доступны. В режиме `baseline` мы больше не можем рассчитывать на наличие полной локальной схемы, поэтому `baseline` использует удалённую базу данных как источник достоверной информации &mdash; аналогично <Constant name="core"/>.
 
-The practical result is that the <Constant name="fusion" /> compiler may sometimes flag incorrect queries that result from introspective queries that come back empty. If you encounter this, you can:
+На практике это означает, что компилятор <Constant name="fusion" /> иногда может отмечать некорректные запросы, возникшие из-за того, что интроспективные запросы вернули пустой результат. Если вы столкнулись с этим, можно:
 
-1. Ignore the warning
-2. Build the model locally
-3. (Coming soon) Use `warn_error_options` to disable the warning
+1. Проигнорировать предупреждение
+2. Построить модель локально
+3. (Скоро) Использовать `warn_error_options`, чтобы отключить предупреждение
 
-For example, consider this query using the `dbt_utils.unpivot` macro:
+Например, рассмотрим запрос с использованием макроса `dbt_utils.unpivot`:
 
 ```sql
 select * from (
@@ -121,7 +121,7 @@ select * from (
 )
 ```
 
-If the introspection query fails or returns no results, this renders to:
+Если интроспективный запрос завершается с ошибкой или не возвращает результатов, после рендеринга получается:
 
 ```sql
 select * from (
@@ -129,7 +129,7 @@ select * from (
 )
 ```
 
-This is invalid SQL. In `baseline` mode, <Constant name="fusion" /> displays a warning so your project can continue running while still alerting you to the issue:
+Это некорректный SQL. В режиме `baseline` <Constant name="fusion" /> показывает предупреждение, чтобы проект мог продолжать выполняться, а вы при этом знали о проблеме:
 
 ```bash
 dbt0101: no viable alternative at input '(
@@ -138,55 +138,55 @@ dbt0101: no viable alternative at input '(
   --> models/example_model.sql:17:1
 ```
 
-#### Migration scenarios
+#### Сценарии миграции
 
-Migrating to <Constant name="fusion" /> can involve more than moving YAML around. Some scenarios that can make migration more involved include:
+Миграция на <Constant name="fusion" /> может потребовать не только перестановок в YAML. Вот некоторые сценарии, которые могут усложнить миграцию:
 
-1. **Limited access to sources**: You don't have access to all the sources and models of a large dbt project.
-2. **Intricate Jinja workflows**: Your project uses post-hooks and introspection extensively.
-3. **Package compatibility**: Your project depends on packages that aren't yet <Constant name="fusion" />-compatible.
-4. **Unsupported SQL features**: Your models or sources use advanced data types (`STRUCT`, `ARRAY`, `GEOGRAPHY`) or built-in functions (`AI.PREDICT`, `JSON_FLATTEN`, `st_pointfromgeohash`) not yet supported by <Constant name="fusion_engine" />.
+1. **Ограниченный доступ к источникам**: у вас нет доступа ко всем источникам и моделям большого проекта dbt.
+2. **Сложные рабочие процессы Jinja**: ваш проект активно использует post-hooks и интроспекцию.
+3. **Совместимость пакетов**: ваш проект зависит от пакетов, которые пока несовместимы с <Constant name="fusion" />.
+4. **Неподдерживаемые возможности SQL**: ваши модели или источники используют сложные типы данных (`STRUCT`, `ARRAY`, `GEOGRAPHY`) или встроенные функции (`AI.PREDICT`, `JSON_FLATTEN`, `st_pointfromgeohash`), которые пока не поддерживаются в <Constant name="fusion_engine" />.
 
-Setting `static_analysis` to `baseline` mode lets you start using <Constant name="fusion" /> immediately while you address these scenarios incrementally. As you resolve compatibility issues, you can opt specific models or your entire project into `strict` mode for maximum validation guarantees.
+Установка `static_analysis` в режим `baseline` позволяет сразу начать использовать <Constant name="fusion" />, постепенно решая перечисленные задачи. По мере устранения проблем совместимости вы можете переводить отдельные модели или весь проект в режим `strict` для получения максимальных гарантий проверки.
 
-## Recapping the differences between engines
+## Краткое сравнение движков
 
 <Constant name="core_v1" />:
 
-- Renders and runs models one at a time.
-- Never runs static analysis.
+- Выполняет рендеринг и запуск моделей по одной.
+- Никогда не выполняет статический анализ.
 
-<Constant name="fusion_engine" /> (baseline mode &mdash; default):
+<Constant name="fusion_engine" /> (режим baseline &mdash; по умолчанию):
 
-- Statically analyzes all models, catching most SQL errors while providing a familiar migration experience.
+- Статически анализирует все модели, выявляя большинство ошибок SQL и обеспечивая привычный процесс миграции.
 
-<Constant name="fusion_engine" /> (strict mode):
+<Constant name="fusion_engine" /> (режим strict):
 
-- Renders and statically analyzes all models before execution begins.
-- Guarantees nothing runs until the entire project is proven valid.
-- Parses `CREATE FUNCTION` in [`sql_header`](/reference/resource-configs/sql_header) and in [`on-run-start`](/reference/project-configs/on-run-start-on-run-end) hooks, then registers those UDFs so strict compilation can resolve calls to them. `baseline` and `off` don't register UDFs this way. See [User-defined functions (UDFs) in `strict` mode](/reference/resource-configs/static-analysis#user-defined-functions-udfs-in-strict-mode).
+- Выполняет рендеринг и статический анализ всех моделей до начала выполнения.
+- Гарантирует, что ничего не запустится, пока не будет подтверждена корректность всего проекта.
+- Разбирает `CREATE FUNCTION` в [`sql_header`](/reference/resource-configs/sql_header) и хуках [`on-run-start`](/reference/project-configs/on-run-start-on-run-end), а затем регистрирует эти UDF, чтобы при строгой компиляции можно было разрешить вызовы этих функций. Режимы `baseline` и `off` не регистрируют UDF таким способом. См. [Пользовательские функции (UDF) в режиме `strict`](/reference/resource-configs/static-analysis#user-defined-functions-udfs-in-strict-mode).
 
-## Configuring `static_analysis`
+## Настройка `static_analysis` {#configuring-static_analysis}
 
-You can modify the way static analysis is applied for specific models in your project. The static analysis configuration cascades from most strict to least strict. Going downstream in your lineage, a model can keep the same mode or relax it &mdash; it can't be stricter than its parent.
+Вы можете изменить способ применения статического анализа для отдельных моделей проекта. Настройка статического анализа распространяется каскадно от наиболее строгой к наименее строгой. Ниже по цепочке происхождения данных модель может сохранить тот же режим или ослабить его &mdash; она не может быть строже своей родительской модели.
 
-Setting `static_analysis: strict` on a model does not automatically set `strict` for downstream models; they keep the project default unless you set them explicitly. For rules and examples, refer to [How modes cascade in your lineage](#how-modes-cascade-in-your-lineage) and [strict mode inheritance](#strict-mode-inheritance).
+Установка `static_analysis: strict` для модели не задаёт автоматически `strict` для нижележащих моделей; они сохраняют значение по умолчанию для проекта, если вы не настроите их явно. Правила и примеры приведены в разделах [Как режимы распространяются по цепочке происхождения данных](#how-modes-cascade-in-your-lineage) и [Наследование режима strict](#strict-mode-inheritance).
 
-Models that use custom materializations follow these same rules, with one exception for `strict`. Refer to [Custom materializations](#custom-materializations).
+Модели, использующие пользовательские материализации, следуют тем же правилам, с одним исключением для `strict`. См. раздел [Пользовательские материализации](#custom-materializations).
 
-The [`static_analysis`](/reference/resource-configs/static-analysis) config options are:
+Доступны следующие значения настройки [`static_analysis`](/reference/resource-configs/static-analysis):
 
-- `baseline` (default): Statically analyze SQL. This is the recommended starting point for users transitioning from <Constant name="core" />, providing a smooth migration experience while still catching most SQL errors.
-- `strict`: Statically analyze all SQL before execution begins. Use this for maximum validation guarantees &mdash; nothing runs until the entire project is proven valid.
-- `off`: Skip SQL analysis on this model and its descendants.
+- `baseline` (по умолчанию): выполнять статический анализ SQL. Это рекомендуемая отправная точка для пользователей, переходящих с <Constant name="core" />: она обеспечивает плавную миграцию и при этом выявляет большинство ошибок SQL.
+- `strict`: выполнять статический анализ всего SQL до начала выполнения. Используйте этот режим для максимальных гарантий проверки &mdash; ничего не запустится, пока не будет подтверждена корректность всего проекта.
+- `off`: пропустить анализ SQL для этой модели и всех её потомков.
 
-When you disable static analysis, features of the VS Code extension which depend on SQL comprehension will be unavailable.
+При отключении статического анализа возможности расширения VS Code, зависящие от понимания SQL, будут недоступны.
 
-The best place to configure `static_analysis` is as a config on an individual model or group of models. As a debugging aid, you can also use the [`--static-analysis strict`](/reference/global-configs/static-analysis-flag) or `--static-analysis off` CLI flags to override all model-level configuration.
+Лучше всего задавать `static_analysis` как настройку отдельной модели или группы моделей. Для отладки также можно использовать флаги CLI [`--static-analysis strict`](/reference/global-configs/static-analysis-flag) или `--static-analysis off`, чтобы переопределить все настройки на уровне моделей.
 
-### Incrementally adopting strict mode
+### Постепенное внедрение режима strict
 
-Once you're comfortable with <Constant name="fusion" /> in baseline mode, you can incrementally opt models or directories into `strict` mode:
+Освоившись с <Constant name="fusion" /> в режиме baseline, вы можете постепенно переводить модели или каталоги в режим `strict`:
 
 <File name='dbt_project.yml'>
 
@@ -195,60 +195,60 @@ name: jaffle_shop
 
 models:
   jaffle_shop:
-    # Start with strict analysis on your cleanest models
+    # Начните со строгого анализа наиболее подготовленных моделей
     staging:
       +static_analysis: strict
-    # Keep baseline for models that need more work
+    # Сохраните baseline для моделей, требующих доработки
     marts:
       +static_analysis: baseline
 ```
 
 </File>
 
-#### How modes cascade in your lineage
+#### Как режимы распространяются по цепочке происхождения данных {#how-modes-cascade-in-your-lineage}
 
-Two rules determine which mode a model can use:
+Два правила определяют, какой режим может использовать модель:
 
-- **Eligibility rule:** A model is eligible for static analysis only if all of its upstream dependencies are eligible.
-- **Strictness rule:** A model can't be stricter than its parents. The strictness hierarchy is `strict` → `baseline` → `off`.
+- **Правило допустимости:** модель допускает статический анализ, только если все её вышележащие зависимости допускают его.
+- **Правило строгости:** модель не может быть строже своих родительских моделей. Иерархия строгости: `strict` → `baseline` → `off`.
 
-Going downstream, a model can keep its parent's mode or relax it, but it can't tighten it:
+Ниже по цепочке модель может сохранить режим родительской модели или ослабить его, но не может сделать его строже:
 
 <SimpleTable>
 
-| Upstream model | Downstream can be |
+| Вышележащая модель | Допустимый режим нижележащей модели |
 |-------------|--------------|
-| `strict`    | `strict`, `baseline`, or `off` |
-| `baseline`  | `baseline` or `off` (not `strict`) |
-| `off`       | `off` only |
+| `strict`    | `strict`, `baseline` или `off` |
+| `baseline`  | `baseline` или `off` (не `strict`) |
+| `off`       | только `off` |
 
 </SimpleTable>
 
-The strictness rule exists because `baseline` doesn't produce the full analyzed schema that `strict` needs from its upstream models. Without that information, a downstream model can't run strict-level type checking. For the complete reference, refer to [How static analysis modes cascade](/reference/resource-configs/static-analysis#how-static-analysis-modes-cascade).
+Правило строгости существует потому, что `baseline` не формирует полную проанализированную схему, которая нужна режиму `strict` от вышележащих моделей. Без этой информации нижележащая модель не может выполнять проверку типов уровня strict. Полное описание см. в разделе [Как каскадно распространяются режимы статического анализа](/reference/resource-configs/static-analysis#how-static-analysis-modes-cascade).
 
-#### Strict mode inheritance
+#### Наследование режима strict {#strict-mode-inheritance}
 
-Unlike `baseline` or `off`, `strict` mode doesn't propagate to downstream models. If you configure a model as `strict`, its downstream models won't inherit `strict` mode unless you set them explicitly. To make all models `strict`, you must set `+static_analysis: strict` on root models first, or use the project-wide config in the next section at the project level.
+В отличие от `baseline` или `off`, режим `strict` не распространяется на нижележащие модели. Если вы зададите для модели `strict`, её нижележащие модели не унаследуют режим `strict`, если вы не настроите их явно. Чтобы сделать все модели `strict`, сначала нужно задать `+static_analysis: strict` для корневых моделей либо использовать общепроектную настройку из следующего раздела на уровне проекта.
 
-For example, in A → B → C with a default of `baseline`, configuring A (a root node) as `strict` makes only A `strict` &mdash; B and C remain baseline unless configured. To make the full chain `strict`, set `+static_analysis: strict` on each relevant model or group, or use a project-wide setting.
+Например, в цепочке A → B → C со значением по умолчанию `baseline` установка `strict` для A (корневого узла) делает строгой только A &mdash; B и C остаются в baseline, если не настроить их отдельно. Чтобы сделать всю цепочку `strict`, задайте `+static_analysis: strict` для каждой соответствующей модели или группы либо используйте общепроектную настройку.
 
-This approach lets you gain the benefits of strict validation where possible while keeping the flexibility of baseline analysis for models that aren't yet compatible.
+Этот подход позволяет получать преимущества строгой проверки там, где это возможно, сохраняя гибкость анализа baseline для моделей, которые пока несовместимы со строгим режимом.
 
-Refer to [CLI options](/reference/global-configs/command-line-options) and [Configurations and properties](/reference/configs-and-properties) to learn more about configs.
+Подробнее о настройках см. в разделах [Параметры CLI](/reference/global-configs/command-line-options) и [Настройки и свойства](/reference/configs-and-properties).
 
-### Custom materializations
+### Пользовательские материализации {#custom-materializations}
 
-Models that use a [custom materialization](/guides/create-new-materializations) follow the same `static_analysis` rules as any other model, including the default `baseline` mode and the usual [cascading rules](#how-modes-cascade-in-your-lineage).
+Модели, использующие [пользовательскую материализацию](/guides/create-new-materializations), следуют тем же правилам `static_analysis`, что и любые другие модели, включая режим `baseline` по умолчанию и обычные [правила каскадного распространения](#how-modes-cascade-in-your-lineage).
 
-This applies to both kinds of custom materializations:
-- **A name you invented:** such as `materialized='my_custom_load'`. Find these in your model configs.
-- **A built-in name:** such as your own macro named `materialization table, default`. These are harder to spot, because models that say `materialized='table'` look standard but run your code instead of dbt's.
+Это относится к обоим видам пользовательских материализаций:
+- **Придуманное вами имя:** например, `materialized='my_custom_load'`. Их можно найти в настройках моделей.
+- **Встроенное имя:** например, ваш собственный макрос с именем `materialization table, default`. Их сложнее обнаружить, потому что модели с `materialized='table'` выглядят стандартными, но выполняют ваш код вместо кода dbt.
 
-#### Schema-changing custom materializations
+#### Пользовательские материализации, изменяющие схему
 
-dbt v2 infers your model’s columns from its SQL, without looking inside your materialization code. Custom `create` statements, merge logic, or grants are fine _if_ they only change how a model is built and they leave the columns unchanged. But if your materialization adds or renames columns, or changes their data types, dbt’s inferred schema won’t match the table in your warehouse.
+dbt v2 определяет столбцы модели по её SQL, не анализируя код материализации. Пользовательские операторы `create`, логика слияния или выдача прав допустимы, _если_ они меняют только способ построения модели и оставляют столбцы неизменными. Но если ваша материализация добавляет или переименовывает столбцы либо меняет их типы данных, схема, выведенная dbt, не будет соответствовать таблице в хранилище данных.
 
-This mainly affects `strict`, which needs accurate upstream schemas for type checking, unlike `baseline`. If you use `strict`, set `static_analysis: off` on models that use a schema-changing materialization:
+Это в первую очередь затрагивает `strict`, которому, в отличие от `baseline`, для проверки типов нужны точные схемы вышележащих моделей. Если вы используете `strict`, задайте `static_analysis: off` для моделей с материализацией, изменяющей схему:
 
 <File name='models/my_schema_changing_model.sql'>
 
@@ -263,19 +263,19 @@ select ...
 
 </File>
 
-Because `off` cascades, every downstream model also loses static analysis. To keep coverage across your DAG, use schema-changing materializations on models that nothing else depends on.
+Поскольку `off` распространяется каскадно, все нижележащие модели также теряют статический анализ. Чтобы сохранить охват анализа по всему DAG, используйте материализации, изменяющие схему, для моделей, от которых больше ничего не зависит.
 
-### Identify a model's mode
+### Определение режима модели
 
-The mode you configure isn't always the mode in effect, because a model's effective mode also depends on its parents. The [dbt VS Code extension](/docs/about-dbt-extension) and the <Constant name="studio_ide" /> both show a CodeLens above each model that tells you when static analysis is off and why.
+Настроенный вами режим не всегда совпадает с действующим, поскольку фактический режим модели также зависит от её родительских моделей. И [расширение dbt для VS Code](/docs/about-dbt-extension), и <Constant name="studio_ide" /> показывают над каждой моделью CodeLens, который сообщает, когда статический анализ отключён и почему.
 
-Keep in mind that `dbt ls --output json --output-keys config.static_analysis` reports the mode you _configured_ for each model, not the mode v2 resolves after applying the cascading rules.
+Помните, что `dbt ls --output json --output-keys config.static_analysis` сообщает режим, который вы _настроили_ для каждой модели, а не режим, который v2 определяет после применения правил каскадного распространения.
 
-### Example configurations
+### Примеры настроек
 
-##### Configure strict for the entire project
+##### Настройка strict для всего проекта
 
-Many teams want to enable `strict` mode for the whole project and all packages. You can do this by setting `+static_analysis: strict` under each resource type in `dbt_project.yml` for your project name (and for any package names if you want those to be strict too):
+Многие команды хотят включить режим `strict` для всего проекта и всех пакетов. Для этого задайте `+static_analysis: strict` для каждого типа ресурсов в `dbt_project.yml` в разделе с именем вашего проекта (и в разделах с именами пакетов, если вы хотите включить строгий режим и для них):
 
 <File name='dbt_project.yml'>
 
@@ -311,9 +311,9 @@ analyses:
 
 </File>
 
-Use your project name in place of `my_project` — that's the same value as the `name:` key at the top of `dbt_project.yml` (for example, `jaffle_shop`). To apply `strict` to a package as well, add another entry under each resource type using the package name as the key; for example, under `models:` add `your_package_name:` with `+static_analysis: strict` beneath it.
+Вместо `my_project` используйте имя вашего проекта — то же значение, что указано в ключе `name:` в начале `dbt_project.yml` (например, `jaffle_shop`). Чтобы применить `strict` также к пакету, добавьте ещё одну запись для каждого типа ресурсов, используя имя пакета в качестве ключа; например, в разделе `models:` добавьте `your_package_name:`, а под ним — `+static_analysis: strict`.
 
-##### Disable static analysis for all models in a package:
+##### Отключение статического анализа для всех моделей пакета:
 
 <File name='dbt_project.yml'>
 
@@ -331,7 +331,7 @@ models:
 
 </File>
 
-##### Disable static analysis in YAML:
+##### Отключение статического анализа в YAML:
 
 <File name='models/my_udf_using_model.yml'>
 
@@ -344,7 +344,7 @@ models:
 
 </File>
 
-##### Disable static analysis for a model using a custom UDF:
+##### Отключение статического анализа для модели, использующей пользовательскую UDF:
 
 <File name='models/my_udf_using_model.sql'>
 
@@ -359,17 +359,17 @@ from {{ ref('my_model') }}
 
 </File>
 
-### Can I use strict mode in development and baseline in deployment?
+### Можно ли использовать режим strict при разработке и baseline при развёртывании?
 
-Yes. This pattern is valid and recommended: use `strict` while you develop for stronger validation, and keep `baseline` in deployment for faster runs that are less likely to stop on analysis findings.
+Да. Это допустимый и рекомендуемый подход: используйте `strict` во время разработки для более строгой проверки, а при развёртывании сохраняйте `baseline` для более быстрых запусков, которые с меньшей вероятностью будут остановлены из-за результатов анализа.
 
-For more information, including CLI examples and an optional environment variable pattern, refer to [Optimize static analysis for development and deployment](/best-practices/optimize-static-analysis-for-development-and-deployment).
+Дополнительные сведения, включая примеры CLI и необязательный подход с использованием переменной окружения, см. в разделе [Оптимизация статического анализа для разработки и развёртывания](/best-practices/optimize-static-analysis-for-development-and-deployment).
 
-### When should I turn static analysis `off`?
+### Когда следует отключать статический анализ с помощью `off`? {#when-should-i-turn-static-analysis-off}
 
-With baseline mode enabled by default, static analysis is less likely to block your runs. You should only disable it if <Constant name="fusion_engine" /> cannot parse SQL that is valid for your database of choice.
+Благодаря включённому по умолчанию режиму baseline статический анализ реже блокирует выполнение. Отключать его следует только в том случае, если <Constant name="fusion_engine" /> не может разобрать SQL, корректный для выбранной вами базы данных.
 
-This is a very rare occurrence. If you encounter this situation, please [open an issue](https://github.com/dbt-labs/dbt/issues) with an example of the failing SQL so we can update our parsers.
+Это происходит крайне редко. Если вы столкнулись с такой ситуацией, [создайте issue](https://github.com/dbt-labs/dbt/issues) с примером SQL, вызывающего ошибку, чтобы мы могли обновить наши парсеры.
 
 import AboutFusion from '/snippets/_about-v2.md';
 

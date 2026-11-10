@@ -1,163 +1,163 @@
 ---
-title: "Wizard Desktop settings"
+title: "Настройки Wizard Desktop"
 id: "wizard-desktop-settings"
-description: "Reference for every setting in Wizard Desktop: general layout, account, AI providers, connectors, appearance, shortcuts, and version control."
-sidebar_label: "Desktop settings"
+description: "Справочник по всем настройкам Wizard Desktop: общие параметры интерфейса, учетная запись, провайдеры ИИ, коннекторы, внешний вид, сочетания клавиш и контроль версий."
+sidebar_label: "Настройки Desktop"
 tags: [AI, Agents, dbt Wizard]
 availability: local_all
 ---
 
 import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 
-# Wizard Desktop settings <Lifecycle status="beta"/>
+# Настройки Wizard Desktop <Lifecycle status="beta"/>
 
 <IntroText>
-Open **Settings** from the bottom left of the app to change how <Constant name="wizard" /> behaves. Settings are grouped into General, Account, AI providers, Connectors, Appearance, Shortcuts, and version control.
+Откройте **Settings** в левом нижнем углу приложения, чтобы настроить поведение <Constant name="wizard" />. Настройки сгруппированы в разделы General, Account, AI providers, Connectors, Appearance, Shortcuts и Version control.
 </IntroText>
 
-Settings that also exist in the Wizard CLI are shared. Changing them here changes them for `wizard` in your terminal too. Refer to [the config reference](/docs/dbt-ai/wizard-config) for the underlying files.
+Настройки, которые также есть в Wizard CLI, являются общими. Изменения, внесенные здесь, также применяются к `wizard` в терминале. Сведения о файлах, в которых хранятся настройки, см. в [справочнике по конфигурации](/docs/dbt-ai/wizard-config).
 
-## General
+## Общие настройки
 
-Controls what appears alongside a chat while you work.
+Управляют тем, что отображается рядом с чатом во время работы.
 
 <SimpleTable>
 
-| Setting | What it does |
+| Настройка | Назначение |
 |---|---|
-| Replay onboarding | Walks you through first-run setup again. Your existing theme and project settings are kept unless you change them during setup. |
-| Application updates | Shows the version you're on, checks for new versions, and installs them. |
+| Replay onboarding | Повторно запускает первоначальную настройку. Текущая тема и настройки проекта сохраняются, если вы не измените их в процессе настройки. |
+| Application updates | Показывает текущую версию, проверяет наличие новых версий и устанавливает их. |
 
 </SimpleTable>
 
-<Lightbox src="/img/wizard/desktop/wizard-desktop-settings-general.png" title="General settings in Wizard Desktop" />
+<Lightbox src="/img/wizard/desktop/wizard-desktop-settings-general.png" title="Общие настройки в Wizard Desktop" />
 
-## Account
+## Учетная запись
 
-Shows the dbt accounts <Constant name="wizard" /> uses for hosted models and platform access, and gives you the tools to clean up what the app has written to disk. 
+Показывает учетные записи dbt, которые <Constant name="wizard" /> использует для доступа к размещенным моделям и платформе, а также предоставляет инструменты для очистки данных, записанных приложением на диск. 
 
-- **Connected dbt accounts** lists each <Constant name="dbt_platform" /> account you've connected, with the platform account hostname, such as `abc123.us1.dbt.com`. Connect more than one account by clicking on **+Add account** and switch between them without signing in again. Each account has its own **Sign out**. To pick which account powers AI models, go to [AI providers](#ai-providers).
-- **Sign-in or Advanced sign-in options** lets you choose where <Constant name="wizard" /> signs in to <Constant name="dbt_platform" />. Most people don't need this. Use it if signing in sends you to a registration page, or the page says your user already exists. To set it up:
+- **Connected dbt accounts** содержит список всех подключенных учетных записей <Constant name="dbt_platform" /> с именами хостов учетных записей платформы, например `abc123.us1.dbt.com`. Чтобы подключить несколько учетных записей, нажмите **+Add account** — после этого вы сможете переключаться между ними без повторного входа. У каждой учетной записи есть собственная кнопка **Sign out**. Чтобы выбрать учетную запись для работы моделей ИИ, перейдите в раздел [Провайдеры ИИ](#ai-providers).
+- **Sign-in или Advanced sign-in options** позволяет выбрать, куда <Constant name="wizard" /> будет обращаться для входа в <Constant name="dbt_platform" />. Большинству пользователей эта настройка не нужна. Используйте ее, если при входе вы попадаете на страницу регистрации или видите сообщение о том, что ваш пользователь уже существует. Для настройки:
 
-    1. Go to **Settings** &rarr; **Account**, and then click **Sign-in options**.
-    2. Enter your account's [Access URL](/docs/platform/about-platform/access-regions-ip-addresses) in **dbt account host**, such as `ab123.us1.dbt.com`. You can find it in your <Constant name="dbt_platform" /> account settings.
-    3. (Optional) Enter your **dbt account ID**. To find it, go to **Account settings** &rarr; **Account** in <Constant name="dbt_platform" />.
-    4. Click **Save**.
+    1. Перейдите в **Settings** &rarr; **Account**, затем нажмите **Sign-in options**.
+    2. Введите [URL доступа](/docs/platform/about-platform/access-regions-ip-addresses) вашей учетной записи в поле **dbt account host**, например `ab123.us1.dbt.com`. Его можно найти в настройках вашей учетной записи <Constant name="dbt_platform" />.
+    3. (Необязательно) Введите **dbt account ID**. Чтобы найти его, перейдите в **Account settings** &rarr; **Account** в <Constant name="dbt_platform" />.
+    4. Нажмите **Save**.
 
-    <Lightbox src="/img/wizard/desktop/wizard-desktop-sign-in-options.png" width="90%" title="Sign-in options in Wizard Desktop" />
+    <Lightbox src="/img/wizard/desktop/wizard-desktop-sign-in-options.png" width="90%" title="Параметры входа в Wizard Desktop" />
 
-    You can also set the account host from the <Constant name="wizard" /> CLI with the `DBT_CLOUD_LOGIN_HOST` environment variable. For example:
+    Также можно задать хост учетной записи для CLI <Constant name="wizard" /> с помощью переменной окружения `DBT_CLOUD_LOGIN_HOST`. Например:
 
     ```shell
     export DBT_CLOUD_LOGIN_HOST=ab123.us1.dbt.com
     ```
 
-- **Maintenance** reclaims disk space or returns <Constant name="wizard" /> to a clean state. This will affect the Wizard CLI too:
+- **Maintenance** позволяет освободить место на диске или вернуть <Constant name="wizard" /> в исходное состояние. Это также затронет Wizard CLI:
 
     <SimpleTable>
 
-    | Action | What it does |
+    | Действие | Назначение |
     |---|---|
-    | Clean up environments | Deletes archived environment directories from disk. The pane tells you whether any are there to remove |
-    | Clean up app data | Drops orphaned records, and shows what the app is tracking, such as `4 environments, 1 project, 4 journal rows` |
-    | Reset app | Permanently deletes your environments, projects, and chat history, plus cached files. It doesn't clear your configuration file at `$DBT_WIZARD_HOME`, which defaults to `~/.dbt/wizard/config.toml` |
+    | Clean up environments | Удаляет с диска каталоги архивных окружений. На панели указано, есть ли каталоги, которые можно удалить |
+    | Clean up app data | Удаляет записи, не связанные с существующими объектами, и показывает, какие данные отслеживает приложение, например `4 environments, 1 project, 4 journal rows` |
+    | Reset app | Безвозвратно удаляет ваши окружения, проекты, историю чатов и кешированные файлы. Не очищает файл конфигурации в `$DBT_WIZARD_HOME`, путь к которому по умолчанию — `~/.dbt/wizard/config.toml` |
 
     </SimpleTable>
 
-:::caution Reset app can't be undone
+:::caution Действие Reset app нельзя отменить
 
-When you select **Reset app**, it can't be undone which means chat history goes with it when you delete it. Make sure you export or open a pull request for any work you want to keep first before taking this action.
+Действие **Reset app** нельзя отменить: при сбросе также удаляется история чатов. Перед выполнением этого действия обязательно экспортируйте все результаты работы, которые хотите сохранить, или создайте для них пул-реквест.
 
 :::
 
 
-## AI providers
+## Провайдеры ИИ {#ai-providers}
 
-Choose how <Constant name="wizard" /> reaches a model. Come here if you selected **Skip for now** during onboarding, or to switch approaches later. Select **Refresh** to re-check which providers and models are available. If you've connected more than one <Constant name="dbt_platform" /> account, choose which one powers AI models here by clicking **Configure**.
+Выберите, как <Constant name="wizard" /> будет подключаться к модели. Перейдите сюда, если выбрали **Skip for now** при первоначальной настройке или хотите позже изменить способ подключения. Нажмите **Refresh**, чтобы повторно проверить доступность провайдеров и моделей. Если вы подключили несколько учетных записей <Constant name="dbt_platform" />, нажмите **Configure**, чтобы выбрать, какая из них будет использоваться для работы моделей ИИ.
 
 <SimpleTable>
 
-| Option | What it means |
+| Вариант | Что означает |
 |---|---|
-| Managed by dbt Labs | No setup. dbt Labs [manages](/docs/dbt-ai/pricing-billing/overview#dbt-managed-providers) the keys and keeps you on the latest models, and usage is metered against your dbt usage credits. The `dbt` provider shows as **Active** when it's in use |
-| Managed by you | Bring your own key for Amazon Bedrock, Anthropic, Azure OpenAI, Databricks, Google Gemini, OpenAI, or an OpenAI subscription, and more. That provider's API charges apply. Refer to [BYOK](/docs/dbt-ai/wizard-byok) |
+| Managed by dbt Labs | Настройка не требуется. dbt Labs [управляет](/docs/dbt-ai/pricing-billing/overview#dbt-managed-providers) ключами и обеспечивает доступ к актуальным моделям, а использование оплачивается из ваших кредитов dbt. Когда провайдер `dbt` используется, он отображается со статусом **Active** |
+| Managed by you | Используйте собственный ключ для Amazon Bedrock, Anthropic, Azure OpenAI, Databricks, Google Gemini, OpenAI, подписку OpenAI и другие варианты. Применяются тарифы API соответствующего провайдера. См. [BYOK](/docs/dbt-ai/wizard-byok) |
 
 </SimpleTable>
 
-Each provider lists how many of its models are enabled, such as `6/6 models enabled`. Select **Manage** to add credentials and turn individual models on or off. You then pick the model and reasoning effort per chat from the chat composer, not here.
+Для каждого провайдера указано, сколько его моделей включено, например `6/6 models enabled`. Нажмите **Manage**, чтобы добавить учетные данные и включить или отключить отдельные модели. Модель и уровень рассуждения для каждого чата выбираются в поле ввода сообщения, а не здесь.
 
 
-## Connectors
-MCP connectors give <Constant name="wizard" /> context about your pipelines, BI tools, and orchestration.
+## Коннекторы
+Коннекторы MCP предоставляют <Constant name="wizard" /> контекст о ваших пайплайнах, BI-инструментах и оркестрации.
 
-If your project is connected to <Constant name="dbt_platform" />, <Constant name="wizard" /> connects to the [remote dbt MCP server](/docs/dbt-ai/mcp-quickstart-remote) by default and asks you to sign in with OAuth. This adds platform tools like job management, run status, and run errors. Use the toggle on this pane to turn it on or off for each dbt account.
+Если ваш проект подключен к <Constant name="dbt_platform" />, <Constant name="wizard" /> по умолчанию подключается к [удаленному MCP-серверу dbt](/docs/dbt-ai/mcp-quickstart-remote) и предлагает выполнить вход через OAuth. Это добавляет инструменты платформы, например управление заданиями, просмотр статуса запусков и ошибок выполнения. Используйте переключатель на этой панели, чтобы включить или отключить подключение для каждой учетной записи dbt.
 
-The remote dbt MCP server is available to <Constant name="dbt_platform" /> users only. <Constant name="wizard" /> still uses its local [dbt Information Schema](/docs/build/dbt-information-schema) for project metadata.
+Удаленный MCP-сервер dbt доступен только пользователям <Constant name="dbt_platform" />. Для получения метаданных проекта <Constant name="wizard" /> по-прежнему использует локальную [dbt Information Schema](/docs/build/dbt-information-schema).
 
-Browsing and enabling other connectors from this pane is planned for future releases. Until then, add [MCP servers](/docs/dbt-ai/wizard-mcp) from the terminal:
+Просмотр и включение других коннекторов на этой панели планируется в будущих версиях. Пока добавляйте [MCP-серверы](/docs/dbt-ai/wizard-mcp) через терминал:
 
-1. Start a project chat and send your first message, which starts the terminal.
-2. Run `wizard` from the terminal.
-3. Run `/mcp` to add a connector or manage the ones you've already added.
+1. Начните чат проекта и отправьте первое сообщение — это запустит терминал.
+2. Выполните `wizard` в терминале.
+3. Выполните `/mcp`, чтобы добавить коннектор или управлять уже добавленными.
 
-## Appearance
+## Внешний вид
 
-Sets how the app looks and how much detail inline widgets show.
+Определяет внешний вид приложения и степень детализации встроенных виджетов.
 
 <SimpleTable>
 
-| Setting | What it does |
+| Настройка | Назначение |
 |---|---|
-| Theme | Switches between **Light**, **Dark**, and **System**. Same choice you made during onboarding. Cycle it with <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>T</kbd> |
-| Transcript density | Controls how much tool activity shows in chat. Choose **Verbose** to see everything, **Focused** to see the least, or **Balanced** for somewhere in between. Back-to-back tool calls collapse into one card, and you can fine-tune what shows per category |
-| Inspector rail labels | Shows the surface names beneath the pane rail icons, so you get **Explorer** and **Lineage** as text rather than icons alone |
-| Terminal font family | The font the integrated terminals use. Enter the name exactly as it's installed, for example `FiraCode Nerd Font`. Your preferred family is used first, with `Geist Mono, monospace` as the fallback |
-| Terminal font size | A whole number from 8 to 32 |
+| Theme | Переключает тему между **Light**, **Dark** и **System**. Это тот же выбор, который вы делали при первоначальной настройке. Переключайте темы сочетанием <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>T</kbd> |
+| Transcript density | Определяет, насколько подробно в чате отображается активность инструментов. Выберите **Verbose**, чтобы видеть все, **Focused** — для минимального объема сведений, или **Balanced** — для промежуточного варианта. Последовательные вызовы инструментов сворачиваются в одну карточку, а отображение можно детально настроить для каждой категории |
+| Inspector rail labels | Показывает названия разделов под значками на боковой панели, чтобы **Explorer** и **Lineage** отображались текстом, а не только значками |
+| Terminal font family | Шрифт встроенных терминалов. Введите название в точности так, как оно указано в системе, например `FiraCode Nerd Font`. Выбранное семейство используется в первую очередь, а `Geist Mono, monospace` — в качестве запасного варианта |
+| Terminal font size | Целое число от 8 до 32 |
 
 </SimpleTable>
 
-## Shortcuts
+## Сочетания клавиш
 
-Lists the app's keyboard shortcuts, grouped by what they act on.
-
-<SimpleTable>
-
-| Shortcut | What it does |
-|---|---|
-| <kbd>⌘</kbd> + <kbd>,</kbd> | Open **Settings** |
-| <kbd>⌘</kbd> + <kbd>K</kbd> | Open the command palette |
-| <kbd>⌘</kbd> + <kbd>/</kbd> | Show the keyboard shortcuts |
-| <kbd>⌘</kbd> + <kbd>L</kbd> | Focus the chat |
-| <kbd>Esc</kbd> | Close an overlay, or go back to the app |
-| <kbd>⌘</kbd> + <kbd>T</kbd> | Open a new chat |
-| <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>{'\\'}</kbd> | Toggle the right sidebar |
-| <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>T</kbd> | Cycle the theme |
-
-</SimpleTable>
-
-
-## Version control
-
-_Only GitHub is supported at this time. Support for more version control providers coming soon._
-
-Set how <Constant name="wizard" /> authenticates with GitHub to read repos and open pull requests with **Create PR**. Refer to [Review and validate changes](/docs/dbt-ai/wizard-desktop-use#review-and-validate-changes).
+Содержит список сочетаний клавиш приложения, сгруппированных по объектам, на которые они действуют.
 
 <SimpleTable>
 
-| Method | When to use it |
+| Сочетание клавиш | Действие |
 |---|---|
-| GitHub CLI integration | The default. When the [GitHub CLI](https://cli.github.com/) is installed and authenticated, the pane shows a green status dot and the account you're signed in as |
-| Personal access token | Optional, and used when the GitHub CLI isn't available. Select **Create one** to generate a token on GitHub, paste it in, then select **Save** |
+| <kbd>⌘</kbd> + <kbd>,</kbd> | Открыть **Settings** |
+| <kbd>⌘</kbd> + <kbd>K</kbd> | Открыть палитру команд |
+| <kbd>⌘</kbd> + <kbd>/</kbd> | Показать сочетания клавиш |
+| <kbd>⌘</kbd> + <kbd>L</kbd> | Перевести фокус в чат |
+| <kbd>Esc</kbd> | Закрыть наложенное окно или вернуться в приложение |
+| <kbd>⌘</kbd> + <kbd>T</kbd> | Открыть новый чат |
+| <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>{'\\'}</kbd> | Показать или скрыть правую боковую панель |
+| <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>T</kbd> | Переключить тему |
 
 </SimpleTable>
 
 
-## Related docs
+## Контроль версий
 
-- [Get started with Wizard Desktop](/docs/dbt-ai/wizard-desktop)
-- [Use Wizard Desktop](/docs/dbt-ai/wizard-desktop-use)
-- [<Constant name="wizard" /> config reference](/docs/dbt-ai/wizard-config)
-- [Configure BYOK](/docs/dbt-ai/wizard-byok)
-- [Use MCP servers](/docs/dbt-ai/wizard-mcp)
+_В настоящее время поддерживается только GitHub. Поддержка других провайдеров контроля версий появится в ближайшее время._
+
+Настройте способ аутентификации <Constant name="wizard" /> в GitHub для чтения репозиториев и создания пул-реквестов с помощью **Create PR**. См. [Проверка и валидация изменений](/docs/dbt-ai/wizard-desktop-use#review-and-validate-changes).
+
+<SimpleTable>
+
+| Способ | Когда использовать |
+|---|---|
+| GitHub CLI integration | Вариант по умолчанию. Если [GitHub CLI](https://cli.github.com/) установлен и аутентификация выполнена, на панели отображаются зеленый индикатор статуса и учетная запись, под которой вы вошли |
+| Personal access token | Необязательный вариант, используемый, когда GitHub CLI недоступен. Нажмите **Create one**, чтобы создать токен на GitHub, вставьте его и нажмите **Save** |
+
+</SimpleTable>
+
+
+## Связанная документация
+
+- [Начало работы с Wizard Desktop](/docs/dbt-ai/wizard-desktop)
+- [Использование Wizard Desktop](/docs/dbt-ai/wizard-desktop-use)
+- [Справочник по конфигурации <Constant name="wizard" />](/docs/dbt-ai/wizard-config)
+- [Настройка BYOK](/docs/dbt-ai/wizard-byok)
+- [Использование MCP-серверов](/docs/dbt-ai/wizard-mcp)
 
 <WizardFeedbackCallout />

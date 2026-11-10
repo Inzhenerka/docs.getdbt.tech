@@ -1,83 +1,83 @@
 ---
-title: dbt v2 readiness checklist
+title: Контрольный список готовности к dbt v2
 id: dbt-readiness
-description: "Your to-do list for preparing for dbt v2"
-sidebar_label: "v2 readiness checklist"
+description: "Список задач для подготовки к переходу на dbt v2"
+sidebar_label: "Готовность к v2: контрольный список"
 pagination_next: null
 pagination_prev: null
 ---
 
-<Constant name="fusion_engine" /> is here and is now generally available for the <Constant name="dbt_platform" />.
+<Constant name="fusion_engine" /> уже здесь и теперь общедоступен в <Constant name="dbt_platform" />.
 
 import FusionReadinessPanel from '/snippets/_v2-migration-readiness-panel.md';
 
 <FusionReadinessPanel />
 
-## Preparing for <Constant name="fusion" />
+## Подготовка к <Constant name="fusion" />
 
-Use the following checklist to prepare your projects for <Constant name="fusion_engine" />
+Используйте следующий контрольный список, чтобы подготовить свои проекты к <Constant name="fusion_engine" />
 
-For walkthroughs of both the preparation and upgrade processes, check out our detailed guides:
-- [ ] [Upgrade to dbt v2 Pt. 1: Preparing to upgrade](/guides/prepare-v2-upgrade?step=1)
-- [ ] [Upgrade to dbt v2 Pt. 2: Making the move](/guides/upgrade-to-v2?step=1)
+Пошаговые инструкции по подготовке и переходу вы найдете в наших подробных руководствах:
+- [ ] [Переход на dbt v2, часть 1: подготовка к переходу](/guides/prepare-v2-upgrade?step=1)
+- [ ] [Переход на dbt v2, часть 2: выполнение перехода](/guides/upgrade-to-v2?step=1)
 
 
-### Upgrade to the latest dbt version (recommended)
+### Обновитесь до последней версии dbt (рекомендуется)
 
-The **v1 Latest** [release track](/docs/dbt-versions/dbt-release-tracks) has all of the most recent features to help you prepare for <Constant name="fusion" />.
+[Канал выпусков](/docs/dbt-versions/dbt-release-tracks) **v1 Latest** включает все новейшие возможности, которые помогут вам подготовиться к <Constant name="fusion" />.
 
-- [ ] Make sure all your projects are on the **v1 Latest** release track across all deployment environments and jobs. This is not a strict requirement for upgrading, but it will ensure the simplest, most predictable experience by allowing you to pre-validate that your project doesn't rely on deprecated behaviors. 
+- [ ] Убедитесь, что все ваши проекты используют канал выпусков **v1 Latest** во всех средах развертывания и заданиях. Это не обязательное условие перехода, но оно обеспечит наиболее простой и предсказуемый процесс, позволяя заранее проверить, что ваш проект не зависит от устаревшего поведения. 
 
-### Resolve all deprecation warnings
+### Устраните все предупреждения об устаревших возможностях
 
-You must resolve deprecations while your projects are on a <Constant name="core" /> release track, as they result in warnings that will become errors once you upgrade to <Constant name="fusion" />. The autofix tool can automatically resolve many deprecations (such as moving arbitrary configs into the meta dictionary). For a full list of deprecations and how to resolve them, refer to [Deprecations](/reference/deprecations). 
+Необходимо устранить использование устаревших возможностей, пока ваши проекты находятся на канале выпусков <Constant name="core" />, поскольку связанные с ними предупреждения станут ошибками после перехода на <Constant name="fusion" />. Инструмент autofix может автоматически устранить многие такие проблемы (например, переместить произвольные настройки в словарь meta). Полный список устаревших возможностей и способов устранения связанных с ними проблем приведен в разделе [Устаревшие возможности](/reference/deprecations). 
 
-Start a new branch to begin resolving deprecation warnings using one of the following methods:
+Создайте новую ветку, чтобы начать устранять предупреждения об устаревших возможностях одним из следующих способов:
 
-- [ ] **Run autofix in the dbt platform:** You can address deprecation warnings using the [autofix tool in the Studio IDE](/docs/platform/studio-ide/autofix-deprecations). You can run the autofix tool on the **v1 Compatible** or **v1 Latest** release track.
-- [ ] **Run autofix locally:** Use the [VS Code extension](/docs/about-dbt-extension). The extension has a built-in ["Getting Started" workflow](/docs/install-dbt-extension#%D0%BD%D0%B0%D1%87%D0%B0%D0%BB%D0%BE-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B) that will debug your dbt project in the VS Code or Cursor IDE and execute the autofix tool. This has the added benefit of installing <Constant name="fusion" /> to your computer so you can begin testing locally before implementing in your <Constant name="dbt_platform" /> account.
-- [ ] **Run autofix locally (without the extension):** Visit the autofix [GitHub repo](https://github.com/dbt-labs/dbt-autofix) to run the tool locally if you're not using VS Code or Cursor. This will only run the tool, it will not install <Constant name="fusion" />.
-- [ ] **Review behavior change flag overrides:** <Constant name="fusion" /> removes the [behavior change flags](/reference/global-configs/behavior-changes#behavior-change-flags) marked `2.0` in the **Removed** column and always enables their new behavior. Delete any `flags:` overrides in your `dbt_project.yml` that opt out of those flags. Other flags remain configurable (including v2-specific flags on that page); validate that your project works with the mature / removed defaults before upgrading.
+- [ ] **Запустите autofix в платформе dbt:** Устранить предупреждения об устаревших возможностях можно с помощью [инструмента autofix в Studio IDE](/docs/platform/studio-ide/autofix-deprecations). Инструмент autofix можно запускать на канале выпусков **v1 Compatible** или **v1 Latest**.
+- [ ] **Запустите autofix локально:** Используйте [расширение для VS Code](/docs/about-dbt-extension). В расширение встроен [процесс «Getting Started»](/docs/install-dbt-extension#getting-started), который выполнит отладку вашего проекта dbt в VS Code или Cursor IDE и запустит инструмент autofix. Дополнительное преимущество этого способа — установка <Constant name="fusion" /> на ваш компьютер, чтобы вы могли начать локальное тестирование до внедрения в своем аккаунте <Constant name="dbt_platform" />.
+- [ ] **Запустите autofix локально (без расширения):** Перейдите в [репозиторий autofix на GitHub](https://github.com/dbt-labs/dbt-autofix), чтобы запустить инструмент локально, если вы не используете VS Code или Cursor. Этот способ только запускает инструмент и не устанавливает <Constant name="fusion" />.
+- [ ] **Проверьте переопределения флагов изменения поведения:** <Constant name="fusion" /> удаляет [флаги изменения поведения](/reference/global-configs/behavior-changes#behavior-change-flags), отмеченные значением `2.0` в столбце **Removed**, и всегда использует соответствующее новое поведение. Удалите из `dbt_project.yml` все переопределения в `flags:`, которые отключают эти флаги. Остальные флаги по-прежнему можно настраивать (включая специфичные для v2 флаги на этой странице); перед переходом убедитесь, что ваш проект работает с поведением по умолчанию для флагов со статусом mature или removed.
 
-### Upgrade YAML spec
+### Перейдите на новую спецификацию YAML
 
-- [ ] **Migrate Semantic Layer configs:** If your project uses the Semantic Layer, make sure your metric configurations use the [latest YAML spec](/docs/build/latest-metrics-spec).
+- [ ] **Перенесите конфигурации Semantic Layer:** Если ваш проект использует Semantic Layer, убедитесь, что конфигурации метрик соответствуют [последней спецификации YAML](/docs/build/latest-metrics-spec).
 
-### Validate and upgrade your dbt packages
+### Проверьте и обновите пакеты dbt
 
-The most commonly used dbt Labs managed packages (such as `dbt_utils` and `dbt_project_evaluator`) are already compatible with <Constant name="fusion" />, as are a large number of external and community packages. Review [the dbt package hub](https://hub.getdbt.com) to see verified <Constant name="fusion" />-compatible packages by checking that the `require-dbt-version` configuration includes `2.0.0` or higher. Refer to [package support](/docs/dbt/supported-features#package-support) for more information.
+Наиболее распространенные пакеты, поддерживаемые dbt Labs (например, `dbt_utils` и `dbt_project_evaluator`), уже совместимы с <Constant name="fusion" />, как и многие сторонние пакеты и пакеты сообщества. Найти пакеты с подтвержденной совместимостью с <Constant name="fusion" /> можно в [каталоге пакетов dbt](https://hub.getdbt.com): проверьте, что настройка `require-dbt-version` включает `2.0.0` или более позднюю версию. Дополнительные сведения см. в разделе [Поддержка пакетов](/docs/dbt/supported-features#package-support).
 
-- [ ] Make sure that all of your packages are upgraded to the most recent version, many of which contain enhancements to support <Constant name="fusion" />. 
-- [ ] Check package repositories to make sure they're compatible with <Constant name="fusion" />. If a package you use is not yet compatible, we recommend opening an issue with the maintainer, making the contribution yourself, or removing the package temporarily before you upgrade.
+- [ ] Убедитесь, что все ваши пакеты обновлены до последней версии: многие из них содержат улучшения для поддержки <Constant name="fusion" />. 
+- [ ] Проверьте репозитории пакетов, чтобы убедиться в их совместимости с <Constant name="fusion" />. Если используемый вами пакет пока несовместим, рекомендуем создать issue для его сопровождающего, самостоятельно внести необходимые изменения или временно удалить пакет перед переходом.
 
-### Validate user-defined functions
+### Проверьте пользовательские функции
 
-Check that <Constant name="fusion" /> supports all user-defined functions (UDFs) in your project.
+Убедитесь, что <Constant name="fusion" /> поддерживает все пользовательские функции (UDF) в вашем проекте.
 
-<Constant name="fusion" /> supports nearly all built-in data platform functions out of the box. However, data platforms continuously add new functions that <Constant name="fusion" /> may not yet support.
+<Constant name="fusion" /> поддерживает почти все встроенные функции платформ данных без дополнительной настройки. Однако платформы данных постоянно добавляют новые функции, которые <Constant name="fusion" /> может пока не поддерживать.
 
-If you see the error `dbt0209: No function <function name>`, you can resolve it depending on whether the function is a UDF or a built-in function:
+Если вы видите ошибку `dbt0209: No function <function name>`, способ ее устранения зависит от того, является ли функция пользовательской или встроенной:
 
-- [ ] **For custom UDFs:** Recreate it as a [native dbt UDF](/docs/build/udfs#defining-udfs-in-dbt) to get the full <Constant name="fusion" /> experience. With `static_analysis: baseline` (the default), most UDFs will work out of the box.
-- [ ] **For Warehouse-native functions:** Submit a [GitHub issue](https://github.com/dbt-labs/dbt). <Constant name="fusion" />'s `baseline` mode handles most cases, but will throw warnings and not errors. You can set `static_analysis: off` for specific models if needed.
+- [ ] **Для пользовательских UDF:** Создайте функцию заново как [нативную UDF dbt](/docs/build/udfs#defining-udfs-in-dbt), чтобы воспользоваться всеми возможностями <Constant name="fusion" />. При `static_analysis: baseline` (значение по умолчанию) большинство UDF будут работать без дополнительной настройки.
+- [ ] **Для встроенных функций хранилища данных:** Создайте [issue на GitHub](https://github.com/dbt-labs/dbt). Режим `baseline` в <Constant name="fusion" /> обрабатывает большинство случаев, но выдает предупреждения, а не ошибки. При необходимости можно задать `static_analysis: off` для отдельных моделей.
 
-For more information about using `strict` in development and `baseline` in deployment, refer to [Optimize static analysis for development and deployment](/best-practices/optimize-static-analysis-for-development-and-deployment).
+Дополнительные сведения об использовании `strict` при разработке и `baseline` при развертывании см. в разделе [Оптимизация статического анализа для разработки и развертывания](/best-practices/optimize-static-analysis-for-development-and-deployment).
 
-### Check for known dbt v2 limitations
+### Проверьте известные ограничения dbt v2
 
-Your project may implement features that <Constant name="fusion" /> currently [limits](/docs/dbt/supported-features#limitations) or doesn't support. 
+Ваш проект может использовать возможности, которые <Constant name="fusion" /> сейчас [ограничивает](/docs/dbt/supported-features#limitations) или не поддерживает. 
 
-- [ ] Remove unnecessary features from your project to make it <Constant name="fusion" /> compatible. 
-- [ ] Monitor progress for critical features, knowing we are working to bring them to <Constant name="fusion" />. You can monitor their progress using the issues linked in the [limitations table](/docs/dbt/supported-features#limitations). 
+- [ ] Удалите из проекта ненужные возможности, чтобы обеспечить его совместимость с <Constant name="fusion" />. 
+- [ ] Следите за ходом реализации критически важных возможностей: мы работаем над их добавлением в <Constant name="fusion" />. Отслеживать прогресс можно с помощью issues, ссылки на которые приведены в [таблице ограничений](/docs/dbt/supported-features#limitations). 
 
-### Review jobs configured in the dbt platform
+### Проверьте задания, настроенные в платформе dbt
 
-We determine <Constant name="fusion" /> eligibility using data from your job runs. 
+Мы определяем готовность к переходу на <Constant name="fusion" /> на основе данных о запусках ваших заданий. 
 
-- [ ] Ensure you have at least one job running in each of your projects in the <Constant name="dbt_platform" />.
-  - [ ] Ensure each job has run within the last 7 days. Jobs that haven't run recently are considered inactive and are ineligible for <Constant name="fusion" />. If you see a "no active jobs" ineligibility reason in the v2 readiness UI, run the job manually or adjust its schedule.
-- [ ] Ensure all jobs are running on the [**v1 Latest** release track](/docs/dbt-versions/dbt-release-tracks#which-release-tracks-are-available) for the smoothest upgrade experience.
-- [ ] Resolve any job failures &mdash; all jobs must run successfully for eligibility checks to work.
-- [ ] Delete any jobs that are no longer in use to ensure accurate eligibility reporting. 
-- [ ] Make sure you've promoted the changes for deprecation resolution and package upgrades to your git branches that map to your deployment environments.
-- [ ] For eligible jobs, use **Debug on <Constant name="fusion" />** to debug in <Constant name="studio_ide" /> or run once on <Constant name="fusion" />. Refer to [Update your jobs](/guides/prepare-v2-upgrade?step=7).
+- [ ] Убедитесь, что в каждом из ваших проектов в <Constant name="dbt_platform" /> выполняется хотя бы одно задание.
+  - [ ] Убедитесь, что каждое задание запускалось в течение последних 7 дней. Задания, которые не запускались недавно, считаются неактивными и не допускаются к переходу на <Constant name="fusion" />. Если в интерфейсе готовности к v2 вы видите причину недоступности перехода «no active jobs», запустите задание вручную или измените его расписание.
+- [ ] Убедитесь, что все задания выполняются на [канале выпусков **v1 Latest**](/docs/dbt-versions/dbt-release-tracks#which-release-tracks-are-available), чтобы переход прошел максимально гладко.
+- [ ] Устраните все ошибки выполнения заданий &mdash; для корректной проверки готовности к переходу все задания должны выполняться успешно.
+- [ ] Удалите все задания, которые больше не используются, чтобы обеспечить точность отчетов о готовности к переходу. 
+- [ ] Убедитесь, что изменения для устранения предупреждений об устаревших возможностях и обновления пакетов перенесены в ветки git, соответствующие вашим средам развертывания.
+- [ ] Для заданий, готовых к переходу, используйте **Debug on <Constant name="fusion" />**, чтобы выполнить отладку в <Constant name="studio_ide" /> или однократный запуск на <Constant name="fusion" />. См. раздел [Обновление заданий](/guides/prepare-v2-upgrade?step=7).

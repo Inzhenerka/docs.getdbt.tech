@@ -1,10 +1,10 @@
 ---
-title: Does dbt State support incremental models?
-description: "Learn how dbt State works with incremental models."
-sidebar_label: 'Does this support incremental models?'
+title: Поддерживает ли dbt State инкрементальные модели?
+description: "Узнайте, как dbt State работает с инкрементальными моделями."
+sidebar_label: 'Поддерживаются ли инкрементальные модели?'
 id: incremental-models
 ---
 
-dbt State works with incremental models. When you make a change to an incremental model and run it in development, dbt State automatically clones the model from production if it exists, then runs the new model logic on top of the clone.
+dbt State работает с инкрементальными моделями. Когда вы изменяете инкрементальную модель и запускаете её в среде разработки, dbt State автоматически клонирует модель из производственной среды, если она там существует, а затем выполняет новую логику модели на основе этого клона.
 
-If you want to revert to the original dbt behavior and fully refresh the incremental model, pass the [`--full-refresh` flag](/reference/commands/run#refresh-incremental-models).
+Если вы хотите вернуться к стандартному поведению dbt и полностью обновить инкрементальную модель, передайте [флаг `--full-refresh`](/reference/commands/run#refresh-incremental-models).

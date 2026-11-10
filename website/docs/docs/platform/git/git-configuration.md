@@ -18,13 +18,13 @@ availability:
 <div className="grid--3-col">
 
 <Card
-    title="Managed repository"
+    title="Управляемый репозиторий"
 body="Узнайте, как быстро настроить проект с управляемым репозиторием."
     link="/docs/platform/git/managed-repository"
     icon="dbt-bit"/>
 
 <Card
-    title="Git clone"
+    title="Клонирование Git-репозитория"
 body="Узнайте, как подключиться к репозиторию Git с помощью URL-адреса Git и ключей развертывания."
     link="/docs/platform/git/import-a-project-by-git-url"
     icon="dbt-bit"/>
@@ -48,7 +48,7 @@ body="Узнайте, как подключиться к репозиторию 
     icon="dbt-bit"/>
 
 <Card
-    title="Availability of CI features by Git provider"
+    title="Доступность функций CI по провайдерам Git"
     body="Узнайте, какие провайдеры Git имеют нативную поддержку рабочих процессов непрерывной интеграции"
     link="/docs/deploy/continuous-integration#availability-of-features-by-git-provider"
     icon="dbt-bit"/>

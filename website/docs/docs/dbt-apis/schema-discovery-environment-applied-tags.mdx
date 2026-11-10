@@ -1,22 +1,23 @@
 ---
 title: "Схема объекта Tags"
-sidebar_label: "Tags"
+sidebar_label: "Теги"
 id: "discovery-schema-environment-applied-tags"
 availability:
   surface: platform
   access: paid_plan
   minPlan: starter
 ---
-
+ 
 import { NodeArgsTable, SchemaTable } from "./schema";
 
-[Tags](/reference/resource-configs/tags) предоставляют механизм для категоризации и группировки ресурсов внутри проекта dbt, что позволяет избирательно выполнять и управлять этими ресурсами. Вы можете запрашивать теги через Discovery API.
+[Теги](/reference/resource-configs/tags) позволяют классифицировать и группировать ресурсы в проекте dbt, обеспечивая возможность выборочного выполнения этих ресурсов и управления ими. Вы можете запрашивать теги через Discovery API.
 
-В разделе [Example query](#example-query) показаны несколько полей, которые можно запрашивать с помощью объекта `tags`. Обратитесь к разделу [Fields](#fields), чтобы посмотреть полную схему, содержащую все возможные поля, доступные для запроса.
+В разделе [Пример запроса](#example-query) показаны некоторые поля, которые можно запрашивать у объекта `tags`. Полная схема со всеми доступными для запроса полями приведена в разделе [Поля](#fields).
+ 
 
-### Example query {#example-query}
+### Пример запроса {#example-query}
 
-Вы можете использовать `environmentId`, чтобы получить имена всех тегов в вашем окружении:
+Вы можете использовать `environmentId`, чтобы получить имена всех тегов в вашей среде:
 
 ```graphql
 query {
@@ -30,8 +31,8 @@ query {
 }
 ```
 
-### Fields {#fields}
+### Поля {#fields}
 
-При запросе `tags` вы можете использовать следующие поля:
+При запросе `tags` можно использовать следующие поля:
 
 <SchemaTable nodeName="Tag" />

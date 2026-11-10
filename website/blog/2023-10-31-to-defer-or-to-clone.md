@@ -119,4 +119,4 @@ is_featured: true
 
 Спасибо за чтение, и я с нетерпением жду, что вы создадите с помощью `dbt clone`.
 
-*Спасибо [Джейсон Ганц](https://docs.getdbt.tech/author/jason_ganz) и [Гвен Виндфлауэр](https://www.linkedin.com/in/gwenwindflower/) за рецензирование черновиков этой статьи*
+*Спасибо [Джейсон Ганц](/blog/authors/jason-ganz) и [Гвен Виндфлауэр](https://www.linkedin.com/in/gwenwindflower/) за рецензирование черновиков этой статьи*

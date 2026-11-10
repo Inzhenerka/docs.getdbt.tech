@@ -15,11 +15,11 @@ import EnvFileConsiderations from '/snippets/_env-file-considerations.md';
 
 <VersionBlock firstVersion="1.12">
 
-### Using the `.env` file
+### Использование файла `.env` {#using-the-env-file}
 
-When running dbt locally (the [dbt CLI](/docs/local/install-dbt), dbt VS Code extension, and dbt v1.12), dbt automatically loads environment variables from a `.env` file in your current working directory (where you run the dbt command). Shell environment variables take precedence over values in `.env` and will not be overridden by the file.
+При локальном запуске dbt через [CLI](/docs/local/install-dbt), расширение для VS Code или в версии dbt v1.12 переменные автоматически загружаются из файла `.env` в текущем рабочем каталоге. Переменные окружения оболочки имеют приоритет над значениями в файле.
 
-Create a `.env` file (typically at the root of your dbt project) and define variables using `KEY=value` syntax. For example:
+Создайте файл `.env`, обычно в корне проекта dbt, и задайте переменные в формате `KEY=value`. Например:
 
 <File name='.env'>
 
@@ -31,7 +31,7 @@ DBT_SCHEMA=dbt_schema
 
 </File>
 
-Reference them in your `profiles.yml` using `env_var()`:
+Сошлитесь на них в `profiles.yml` через `env_var()`:
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -55,19 +55,19 @@ my_profile:
 
 </VersionBlock>
 
-### Converting env_vars
+### Преобразование переменных окружения {#converting-env_vars}
 
-Environment variables are always strings. When using them for configurations that expect integers or booleans, you must explicitly convert the value to the correct type.
+Значения переменных окружения всегда являются строками. Для параметров, которые ожидают целые числа или логические значения, тип нужно преобразовать явно.
 
-Use a Jinja filter to convert the string to the correct type:
+Для преобразования используйте фильтр Jinja:
 
-- **Integers** &mdash; Convert the string to a number using the `int` or [`as_number`](/reference/dbt-jinja-functions/as_number) filter to avoid errors like `'1' is not of type 'integer'`. For example, `"{{ env_var('DBT_THREADS') | int }}"` or `"{{ env_var('DB_PORT') | as_number }}"`.
+- **Целые числа** &mdash; преобразуйте строку через `int` или [`as_number`](/reference/dbt-jinja-functions/as_number), чтобы избежать ошибок вида `'1' is not of type 'integer'`. Например, `"{{ env_var('DBT_THREADS') | int }}"` или `"{{ env_var('DB_PORT') | as_number }}"`.
 
-- **Booleans** &mdash; Convert the string to a boolean explicitly using the [`as_bool`](/reference/dbt-jinja-functions/as_bool) filter. For example, `"{{ env_var('DBT_PERSIST_DOCS_RELATION', False) | as_bool }}"`.
+- **Логические значения** &mdash; явно преобразуйте строку фильтром [`as_bool`](/reference/dbt-jinja-functions/as_bool). Например, `"{{ env_var('DBT_PERSIST_DOCS_RELATION', False) | as_bool }}"`.
 
-For boolean defaults, use capitalized `True` or `False`. Using lowercase `true` or `false` will be treated as a string and can result in unexpected results.
+В качестве логических значений по умолчанию используйте `True` или `False` с заглавной буквы. Варианты `true` и `false` будут обработаны как строки и могут дать неожиданный результат.
 
-For example, to disable [`persist_docs`](/reference/resource-configs/persist_docs) using environment variables:
+Например, чтобы отключить [`persist_docs`](/reference/resource-configs/persist_docs) через переменные окружения:
 
 <File name='dbt_project.yml'>
 

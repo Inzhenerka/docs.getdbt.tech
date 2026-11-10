@@ -1,5 +1,5 @@
 ---
-description: "Attach arbitrary metadata as key-value pairs to dbt resources such as models, sources, seeds, and snapshots."
+description: "Добавляйте метаданные в виде пар «ключ — значение» к моделям, источникам, seeds и снимкам dbt."
 resource_types: all
 datatype: "{<словарь>}"
 default_value: {}
@@ -351,7 +351,7 @@ semantic_models:
 
 <VersionBlock firstVersion="1.12">
 
-Configure `meta` in the [semantic models](/docs/build/semantic-models) embedded within your model YAML file or under the `semantic-models` config block in the `dbt_project.yml` file. 
+Задайте `meta` для [семантических моделей](/docs/build/semantic-models) в YAML-файле модели или в блоке конфигурации `semantic-models` в `dbt_project.yml`.
 
 <File name='dbt_project.yml'>
 
@@ -410,7 +410,7 @@ semantic_models:
 
 <VersionBlock firstVersion="1.12">
 
-[Dimensions](/docs/build/dimensions), [entities](/docs/build/entities), and metrics can also have their own `meta` configurations.
+У [измерений](/docs/build/dimensions), [сущностей](/docs/build/entities) и метрик могут быть собственные настройки `meta`.
 
 <File name='models/file_name.yml'>
 
@@ -572,8 +572,8 @@ functions:
 
 В зависимости от ресурса, который вы настраиваете, `meta` может быть доступно в свойстве `config` и/или в качестве ключа верхнего уровня. (Для обратной совместимости `meta` часто (но не всегда) поддерживается в качестве ключа верхнего уровня, хотя без возможностей наследования конфигурации.)
 
-:::note Effect on state comparison
-Changes to `meta`, including at the column level, don't trigger [`state:modified`](/reference/node-selection/methods#state). dbt treats `meta` (and `tags`) as metadata only, since it doesn't affect how a resource is materialized. Refer to [caveats to state comparison](/reference/node-selection/state-comparison-caveats#tags-and-meta) for more detail.
+:::note Влияние на сравнение состояния
+Изменения `meta`, в том числе на уровне столбца, не приводят к выбору ресурса через [`state:modified`](/reference/node-selection/methods#state). Для dbt параметры `meta` и `tags` — метаданные: они не влияют на материализацию. Подробнее см. [Особенности сравнения состояния](/reference/node-selection/state-comparison-caveats#tags-and-meta).
 :::
 
 
@@ -715,7 +715,7 @@ semantic-models:
 
 <VersionBlock firstVersion="1.12">
 
-The following example shows how to assign a `meta` value to a [semantic model](/docs/build/semantic-models) in the model YAML file and  `dbt_project.yml` file:
+Ниже показано, как задать `meta` для [семантической модели](/docs/build/semantic-models) в YAML-файле модели и в `dbt_project.yml`:
 
 <Tabs>
 <TabItem value="semantic_model" label="Semantic model">

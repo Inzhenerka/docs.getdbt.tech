@@ -2,10 +2,10 @@
 title: "dbt state explain"
 sidebar_label: "state explain"
 id: "state-explain"
-description: "Use dbt state explain to see why dbt State made each decision after a run."
+description: "Используйте dbt state explain, чтобы узнать, почему dbt State принял каждое решение после запуска."
 ---
 
-<VersionBlock firstVersion="2.0">`dbt state explain`</VersionBlock><VersionBlock lastVersion="1.99">`dbt-state explain`</VersionBlock> is a CLI command available when you enable [dbt State](/docs/deploy/dbt-state-about). After a job finishes, run this command to see why dbt State made each decision for every node and whether it executed, skipped, or cloned the node. Use it to audit State behavior, debug unexpected skips, or confirm that freshness and query checks work as expected.
+<VersionBlock firstVersion="2.0">`dbt state explain`</VersionBlock><VersionBlock lastVersion="1.99">`dbt-state explain`</VersionBlock> — это команда CLI, доступная при включении [dbt State](/docs/deploy/dbt-state-about). После завершения задания выполните эту команду, чтобы узнать, почему dbt State принял то или иное решение для каждого узла и был ли узел выполнен, пропущен или клонирован. Используйте её для проверки поведения State, отладки неожиданных пропусков или подтверждения того, что проверки актуальности данных и запросов работают должным образом.
 
 <VersionBlock firstVersion="2.0">
 
@@ -13,7 +13,7 @@ description: "Use dbt state explain to see why dbt State made each decision afte
 dbt state explain
 ```
 
-The output shows all nodes from the last run, with a summary of the State decision for each:
+В выводе отображаются все узлы из последнего запуска с кратким описанием решения State для каждого из них:
 
 ```shell
 SKIP_EXECUTION model.jaffle_shop.customers - model was a no-op because its query is up to date and its upstream data is within freshness tolerance
@@ -30,7 +30,7 @@ UNKNOWN unit_test.jaffle_shop.orders.test_order_items_compute_to_bools_correctly
 dbt-state explain
 ```
 
-The output shows all nodes from the last run with a summary of the State decision for each:
+В выводе отображаются все узлы из последнего запуска с кратким описанием решения State для каждого из них:
 
 ```shell
 Last run: 2 minutes ago
@@ -48,11 +48,11 @@ not_null_stg_locations_location_id
 
 </VersionBlock>
 
-If you use the <Constant name="dbt_platform" />, the same information is available without running a command &mdash; go to the [**Explain** tab](/docs/deploy/dbt-state-interface#explain-tab) on the job run details page to see the full decision breakdown for each node.
+Если вы используете <Constant name="dbt_platform" />, та же информация доступна без выполнения команды &mdash; перейдите на [**вкладку Explain**](/docs/deploy/dbt-state-interface#explain-tab) на странице сведений о запуске задания, чтобы просмотреть подробное обоснование решения для каждого узла.
 
-## Specifying a log file
+## Указание файла журнала
 
-By default, <VersionBlock firstVersion="2.0">`dbt state explain`</VersionBlock><VersionBlock lastVersion="1.99">`dbt-state explain`</VersionBlock> reads from the most recent execution. To analyze a previous run, you can use `--log-file` (or `-l`) to specify a state file from the `logs/state/` directory:
+По умолчанию <VersionBlock firstVersion="2.0">`dbt state explain`</VersionBlock><VersionBlock lastVersion="1.99">`dbt-state explain`</VersionBlock> считывает данные последнего выполнения. Чтобы проанализировать предыдущий запуск, используйте `--log-file` (или `-l`) и укажите файл состояния из каталога `logs/state/`:
 
 <VersionBlock firstVersion="2.0">
 
@@ -70,9 +70,9 @@ dbt-state explain --log-file 'logs/state/responses_2026_08_25_11_00_15_667.jsonl
 
 </VersionBlock>
 
-## Using verbose mode
+## Использование подробного режима
 
-Use the `--verbose` flag to see the full step-by-step analysis for each node and add a run configuration summary. Use `-s` to filter the output to a specific node.
+Используйте флаг `--verbose`, чтобы увидеть полный пошаговый анализ для каждого узла и добавить сводку конфигурации запуска. Используйте `-s`, чтобы ограничить вывод определённым узлом.
 
 <VersionBlock firstVersion="2.0">
 
@@ -80,7 +80,7 @@ Use the `--verbose` flag to see the full step-by-step analysis for each node and
 dbt state explain --verbose -s my_node_name
 ```
 
-In dbt v2, `--verbose` adds a run configuration summary at the top and shows the full step-by-step analysis for each node.
+В dbt v2 флаг `--verbose` добавляет сводку конфигурации запуска в начало вывода и отображает полный пошаговый анализ для каждого узла.
 
 ```shell
 Run configuration:
@@ -115,7 +115,7 @@ SKIP_EXECUTION model.jaffle_shop.customers - model was a no-op because its query
 dbt-state explain --verbose -s my_node_name
 ```
 
-The verbose output shows the full step-by-step analysis and adds a run configuration summary:
+Подробный вывод отображает полный пошаговый анализ и добавляет сводку конфигурации запуска:
 
 ```shell
 Last run: 2026-08-19 20:19:00 PST (10 minutes ago)
@@ -153,14 +153,14 @@ Last run: 2026-08-19 20:19:00 PST (10 minutes ago)
 
 </VersionBlock>
 
-The `--verbose` flag produces a decision breakdown that may include the following analyses, depending on the node type:
+Флаг `--verbose` выводит подробное обоснование решения, которое в зависимости от типа узла может включать следующие виды анализа:
 
-- **Table analysis**: whether the target table already exists in the schema
-- **Query analysis**: whether the model query or its upstream queries have changed
-- **Data freshness analysis**: whether upstream data is fresh or within the configured [`lag_tolerance`](/reference/resource-configs/lag-tolerance)
+- **Анализ таблицы**: существует ли целевая таблица в схеме
+- **Анализ запросов**: изменился ли запрос модели или запросы вышестоящих моделей
+- **Анализ актуальности данных**: актуальны ли данные вышестоящих узлов или находится ли их отставание в пределах настроенного значения [`lag_tolerance`](/reference/resource-configs/lag-tolerance)
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Monitor dbt State activity](/docs/deploy/dbt-state-interface)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Мониторинг работы dbt State](/docs/deploy/dbt-state-interface)
+- [Настройки dbt State](/reference/resource-configs/dbt-state-configs)

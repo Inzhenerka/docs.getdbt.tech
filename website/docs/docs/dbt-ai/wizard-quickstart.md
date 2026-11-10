@@ -1,8 +1,8 @@
 ---
-title: "Use dbt Wizard locally"
+title: "Использование dbt Wizard локально"
 id: "wizard-quickstart"
-description: "Install the dbt Wizard local CLI, complete first-run onboarding, and send your first prompt from the terminal."
-sidebar_label: "Use dbt Wizard locally"
+description: "Установите локальный CLI dbt Wizard, выполните первоначальную настройку и отправьте первый запрос из терминала."
+sidebar_label: "Использование dbt Wizard локально"
 tags: [AI, CLI, dbt Wizard]
 availability: local_all
 unlisted: true
@@ -14,10 +14,10 @@ import WizardFeedbackCallout from '/snippets/_wizard-feedback-callout.md';
 import WizardCliDbtCliSupport from '/snippets/_wizard-cli-dbt-cli-support.md';
 import WizardTrialBilling from '/snippets/_wizard-trial-billing.md';
 
-# Use <Constant name="wizard" /> locally <Lifecycle status="beta"/>
+# Использование <Constant name="wizard" /> локально <Lifecycle status="beta"/>
 
 <IntroText>
-Install <Constant name="wizard" /> locally and start an agentic dbt development session from your terminal. 
+Установите <Constant name="wizard" /> локально и начните сеанс разработки dbt с ИИ-агентом из терминала. 
 
 </IntroText>
 
@@ -25,66 +25,66 @@ Install <Constant name="wizard" /> locally and start an agentic dbt development 
 
 <WizardTrialBilling />
 
-## Prerequisites
+## Предварительные требования
 
-- Access to a [supported AI provider](#supported-ai-providers). Use a dbt managed provider or configure [BYOK](/docs/dbt-ai/wizard-byok) with your own provider credentials.
-- A dbt project with a built `target/` directory (run `dbt parse`, `dbt compile`, or `dbt build`)
+- Доступ к [поддерживаемому поставщику ИИ](#supported-ai-providers). Используйте поставщика, управляемого dbt, или настройте [BYOK](/docs/dbt-ai/wizard-byok) с собственными учётными данными поставщика.
+- Проект dbt со сформированным каталогом `target/` (выполните `dbt parse`, `dbt compile` или `dbt build`)
 
-<Constant name="wizard" /> is data warehouse agnostic and works on both v1 and v2.
+<Constant name="wizard" /> не зависит от используемого хранилища данных и работает как с v1, так и с v2.
 
-## Supported AI providers
+## Поддерживаемые поставщики ИИ {#supported-ai-providers}
 
 <WizardSupportedProviders defaultSurface="local" />
 
 <VersionBlock lastVersion="1.99">
 
-:::tip Upgrade to <Constant name="fusion_engine" />
-On <Constant name="fusion_engine"/> (version 2.0 and later), start <Constant name="wizard"/> with `wizard` and use `wizard COMMAND_NAME` for CLI commands.
+:::tip Перейдите на <Constant name="fusion_engine" />
+При использовании <Constant name="fusion_engine"/> (версии 2.0 и выше) запускайте <Constant name="wizard"/> командой `wizard`, а для команд CLI используйте `wizard COMMAND_NAME`.
 :::
 
 </VersionBlock>
 
 
-## Install and set up dbt Wizard
+## Установка и настройка dbt Wizard
 
 <WizardCliOnboarding />
 
-:::tip Best practices for using dbt Wizard
-Once you're set up, refer to [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro) for recommended workflows on real project tasks.
+:::tip Рекомендации по использованию dbt Wizard
+После завершения настройки ознакомьтесь с руководством [Как использовать dbt Wizard в проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro), в котором описаны рекомендуемые рабочие процессы для реальных задач проекта.
 :::
 
-## Useful terminal commands
+## Полезные команды терминала
 
-Use the following commands to get started:
+Для начала работы используйте следующие команды:
 
 <SimpleTable>
 
-| Command | Description | Example |
+| Команда | Описание | Пример |
 |---------|-------------|---------|
-| `wizard "[prompt]"` | Start an interactive session seeded with a prompt. Once you activate the session, you don't need to pass your prompt in quotes. | `wizard "summarize what this project does"` |
-| `wizard exec "[prompt]"` | Run a single prompt non-interactively and exit | `wizard exec "list all models with no tests"` |
-| `wizard review --uncommitted` | Non-interactive code review of uncommitted changes | `wizard review --uncommitted` |
-| `wizard review --base BRANCH` | Review diff against a base branch | `wizard review --base main` |
-| `wizard resume` | Resume a previous session | `wizard resume --last` |
-| `wizard apply` | Apply the latest Wizard diff to your working directory | `wizard apply TASK_ID` |
-| `wizard login` / `logout` | Authenticate with your dbt account | `wizard login` |
-| `wizard mcp` | Manage MCP server connections | `wizard mcp add dbt` |
-| `wizard update` | Update Wizard to the latest version | `wizard update` |
+| `wizard "[prompt]"` | Запустить интерактивный сеанс с начальным запросом. После активации сеанса запросы можно вводить без кавычек. | `wizard "summarize what this project does"` |
+| `wizard exec "[prompt]"` | Выполнить один запрос в неинтерактивном режиме и завершить работу | `wizard exec "list all models with no tests"` |
+| `wizard review --uncommitted` | Выполнить проверку кода для незакоммиченных изменений в неинтерактивном режиме | `wizard review --uncommitted` |
+| `wizard review --base BRANCH` | Проверить изменения относительно базовой ветки | `wizard review --base main` |
+| `wizard resume` | Возобновить предыдущий сеанс | `wizard resume --last` |
+| `wizard apply` | Применить последние изменения Wizard к рабочему каталогу | `wizard apply TASK_ID` |
+| `wizard login` / `logout` | Пройти аутентификацию с помощью учётной записи dbt | `wizard login` |
+| `wizard mcp` | Управлять подключениями к серверам MCP | `wizard mcp add dbt` |
+| `wizard update` | Обновить Wizard до последней версии | `wizard update` |
 
 </SimpleTable>
 
-:::tip Need to re-run setup?
-If you want to re-run onboarding — re-authenticate, reset project config, or retrigger the trusted folder prompt &mdash; refer to [Re-trigger onboarding flows](/docs/dbt-ai/wizard-config#re-trigger-onboarding-flows).
+:::tip Нужно повторить первоначальную настройку?
+Если вы хотите повторить первоначальную настройку — заново пройти аутентификацию, сбросить конфигурацию проекта или повторно вызвать запрос о доверии к папке &mdash; обратитесь к разделу [Повторный запуск процедур первоначальной настройки](/docs/dbt-ai/wizard-config#re-trigger-onboarding-flows).
 :::
 
-## Next steps
+## Дальнейшие шаги
 
-- [Use cases and examples](/docs/dbt-ai/wizard-use-cases) for realistic analytics engineering scenarios
-- [Install and update reference](/docs/dbt-ai/wizard-cli) for full install, update, and uninstall details
-- [Configure BYOK](/docs/dbt-ai/wizard-byok) for managing your API key and choosing an AI model
-- [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro) for recommended workflows
-- [Use skills locally](/docs/dbt-ai/wizard-skills) for giving Wizard reusable instructions for your project
-- [Use MCP servers](/docs/dbt-ai/wizard-mcp) to connect <Constant name="wizard" /> CLI to more tools and context
-- [Migrate from Claude Code](/docs/dbt-ai/wizard-migrate) for bringing existing Claude Code project context into <Constant name="wizard" />
+- [Варианты использования и примеры](/docs/dbt-ai/wizard-use-cases) — практические сценарии аналитической инженерии
+- [Справочник по установке и обновлению](/docs/dbt-ai/wizard-cli) — подробные сведения об установке, обновлении и удалении
+- [Настройка BYOK](/docs/dbt-ai/wizard-byok) — управление ключом API и выбор модели ИИ
+- [Как использовать dbt Wizard в проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro) — рекомендуемые рабочие процессы
+- [Использование навыков локально](/docs/dbt-ai/wizard-skills) — предоставление Wizard многократно используемых инструкций для вашего проекта
+- [Использование серверов MCP](/docs/dbt-ai/wizard-mcp) — подключение CLI <Constant name="wizard" /> к дополнительным инструментам и источникам контекста
+- [Переход с Claude Code](/docs/dbt-ai/wizard-migrate) — перенос существующего контекста проекта из Claude Code в <Constant name="wizard" />
 
 <WizardFeedbackCallout />

@@ -1,24 +1,24 @@
 ---
-title: "Batch tests"
+title: "Пакетное выполнение тестов"
 id: "batch-tests"
-description: "Use the --batch-tests flag to combine compatible data tests into a single query per test type, improving performance in large projects."
-sidebar_label: "Batch tests"
+description: "Используйте флаг --batch-tests, чтобы объединять совместимые тесты данных в один запрос для каждого типа тестов и повышать производительность в крупных проектах."
+sidebar_label: "Пакетное выполнение тестов"
 availability:
   engine: v2
 ---
 
-The `--batch-tests` flag combines compatible data tests that target the same model into a single query per test type, rather than running one query per test. This reduces the number of queries dbt runs for tests, which can improve performance in projects with many data tests.
+Флаг `--batch-tests` объединяет совместимые тесты данных, относящиеся к одной модели, в один запрос для каждого типа тестов вместо выполнения отдельного запроса для каждого теста. Это сокращает количество запросов, которые dbt выполняет при тестировании, что может повысить производительность в проектах с большим количеством тестов данных.
 
-## Batching tests
+## Объединение тестов в пакеты
 
-Batching applies to `dbt build` and `dbt test`. dbt batches a group of tests when all of these are true:
+Пакетное выполнение применяется к `dbt build` и `dbt test`. dbt объединяет группу тестов в пакет, если выполняются все следующие условия:
 
-- The tests are `unique` or `not_null`
-- They're attached to the same model
-- They use their default configuration
-- At least two of them are the same type
+- Тесты имеют тип `unique` или `not_null`
+- Они относятся к одной модели
+- Они используют конфигурацию по умолчанию
+- Как минимум два из них имеют одинаковый тип
 
-dbt excludes tests from batching when any of the following is set:
+dbt исключает тесты из пакетного выполнения, если задан любой из следующих параметров:
 - `severity`
 - `error_if`
 - `warn_if`
@@ -28,17 +28,17 @@ dbt excludes tests from batching when any of the following is set:
 - `store_failures`
 - `store_failures_as`
 
-Excluded tests run on their own, as they do without batching.
+Исключённые тесты выполняются отдельно, как и без пакетного выполнения.
 
-## Setting the flag
+## Настройка флага
 
-dbt resolves `batch_tests` from three places, in order of precedence:
+dbt определяет значение `batch_tests` по трём источникам в порядке приоритета:
 
-1. The `--batch-tests` command-line flag
-2. The `DBT_ENGINE_BATCH_TESTS` environment variable
-3. The `flags` block in your root project's `dbt_project.yml`
+1. Флаг командной строки `--batch-tests`
+2. Переменная окружения `DBT_ENGINE_BATCH_TESTS`
+3. Блок `flags` в файле `dbt_project.yml` корневого проекта
 
-For example, on the command line:
+Например, в командной строке:
 
 <File name='CLI'>
 
@@ -48,7 +48,7 @@ dbt build --batch-tests
 
 </File>
 
-With an environment variable:
+С помощью переменной окружения:
 
 <File name='Env var'>
 
@@ -59,7 +59,7 @@ dbt build
 
 </File>
 
-In your `dbt_project.yml`:
+В файле `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 

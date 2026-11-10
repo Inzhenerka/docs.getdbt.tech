@@ -2,7 +2,7 @@
 title: "О команде dbt source"
 sidebar_label: "source"
 id: "source"
-description: "Use the dbt source command to work with source data in your dbt project."
+description: "Используйте команду dbt source для работы с исходными данными в проекте dbt."
 ---
 
 <VersionBlock firstVersion="2.0">
@@ -21,7 +21,7 @@ description: "Use the dbt source command to work with source data in your dbt pr
 
 ### dbt source freshness {#dbt-source-freshness}
 
-### Актуальность
+### Актуальность {#freshness}
 
 <VersionBlock firstVersion="2.0">
 
@@ -89,7 +89,7 @@ sources:
 
 Некоторые из наиболее часто используемых команд:
 
-| **Command**                                                                 | **Description**                  | 
+| **Команда** | **Описание** |
 | ----------------------------------------------------------------------------| ---------------------------------|
 |[`dbt source freshness`](/reference/commands/source#dbt-source-freshness)    |Проверяет актуальность всех источников.|
 |[`dbt source freshness --output target/source_freshness.json`](/reference/commands/source#configuring-source-freshness-output)|Выводит информацию об актуальности по другому пути.|

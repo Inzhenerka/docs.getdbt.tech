@@ -1,59 +1,59 @@
 ---
-title: "Incremental patterns for near real-time data"
+title: "Инкрементальные подходы для обработки данных почти в реальном времени"
 id: "2-incremental-patterns"
-description: Learn how to implement incremental models with MERGE, CDC, and microbatch strategies for near real-time data processing
-hoverSnippet: Learn incremental patterns for near real-time data with dbt
+description: Узнайте, как реализовать инкрементальные модели с использованием стратегий MERGE, CDC и микропакетной обработки для обработки данных почти в реальном времени
+hoverSnippet: Изучите инкрементальные подходы для обработки данных почти в реальном времени с dbt
 ---
 
-This section covers three core incremental patterns for achieving near real-time data freshness:
+В этом разделе рассматриваются три основных инкрементальных подхода, позволяющих поддерживать актуальность данных почти в реальном времени:
 
-1. [Incremental MERGE from append-only tables](#incremental-merge-from-append-only-tables)
-2. [CDC with Snowflake Streams](#cdc-with-snowflake-streams)
-3. [Microbatch for large time-series tables](#microbatch-for-large-time-series-tables)
+1. [Инкрементальный MERGE из таблиц только для добавления](#incremental-merge-from-append-only-tables)
+2. [CDC с использованием Snowflake Streams](#cdc-with-snowflake-streams)
+3. [Микропакетная обработка больших таблиц временных рядов](#microbatch-for-large-time-series-tables)
 
 
-:::info Snowflake-specific pattern
-Some patterns on this guide uses Snowflake-specific features. Other warehouses have similar features with different implementations. Refer to the [additional resources](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#resources-by-warehouse) section for adapter-specific documentation.  
+:::info Подходы, специфичные для Snowflake
+Некоторые подходы в этом руководстве используют возможности, специфичные для Snowflake. В других хранилищах есть аналогичные возможности с другими реализациями. Документацию для конкретных адаптеров см. в разделе [дополнительных ресурсов](/best-practices/how-we-handle-real-time-data/3-warehouse-native-features#resources-by-warehouse).  
 :::
 
-## Pattern 1: Incremental MERGE from append-only tables {#incremental-merge-from-append-only-tables}
+## Подход 1: инкрементальный MERGE из таблиц только для добавления {#incremental-merge-from-append-only-tables}
 
-This pattern uses the `merge` incremental strategy to upsert (insert + update) new and updated rows into a target table. Most data platforms support the `merge` strategy. Refer to [supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter) for details.
+Этот подход использует инкрементальную стратегию `merge` для добавления и обновления строк (upsert: insert + update) в целевой таблице. Большинство платформ данных поддерживают стратегию `merge`. Подробнее см. в разделе [поддерживаемых инкрементальных стратегий по адаптерам](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter).
 
-"Append-only tables" refers to a data pattern where source data continuously receives new rows without updates or deletes.
+«Таблицы только для добавления» (append-only) — это подход к хранению данных, при котором в исходные данные непрерывно добавляются новые строки без обновлений и удалений.
 
-### When to use the merge strategy
+### Когда использовать стратегию merge
 
-Use this pattern when raw events continuously land into a staging table and you want a near real-time fact table updated every few minutes.
+Используйте этот подход, когда необработанные события непрерывно поступают в промежуточную таблицу и вам нужна таблица фактов, обновляемая каждые несколько минут для работы почти в реальном времени.
 
-### Example model
+### Пример модели
 
-In this example, assume you have raw events continuously landing into `raw.events` (using Snowpipe, Databricks Auto Loader, Kafka, or a similar ingestion mechanism) and you're looking for a near real‑time fact table `analytics.fct_events` updated every few minutes.
+В этом примере предположим, что необработанные события непрерывно поступают в `raw.events` (с помощью Snowpipe, Databricks Auto Loader, Kafka или аналогичного механизма загрузки) и вам нужна таблица фактов `analytics.fct_events`, обновляемая каждые несколько минут для работы почти в реальном времени.
 
-Configure the SQL model with the following settings:
+Настройте SQL-модель следующим образом:
 
-- Use the `incremental` filter to only scan rows newer than the latest timestamp already in the target.
-- Use `incremental_strategy='merge'` with `unique_key=event_id` to give you <Term id="idempotent">idempotent</Term> upserts (inserts + updates).
-- Cluster by date using `cluster_by=['event_date']` helps with query pruning during `MERGE` operations (syntax varies by warehouse).
-- Run the model every few minutes to achieve a freshness service level agreement (SLA) measured in minutes, depending on ingestion and job scheduling.
+- Используйте фильтр `incremental`, чтобы сканировать только строки с временной меткой новее самой поздней временной метки в целевой таблице.
+- Используйте `incremental_strategy='merge'` с `unique_key=event_id` для <Term id="idempotent">идемпотентного</Term> добавления и обновления строк (upsert).
+- Кластеризация по дате с помощью `cluster_by=['event_date']` помогает исключать ненужные данные из сканирования во время операций `MERGE` (синтаксис зависит от хранилища).
+- Запускайте модель каждые несколько минут, чтобы обеспечить соглашение об уровне обслуживания (SLA) по актуальности данных, измеряемое в минутах, с учётом загрузки данных и расписания заданий.
 
-The following example uses Snowflake SQL syntax (`::`  type casting, `timestamp_ntz`, `cluster_by` config). Make sure you adapt the SQL and clustering syntax for your warehouse.
+В следующем примере используется синтаксис SQL Snowflake (приведение типов через `::`, `timestamp_ntz`, настройка `cluster_by`). Обязательно адаптируйте синтаксис SQL и кластеризации для своего хранилища.
 
 <File name="models/fct_events.sql">
 
 ```sql
 {{ config(
     materialized = 'incremental',
-    incremental_strategy = 'merge',         -- default on Snowflake
+    incremental_strategy = 'merge',         -- по умолчанию в Snowflake
     unique_key = 'event_id',
-    cluster_by = ['event_date']             -- helps MERGE performance (syntax varies by warehouse)
+    cluster_by = ['event_date']             -- повышает производительность MERGE (синтаксис зависит от хранилища)
 ) }}
 
 with source_events as (
 
     select
         event_id,
-        event_ts::timestamp_ntz       as event_ts,  -- Snowflake syntax for type casting
+        event_ts::timestamp_ntz       as event_ts,  -- синтаксис Snowflake для приведения типов
         to_date(event_ts)             as event_date,
         user_id,
         event_type,
@@ -61,7 +61,7 @@ with source_events as (
     from {{ source('raw', 'events') }}
 
     {% if is_incremental() %} 
-      -- Only pull new/changed rows since last successful load
+      -- Получать только новые/изменённые строки с момента последней успешной загрузки
       where event_ts >
             (select max(event_ts) from {{ this }})
     {% endif %}
@@ -70,7 +70,7 @@ with source_events as (
 
 deduped as (
 
-    -- optional: if the raw feed can produce duplicates
+    -- необязательно: если исходный поток данных может содержать дубликаты
     select *
     from (
         select
@@ -96,37 +96,37 @@ from deduped;
 ```
 </File>
 
-To ensure the best results:
+Для достижения наилучших результатов:
 
-- Use clustering keys wisely for better `MERGE` performance.
-- Monitor `MERGE` performance as your table grows.
-- Consider adding a lookback window (for example, `event_ts > max(event_ts) - interval '1 hour'`) to handle late-arriving data.
+- Продуманно выбирайте ключи кластеризации для повышения производительности `MERGE`.
+- Отслеживайте производительность `MERGE` по мере роста таблицы.
+- Рассмотрите возможность добавления окна ретроспективной обработки (например, `event_ts > max(event_ts) - interval '1 hour'`) для обработки данных, поступающих с задержкой.
 
-## Pattern 2: CDC with Snowflake Streams {#cdc-with-snowflake-streams}
+## Подход 2: CDC с использованием Snowflake Streams {#cdc-with-snowflake-streams}
 
-This pattern leverages Snowflake's native Change Data Capture (CDC) capabilities through [Streams](https://docs.snowflake.com/en/user-guide/streams-intro), a Snowflake-specific feature which tracks changes (inserts, updates, deletes) to source tables.
+Этот подход использует встроенные возможности отслеживания изменений данных (Change Data Capture, CDC) в Snowflake с помощью [Streams](https://docs.snowflake.com/en/user-guide/streams-intro) — специфичной для Snowflake функции, которая отслеживает изменения (вставки, обновления, удаления) в исходных таблицах.
 
-### When to use CDC
+### Когда использовать CDC
 
-Use CDC when:
+Используйте CDC, если:
 
-- You have source tables that receive frequent updates (not just appends).
-- You need to capture both new records and changes to existing records.
-- You want to avoid full table scans on large source tables.
+- В исходных таблицах часто обновляются данные (а не только добавляются новые строки).
+- Необходимо отслеживать как новые записи, так и изменения существующих записей.
+- Вы хотите избежать полного сканирования больших исходных таблиц.
 
-This pattern is warehouse CDC plus an incremental model. It does not use snapshots. For guidance on choosing incremental models vs snapshots (and when to use both), refer to [Choosing incremental models or snapshots](/best-practices/how-we-handle-cdc/2-choosing-incremental-or-snapshots).
+Этот подход сочетает CDC на уровне хранилища и инкрементальную модель. Он не использует снимки. Рекомендации по выбору между инкрементальными моделями и снимками (а также по их совместному использованию) см. в разделе [Выбор между инкрементальными моделями и снимками](/best-practices/how-we-handle-cdc/2-choosing-incremental-or-snapshots).
 
-### Setup
-To use this pattern, set up the stream in your data warehouse and then create a model to consume the stream.
+### Настройка
+Чтобы использовать этот подход, настройте поток в своём хранилище данных, а затем создайте модель для чтения этого потока.
 
-1. Create the stream (one-time, outside dbt):
+1. Создайте поток (однократно, вне dbt):
 
 ```sql
 create or replace stream RAW.EVENTS_STREAM
 on table RAW.EVENTS;
 ```
 
-2. Create a model consuming the stream:
+2. Создайте модель, читающую поток:
 
 <File name="models/fct_events_cdc.sql">
 
@@ -149,7 +149,7 @@ with changes as (
         event_type,
         payload,
         metadata$action                as change_type
-    -- points at the STREAM, not the table
+    -- ссылается на STREAM, а не на таблицу
     from {{ source('raw', 'events_stream') }}
 
 ),
@@ -159,7 +159,7 @@ filtered as (
     select *
     from changes
     where change_type in ('INSERT', 'UPDATE')
-    -- If you want to physically delete, you could also handle 'DELETE' here
+    -- Если нужно физически удалять записи, здесь также можно обработать 'DELETE'
 
 )
 
@@ -174,32 +174,32 @@ from filtered;
 ```
 </File>
 
-### Pattern distinctions
-There are some key differences from [pattern 1](#incremental-merge-from-append-only-tables):
+### Особенности подхода
+Есть несколько ключевых отличий от [подхода 1](#incremental-merge-from-append-only-tables):
 
-- Streams only return changed rows, so you don’t need an `is_incremental()` time filter. Each run processes only the changes available at the moment.
-- Run the model every few minutes to pull new changes and merge them into `fct_events`.
-- This gives you a CDC-style pipeline. Snowflake Streams captures changes, and dbt handles transformations, tests, and lineage.
+- Потоки возвращают только изменённые строки, поэтому фильтр по времени с `is_incremental()` не нужен. Каждый запуск обрабатывает только изменения, доступные на этот момент.
+- Запускайте модель каждые несколько минут, чтобы получать новые изменения и применять их к `fct_events` с помощью merge.
+- В результате вы получаете конвейер на основе CDC. Snowflake Streams отслеживает изменения, а dbt выполняет преобразования, тесты и отслеживание происхождения данных.
 
-## Pattern 3: Microbatch for large time-series tables {#microbatch-for-large-time-series-tables}
+## Подход 3: микропакетная обработка больших таблиц временных рядов {#microbatch-for-large-time-series-tables}
 
-For large `fact` tables where backfills or long lookback windows are challenging, use `incremental_strategy='microbatch'` (available in <Constant name="dbt" /> v1.9 or higher and **v1 Latest** release track in <Constant name="dbt_platform" />). Refer to [incremental microbatch](/docs/build/incremental-microbatch) for more details. Note that Microsoft Fabric doesn't support microbatch yet. Refer to [incremental strategy by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter) for more details.
+Для больших таблиц фактов (`fact`), в которых дозагрузка исторических данных или обработка за длительные ретроспективные периоды вызывает сложности, используйте `incremental_strategy='microbatch'` (доступно в <Constant name="dbt" /> версии 1.9 и выше, а также в канале релизов **v1 Latest** в <Constant name="dbt_platform" />). Подробнее см. в разделе [инкрементальной микропакетной обработки](/docs/build/incremental-microbatch). Обратите внимание, что Microsoft Fabric пока не поддерживает микропакетную обработку. Подробнее см. в разделе [инкрементальных стратегий по адаптерам](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter).
 
-:::info microbatch must have event_time
+:::info Для microbatch необходим event_time
 
-Every upstream model feeding this microbatch model must also be configured with `event_time` so dbt can push time-filters upstream. Otherwise, each batch could re-scan full upstream tables.
+Для каждой вышестоящей модели, передающей данные в эту микропакетную модель, также необходимо настроить `event_time`, чтобы dbt мог применять фильтры по времени к вышестоящим моделям. Иначе каждый пакет может приводить к повторному полному сканированию вышестоящих таблиц.
 :::
 
-### When to use microbatch
+### Когда использовать микропакетную обработку
 
-- You have massive time-series tables (billions of rows).
-- Backfills are slow and risky with traditional incremental approaches.
-- You need to reprocess data in manageable chunks.
-- Late-arriving data is common.
+- У вас очень большие таблицы временных рядов (миллиарды строк).
+- Дозагрузка исторических данных при традиционных инкрементальных подходах выполняется медленно и сопряжена с рисками.
+- Вам нужно повторно обрабатывать данные частями удобного размера.
+- Данные часто поступают с задержкой.
 
-### Model configuration
+### Настройка модели
 
-Let's say you have a `fact_events` table with a `event_ts` column and you want to process it in hourly chunks. You can configure the model as follows:
+Предположим, у вас есть таблица `fact_events` со столбцом `event_ts`, и вы хотите обрабатывать её часовыми пакетами. Модель можно настроить следующим образом:
 
 <File name="models/fct_events_microbatch.sql">
 
@@ -207,9 +207,9 @@ Let's say you have a `fact_events` table with a `event_ts` column and you want t
 {{ config(
     materialized        = 'incremental',
     incremental_strategy= 'microbatch',
-    event_time          = 'event_ts',   -- time column in this model
-    batch_size          = 'hour',       -- process in hourly chunks
-    lookback            = 1,            -- reprocess 1 prior batch to catch late data
+    event_time          = 'event_ts',   -- столбец времени в этой модели
+    batch_size          = 'hour',       -- обработка часовыми пакетами
+    lookback            = 1,            -- повторная обработка 1 предыдущего пакета для учёта запоздавших данных
     unique_key          = 'event_id',
     cluster_by          = ['event_date'],
     full_refresh        = false
@@ -226,29 +226,29 @@ from {{ ref('stg_events') }};
 ```
 </File>
 
-### Key behavior
+### Основные особенности работы
 
-- Use microbatch for massive fact tables (clickstream, IoT, point-of-sale) with multi-year history.
-- No `is_incremental() block` needed &mdash; dbt automatically generates the appropriate `WHERE event_ts BETWEEN..` predicates per batch based on `event_time`, `batch_size`, `begin`, `lookback`, and so on.
-- Each run processes multiple smaller queries (one per batch), making larger backfills safer and easier to retry.
-- The `lookback` parameter automatically handles late-arriving data by reprocessing recent batches.
-- Schedule jobs based on your SLA.
+- Используйте микропакетную обработку для очень больших таблиц фактов (потоки кликов, IoT, данные кассовых систем) с многолетней историей.
+- Блок `is_incremental()` не нужен &mdash; dbt автоматически создаёт соответствующие предикаты `WHERE event_ts BETWEEN..` для каждого пакета на основе `event_time`, `batch_size`, `begin`, `lookback` и других параметров.
+- Каждый запуск выполняет несколько небольших запросов (по одному на пакет), что делает масштабную дозагрузку исторических данных безопаснее и упрощает повторные попытки.
+- Параметр `lookback` автоматически обеспечивает обработку данных, поступающих с задержкой, за счёт повторной обработки недавних пакетов.
+- Планируйте задания с учётом своего SLA.
 
-## Choosing the right incremental pattern
+## Выбор подходящего инкрементального подхода
 
-The pattern you select will depend on your use case. Start with [pattern 1](#incremental-merge-from-append-only-tables) (`MERGE`), since it's appropriate for most use cases. Upgrade to [pattern 2](#cdc-with-snowflake-streams) (use your data warehouse's native CDC features) when you need efficient CDC. Reach for [pattern 3](#microbatch-for-large-time-series-tables) (Microbatch) when dealing with massive scale.
+Выбор подхода зависит от вашей задачи. Начните с [подхода 1](#incremental-merge-from-append-only-tables) (`MERGE`), поскольку он подходит для большинства случаев. Переходите к [подходу 2](#cdc-with-snowflake-streams) (используйте встроенные возможности CDC вашего хранилища данных), когда требуется эффективное отслеживание изменений. Выбирайте [подход 3](#microbatch-for-large-time-series-tables) (микропакетная обработка) при работе с очень большими объёмами данных.
 
 
-Use the following table to help you choose the right pattern:
+Используйте следующую таблицу, чтобы выбрать подходящий подход:
 
-| Pattern | Best for | Key benefit |
+| Подход | Лучше всего подходит для | Основное преимущество |
 | ------- | -------- | ----------- |
-| `merge` from append-only | Most standard use cases | Simple, widely understood |
-| CDC with Streams | Tables with frequent updates | Efficient change capture |
-| Microbatch | Massive time-series tables | Safe backfills, late-data handling |
+| `merge` из таблиц только для добавления | Большинство стандартных задач | Простота и широкая известность |
+| CDC с использованием Streams | Таблицы с частыми обновлениями | Эффективное отслеживание изменений |
+| Микропакетная обработка | Очень большие таблицы временных рядов | Безопасная дозагрузка исторических данных и обработка запоздавших данных |
 
 
-## Related docs
-- [Incremental models](/docs/build/incremental-models-overview)
-- [Microbatch incremental models](/docs/build/incremental-microbatch)
-- [Configuring incremental models in dbt](/docs/build/incremental-models)
+## Связанная документация
+- [Инкрементальные модели](/docs/build/incremental-models-overview)
+- [Микропакетные инкрементальные модели](/docs/build/incremental-microbatch)
+- [Настройка инкрементальных моделей в dbt](/docs/build/incremental-models)

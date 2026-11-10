@@ -1,112 +1,112 @@
 ---
-title: "Onboarding to Lake Compute"
-description: "Steps to prepare your MDLS and Snowflake environments before your Lake Compute private preview onboarding call."
+title: "Начало работы с Lake Compute"
+description: "Шаги по подготовке сред MDLS и Snowflake перед вводным звонком для участия в закрытом предварительном тестировании Lake Compute."
 id: compute-onboarding
 ---
 
-# Onboarding to Lake Compute <Lifecycle status="private_beta" />
+# Начало работы с Lake Compute <Lifecycle status="private_beta" />
 
-:::info Lake Compute is in private beta
+:::info Lake Compute находится в стадии закрытого бета-тестирования
 
-To request access, fill out the [Lake Compute signup form](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform). Lake Compute is in active development and likely to change. Breaking changes may occur, documentation may be incomplete, technical support may be limited, and no service-level agreement covers it during beta. Refer to [Private beta limitations](/docs/lake-compute#private-beta-limitations) before you plan real work around it.
-
-:::
-
-## Set up MDLS
-
-MDLS is Fivetran's managed data lake product, including a hosted Iceberg catalog and compute service (Lake Compute). To start using Lake Compute, you need a Fivetran account and an MDLS instance.
-
-### 1. Create a Fivetran account (if you don't already have one)
-
-A Fivetran account itself is free to create and use indefinitely, even after any trial period ends, as long as you don't create connectors — billing only applies to connectors, and there is not yet any billing for MDLS or Lake Compute usage. If you also want to try connectors, you get a 14-day full-feature trial.
-
-### 2. Create an MDLS destination (if you don't already have one) {#create-mdls-destination}
-
-Follow the [Managed Data Lake Service setup guide for AWS](https://fivetran.com/docs/managed-data-lake-service/setup-guide#setupinstructionsforaws) on Fivetran's docs site.
-
-:::info Things to watch for
-
-- Provide an S3 bucket in the `us-east-1` region to reduce latency and egress costs.
-- Make sure the bucket name and prefix don't contain any of these characters: `['#', '%', '^', '{', '}', '[', ']', '"', '?', '|', '', ' ']`.
-- After you create the MDLS destination, Fivetran provides the required `External ID` (also known as `group_id`). Pass this along with Fivetran's AWS account (`834469178297`) to the IAM trust policy.
+Чтобы запросить доступ, заполните [форму регистрации Lake Compute](https://docs.google.com/forms/d/e/1FAIpQLSdWXHU3VFqq1t8GVAA2BMfY_AfeVJH26OXJFlNwXiVv4pcuXQ/viewform). Lake Compute активно разрабатывается и, вероятно, будет меняться. Возможны изменения, нарушающие обратную совместимость; документация может быть неполной, а техническая поддержка — ограниченной. На период бета-тестирования соглашение об уровне обслуживания не распространяется. Ознакомьтесь с [ограничениями закрытого бета-тестирования](/docs/lake-compute#private-beta-limitations), прежде чем планировать использование Lake Compute для реальных задач.
 
 :::
 
-### 3. Enable Lake Compute and generate a token
+## Настройка MDLS
 
-Before you enable Lake Compute, click **Save & Test** on your MDLS destination and confirm every test passes. Only enable Lake Compute and generate a token after the MDLS connection tests are all green. You don't need to generate a token as part of the MDLS connection setup itself.
+MDLS — это управляемое озеро данных от Fivetran, включающее размещённый в облаке каталог Iceberg и вычислительный сервис (Lake Compute). Чтобы начать использовать Lake Compute, вам понадобятся аккаунт Fivetran и экземпляр MDLS.
 
-On the destination page for your MDLS instance, go to the **Compute** tab and turn on **Enable Lake Compute**.
+### 1. Создайте аккаунт Fivetran (если у вас его ещё нет)
 
-<Lightbox src="/img/docs/lake-compute/enable-lake-compute.png" title="Enable Lake Compute" width="80%" />
+Сам аккаунт Fivetran можно создать и использовать бесплатно неограниченное время, даже после окончания пробного периода, при условии, что вы не создаёте коннекторы: плата взимается только за коннекторы, а использование MDLS и Lake Compute пока не тарифицируется. Если вы также хотите попробовать коннекторы, вам предоставляется 14-дневный пробный период с полным набором функций.
 
-Then generate a token (user-scoped or service account). Save this token in a password manager, because you need it for your dbt connection profile.
+### 2. Создайте назначение MDLS (если у вас его ещё нет) {#create-mdls-destination}
 
-<Lightbox src="/img/docs/lake-compute/generate-token.png" title="Generate a Lake Compute token" width="80%" />
+Следуйте [руководству по настройке Managed Data Lake Service для AWS](https://fivetran.com/docs/managed-data-lake-service/setup-guide#setupinstructionsforaws) на сайте документации Fivetran.
 
-## Configure Snowflake
+:::info На что обратить внимание
 
-These steps require `ACCOUNTADMIN` permissions.
+- Укажите бакет S3 в регионе `us-east-1`, чтобы снизить задержки и затраты на исходящий трафик.
+- Убедитесь, что имя и префикс бакета не содержат следующих символов: `['#', '%', '^', '{', '}', '[', ']', '"', '?', '|', '', ' ']`.
+- После создания назначения MDLS Fivetran предоставит необходимый `External ID` (также известный как `group_id`). Укажите его вместе с аккаунтом AWS Fivetran (`834469178297`) в политике доверия IAM.
 
-### Supported authentication methods
+:::
 
-Lake Compute supports the following authentication methods:
-- `sso` (with `authenticator: externalbrowser` for local development)
-- `keypair` (with `private_key`)
+### 3. Включите Lake Compute и сгенерируйте токен
+
+Прежде чем включать Lake Compute, нажмите **Save & Test** в настройках назначения MDLS и убедитесь, что все тесты проходят успешно. Включайте Lake Compute и генерируйте токен только после успешного прохождения всех тестов подключения MDLS. Генерировать токен в рамках самой настройки подключения MDLS не требуется.
+
+На странице назначения для вашего экземпляра MDLS перейдите на вкладку **Compute** и включите **Enable Lake Compute**.
+
+<Lightbox src="/img/docs/lake-compute/enable-lake-compute.png" title="Включение Lake Compute" width="80%" />
+
+Затем сгенерируйте токен (пользовательский или для сервисного аккаунта). Сохраните этот токен в менеджере паролей: он понадобится для профиля подключения dbt.
+
+<Lightbox src="/img/docs/lake-compute/generate-token.png" title="Генерация токена Lake Compute" width="80%" />
+
+## Настройка Snowflake
+
+Для выполнения этих шагов требуются права `ACCOUNTADMIN`.
+
+### Поддерживаемые методы аутентификации
+
+Lake Compute поддерживает следующие методы аутентификации:
+- `sso` (с `authenticator: externalbrowser` для локальной разработки)
+- `keypair` (с `private_key`)
 - `self_signed_jwt`
 - `workload_identity`
 
-These are the only methods currently supported. The following authentication methods can create a Snowflake PAT, but Lake Compute doesn't support them yet — coming soon:
+В настоящее время поддерживаются только эти методы. Следующие методы аутентификации позволяют создать PAT Snowflake, но Lake Compute пока их не поддерживает — поддержка появится в ближайшее время:
 - `user`/`password`
-- `user`/`password` with MFA
+- `user`/`password` с MFA
 - OAuth
 
-Lake Compute uses your Snowflake connection profile to generate a token that can access Iceberg tables in Snowflake Horizon. This token has the exact same access as the user/role specified in your Snowflake connection profile. By default, this is a [personal access token (PAT)](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens) that lasts for 1 month; you can configure a different `pat_duration` if required by your organization's security policies.
+Lake Compute использует ваш профиль подключения Snowflake для генерации токена, предоставляющего доступ к таблицам Iceberg в Snowflake Horizon. Этот токен обладает теми же правами доступа, что и пользователь/роль, указанные в вашем профиле подключения Snowflake. По умолчанию это [персональный токен доступа (PAT)](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens) со сроком действия 1 месяц; при необходимости вы можете задать другое значение `pat_duration` в соответствии с политиками безопасности вашей организации.
 
-To use keypair authentication, follow Snowflake's guide to [key-pair authentication and key-pair rotation](https://docs.snowflake.com/en/user-guide/key-pair-auth) to create a Privacy Enhanced Mail (PEM) private-public key pair for your user, then set the public key on the user:
+Чтобы использовать аутентификацию по паре ключей, следуйте руководству Snowflake по [аутентификации с помощью пары ключей и ротации ключей](https://docs.snowflake.com/en/user-guide/key-pair-auth): создайте для своего пользователя пару закрытого и открытого ключей в формате Privacy Enhanced Mail (PEM), а затем задайте открытый ключ для пользователя:
 
 ```sql
 ALTER USER USER_NAME SET RSA_PUBLIC_KEY='PUBLIC_KEY_BODY';
 ```
 
-Replace `USER_NAME` with the Snowflake user dbt connects as, and `PUBLIC_KEY_BODY` with the body of the public key you generated. Save the private key somewhere so you can specify it in your `profiles.yml` later.
+Замените `USER_NAME` на имя пользователя Snowflake, от имени которого подключается dbt, а `PUBLIC_KEY_BODY` — на содержимое сгенерированного открытого ключа. Сохраните закрытый ключ, чтобы позже указать его в `profiles.yml`.
 
-Lake Compute connects to Snowflake in one of two ways:
+Lake Compute подключается к Snowflake одним из двух способов:
 
-- **Option 1 (PAT)** — compatible with any of the methods above. Lake Compute creates a Snowflake personal access token (PAT) using your connection profile, which requires a network policy (see [Allow Lake Compute's egress through a network policy](#allow-lake-computes-egress-through-a-network-policy-pat-only) below).
-- **Option 2 (JWT)** — compatible with `keypair` (private key) authentication. Lake Compute authenticates directly with a JWT instead of creating a PAT, so you don't need a network policy.
+- **Вариант 1 (PAT)** — совместим с любым из перечисленных выше методов. Lake Compute создаёт персональный токен доступа (PAT) Snowflake с помощью вашего профиля подключения; для этого требуется сетевая политика (см. раздел [Разрешение исходящего трафика Lake Compute с помощью сетевой политики](#allow-lake-computes-egress-through-a-network-policy-pat-only) ниже).
+- **Вариант 2 (JWT)** — совместим с аутентификацией `keypair` (по закрытому ключу). Lake Compute выполняет аутентификацию напрямую с помощью JWT вместо создания PAT, поэтому сетевая политика не требуется.
 
-`self_signed_jwt` looks similar to `keypair` by name, but it still creates a PAT under the hood — it just caches that PAT locally so it can be reused across runs. It follows Option 1, not Option 2, and still needs a network policy.
+Название `self_signed_jwt` похоже на `keypair`, но этот метод всё равно создаёт PAT за кулисами — он лишь кэширует этот PAT локально, чтобы повторно использовать его между запусками. Он соответствует варианту 1, а не варианту 2, и по-прежнему требует сетевой политики.
 
-### Create a Snowflake catalog integration for MDLS
+### Создание интеграции каталога Snowflake для MDLS
 
-Create a catalog integration in Snowflake, using the pre-generated SQL in the Fivetran UI under **Catalog integration > Snowflake**. Make the following changes to that SQL:
+Создайте интеграцию каталога в Snowflake, используя предварительно сгенерированный SQL из раздела **Catalog integration > Snowflake** в интерфейсе Fivetran. Внесите в этот SQL следующие изменения:
 
-| Old value | New value |
+| Старое значение | Новое значение |
 |-----------|-----------|
-| `OAUTH_CLIENT_ID` / `OAUTH_CLIENT_SECRET` | Enter your existing credentials, or click **Regenerate client secret** if you've forgotten them. |
+| `OAUTH_CLIENT_ID` / `OAUTH_CLIENT_SECRET` | Введите существующие учётные данные или нажмите **Regenerate client secret**, если вы их забыли. |
 
-Lake Compute uses the MDLS catalog integration to propagate Iceberg table metadata from MDLS to Snowflake after building each model. Therefore, you need to `grant usage on integration CATALOG_INTEGRATION_NAME to role ROLE_NAME` for all roles that are running dbt with Lake Compute.
+Lake Compute использует интеграцию каталога MDLS для передачи метаданных таблиц Iceberg из MDLS в Snowflake после построения каждой модели. Поэтому необходимо выполнить `grant usage on integration CATALOG_INTEGRATION_NAME to role ROLE_NAME` для всех ролей, которые запускают dbt с Lake Compute.
 
-### Allow Lake Compute's egress through a network policy (PAT only)
+### Разрешение исходящего трафика Lake Compute с помощью сетевой политики (только для PAT) {#allow-lake-computes-egress-through-a-network-policy-pat-only}
 
-:::info This section applies to Option 1 (PAT) only
+:::info Этот раздел относится только к варианту 1 (PAT)
 
-Snowflake requires a network policy to be in effect before it creates a PAT, even if your account doesn't otherwise enforce one. If you're using Option 2 (`keypair` JWT authentication), Lake Compute never creates a PAT, and you can **skip this section entirely.**
+Snowflake требует наличия действующей сетевой политики перед созданием PAT, даже если в остальных случаях ваш аккаунт её не требует. Если вы используете вариант 2 (аутентификацию `keypair` с JWT), Lake Compute не создаёт PAT, и вы можете **полностью пропустить этот раздел.**
 
 :::
 
-First, check whether your account or your user already has a network policy assigned:
+Сначала проверьте, назначена ли уже сетевая политика вашему аккаунту или пользователю:
 
 ```sql
 SHOW PARAMETERS LIKE 'NETWORK_POLICY' IN ACCOUNT;
 SHOW PARAMETERS LIKE 'NETWORK_POLICY' IN USER USER_NAME;
 ```
 
-- **If neither returns a policy:** Snowflake doesn't restrict egress by default, and no further action is needed — skip the rest of this section.
-- **If either returns a policy:** continue below. In Snowflake, a network policy attached to a user *replaces* the account-level policy for that user rather than supplementing it, so your existing policy already accounts for your own IP or VPN range — you only need to add Lake Compute's egress IPs to it.
+- **Если ни один запрос не возвращает политику:** по умолчанию Snowflake не ограничивает исходящий трафик, и никаких дополнительных действий не требуется — пропустите оставшуюся часть этого раздела.
+- **Если хотя бы один запрос возвращает политику:** продолжайте настройку ниже. В Snowflake сетевая политика, назначенная пользователю, *заменяет* политику уровня аккаунта для этого пользователя, а не дополняет её. Поэтому существующая политика уже учитывает ваш IP-адрес или диапазон VPN — вам нужно лишь добавить в неё IP-адреса исходящего трафика Lake Compute.
 
-1. Create a network rule with Lake Compute's egress IPs:
+1. Создайте сетевое правило с IP-адресами исходящего трафика Lake Compute:
 
 ```sql
 CREATE NETWORK RULE lakecompute_ipv4
@@ -120,7 +120,7 @@ CREATE NETWORK RULE lakecompute_ipv4
   );
 ```
 
-2. Add `lakecompute_ipv4` to your existing policy's allowed rule list. `ALTER NETWORK POLICY ... SET ALLOWED_NETWORK_RULE_LIST` replaces the entire list, so include your existing rule(s) as well as the new one. Replace `EXISTING_POLICY_NAME` with your account's or user's existing policy, and `EXISTING_RULE_NAME` with the rule(s) already on that policy (check with `DESC NETWORK POLICY EXISTING_POLICY_NAME;`):
+2. Добавьте `lakecompute_ipv4` в список разрешённых правил существующей политики. Команда `ALTER NETWORK POLICY ... SET ALLOWED_NETWORK_RULE_LIST` заменяет весь список, поэтому включите в него как существующие правила, так и новое. Замените `EXISTING_POLICY_NAME` на существующую политику аккаунта или пользователя, а `EXISTING_RULE_NAME` — на правила, уже указанные в этой политике (проверьте их с помощью `DESC NETWORK POLICY EXISTING_POLICY_NAME;`):
 
 ```sql
 ALTER NETWORK POLICY EXISTING_POLICY_NAME SET ALLOWED_NETWORK_RULE_LIST = (
@@ -131,38 +131,38 @@ ALTER NETWORK POLICY EXISTING_POLICY_NAME SET ALLOWED_NETWORK_RULE_LIST = (
 
 :::note
 
-Only security administrators (that is, users with the `SECURITYADMIN` role) or higher, or a role with the global `CREATE NETWORK POLICY` privilege, can create network rules or modify network policies.
+Создавать сетевые правила или изменять сетевые политики могут только администраторы безопасности (то есть пользователи с ролью `SECURITYADMIN`) и выше, а также роли с глобальной привилегией `CREATE NETWORK POLICY`.
 
 :::
 
-Some accounts also restrict which authentication methods a user or account can use. If your account blocks PAT authentication, you need an [authentication policy](https://docs.snowflake.com/en/sql-reference/sql/create-authentication-policy) that explicitly permits it before Snowflake creates a PAT for Lake Compute.
+В некоторых аккаунтах также ограничены методы аутентификации, доступные пользователю или аккаунту. Если ваш аккаунт блокирует аутентификацию с помощью PAT, перед созданием PAT для Lake Compute в Snowflake необходимо настроить [политику аутентификации](https://docs.snowflake.com/en/sql-reference/sql/create-authentication-policy), которая явно её разрешает.
 
-## Set up your connection profile
+## Настройка профиля подключения
 
-You can use Lake Compute in one of two ways:
+Вы можете использовать Lake Compute одним из двух способов:
 
-1. As a "sidecar" for an existing data warehouse, like Snowflake. Lake Compute reads upstream models out of the data warehouse's managed Iceberg catalog, like Snowflake Horizon.
-2. As your default adapter, with Lake Compute for compute and Fivetran MDLS for storage.
+1. Как вспомогательный вычислительный сервис («sidecar») для существующего хранилища данных, например Snowflake. Lake Compute читает вышестоящие модели из управляемого каталога Iceberg этого хранилища данных, например Snowflake Horizon.
+2. Как адаптер по умолчанию: Lake Compute используется для вычислений, а Fivetran MDLS — для хранения.
 
-Before you continue, update to the latest dbt client: `dbt system update --version VERSION`. Lake Compute support depends on a recent dbt v2 release.
+Прежде чем продолжить, обновите клиент dbt до последней версии: `dbt system update --version VERSION`. Для поддержки Lake Compute требуется один из последних выпусков dbt v2.
 
-### Opt in to multi-adapter invocations
+### Включение запусков с несколькими адаптерами
 
-dbt gates Lake Compute behind an experimental opt-in. Set this before you run anything, for **either** of the two patterns above:
+В dbt использование Lake Compute требует явного включения экспериментальной функции. Задайте следующую переменную перед любым запуском для **любого** из двух описанных выше вариантов:
 
 ```bash
 export DBT_ENGINE_EXPERIMENTAL_MULTI_ADAPTER=true
 ```
 
-The variable gates `type: lakecompute` in `profiles.yml`, the `adapter` config on a node, and the `--adapter` flag. While it's off, dbt fails at parse time with a message naming the variable rather than falling back to your default adapter, and `DBT_ALLOW_EXPERIMENTAL_ADAPTERS` won't substitute for it. Refer to [Required environment variable](/docs/lake-compute#required-environment-variable) for the full behavior.
+Эта переменная разрешает использование `type: lakecompute` в `profiles.yml`, настройки `adapter` для узла и флага `--adapter`. Пока она отключена, dbt завершает работу с ошибкой на этапе разбора и выводит сообщение с именем переменной вместо того, чтобы использовать адаптер по умолчанию; переменная `DBT_ALLOW_EXPERIMENTAL_ADAPTERS` её не заменяет. Полное описание поведения см. в разделе [Обязательная переменная окружения](/docs/lake-compute#required-environment-variable).
 
-Add it to your terminal profile so it persists across sessions.
+Добавьте её в профиль терминала, чтобы она сохранялась между сеансами.
 
-### Local `profiles.yml`
+### Локальный `profiles.yml`
 
-#### Use Lake Compute as a "sidecar"
+#### Использование Lake Compute как вспомогательного сервиса («sidecar»)
 
-Replace `YOUR_ACCOUNT` with your Snowflake account identifier, `DATABASE_NAME` and `SCHEMA_NAME` with the database and schema dbt writes to, and `LAKE_COMPUTE_TOKEN` with the token you generated in step 3:
+Замените `YOUR_ACCOUNT` на идентификатор вашего аккаунта Snowflake, `DATABASE_NAME` и `SCHEMA_NAME` — на базу данных и схему, в которые dbt записывает данные, а `LAKE_COMPUTE_TOKEN` — на токен, сгенерированный на шаге 3:
 
 ```yaml
 my_profile:
@@ -183,15 +183,15 @@ my_profile:
         # database + schema are inherited from default adapter config 
 ```
 
-With this profile, Lake Compute:
+При использовании этого профиля Lake Compute:
 
-- Uses the default Snowflake adapter config to create a PAT to Snowflake's managed catalog, Horizon
-- Reads all upstream Iceberg tables from the Horizon catalog
-- Writes models as Iceberg tables to MDLS, and propagates them to the Horizon catalog, using the `database` and `schema` from the default Snowflake adapter config as the default write location
+- Использует конфигурацию адаптера Snowflake по умолчанию для создания PAT для управляемого каталога Snowflake Horizon
+- Читает все вышестоящие таблицы Iceberg из каталога Horizon
+- Записывает модели как таблицы Iceberg в MDLS и передаёт их в каталог Horizon, используя `database` и `schema` из конфигурации адаптера Snowflake по умолчанию в качестве расположения для записи по умолчанию
 
-#### Use Lake Compute as your default adapter
+#### Использование Lake Compute как адаптера по умолчанию
 
-In this pattern, your entire project runs on Lake Compute, and Lake Compute materializes every model as an Iceberg table in your MDLS catalog instance. Replace `MDLS_INSTANCE_NAME` with your MDLS instance name, `SCHEMA_NAME` with the schema dbt writes to, and `LAKE_COMPUTE_TOKEN` with the token you generated in step 3:
+При таком подходе весь проект выполняется в Lake Compute, и Lake Compute материализует каждую модель как таблицу Iceberg в вашем экземпляре каталога MDLS. Замените `MDLS_INSTANCE_NAME` на имя вашего экземпляра MDLS, `SCHEMA_NAME` — на схему, в которую dbt записывает данные, а `LAKE_COMPUTE_TOKEN` — на токен, сгенерированный на шаге 3:
 
 ```yaml
 # new spec
@@ -208,16 +208,16 @@ my_profile:
         schema: SCHEMA_NAME
 ```
 
-This means:
+Это означает следующее:
 
-- **Every model in the project is configured `compute: 'lakecompute'` by default.**
-- Every model also gets `materialized: table` and `table_format: 'iceberg'` as defaults.
+- **Для каждой модели в проекте по умолчанию задана настройка `compute: 'lakecompute'`.**
+- Каждая модель также получает значения по умолчанию `materialized: table` и `table_format: 'iceberg'`.
 
-### dbt platform
+### Платформа dbt {#dbt-platform}
 
-#### Use Lake Compute as a "sidecar"
+#### Использование Lake Compute как вспомогательного сервиса («sidecar»)
 
-As a temporary workaround during private beta, you can set Lake Compute configurations using [Extended Attributes](/docs/dbt-platform-environments#extended-attributes), by adding a key named `lakecompute`:
+В качестве временного обходного решения на период закрытого бета-тестирования можно задать настройки Lake Compute через [расширенные атрибуты (Extended Attributes)](/docs/dbt-platform-environments#extended-attributes), добавив ключ с именем `lakecompute`:
 
 ```yaml
 lakecompute:
@@ -226,37 +226,37 @@ lakecompute:
 method: self_signed_jwt
 ```
 
-:::caution Don't put your token in Extended Attributes
-Extended Attributes aren't a safe place for secrets, so never paste the token itself into this field. Reference it with `env_var()`, as shown above, and store the token in a [secret environment variable](/docs/build/environment-variables#handling-secrets) instead.
+:::caution Не размещайте токен в Extended Attributes
+Extended Attributes не являются безопасным местом для секретов, поэтому никогда не вставляйте сам токен в это поле. Ссылайтесь на него через `env_var()`, как показано выше, а сам токен храните в [секретной переменной окружения](/docs/build/environment-variables#handling-secrets).
 :::
 
-Then within your environment variables, set:
+Затем задайте следующие переменные окружения:
 - `DBT_ALLOW_EXPERIMENTAL_ADAPTERS`: `true`
 - `DBT_ENGINE_EXPERIMENTAL_MULTI_ADAPTER`: `true`
-- `DBT_ENV_SECRET_LAKE_COMPUTE_TOKEN`: the token you generated in step 3
+- `DBT_ENV_SECRET_LAKE_COMPUTE_TOKEN`: токен, сгенерированный на шаге 3
 
-This differs from running locally, where you set both `DBT_ENGINE_EXPERIMENTAL_MULTI_ADAPTER` and `DBT_ALLOW_EXPERIMENTAL_ADAPTERS`. Refer to [Required environment variable](/docs/lake-compute#required-environment-variable).
+Это отличается от локального запуска, при котором вы задаёте и `DBT_ENGINE_EXPERIMENTAL_MULTI_ADAPTER`, и `DBT_ALLOW_EXPERIMENTAL_ADAPTERS`. См. раздел [Обязательная переменная окружения](/docs/lake-compute#required-environment-variable).
 
-### Verify your setup
+### Проверка настройки
 
-Run `dbt debug` to confirm your profile is configured correctly. Normally, `debug` just makes sure that you can connect to your data platform, but for Lake Compute it is more involved with the goal of giving you actionable feedback should something be misconfigured. A failure can indicate potential issues with credentials, a malformed profile, a missing `database`/`schema` (see above), or a network policy blocking egress (see [Allow Lake Compute's egress through a network policy](#allow-lake-computes-egress-through-a-network-policy-pat-only)).
-
-
-Here's what it does at a high-level:
-1. This parses `profiles.yml` and `dbt_project.yml`
-2. tests authentication against every configured adapter in output — including `lakecompute` — with both a write test and a read-back test. 
-3. Tests "propagation" that a table written to MDLS has a corresponding table created on the Horizon catalog so that downstream Snowflake nodes may `ref` it.
+Запустите `dbt debug`, чтобы убедиться, что профиль настроен правильно. Обычно `debug` лишь проверяет возможность подключения к платформе данных, но для Lake Compute выполняет более подробную проверку, чтобы при неверной настройке предоставить информацию, на основе которой можно устранить проблему. Ошибка может указывать на проблемы с учётными данными, некорректный профиль, отсутствие `database`/`schema` (см. выше) или сетевую политику, блокирующую исходящий трафик (см. раздел [Разрешение исходящего трафика Lake Compute с помощью сетевой политики](#allow-lake-computes-egress-through-a-network-policy-pat-only)).
 
 
-## Configure models to run on Lake Compute
+В общих чертах команда выполняет следующие действия:
+1. Разбирает `profiles.yml` и `dbt_project.yml`.
+2. Проверяет аутентификацию для каждого настроенного адаптера в выходной конфигурации, включая `lakecompute`, с помощью теста записи и последующего чтения. 
+3. Проверяет «передачу»: для таблицы, записанной в MDLS, должна создаваться соответствующая таблица в каталоге Horizon, чтобы нижестоящие узлы Snowflake могли ссылаться на неё через `ref`.
 
-### Use Lake Compute as a "sidecar"
 
-Given a dbt DAG of `model_a -> model_b -> model_c`, you can configure:
+## Настройка моделей для выполнения в Lake Compute
 
-- `model_a` to run on Snowflake and materialize an Iceberg table in Snowflake Horizon, using Snowflake-managed storage
-- `model_b` to run on Lake Compute
-- `model_c` to run on Snowflake
+### Использование Lake Compute как вспомогательного сервиса («sidecar»)
+
+Для DAG dbt вида `model_a -> model_b -> model_c` можно настроить:
+
+- `model_a` для выполнения в Snowflake и материализации таблицы Iceberg в Snowflake Horizon с использованием хранилища, управляемого Snowflake
+- `model_b` для выполнения в Lake Compute
+- `model_c` для выполнения в Snowflake
 
 ```sql
 -- models/model_a.sql
@@ -282,12 +282,12 @@ select * from {{ ref('model_a') }}
 select * from {{ ref('model_b') }}
 ```
 
-### Use Lake Compute as your default adapter
+### Использование Lake Compute как адаптера по умолчанию
 
-All your models run on Lake Compute by default and write to Iceberg tables in MDLS. Also check for existing `materialized: view` configs — Lake Compute doesn't support views (see [Private beta limitations](/docs/lake-compute#private-beta-limitations)), so switch any views to `table` or `ephemeral` before converting a project over.
+Все ваши модели по умолчанию выполняются в Lake Compute и записывают данные в таблицы Iceberg в MDLS. Также проверьте наличие существующих настроек `materialized: view`: Lake Compute не поддерживает представления (см. [Ограничения закрытого бета-тестирования](/docs/lake-compute#private-beta-limitations)), поэтому перед переносом проекта переключите все представления на `table` или `ephemeral`.
 
-For an existing project, convert models over in two steps rather than all at once:
+Для существующего проекта переносите модели в два этапа, а не все сразу:
 
-1. Identify the model you want to run on Lake Compute and its direct upstream dependencies.
-2. Add `{{ config(materialized='table', table_format='iceberg') }}` to the target model and its upstream dependencies. Run the project and verify it works. Any runtime errors at this stage are due to Iceberg/Snowflake type incompatibilities and require casting.
-3. On the target model, add `{{ config(adapter='lakecompute') }}` and look for any Snowflake-specific functions. If you find any, rewrite the query using the corresponding DuckDB function. Run the project again to verify.
+1. Определите модель, которую хотите выполнять в Lake Compute, и её непосредственные вышестоящие зависимости.
+2. Добавьте `{{ config(materialized='table', table_format='iceberg') }}` в целевую модель и её вышестоящие зависимости. Запустите проект и убедитесь, что он работает. Любые ошибки выполнения на этом этапе связаны с несовместимостью типов Iceberg/Snowflake и требуют приведения типов.
+3. В целевую модель добавьте `{{ config(adapter='lakecompute') }}` и проверьте наличие функций, специфичных для Snowflake. Если такие функции есть, перепишите запрос, используя соответствующие функции DuckDB. Снова запустите проект для проверки.

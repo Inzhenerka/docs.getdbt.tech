@@ -29,7 +29,7 @@ availability: all_users
 
 Нажмите на название адаптера в таблице ниже, чтобы узнать больше о поддерживаемых инкрементальных стратегиях:
 
-| Data platform adapter | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch`        |
+| Адаптер платформы данных | `append` | `merge` | `delete+insert` | `insert_overwrite` | `microbatch` |
 |-----------------------|:--------:|:-------:|:---------------:|:------------------:|:-------------------:|
 | [dbt-postgres](/reference/resource-configs/postgres-configs#incremental-materialization-strategies) |     ✅    |    ✅   |  ✅ |   |   ✅   |
 | [dbt-redshift](/reference/resource-configs/redshift-configs#incremental-materialization-strategies) |     ✅    |    ✅   |  ✅ |   |   ✅   |
@@ -218,7 +218,7 @@ select * from {{ ref("some_model") }}
 
 [`microbatch`](/docs/build/incremental-microbatch#what-is-microbatch-in-dbt) — это инкрементальная стратегия, предназначенная для обработки больших временных рядов путём разбиения данных на временные батчи (например, по дням или по часам). Она поддерживает [параллельное выполнение батчей](/docs/build/parallel-batch-execution#how-parallel-batch-execution-works), что позволяет ускорить выполнение.
 
-Подробную информацию о том, какие инкрементальные стратегии поддерживаются каждым адаптером, см. в разделе [Supported incremental strategies by adapter](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter).
+Подробнее см. в разделе [Поддерживаемые стратегии по адаптерам](/docs/build/incremental-strategy#supported-incremental-strategies-by-adapter).
 
 ### Пользовательские стратегии {#custom-strategies}
 

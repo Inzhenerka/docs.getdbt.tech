@@ -57,7 +57,7 @@ dbt docs generate --no-compile
 
 Зато это может ускорить выполнение команды `docs generate` в процессе разработки, когда вам нужно лишь визуализировать lineage и другую информацию, определённую внутри вашего проекта.  
 
-Чтобы узнать, как собирать документацию в <Constant name="cloud" />, см. раздел [build your docs in <Constant name="cloud" />](/docs/explore/build-and-view-your-docs).
+Как собрать документацию в <Constant name="cloud" />, описано в разделе [Сборка и просмотр документации](/docs/explore/build-and-view-your-docs).
 
 **Пример**:
 
@@ -109,7 +109,7 @@ dbt docs serve --port 8001
 
 Вы можете указать другой хост, используя флаг `--host`.
 
-:::info Note
+:::info Примечание
 Флаг `--host` доступен только в [<Constant name="core"/>](/docs/local/install-dbt). Он не поддерживается в [<Constant name="platform_cli" />](/docs/platform/dbt-cli-installation).
 :::
 
@@ -126,180 +126,180 @@ dbt docs serve --host ""
 
 <VersionBlock firstVersion="2.0">
 
-With <Constant name="fusion_engine" />, use [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2) to generate and view your project's documentation locally. Run `dbt docs generate` to build the site, then `dbt docs serve` to preview it.
+С <Constant name="fusion_engine" /> используйте [dbt Docs v2](/docs/build/view-documentation#dbt-docs-v2), чтобы создать и просмотреть документацию проекта локально. Команда `dbt docs generate` собирает сайт, а `dbt docs serve` запускает предпросмотр.
 
-To generate catalog metadata (`catalog.json`) without building the documentation site, use the [`--write-catalog` flag](#--write-catalog-flag).
+Чтобы создать только метаданные каталога (`catalog.json`), используйте [флаг `--write-catalog`](#--write-catalog-flag).
 
-dbt Docs v2 is built for local and self-hosted workflows. In <Constant name="dbt_platform" />, use [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs) instead, a hosted, always-up-to-date view of your docs that your jobs refresh automatically. Refer to [Platform behavior](#dbt-platform-behavior) for details.
+dbt Docs v2 предназначен для локального запуска и размещения в собственной инфраструктуре. В <Constant name="dbt_platform" /> используйте [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs): это облачное представление документации, которое задания обновляют автоматически. Подробнее см. [Поведение на платформе](#dbt-platform-behavior).
 
 ## dbt Docs v2
 
-dbt Docs v2 is a self-hosted documentation site generated on your local machine or your own pipeline (like GitHub Actions). It isn't available in the <Constant name="dbt_platform" />, where you use [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs) instead. Refer to [dbt platform behavior](#dbt-platform-behavior) for details.
+Сайт dbt Docs v2 собирается локально или в вашем пайплайне, например в GitHub Actions, и размещается в вашей инфраструктуре. На <Constant name="dbt_platform" /> вместо него используется [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs). Подробнее см. [Поведение на платформе](#dbt-platform-behavior).
 
-Instead of loading a static `manifest.json` in the browser, v2 produces Parquet artifacts when you compile or build your project. `dbt docs generate` exports a documentation site made of plain static files (a single-page app plus those artifacts) that any file host can serve. The browser reads the Parquet directly using DuckDB-WASM (WebAssembly), so you don't need to run a stateful server to view your docs. This keeps the experience fast even for large projects.
+При компиляции или сборке проекта v2 создаёт артефакты Parquet вместо статического `manifest.json`, который загружался в браузер. Команда `dbt docs generate` экспортирует сайт как набор статических файлов: одностраничное приложение и эти артефакты. Их можно разместить на любом файловом хостинге. Браузер читает Parquet напрямую через DuckDB-WASM (WebAssembly), поэтому отдельный сервер с состоянием не нужен и просмотр остаётся быстрым даже для крупных проектов.
 
-### Generate the site
+### Сборка сайта {#generate-the-site}
 
-`dbt docs generate` compiles your project, writes the index, and exports the documentation site in a single command:
+Команда `dbt docs generate` компилирует проект, записывает индекс и экспортирует сайт документации:
 
 ```shell
 dbt docs generate
 ```
 
-By default, dbt writes the site into your `target/` directory (`target/index.html`, `target/assets/`, and the index under `target/index/`), matching the layout of <Constant name="core_v1" />. You can serve `index.html` from `target/` the same way you did in v1, so a self-hosted pipeline that runs `dbt docs generate && mv target public` keeps working.
+По умолчанию dbt записывает сайт в `target/`: `target/index.html`, `target/assets/` и индекс в `target/index/`. Структура совпадает с <Constant name="core_v1" />. Файл `index.html` можно отдавать из `target/` так же, как в v1, поэтому пайплайн с командой `dbt docs generate && mv target public` продолжит работать.
 
-Use `--output-dir` to write a self-contained copy of the site to a different directory:
+Чтобы записать автономную копию сайта в другой каталог, используйте `--output-dir`:
 
 ```shell
 dbt docs generate --output-dir site
 ```
 
-This writes a `site/` directory (the app, hashed assets, and a copy of the index) that you can host on S3, GitHub Pages, Netlify, GitLab Pages, or any similar static file host.
+Будет создан каталог `site/` с приложением, ресурсами с хешами в именах и копией индекса. Его можно разместить в S3, GitHub Pages, Netlify, GitLab Pages или на аналогичном хостинге статических файлов.
 
-To skip compilation and export whatever index is already on disk, use `--no-compile`, which fails with an error if no index exists:
+Чтобы пропустить компиляцию и экспортировать существующий индекс, используйте `--no-compile`. Если индекса нет, команда завершится ошибкой:
 
 ```shell
 dbt docs generate --no-compile
 ```
 
-#### Column lineage and richer metadata
+#### Зависимости столбцов и дополнительные метаданные {#column-lineage-and-richer-metadata}
 
-To include model column types inferred from your SQL and column-level lineage, run `dbt build`, `dbt run`, or `dbt compile` with [`--generate-info-schema`](/docs/build/dbt-information-schema) and [`--static-analysis strict`](/docs/build/about-static-analysis), then export the site:
+Чтобы добавить типы столбцов, выведенные из SQL моделей, и зависимости на уровне столбцов, запустите `dbt build`, `dbt run` или `dbt compile` с флагами [`--generate-info-schema`](/docs/build/dbt-information-schema) и [`--static-analysis strict`](/docs/build/about-static-analysis), затем экспортируйте сайт:
 
 ```shell
 dbt build --generate-info-schema --static-analysis strict
 dbt docs generate --no-compile
 ```
 
-`--no-compile` skips the default compile step in `dbt docs generate` and exports the existing index.
+Флаг `--no-compile` пропускает этап компиляции в `dbt docs generate` и экспортирует существующий индекс.
 
-If you generate the site without column lineage, dbt Docs v2 hides those features instead of showing empty data.
+Если при сборке сайта сведения о зависимостях столбцов не были добавлены, dbt Docs v2 скрывает соответствующие функции.
 
-### Serve dbt Docs v2
+### Локальный запуск dbt Docs v2 {#serve-dbt-docs-v2}
 
-To preview the site locally, run:
+Чтобы просмотреть сайт локально, выполните:
 
 ```shell
 dbt docs serve
 ```
 
-Use `dbt docs serve` to view your documentation locally on your own machine. In <Constant name="dbt_platform"/>, use <Constant name="catalog" /> to explore your project. Refer to [platform behavior](#dbt-platform-behavior) for details.
+Команда `dbt docs serve` открывает документацию на вашем компьютере. На <Constant name="dbt_platform"/> для просмотра проекта используйте <Constant name="catalog" />. Подробнее см. [Поведение на платформе](#dbt-platform-behavior).
 
-`dbt docs serve` generates the site if it's missing or older than the index, then serves the static files. The server starts on port `8580` by default and opens in your browser. Use `--port` to change the port:
+Команда `dbt docs serve` собирает сайт, если его ещё нет или он старше индекса, а затем отдаёт статические файлы. По умолчанию сервер запускается на порту `8580`, и сайт открывается в браузере. Порт можно изменить флагом `--port`:
 
 ```shell
 dbt docs serve --port 8081
 ```
 
-Use the `--target-path` flag to change the path where dbt reads artifacts from:
+Флаг `--target-path` позволяет изменить каталог, из которого dbt читает артефакты:
 
 ```shell
 dbt docs serve --target-path ~/Developer/internal-analytics/target
 ```
 
-Because the generated site is a set of static files, you can also host it on any static file host — such as cloud object storage or a static site host — instead of serving it locally.
+Сайт состоит из статических файлов, поэтому вместо локального сервера можно разместить его в объектном хранилище или на хостинге статических сайтов.
 
-### Project overview page
+### Страница обзора проекта {#project-overview-page}
 
-dbt Docs v2 renders your project's `__overview__` doc block as the landing page, the same as dbt Docs v1. dbt discovers overview content by scanning your `docs-paths` for `{% docs %}` blocks, so a block in `models/overview.md` is found by default. A file at `docs/overview.md` is only picked up when your project sets `docs-paths: ["docs"]`. If your project defines no overview, dbt renders its default overview content.
+Как и в dbt Docs v1, начальная страница dbt Docs v2 использует блок документации `__overview__`. dbt ищет блоки `{% docs %}` в каталогах `docs-paths`, поэтому файл `models/overview.md` находится по умолчанию. Файл `docs/overview.md` будет найден, только если в проекте задано `docs-paths: ["docs"]`. Если блок обзора не задан, dbt использует стандартную страницу.
 
-## --write-catalog flag
+## Флаг `--write-catalog` {#--write-catalog-flag}
 
-The `--write-catalog` flag generates the [`catalog.json`](/reference/artifacts/catalog-json) artifact, which contains metadata about the tables and <Term id="view">views</Term> produced by the models in your project. It focuses solely on metadata hydration and does not build the documentation site — use [dbt Docs v2](#dbt-docs-v2) for that.
+Флаг `--write-catalog` создаёт артефакт [`catalog.json`](/reference/artifacts/catalog-json) с метаданными таблиц и <Term id="view">представлений</Term>, созданных моделями проекта. Флаг только собирает метаданные. Чтобы собрать сайт документации, используйте [dbt Docs v2](#dbt-docs-v2).
 
-When you run dbt locally, add the flag yourself. You can use it with the following commands:
+При локальном запуске dbt добавляйте этот флаг явно. Он поддерживается следующими командами:
 
 - `dbt build`
 - `dbt run`
 - `dbt parse`
 - `dbt compile`
 
-**Example**:
+**Пример**:
 
 ```shell
 dbt build --write-catalog
 ```
 
-:::info <Constant name="dbt_platform" /> jobs
-<Constant name="fusion" /> jobs in <Constant name="dbt_platform" /> refresh <Constant name="catalog" /> metadata automatically on every run, so you don't need to add the `--write-catalog` flag there. Refer to [Platform behavior](#dbt-platform-behavior) for more info.
+:::info Задания на <Constant name="dbt_platform" />
+Задания <Constant name="fusion" /> на <Constant name="dbt_platform" /> автоматически обновляют метаданные <Constant name="catalog" /> при каждом запуске, поэтому флаг `--write-catalog` в них не нужен. Подробнее см. [Поведение на платформе dbt](#dbt-platform-behavior).
 :::
 
-### Local usage
+### Локальный запуск {#local-usage}
 
-When running <Constant name="fusion" /> locally, add the `--write-catalog` flag to your command to generate the catalog:
+При локальном запуске <Constant name="fusion" /> добавьте флаг `--write-catalog`, чтобы сгенерировать метаданные каталога:
 
 ```shell
 dbt build --write-catalog
 ```
 
-### What's different from docs generate
+### Отличие от docs generate {#whats-different-from-docs-generate}
 
-Both write artifacts, but only `dbt docs generate` builds a documentation site you can view in a browser.
+Обе команды записывают артефакты. Сайт документации, который можно открыть в браузере, создаёт только `dbt docs generate`.
 
 <SimpleTable>
 
-| | `--write-catalog` flag | `dbt docs generate` command |
+| | Флаг `--write-catalog` | Команда `dbt docs generate` |
 |--|-------------------|---------------------|
-| What it produces | `catalog.json`, plus the artifacts the command already generates | `index.html`, `assets/`, and the index files |
-| What it's for | Metadata for [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs) and the metadata APIs | A static site you can preview with `dbt docs serve` or host anywhere |
-| Where it works | Locally and in <Constant name="dbt_platform" />. The command is added automatically in dbt platform jobs on <Constant name="fusion" />. | Locally only in v2. <Constant name="dbt_platform" /> job runs use `dbt compile --write-catalog` instead |
+| Что создаёт | `catalog.json` и артефакты, которые команда создаёт и без флага | `index.html`, `assets/` и файлы индекса |
+| Для чего используется | Метаданные для [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs) и API метаданных | Статический сайт, который можно просмотреть через `dbt docs serve` или разместить на хостинге |
+| Где работает | Локально и на <Constant name="dbt_platform" />. В заданиях <Constant name="fusion" /> на платформе команда добавляется автоматически. | Только локально в v2. В заданиях <Constant name="dbt_platform" /> вместо неё выполняется `dbt compile --write-catalog` |
 
 </SimpleTable>
 
-## Commands for generating metadata
+## Команды для сбора метаданных {#commands-for-generating-metadata}
 
-Each flag targets different metadata and addresses different use cases. Find the right command for your use case in the following list. The [Flag reference](#flag-reference) section breaks down what each flag generates and where it writes.
+Флаги собирают разные метаданные для разных задач. Выберите подходящую команду из списка. В [Справочнике флагов](#flag-reference) указано, какие данные создаёт каждый флаг и куда он их записывает.
 
-- To display inferred model column types and column-level lineage in [dbt Docs v2](#dbt-docs-v2):
+- Чтобы показать выведенные типы столбцов моделей и зависимости столбцов в [dbt Docs v2](#dbt-docs-v2):
 
   ```shell
   dbt build --generate-info-schema --static-analysis strict
   dbt docs generate --no-compile
   ```
 
-- To generate the [dbt Information Schema](/docs/build/dbt-information-schema) with inferred model column types and column-level lineage:
+- Чтобы создать [информационную схему dbt](/docs/build/dbt-information-schema) с выведенными типами столбцов моделей и зависимостями столбцов:
 
   ```shell
   dbt build --generate-info-schema --static-analysis strict
   ```
 
-- To generate the dbt Information Schema with inferred model column types and column-level lineage, plus warehouse types and all columns from sources used by the selected nodes:
+- Чтобы создать информационную схему dbt с выведенными типами и зависимостями столбцов моделей, типами из хранилища и всеми столбцами источников, используемых выбранными узлами:
 
   ```shell
   dbt build --generate-info-schema --static-analysis strict --write-catalog
   ```
 
-- To generate the dbt Information Schema with warehouse column types only:
+- Чтобы создать информационную схему dbt только с типами столбцов из хранилища:
   ```shell
   dbt build --generate-info-schema --write-catalog
   ```
 
-- To generate [`catalog.json`](/reference/artifacts/catalog-json) with warehouse column types:
+- Чтобы создать [`catalog.json`](/reference/artifacts/catalog-json) с типами столбцов из хранилища:
 
   ```shell
   dbt build --write-catalog
   ```
 
-#### Flag reference
+#### Справочник флагов {#flag-reference}
 
-The following table explains what each flag generates and where the metadata is stored:
+В таблице указано, какие метаданные создаёт каждый флаг и куда они записываются:
 
 <SimpleTable>
-| Flag | Description | Output location |
+| Флаг | Описание | Куда записываются данные |
 |------|-------------|-----------------|
-| [`--generate-info-schema`](/docs/build/dbt-information-schema) | Generates the [dbt Information Schema](/docs/build/dbt-information-schema). Add `--static-analysis strict` to include inferred model column types and column-level lineage. | `target/info_schema/v1/` |
-| [`--static-analysis strict`](/docs/build/about-static-analysis) | Enables inferred column types and column-level lineage when used with `--generate-info-schema`. | Depends on the flag it's combined with |
-| [`--write-catalog`](#--write-catalog-flag) | Generates [`catalog.json`](/reference/artifacts/catalog-json) with warehouse column types. <br /><br /> When combined with `--generate-info-schema` on `dbt build` or `dbt run`, writes warehouse column types and all source columns for selected nodes to the dbt Information Schema. | `target/catalog.json` (and `target/info_schema/v1/` when used with `--generate-info-schema`) |
+| [`--generate-info-schema`](/docs/build/dbt-information-schema) | Создаёт [информационную схему dbt](/docs/build/dbt-information-schema). Добавьте `--static-analysis strict`, чтобы включить выведенные типы и зависимости столбцов моделей. | `target/info_schema/v1/` |
+| [`--static-analysis strict`](/docs/build/about-static-analysis) | Включает выведенные типы и зависимости столбцов при использовании вместе с `--generate-info-schema`. | Зависит от флага, с которым используется |
+| [`--write-catalog`](#--write-catalog-flag) | Создаёт [`catalog.json`](/reference/artifacts/catalog-json) с типами столбцов из хранилища. <br /><br /> Вместе с `--generate-info-schema` в `dbt build` или `dbt run` записывает типы из хранилища и все столбцы источников для выбранных узлов в информационную схему dbt. | `target/catalog.json` (и `target/info_schema/v1/` вместе с `--generate-info-schema`) |
 </SimpleTable>
 
-dbt Docs v2 reads metadata from the dbt Information Schema, not from `catalog.json`. The `catalog.json` file is a separate artifact for external tools.
+dbt Docs v2 читает метаданные из информационной схемы dbt. Файл `catalog.json` — отдельный артефакт для внешних инструментов.
 
-## dbt platform behavior
-dbt Docs v2 is built for local and self-hosted workflows. In <Constant name="dbt_platform" />, use [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs), which gives you a cloud-hosted, always-up-to-date view of your project:
+## Поведение на платформе dbt {#dbt-platform-behavior}
+dbt Docs v2 предназначен для локального запуска и размещения в собственной инфраструктуре. На <Constant name="dbt_platform" /> используйте [<Constant name="catalog" />](/docs/explore/build-and-view-your-docs), где доступно актуальное представление проекта:
 
-- In <Constant name="dbt_platform" /> jobs running v2, every job run automatically refreshes <Constant name="catalog" /> metadata, so you don't need a separate docs step.
-- If you add `dbt docs generate` as a job step, dbt automatically runs `dbt compile --write-catalog` instead and directs you to <Constant name="catalog" />. The job doesn't produce the static site or `index.html`.
-- To share your project with stakeholders who don't develop in dbt, add as many [read-only seats](/docs/platform/manage-access/seats-and-users) as you need.  Developer and read-only seats both include access to <Constant name="catalog" />
+- Каждый запуск задания v2 в <Constant name="dbt_platform" /> автоматически обновляет метаданные <Constant name="catalog" />. Отдельный шаг генерации документации не нужен.
+- Если добавить в задание шаг `dbt docs generate`, dbt автоматически выполнит вместо него `dbt compile --write-catalog` и направит вас в <Constant name="catalog" />. Задание не создаст статический сайт или файл `index.html`.
+- Чтобы дать коллегам, которые не разрабатывают в dbt, доступ к проекту, добавьте необходимое число [мест с правом чтения](/docs/platform/manage-access/seats-and-users). Доступ к <Constant name="catalog" /> включён и для разработчиков, и для пользователей с правом чтения.
 
 
 </VersionBlock>

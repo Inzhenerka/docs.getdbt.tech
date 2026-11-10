@@ -1,8 +1,8 @@
 --- 
-title: "About dbt Canvas" 
+title: "О dbt Canvas"
 id: canvas      
-sidebar_label: "About dbt Canvas" 
-description: "dbt Canvas enables you to quickly create and visualize dbt models through a visual, drag-and-drop experience inside of dbt." 
+sidebar_label: "О dbt Canvas"
+description: "dbt Canvas позволяет быстро создавать и визуализировать dbt‑модели с помощью визуального drag‑and‑drop интерфейса прямо в dbt."
 pagination_next: "docs/platform/canvas-interface"
 pagination_prev: null
 image: /img/docs/dbt-platform/canvas/canvas.png
@@ -14,21 +14,21 @@ availability:
 
 import Prerequisites from '/snippets/_canvas-prerequisites.md';
 
-# About Canvas
+# О Canvas {#about-canvas}
 
-<p style={{ color: '#717d7d', fontSize: '1.1em' }}>
-<Constant name="canvas" /> helps you quickly access and transform data through a visual, drag-and-drop experience.
-</p>
+<div style={{ color: '#717d7d', fontSize: '1.1em' }}>
+<Constant name="canvas" /> позволяет быстро получать и преобразовывать данные в визуальном редакторе с поддержкой перетаскивания.
+</div>
 
-<Constant name="canvas" /> allows organizations to enjoy the many benefits of code-driven development, such as increased precision, ease of debugging, and ease of validation, while retaining the flexibility to have different contributors develop wherever they are most comfortable. For natural language and AI-assisted workflows, use [dbt Copilot in <Constant name="canvas" />](/docs/platform/build-canvas-copilot).
+<Constant name="canvas" /> сохраняет преимущества разработки с кодом, включая точность, простоту отладки и проверки. При этом участники могут работать в привычной среде. Для запросов на естественном языке и задач с ИИ используйте [dbt Copilot в <Constant name="canvas" />](/docs/platform/build-canvas-copilot).
 
-These models compile directly to SQL and are indistinguishable from other dbt models in your projects:
-- Visual models are version-controlled in your backing <Constant name="git" /> provider.
-- All models are accessible across projects in [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro).
-- Models can be materialized into production through [<Constant name="dbt" /> orchestration](/docs/deploy/deployments), or be built directly into a user's development schema.
-- Integrate with [<Constant name="catalog" />](/docs/explore/explore-projects) and the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio).
+Эти модели компилируются напрямую в SQL и неотличимы от других dbt-моделей в ваших проектах:
+- Визуальные модели находятся под версионным контролем в вашем провайдере <Constant name="git" />.
+- Все модели доступны между проектами в рамках [<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro).
+- Модели могут быть материализованы в продакшене с помощью [оркестрации <Constant name="dbt" />](/docs/deploy/deployments) или собраны напрямую в схеме разработки пользователя.
+- Интеграция с [<Constant name="catalog" />](/docs/explore/explore-projects) и [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio).
 
-<Lightbox src="/img/docs/dbt-platform/canvas/canvas.png" width="90%" title="Create or edit dbt models with Canvas, enabling everyone to develop with dbt through a drag-and-drop experience inside of dbt." />
+<Lightbox src="/img/docs/dbt-platform/canvas/canvas.png" width="90%" title="Создание и редактирование моделей dbt в визуальном редакторе Canvas с поддержкой перетаскивания" />
 
 <Prerequisites feature={'/snippets/_canvas-prerequisites.md'} />
 
@@ -36,16 +36,16 @@ import CopilotWizardDifferences from '/snippets/_copilot-wizard-diff.md';
 
 <CopilotWizardDifferences/>
 
-## Feedback
+## Обратная связь {#feedback}
 
-Please note, always review AI-generated code and content as it may produce incorrect results.
+Обратите внимание: всегда проверяйте код и контент, сгенерированные ИИ, так как они могут содержать ошибки или некорректные результаты.
 
-To give feedback, please reach out to your dbt Labs account team. We appreciate your feedback and suggestions as we improve <Constant name="canvas" />.
+Чтобы оставить обратную связь, пожалуйста, свяжитесь с вашей аккаунт-командой dbt Labs. Мы ценим ваши отзывы и предложения и используем их для улучшения <Constant name="canvas" />.
 
-## Resources
+## Ресурсы {#resources}
 
-Learn more about <Constant name="canvas" />: 
+Подробнее о <Constant name="canvas" />:
 
-- How to [use <Constant name="canvas" />](/docs/platform/use-canvas)
-- The <Constant name="canvas" /> [quickstart guide](/guides/canvas)
-- [<Constant name="canvas" /> fundamentals course](https://learn.getdbt.com/learn/course/canvas-fundamentals) on [dbt Learn](https://learn.getdbt.com/catalog)
+- Как [работать с <Constant name="canvas" />](/docs/platform/use-canvas)
+- [Краткое руководство по <Constant name="canvas" />](/guides/canvas)
+- [Курс по основам <Constant name="canvas" />](https://learn.getdbt.com/learn/course/canvas-fundamentals) на [dbt Learn](https://learn.getdbt.com/catalog)

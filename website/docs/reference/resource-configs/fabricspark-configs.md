@@ -10,11 +10,11 @@ description: "Конфигурации Microsoft Fabric Spark — прочита
 
 | Параметр  | Описание          | Обязательно?        | <div style={{width:'350px'}}>Пример</div>       |
 |---------|----------------------|------------------|--------------------------------------------------|
-| file_format | Формат файла, который будет использоваться при создании таблиц (`parquet`, `delta`, `csv`). | Optional | `delta`|
-| location_root [^1]  | Указанный каталог, используемый для хранения данных таблицы. К нему добавляется алиас таблицы. | Optional | `Files/<folder>` or `Tables/<tableName>` |
+| file_format | Формат файла, который будет использоваться при создании таблиц (`parquet`, `delta`, `csv`). | Нет | `delta`|
+| location_root [^1]  | Указанный каталог, используемый для хранения данных таблицы. К нему добавляется алиас таблицы. | Нет | `Files/<folder>` или `Tables/<tableName>` |
 | partition_by  | Разбиение таблицы по указанным колонкам. Для каждого раздела создаётся отдельный каталог. | Optional | `date_day` |
 | clustered_by  | Каждый раздел таблицы будет разбит на фиксированное количество бакетов по указанным колонкам. | Optional | `country_code` |
-| buckets  | Количество бакетов, создаваемых при кластеризации. | Required if `clustered_by` is specified | `8` |
+| buckets  | Количество бакетов, создаваемых при кластеризации. | Да, если задан `clustered_by` | `8` |
 | tblproperties | Свойства таблицы, которые настраивают её поведение. Набор свойств зависит от формата файла, см. справочную документацию ([Parquet](https://spark.apache.org/docs/3.5.4/sql-data-sources-parquet.html#data-source-option), [Delta](https://docs.delta.io/latest/table-properties.html)). | Optional |<code>Provider=delta Location=abfss://.../Files/tables/sales_data TableProperty.created.by=data_engineering_team TableProperty.purpose=sales analytics CreatedBy=Delta Lake CreatedAt=2024-12-01 14:21:00 Format=Parquet PartitionColumns=region MinReaderVersion=1 MinWriterVersion=2</code> |
 
 [^1]: Если вы настраиваете `location_root`, dbt указывает путь расположения в операторе `create table`. Это переводит таблицу из состояния «managed» в «external» в Fabric Lakehouse.
@@ -40,8 +40,8 @@ dbt стремится предоставлять удобные и интуит
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Выполнение', value: 'run', },
   ]
 }>
 <TabItem value="source">
@@ -96,8 +96,8 @@ insert into table analytics.fabricspark_incremental
 <Tabs
   defaultValue="source"
   values={[
-    { label: 'Source code', value: 'source', },
-    { label: 'Run code', value: 'run', },
+    { label: 'Исходный код', value: 'source', },
+    { label: 'Выполнение', value: 'run', },
   ]
 }>
 <TabItem value="source">

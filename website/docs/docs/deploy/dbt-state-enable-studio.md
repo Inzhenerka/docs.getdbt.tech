@@ -1,46 +1,46 @@
 ---
-title: "Enabling dbt State in Studio"
-sidebar_label: "Enable in Studio"
-description: "Enable dbt State in the dbt Studio IDE for faster development runs, either at the environment level or per user."
+title: "Включение dbt State в Studio"
+sidebar_label: "Включение в Studio"
+description: "Включите dbt State в dbt Studio IDE, чтобы ускорить запуски при разработке — на уровне среды или для отдельного пользователя."
 id: "dbt-state-enable-studio"
 tags: ['dbt State']
 availability: everywhere_usage
 ---
 
-# Enabling dbt State in Studio
+# Включение dbt State в Studio
 
-When you enable dbt State in the [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), it runs automatically on every `dbt run` or `dbt build` during development &mdash; skipping unchanged models and reusing production results so your runs are _faster_.
+Когда вы включаете dbt State в [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio), он автоматически применяется при каждом выполнении `dbt run` или `dbt build` во время разработки &mdash; пропуская неизменённые модели и повторно используя результаты из production, чтобы ваши запуски выполнялись _быстрее_.
 
-You can [turn it on for your development environment](#enabling-dbt-state-on-a-development-environment) so it's the default for everyone, or you can [override that setting just for your own account](#overriding-dbt-state-setting-per-user).
+Вы можете [включить его для среды разработки](#enabling-dbt-state-on-a-development-environment), чтобы он использовался по умолчанию для всех, или [переопределить эту настройку только для своей учётной записи](#overriding-dbt-state-setting-per-user).
 
-**Prerequisite**: An account admin must [enable dbt State](/docs/deploy/dbt-state-setup) before you can use it.
+**Предварительное условие**: прежде чем вы сможете использовать dbt State, администратор аккаунта должен [включить его](/docs/deploy/dbt-state-setup).
 
-## Enabling dbt State on a development environment
+## Включение dbt State в среде разработки {#enabling-dbt-state-on-a-development-environment}
 
-Enabling dbt State on your development environment turns it on for everyone using the <Constant name="studio_ide" />, unless they override it for their own account.
+Включение dbt State в среде разработки активирует его для всех пользователей <Constant name="studio_ide" />, если они не переопределят эту настройку для своей учётной записи.
 
-1. Go to **Orchestration** > **Environments** and select your development environment.
-2. Click **Settings** > **Edit**.
-3. In the **dbt State** section, select **Enable dbt State**.
-4. Click **Save**.
-5. In the pop-up box, click **Continue** if you want to go ahead with the changes and restart all IDE sessions for this project.
+1. Перейдите в **Orchestration** > **Environments** и выберите свою среду разработки.
+2. Нажмите **Settings** > **Edit**.
+3. В разделе **dbt State** выберите **Enable dbt State**.
+4. Нажмите **Save**.
+5. Во всплывающем окне нажмите **Continue**, если хотите применить изменения и перезапустить все сеансы IDE для этого проекта.
 
-## Overriding dbt State setting per user
+## Переопределение настройки dbt State для отдельного пользователя {#overriding-dbt-state-setting-per-user}
 
-You can override the development environment's dbt State setting for your own account without affecting other users. Because the user-level setting takes precedence over the environment-level setting, you can turn dbt State on for yourself before enabling it for your whole team, or turn it off when it's enabled at the environment level.
+Вы можете переопределить настройку dbt State среды разработки для своей учётной записи, не затрагивая других пользователей. Поскольку настройка на уровне пользователя имеет приоритет над настройкой на уровне среды, вы можете включить dbt State для себя до того, как включите его для всей команды, или отключить его для себя, когда он включён на уровне среды.
 
-1. Click your account name in the lower-left corner and select **Account settings**.
-2. Under **Your profile**, go to **Credentials**.
-3. Select the project you want to enable dbt State for.
-4. Click **Edit** and go to the **User development settings** section.
-5. Under **dbt State**, select one of the following options:
-   - **Enabled**: Enables dbt State for your user regardless of the development environment setting.
-   - **Disabled**: Disables dbt State for your user regardless of the development environment setting.
-   - **Reset (inherit from development)**: Only appears after you've saved an **Enabled** or **Disabled** override. Clears your override and falls back to the dbt State setting configured on your development environment.
-6. Click **Save**.
+1. Нажмите на имя своей учётной записи в левом нижнем углу и выберите **Account settings**.
+2. В разделе **Your profile** перейдите в **Credentials**.
+3. Выберите проект, для которого хотите включить dbt State.
+4. Нажмите **Edit** и перейдите в раздел **User development settings**.
+5. В разделе **dbt State** выберите один из следующих вариантов:
+   - **Enabled**: включает dbt State для вашего пользователя независимо от настройки среды разработки.
+   - **Disabled**: отключает dbt State для вашего пользователя независимо от настройки среды разработки.
+   - **Reset (inherit from development)**: появляется только после сохранения переопределения **Enabled** или **Disabled**. Удаляет ваше переопределение и возвращает к использованию настройки dbt State, заданной в среде разработки.
+6. Нажмите **Save**.
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [Enable dbt State on environments and jobs](/docs/deploy/dbt-state-enable-env-jobs)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Включение dbt State для сред и заданий](/docs/deploy/dbt-state-enable-env-jobs)

@@ -39,11 +39,11 @@ dbt предоставляет механизм [переменных](/referenc
 
 <VersionBlock firstVersion="1.12">
 
-### Defining variables in `vars.yml`
+### Определение переменных в `vars.yml` {#defining-variables-in-varsyml}
 
-`vars.yml` is a dedicated file for project variables located at the project root. Because dbt parses it _before_ `dbt_project.yml`, variables from `vars.yml` are available when `dbt_project.yml` is evaluated, so you can reference them in `dbt_project.yml` using `{{ var('...') }}`. For more information, refer to [Using vars.yml variables in dbt_project.yml](#using-varsyml-variables-in-dbt_projectyml).
+Файл `vars.yml` в корне проекта предназначен для переменных проекта. dbt разбирает его _до_ `dbt_project.yml`, поэтому в `dbt_project.yml` на эти переменные можно ссылаться через `{{ var('...') }}`. Подробнее см. [Использование переменных из vars.yml в dbt_project.yml](#using-varsyml-variables-in-dbt_projectyml).
 
-To define variables in a `vars.yml` file, add a `vars` config. You can scope these variables globally, or to a specific package imported in your project. The following example shows variables in a `vars.yml` file:
+Добавьте блок `vars` в файл `vars.yml`. Переменные можно задать для всего проекта или для отдельного подключённого пакета. Пример:
 
 <File name='vars.yml'>
 
@@ -63,15 +63,15 @@ vars:
 
 </File>
 
-You cannot define variables in both `vars.yml` and `dbt_project.yml`. If both files contain a `vars` block with definitions, dbt raises an error.
+Определять переменные одновременно в `vars.yml` и `dbt_project.yml` нельзя. Если в обоих файлах есть блок `vars` с определениями, dbt выдаст ошибку.
 
-If `vars.yml` is empty or doesn't exist, variables defined in `dbt_project.yml` are used instead. 
+Если `vars.yml` пуст или отсутствует, dbt использует переменные из `dbt_project.yml`.
 
-#### Using `vars.yml` variables in `dbt_project.yml`
+#### Использование переменных из `vars.yml` в `dbt_project.yml` {#using-varsyml-variables-in-dbt_projectyml}
 
-Because `vars.yml` is parsed before `dbt_project.yml`, you can reference variables from `vars.yml` within `dbt_project.yml` using `{{ var('...') }}`. Variables referenced in `dbt_project.yml` are resolved only from `vars.yml` or the `--vars` command-line argument, not from the `vars` block in `dbt_project.yml` itself. If `dbt_project.yml` references a variable that is defined only in its own `vars` block, dbt raises an error.
+Поскольку dbt разбирает `vars.yml` раньше `dbt_project.yml`, в `dbt_project.yml` можно ссылаться на переменные из `vars.yml` через `{{ var('...') }}`. Ссылки разрешаются только через `vars.yml` или аргумент командной строки `--vars`. Если переменная определена только в блоке `vars` самого файла `dbt_project.yml`, dbt выдаст ошибку.
 
-For example, you have the following variables defined in `vars.yml`:
+Например, в `vars.yml` определены следующие переменные:
 
 <File name='vars.yml'>
 
@@ -83,7 +83,7 @@ vars:
 
 </File>
 
-You can reference them in `dbt_project.yml`:
+На них можно сослаться в `dbt_project.yml`:
 
 <File name='dbt_project.yml'>
 
@@ -98,7 +98,7 @@ models:
 
 </VersionBlock>
 
-### Defining variables in `dbt_project.yml`
+### Определение переменных в `dbt_project.yml` {#defining-variables-in-dbt_projectyml}
 
 :::info
 

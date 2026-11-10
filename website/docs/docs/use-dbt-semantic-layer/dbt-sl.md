@@ -29,7 +29,7 @@ import SlConnectYourAi from '/snippets/_sl-connect-your-ai.md';
 
 Перенос определений метрик из BI‑слоя в слой моделирования позволяет дата-командам быть уверенными, что разные бизнес‑подразделения используют одни и те же определения метрик, независимо от выбранного инструмента. Если определение метрики изменяется в dbt, оно обновляется везде, где используется, обеспечивая согласованность во всех приложениях. Для обеспечения безопасного контроля доступа <Constant name="semantic_layer" /> реализует надежные механизмы [разграничения прав доступа](/docs/use-dbt-semantic-layer/setup-sl#administer-the-semantic-layer-1).
 
-Чтобы узнать больше, ознакомьтесь с [FAQ по <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs) или прочитайте пост в блоге [Why we need a universal semantic layer](https://www.getdbt.com/blog/universal-semantic-layer/).
+Чтобы узнать больше, ознакомьтесь с [FAQ по <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs) или прочитайте пост в блоге [Зачем нужен универсальный семантический слой](https://www.getdbt.com/blog/universal-semantic-layer/).
 
 <div style={{ display: 'flex', justifyContent: 'center', }}>
 <iframe width="850" height="510" position="relative" src="https://www.youtube.com/embed/DS7Ub_CmBR0?si=m92hLmxw1VuE6KKO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -48,19 +48,12 @@ plan="dbt Starter or Enterprise-tier"
 
 На этой странице собраны ссылки на различные ресурсы, которые помогут вам разобраться в <Constant name="semantic_layer" />, настроить и развернуть его, а также интегрировать с другими инструментами. В следующих разделах приведены ссылки на отдельные страницы, где подробно рассматривается каждый из этих аспектов. Используйте эти ссылки, чтобы сразу перейти к нужной информации — будь то первоначальная настройка <Constant name="semantic_layer" />, развертывание метрик или интеграция с инструментами, использующими его данные.
 
-Для начала работы с <Constant name="semantic_layer" /> ознакомьтесь со следующими ресурсами:
-- [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-qs) &mdash; Создание и определение метрик, настройка <Constant name="semantic_layer" /> и выполнение запросов с использованием наших первоклассных интеграций.
-- [Создание метрик](/docs/build/build-metrics-intro) &mdash; Используйте MetricFlow в <Constant name="cloud" /> для централизованного определения метрик.
-- [FAQ по <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs) &mdash; Ответы на часто задаваемые вопросы о <Constant name="semantic_layer" />, включая доступность, интеграции и многое другое.
-
 Чтобы начать работу с <Constant name="semantic_layer" />, обратитесь к следующим ресурсам:
 - [Быстрый старт с <Constant name="semantic_layer" />](/guides/sl-qs): Создавайте и определяйте метрики, настройте <Constant name="semantic_layer" /> и запрашивайте метрики в Google Sheets и других инструментах.
 - [Создание метрик](/docs/build/build-metrics-intro) &mdash; Используйте MetricFlow в <Constant name="dbt" /> для централизованного определения метрик.
 - [Часто задаваемые вопросы о <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs) &mdash; Найдите ответы на часто задаваемые вопросы о <Constant name="semantic_layer" />, включая доступность, интеграции и другие темы.
 
-Следующие ресурсы содержат информацию о том, как настроить <Constant name="semantic_layer" />:
-- [Администрирование <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) &mdash; Удобная настройка учетных данных и токенов для начала выполнения запросов к <Constant name="semantic_layer" />. 
-- [Архитектура](/docs/use-dbt-semantic-layer/sl-architecture) &mdash; Обзор ключевых компонентов, из которых состоит <Constant name="semantic_layer" />.
+## Настройка семантического слоя dbt {#configure-the-dbt-semantic-layer}
 
 Следующие ресурсы содержат информацию о настройке <Constant name="semantic_layer" />:
 - [Администрирование <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/setup-sl) &mdash; С лёгкостью настройте учётные данные и токены, чтобы начать выполнять запросы к <Constant name="semantic_layer" />. 
@@ -71,12 +64,6 @@ plan="dbt Starter or Enterprise-tier"
 - [Развёртывание <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/deploy-sl) &mdash; Запустите задание <Constant name="dbt" />, чтобы развернуть <Constant name="semantic_layer" /> и материализовать метрики.
 - [Создание запросов с помощью экспортов](/docs/use-dbt-semantic-layer/exports) &mdash; Используйте экспорты для выполнения часто используемых запросов непосредственно на вашей платформе данных по расписанию.
 - [Кэширование типовых запросов](/docs/use-dbt-semantic-layer/sl-cache) &mdash; Используйте кэширование результатов и декларативное кэширование для типовых запросов, чтобы повысить производительность и сократить объём вычислений при выполнении запросов.
-
-## Использование метрик и интеграция
-Используйте метрики и интегрируйте <Constant name="semantic_layer" /> с инструментами и приложениями, которые их используют:
-- [Использование метрик](/docs/use-dbt-semantic-layer/consume-metrics) &mdash; Запрашивайте и используйте метрики в инструментах и приложениях с помощью <Constant name="semantic_layer" />.
-- [Доступные интеграции](/docs/platform-integrations/avail-sl-integrations) &mdash; Ознакомьтесь с широким кругом партнёрских решений, которые можно интегрировать с <Constant name="semantic_layer" /> для выполнения запросов.
-- [API <Constant name="semantic_layer" />](/docs/dbt-apis/sl-api-overview) &mdash; Используйте API <Constant name="semantic_layer" /> для запроса метрик в инструментах, работающих с этими данными, чтобы получать согласованные и надёжные метрики.
 
 ## Использование метрик и интеграция {#consume-metrics-and-integrate}
 Используйте метрики и интегрируйте <Constant name="semantic_layer" /> с downstream‑инструментами и приложениями:

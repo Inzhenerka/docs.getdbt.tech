@@ -19,13 +19,13 @@ description: "Конфигурации Apache Spark - Прочтите это п
 
 При материализации модели как `table`, вы можете включить несколько дополнительных конфигураций, специфичных для плагина dbt-spark, в дополнение к стандартным [конфигурациям модели](/reference/model-configs).
 
-| Option  | Description          | Required?        | <div style={{width:'350px'}}>Example</div>       |
+| Параметр | Описание | Обязательный? | <div style={{width:'350px'}}>Пример</div> |
 |---------|----------------------|------------------|--------------------------------------------------|
 | file_format | Формат файла, который будет использоваться при создании таблиц (`parquet`, `delta`, `iceberg`, `hudi`, `csv`, `json`, `text`, `jdbc`, `orc`, `hive` или `libsvm`). | Optional | `parquet`|
 | location_root [^1]  | Создаваемая таблица использует указанный каталог для хранения своих данных. К этому пути будет добавлен алиас таблицы. | Optional                | `/mnt/root`              |
 | partition_by  | Разбивает создаваемую таблицу на партиции по указанным столбцам. Для каждой партиции создаётся отдельный каталог. | Optional                | `date_day`              |
 | clustered_by  | Каждая партиция в создаваемой таблице будет дополнительно разбита на фиксированное количество бакетов по указанным столбцам. | Optional               | `country_code`              |
-| buckets  | Количество бакетов, которые будут созданы при кластеризации. | Required if `clustered_by` is specified                | `8`              |
+| buckets  | Количество бакетов, которые будут созданы при кластеризации. | Да, если задан `clustered_by`                | `8`              |
 | tblproperties | Свойства таблицы, которые настраивают её поведение. Набор доступных свойств зависит от формата файла, см. справочную документацию ([Iceberg](https://iceberg.apache.org/docs/latest/configuration/#table-properties), [Parquet](https://spark.apache.org/docs/3.5.4/sql-data-sources-parquet.html#data-source-option), [Delta](https://docs.databricks.com/aws/en/delta/table-properties#delta-table-properties), [Hudi](https://hudi.apache.org/docs/sql_ddl/#table-properties)). | Optional |<code># Iceberg Example<br /> tblproperties:<br />   read.split.target-size: 268435456<br />   commit.retry.num-retries: 10</code> |
 
 [^1]: Если вы настраиваете `location_root`, dbt указывает путь размещения в выражении `create table`. Это изменяет тип таблицы с «managed» на «external» в Spark/Databricks.
@@ -325,7 +325,7 @@ snapshots:
 
 Доступны три конфигурации профиля:
 
-| Parameter	| Type	| Default |	Description |
+| Параметр | Тип | По умолчанию | Описание |
 |-----------|-------|---------|-------------|
 | `poll_interval` | Integer |	5 |	Как часто (в секундах) адаптер опрашивает Thrift-сервер, чтобы проверить, завершился ли асинхронный запрос. |
 | `query_timeout`	| Integer |	None | Максимальная продолжительность выполнения запроса (в секундах). Если во время опроса запрос превышает это значение, dbt выбрасывает `DbtRuntimeError`. По умолчанию тайм-аут не задан. |

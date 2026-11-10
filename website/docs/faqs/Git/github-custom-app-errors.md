@@ -1,17 +1,17 @@
 ---
-title: Why does dbt reject my custom GitHub application details?
-description: "Troubleshoot validation errors when adding your own GitHub application to dbt"
-sidebar_label: 'Errors when adding a custom GitHub application'
+title: Почему dbt отклоняет данные моего собственного приложения GitHub?
+description: "Устранение ошибок проверки при добавлении собственного приложения GitHub в dbt"
+sidebar_label: 'Ошибки при добавлении собственного приложения GitHub'
 id: github-custom-app-errors
 ---
 
-<Constant name="dbt" /> validates your GitHub application against GitHub before saving it, so an invalid configuration is rejected instead of quietly breaking your team's connection. If you see an error when you save, check these in order:
+<Constant name="dbt" /> проверяет данные вашего приложения GitHub, обращаясь к GitHub, прежде чем сохранить их. Поэтому некорректная конфигурация отклоняется, а не приводит к незаметному нарушению подключения вашей команды. Если при сохранении возникает ошибка, последовательно проверьте следующее:
 
-- **App ID**: Use the **App ID** from your GitHub app's settings page, not the client ID or the installation ID.
-- **Private key**: Paste the entire contents of the `.pem` file, including the `-----BEGIN RSA PRIVATE KEY-----` and `-----END RSA PRIVATE KEY-----` lines. If you lost the file, generate a new private key in GitHub.
-- **Client ID**: Paste the **Client ID** from your GitHub app.
-- **GitHub base URL**: Use the hostname of your GitHub instance with no trailing slash and no `/api/v3` path, for example `https://github.yourgreatcompany.com`.
-- **Client secret**: GitHub only shows this once. If you didn't copy it, generate a new one.
-- **Network access**: Your GitHub instance must be reachable from <Constant name="dbt" />. If you use [IP restrictions](/docs/platform/secure/ip-restrictions), confirm the relevant CIDRs are allowed.
+- **App ID**: Используйте **App ID** со страницы настроек вашего приложения GitHub, а не идентификатор клиента или идентификатор установки.
+- **Private key**: Вставьте всё содержимое файла `.pem`, включая строки `-----BEGIN RSA PRIVATE KEY-----` и `-----END RSA PRIVATE KEY-----`. Если вы потеряли файл, создайте новый закрытый ключ в GitHub.
+- **Client ID**: Вставьте **Client ID** вашего приложения GitHub.
+- **GitHub base URL**: Укажите имя хоста вашего экземпляра GitHub без завершающей косой черты и без пути `/api/v3`, например `https://github.yourgreatcompany.com`.
+- **Client secret**: GitHub показывает это значение только один раз. Если вы его не скопировали, создайте новое.
+- **Сетевой доступ**: Ваш экземпляр GitHub должен быть доступен из <Constant name="dbt" />. Если вы используете [ограничения по IP-адресам](/docs/platform/secure/ip-restrictions), убедитесь, что доступ для соответствующих диапазонов CIDR разрешён.
 
-For setup steps, refer to [Custom GitHub application](/docs/platform/git/connect-github#custom-github-application), available in private beta.
+Инструкции по настройке см. в разделе [Собственное приложение GitHub](/docs/platform/git/connect-github#custom-github-application). Эта возможность доступна в рамках закрытого бета-тестирования.

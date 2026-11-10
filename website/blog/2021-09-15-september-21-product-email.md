@@ -49,12 +49,12 @@ is_featured: false
 - Определение конфигураций ресурсов во всех ожидаемых местах (например, YAML файлы)
 - Фиксация изменений в макросах в state:modified для лучшей Slim CI
 
- ![Screen Shot 2021-09-20 at 11.34.47 AM (1)](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-09-20%20at%2011.34.47%20AM%20(1).png?upscale=true&width=600&upscale=true&name=Screen%20Shot%202021-09-20%20at%2011.34.47%20AM%20(1).png) 
+ ![Снимок экрана от 20.09.2021](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-09-20%20at%2011.34.47%20AM%20(1).png?upscale=true&width=600&upscale=true&name=Screen%20Shot%202021-09-20%20at%2011.34.47%20AM%20(1).png) 
 
 ### dbt Cloud v1.1.32 - v1.1.35: {#dbt-cloud-v1132-v1135}
-- Журнал изменений и дополнительные материалы находятся [здесь.](https://docs.getdbt.tech/docs/dbt-cloud/cloud-changelog?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD)*
+- Журнал изменений и дополнительные материалы находятся [здесь.](/docs/dbt-versions/release-notes?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD)*
 - [DAG в IDE](https://blog.getdbt.com/on-dags-hierarchies-and-ides/?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Мы хотим, чтобы пользователи имели беспрепятственный опыт при навигации между кодом и контекстом. Встраивание DAG в IDE значительно упрощает исследование структуры проекта
- ![Screen Shot 2021-09-22 at 4.59.24 PM](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png?upscale=true&width=1120&upscale=true&name=Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png) 
+ ![Граф зависимостей в IDE dbt Cloud](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png?upscale=true&width=1120&upscale=true&name=Screen%20Shot%202021-09-22%20at%204.59.24%20PM.png) 
 - [Metadata API](https://docs.getdbt.com/docs/dbt-apis/metadata-api?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Теперь общедоступен (GA)! Оценивайте состояние данных с помощью метаданных, созданных при последних запусках заданий dbt
 -   [Плитки статуса для дашбордов](https://docs.getdbt.com/docs/dbt-cloud/using-dbt-cloud/cloud-dashboard-status-tiles?utm_campaign=Monthly%20Product%20Updates&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-8nIpohDBSr7SvpXrqY-5ONmnjdIgW0XMiAPkjQTb9Pgwt24nzqAWNX2Xgtj8LA0LrPoHpD): Встраивайте эту плитку везде, где поддерживаются iFrame, чтобы быстро проверять актуальность данных
 
@@ -81,7 +81,7 @@ is_featured: false
 
 - Это фото меня на вершине горы Уитни после моего одиночного похода SOBO по JMT в прошлом месяце. Это и причина, по которой я больше никогда не буду есть овсянку, и причина, по которой вы не получили новостную рассылку в августе. *Извините за это.*
 
- ![Image from iOS (2)](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Image%20from%20iOS%20(2).jpg?upscale=true&width=400&upscale=true&name=Image%20from%20iOS%20(2).jpg) 
+![Автор на вершине горы Уитни](https://hs-8698602.f.hubspotemail.net/hub/8698602/hubfs/Image%20from%20iOS%20(2).jpg?upscale=true&width=400&upscale=true&name=Image%20from%20iOS%20(2).jpg)
 
 Эй, спасибо за чтение. Я ценю вас.
 

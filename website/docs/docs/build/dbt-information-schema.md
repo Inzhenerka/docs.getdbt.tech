@@ -1,7 +1,7 @@
 ---
-title: "dbt Information Schema"
-sidebar_label: "About dbt Information Schema"
-description: "The dbt Information Schema is a contracted interface into your dbt project metadata."
+title: "Информационная схема dbt"
+sidebar_label: "Об информационной схеме dbt"
+description: "Информационная схема dbt — это интерфейс с определённым контрактом для доступа к метаданным вашего проекта dbt."
 id: "dbt-information-schema"
 availability:
   engine: v2
@@ -9,104 +9,104 @@ availability:
 ---
 
 
-The dbt Information Schema is a contracted interface into your project’s metadata. You can query it using SQL with [`dbt show`](#querying-with-dbt-show) or in your [checks](#using-the-information-schema-in-checks).
+Информационная схема dbt — это интерфейс с определённым контрактом для доступа к метаданным вашего проекта. Вы можете обращаться к ней с помощью SQL через [`dbt show`](#querying-with-dbt-show) или в своих [проверках](#using-the-information-schema-in-checks).
 
-The metadata is stored as [Parquet](https://parquet.apache.org/) files, which are more compact and efficient to query than JSON artifacts. For example, a project whose `manifest.json` and `catalog.json` total ~70 MB has an Information Schema of ~5 MB.
+Метаданные хранятся в файлах [Parquet](https://parquet.apache.org/), которые компактнее JSON-артефактов и обеспечивают более эффективное выполнение запросов. Например, для проекта, в котором общий размер `manifest.json` и `catalog.json` составляет около 70 МБ, размер информационной схемы составляет около 5 МБ.
 
-The Information Schema doesn't use warehouse compute to build or to query it. dbt writes the files from its internal project metadata, using an embedded DuckDB engine that runs inside the dbt process. You don't need to install, configure, or manage DuckDB to use the Information Schema.
+Создание информационной схемы и выполнение запросов к ней не используют вычислительные ресурсы хранилища данных. dbt записывает файлы на основе внутренних метаданных проекта с помощью встроенного движка DuckDB, работающего внутри процесса dbt. Для использования информационной схемы не нужно устанавливать, настраивать или администрировать DuckDB.
 
-When you use the [`--generate-info-schema`](#generating-the-information-schema) flag, dbt writes these files to a versioned directory, such as `target/info_schema/v1/`. The available metadata grows as dbt processes your project:
+При использовании флага [`--generate-info-schema`](#generating-the-information-schema) dbt записывает эти файлы в каталог с указанием версии, например `target/info_schema/v1/`. Объём доступных метаданных растёт по мере обработки проекта в dbt:
 
-- Parsing provides basic project metadata
-- Compiling adds model column types and column-level lineage (with `--static-analysis strict`)
-- Running or building adds runtime results
+- Парсинг предоставляет основные метаданные проекта
+- Компиляция добавляет типы столбцов моделей и происхождение данных на уровне столбцов (при использовании `--static-analysis strict`)
+- Выполнение команд run или build добавляет результаты выполнения
 
-Use `dbt show --inline` to run SQL queries or `dbt show --info` to query a view by name. You can also read the files with Parquet-compatible tools such as Pandas or Polars.
+Используйте `dbt show --inline` для выполнения SQL-запросов или `dbt show --info` для запроса представления по имени. Вы также можете читать файлы с помощью инструментов, поддерживающих Parquet, например Pandas или Polars.
 
-For available tables and their descriptions, see [Information Schema tables](/reference/info-schema).
+Список доступных таблиц и их описания см. в разделе [Таблицы информационной схемы](/reference/info-schema).
 
-<Constant name="wizard" /> also uses the Information Schema to understand your project. Refer to [How <Constant name="wizard" /> works](/docs/dbt-ai/wizard-how-it-works#dbt-information-schema) to learn more.
+<Constant name="wizard" /> также использует информационную схему для анализа вашего проекта. Подробнее см. в разделе [Как работает <Constant name="wizard" />](/docs/dbt-ai/wizard-how-it-works#dbt-information-schema).
 
-## Generating the Information Schema
+## Создание информационной схемы {#generating-the-information-schema}
 
-Use `--generate-info-schema` or `DBT_ENGINE_GENERATE_INFO_SCHEMA=true` with `dbt build`, `dbt run`, `dbt compile`, or `dbt parse`. By default, the `dbt.node_columns` table contains only YAML-declared columns for both models and sources.
+Используйте `--generate-info-schema` или `DBT_ENGINE_GENERATE_INFO_SCHEMA=true` с командами `dbt build`, `dbt run`, `dbt compile` или `dbt parse`. По умолчанию таблица `dbt.node_columns` содержит только столбцы, объявленные в YAML, как для моделей, так и для источников.
 
-- To include inferred model column types and column-level lineage, add `--static-analysis strict`:
+- Чтобы включить выведенные типы столбцов моделей и происхождение данных на уровне столбцов, добавьте `--static-analysis strict`:
 
   ```shell
   dbt build --generate-info-schema --static-analysis strict
   ```
 
-  With this flag, dbt infers column types from your model SQL. Source columns are still limited to what's declared in YAML.
+  С этим флагом dbt определяет типы столбцов на основе SQL-кода ваших моделей. Столбцы источников по-прежнему ограничены теми, которые объявлены в YAML.
 
-- To include warehouse column types and all columns from sources used by the selected nodes, add [`--write-catalog`](/reference/commands/cmd-docs#--write-catalog-flag) on `dbt build` or `dbt run`:
+- Чтобы включить типы столбцов из хранилища данных и все столбцы источников, используемых выбранными узлами, добавьте [`--write-catalog`](/reference/commands/cmd-docs#--write-catalog-flag) к команде `dbt build` или `dbt run`:
 
   ```shell
   dbt build --generate-info-schema --write-catalog
   dbt build --generate-info-schema --static-analysis strict --write-catalog # to get inferred model column types and column-level lineage
   ```
 
-- For [`dbt parse`](/reference/commands/parse), the Information Schema contains no column types, no lineage, and no runtime results, because `dbt parse` doesn't connect to your warehouse.
+- При использовании [`dbt parse`](/reference/commands/parse) информационная схема не содержит типов столбцов, сведений о происхождении данных и результатов выполнения, поскольку `dbt parse` не подключается к вашему хранилищу данных.
 
-- `dbt show` reads your project's metadata directly, so you don't need to generate anything before using the command. Use `--generate-info-schema` when you want to export the Parquet files to disk (for example, to read them with [external tools](#querying-with-external-tools)).
+- `dbt show` читает метаданные проекта напрямую, поэтому перед использованием этой команды ничего создавать не нужно. Используйте `--generate-info-schema`, если хотите экспортировать файлы Parquet на диск (например, чтобы прочитать их с помощью [внешних инструментов](#querying-with-external-tools)).
 
-### Schema directory
+### Каталог схемы
 
-The Information Schema Parquet files live in a versioned subdirectory under your project's `target/info_schema/` directory (or wherever you've set with [`--info-schema-dir`](#overriding-the-output-directory)). They aren't stored in your data warehouse.
+Файлы Parquet информационной схемы находятся в подкаталоге с указанием версии внутри каталога `target/info_schema/` вашего проекта (или каталога, заданного с помощью [`--info-schema-dir`](#overriding-the-output-directory)). Они не хранятся в вашем хранилище данных.
 
-#### Overriding the output directory
+#### Переопределение выходного каталога {#overriding-the-output-directory}
 
-Use `--info-schema-dir` or `DBT_ENGINE_INFO_SCHEMA_DIR` to write the Information Schema to a custom directory. The versioned subdirectory (`v1/`) is still appended under whatever directory you set.
+Используйте `--info-schema-dir` или `DBT_ENGINE_INFO_SCHEMA_DIR`, чтобы записать информационную схему в указанный вами каталог. Подкаталог с указанием версии (`v1/`) по-прежнему создаётся внутри заданного каталога.
 
 ```shell
 dbt build --generate-info-schema --info-schema-dir /tmp/my_schema
 # writes to /tmp/my_schema/v1/
 ```
 
-## Querying the Information Schema
+## Запросы к информационной схеме
 
-You can query the Information Schema locally with `dbt show` or any Parquet-compatible tool.
+Вы можете выполнять запросы к информационной схеме локально с помощью `dbt show` или любого инструмента, поддерживающего Parquet.
 
-### Querying with `dbt show`
+### Запросы с помощью `dbt show` {#querying-with-dbt-show}
 
-Use `dbt show --info <view>` to query a view directly from the CLI:
+Используйте `dbt show --info <view>`, чтобы запросить представление непосредственно из CLI:
 
 ```shell
 dbt show --info models
 dbt show --info models --format json --limit 20
 ```
 
-This queries the intermediate views directly, without connecting to your warehouse. `--info <view>` is equivalent to `--inline "select * from {{ info_schema('<view>') }}"`.
+Эта команда напрямую запрашивает промежуточные представления, не подключаясь к вашему хранилищу данных. `--info <view>` эквивалентно `--inline "select * from {{ info_schema('<view>') }}"`.
 
-You can also use `--inline` SQL that calls `{{ info_schema() }}` directly:
+Вы также можете использовать `--inline` с SQL-кодом, который напрямую вызывает `{{ info_schema() }}`:
 
 ```shell
 dbt show --inline "select name from {{ info_schema('models') }} order by name"
 ```
 
-### Querying with external tools
+### Запросы с помощью внешних инструментов {#querying-with-external-tools}
 
-Point any Parquet-compatible tool at the files in `target/info_schema/v1/`. For example, with pandas:
+Укажите любому инструменту, поддерживающему Parquet, путь к файлам в `target/info_schema/v1/`. Например, для pandas:
 
 ```python
 import pandas as pd
 models = pd.read_parquet("target/info_schema/v1/dbt.models.parquet")
 ```
 
-## Using the Information Schema in checks
+## Использование информационной схемы в проверках {#using-the-information-schema-in-checks}
 
-[Checks](/docs/build/checks) are SQL queries that run against the dbt Information Schema to check your project quality. Use the [`{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) macro in your check to reference a view in the dbt Information Schema. You must set the version of the `info_schema` you want to use in `dbt_project.yml`. Currently, `1` is the only available version.
+[Проверки](/docs/build/checks) — это SQL-запросы к информационной схеме dbt, предназначенные для проверки качества вашего проекта. Используйте макрос [`{{ info_schema() }}`](/reference/dbt-jinja-functions/info-schema-macro) в своей проверке, чтобы обратиться к представлению в информационной схеме dbt. В `dbt_project.yml` необходимо указать версию `info_schema`, которую вы хотите использовать. На данный момент доступна только версия `1`.
 
 ```yaml
 info_schema:
   version: 1
 ```
 
-You can find the schema version in the versioned subdirectory name (for example, `target/info_schema/v1/`).
+Версию схемы можно найти в имени подкаталога с указанием версии (например, `target/info_schema/v1/`).
 
-## Related docs
-- [Information Schema tables](/reference/info-schema)
-- [Commands for generating metadata](/reference/commands/cmd-docs#commands-for-generating-metadata)
+## Связанная документация
+- [Таблицы информационной схемы](/reference/info-schema)
+- [Команды для создания метаданных](/reference/commands/cmd-docs#commands-for-generating-metadata)
 - [`dbt build`](/reference/commands/build)
 - [`dbt run`](/reference/commands/run)
 - [`dbt compile`](/reference/commands/compile)

@@ -16,6 +16,8 @@ availability: all_users
 
 Если вы разрабатываете в командной строке (CLI) и у вас есть вопросы или нужна помощь &mdash; обратитесь к отзывчивому сообществу dbt через [Форум сообщества](https://discourse.getdbt.com/) или [Slack-сообщество dbt](https://www.getdbt.com/community/join-the-community/).
 
+<a id="dbt-cloud-support" />
+
 ## Поддержка платформы dbt {#dbt-platform-support}
 
 Глобальная служба поддержки dbt доступна клиентам <Constant name="dbt" /> по [электронной почте](mailto:support@getdbt.com) или через пункт **Create a support ticket** в меню навигации <Constant name="dbt" />.

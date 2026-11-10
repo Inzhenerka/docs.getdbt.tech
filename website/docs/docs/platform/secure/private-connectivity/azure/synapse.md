@@ -1,7 +1,7 @@
 ---
-title: "Configuring Private Link for Azure Synapse"
+title: "Настройка Private Link для Azure Synapse"
 id: azure-synapse
-description: "Configuring Private Link for Azure Synapse."
+description: "Настройка Private Link для Azure Synapse."
 sidebar_label: "Azure Synapse"
 availability:
   surface: platform
@@ -16,21 +16,21 @@ import CloudProviders from '/snippets/_private-connection-across-providers.md';
 
 <SetUpPages features={'/snippets/_available-tiers-enterprise-plus.md'}/>
 
-The following steps walk you through the setup of a Private Link endpoint for Azure Synapse in a <Constant name="dbt" /> multi-tenant environment.
+Следующие шаги помогут вам настроить частную конечную точку Private Link для Azure Synapse в мультитенантной среде <Constant name="dbt" />.
 
 <CloudProviders type='Azure Synapse' />
 
-## Configure Azure Private Link
+## Настройка Azure Private Link
 
-From your Azure portal:
+На портале Azure:
 
-1. Navigate to your Azure Synapse workspace.
-2. From the workspace overview, click **JSON view**. 
-3. Copy the value in the **Resource ID** field at the top of the pane.  
-    The path format is: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.Synapse/workspaces/<workspace_name>`.
-4. Add the required information to the following template and submit your Azure Private Link request to [dbt Support](mailto:support@getdbt.com):
+1. Перейдите в свою рабочую область Azure Synapse.
+2. На странице обзора рабочей области нажмите **JSON view**. 
+3. Скопируйте значение поля **Resource ID** в верхней части панели.  
+    Формат пути: `/subscriptions/<subscription_uuid>/resourceGroups/<resource_group_name>/providers/Microsoft.Synapse/workspaces/<workspace_name>`.
+4. Заполните следующий шаблон необходимыми сведениями и отправьте запрос на настройку Azure Private Link в [службу поддержки dbt](mailto:support@getdbt.com):
 
-   <Expandable alt_header="Support request email template" is_open={true}>
+   <Expandable alt_header="Шаблон письма в службу поддержки" is_open={true}>
 
    ```text
    Subject: New Azure Multi-Tenant Private Link Request
@@ -47,11 +47,11 @@ From your Azure portal:
 
    <PrivateLinkSLA />
 
-5. Once our Support team confirms the endpoint has been created, navigate to the Azure Synapse workspace in the Azure Portal and browse to **Security** > **Private endpoint connections**. In the **Private endpoint connections** table, highlight the `dbt` named option and select **Approve**. Confirm with dbt Support that the connection has been approved so they can validate the connection and make it available for use in <Constant name="dbt" />.
+5. Когда наша служба поддержки подтвердит создание конечной точки, перейдите в рабочую область Azure Synapse на портале Azure и откройте **Security** > **Private endpoint connections**. В таблице **Private endpoint connections** выделите запись с именем `dbt` и нажмите **Approve**. Сообщите службе поддержки dbt, что подключение одобрено, чтобы специалисты могли проверить его и сделать доступным для использования в <Constant name="dbt" />.
 
 
-## Create connection in dbt
+## Создание подключения в dbt
 
-Once you've completed the step above, you can configure a private endpoint in <Constant name="dbt" />:
+Выполнив шаг выше, вы можете настроить частную конечную точку в <Constant name="dbt" />:
 
 <PrivateLinkCreateConnection platform="Synapse" />

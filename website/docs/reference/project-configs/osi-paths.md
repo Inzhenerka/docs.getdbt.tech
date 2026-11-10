@@ -13,13 +13,13 @@ osi-paths: [directorypath]
 
 </File>
 
-## Definition
+## Определение
 
-Optionally specify a custom list of directories where [Apache Ossie semantic layer documents](/docs/build/ossie-semantic-models) are located.
+При необходимости укажите собственный список каталогов, в которых находятся [документы семантического слоя Apache Ossie](/docs/build/ossie-semantic-models).
 
-## Default
+## Значение по умолчанию
 
-By default, dbt will search for Ossie documents in the `OSI` directory, for example, `osi-paths: ["OSI"]`.
+По умолчанию dbt ищет документы Ossie в каталоге `OSI`, например: `osi-paths: ["OSI"]`.
 
 import RelativePath from '/snippets/_relative-path.md';
 
@@ -28,21 +28,21 @@ path="osi-paths"
 absolute="/Users/username/project/OSI"
 />
 
-- ✅ **Do**
-  - Use relative path:
+- ✅ **Правильно**
+  - Используйте относительный путь:
     ```yml
     osi-paths: ["OSI"]
     ```
 
-- ❌ **Don't:**
-  - Avoid absolute paths:
+- ❌ **Неправильно:**
+  - Избегайте абсолютных путей:
     ```yml
     osi-paths: ["/Users/username/project/OSI"]
     ```
 
-## Examples
+## Примеры
 
-Use a subdirectory named `semantic_interchange` instead of `OSI`:
+Используйте подкаталог с именем `semantic_interchange` вместо `OSI`:
 
 <File name='dbt_project.yml'>
 
@@ -52,7 +52,7 @@ osi-paths: ["semantic_interchange"]
 
 </File>
 
-Use multiple directories to organize your Ossie documents:
+Используйте несколько каталогов для организации документов Ossie:
 
 <File name='dbt_project.yml'>
 

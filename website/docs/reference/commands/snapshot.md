@@ -17,7 +17,7 @@ dbt ищет снимки в каталогах, перечисленных в `
 ```shell
 dbt snapshot --help
 ```
-Use `--select` or `--exclude` to choose which snapshots run. For selection syntax, refer to [Node selection syntax](/reference/node-selection/syntax). `dbt snapshot` also supports common command-line options, such as `--target` and `--threads`. For flag details (including logging options), refer to [About flags (global configs)](/reference/global-configs/about-global-configs).
+Флаги `--select` и `--exclude` определяют, какие снимки выполнить. См. [Синтаксис выбора узлов](/reference/node-selection/syntax). Команда `dbt snapshot` также принимает общие параметры, например `--target` и `--threads`. Подробности, включая настройки журналов, приведены в разделе [Глобальные флаги](/reference/global-configs/about-global-configs).
 
 Используйте `--vars`, если SQL-код вашего снимка обращается к значениям с помощью функции `var()`. Синтаксис, правила приоритета и дополнительные примеры приведены в разделе [Определение переменных в командной строке](/docs/build/project-variables#defining-variables-on-the-command-line).
 

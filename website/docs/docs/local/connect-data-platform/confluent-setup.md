@@ -1,8 +1,8 @@
 ---
-title: "Connect Confluent Cloud to dbt v1"
+title: "Подключение Confluent Cloud к dbt v1"
 sidebar_label: "Confluent Cloud"
 id: "confluent-setup"
-description: "Set up dbt v1 with Confluent Cloud for Apache Flink using the dbt-confluent adapter."
+description: "Настройте dbt v1 для работы с Confluent Cloud for Apache Flink с помощью адаптера dbt-confluent."
 meta:
   maintained_by: Confluent
   authors: "Confluent"
@@ -11,44 +11,42 @@ meta:
   min_core_version: "v1.11.0"
   cloud_support: Not Supported
   min_supported_version: "n/a"
-  slack_channel_name: "n/a"
-  slack_channel_link: "n/a"
   platform_name: "Confluent Cloud"
   config_page: "/reference/resource-configs/confluent-configs"
 availability: local_free
 ---
 
-:::info Community plugin
+:::info Плагин сообщества
 
-Some features may be limited. To contribute, refer to the source repository below.
+Некоторые возможности могут быть ограничены. Чтобы внести свой вклад в разработку, обратитесь к репозиторию исходного кода ниже.
 :::
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 <SetUpPages meta={frontMatter.meta} />
 
-## Connecting to Confluent Cloud with dbt-confluent
+## Подключение к Confluent Cloud с помощью dbt-confluent
 
-Use the `dbt-confluent` adapter to connect to [Confluent Cloud for Apache Flink](https://docs.confluent.io/cloud/current/flink/overview.html), a fully managed stream processing service. The adapter [deploys dbt models as Flink SQL statements](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/deploy-flink-dbt.html) that run continuously on Confluent Cloud.
+Используйте адаптер `dbt-confluent` для подключения к [Confluent Cloud for Apache Flink](https://docs.confluent.io/cloud/current/flink/overview.html) — полностью управляемому сервису обработки потоковых данных. Адаптер [развёртывает модели dbt в виде SQL-операторов Flink](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/deploy-flink-dbt.html), которые непрерывно выполняются в Confluent Cloud.
 
-### Prerequisites
+### Предварительные требования
 
-- A [Confluent Cloud](https://confluent.cloud/) account
-- A [Flink compute pool](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/compute-pools.html) in your environment
-- A [Flink API key](https://docs.confluent.io/cloud/current/flink/authenticate/authenticate-api-keys.html) for a service account with appropriate [RBAC permissions](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/flink-rbac.html)
-- Python 3.10 or later
+- Учётная запись [Confluent Cloud](https://confluent.cloud/)
+- [Вычислительный пул Flink](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/compute-pools.html) в вашей среде
+- [Ключ API Flink](https://docs.confluent.io/cloud/current/flink/authenticate/authenticate-api-keys.html) для сервисной учётной записи с соответствующими [разрешениями RBAC](https://docs.confluent.io/cloud/current/flink/operate-and-deploy/flink-rbac.html)
+- Python 3.10 или более поздней версии
 
-### Installation
+### Установка
 
-Install `dbt-confluent` from PyPI:
+Установите `dbt-confluent` из PyPI:
 
 ```bash
 pip install dbt-confluent
 ```
 
-### Configuring your profile
+### Настройка профиля
 
-Add the following configuration to your `profiles.yml` file to define Confluent Cloud targets.
+Добавьте следующую конфигурацию в файл `profiles.yml`, чтобы определить целевые среды Confluent Cloud.
 
 <File name='~/.dbt/profiles.yml'>
 
@@ -71,45 +69,45 @@ my_confluent_project:
 
 </File>
 
-#### Description of profile fields
+#### Описание полей профиля
 
-| Field | Required | Description |
+| Поле | Обязательное | Описание |
 |---|---|---|
-| `type` | Yes | Must be set to `confluent`. |
-| `cloud_provider` | Yes | The cloud provider for your Confluent Cloud environment (`aws`, `azure`, or `gcp`). |
-| `cloud_region` | Yes | The cloud region for your environment (for example, `us-east-1`, `us-west-2`). |
-| `organization_id` | Yes | Your Confluent Cloud organization ID (UUID format). Find this in the Confluent Cloud Console under **Settings**. |
-| `compute_pool_id` | Yes | The ID of the Flink compute pool to run statements on (for example, `lfcp-xxxxx`). |
-| `environment_id` | Yes | The Confluent Cloud environment ID (for example, `env-xxxxx`). Maps to the Flink SQL catalog. |
-| `dbname` | Yes | The Kafka cluster name within the environment. Maps to the Flink SQL database. |
-| `flink_api_key` | Yes | A Flink API key for authenticating with Confluent Cloud. Use `env_var` to avoid storing secrets in plain text. |
-| `flink_api_secret` | Yes | The corresponding Flink API secret. Use `env_var` to avoid storing secrets in plain text. |
-| `execution_mode` | No | Sets the default execution mode for statements. One of: `streaming_query` (default), `streaming_ddl`, `snapshot`, `snapshot_ddl`. |
-| `statement_name_prefix` | No | Adds a prefix to each Flink statement name. Default: `dbt-`. |
-| `statement_label` | No | Applies a label to all Flink statements so you can filter them in the Confluent Cloud Console. Default: `dbt-confluent`. |
-| `threads` | No | Sets how many models dbt runs concurrently. Default: `1`. |
+| `type` | Да | Должно иметь значение `confluent`. |
+| `cloud_provider` | Да | Облачный провайдер вашей среды Confluent Cloud (`aws`, `azure` или `gcp`). |
+| `cloud_region` | Да | Облачный регион вашей среды (например, `us-east-1`, `us-west-2`). |
+| `organization_id` | Да | Идентификатор вашей организации Confluent Cloud (в формате UUID). Его можно найти в консоли Confluent Cloud в разделе **Settings**. |
+| `compute_pool_id` | Да | Идентификатор вычислительного пула Flink для выполнения операторов (например, `lfcp-xxxxx`). |
+| `environment_id` | Да | Идентификатор среды Confluent Cloud (например, `env-xxxxx`). Соответствует каталогу Flink SQL. |
+| `dbname` | Да | Имя кластера Kafka в среде. Соответствует базе данных Flink SQL. |
+| `flink_api_key` | Да | Ключ API Flink для аутентификации в Confluent Cloud. Используйте `env_var`, чтобы не хранить секреты в открытом виде. |
+| `flink_api_secret` | Да | Соответствующий секрет API Flink. Используйте `env_var`, чтобы не хранить секреты в открытом виде. |
+| `execution_mode` | Нет | Задаёт режим выполнения операторов по умолчанию. Допустимые значения: `streaming_query` (по умолчанию), `streaming_ddl`, `snapshot`, `snapshot_ddl`. |
+| `statement_name_prefix` | Нет | Добавляет префикс к имени каждого оператора Flink. По умолчанию: `dbt-`. |
+| `statement_label` | Нет | Применяет метку ко всем операторам Flink, чтобы их можно было фильтровать в консоли Confluent Cloud. По умолчанию: `dbt-confluent`. |
+| `threads` | Нет | Задаёт количество моделей, которые dbt выполняет одновременно. По умолчанию: `1`. |
 
-### Understanding Confluent Cloud concepts
+### Основные понятия Confluent Cloud
 
-In Confluent Cloud for Apache Flink, dbt concepts map to Flink SQL as follows:
+В Confluent Cloud for Apache Flink понятия dbt соответствуют понятиям Flink SQL следующим образом:
 
-| dbt concept | Confluent Cloud / Flink SQL concept |
+| Понятие dbt | Понятие Confluent Cloud / Flink SQL |
 |---|---|
-| `database` (via `environment_id`) | Flink SQL catalog (Confluent Cloud environment) |
-| `schema` (via `dbname`) | Flink SQL database (Kafka cluster) |
-| `model` | Flink SQL statement |
-| `table` | Kafka topic with a schema |
+| `database` (через `environment_id`) | Каталог Flink SQL (среда Confluent Cloud) |
+| `schema` (через `dbname`) | База данных Flink SQL (кластер Kafka) |
+| `model` | SQL-оператор Flink |
+| `table` | Топик Kafka со схемой |
 
-### Environment variables
+### Переменные окружения
 
-Use environment variables to configure your profile, especially in CI/CD pipelines:
+Используйте переменные окружения для настройки профиля, особенно в конвейерах CI/CD:
 
 ```bash
 export CONFLUENT_FLINK_API_KEY=your-api-key
 export CONFLUENT_FLINK_API_SECRET=your-api-secret
 ```
 
-Then reference them in `profiles.yml` using the `env_var` Jinja function:
+Затем ссылайтесь на них в `profiles.yml` с помощью функции Jinja `env_var`:
 
 ```yaml
 flink_api_key: "{{ env_var('CONFLUENT_FLINK_API_KEY') }}"

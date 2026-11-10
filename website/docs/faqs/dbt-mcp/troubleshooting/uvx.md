@@ -1,21 +1,21 @@
 ---
-title: "Can't find the uvx executable"
-sidebar_label: "Can't find the uvx executable"
-description: "Troubleshooting: Can't find the uvx executable"
+title: "Не удаётся найти исполняемый файл uvx"
+sidebar_label: "Не удаётся найти исполняемый файл uvx"
+description: "Устранение неполадок: не удаётся найти исполняемый файл uvx"
 id: mcp-troubleshoot-uvx
 ---
 
-**Symptoms:** Error messages like `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT`, or `spawn uvx ENOENT` in your MCP client.
+**Симптомы:** В вашем MCP-клиенте появляются сообщения об ошибках, такие как `Could not connect to MCP server dbt-mcp`, `Error: spawn uvx ENOENT` или `spawn uvx ENOENT`.
 
-**Cause:** Your MCP client (like Claude desktop) can't find `uvx` in its PATH because it starts with a limited environment.
+**Причина:** Ваш MCP-клиент (например, настольное приложение Claude) не может найти `uvx` в переменной PATH, поскольку запускается с ограниченным набором переменных окружения.
 
-**Solution:** Use the full path to `uvx` in your configuration.
+**Решение:** Укажите полный путь к `uvx` в конфигурации.
 
-1. Find the full path:
-   - macOS/Linux: Run `which uvx` in Terminal.
-   - Windows: Run `where uvx` in Command Prompt or PowerShell.
+1. Найдите полный путь:
+   - macOS/Linux: Выполните `which uvx` в терминале.
+   - Windows: Выполните `where uvx` в командной строке или PowerShell.
 
-2. Replace `"command": "uvx"` with the full path:
+2. Замените `"command": "uvx"` на вариант с полным путём:
 
 ```json
 {
@@ -29,6 +29,6 @@ id: mcp-troubleshoot-uvx
 }
 ```
 
-Example on macOS with Homebrew: `"command": "/opt/homebrew/bin/uvx"`
+Пример для macOS с Homebrew: `"command": "/opt/homebrew/bin/uvx"`
 
-For VS Code (`mcp.json`), the same fix applies — replace `uvx` with its full path in the `command` field.
+Для VS Code (`mcp.json`) применяется то же решение — замените `uvx` полным путём к нему в поле `command`.

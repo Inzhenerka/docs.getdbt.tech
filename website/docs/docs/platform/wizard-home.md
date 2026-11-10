@@ -1,8 +1,8 @@
 ---
-title: "dbt Wizard home tab"
+title: "Главная вкладка dbt Wizard"
 id: "wizard-home"
-description: "Use the dbt Wizard home tab in dbt platform for an agent-native development workflow — iterate in natural language, review inline diffs and DAG previews, and validate changes without leaving the agent."
-sidebar_label: "Wizard home tab"
+description: "Используйте главную вкладку dbt Wizard в dbt platform для разработки с ИИ-агентом — дорабатывайте проект с помощью естественного языка, просматривайте различия в коде и DAG прямо в интерфейсе и проверяйте изменения, не выходя из агента."
+sidebar_label: "Главная вкладка Wizard"
 tags: [AI, Wizard, Platform]
 availability: platform_usage
 image: /img/docs/dbt-platform/wizard-home-empty.png
@@ -12,108 +12,108 @@ import WizardExploreUsage from '/snippets/_wizard-explore-usage.md';
 import WizardAgentModes from '/snippets/_wizard-agent-modes.md';
 import WizardModelPicker from '/snippets/_wizard-model-picker.md';
 
-# dbt Wizard home tab <Lifecycle status="preview" />
+# Главная вкладка dbt Wizard <Lifecycle status="preview" />
 
 <IntroText>
-The <Constant name="wizard" /> home tab is an agent-native development experience in <Constant name="dbt_platform" />. 
+Главная вкладка <Constant name="wizard" /> — это интерфейс разработки в <Constant name="dbt_platform" />, ориентированный на работу с ИИ-агентом. 
 </IntroText>
 
-Use the <Constant name="wizard" /> home tab to investigate and generate changes with natural language prompts, review inline diffs and DAG previews, and validate changes without leaving the agent.
+Используйте главную вкладку <Constant name="wizard" />, чтобы исследовать проект и создавать изменения с помощью запросов на естественном языке, просматривать различия в коде и DAG прямо в интерфейсе и проверять изменения, не выходя из агента.
 
-AI features are being enabled by default. They're already on for new accounts and are rolling out soon to existing accounts. If your organization opted out, they'll remain off. Admins can [turn AI off or back on and configure providers](/docs/platform/manage-dbt-ai) anytime.
+Функции ИИ включаются по умолчанию. Они уже включены для новых аккаунтов и вскоре будут постепенно включены для существующих. Если ваша организация отказалась от их использования, они останутся выключенными. Администраторы могут в любое время [выключить или снова включить ИИ и настроить поставщиков](/docs/platform/manage-dbt-ai).
 
 
-The <Constant name="wizard" /> home tab is complementary to the [<Constant name="wizard" /> experience in <Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide). Where the <Constant name="studio_ide" /> supports users working directly within a traditional IDE environment, the home tab is purpose-built for agent-native development and keeps you focused on supervising and validating agent-generated work.
+Главная вкладка <Constant name="wizard" /> дополняет [возможности <Constant name="wizard" /> в <Constant name="studio_ide" />](/docs/dbt-ai/wizard-ide). В то время как <Constant name="studio_ide" /> позволяет пользователям работать непосредственно в традиционной среде IDE, главная вкладка специально создана для разработки с ИИ-агентом и помогает сосредоточиться на контроле и проверке результатов его работы.
 
 
 <DocCarousel slidesPerView={1}>
-<Lightbox src="/img/docs/dbt-platform/wizard-home-empty.png" width="95%" title="dbt Wizard home tab — empty state with quick-start prompts" />
-<Lightbox src="/img/docs/dbt-platform/wizard-home-agent.png" width="95%" title="dbt Wizard agent refactoring a docs github model for tech writers :) " />
+<Lightbox src="/img/docs/dbt-platform/wizard-home-empty.png" width="95%" title="Главная вкладка dbt Wizard — начальный экран с запросами для быстрого старта" />
+<Lightbox src="/img/docs/dbt-platform/wizard-home-agent.png" width="95%" title="Агент dbt Wizard выполняет рефакторинг модели docs github для технических писателей :) " />
 </DocCarousel>
 
 
-## Prerequisites
+## Предварительные требования
 
-- A [<Constant name="dbt" /> account](https://www.getdbt.com/signup) and [Developer or Read-only seat license](/docs/platform/manage-access/seats-and-users).
-  - [Legacy Team plans](/docs/platform/billing/plans-and-billing#legacy-plans) don't have access to <Constant name="wizard" />. Move to a [Starter, Enterprise, or Enterprise+ plan](https://www.getdbt.com/pricing) to use it.
-- A [development environment](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) and credentials set up in the <Constant name="studio_ide" />.
-- Use a supported AI provider. Refer to [Supported AI providers](/docs/platform/wizard-platform#supported-ai-providers), or the [Model Provider Rate Table](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model) for the full model list and rates.
-- If you're using <Constant name="wizard" /> in the home tab, you need to [enable experimental features](/docs/dbt-versions/experimental-features) for your account.
+- [Аккаунт <Constant name="dbt" />](https://www.getdbt.com/signup) и [пользовательская лицензия Developer или Read-only](/docs/platform/manage-access/seats-and-users).
+  - [Устаревшие тарифные планы Team](/docs/platform/billing/plans-and-billing#legacy-plans) не предоставляют доступ к <Constant name="wizard" />. Чтобы использовать его, перейдите на [тарифный план Starter, Enterprise или Enterprise+](https://www.getdbt.com/pricing).
+- [Среда разработки](/docs/platform/studio-ide/develop-in-studio#get-started-with-the-studio-ide) и учётные данные, настроенные в <Constant name="studio_ide" />.
+- Используйте поддерживаемого поставщика ИИ. См. раздел [Поддерживаемые поставщики ИИ](/docs/platform/wizard-platform#supported-ai-providers) или [таблицу тарифов поставщиков моделей](https://www.getdbt.com/legal/dbt-wizard-token-costs-by-model), где приведён полный список моделей и тарифов.
+- Чтобы использовать <Constant name="wizard" /> на главной вкладке, необходимо [включить экспериментальные функции](/docs/dbt-versions/experimental-features) для вашего аккаунта.
 
-If <Constant name="wizard" /> stops responding, your account may have used up its usage credits. Refer to [Trial and billing](/docs/dbt-ai/pricing-billing/trial-and-billing).
+Если <Constant name="wizard" /> перестал отвечать, возможно, в вашем аккаунте исчерпаны кредиты на использование. См. раздел [Пробный период и оплата](/docs/dbt-ai/pricing-billing/trial-and-billing).
 
-## What you can do
+## Возможности
 
-Use <Constant name="wizard" /> in the home tab to:
+Используйте <Constant name="wizard" /> на главной вкладке, чтобы:
 
-- **Answer project-aware questions**: Ask about lineage, dependencies, model logic, and project context.
-- **Debug failed jobs**: Investigate run and job failures using dbt Agent Skills with full project context.
-- **Create and manage branches**: Initiate and switch branches directly from the agent workflow.
-- **Make model and project changes**: Refactor SQL, update YAML, and modify project configuration through natural language.
-- **Generate and refine transformation logic**: Build or rewrite models, tests, documentation, and semantic definitions from plain-language prompts.
-- **Run validation workflows**: Execute compile and build checks to validate proposed changes before they're persisted.
-- **Ask questions of production data**: Use [Explore mode](#agent-modes) to query governed metrics and models in plain language, and see the SQL or metric definition behind every answer. This is the main surface for [read-only users](/docs/platform/wizard-read-only-users).
-- **Choose your model**: Select the dbt <Term id="managed" /> model you'd like to work with from the [model picker](/docs/dbt-ai/pricing-billing/overview#choose-a-model).
+- **Получать ответы с учётом контекста проекта**: задавайте вопросы о происхождении данных, зависимостях, логике моделей и контексте проекта.
+- **Отлаживать задания, завершившиеся с ошибкой**: исследуйте ошибки запусков и заданий с помощью dbt Agent Skills с учётом полного контекста проекта.
+- **Создавать ветки и управлять ими**: создавайте и переключайте ветки непосредственно в процессе работы с агентом.
+- **Вносить изменения в модели и проект**: выполняйте рефакторинг SQL, обновляйте YAML и изменяйте конфигурацию проекта с помощью естественного языка.
+- **Создавать и дорабатывать логику преобразований**: создавайте или переписывайте модели, тесты, документацию и семантические определения с помощью запросов на обычном языке.
+- **Запускать процедуры проверки**: выполняйте компиляцию и сборку, чтобы проверить предлагаемые изменения до их сохранения.
+- **Задавать вопросы о данных в рабочей среде**: используйте [режим Explore](#agent-modes), чтобы запрашивать управляемые метрики и модели на обычном языке и просматривать SQL или определение метрики, лежащие в основе каждого ответа. Это основной интерфейс для [пользователей с доступом только для чтения](/docs/platform/wizard-read-only-users).
+- **Выбирать модель**: выбирайте модель под управлением dbt (<Term id="managed" />), с которой хотите работать, в [меню выбора модели](/docs/dbt-ai/pricing-billing/overview#choose-a-model).
 
-:::tip Best practices for using dbt Wizard
-Refer to [How to use dbt Wizard in your dbt project](/best-practices/how-to-use-wizard/wizard-1-intro) for recommended workflows &mdash; including [debugging a failed job](/best-practices/how-to-use-wizard/wizard-5-debug-failed-job), which applies directly to the home tab.
+:::tip Рекомендации по использованию dbt Wizard
+Рекомендуемые рабочие процессы описаны в разделе [Как использовать dbt Wizard в вашем проекте dbt](/best-practices/how-to-use-wizard/wizard-1-intro) &mdash; в том числе [отладка задания, завершившегося с ошибкой](/best-practices/how-to-use-wizard/wizard-5-debug-failed-job), которая применима и к главной вкладке.
 :::
 
-## Agent modes {#agent-modes}
+## Режимы агента {#agent-modes}
 
 <WizardAgentModes />
 
-## Ask questions in Explore mode 
+## Задавайте вопросы в режиме Explore {#ask-questions-in-explore-mode}
 
-Explore mode in the <Constant name="wizard"/> home tab lets you ask questions of your production data in plain language. <Constant name="wizard" /> in Explore mode answers and explains but never changes your project. This option is great for exploratory data analysis and getting a quick understanding of your data.
+Режим Explore на главной вкладке <Constant name="wizard"/> позволяет задавать вопросы о данных в рабочей среде на обычном языке. В режиме Explore <Constant name="wizard" /> отвечает и даёт объяснения, но никогда не изменяет ваш проект. Этот вариант отлично подходит для исследовательского анализа данных и быстрого ознакомления с ними.
 
-Explore mode queries with your personal warehouse credentials. If you don't have any, it falls back to the project's [analytics credential](/docs/platform/wizard-read-only-users#set-up-analytics-credentials), a shared credential an admin sets up on Snowflake, BigQuery, Redshift, or Databricks connections. This is how [read-only users](/docs/platform/wizard-read-only-users) query without their own credentials. If neither exists, <Constant name="wizard" /> asks you to set up credentials or contact an admin.
+Режим Explore выполняет запросы с вашими личными учётными данными хранилища. Если их нет, он использует [учётные данные для аналитики](/docs/platform/wizard-read-only-users#set-up-analytics-credentials) проекта — общие учётные данные, которые администратор настраивает для подключений Snowflake, BigQuery, Redshift или Databricks. Благодаря этому [пользователи с доступом только для чтения](/docs/platform/wizard-read-only-users) могут выполнять запросы без собственных учётных данных. Если ни тех ни других нет, <Constant name="wizard" /> предложит настроить учётные данные или обратиться к администратору.
 
-Explore mode answers are grounded in what your project defines, so it needs metadata or <Constant name="semantic_layer" /> definitions to answer against. For what makes answers better, refer to [Set your team up for good answers](/docs/platform/wizard-read-only-users#set-your-team-up-for-good-answers).
+Ответы в режиме Explore опираются на определения в вашем проекте, поэтому для их формирования необходимы метаданные или определения <Constant name="semantic_layer" />. О том, что помогает улучшить ответы, см. раздел [Подготовьте команду к получению качественных ответов](/docs/platform/wizard-read-only-users#set-your-team-up-for-good-answers).
 
 <WizardExploreUsage />
 
-In the home tab, click **Open** on a result to view the visualization in the right-hand context sidebar, and download the data from there.
+На главной вкладке нажмите **Open** у результата, чтобы просмотреть визуализацию на правой боковой панели контекста и скачать оттуда данные.
 
-<Lightbox src="/img/docs/dbt-platform/wizard-home-explore-viz.png" width="95%" title="Explore mode in the dbt Wizard home tab, with a plain-language summary, a chart, and Chart/Table/SQL toggles." />
+<Lightbox src="/img/docs/dbt-platform/wizard-home-explore-viz.png" width="95%" title="Режим Explore на главной вкладке dbt Wizard: сводка на обычном языке, диаграмма и переключатели Chart/Table/SQL." />
 
-## Inline preview mode
+## Режим встроенного предварительного просмотра
 
-A core part of the home tab experience is **inline preview mode**, which gives you multiple ways to review and validate agent-generated changes directly in the workflow without switching to a separate tool.
+Важная часть работы на главной вкладке — **режим встроенного предварительного просмотра**, который предоставляет несколько способов просмотра и проверки изменений, созданных агентом, непосредственно в процессе работы, без перехода в отдельный инструмент.
 
-The preview experience includes:
+Предварительный просмотр включает:
 
-- **Enhanced SQL diffs**: Review proposed code changes side by side before accepting them.
-- **Structural DAG visualizations**: Inspect transformations as operator-level DAG views that break logic into familiar patterns — joins, filters, aggregations, and projections — making it easier to understand how a model changed beyond the raw SQL.
-- **Execution-aware validation feedback**: See results from compile and build checks inline, so you can assess both the proposed implementation and how the transformation behaves in practice.
-- **Jump to related surfaces**: From the preview, open a model directly in <Constant name="catalog" /> to explore metadata and lineage, or open the file in <Constant name="studio_ide" /> to iterate manually when needed.
+- **Расширенное сравнение SQL**: просматривайте предлагаемые изменения кода в расположенных рядом версиях, прежде чем принять их.
+- **Структурные визуализации DAG**: исследуйте преобразования в виде DAG на уровне операторов, где логика разбита на знакомые операции — соединения, фильтрацию, агрегацию и проекции, — чтобы было проще понять изменения модели, не ограничиваясь исходным SQL.
+- **Результаты проверки с учётом выполнения**: просматривайте результаты компиляции и сборки прямо в интерфейсе, чтобы оценить и предлагаемую реализацию, и поведение преобразования на практике.
+- **Переход к связанным интерфейсам**: из предварительного просмотра открывайте модель непосредственно в <Constant name="catalog" /> для изучения метаданных и происхождения данных или открывайте файл в <Constant name="studio_ide" />, чтобы при необходимости доработать его вручную.
 
-## When to use the home tab or Studio IDE
+## Когда использовать главную вкладку, а когда — Studio IDE
 
-The home tab and <Constant name="studio_ide" /> support different parts of the development workflow:
+Главная вкладка и <Constant name="studio_ide" /> предназначены для разных этапов процесса разработки:
 
 <SimpleTable>
 
-| | Home tab | <Constant name="studio_ide" /> |
+| | Главная вкладка | <Constant name="studio_ide" /> |
 |---|---|---|
-| **Primary workflow** | Supervise and validate agent-generated work | Write and edit code directly in the editor |
-| **Interface** | Streamlined agent-native chat | Full IDE with file explorer, editor, console |
-| **Best for** | Natural language iteration, reviewing diffs, running validations | Manual file edits, direct SQL authoring, complex multi-file work |
-| **Inline preview** | ✅ SQL diffs, DAG visualizations, build feedback | File diffs shown before changes are persisted |
+| **Основной рабочий процесс** | Контроль и проверка результатов работы агента | Написание и изменение кода непосредственно в редакторе |
+| **Интерфейс** | Упрощённый чат для работы с агентом | Полноценная IDE с обозревателем файлов, редактором и консолью |
+| **Лучше всего подходит для** | Доработка с помощью естественного языка, просмотр различий, запуск проверок | Ручное редактирование файлов, непосредственное написание SQL, сложная работа с несколькими файлами |
+| **Встроенный предварительный просмотр** | ✅ Различия в SQL, визуализации DAG, результаты сборки | Отображение различий в файлах до сохранения изменений |
 
 </SimpleTable>
 
-For most development workflows, you can move between the two surfaces freely. Use the home tab to investigate and generate, and drop into <Constant name="studio_ide" /> when you need direct control.
+В большинстве рабочих процессов разработки можно свободно переключаться между двумя интерфейсами. Используйте главную вкладку для исследования и генерации, а когда потребуется непосредственный контроль, переходите в <Constant name="studio_ide" />.
 
-## Choose a model
+## Выбор модели
 
 <WizardModelPicker />
 
-## Related docs
+## Связанная документация
 
-- [dbt Wizard in Studio IDE](/docs/dbt-ai/wizard-ide)
-- [Invite read-only users to dbt Wizard](/docs/platform/wizard-read-only-users)
-- [About dbt Wizard in dbt platform](/docs/platform/wizard-platform)
-- [How dbt Wizard works](/docs/dbt-ai/wizard-how-it-works)
-- [Prompt cookbook](/guides/prompt-cookbook)
-- [dbt AI FAQs](/docs/dbt-ai/dbt-ai-faqs)
+- [dbt Wizard в Studio IDE](/docs/dbt-ai/wizard-ide)
+- [Приглашение пользователей с доступом только для чтения в dbt Wizard](/docs/platform/wizard-read-only-users)
+- [О dbt Wizard в dbt platform](/docs/platform/wizard-platform)
+- [Как работает dbt Wizard](/docs/dbt-ai/wizard-how-it-works)
+- [Сборник примеров запросов](/guides/prompt-cookbook)
+- [Часто задаваемые вопросы об ИИ в dbt](/docs/dbt-ai/dbt-ai-faqs)

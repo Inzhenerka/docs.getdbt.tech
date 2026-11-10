@@ -1,6 +1,6 @@
 ---
 datatype: [directorypath]
-description: "Read this guide to understand the skill-paths configuration in dbt."
+description: "Прочитайте это руководство, чтобы разобраться в настройке skill-paths в dbt."
 default_value: [skills]
 ---
 
@@ -12,15 +12,15 @@ skill-paths: [directorypath]
 
 </File>
 
-## Definition
+## Определение
 
-Optionally specify a custom list of directories where [agent skills](/docs/dbt-ai/package-skills) are located.
+При необходимости укажите собственный список каталогов, в которых находятся [навыки агентов](/docs/dbt-ai/package-skills).
 
-Every subdirectory containing a `SKILL.md` file is treated as one skill. dbt scans `skill-paths` in your root project and in each installed package when it installs packages.
+Каждый подкаталог, содержащий файл `SKILL.md`, считается отдельным навыком. При установке пакетов dbt сканирует каталоги, указанные в `skill-paths`, в корневом проекте и в каждом установленном пакете.
 
-## Default
+## Значение по умолчанию
 
-By default, dbt looks for skills in a directory named `skills` in the root of your project.
+По умолчанию dbt ищет навыки в каталоге с именем `skills` в корне вашего проекта.
 
 import RelativePath from '/snippets/_relative-path.md';
 
@@ -29,21 +29,21 @@ path="skill-paths"
 absolute="/Users/username/project/skills"
 />
 
-- ✅ **Do**
-  - Use relative path:
+- ✅ **Правильно**
+  - Используйте относительный путь:
     ```yml
     skill-paths: ["skills"]
     ```
 
-- ❌ **Don't**
-  - Avoid absolute paths:
+- ❌ **Неправильно**
+  - Избегайте абсолютных путей:
     ```yml
     skill-paths: ["/Users/username/project/skills"]
     ```
 
-## Examples
+## Примеры
 
-### Use a subdirectory named `agent-skills` for skills
+### Использование подкаталога с именем `agent-skills` для навыков
 
 <File name='dbt_project.yml'>
 
@@ -53,7 +53,7 @@ skill-paths: ["agent-skills"]
 
 </File>
 
-### Use more than one directory for skills
+### Использование нескольких каталогов для навыков
 
 <File name='dbt_project.yml'>
 

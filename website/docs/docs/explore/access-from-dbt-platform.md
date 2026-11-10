@@ -1,42 +1,42 @@
 ---
-title: "Access Catalog from dbt platform features"
-sidebar_label: "Access from dbt platform"
-description: "Learn where and how to directly access and interact with Catalog from dbt platform features and products."
+title: "Доступ к Catalog из функций платформы dbt"
+sidebar_label: "Доступ из платформы dbt"
+description: "Узнайте, где и как открывать Catalog и взаимодействовать с ним напрямую из функций и продуктов платформы dbt."
 availability: platform_login
 ---
 
-Access <Constant name="catalog" /> from jobs, <Constant name="insights" />, and other areas of <Constant name="dbt" /> to move quickly between run context, lineage, and resource metadata in your project.
+Открывайте <Constant name="catalog" /> из заданий, <Constant name="insights" /> и других разделов <Constant name="dbt" />, чтобы быстро переключаться между контекстом запуска, графом зависимостей и метаданными ресурсов вашего проекта.
 
-This page describes how to open <Constant name="catalog" /> from orchestration and exploration workflows in <Constant name="dbt" />. The primary way to open <Constant name="catalog" /> is **Catalog** in the navigation; you can also open it from jobs and <Constant name="insights" /> as described in the sections below.
+На этой странице описано, как открыть <Constant name="catalog" /> в ходе оркестрации и исследования данных в <Constant name="dbt" />. Основной способ открыть <Constant name="catalog" /> — выбрать **Catalog** в меню навигации; также его можно открыть из заданий и <Constant name="insights" />, как описано в разделах ниже.
 
-### Lineage tab in jobs
+### Вкладка Lineage в заданиях {#lineage-tab-in-jobs}
 
-The **Lineage tab** in <Constant name="dbt" /> jobs displays the lineage associated with the [job run](/docs/deploy/jobs). You can open <Constant name="catalog" /> directly from this tab to understand the dependencies and relationships of resources in your project.
+**Вкладка Lineage** в заданиях <Constant name="dbt" /> отображает граф зависимостей, связанный с [запуском задания](/docs/deploy/jobs). Вы можете открыть <Constant name="catalog" /> прямо с этой вкладки, чтобы изучить зависимости и связи между ресурсами вашего проекта.
 
-#### Access Catalog from the lineage tab
+#### Доступ к Catalog с вкладки Lineage
 
-- From a job, select the **Lineage tab**.
-- Double-click a node in the lineage graph to open a new tab and view its metadata in <Constant name="catalog" />.
+- В задании выберите **вкладку Lineage**.
+- Дважды щёлкните узел графа зависимостей, чтобы открыть новую вкладку и просмотреть его метаданные в <Constant name="catalog" />.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Access dbt Catalog from the lineage tab by double-clicking on the lineage node." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-lineage.gif" title="Откройте dbt Catalog с вкладки Lineage, дважды щёлкнув узел графа зависимостей." />
 
-### Model timing tab in jobs <Lifecycle status="self_service,managed,managed_plus"/>
+### Вкладка Model timing в заданиях <Lifecycle status="self_service,managed,managed_plus"/> {#model-timing-tab-in-jobs-}
 
-The [model timing tab](/docs/deploy/run-visibility#model-timing-tab) in <Constant name="dbt" /> jobs displays the composition, order, and time taken by each model in a job run.
+[Вкладка Model timing](/docs/deploy/run-visibility#model-timing) в заданиях <Constant name="dbt" /> отображает состав моделей, порядок их выполнения и время, затраченное на каждую модель при запуске задания.
 
-You can open <Constant name="catalog" /> from the **model timing tab** to investigate resources, diagnose performance bottlenecks, understand dependencies and relationships of slow-running models, and make changes to improve their performance.
+Вы можете открыть <Constant name="catalog" /> с **вкладки Model timing**, чтобы исследовать ресурсы, выявлять узкие места производительности, изучать зависимости и связи медленно выполняющихся моделей и вносить изменения для повышения их производительности.
 
-#### Access Catalog from the model timing tab
+#### Доступ к Catalog с вкладки Model timing
 
-- From a job, select the **model timing tab**.
-- Hover over a resource and select **View in <Constant name="catalog" />** to open its metadata in <Constant name="catalog" />.
+- В задании выберите **вкладку Model timing**.
+- Наведите указатель на ресурс и выберите **View in <Constant name="catalog" />**, чтобы открыть его метаданные в <Constant name="catalog" />.
 
-<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-model-timing.png" title="Access dbt Catalog from the model timing tab by hovering over the resource and clicking 'View in Explorer'." />
+<Lightbox src="/img/docs/collaborate/dbt-explorer/explorer-from-model-timing.png" title="Откройте dbt Catalog с вкладки Model timing, наведя указатель на ресурс и нажав 'View in Explorer'." />
 
 ### dbt Insights <Lifecycle status="managed,managed_plus" />
 
-Open <Constant name="catalog" /> from [<Constant name="insights" />](/docs/explore/access-dbt-insights) to view project lineage and resources such as tables, columns, metrics, dimensions, and more.
+Откройте <Constant name="catalog" /> из [<Constant name="insights" />](/docs/explore/access-dbt-insights), чтобы просмотреть граф зависимостей проекта и такие ресурсы, как таблицы, столбцы, метрики, измерения и многое другое.
 
-To open <Constant name="catalog" /> from <Constant name="insights" />, select the **<Constant name="catalog" />** icon in the Query console sidebar menu, then search for the resource you want.
+Чтобы открыть <Constant name="catalog" /> из <Constant name="insights" />, выберите значок **<Constant name="catalog" />** в боковом меню Query console, а затем найдите нужный ресурс.
 
-<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="dbt Insights integrated with dbt Catalog" />
+<Lightbox src="/img/docs/dbt-insights/insights-explorer.png" width="90%" title="Интеграция dbt Insights с dbt Catalog" />

@@ -204,9 +204,9 @@ semantic_model:
 
 <VersionBlock firstVersion="1.12">
 
-Dimensions are bound to the primary entity of the semantic model they are defined in. 
+Измерения привязаны к первичной сущности семантической модели, в которой они определены.
 
-MetricFlow requires that all semantic models have a primary entity. This is to guarantee unique dimension names. If your data source doesn't have a primary entity, you need to assign the entity a name using the `entity` key. It doesn't necessarily have to map to a column in that table and assigning the name doesn't affect query generation. We recommend making these "virtual primary entities" unique across your semantic model. See the following example on how to define a primary entity:
+MetricFlow требует первичную сущность в каждой семантической модели, чтобы имена измерений были уникальными. Если у источника данных нет первичной сущности, задайте ей имя с помощью ключа `entity`. Имя может не соответствовать столбцу таблицы и не влияет на генерацию запросов. Используйте уникальные имена для таких виртуальных первичных сущностей. Ниже показано, как определить первичную сущность:
 
 ```yaml
 models:
@@ -235,7 +235,7 @@ models:
         agg: sum
 ```
 
-If your table doesn't have a physical primary key column, you can still declare a primary entity. Set the model’s grain by declaring a `primary_entity`. The new YAML spec supports this and treats the model as being at that entity’s grain.
+Первичную сущность можно объявить, даже если в таблице нет столбца с физическим первичным ключом. Чтобы задать детализацию модели, укажите `primary_entity`. В новой спецификации YAML детализация модели соответствует этой сущности.
 
 ```yaml
 models:
@@ -269,7 +269,7 @@ models:
 
 <VersionBlock firstVersion="1.9" lastVersion="1.11">
 
-They can refer to existing columns in your dbt model or be calculated using a SQL expression with the `expr` parameter. An example of a categorical dimension is `is_bulk_transaction`, which is a group created by applying a case statement to the underlying column `quantity`. This allows users to group or filter the data based on bulk transactions.
+Измерения могут ссылаться на существующие столбцы модели dbt или вычисляться через SQL-выражение в параметре `expr`. Например, категориальное измерение `is_bulk_transaction` вычисляется выражением `CASE` по столбцу `quantity` и позволяет группировать или фильтровать данные по признаку оптовой покупки.
 
 ```yaml
 dimensions: 
@@ -284,7 +284,7 @@ dimensions:
 
 <VersionBlock firstVersion="1.12">
 
-Define a categorical dimension on the column it maps to. For example, the `transaction_type` column becomes a dimension you can group or filter metrics by:
+Определите категориальное измерение для нужного столбца. Например, столбец `transaction_type` становится измерением, по которому можно группировать или фильтровать метрики:
 
 ```yaml
 models:
@@ -301,7 +301,7 @@ models:
               usage: "Group transactions by their type, like refund or purchase."
 ```
 
-To calculate a categorical dimension from a SQL expression instead of a single column, define it under [`derived_semantics`](#derived_semantics-in-dimensions) and use `expr`. For example, `is_bulk_transaction` applies a case statement to the underlying `quantity` column so users can group or filter by bulk transactions:
+Чтобы вычислить категориальное измерение по SQL-выражению, определите его в [`derived_semantics`](#derived_semantics-in-dimensions) и задайте `expr`. Например, измерение `is_bulk_transaction` вычисляется выражением `CASE` по столбцу `quantity` и позволяет группировать или фильтровать данные по признаку оптовой покупки:
 
 ```yaml
 models:
@@ -485,10 +485,10 @@ measures:
 
 <VersionBlock firstVersion="1.12">
 
-`granularity` specifies the grain of a time dimension. MetricFlow will transform the underlying column to the specified granularity. For example, if you add hourly granularity to a time dimension column, MetricFlow will run a `date_trunc` function to convert the timestamp to hourly. You can easily change the time grain at query time and aggregate it to a coarser grain, for example, from hourly to monthly. However, you can't go from a coarser grain to a finer grain (monthly to hourly).
+Параметр `granularity` задаёт детализацию временного измерения. MetricFlow приводит исходный столбец к заданной детализации. Например, при почасовой детализации он округляет метку времени до часа с помощью `date_trunc`. При запросе можно перейти к более крупному интервалу, например от часа к месяцу. Обратный переход невозможен.
 
-Our supported granularities are:
-* nanosecond (Snowflake only)
+Поддерживаемые уровни детализации:
+* `nanosecond` (только Snowflake)
 * microsecond 
 * millisecond
 * second
@@ -500,7 +500,7 @@ Our supported granularities are:
 * quarter
 * year
 
-Aggregation between metrics with different granularities is possible, with the <Constant name="semantic_layer" /> returning results at the coarsest granularity by default. For example, when querying two metrics with daily and monthly granularity, the resulting aggregation will be at the monthly level.
+Метрики с разной детализацией можно агрегировать вместе. По умолчанию <Constant name="semantic_layer" /> возвращает результат на самом крупном уровне. Например, при совместном запросе дневной и месячной метрик результат будет агрегирован по месяцам.
 
 ```yaml
 models:
@@ -576,7 +576,7 @@ models:
 
 <VersionBlock firstVersion="1.12">
 :::caution
-Currently, semantic models with SCD Type II dimensions cannot contain simple metrics.
+Сейчас семантические модели с измерениями SCD типа II не могут содержать простые метрики.
 :::
 </VersionBlock>
 
@@ -918,7 +918,7 @@ models:
 
 </Expandable>
 
-<Expandable alt_header="Измерения SCD с уровнями продаж и группировкой транзакций по месяцам, когда уровни отсутствуют">
+<Expandable alt_header="Измерения SCD с уровнями продаж и группировкой транзакций по месяцам, когда уровни отсутствуют" anchor_id="scd-details-2">
 
 Этот пример показывает, как создать медленно изменяющиеся измерения (SCD) с использованием семантической модели. Таблица SCD содержит информацию об уровне продавцов и продолжительности этого уровня. Предположим, у вас есть базовая таблица SCD:
 

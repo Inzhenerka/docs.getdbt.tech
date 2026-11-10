@@ -251,7 +251,7 @@ import CreateSnowflakeSqlFile from '/snippets/_create-snowflake-sql-file.md';
 
 7. Теперь давайте посмотрим на наши классные данные Formula 1, которые мы только что загрузили!
    1. Создайте новый worksheet, выбрав **+**, затем **New Worksheet**.
-      <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/3-create-new-worksheet-to-query-data.png" width="60%" title="Create new worksheet to query data"/>
+      <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/3-connect-to-data-source/3-create-new-worksheet-to-query-data.png" width="60%" title="Создание листа для запросов к данным"/>
    2. Перейдите в **Database > Formula1 > RAW > Tables**.
    3. Выполните запрос к данным, используя следующий код. В таблице circuits всего 76 строк, поэтому нам не нужно беспокоиться об ограничении объёма запрашиваемых данных.
 
@@ -313,7 +313,7 @@ import CreateSnowflakeSqlFile from '/snippets/_create-snowflake-sql-file.md';
 
     <DocCarousel slidesPerView={1}>
 
-    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/5-first-commit-and-push.png" width="40%" title="First commit and push"/>
+    <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/5-first-commit-and-push.png" width="40%" title="Первый коммит и отправка изменений"/>
 
     <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/6-initalize-project.png" width="60%" title="Commit Changes button"/>
 
@@ -334,7 +334,7 @@ import CreateSnowflakeSqlFile from '/snippets/_create-snowflake-sql-file.md';
 
 13. Теперь давайте переключимся в Snowflake, чтобы убедиться, что объекты действительно были созданы. Нажмите на три точки **…** над объектами вашей базы данных, а затем выберите **Refresh**. Разверните базу данных **PC_DBT_DB**, и вы должны увидеть свою схему разработки. Выберите эту схему, затем **Tables** и **Views**. Теперь вы должны увидеть `MY_FIRST_DBT_MODEL` как таблицу и `MY_SECOND_DBT_MODEL` как представление.
 
-<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/10-confirm-example-models-built-in-snowflake.png" width="40%" title="Confirm example models are built in Snowflake"/>
+<Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/5-development-schema-name/10-confirm-example-models-built-in-snowflake.png" width="40%" title="Проверка сборки моделей из примера в Snowflake"/>
 
 ## Создание ветки и настройка конфигураций проекта {#create-branch-and-set-up-project-configs}
 
@@ -1231,7 +1231,6 @@ sources:
             dbt.config(materialized="table")
 ```
   - Существует ограничение на то, насколько сложной может быть конфигурация при использовании метода `dbt.config()`. Он принимает только литеральные значения (строки, булевы значения и числовые типы). Передача другой функции или более сложной структуры данных невозможна. Причина в том, что dbt статически анализирует аргументы, переданные в `.config()`, во время парсинга модели, не выполняя ваш Python-код. Если вам нужно задать более сложную конфигурацию, мы рекомендуем определить её с помощью свойства `config` в [YAML-файле свойств](/reference/resource-properties/config). Подробнее о конфигурациях можно узнать [здесь](/reference/model-configs).
-```
 
 ## Подготовка к машинному обучению: очистка, кодирование и разделение
 
@@ -1749,7 +1748,7 @@ sources:
 ### Общие тесты
 
 1. Чтобы использовать встроенные универсальные тесты dbt (out-of-the-box), мы можем применять YAML-файлы для описания информации о наших моделях. Чтобы добавить универсальные тесты к нашей модели агрегатов, создайте файл с именем `aggregates.yml`, скопируйте приведённый ниже блок кода в этот файл и сохраните его.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/1-generic-testing-file-tree.png" width="60%" title="The aggregates.yml file in our file tree"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/1-generic-testing-file-tree.png" width="60%" title="Файл aggregates.yml в дереве проекта"/>
 
     ```yaml
 
@@ -1774,14 +1773,14 @@ sources:
                         field: race_year
     ```
 
-1. Давайте разберем код, который у нас здесь. У нас есть обе наши модели агрегатов с именем модели, чтобы знать объект, на который мы ссылаемся, и описание модели, которое мы будем заполнять в нашей документации. На уровне колонки (уровень ниже нашей модели) мы предоставляем имя колонки, за которым следуют наши тесты. Мы хотим убедиться, что наш `constructor_name` уникален, так как мы использовали pandas `groupby` на `constructor_name` в модели `fastest_pit_stops_by_constructor`. Далее мы хотим убедиться, что наш `race_year` имеет ссылочную целостность из модели, которую мы выбрали из `int_lap_times_years`, в нашу последующую модель `lap_times_moving_avg`.
-2. Наконец, если мы хотим увидеть, как тесты были развернуты на источниках и SQL моделях, мы можем посмотреть на другие файлы в нашем проекте, такие как `f1_sources.yml`, который мы создали в нашем разделе Источники и стадирование.
+2. Давайте разберем код, который у нас здесь. У нас есть обе наши модели агрегатов с именем модели, чтобы знать объект, на который мы ссылаемся, и описание модели, которое мы будем заполнять в нашей документации. На уровне колонки (уровень ниже нашей модели) мы предоставляем имя колонки, за которым следуют наши тесты. Мы хотим убедиться, что наш `constructor_name` уникален, так как мы использовали pandas `groupby` на `constructor_name` в модели `fastest_pit_stops_by_constructor`. Далее мы хотим убедиться, что наш `race_year` имеет ссылочную целостность из модели, которую мы выбрали из `int_lap_times_years`, в нашу последующую модель `lap_times_moving_avg`.
+3. Наконец, если мы хотим увидеть, как тесты были развернуты на источниках и SQL моделях, мы можем посмотреть на другие файлы в нашем проекте, такие как `f1_sources.yml`, который мы создали в нашем разделе Источники и стадирование.
 
 ### Использование макросов для тестирования
 
 1. В папке `macros` создайте новый файл и назовите его `test_all_values_gte_zero.sql`. Скопируйте приведённый ниже блок кода и сохраните файл. Для ясности: «gte» — это сокращение от *greater than or equal to* («больше или равно»).
 
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/2-macro-testing.png" width="60%" title="macro file for reusable testing code"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/2-macro-testing.png" width="60%" title="Файл макроса для переиспользуемого теста"/>
 
     ```sql
     {% macro test_all_values_gte_zero(table, column) %}
@@ -1824,7 +1823,7 @@ sources:
 Давайте добавим пользовательский тест, который утверждает, что скользящее среднее времени круга за последние 5 лет больше нуля (невозможно иметь время меньше 0!). Легко предположить, что если это не так, данные были повреждены.
 
 1. Создайте файл `lap_times_moving_avg_assert_positive_or_null.sql` в папке `tests`.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/4-custom-singular-test.png" width="60%" title="custom singular test for testing lap times are positive values"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/13-testing/4-custom-singular-test.png" width="60%" title="Одиночный тест, проверяющий положительное время круга"/>
 
 2. Скопируйте следующий код и сохраните файл:
 
@@ -1890,7 +1889,7 @@ sources:
   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/2-view-docblock-description.png" title="Описание docblock в рамках сайта документации"/>
 
 3. Просмотрите мини-линейдж, который показывает модель, выбранную в данный момент (`int_results` в этом случае).
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/3-mini-lineage-docs.png" width="40%" title="Mini lineage view on docs site"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/14-documentation/3-mini-lineage-docs.png" width="40%" title="Компактный граф зависимостей на сайте документации"/>
 
 4. В нашем `dbt_project.yml` мы настроили `node_colors` в зависимости от каталога файлов. Цветовое кодирование вашего проекта может помочь вам сгруппировать похожие модели или шаги и легче устранять неполадки при просмотре родословной в вашей документации.
 
@@ -1902,24 +1901,17 @@ sources:
 
 Работа в feature‑ветке позволяет изолировать наш код от того, над чем работают другие коллеги, а также от кода, который уже считается готовым к использованию в продакшене. Создание моделей в development‑схеме Snowflake позволяет отделить объекты базы данных, которые мы всё ещё можем изменять и тестировать, от объектов базы данных, используемых в продакшн‑дашбордах или других downstream‑зависимостях.  
 
+
 В совокупности ветка <Constant name="git" /> и объекты базы данных в Snowflake образуют наше окружение.
 
 Теперь, когда мы завершили тестирование и документирование нашей работы, мы готовы развернуть наш код из нашей среды разработки в нашу производственную среду, и это включает два шага:
 
-3. После завершения вы увидите, что на кнопке git появилась надпись **Create branch**, а текущей просматриваемой веткой стала **main**.
-4. Теперь, когда все наши изменения слиты в основную ветку, можно настроить задание развертывания. Поскольку рабочая среда и задание для нее были созданы автоматически через Partner Connect, нам нужно лишь изменить некоторые настройки по умолчанию в соответствии с нашими потребностями.
-5. В меню слева перейдите в **Orchestration** > **Environments**.
-6. В списке должны отображаться две среды. Выберите среду **Deployment**, а затем **Settings**, чтобы изменить ее настройки.
-7. Прежде чем вносить изменения, рассмотрим, что настроено в этой среде. Подключение Snowflake показывает учетные данные, которые <Constant name="dbt" /> использует для этой среды. В нашем случае это те же данные, которые были созданы для нас через Partner Connect. Наше задание развертывания будет создавать объекты в базе данных `PC_DBT_DB`, используя роль и виртуальный склад Partner Connect по умолчанию. В разделе учетных данных для развертывания также используются сведения, созданные в рамках задания Partner Connect, для настройки подключения. Однако в нем указана та же схема по умолчанию, которую мы использовали для среды разработки.
-8. Давайте изменим схему, чтобы создать новую схему специально для рабочей среды. Нажмите **Edit**, чтобы изменить текущие значения полей. Перейдите к **Deployment Credentials >** **schema.**
-9. Измените имя схемы на **production**. После внесения изменения не забудьте нажать **Save**.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/3-update-deployment-credentials-production.png" title="Изменение схемы в учетных данных для развертывания на production"/>
-10. Указав для рабочей среды схему **production**, мы обеспечиваем создание моделей dbt заданием развертывания этой среды в схеме **production** базы данных `PC_DBT_DB`, указанной в разделе подключения Snowflake.
-11. Теперь перейдем к заданию для рабочей среды. Снова нажмите вкладку развертывания, а затем выберите **Jobs**. Вы должны увидеть уже созданное и предварительно настроенное задание **Partner Connect Trial Job**. Как и в случае со средой, нажмите на задание, а затем выберите **Settings**, чтобы изменить его настройки. Прежде чем вносить изменения, рассмотрим задание, чтобы понять, как оно устроено.
+- Слейте изменения из рабочей ветки в основную ветку репозитория. Обычно это `main`, а перед слиянием изменения проходят ревью.
+- Запустите dbt в производственной среде, чтобы построить модели и выполнить тесты.
 
 1. Прежде чем начать, давайте убедимся, что вся наша работа закоммичена в feature-ветку. Если у вас ещё есть изменения для коммита, вы сможете выбрать **Commit and push**, указать сообщение, а затем снова нажать **Commit**.
 2. После того как вся работа будет закоммичена, кнопка git‑workflow изменится на **Merge this branch to main**. Нажмите **Merge this branch to main**, и процесс слияния автоматически выполнится в фоновом режиме.
-   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" width="60%" title="Merge this branch to main"/>
+   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/1-merge-to-main-branch.png" width="60%" title="Слияние ветки с main"/>
 
 3. После завершения процесса вы увидите, что кнопка git отображает **Create branch**, а ветка, которую вы сейчас просматриваете, станет **main**.
 4. Теперь, когда вся наша разработка слита в ветку main, мы можем настроить job для деплоя. Поскольку production‑окружение и production‑job были автоматически созданы для нас через Partner Connect, здесь нам нужно лишь обновить некоторые конфигурации по умолчанию под наши требования.
@@ -1928,7 +1920,7 @@ sources:
 7. Прежде чем вносить изменения, давайте разберёмся, что определено в этом окружении. Подключение к Snowflake показывает учётные данные, которые <Constant name="cloud" /> использует для этого окружения, и в нашем случае они совпадают с теми, что были созданы через Partner Connect. Наш deployment‑job будет собираться в базе данных `PC_DBT_DB` и использовать роль и warehouse Partner Connect по умолчанию. Раздел deployment credentials также использует информацию, созданную в Partner Connect job, для формирования credential‑подключения. Однако при этом используется та же схема по умолчанию, которую мы применяли в окружении разработки.
 8. Давайте обновим схему и создадим новую схему специально для production‑окружения. Нажмите **Edit**, чтобы получить возможность изменить существующие значения полей. Перейдите в **Deployment Credentials >** **schema**.
 9. Обновите имя схемы на **production**. Не забудьте нажать **Save** после внесения изменений.
-   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/3-update-deployment-credentials-production.png" title="Update the deployment credentials schema to production"/>
+   <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/3-update-deployment-credentials-production.png" title="Смена схемы в учётных данных развёртывания на production"/>
 
 10. Обновив схему production‑окружения на **production**, мы гарантируем, что deployment‑job для этого окружения будет собирать наши dbt‑модели в схеме **production** внутри базы данных `PC_DBT_DB`, как указано в разделе Snowflake Connection.
 11. Теперь перейдём к нашему production‑job. Снова нажмите на вкладку deploy и выберите **Jobs**. Вы увидите существующий и предварительно настроенный **Partner Connect Trial Job**. Аналогично окружению, кликните по job, затем выберите **Settings**, чтобы изменить его. Давайте сначала рассмотрим этот job, чтобы понять его устройство, прежде чем вносить изменения.
@@ -1949,7 +1941,7 @@ sources:
   </DocCarousel>
 
 13. Перейдем в Snowflake и убедимся, что все объекты в нашей производственной схеме созданы как ожидалось. Обновите список объектов базы данных в своей учетной записи Snowflake: теперь вы должны увидеть производственную схему в нашей базе данных Partner Connect, используемой по умолчанию. Если вы откроете эту схему и все было выполнено успешно, то увидите все разработанные нами модели.
-  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/6-all-models-generated.png" width="40%" title="Check all our models in our pipeline are in Snowflake"/>
+  <Lightbox src="/img/guides/dbt-ecosystem/dbt-python-snowpark/15-deployment/6-all-models-generated.png" width="40%" title="Проверка наличия всех моделей пайплайна в Snowflake"/>
 
 ### Заключение
 

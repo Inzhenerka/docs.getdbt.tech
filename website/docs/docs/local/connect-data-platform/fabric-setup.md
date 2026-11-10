@@ -52,18 +52,18 @@ sudo apt install unixodbc-dev
 
 ## Методы аутентификации и конфигурация профиля {#authentication-methods-profile-configuration}
 
-:::info Supported authentication methods
+:::info Поддерживаемые способы аутентификации
 
 Microsoft Fabric поддерживает два типа аутентификации:
 
-- Microsoft Entra service principal
-- Microsoft Entra password
+- Субъект-служба Microsoft Entra
+- Пароль Microsoft Entra
 
 Чтобы лучше разобраться в механизмах аутентификации, ознакомьтесь со страницей [Подключение Microsoft Fabric](/docs/platform/connect-data-platform/connect-microsoft-fabric).
 
 :::
 
-### Common configuration {#common-configuration}
+### Общие настройки {#common-configuration}
 
 Для всех методов аутентификации обратитесь к следующим параметрам конфигурации, которые можно задать в вашем файле `profiles.yml`.
 Полная справка по всем параметрам доступна [в конце этой страницы](#reference-of-all-connection-options).

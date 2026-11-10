@@ -1,29 +1,29 @@
 ---
-title: "About network security"
+title: "О сетевой безопасности"
 id: about-network-security
-description: "Configure network security for dbt Cloud"
-sidebar_label: "About network security"
+description: "Настройка сетевой безопасности для dbt Cloud"
+sidebar_label: "О сетевой безопасности"
 availability:
   surface: platform
   access: login_required
 ---
 
-Network security in <Constant name="dbt" /> gives you control over how traffic flows between dbt and your infrastructure. Choose the approach that best fits your security requirements.
+Сетевая безопасность в <Constant name="dbt" /> позволяет управлять сетевым трафиком между dbt и вашей инфраструктурой. Выберите подход, который лучше всего соответствует вашим требованиям к безопасности.
 
-## Choose your connectivity approach
+## Выберите способ подключения
 
 <div className="grid--2-col">
 
 <Card
-    title="Over the public internet"
-    body="Use IP restrictions to limit which IP addresses can access dbt Cloud or your data platform."
+    title="Через общедоступный интернет"
+    body="Используйте ограничения по IP-адресам, чтобы разрешить доступ к dbt Cloud или вашей платформе данных только с определённых IP-адресов."
     link="/docs/platform/secure/ip-restrictions"
     icon="dbt-bit"
 />
 
 <Card
-    title="Over a private network"
-    body="Use your cloud provider's private connectivity technology to keep traffic off the public internet entirely."
+    title="Через частную сеть"
+    body="Используйте технологию частного подключения вашего облачного провайдера, чтобы полностью исключить передачу трафика через общедоступный интернет."
     link="/docs/platform/secure/private-connectivity/private-connectivity"
     icon="dbt-bit"
 />

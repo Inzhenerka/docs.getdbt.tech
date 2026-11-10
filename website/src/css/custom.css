@@ -3389,6 +3389,10 @@ h2.anchor a.hash-link:before {
   filter: brightness(100); 
 }
 
+h2.anchor[id], h3.anchor[id], h4.anchor[id] {
+  cursor: pointer;
+}
+
 h3.anchor.clicked a.hash-link:before,
 h2.anchor.clicked a.hash-link:before {
   background-image: /* webpackIgnore: true */ url('/img/check.png');

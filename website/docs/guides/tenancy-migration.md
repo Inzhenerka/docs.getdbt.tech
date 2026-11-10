@@ -1,8 +1,8 @@
 ---
-title: 'Migrate between dbt platform tenancy types'
+title: 'Миграция между типами размещения dbt platform'
 id: tenancy-migration
-description: "A self-serve guide for migrating between dbt platform tenancy types, such as moving from multi-tenant to single-tenant."
-hoverSnippet: "Self-serve guide for migrating between dbt platform tenancy types."
+description: "Руководство по самостоятельной миграции между типами размещения dbt platform, например с мультитенантного на однотенантное."
+hoverSnippet: "Руководство по самостоятельной миграции между типами размещения dbt platform."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Migration', 'Tenancy', 'dbt platform']
@@ -11,126 +11,126 @@ level: 'Advanced'
 unlisted: true
 ---
 
-:::warning Contract change required
-Migrating between tenancy types requires a contract change.
+:::warning Требуется изменение договора
+Для миграции между типами размещения необходимо изменить договор.
 
-Make sure you contact your account manager before starting this process to confirm eligibility, timeline, and initiate the necessary contract updates. _Do not_ begin migration steps until a contract change is confirmed.
+Перед началом процесса обязательно свяжитесь со своим менеджером по работе с клиентами, чтобы подтвердить возможность миграции, согласовать сроки и инициировать необходимые изменения договора. _Не приступайте_ к миграции, пока изменение договора не будет подтверждено.
 :::
 
-## Overview
+## Обзор {#overview}
 
-This guide walks you through a self-serve migration between [<Constant name="dbt_platform"/> tenancy types](/docs/platform/about-platform/tenancy) &mdash; for example, moving from multi-tenant to single-tenant.
+В этом руководстве описана самостоятельная миграция между [типами размещения <Constant name="dbt_platform"/>](/docs/platform/about-platform/tenancy) &mdash; например, переход с мультитенантного на однотенантное размещение.
 
-It's meant for accounts that have been assessed by the dbt Labs team as low complexity. Your dbt Labs contact will provide a migration window before you begin &mdash; do not start until you've received it.
+Оно предназначено для аккаунтов, сложность миграции которых команда dbt Labs оценила как низкую. Ваш контакт в dbt Labs предоставит вам временное окно для миграции &mdash; не начинайте, пока не получите его.
 
-Use the following table to confirm this guide is the right path for your account. If your account crosses the high-complexity threshold for even one signal, we recommend a Professional Services-led migration instead.
+С помощью следующей таблицы убедитесь, что это руководство подходит для вашего аккаунта. Если хотя бы один показатель вашего аккаунта достигает порога высокой сложности, рекомендуем провести миграцию под руководством команды Professional Services.
 
 <SimpleTable>
 
-| Signal | Low complexity (self-serve) | High complexity (PS-led) |
+| Показатель | Низкая сложность (самостоятельная миграция) | Высокая сложность (миграция под руководством Professional Services) |
 |--------|----------------------------|--------------------------|
-| Active jobs (run in last 30 days) | Fewer than 10 | 10 or more |
-| Projects | Fewer than 3 | 3 or more |
-| Environments | Fewer than 5 | 5 or more |
-| **How to proceed** | If all signals are low complexity, follow this guide or contact  [Professional Services migration](https://www.getdbt.com/services) for help | If one or more signals are high complexity, contact your account manager to scope a [Professional Services migration](https://www.getdbt.com/services) |
+| Активные задания (запускавшиеся за последние 30 дней) | Менее 10 | 10 и более |
+| Проекты | Менее 3 | 3 и более |
+| Среды | Менее 5 | 5 и более |
+| **Дальнейшие действия** | Если все показатели соответствуют низкой сложности, следуйте этому руководству или обратитесь за помощью к [команде Professional Services по миграции](https://www.getdbt.com/services) | Если один или несколько показателей соответствуют высокой сложности, свяжитесь со своим менеджером по работе с клиентами, чтобы определить объём работ по [миграции с участием Professional Services](https://www.getdbt.com/services) |
 
 </SimpleTable>
 
-The following factors add coordination overhead regardless of account size &mdash; flag these to your account manager if they apply:
+Следующие факторы требуют дополнительной координации независимо от размера аккаунта &mdash; сообщите о них своему менеджеру по работе с клиентами, если они применимы:
 
-- CI or webhook-triggered jobs
-- SSO or SCIM provisioning
-- Privatelink endpoints
-- Multiple warehouse connection types
+- Задания CI или задания, запускаемые через вебхуки
+- SSO или подготовка учётных записей через SCIM
+- Конечные точки PrivateLink
+- Несколько типов подключений к хранилищам данных
 
-### Related docs
+### Связанная документация {#related-docs}
 
-- [Tenancy](/docs/platform/about-platform/tenancy)
-- [Access, regions, and IP addresses](/docs/platform/about-platform/access-regions-ip-addresses)
+- [Типы размещения](/docs/platform/about-platform/tenancy)
+- [Доступ, регионы и IP-адреса](/docs/platform/about-platform/access-regions-ip-addresses)
 
-## What doesn't migrate automatically
+## Что не переносится автоматически {#what-doesnt-migrate-automatically}
 
-The migration tool automates most configuration, but some things require manual setup after you apply the Terraform configuration.
+Инструмент миграции автоматизирует перенос большей части конфигурации, но некоторые элементы необходимо настроить вручную после применения конфигурации Terraform.
 
-**Credentials and secrets** &mdash; these must be recreated manually:
+**Учётные данные и секреты** &mdash; их необходимо воссоздать вручную:
 
-- SSH keys and repository credentials
-- Service account tokens
-- Environment variables containing secrets
-- Warehouse connections and environment-level credentials
-- dbt platform profiles
+- SSH-ключи и учётные данные для репозиториев
+- Токены сервисных аккаунтов
+- Переменные среды, содержащие секреты
+- Подключения к хранилищам данных и учётные данные на уровне сред
+- Профили dbt platform
 
-**Project data** &mdash; not transferred:
+**Данные проектов** &mdash; не переносятся:
 
-- Job run history, artifacts, and logs
+- История запусков заданий, артефакты и журналы
 
-**User management** &mdash; requires manual verification:
+**Управление пользователями** &mdash; требует ручной проверки:
 
-- Users must already exist in the target account
-- Permissions must be manually verified after migration
-- SSO, keypairs, and warehouse authentication credentials must be reconfigured
+- Пользователи должны уже существовать в целевом аккаунте
+- После миграции необходимо вручную проверить разрешения
+- SSO, пары ключей и учётные данные для аутентификации в хранилищах данных необходимо настроить заново
 
-**Unsupported resources:**
+**Неподдерживаемые ресурсы:**
 
-- PrivateLink endpoints require assistance from the dbt Labs infrastructure team &mdash; [open a support ticket](https://www.getdbt.com/support)
+- Конечные точки PrivateLink требуют помощи команды инфраструктуры dbt Labs &mdash; [создайте обращение в службу поддержки](https://www.getdbt.com/support)
 
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-Before starting your migration, confirm the following:
+Перед началом миграции убедитесь в следующем:
 
-- A contract change has been initiated and confirmed with your account manager
-- You have received a migration window from the dbt Labs Support team
-- You have admin access to both the source and target <Constant name="dbt_platform"/> accounts
-- The target account is provisioned in the new environment
-- You have a service token with Account Admin permissions on the source account
+- Изменение договора инициировано и подтверждено вашим менеджером по работе с клиентами
+- Вы получили временное окно для миграции от команды поддержки dbt Labs
+- У вас есть права администратора в исходном и целевом аккаунтах <Constant name="dbt_platform"/>
+- Целевой аккаунт подготовлен в новой среде
+- У вас есть сервисный токен с разрешениями Account Admin в исходном аккаунте
 
-## Migration steps
+## Этапы миграции {#migration-steps}
 
-This migration uses two open-source tools:
+Для этой миграции используются два инструмента с открытым исходным кодом:
 
-- [<Constant name="dbt_platform"/> migration tool](https://github.com/dpguthrie/dbt-cloud-migration-tool) &mdash; exports your source account configuration and applies it to the target account via Terraform
-- [dbtcloud-terraforming](https://github.com/dbt-labs/dbtcloud-terraforming) &mdash; generates Terraform HCL from an existing <Constant name="dbt_platform"/> account
+- [Инструмент миграции <Constant name="dbt_platform"/>](https://github.com/dpguthrie/dbt-cloud-migration-tool) &mdash; экспортирует конфигурацию исходного аккаунта и применяет её к целевому аккаунту через Terraform
+- [dbtcloud-terraforming](https://github.com/dbt-labs/dbtcloud-terraforming) &mdash; генерирует конфигурацию Terraform HCL на основе существующего аккаунта <Constant name="dbt_platform"/>
 
 :::info
-Credentials, secrets, and some other items don't migrate automatically &mdash; plan to recreate them manually. Refer to [What doesn't migrate automatically](#what-doesnt-migrate-automatically) for the full list.
+Учётные данные, секреты и некоторые другие элементы не переносятся автоматически &mdash; запланируйте их воссоздание вручную. Полный список приведён в разделе [Что не переносится автоматически](#what-doesnt-migrate-automatically).
 :::
 
 <Tabs>
 <TabItem value="mac-linux" label="Mac/Linux">
 
-### Step 1: Install prerequisites
+### Шаг 1. Установите необходимые компоненты {#step-1-install-prerequisites}
 
-You need Python, Terraform, and `dbtcloud-terraforming`. Install them using any method you prefer &mdash; we use Homebrew as an example here.
+Вам понадобятся Python, Terraform и `dbtcloud-terraforming`. Установите их любым удобным способом &mdash; здесь в качестве примера используется Homebrew.
 
-Create and activate a Python virtual environment:
+Создайте и активируйте виртуальное окружение Python:
 
 ```shell
 python3 -m venv tf_acct_migrator_env
 source tf_acct_migrator_env/bin/activate
 ```
 
-Install Terraform:
+Установите Terraform:
 
 ```shell
 brew tap hashicorp/tap && brew install hashicorp/tap/terraform
 ```
 
-Install `dbtcloud-terraforming`:
+Установите `dbtcloud-terraforming`:
 
 ```shell
 brew install dbt-labs/dbt-cli/dbtcloud-terraforming
 ```
 
-### Step 2: Set up the migration tool
+### Шаг 2. Настройте инструмент миграции {#step-2-set-up-the-migration-tool}
 
-Clone the migration tool repo and navigate into it:
+Клонируйте репозиторий инструмента миграции и перейдите в него:
 
 ```shell
 git clone https://github.com/dpguthrie/dbt-cloud-migration-tool
 cd dbt-cloud-migration-tool
 ```
 
-Set environment variables for your source <Constant name="dbt_platform"/> account:
+Задайте переменные среды для исходного аккаунта <Constant name="dbt_platform"/>:
 
 ```shell
 export DBT_CLOUD_HOST_URL="https://YOUR_SOURCE_REGION.getdbt.com/api"
@@ -138,22 +138,22 @@ export DBT_CLOUD_TOKEN="your_source_service_token"
 export DBT_CLOUD_ACCOUNT_ID="your_source_account_id"
 ```
 
-### Step 3: Generate and apply Terraform configuration
+### Шаг 3. Сгенерируйте и примените конфигурацию Terraform {#step-3-generate-and-apply-terraform-configuration}
 
-Run the migration tool to generate a `resources.tf` file with your source account's resources:
+Запустите инструмент миграции, чтобы сгенерировать файл `resources.tf` с ресурсами исходного аккаунта:
 
 ```shell
 sh migrate.sh
 ```
 
-Copy the example vars file and add your target account's details:
+Скопируйте пример файла переменных и добавьте сведения о целевом аккаунте:
 
 ```shell
 cp terraform.tfvars.example terraform.tfvars
 # Edit terraform.tfvars with your target account details
 ```
 
-Apply the configuration to your target account:
+Примените конфигурацию к целевому аккаунту:
 
 ```shell
 terraform init
@@ -161,42 +161,42 @@ terraform plan
 terraform apply
 ```
 
-Terraform will output the newly created resources and any warnings or errors. You may need to re-run `migrate.sh` multiple times to catch all required resource types.
+Terraform выведет сведения о созданных ресурсах, а также предупреждения и ошибки, если они возникнут. Возможно, потребуется запустить `migrate.sh` несколько раз, чтобы охватить все необходимые типы ресурсов.
 
 </TabItem>
 <TabItem value="windows" label="Windows">
 
-### Step 1: Install prerequisites
+### Шаг 1. Установите необходимые компоненты {#step-1-install-prerequisites-1}
 
-You need Python, Terraform, and `dbtcloud-terraforming`. Install them using any method you prefer &mdash; we use Chocolatey as an example here.
+Вам понадобятся Python, Terraform и `dbtcloud-terraforming`. Установите их любым удобным способом &mdash; здесь в качестве примера используется Chocolatey.
 
-Install Python and Terraform:
+Установите Python и Terraform:
 
 ```shell
 choco install python terraform -y
 ```
 
-After installation, restart your terminal and verify:
+После установки перезапустите терминал и проверьте установленные версии:
 
 ```shell
 python --version
 terraform --version
 ```
 
-Install `dbtcloud-terraforming` by adding it to your Terraform installation directory. If you used Chocolatey, the path is typically `C:\ProgramData\chocolatey\bin`.
+Установите `dbtcloud-terraforming`, добавив его в каталог установки Terraform. Если вы использовали Chocolatey, обычно это каталог `C:\ProgramData\chocolatey\bin`.
 
-### Step 2: Set up the migration tool
+### Шаг 2. Настройте инструмент миграции {#step-2-set-up-the-migration-tool-1}
 
-The following steps should be run in a bash environment (for example, Git Bash). Clone the migration tool repo and navigate into it:
+Следующие действия необходимо выполнять в среде bash (например, Git Bash). Клонируйте репозиторий инструмента миграции и перейдите в него:
 
 ```shell
 git clone https://github.com/dpguthrie/dbt-cloud-migration-tool.git
 cd dbt-cloud-migration-tool
 ```
 
-### Step 3: Configure and run the migration
+### Шаг 3. Настройте и запустите миграцию {#step-3-configure-and-run-the-migration}
 
-Set environment variables for your source <Constant name="dbt_platform"/> account (these reset when you close the terminal):
+Задайте переменные среды для исходного аккаунта <Constant name="dbt_platform"/> (они сбрасываются при закрытии терминала):
 
 ```shell
 export DBT_CLOUD_HOST_URL="https://YOUR_SOURCE_REGION.getdbt.com/api"
@@ -204,20 +204,20 @@ export DBT_CLOUD_TOKEN="your_source_service_token"
 export DBT_CLOUD_ACCOUNT_ID="your_source_account_id"
 ```
 
-Run the migration script:
+Запустите скрипт миграции:
 
 ```shell
 sh migrate.sh
 ```
 
-Copy the example vars file and add your target account's details:
+Скопируйте пример файла переменных и добавьте сведения о целевом аккаунте:
 
 ```shell
 cp terraform.tfvars.example terraform.tfvars
 # Edit terraform.tfvars with your target account details
 ```
 
-Apply the configuration to your target account:
+Примените конфигурацию к целевому аккаунту:
 
 ```shell
 terraform init
@@ -225,14 +225,14 @@ terraform plan
 terraform apply
 ```
 
-Terraform will output the newly created resources and any warnings or errors. You may need to re-run `migrate.sh` multiple times to catch all required resource types.
+Terraform выведет сведения о созданных ресурсах, а также предупреждения и ошибки, если они возникнут. Возможно, потребуется запустить `migrate.sh` несколько раз, чтобы охватить все необходимые типы ресурсов.
 
 </TabItem>
 </Tabs>
 
-## Post-migration checklist
+## Контрольный список после миграции {#post-migration-checklist}
 
-- [ ] Verify all connections, permissions, and secrets in the target account
-- [ ] Run test jobs to confirm end-to-end functionality
-- [ ] Confirm IP allowlist and network settings are updated for the new tenant
-- [ ] Update internal bookmarks, SSO configurations, and API integrations to the new account URL
+- [ ] Проверьте все подключения, разрешения и секреты в целевом аккаунте
+- [ ] Запустите тестовые задания, чтобы проверить работоспособность всего процесса
+- [ ] Убедитесь, что список разрешённых IP-адресов и сетевые настройки обновлены для нового тенанта
+- [ ] Обновите внутренние закладки, конфигурации SSO и интеграции с API, указав URL нового аккаунта

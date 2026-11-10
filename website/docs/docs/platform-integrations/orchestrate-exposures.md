@@ -1,7 +1,7 @@
 ---
-title: "Orchestrate downstream exposures"
-sidebar_label: "Orchestrate exposures"
-description: "Use dbt to proactively refresh the underlying data sources (like Tableau extracts) during scheduled dbt jobs."
+title: "Оркестрация downstream exposures"
+sidebar_label: "Оркестрация exposures"
+description: "Используйте dbt, чтобы проактивно обновлять базовые источники данных (например, Tableau extracts) во время запланированных dbt jobs."
 image: /img/docs/platform-integrations/auto-exposures/explorer-lineage2.png
 availability:
   surface: platform
@@ -9,23 +9,23 @@ availability:
   minPlan: enterprise
 ---
 
-# Orchestrate downstream exposures <Lifecycle status="beta" />
+# Оркестрация зависимых экспозиций <Lifecycle status="beta" /> {#orchestrate-downstream-exposures}
 
 <IntroText>
 
-Use [<Constant name="dbt_platform" /> job scheduler](/docs/deploy/job-scheduler) to proactively refresh downstream exposures and the underlying data sources (extracts) that power your Tableau Workbooks.
+Используйте [планировщик заданий <Constant name="dbt_platform" />](/docs/deploy/job-scheduler), чтобы заблаговременно обновлять зависимые экспозиции и лежащие в их основе источники данных (экстракты), которые используются в ваших рабочих книгах Tableau.
 
 </IntroText>
 
 <VersionBlock firstVersion="2.0">
 
-:::warning <Constant name="fusion" /> not supported for this beta
+:::warning <Constant name="fusion" /> не поддерживается в этой бета-версии
 
-Orchestrating downstream exposures _isn’t_ available when your deployments use [**v2 Stable**](/docs/dbt-versions/dbt-release-tracks). Supported jobs must use [**v1 Latest**](/docs/dbt-versions/dbt-release-tracks) with the <Constant name="core" /> engine.
+Оркестрация зависимых экспозиций _недоступна_, если ваши развертывания используют [**v2 Stable**](/docs/dbt-versions/dbt-release-tracks). Поддерживаемые задания должны использовать [**v1 Latest**](/docs/dbt-versions/dbt-release-tracks) с движком <Constant name="core" />.
 
-On the [**v2 Stable**](/docs/dbt-versions/dbt-release-tracks) release track, orchestrating downstream exposures isn’t supported yet. Setting `DBT_ACTIVE_EXPOSURES` and `DBT_ACTIVE_EXPOSURES_BUILD_AFTER` won’t enable orchestration behavior (like Tableau extract refreshes) or the related job log entries.
+В канале выпуска [**v2 Stable**](/docs/dbt-versions/dbt-release-tracks) оркестрация зависимых экспозиций пока не поддерживается. Установка `DBT_ACTIVE_EXPOSURES` и `DBT_ACTIVE_EXPOSURES_BUILD_AFTER` не включит функции оркестрации (например, обновление экстрактов Tableau) или соответствующие записи в журналах заданий.
 
-The private beta is for <Constant name="dbt" /> Enterprise accounts. Contact your account representative for access.
+Закрытая бета-версия предназначена для учетных записей <Constant name="dbt" /> Enterprise. Для получения доступа обратитесь к представителю, обслуживающему вашу учетную запись.
 
 :::
 
@@ -33,55 +33,55 @@ The private beta is for <Constant name="dbt" /> Enterprise accounts. Contact you
 
 <VersionBlock lastVersion="1.99">
 
-:::tip Available in private beta
+:::tip Доступно в private beta
 
-Orchestrating exposures is currently available in private beta to <Constant name="dbt" /> Enterprise accounts. Your deployment environments and scheduled jobs must use [**v1 Latest**](/docs/dbt-versions/dbt-release-tracks) with the <Constant name="core" /> engine (not [**v2 Stable** release track](/docs/dbt-versions/dbt-release-tracks)). To join the beta, contact your account representative.
+Оркестрация экспозиций сейчас доступна в закрытой бета-версии для учетных записей <Constant name="dbt" /> Enterprise. Ваши среды развертывания и задания по расписанию должны использовать [**v1 Latest**](/docs/dbt-versions/dbt-release-tracks) с движком <Constant name="core" /> (а не [канал выпуска **v2 Stable**](/docs/dbt-versions/dbt-release-tracks)). Чтобы присоединиться к бета-тестированию, обратитесь к представителю, обслуживающему вашу учетную запись.
 
 :::
 
 </VersionBlock>
 
-Orchestrating exposures integrates with [downstream exposures](/docs/platform-integrations/downstream-exposures-tableau) and uses your `dbt build` job to ensure that Tableau extracts are updated regularly.
+Оркестрация экспозиций интегрируется с [зависимыми экспозициями](/docs/platform-integrations/downstream-exposures-tableau) и использует ваше задание `dbt build`, чтобы обеспечить регулярное обновление экстрактов Tableau.
 
-Control the frequency of these refreshes by configuring environment variables in your dbt environment.
+Вы можете управлять частотой этих обновлений, настраивая переменные окружения в вашем dbt environment.
 
-<Expandable alt_header="Differences between visualizing and orchestrating downstream exposures">
+<Expandable alt_header="Различия между визуализацией и оркестрацией зависимых экспозиций">
 
-The following table summarizes the differences between visualizing and orchestrating downstream exposures:
+В следующей таблице показаны основные различия между визуализацией и оркестрацией downstream exposures:
 
-| Info | Set up and visualize downstream exposures | Orchestrate downstream exposures <Lifecycle status="beta"/> |
+| Информация | Настройка и визуализация зависимых экспозиций | Оркестрация зависимых экспозиций <Lifecycle status="beta"/> |
 | ---- | ---- | ---- |
-| Purpose | Automatically brings downstream assets into your dbt lineage. | Proactively refreshes the underlying data sources during scheduled dbt jobs. |
-| Benefits | Provides visibility into data flow and dependencies. | Ensures BI tools always have up-to-date data without manual intervention. |
-| Location  | Exposed in [<Constant name="catalog" />](/docs/explore/explore-projects) | Exposed in [<Constant name="dbt" /> scheduler](/docs/deploy/deployments) |
-| Supported BI tool | Tableau | Tableau |
-| Use case | Helps users understand how models are used and reduces incidents. | Optimizes timeliness and reduces costs by running models when needed. |
+| Purpose | Автоматически добавляет downstream‑активы в lineage dbt. | Проактивно обновляет базовые источники данных во время запланированных dbt jobs. |
+| Benefits | Обеспечивает видимость потоков данных и зависимостей. | Гарантирует, что BI‑инструменты всегда используют актуальные данные без ручного вмешательства. |
+| Location  | Отображается в [<Constant name="catalog" />](/docs/explore/explore-projects) | Отображается в [scheduler <Constant name="dbt" />](/docs/deploy/deployments) |
+| Поддерживаемый инструмент BI | Tableau | Tableau |
+| Use case | Помогает пользователям понять, как используются модели, и снижает количество инцидентов. | Оптимизирует своевременность и снижает затраты за счёт запуска моделей только при необходимости. |
 </Expandable>
 
-## Prerequisites
+## Предварительные требования {#prerequisites}
 
-To orchestrate downstream exposures, you should meet the following:
+Чтобы оркестрировать downstream exposures, необходимо выполнить следующие условия:
 
-- [Configured downstream exposures](/docs/platform-integrations/downstream-exposures-tableau) and ensured desired exposures are included in your lineage.
-- Verified your environment and jobs are on a supported dbt [release track](/docs/dbt-versions/dbt-release-tracks).
-- Have a <Constant name="dbt" /> account on the [Enterprise or Enterprise+ plan](https://www.getdbt.com/pricing/).
-- Created a [production](/docs/deploy/deploy-environments#set-as-production-environment) deployment environment for each project you want to explore, with at least one successful job run.
-- Have [admin permissions](/docs/platform/manage-access/enterprise-permissions) in <Constant name="dbt" /> to edit project settings or production environment settings.
-- Configured a [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm) whose creator has privileges to view and refresh the data sources used by your exposures. The PAT inherits the permissions of its creator. Use a PAT created by:
-   - A Tableau server or site administrator
-   - A data source owner or a project leader
+- [Настроили зависимые экспозиции](/docs/platform-integrations/downstream-exposures-tableau) и убедились, что нужные экспозиции включены в граф происхождения данных.
+- Проверено, что environment и jobs используют поддерживаемый dbt [release track](/docs/dbt-versions/dbt-release-tracks).
+- Наличие аккаунта <Constant name="dbt" /> на тарифе [Enterprise или Enterprise+](https://www.getdbt.com/pricing/).
+- Создан production [deployment environment](/docs/deploy/deploy-environments#set-as-production-environment) для каждого проекта, который вы хотите использовать, с как минимум одним успешным запуском job.
+- Имеете [права администратора](/docs/platform/manage-access/enterprise-permissions) в <Constant name="dbt" /> для изменения настроек проекта или производственной среды.
+- Настроен [Tableau personal access token (PAT)](https://help.tableau.com/current/server/en-us/security_personal_access_tokens.htm), создатель которого имеет права на просмотр и обновление data sources, используемых вашими exposures. PAT наследует права своего создателя. Используйте PAT, созданный:
+   - администратором Tableau Server или Tableau Site;
+   - владельцем data source или project leader.
 
 
-## Orchestrate downstream exposures
+## Оркестрация downstream exposures {#orchestrate-downstream-exposures-1}
 
-To orchestrate downstream exposures and see refreshes happen automatically during scheduled jobs on [Latest](/docs/dbt-versions/dbt-release-tracks) with the <Constant name="core" /> engine:
+Чтобы оркестрировать зависимые экспозиции и автоматически обновлять их при выполнении заданий по расписанию в [Latest](/docs/dbt-versions/dbt-release-tracks) с движком <Constant name="core" />:
 
-1. In the <Constant name="dbt_platform" />, click **Deploy**, then **Environments**, and select the **Environment variables** tab.
-2. Click **Add variable** and set the [environment level variable](/docs/build/environment-variables#setting-and-overriding-environment-variables) `DBT_ACTIVE_EXPOSURES` to `1` within the environment you want the refresh to happen.
-3. Then set the `DBT_ACTIVE_EXPOSURES_BUILD_AFTER` to control the maximum refresh frequency (in minutes) you want between each exposure refresh.
-4. Set the variable to **1440** minutes (24 hours) by default. This means that downstream exposures won’t refresh Tableau extracts more often than this set interval, even if the related models run more frequently.
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/active-exposures-env-var.jpg" width="100%" title="Set the environment variable `DBT_ACTIVE_EXPOSURES` to `1`."/>
-5. Run a production job on [Latest](/docs/dbt-versions/dbt-release-tracks) with <Constant name="core" />. Each run can trigger a downstream exposure refresh; if a job runs before the configured interval has passed, <Constant name="dbt" /> skips the downstream exposure refresh and marks it as `skipped` in the job logs.
-6. View downstream exposure entries in your run job logs.
-   <Lightbox src="/img/docs/platform-integrations/auto-exposures/active-exposure-log.jpg" title="View the downstream exposure logs in the dbt run job logs."/>
-   - View more details in the debug logs for any troubleshooting.
+1. В <Constant name="dbt_platform" /> нажмите **Deploy**, затем **Environments**, и выберите вкладку **Environment variables**.
+2. Нажмите **Add variable** и задайте [environment level variable](/docs/build/environment-variables#setting-and-overriding-environment-variables) `DBT_ACTIVE_EXPOSURES` со значением `1` в том environment, где должно происходить обновление.
+3. Затем задайте `DBT_ACTIVE_EXPOSURES_BUILD_AFTER`, чтобы контролировать максимальную частоту обновлений (в минутах) между каждым обновлением exposure.
+4. По умолчанию установите значение **1440** минут (24 часа). Это означает, что downstream exposures не будут обновлять Tableau extracts чаще этого интервала, даже если связанные модели запускаются чаще.
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/active-exposures-env-var.jpg" width="100%" title="Установите для переменной среды `DBT_ACTIVE_EXPOSURES` значение `1`."/>
+5. Запустите производственное задание в [Latest](/docs/dbt-versions/dbt-release-tracks) с <Constant name="core" />. Каждый запуск может инициировать обновление зависимой экспозиции; если задание запускается до истечения настроенного интервала, <Constant name="dbt" /> пропускает обновление зависимой экспозиции и отмечает его как `skipped` в журналах задания.
+6. Просмотрите записи о зависимых экспозициях в журналах запуска задания.
+   <Lightbox src="/img/docs/platform-integrations/auto-exposures/active-exposure-log.jpg" title="Просмотрите журналы зависимых экспозиций в журналах запуска задания dbt."/>
+   - Для диагностики проблем смотрите дополнительные детали в debug logs.

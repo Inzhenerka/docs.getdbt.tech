@@ -1,6 +1,6 @@
 ---
-title: "Single sign-on, SCIM, and OAuth"
-description: "Overview of SSO, SCIM, and OAuth options for authentication and access in the dbt platform."
+title: "Единый вход, SCIM и OAuth"
+description: "Обзор возможностей SSO, SCIM и OAuth для аутентификации и управления доступом на платформе dbt."
 id: "sso-oauth-intro"
 availability:
   surface: platform
@@ -8,43 +8,43 @@ availability:
   minPlan: enterprise
 ---
 
-# Single sign-on and OAuth 
+# Единый вход и OAuth 
 
-This section covers how to authenticate users and connect data platforms in <Constant name="dbt_platform" /> using:
+В этом разделе описывается, как аутентифицировать пользователей и подключать платформы данных в <Constant name="dbt_platform" /> с помощью:
 
 <!-- no toc -->
-- [Single sign-on (SSO)](#sso)
-- [System for Cross-Domain Identity Management (SCIM)](#scim)
-- [Connection OAuth](#connection-oauth)
+- [Единого входа (SSO)](#sso)
+- [Системы междоменного управления идентификацией (SCIM)](#scim)
+- [OAuth для подключений](#connection-oauth)
 
-These features are available on Enterprise and Enterprise+ plans and are typically configured by account admins or security teams.
+Эти функции доступны в тарифных планах Enterprise и Enterprise+ и обычно настраиваются администраторами аккаунта или специалистами по безопасности.
 
 ## SSO
 
-Lets users log in to <Constant name="dbt" /> with your identity provider (IdP) instead of a password. Supports Just-in-Time provisioning and IdP-initiated login. *For admins setting up Okta, Microsoft Entra ID, Google Workspace, or SAML 2.0.*
+Позволяет пользователям входить в <Constant name="dbt" /> через вашего поставщика удостоверений (IdP), а не с помощью пароля. Поддерживает создание учетных записей при первом входе (Just-in-Time) и вход, инициируемый IdP. *Для администраторов, настраивающих Okta, Microsoft Entra ID, Google Workspace или SAML 2.0.*
 
-- [Single sign-on (SSO) overview](/docs/platform/manage-access/sso-overview) &mdash; How SSO works and prerequisites
-- [Migrating to Auth0 for SSO](/docs/platform/manage-access/auth0-migration)
-- [Set up SSO with SAML 2.0](/docs/platform/manage-access/set-up-sso-saml-2.0)
-- [Set up SSO with Okta](/docs/platform/manage-access/set-up-sso-okta)
-- [Set up SSO with Google Workspace](/docs/platform/manage-access/set-up-sso-google-workspace)
-- [Set up SSO with Microsoft Entra ID](/docs/platform/manage-access/set-up-sso-microsoft-entra-id)
+- [Обзор единого входа (SSO)](/docs/platform/manage-access/sso-overview) &mdash; Принцип работы SSO и предварительные требования
+- [Переход на Auth0 для SSO](/docs/platform/manage-access/auth0-migration)
+- [Настройка SSO с SAML 2.0](/docs/platform/manage-access/set-up-sso-saml-2.0)
+- [Настройка SSO с Okta](/docs/platform/manage-access/set-up-sso-okta)
+- [Настройка SSO с Google Workspace](/docs/platform/manage-access/set-up-sso-google-workspace)
+- [Настройка SSO с Microsoft Entra ID](/docs/platform/manage-access/set-up-sso-microsoft-entra-id)
 
 ## SCIM
 
-Automates user and group provisioning from your IdP into <Constant name="dbt" /> (and, with Okta, license assignment). *For admins using Okta or Microsoft Entra ID who want to sync users and groups.*
+Автоматизирует создание и управление пользователями и группами в <Constant name="dbt" /> на основе данных из вашего IdP (а при использовании Okta — также назначение лицензий). *Для администраторов, использующих Okta или Microsoft Entra ID и желающих синхронизировать пользователей и группы.*
 
-- [Set up SCIM](/docs/platform/manage-access/scim) &mdash; Prerequisites and enabling SCIM in <Constant name="dbt" />
-- [Set up SCIM with Okta](/docs/platform/manage-access/scim-okta) (includes [license management](/docs/platform/manage-access/scim-manage-user-licenses))
-- [Set up SCIM with Entra ID](/docs/platform/manage-access/scim-entra-id)
+- [Настройка SCIM](/docs/platform/manage-access/scim) &mdash; Предварительные требования и включение SCIM в <Constant name="dbt" />
+- [Настройка SCIM с Okta](/docs/platform/manage-access/scim-okta) (включает [управление лицензиями](/docs/platform/manage-access/scim-manage-user-licenses))
+- [Настройка SCIM с Entra ID](/docs/platform/manage-access/scim-entra-id)
 
-## Connection OAuth {#connection-oauth}
+## OAuth для подключений {#connection-oauth}
 
-Connection OAuth is for authenticating to your data platform (like Snowflake, BigQuery), which is different from SSO, which handles user login to <Constant name="dbt_platform" />. It lets developers authorize their user credentials with a data platform using that platform's login instead of storing passwords in <Constant name="dbt" />. *For admins and developers connecting to supported data platforms.*
+OAuth для подключений используется для аутентификации на вашей платформе данных (например, Snowflake или BigQuery), в отличие от SSO, который отвечает за вход пользователей в <Constant name="dbt_platform" />. Он позволяет разработчикам авторизовать доступ к платформе данных со своей учетной записью через механизм входа этой платформы, не сохраняя пароли в <Constant name="dbt" />. *Для администраторов и разработчиков, подключающихся к поддерживаемым платформам данных.*
 
-- [OAuth overview](/docs/platform/manage-access/oauth-intro) &mdash; What's available by platform
-- [Set up Snowflake OAuth](/docs/platform/manage-access/set-up-snowflake-oauth)
-- [Set up Databricks OAuth](/docs/platform/manage-access/set-up-databricks-oauth)
-- [Set up BigQuery OAuth](/docs/platform/manage-access/set-up-bigquery-oauth)
-- [Set up external OAuth with Snowflake](/docs/platform/manage-access/snowflake-external-oauth)
-- [Set up external OAuth with Redshift](/docs/platform/manage-access/redshift-external-oauth)
+- [Обзор OAuth](/docs/platform/manage-access/oauth-intro) &mdash; Доступные возможности для каждой платформы
+- [Настройка Snowflake OAuth](/docs/platform/manage-access/set-up-snowflake-oauth)
+- [Настройка Databricks OAuth](/docs/platform/manage-access/set-up-databricks-oauth)
+- [Настройка BigQuery OAuth](/docs/platform/manage-access/set-up-bigquery-oauth)
+- [Настройка внешнего OAuth со Snowflake](/docs/platform/manage-access/snowflake-external-oauth)
+- [Настройка внешнего OAuth с Redshift](/docs/platform/manage-access/redshift-external-oauth)

@@ -23,44 +23,44 @@ import RedshiftIdentifierCase from '/snippets/_redshift-identifier-case.md';
 
 <VersionBlock firstVersion="2.0">
 
-# Connect Redshift to <Constant name="fusion" />
+# Подключение Redshift к <Constant name="fusion" /> {#connect-redshift-to-fusion}
 
-You can configure the Redshift adapter by running `dbt init` in your CLI or manually providing the `profiles.yml` file with the fields configured for your authentication type.
+Настройте адаптер Redshift командой `dbt init` или вручную создайте `profiles.yml` с полями для выбранного способа аутентификации.
 
-The Redshift adapter for <Constant name="fusion" /> supports the following [authentication methods](#supported-authentication-types):
+Адаптер Redshift для <Constant name="fusion" /> поддерживает следующие [способы аутентификации](#supported-authentication-types):
 - Password
 - IAM profile
 - IAM Identity Center (browser)
 
-## Warehouse permissions
+## Разрешения в хранилище {#warehouse-permissions}
 
 import FusionRedshiftWarehousePerms from '/snippets/_v2-warehouse-permissions-redshift.md';
 
 <FusionRedshiftWarehousePerms />
 
-For example SQL grants in Redshift, refer to [Redshift permissions](/reference/database-permissions/redshift-permissions).
+Примеры выдачи прав через SQL приведены в разделе [Разрешения Redshift](/reference/database-permissions/redshift-permissions).
 
-## Configure <Constant name="fusion" />
+## Настройка <Constant name="fusion" /> {#configure-fusion}
 
-Executing `dbt init` in your CLI will prompt for the following fields:
-- **Host:** The hostname of your Redshift cluster
-- **User:** Username of the account that will be connecting to the database
-- **Database:** The database name
-- **Schema:** The schema name
-- **Port (default: 5439):** Port for your Redshift environment
+При запуске `dbt init` в CLI укажите следующие данные:
+- **Host:** имя хоста кластера Redshift.
+- **User:** имя пользователя для подключения к базе данных.
+- **Database:** имя базы данных.
+- **Schema:** имя схемы.
+- **Port (по умолчанию 5439):** порт среды Redshift.
 
-Alternatively, you can manually create the `profiles.yml` file and configure the fields. See examples in [authentication](#supported-authentication-types) section for formatting. If there is an existing `profiles.yml` file, you are given the option to retain the existing fields or overwrite them. 
+Файл `profiles.yml` также можно создать вручную. Формат полей показан в разделе [Способы аутентификации](#supported-authentication-types). Если файл уже существует, можно сохранить текущие поля или перезаписать их.
 
-Next, select your authentication method. Follow the on-screen prompts to provide the required information.
+Выберите способ аутентификации и заполните запрошенные поля.
 
-## Supported authentication types
+## Поддерживаемые способы аутентификации {#supported-authentication-types}
 
 <Tabs>
 <TabItem value="Password">
 
-Use your Redshift user's password to authenticate. You can also manually enter it in plain text into the `profiles.yml` file configuration.
+Для входа используйте пароль пользователя Redshift. Его также можно указать открытым текстом в `profiles.yml`.
 
-#### Example password configuration
+#### Пример настройки с паролем {#example-password-configuration}
 
 <File name="profiles.yml">
 
@@ -86,13 +86,13 @@ default:
 
 <TabItem value="IAM profile">
 
-Specify the IAM profile to use to connect your v2 sessions. You will need to provide the following information:
-- **IAM Profile:** The profile name
-- **Cluster ID:** The unique identifier for your AWS cluster
-- **Region:** Your AWS region (for example, us-east-1)
-- **Use RA3 node type (y/n):** Use high performance AWS RA3 node
+Укажите IAM-профиль для подключения сеансов dbt v2:
+- **IAM Profile:** имя профиля.
+- **Cluster ID:** уникальный идентификатор кластера AWS.
+- **Region:** регион AWS, например us-east-1.
+- **Use RA3 node type (y/n):** использовать высокопроизводительный узел AWS RA3.
 
-#### Example IAM profile configuration
+#### Пример настройки IAM-профиля {#example-iam-profile-configuration}
 
 <File name="profiles.yml">
 
@@ -125,21 +125,21 @@ default:
 </TabItem>
 </Tabs>
 
-## Identifier case
+## Регистр идентификаторов {#identifier-case}
 
 <RedshiftIdentifierCase />
 
-## More information
+## Дополнительные сведения {#more-information}
 
-Find Redshift-specific configuration information in the [Redshift adapter reference guide](/reference/resource-configs/redshift-configs).
+Настройки Redshift описаны в [справочнике адаптера](/reference/resource-configs/redshift-configs).
 
 </VersionBlock>
 
 <VersionBlock lastVersion="1.99">
 
-# Connect Redshift to <Constant name="core" />
+# Подключение Redshift к <Constant name="core" /> {#connect-redshift-to-core}
 
-<ProductCard text="dbt v2 compatible" url="/docs/local/connect-data-platform/redshift-setup?version=2" /> connection also available.
+Также доступно подключение <ProductCard text="совместимое с dbt v2" url="/docs/local/connect-data-platform/redshift-setup?version=2" />.
 
 import SetUpPages from '/snippets/_setup-pages-intro.md';
 import RedshiftDatasharing from '/snippets/_redshift-datasharing.md';

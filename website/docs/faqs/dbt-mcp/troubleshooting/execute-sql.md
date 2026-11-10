@@ -1,21 +1,21 @@
 ---
-title: "execute_sql tool not working"
-sidebar_label: "execute_sql tool not working"
-description: "Troubleshooting: execute_sql tool not working"
+title: "Инструмент execute_sql не работает"
+sidebar_label: "Инструмент execute_sql не работает"
+description: "Устранение неполадок: инструмент execute_sql не работает"
 id: mcp-troubleshoot-execute-sql
 ---
 
-**Symptoms:** The `execute_sql` tool returns an authentication error or is unavailable.
+**Симптомы:** Инструмент `execute_sql` возвращает ошибку аутентификации или недоступен.
 
-**Cause:** How you fix this depends on how you connected:
+**Причина:** Способ устранения проблемы зависит от того, как вы подключились:
 
-- **Remote MCP with OAuth:** Sign in through your MCP client when prompted. You don't need a personal access token.
-- **Remote MCP with token-based auth:** You need a [personal access token (PAT)](/docs/dbt-apis/user-tokens). Service tokens won't work. You also need `x-dbt-dev-environment-id` and `x-dbt-user-id` headers. The user ID must match the user who created the PAT.
-- **Local MCP:** Set `DBT_TOKEN` to a personal access token (PAT). Service tokens won't work.
+- **Удалённый MCP с OAuth:** Войдите в систему через свой MCP-клиент, когда появится соответствующий запрос. Персональный токен доступа не требуется.
+- **Удалённый MCP с аутентификацией по токену:** Вам нужен [персональный токен доступа (PAT)](/docs/dbt-apis/user-tokens). Сервисные токены не подойдут. Также необходимы заголовки `x-dbt-dev-environment-id` и `x-dbt-user-id`. Идентификатор пользователя должен соответствовать пользователю, создавшему PAT.
+- **Локальный MCP:** Задайте для `DBT_TOKEN` значение персонального токена доступа (PAT). Сервисные токены не подойдут.
 
-**Solution:**
+**Решение:**
 
-1. If you use OAuth for remote MCP, confirm you completed sign-in and consent in your MCP client.
-2. If you use token-based auth or local MCP, create a [personal access token (PAT)](/docs/dbt-apis/user-tokens) in **Account settings** → **API tokens** → **Personal tokens**.
-3. For token-based remote MCP, add the PAT to the `Authorization` header as `Token YOUR_PAT`. For local MCP, set the PAT as your `DBT_TOKEN` value.
-4. Also ensure `DBT_DEV_ENV_ID` and `DBT_USER_ID` are set (local MCP) or `x-dbt-dev-environment-id` and `x-dbt-user-id` headers are set (remote MCP). Refer to [Finding your IDs](/docs/dbt-ai/mcp-find-ids) for details.
+1. Если вы используете OAuth для удалённого MCP, убедитесь, что вы выполнили вход и предоставили согласие в своём MCP-клиенте.
+2. Если вы используете аутентификацию по токену или локальный MCP, создайте [персональный токен доступа (PAT)](/docs/dbt-apis/user-tokens) в разделе **Account settings** → **API tokens** → **Personal tokens**.
+3. Для удалённого MCP с аутентификацией по токену добавьте PAT в заголовок `Authorization` в виде `Token YOUR_PAT`. Для локального MCP задайте PAT в качестве значения `DBT_TOKEN`.
+4. Также убедитесь, что заданы `DBT_DEV_ENV_ID` и `DBT_USER_ID` (для локального MCP) или заголовки `x-dbt-dev-environment-id` и `x-dbt-user-id` (для удалённого MCP). Подробности см. в разделе [Поиск идентификаторов](/docs/dbt-ai/mcp-find-ids).

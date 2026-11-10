@@ -1,8 +1,8 @@
 ---
-title: 'Move to the dbt platform: Optimization tips'
+title: 'Переход на платформу dbt: советы по оптимизации'
 id: dbt-migration-3
-description: "Use this guide to learn how to optimize your dbt experience and get answers to common questions."
-hoverSnippet: "Use this guide to learn how to optimize your dbt experience and get answers to common questions."
+description: "Из этого руководства вы узнаете, как оптимизировать работу с dbt, и получите ответы на распространённые вопросы."
+hoverSnippet: "Из этого руководства вы узнаете, как оптимизировать работу с dbt, и получите ответы на распространённые вопросы."
 icon: 'guides'
 hide_table_of_contents: true
 tags: ['Migration', 'dbt platform']
@@ -10,192 +10,192 @@ keywords: ['dbt v1','dbt platform','Migration', 'Move dbt', 'Migrate dbt']
 level: 'Intermediate'
 ---
 
-## Introduction
+## Введение
 
-Moving from self-hosted dbt to the <Constant name="dbt_platform" /> streamlines analytics engineering workflows by allowing teams to develop, test, deploy, and explore data products using a single, fully managed software service. It's not just better tooling &mdash; it's about lowering total cost of ownership, powering AI with trusted data, and scaling with governed self-service.
+Переход с самостоятельно размещённого dbt на <Constant name="dbt_platform" /> упрощает рабочие процессы аналитической инженерии: команды могут разрабатывать, тестировать, развёртывать и исследовать продукты данных с помощью единого, полностью управляемого программного сервиса. Это не просто более совершенные инструменты &mdash; это снижение совокупной стоимости владения, обеспечение ИИ надёжными данными и масштабирование за счёт самообслуживания с контролем и управлением.
 
-Explore our 3-part-guide series on moving from self-hosted dbt to the <Constant name="dbt_platform" />. The series is ideal for users aiming for streamlined workflows and enhanced analytics:
+Ознакомьтесь с нашей серией руководств из трёх частей о переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" />. Эта серия идеально подходит пользователям, которые стремятся упростить рабочие процессы и расширить возможности аналитики:
 
 import CoreMigrationTable from '/snippets/_core-migration-table.md';
 
 <CoreMigrationTable/>
 
-## What you'll learn
-You may have already started your move to the <Constant name="dbt_platform" /> and are looking for tips to help you optimize your <Constant name="dbt_platform" /> experience. This guide includes tips and caveats for the following areas:
+## Что вы узнаете
+Возможно, вы уже начали переход на <Constant name="dbt_platform" /> и ищете советы, которые помогут оптимизировать работу с <Constant name="dbt_platform" />. В этом руководстве приведены советы и оговорки по следующим направлениям:
 
-- [Adapters and connections](/guides/dbt-migration-3?step=3) 
-- [Development tools](/guides/dbt-migration-3?step=4) 
-- [Orchestration](/guides/dbt-migration-3?step=5)
+- [Адаптеры и подключения](/guides/dbt-migration-3?step=3) 
+- [Инструменты разработки](/guides/dbt-migration-3?step=4) 
+- [Оркестрация](/guides/dbt-migration-3?step=5)
 - [<Constant name="mesh" />](/guides/dbt-migration-3?step=6)
 - [<Constant name="semantic_layer" />](/guides/dbt-migration-3?step=7)
 - [<Constant name="catalog" />](/guides/dbt-migration-3?step=8)
 
-## Adapters and connections
+## Адаптеры и подключения
 
-In the <Constant name="dbt_platform" />, you can natively connect to your data platform and test its [connection](/docs/platform/connect-data-platform/about-connections) with a click of a button. This is especially useful for users who are new to the <Constant name="dbt_platform" /> or are looking to streamline their connection setup. Here are some tips and caveats to consider:
+В <Constant name="dbt_platform" /> можно напрямую подключиться к вашей платформе данных и проверить [подключение](/docs/platform/connect-data-platform/about-connections) одним нажатием кнопки. Это особенно полезно для пользователей, которые только начинают работать с <Constant name="dbt_platform" /> или хотят упростить настройку подключения. Вот несколько советов и оговорок, которые стоит учитывать:
 
-### Tips
-- Manage [dbt versions](/docs/dbt-versions/upgrade-dbt-platform-version) and ensure team collaboration with <Constant name="dbt_platform" />'s one-click feature, eliminating the need for manual updates and version discrepancies. Select a [release track](/docs/dbt-versions/dbt-release-tracks) for ongoing updates, to always stay up to date with fixes and (optionally) get early access to new functionality for your dbt project.
-- The <Constant name="dbt_platform" /> supports a whole host of [cloud providers](/docs/platform/connect-data-platform/about-connections), including Snowflake, Databricks, BigQuery, Fabric, and Redshift (to name a few).
-- Use [Extended attributes](/docs/dbt-platform-environments#extended-attributes) to set a [`profiles.yml`](/docs/local/profiles.yml) snippet that changes how the <Constant name="dbt_platform" /> connects to the data platform. That page explains where to configure them for deployment and development environments.
-  - For example, if you have a field in your `profiles.yml` that you’d like to add to the <Constant name="dbt_platform" /> adapter user interface, you can use Extended attributes to set it.
+### Советы
+- Управляйте [версиями dbt](/docs/dbt-versions/upgrade-dbt-platform-version) и обеспечивайте совместную работу команды с помощью функции <Constant name="dbt_platform" />, позволяющей выбирать версию одним нажатием: она избавляет от ручных обновлений и расхождений версий. Выберите [канал выпусков](/docs/dbt-versions/dbt-release-tracks) для непрерывного получения обновлений, чтобы всегда иметь актуальные исправления и при желании получать ранний доступ к новым возможностям для вашего проекта dbt.
+- <Constant name="dbt_platform" /> поддерживает множество [облачных провайдеров](/docs/platform/connect-data-platform/about-connections), включая Snowflake, Databricks, BigQuery, Fabric и Redshift, и это лишь некоторые из них.
+- Используйте [расширенные атрибуты](/docs/dbt-platform-environments#extended-attributes), чтобы задать фрагмент [`profiles.yml`](/docs/local/profiles.yml), который изменяет способ подключения <Constant name="dbt_platform" /> к платформе данных. На этой странице объясняется, где настраивать их для сред развёртывания и разработки.
+  - Например, если в вашем `profiles.yml` есть поле, которое вы хотели бы добавить в пользовательский интерфейс адаптера <Constant name="dbt_platform" />, вы можете задать его с помощью расширенных атрибутов.
 
-### Caveats
-- Not all parameters are available for adapters.
-- A project can only use one warehouse type.
+### Оговорки
+- Не все параметры доступны для адаптеров.
+- Проект может использовать только один тип хранилища данных.
 
-## Development tools
+## Инструменты разработки
 
-The <Constant name="dbt_platform" /> empowers data practitioners to develop in the tool of their choice. It ships with a [<Constant name="dbt_platform" /> CLI](/docs/platform/dbt-cli-installation) (local) or [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) (browser-based) to build, test, run, and version control your dbt projects.
+<Constant name="dbt_platform" /> позволяет специалистам по данным разрабатывать проекты в удобном для них инструменте. В состав платформы входят [CLI <Constant name="dbt_platform" />](/docs/platform/dbt-cli-installation) (локальный инструмент) и [<Constant name="studio_ide" />](/docs/platform/studio-ide/develop-in-studio) (браузерный инструмент) для создания, тестирования, запуска проектов dbt и управления их версиями.
 
-Both development tools are tailored to suit different audiences and preferences within your team. To streamline your team's workflow, it's important to know who will prefer the <Constant name="studio_ide" /> and who might lean towards the <Constant name="dbt_platform" /> CLI. This section aims to clarify these preferences.
+Оба инструмента разработки рассчитаны на разные категории пользователей и предпочтения внутри вашей команды. Чтобы упростить рабочий процесс команды, важно понимать, кто предпочтёт <Constant name="studio_ide" />, а кто — CLI <Constant name="dbt_platform" />. Этот раздел поможет разобраться в этих предпочтениях.
 
 ### Studio IDE
-A web-based interface for building, testing, running, and version-controlling dbt projects. It compiles dbt code into SQL and executes it directly on your database. The <Constant name="studio_ide" /> makes developing fast and easy for new and seasoned data practitioners to build and test changes.
+Веб-интерфейс для создания, тестирования, запуска проектов dbt и управления их версиями. Он компилирует код dbt в SQL и выполняет его непосредственно в вашей базе данных. <Constant name="studio_ide" /> ускоряет и упрощает разработку, позволяя как начинающим, так и опытным специалистам по данным создавать и тестировать изменения.
 
-**Who might prefer the <Constant name="studio_ide" />?**
+**Кто может предпочесть <Constant name="studio_ide" />?**
 
-- New dbt users or those transitioning from other tools who appreciate a more guided experience through a browser-based interface.
-- Team members focused on speed and convenience for getting started with a new or existing project.
-- Individuals who prioritize direct feedback from the <Constant name="studio_ide" />, such as seeing unsaved changes.
+- Новые пользователи dbt или пользователи, переходящие с других инструментов, которым удобнее работать в браузерном интерфейсе с подсказками.
+- Участники команды, которым важны скорость и удобство начала работы с новым или существующим проектом.
+- Пользователи, для которых важна непосредственная обратная связь от <Constant name="studio_ide" />, например отображение несохранённых изменений.
 
-**Key features**
+**Основные возможности**
 
-- The <Constant name="studio_ide" /> has simplified <Constant name="git" /> functionality:
-  - Create feature branches from the branch configured in the development environment.
-  - View saved but not-committed code changes directly in the <Constant name="studio_ide" />.
-- [Format or lint](/docs/platform/studio-ide/lint-format) your code with `sqlfluff` or `sqlfmt`. This includes support for adding your custom linting rules.
-- Allows users to natively [defer to production](/docs/platform/about-defer#defer-in-dbt-platform-cli) metadata directly in their development workflows, reducing the number of objects.
-- Support running multiple dbt commands at the same time through [safe parallel execution](/reference/dbt-commands#parallel-execution), a [feature](/docs/platform/about-platform/dbt-platform-features) available in <Constant name="dbt_platform" />'s infrastructure. In contrast, local dbt *doesn't support* safe parallel execution for multiple invocations in the same process.
+- <Constant name="studio_ide" /> предоставляет упрощённые функции <Constant name="git" />:
+  - Создание веток для разработки функциональности от ветки, настроенной в среде разработки.
+  - Просмотр сохранённых, но ещё не включённых в коммит изменений кода непосредственно в <Constant name="studio_ide" />.
+- [Форматирование и линтинг](/docs/platform/studio-ide/lint-format) кода с помощью `sqlfluff` или `sqlfmt`. Также поддерживается добавление собственных правил линтинга.
+- Встроенная возможность [использовать метаданные production-среды через defer](/docs/platform/about-defer#defer-in-dbt-cli) непосредственно в рабочих процессах разработки, что сокращает количество объектов.
+- Поддержка одновременного запуска нескольких команд dbt благодаря [безопасному параллельному выполнению](/reference/dbt-commands#parallel-execution) — [возможности](/docs/platform/about-platform/dbt-platform-features), доступной в инфраструктуре <Constant name="dbt_platform" />. В отличие от неё, локальный dbt *не поддерживает* безопасное параллельное выполнение нескольких вызовов в одном процессе.
 
-The <Constant name="studio_ide" /> provides a simplified interface that's accessible to all users, regardless of their technical background. However, there are some capabilities that are intentionally not available in the <Constant name="studio_ide" /> due to its focus on simplicity and ease of use:
+<Constant name="studio_ide" /> предоставляет упрощённый интерфейс, доступный всем пользователям независимо от их технической подготовки. Однако некоторые возможности намеренно отсутствуют в <Constant name="studio_ide" />, поскольку основной акцент сделан на простоте и удобстве использования:
 
-- Pre-commit for automated checks before *committing* code is not available (yet).
-- Mass-generating files / interacting with the file system are not available.
-- Combining/piping commands, such as `dbt run -s (bash command)`, is not available.
+- Pre-commit для автоматических проверок перед *созданием коммита* кода недоступен (пока).
+- Массовое создание файлов и взаимодействие с файловой системой недоступны.
+- Объединение команд и передача данных через конвейер, например `dbt run -s (bash command)`, недоступны.
 
 ### <Constant name="platform_cli" />
 
-The <Constant name="platform_cli" /> allows you to run dbt [commands](/reference/dbt-commands#available-commands) against your <Constant name="dbt_platform" /> development environment from your local command line. For users who seek full control over their development environment and ideal for those comfortable with the command line.
+<Constant name="platform_cli" /> позволяет выполнять [команды](/reference/dbt-commands#available-commands) dbt в вашей среде разработки <Constant name="dbt_platform" /> из локальной командной строки. Этот инструмент предназначен для пользователей, которым нужен полный контроль над средой разработки, и идеально подходит тем, кто уверенно работает с командной строкой.
 
-When moving from self-hosted dbt to the <Constant name="dbt_platform" />, make sure you check the `.gitignore` file contains the [necessary folders](/docs/platform/git/version-control-basics#the-gitignore-file). <Constant name="dbt" /> doesn't interact with git so the <Constant name="dbt_platform" /> doesn't automatically add or verify entries in the `.gitignore` file. Additionally, if the repository already contains dbt code and doesn't require initialization, the <Constant name="dbt_platform" /> won't add any missing entries to the `.gitignore file`.
+При переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" /> обязательно проверьте, что файл `.gitignore` содержит [необходимые папки](/docs/platform/git/version-control-basics#the-gitignore-file). <Constant name="dbt" /> не взаимодействует с git, поэтому <Constant name="dbt_platform" /> не добавляет и не проверяет записи в файле `.gitignore` автоматически. Кроме того, если репозиторий уже содержит код dbt и не требует инициализации, <Constant name="dbt_platform" /> не добавит недостающие записи в файл `.gitignore`.
 
-**Who might prefer the <Constant name="dbt_platform" /> CLI?**
+**Кто может предпочесть CLI <Constant name="dbt_platform" />?**
 
-- Data practitioners accustomed to working with a specific set of development tooling.
-- Users looking for granular control over their <Constant name="git" /> workflows (such as pre-commits for automated checks before committing code).
-- Data practitioners who need to perform complex operations, like mass file generation or specific command combinations.
+- Специалисты по данным, привыкшие работать с определённым набором инструментов разработки.
+- Пользователи, которым нужен детальный контроль над рабочими процессами <Constant name="git" /> (например, pre-commit для автоматических проверок перед созданием коммита кода).
+- Специалисты по данным, которым необходимо выполнять сложные операции, такие как массовое создание файлов или определённые комбинации команд.
 
-**Key features**
+**Основные возможности**
 
-- Allows users to run dbt commands against their <Constant name="dbt_platform" /> development environment from their local command line with minimal configuration.
-- Allows users to natively [defer to production](/docs/platform/about-defer#defer-in-dbt-platform-cli) metadata directly in their development workflows, reducing the number of objects.
-- Support running multiple dbt commands at the same time through [safe parallel execution](/reference/dbt-commands#parallel-execution), a [feature](/docs/platform/about-platform/dbt-platform-features) available in <Constant name="dbt_platform" />'s infrastructure. In contrast, local dbt *doesn't support* safe parallel execution for multiple invocations in the same process.
-- Able to use Visual Studio (VS) Code extensions
+- Возможность выполнять команды dbt в своей среде разработки <Constant name="dbt_platform" /> из локальной командной строки с минимальной настройкой.
+- Встроенная возможность [использовать метаданные production-среды через defer](/docs/platform/about-defer#defer-in-dbt-cli) непосредственно в рабочих процессах разработки, что сокращает количество объектов.
+- Поддержка одновременного запуска нескольких команд dbt благодаря [безопасному параллельному выполнению](/reference/dbt-commands#parallel-execution) — [возможности](/docs/platform/about-platform/dbt-platform-features), доступной в инфраструктуре <Constant name="dbt_platform" />. В отличие от неё, локальный dbt *не поддерживает* безопасное параллельное выполнение нескольких вызовов в одном процессе.
+- Возможность использовать расширения Visual Studio (VS) Code
 
-## Orchestration
+## Оркестрация
 
-The <Constant name="dbt_platform" /> provides robust orchestration that enables you to schedule, run, and monitor dbt jobs with ease. Here are some tips and caveats to consider when using <Constant name="dbt_platform" />'s orchestration features:
+<Constant name="dbt_platform" /> предоставляет надёжные средства оркестрации, которые позволяют легко планировать, запускать и отслеживать задания dbt. Вот несколько советов и оговорок, которые стоит учитывать при использовании возможностей оркестрации <Constant name="dbt_platform" />:
 
-### Tips
+### Советы
 
-- Enable [partial parsing](/docs/platform/account-settings#partial-parsing) between jobs in the <Constant name="dbt_platform" /> to significantly speed up project parsing by only processing changed files, optimizing performance for large projects.
-- [Run multiple CI/CD](/docs/deploy/continuous-integration) jobs at the same time which will not block production runs. The Job scheduler automatically cancels stale runs  when a newer commit is pushed. This is because each PR will run in its own schema.
-- The <Constant name="dbt_platform" /> automatically [cancels](/docs/deploy/job-scheduler#run-cancellation-for-over-scheduled-jobs) a scheduled run if the existing run is still executing. This prevents unnecessary, duplicative executions.
-- Protect you and your data freshness from third-party outages by enabling <Constant name="dbt_platform" />'s [Git repository caching](/docs/platform/account-settings#git-repository-caching-), which keeps a cache of the project's Git repository. <Lifecycle status="managed,managed_plus" />
-- [Link deploy jobs](/docs/deploy/deploy-jobs#trigger-on-job-completion) across <Constant name="dbt_platform" /> projects by configuring your job or using the [Create Job API](/dbt-cloud/api-v2#/operations/Create%20Job) to do this. <Lifecycle status="self_service,managed" />
-- [Rerun your jobs](/docs/deploy/retry-jobs) from the start or the point of failure if your dbt job run completed with a status of **`Error.`**
+- Включите [частичный разбор](/docs/platform/account-settings#partial-parsing) между заданиями в <Constant name="dbt_platform" />, чтобы значительно ускорить разбор проекта за счёт обработки только изменённых файлов и оптимизировать производительность крупных проектов.
+- [Запускайте несколько заданий CI/CD](/docs/deploy/continuous-integration) одновременно, не блокируя запуски в production-среде. Планировщик заданий автоматически отменяет устаревшие запуски при отправке нового коммита. Это возможно благодаря тому, что каждый PR выполняется в собственной схеме.
+- <Constant name="dbt_platform" /> автоматически [отменяет](/docs/deploy/job-scheduler#run-cancellation-for-over-scheduled-jobs) запуск по расписанию, если предыдущий запуск ещё выполняется. Это предотвращает ненужные повторные выполнения.
+- Защитите свою работу и актуальность данных от сбоев сторонних сервисов: включите [кэширование Git-репозитория](/docs/platform/account-settings#git-repository-caching) в <Constant name="dbt_platform" />, которое сохраняет кэш Git-репозитория проекта. <Lifecycle status="managed,managed_plus" />
+- [Связывайте задания развёртывания](/docs/deploy/deploy-jobs#trigger-on-job-completion) между проектами <Constant name="dbt_platform" />, настроив задание или используя для этого [Create Job API](/dbt-cloud/api-v2#/operations/Create%20Job). <Lifecycle status="self_service,managed" />
+- [Повторно запускайте задания](/docs/deploy/retry-jobs) с начала или с места сбоя, если выполнение задания dbt завершилось со статусом **`Error.`**
 
-### Caveats
-- To automate the setup and configuration of your <Constant name="dbt" /> platform, you can store your job configurations as code within a repository:
-  - Check out our [Terraform provider.](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job)
-  - Alternatively, check out our [jobs-as-code](https://github.com/dbt-labs/dbt-jobs-as-code) repository, which is a tool built to handle <Constant name="dbt_platform" /> jobs as a well-defined YAML file.
-- <Constant name="dbt_platform" /> users and external emails can receive notifications if a job fails, succeeds, or is cancelled. To get notifications for warnings, you can create a [webhook subscription](/guides/zapier-slack) and post to Slack.
+### Оговорки
+- Чтобы автоматизировать настройку и конфигурирование вашей платформы <Constant name="dbt" />, можно хранить конфигурации заданий в виде кода в репозитории:
+  - Ознакомьтесь с нашим [провайдером Terraform.](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest/docs/resources/job)
+  - Также ознакомьтесь с нашим репозиторием [jobs-as-code](https://github.com/dbt-labs/dbt-jobs-as-code) — инструментом для управления заданиями <Constant name="dbt_platform" /> с помощью YAML-файла с чётко определённой структурой.
+- Пользователи <Constant name="dbt_platform" /> и внешние адресаты электронной почты могут получать уведомления об ошибке, успешном выполнении или отмене задания. Чтобы получать уведомления о предупреждениях, можно создать [подписку на вебхук](/guides/zapier-slack) и отправлять сообщения в Slack.
 
 ## dbt Mesh
 
-[<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro) helps organizations with mature, complex transformation workflows in dbt increase the flexibility and performance of their dbt projects. It allows you to make use of multiple interconnected dbt projects instead of a single large, monolithic project.
+[<Constant name="mesh" />](/best-practices/how-we-mesh/mesh-1-intro) помогает организациям со зрелыми и сложными процессами преобразования данных в dbt повысить гибкость и производительность своих проектов dbt. Он позволяет использовать несколько взаимосвязанных проектов dbt вместо одного большого монолитного проекта.
 
-It enables you to interface and navigate between different projects and models with [cross-project dependencies](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref), enhancing collaboration and data governance.
+Он позволяет связывать разные проекты и модели и переходить между ними с помощью [межпроектных зависимостей](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref), улучшая совместную работу и управление данными.
 
-Here are some tips and caveats to consider when using <Constant name="mesh" />:
+Вот несколько советов и оговорок, которые стоит учитывать при использовании <Constant name="mesh" />:
 
-### Tips
-- To dynamically resolve [cross-project references](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref), all developers need to develop with the <Constant name="dbt_platform" /> (either with the <Constant name="dbt_platform" /> CLI or <Constant name="studio_ide" />). Cross-project references aren't natively supported in self-hosted dbt, except by installing the source code from upstream projects [as packages](/docs/build/packages#how-do-i-add-a-package-to-my-project)
-- Link models across projects for a modular and scalable approach for your project and teams.
-- Manage access to your dbt models both within and across projects using:
-  - **[Groups](/docs/mesh/govern/model-access#groups)** &mdash; Organize nodes in your dbt DAG that share a logical connection and assign an owner to the entire group.
-  - **[Model access](/docs/mesh/govern/model-access#access-modifiers)** &mdash; Control which other models or projects can reference this model.
-  - **[Model versions](/docs/mesh/govern/model-versions)** &mdash; Enable adoption and deprecation of models as they evolve.
-  - **[Model contracts](/docs/mesh/govern/model-contracts)** &mdash; Set clear expectations on the shape of the data to ensure data changes upstream of dbt or within a project's logic don't break downstream consumers' data products.
+### Советы
+- Для динамического разрешения [межпроектных ссылок](/docs/mesh/govern/project-dependencies#how-to-write-cross-project-ref) все разработчики должны вести разработку в <Constant name="dbt_platform" /> (используя CLI <Constant name="dbt_platform" /> или <Constant name="studio_ide" />). В самостоятельно размещённом dbt нет встроенной поддержки межпроектных ссылок: для этого нужно устанавливать исходный код вышестоящих проектов [в виде пакетов](/docs/build/packages#how-do-i-add-a-package-to-my-project)
+- Связывайте модели из разных проектов, чтобы обеспечить модульный и масштабируемый подход к организации проекта и работы команд.
+- Управляйте доступом к моделям dbt как внутри проектов, так и между ними с помощью следующих возможностей:
+  - **[Группы](/docs/mesh/govern/model-access#groups)** &mdash; Объединяйте логически связанные узлы в DAG dbt и назначайте владельца для всей группы.
+  - **[Доступ к моделям](/docs/mesh/govern/model-access#access-modifiers)** &mdash; Определяйте, какие другие модели или проекты могут ссылаться на эту модель.
+  - **[Версии моделей](/docs/mesh/govern/model-versions)** &mdash; Обеспечивайте внедрение новых и вывод из эксплуатации устаревших версий моделей по мере их развития.
+  - **[Контракты моделей](/docs/mesh/govern/model-contracts)** &mdash; Задавайте чёткие требования к структуре данных, чтобы изменения данных до их обработки в dbt или изменения логики проекта не нарушали работу продуктов данных нижестоящих потребителей.
 
-### Caveats
-- To use cross-project references in dbt, each dbt project must correspond to just one <Constant name="dbt_platform" /> project. We strongly discourage defining multiple projects for the same codebase, even if you're trying to manage access permissions, connect to different data warehouses, or separate production and non-production data.  While this was required historically, features like [Staging environments](/docs/dbt-platform-environments#types-of-environments), Environment-level RBAC (_coming soon_), and [Extended attributes](/docs/dbt-platform-environments#extended-attributes) will make it unnecessary.
-- Project dependencies are uni-directional, meaning they go in one direction. This means dbt checks for cycles across projects (circular dependencies) and raise errors if any are detected. However, we are considering support to allow projects to depend on each other in both directions in the future, with dbt still checking for node-level cycles while allowing cycles at the project level.
-- Everyone in the account can view public model metadata, which helps users find data products more easily. This is separate from who can access the actual data, which is controlled by permissions in the data warehouse. For use cases where even metadata about a reusable data asset is sensitive, we are [considering](https://github.com/dbt-labs/dbt/issues/9340) an optional extension of protected models.
+### Оговорки
+- Для использования межпроектных ссылок в dbt каждый проект dbt должен соответствовать только одному проекту <Constant name="dbt_platform" />. Мы настоятельно не рекомендуем создавать несколько проектов для одной и той же кодовой базы, даже если вы хотите управлять правами доступа, подключаться к разным хранилищам данных или разделять производственные и непроизводственные данные. Хотя раньше это было необходимо, такие возможности, как [промежуточные среды](/docs/dbt-platform-environments#types-of-environments), RBAC на уровне среды (_скоро появится_) и [расширенные атрибуты](/docs/dbt-platform-environments#extended-attributes), устранят эту необходимость.
+- Зависимости проектов однонаправленны, то есть действуют только в одном направлении. Это означает, что dbt проверяет наличие циклов между проектами (циклических зависимостей) и выдаёт ошибки при их обнаружении. Однако мы рассматриваем возможность в будущем разрешить проектам зависеть друг от друга в обоих направлениях: dbt по-прежнему будет проверять циклы на уровне узлов, но разрешит циклы на уровне проектов.
+- Все пользователи аккаунта могут просматривать метаданные публичных моделей, что упрощает поиск продуктов данных. Это не связано с доступом к самим данным, который регулируется правами в хранилище данных. Для случаев, когда даже метаданные о повторно используемом ресурсе данных являются конфиденциальными, мы [рассматриваем](https://github.com/dbt-labs/dbt/issues/9340) дополнительное расширение возможностей защищённых моделей.
 
-Refer to the [<Constant name="mesh" /> FAQs](/best-practices/how-we-mesh/mesh-5-faqs) for more questions.
+Другие вопросы рассмотрены в разделе [часто задаваемых вопросов о <Constant name="mesh" />](/best-practices/how-we-mesh/mesh-5-faqs).
 
 ## dbt Semantic Layer
 
-Leverage the [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl), powered by MetricFlow, to create a unified view of your business metrics, ensuring consistency across all analytics tools. The data layer is the foundation for AI as well as analytics &mdash; shared definitions and lineage give AI and BI the same trusted context so answers are consistent and actionable. Here are some tips and caveats to consider when using <Constant name="semantic_layer" />:
+Используйте [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) на базе MetricFlow, чтобы создать единое представление бизнес-метрик и обеспечить их согласованность во всех аналитических инструментах. Слой данных — основа как для ИИ, так и для аналитики &mdash; общие определения и сведения о происхождении данных обеспечивают ИИ и BI единым надёжным контекстом, благодаря чему ответы согласованы и применимы на практике. Вот несколько советов и оговорок, которые стоит учитывать при использовании <Constant name="semantic_layer" />:
 
-### Tips
-- Define semantic models and metrics once in the <Constant name="dbt_platform" /> with the [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) (powered by MetricFlow). Reuse them across various analytics platforms, reducing redundancy and errors.
-- Use the [<Constant name="semantic_layer" /> APIs](/docs/dbt-apis/sl-api-overview) to query metrics in downstream tools for consistent, reliable data metrics.
-- Connect to several data applications, from business intelligence tools to notebooks, spreadsheets, data catalogs, and more, to query your metrics. [Available integrations](/docs/platform-integrations/avail-sl-integrations) include Tableau, Google Sheets, Hex, and more.
-- Use [exports](/docs/use-dbt-semantic-layer/exports) to write commonly used queries directly within your data platform, on a schedule.
+### Советы
+- Определите семантические модели и метрики один раз в <Constant name="dbt_platform" /> с помощью [<Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/dbt-sl) (на базе MetricFlow). Повторно используйте их на разных аналитических платформах, сокращая дублирование и количество ошибок.
+- Используйте [API <Constant name="semantic_layer" />](/docs/dbt-apis/sl-api-overview) для запросов метрик в нижестоящих инструментах, чтобы получать согласованные и надёжные показатели.
+- Подключайте различные приложения для работы с данными — от инструментов бизнес-аналитики до блокнотов, электронных таблиц, каталогов данных и других инструментов — для запросов ваших метрик. [Доступные интеграции](/docs/platform-integrations/avail-sl-integrations) включают Tableau, Google Sheets, Hex и другие.
+- Используйте [экспорт](/docs/use-dbt-semantic-layer/exports), чтобы по расписанию сохранять результаты часто используемых запросов непосредственно в вашей платформе данных.
 
-### Caveats
-- <Constant name="semantic_layer" /> currently supports the Deployment environment for querying. Development querying experience coming soon.
-- Run queries/semantic layer commands in the <Constant name="dbt_platform" /> CLI, however running queries/semantic layer commands in the <Constant name="studio_ide" /> isn't supported *yet.*
-- <Constant name="semantic_layer" /> doesn't support using [Single sign-on (SSO)](/docs/platform/manage-access/sso-overview) for <Constant name="semantic_layer" /> [production credentials](/docs/dbt-apis/service-tokens#permissions-for-service-account-tokens), however, SSO is supported for development user accounts.
+### Оговорки
+- <Constant name="semantic_layer" /> в настоящее время поддерживает выполнение запросов в среде развёртывания. Возможность выполнения запросов в среде разработки появится в ближайшее время.
+- Выполняйте запросы и команды семантического слоя в CLI <Constant name="dbt_platform" />; выполнение запросов и команд семантического слоя в <Constant name="studio_ide" /> *пока* не поддерживается.
+- <Constant name="semantic_layer" /> не поддерживает использование [единого входа (SSO)](/docs/platform/manage-access/sso-overview) для [учётных данных production-среды](/docs/dbt-apis/service-tokens#permissions-for-service-account-tokens) <Constant name="semantic_layer" />, однако SSO поддерживается для учётных записей пользователей в среде разработки.
 
-Refer to the [<Constant name="semantic_layer" /> FAQs](/docs/use-dbt-semantic-layer/sl-faqs) for more information.
+Дополнительную информацию см. в разделе [часто задаваемых вопросов о <Constant name="semantic_layer" />](/docs/use-dbt-semantic-layer/sl-faqs).
 
 ## dbt Catalog
 
-[<Constant name="catalog" />](/docs/explore/explore-projects) enhances your ability to discover, understand, and troubleshoot your data assets through rich metadata and lineage visualization. Lineage and discovery are essential for governance and for feeding reliable context to AI workflows. Here are some tips and caveats to consider when using <Constant name="catalog" />:
+[<Constant name="catalog" />](/docs/explore/explore-projects) расширяет возможности поиска, изучения ресурсов данных и устранения связанных с ними проблем благодаря подробным метаданным и визуализации происхождения данных. Поиск ресурсов и сведения о происхождении данных необходимы для управления данными и предоставления надёжного контекста рабочим процессам ИИ. Вот несколько советов и оговорок, которые стоит учитывать при использовании <Constant name="catalog" />:
 
-### Tips
-- Use the search and filter capabilities in <Constant name="catalog" /> to quickly locate models, sources, and tests, streamlining your workflow.
-- View all the [different projects](/docs/explore/explore-multiple-projects) and public models in the account, where the public models are defined, and how they are used to gain a better understanding of your cross-project resources.
-- Use the [Lenses](/docs/explore/explore-projects#lenses) feature, which are map-like layers for your DAG, available from your project's lineage graph. Lenses help you further understand your project's contextual metadata at scale, especially to distinguish a particular model or a subset of models.
-- Access column-level lineage (CLL) for the resources in your dbt project. <Lifecycle status="managed,managed_plus" />
+### Советы
+- Используйте поиск и фильтры в <Constant name="catalog" />, чтобы быстро находить модели, источники и тесты, упрощая рабочий процесс.
+- Просматривайте все [проекты](/docs/explore/explore-multiple-projects) и публичные модели в аккаунте, места определения публичных моделей и способы их использования, чтобы лучше понимать ресурсы, используемые между проектами.
+- Используйте функцию [Lenses](/docs/explore/explore-projects#lenses) — слои для DAG, подобные слоям карты, доступные на графе происхождения данных вашего проекта. Lenses помогают лучше понимать контекстные метаданные проекта в большом масштабе, в частности выделять определённую модель или подмножество моделей.
+- Получайте доступ к сведениям о происхождении данных на уровне столбцов (CLL) для ресурсов вашего проекта dbt. <Lifecycle status="managed,managed_plus" />
 
-### Caveats
-- There must be at least one successful job run in the production deployment environment for <Constant name="catalog" /> to populate information. 
+### Оговорки
+- Чтобы <Constant name="catalog" /> заполнился информацией, в производственной среде развёртывания должен быть хотя бы один успешный запуск задания. 
 
-Familiarize yourself with <Constant name="catalog" />'s features to fully leverage its capabilities to avoid missed opportunities for efficiency gains.
+Ознакомьтесь с функциями <Constant name="catalog" />, чтобы в полной мере использовать его возможности и не упустить способы повысить эффективность.
 
-Refer to the [<Constant name="catalog" /> FAQs](/docs/explore/dbt-explorer-faqs) for more information.
+Дополнительную информацию см. в разделе [часто задаваемых вопросов о <Constant name="catalog" />](/docs/explore/dbt-explorer-faqs).
 
-## What's next?
+## Что дальше?
 
 <ConfettiTrigger>
 
-Congratulations on making it through the guide 🎉!
+Поздравляем с завершением руководства 🎉!
 
-We hope you're equipped with useful insights and tips to help you with your move. Something to note is that moving from self-hosted dbt to the <Constant name="dbt_platform" /> isn't just about evolving your data projects, it's about exploring new levels of collaboration, governance, efficiency, and innovation within your team, and building a data layer that's ready for AI.
+Надеемся, вы получили полезные сведения и советы, которые помогут вам при переходе. Важно помнить: переход с самостоятельно размещённого dbt на <Constant name="dbt_platform" /> — это не только развитие ваших проектов данных, но и выход на новый уровень совместной работы, управления, эффективности и инноваций в команде, а также создание слоя данных, готового к использованию ИИ.
 
-For the next steps, continue exploring our 3-part-guide series on moving from self-hosted dbt to the <Constant name="dbt_platform" />:
+В качестве следующих шагов продолжите изучение нашей серии руководств из трёх частей о переходе с самостоятельно размещённого dbt на <Constant name="dbt_platform" />:
 
-<CoreMigrationTable/>
+<CoreMigrationTable anchorId="why-move-to-the-dbt-platform-recap" />
 
 </ConfettiTrigger>
 
-### Resources
+### Ресурсы
 
-If you need any additional help or have some questions, use the following resources:
+Если вам нужна дополнительная помощь или у вас есть вопросы, воспользуйтесь следующими ресурсами:
 
-- [dbt Learn courses](https://learn.getdbt.com) for on-demand video learning.
-- Our [Support team](/docs/dbt-support) is always available to help you troubleshoot your <Constant name="dbt_platform" /> issues.
-- Join the [dbt Community](https://community.getdbt.com/) to connect with other dbt users, ask questions, and share best practices.
-- Subscribe to the [<Constant name="dbt_platform" /> RSS alerts](https://status.getdbt.com/)
-- Enterprise accounts have an account management team available to help troubleshoot solutions and account management assistance. [Book a demo](https://www.getdbt.com/contact) to learn more.
-- [How the <Constant name="dbt_platform" /> compares with self-hosted dbt](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) for a detailed comparison of self-hosted dbt and the <Constant name="dbt_platform" />.
+- [Курсы dbt Learn](https://learn.getdbt.com) для обучения по видеоматериалам в удобное время.
+- Наша [служба поддержки](/docs/dbt-support) всегда готова помочь вам устранить проблемы с <Constant name="dbt_platform" />.
+- Присоединяйтесь к [сообществу dbt](https://community.getdbt.com/), чтобы общаться с другими пользователями dbt, задавать вопросы и делиться лучшими практиками.
+- Подпишитесь на [RSS-уведомления <Constant name="dbt_platform" />](https://status.getdbt.com/)
+- Для аккаунтов Enterprise доступна команда сопровождения, которая помогает устранять проблемы и управлять аккаунтом. [Закажите демонстрацию](https://www.getdbt.com/contact), чтобы узнать больше.
+- [Сравнение <Constant name="dbt_platform" /> с самостоятельно размещённым dbt](https://www.getdbt.com/product/dbt-core-vs-dbt-cloud) — подробное сопоставление самостоятельно размещённого dbt и <Constant name="dbt_platform" />.
 
-For tailored assistance, you can use the following resources:
+Для получения индивидуальной помощи воспользуйтесь следующими ресурсами:
 
-- Book [expert-led demos](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) and insights
-- Work with the [dbt Labs' Professional Services](https://www.getdbt.com/dbt-labs/services) team to support your data organization and move.
+- Запишитесь на [демонстрации с экспертами](https://www.getdbt.com/resources/dbt-cloud-demos-with-experts) и получите рекомендации
+- Обратитесь к команде [профессиональных услуг dbt Labs](https://www.getdbt.com/dbt-labs/services) за поддержкой вашей команды по работе с данными и помощью при переходе.

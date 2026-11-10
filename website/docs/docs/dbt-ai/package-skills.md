@@ -1,29 +1,29 @@
 ---
-title: "Installing agent skills from dbt packages"
+title: "Установка навыков агента из пакетов dbt"
 id: "package-skills"
-description: "Ship agent skills in a dbt package and install them with dbt deps."
-sidebar_label: "Skills from packages"
+description: "Добавляйте навыки агента в пакет dbt и устанавливайте их с помощью dbt deps."
+sidebar_label: "Навыки из пакетов"
 tags: [AI]
 availability:
   surface: local
   engine: v2
 ---
 
-# Installing agent skills from dbt packages
+# Установка навыков агента из пакетов dbt
 
 <IntroText>
-Ship a set of skills in a dbt package, and `dbt deps` installs them into the directory your coding agent reads from. Your whole team picks up the same skills from a versioned dependency instead of managing them separately.
+Добавьте набор навыков в пакет dbt, и `dbt deps` установит их в каталог, из которого ваш агент для работы с кодом считывает навыки. Вся команда получает одинаковые навыки из зависимости с контролем версий вместо того, чтобы управлять ими по отдельности.
 </IntroText>
 
-A skill is a directory containing a `SKILL.md` file that gives your coding agent reusable instructions, in the [Agent Skills](https://agentskills.io/specification) format. Any dbt project can ship skills, and any project that installs that project as a package can install its skills.
+Навык — это каталог с файлом `SKILL.md`, который содержит многократно используемые инструкции для вашего агента для работы с кодом в формате [Agent Skills](https://agentskills.io/specification). Любой проект dbt может включать навыки, и любой проект, который устанавливает его как пакет, может установить и его навыки.
 
-Let's say your team has rules about how to name models or where tests go. You can write those rules down as a skill _once_, ship them in a package, and everyone's coding agent picks them up the next time they run `dbt deps`. This means everyone on the team gets the same rules, and you only update them in one place.
+Предположим, в вашей команде есть правила именования моделей или размещения тестов. Вы можете записать эти правила в виде навыка _один раз_, добавить их в пакет, и агент каждого участника команды получит их при следующем запуске `dbt deps`. Так все участники команды будут использовать одни и те же правила, а обновлять их потребуется только в одном месте.
 
-Agent skills install locally where your coding agent runs. Skills install only when you configure an `ai_provider`. Without one, `dbt deps` installs your packages as usual and leaves your agent directories untouched.
+Навыки агента устанавливаются локально там, где работает ваш агент для работы с кодом. Навыки устанавливаются только при настроенном `ai_provider`. Без него `dbt deps` устанавливает пакеты как обычно и не затрагивает каталоги агента.
 
-## Set the ai_provider flag
+## Настройка флага ai_provider {#set-the-ai_provider-flag}
 
-Set [`ai_provider` in the `flags`](/reference/global-configs/about-global-configs?version=2#available-flags) block of your root project to tell dbt which directory to write skills to. For example, if you use claude as your AI provider, you'd set it as such:
+Задайте [`ai_provider` в блоке `flags`](/reference/global-configs/about-global-configs?version=2#available-flags) корневого проекта, чтобы указать dbt, в какой каталог записывать навыки. Например, если вы используете claude в качестве поставщика ИИ, настройка будет выглядеть так:
 
 <File name='dbt_project.yml'>
 
@@ -34,10 +34,10 @@ flags:
 
 </File>
 
-Each provider has a directory it reads skills from. Most providers share `.agents/skills`; claude reads skills via its own directory. Supported providers are:
+У каждого поставщика есть каталог, из которого он считывает навыки. Большинство поставщиков используют `.agents/skills`; claude считывает навыки из собственного каталога. Поддерживаются следующие поставщики:
 
 <SimpleTable>
-| `ai_provider` value | Installs to |
+| Значение `ai_provider` | Каталог установки |
 |---------------------|-------------|
 | `wizard` | `.agents/skills` |
 | `claude` | `.claude/skills` |
@@ -46,11 +46,11 @@ Each provider has a directory it reads skills from. Most providers share `.agent
 | `cursor` | `.agents/skills` |
 | `gemini` | `.agents/skills` |
 </SimpleTable>
-Values are case-insensitive, so `wizard`, `Wizard`, and `WIZARD` all resolve the same way.
+Значения нечувствительны к регистру, поэтому `wizard`, `Wizard` и `WIZARD` обрабатываются одинаково.
 
-If you use <Constant name="wizard" />, set `wizard` even if you [bring your own key](/docs/dbt-ai/wizard-byok) or use dbt-<Term id="managed"/> AI.
+Если вы используете <Constant name="wizard" />, укажите `wizard`, даже если вы [используете собственный ключ](/docs/dbt-ai/wizard-byok) или ИИ под управлением dbt (dbt-<Term id="managed"/> AI).
 
-You can also list more than one provider, which installs the same skills into each provider's directory:
+Также можно указать несколько поставщиков: в этом случае одинаковые навыки будут установлены в каталог каждого поставщика:
 
 <File name='dbt_project.yml'>
 
@@ -63,23 +63,23 @@ flags:
 
 </File>
 
-dbt resolves `ai_provider` from three places, in order of precedence:
+dbt определяет значение `ai_provider` из трёх источников в следующем порядке приоритета:
 
-1. The `--ai-provider` command-line option, which accepts a comma-separated list, for example `dbt deps --ai-provider claude,cursor`.
-2. The `DBT_ENGINE_AI_PROVIDER` environment variable.
-3. The `flags` block in your root project's `dbt_project.yml`, as shown previously.
+1. Параметр командной строки `--ai-provider`, который принимает список значений через запятую, например `dbt deps --ai-provider claude,cursor`.
+2. Переменная окружения `DBT_ENGINE_AI_PROVIDER`.
+3. Блок `flags` в файле `dbt_project.yml` корневого проекта, как показано выше.
 
-Only the root project's `flags` block is read. Setting `ai_provider` in a package has no effect, because the choice of coding agent belongs to the user, not to the package author.
+Считывается только блок `flags` корневого проекта. Установка `ai_provider` в пакете не имеет эффекта, поскольку агента для работы с кодом выбирает пользователь, а не автор пакета.
 
-If your project or its packages ship skills and `ai_provider` isn't set, `dbt deps` succeeds and warns that it found skills but installed none. For example:
+Если ваш проект или его пакеты содержат навыки, но `ai_provider` не задан, `dbt deps` завершается успешно и выводит предупреждение о том, что навыки найдены, но ни один из них не установлен. Например:
 
 ```text
 [warning] [AiProviderUnset (dbt1801)]: Found 3 agent skill(s) in this project and its packages, but 'ai_provider' is not set, so none were installed. Set it in dbt_project.yml (flags: {ai_provider: claude}), via --ai-provider, or with DBT_ENGINE_AI_PROVIDER. Known providers: wizard, claude, openai, codex, cursor, gemini.
 ```
 
-## Ship skills in a package
+## Добавление навыков в пакет
 
-Create one directory per skill under your project's `skills` directory, each containing a `SKILL.md` file:
+Создайте отдельный каталог для каждого навыка в каталоге `skills` вашего проекта и поместите в каждый из них файл `SKILL.md`:
 
 ```text
 skills/
@@ -89,9 +89,9 @@ skills/
     SKILL.md
 ```
 
-To keep skills somewhere other than `skills`, set [skill-paths](/reference/project-configs/skill-paths).
+Чтобы хранить навыки не в `skills`, а в другом каталоге, задайте [skill-paths](/reference/project-configs/skill-paths).
 
-Each `SKILL.md` needs YAML frontmatter with a `name` that matches its directory name, and a `description` that tells the agent when to apply the skill:
+Каждый файл `SKILL.md` должен содержать блок метаданных YAML с полем `name`, совпадающим с именем каталога, и полем `description`, которое сообщает агенту, когда применять навык:
 
 <File name='skills/naming-conventions/SKILL.md'>
 
@@ -112,15 +112,15 @@ Apply these prefixes when adding a new model:
 
 </File>
 
-For more detail on writing effective skills, refer to [Skill file format](/docs/dbt-ai/wizard-skills#skill-file-format).
+Подробнее о создании эффективных навыков см. в разделе [Формат файла навыка](/docs/dbt-ai/wizard-skills#skill-file-format).
 
-dbt reads a package's `SKILL.md` files and never modifies them. Only the installed copy is written to.
+dbt считывает файлы `SKILL.md` пакета и никогда их не изменяет. Запись выполняется только в установленную копию.
 
-A `SKILL.md` that dbt can't read — because it's missing frontmatter, or its `name` doesn't match its directory — produces a warning and is skipped. One malformed skill in a package doesn't stop the rest from installing.
+Если dbt не может прочитать `SKILL.md` — из-за отсутствия блока метаданных или несовпадения `name` с именем каталога — он выводит предупреждение и пропускает этот навык. Один некорректно оформленный навык в пакете не мешает установке остальных.
 
-## Install the skills
+## Установка навыков
 
-Add the package to your project as you would any other dependency:
+Добавьте пакет в проект так же, как любую другую зависимость:
 
 <File name='packages.yml'>
 
@@ -131,7 +131,7 @@ packages:
 
 </File>
 
-Then run `dbt deps`. dbt reports each skill it writes:
+Затем запустите `dbt deps`. dbt сообщает о каждом записанном навыке:
 
 ```shell
 dbt deps
@@ -146,22 +146,22 @@ Installing add-a-data-test (demo_skills) -> .agents/skills
 Installing naming-conventions (demo_skills) -> .agents/skills
 ```
 
-With more than one provider set, dbt writes a copy per directory:
+Если указано несколько поставщиков, dbt записывает копию в каждый каталог:
 
 ```text
 Installing add-a-data-test (demo_skills) -> .agents/skills
 Installing add-a-data-test (demo_skills) -> .claude/skills
 ```
 
-dbt installs skills whenever it installs packages, so `dbt build`, `dbt run`, and `dbt parse` install them too. You don't have to run `dbt deps` yourself.
+dbt устанавливает навыки всякий раз, когда устанавливает пакеты, поэтому `dbt build`, `dbt run` и `dbt parse` тоже устанавливают их. Запускать `dbt deps` самостоятельно не требуется.
 
-dbt collects skills from your root project as well as from every installed package, including packages installed as transitive dependencies. A `skills` directory in your own project installs alongside the ones your packages ship.
+dbt собирает навыки как из корневого проекта, так и из всех установленных пакетов, включая пакеты, установленные как транзитивные зависимости. Навыки из каталога `skills` вашего проекта устанавливаются вместе с навыками из пакетов.
 
-Re-running a command when nothing has changed writes nothing and reports nothing. dbt rewrites the installed copy only when the source has changed.
+При повторном запуске команды, если ничего не изменилось, dbt ничего не записывает и не выводит сообщений. dbt перезаписывает установленную копию только при изменении исходного содержимого.
 
-## Understand how dbt tracks installed skills
+## Как dbt отслеживает установленные навыки
 
-When dbt installs a skill, it records what it did in the installed copy's frontmatter, under the `metadata` field:
+При установке навыка dbt записывает сведения о выполненных действиях в блок метаданных установленной копии, в поле `metadata`:
 
 <File name='.agents/skills/naming-conventions/SKILL.md'>
 
@@ -181,19 +181,19 @@ metadata:
 
 </File>
 
-That record is the only way dbt recognizes a skill as its own, which has three consequences worth knowing:
+Эта запись — единственный способ, которым dbt распознаёт навык как управляемый им. Из этого следуют три важных момента:
 
-- **Skills you write by hand are never touched.** dbt only overwrites or removes a skill directory whose `SKILL.md` carries `dbt.managed_by: dbt`. Your own skills can sit in the same directory safely.
-- **Removing the record makes dbt forget the copy.** If you delete the `dbt.` entries from an installed skill, dbt no longer recognizes it and leaves it alone from then on, including during [dbt clean](/reference/commands/clean).
-- **Modifications to skills are overwritten.** dbt always overwrites skill directories whose `SKILL.md` carries `dbt.managed_by: dbt`. To permanently modify a skill installed via a package, remove the dbt metadata within the frontmatter of the `SKILL.md`.
+- **Навыки, написанные вами вручную, никогда не затрагиваются.** dbt перезаписывает или удаляет только те каталоги навыков, в файле `SKILL.md` которых есть `dbt.managed_by: dbt`. Ваши собственные навыки могут безопасно находиться в том же каталоге.
+- **После удаления записи dbt забывает о копии.** Если удалить записи `dbt.` из установленного навыка, dbt перестанет распознавать его и больше не будет его затрагивать, в том числе при выполнении [dbt clean](/reference/commands/clean).
+- **Изменения навыков перезаписываются.** dbt всегда перезаписывает каталоги навыков, в файле `SKILL.md` которых есть `dbt.managed_by: dbt`. Чтобы изменения навыка, установленного из пакета, сохранялись, удалите метаданные dbt из блока метаданных файла `SKILL.md`.
 
-If the skill's author included their own `metadata` entries, dbt preserves them and adds its own entries after them.
+Если автор навыка добавил собственные записи в `metadata`, dbt сохраняет их и добавляет свои записи после них.
 
-`dbt.version` records the version dbt resolved for the package. Local and tarball packages have no pinned version, so the field is absent for those; `dbt.source_hash` still identifies the exact content that was installed.
+`dbt.version` содержит версию, которую dbt определил для пакета. У локальных пакетов и пакетов из tarball-архивов нет закреплённой версии, поэтому для них это поле отсутствует; при этом `dbt.source_hash` по-прежнему позволяет точно определить установленное содержимое.
 
-## Disable a skill
+## Отключение навыка {#disable-a-skill}
 
-Use the `skills` config in your root project, keyed by the package that ships the skill:
+Используйте конфигурацию `skills` в корневом проекте, указав в качестве ключа пакет, содержащий навык:
 
 <File name='dbt_project.yml'>
 
@@ -206,13 +206,13 @@ skills:
 
 </File>
 
-A package's own `skills` config sets the defaults for the skills it ships, and your root project's `skills` config overrides it. This works the same way as [enabling and disabling other resources](/reference/resource-configs/enabled).
+Собственная конфигурация `skills` пакета задаёт значения по умолчанию для содержащихся в нём навыков, а конфигурация `skills` корневого проекта переопределяет их. Это работает так же, как [включение и отключение других ресурсов](/reference/resource-configs/enabled).
 
-## More examples
+## Дополнительные примеры
 
-Set `+enabled` at the package level to control a whole package, or nest it under a skill name to control a single skill.
+Задайте `+enabled` на уровне пакета, чтобы управлять всем пакетом, или вложите его в раздел с именем навыка, чтобы управлять отдельным навыком.
 
-Disable every skill from one package, and leave all others enabled:
+Отключить все навыки из одного пакета, оставив остальные включёнными:
 
 <File name='dbt_project.yml'>
   
@@ -223,7 +223,7 @@ skills:
 ```
 </File>
 
-Enable skills from only one package, and disable them from all others:
+Включить навыки только из одного пакета и отключить их во всех остальных:
 
 <File name='dbt_project.yml'>
   
@@ -235,7 +235,7 @@ skills:
 ```
 </File>
 
-Enable just two skills, and disable everything else:
+Включить только два навыка и отключить все остальные:
 
 <File name='dbt_project.yml'>
   
@@ -250,7 +250,7 @@ skills:
 ```
 </File>
 
-Disable just two skills, and leave everything else enabled:
+Отключить только два навыка, оставив все остальные включёнными:
 
 <File name='dbt_project.yml'>
   
@@ -264,8 +264,8 @@ skills:
 ```
 </File>
 
-:::caution Skill names must be unique
-Because skills install under their own name, two enabled skills with the same name would occupy the same directory. Rather than choose between them, dbt fails the command before writing anything:
+:::caution Имена навыков должны быть уникальными
+Поскольку навыки устанавливаются под собственными именами, два включённых навыка с одинаковым именем заняли бы один и тот же каталог. Вместо того чтобы выбирать один из них, dbt завершает команду с ошибкой до начала записи:
 
 ```text
 Two or more agent skills are named 'naming-conventions' (this project, package
@@ -273,12 +273,12 @@ Two or more agent skills are named 'naming-conventions' (this project, package
 be unique across your project and its packages.
 ```
 
-Resolve it the same way you'd resolve duplicate model names: disable all but one with `+enabled: false`, or ask the package maintainer to rename theirs.
+Решите проблему так же, как при дублировании имён моделей: отключите все навыки, кроме одного, с помощью `+enabled: false` или попросите сопровождающего пакета переименовать его навык.
 :::
 
-## Remove installed skills
+## Удаление установленных навыков
 
-[dbt clean](/reference/commands/clean) removes the skills dbt installed and leaves everything else in place:
+[dbt clean](/reference/commands/clean) удаляет навыки, установленные dbt, и оставляет всё остальное на месте:
 
 ```shell
 dbt clean
@@ -289,10 +289,10 @@ dbt clean
   Removing naming-conventions -> .agents/skills
 ```
 
-## Related docs
+## Связанная документация
 
-- [Use skills with <Constant name="wizard" /> CLI](/docs/dbt-ai/wizard-skills)
-- [Packages](/docs/build/packages)
+- [Использование навыков с CLI <Constant name="wizard" />](/docs/dbt-ai/wizard-skills)
+- [Пакеты](/docs/build/packages)
 - [skill-paths](/reference/project-configs/skill-paths)
-- [About dbt deps command](/reference/commands/deps)
-- [About dbt clean command](/reference/commands/clean)
+- [О команде dbt deps](/reference/commands/deps)
+- [О команде dbt clean](/reference/commands/clean)

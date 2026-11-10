@@ -1,8 +1,8 @@
 ---
-title: Does dbt State support Python models?
-description: "Learn how dbt State works with Python models."
-sidebar_label: 'Does State support Python models?'
+title: Поддерживает ли dbt State модели Python?
+description: "Узнайте, как dbt State работает с моделями Python."
+sidebar_label: 'Поддерживает ли State модели Python?'
 id: python-models
 ---
 
-dbt State builds Python models but does not reuse them. It executes Python models on every run, even when their code and upstream data have not changed.
+dbt State строит модели Python, но не использует повторно результаты их выполнения. Он выполняет модели Python при каждом запуске, даже если их код и данные вышестоящих зависимостей не изменились.

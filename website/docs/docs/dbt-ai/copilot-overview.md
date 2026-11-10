@@ -1,8 +1,8 @@
 ---
 title: "dbt Copilot"
 id: "copilot-overview"
-description: "dbt Copilot is dbt's inline AI assistance experience, providing single-click generation of SQL, documentation, tests, and semantic models."
-sidebar_label: "dbt Copilot overview"
+description: "dbt Copilot — встроенный ИИ-помощник dbt, позволяющий генерировать SQL, документацию, тесты и семантические модели одним нажатием."
+sidebar_label: "Обзор dbt Copilot"
 tags: [AI, Copilot]
 availability:
   surface: platform
@@ -16,20 +16,20 @@ import CopilotConfigureAiProvider from '/snippets/_copilot-configure-ai-provider
 # dbt Copilot
 
 <IntroText>
-dbt Copilot helps you generate SQL, documentation, tests, and semantic models in the <Constant name="dbt_platform" />.
+dbt Copilot помогает генерировать SQL, документацию, тесты и семантические модели в <Constant name="dbt_platform" />.
 </IntroText>
 
 <CopilotWizardDifferences/>
 
 
-_The earlier version of dbt Copilot in the Studio IDE is available only to a limited set of accounts. dbt Wizard is available to all accounts and is the recommended way to develop with AI in the Studio IDE &mdash; it covers everything dbt Copilot's quick actions did, plus multi-step changes with built-in validation._
+_Ранняя версия dbt Copilot в Studio IDE доступна только ограниченному числу аккаунтов. dbt Wizard доступен для всех аккаунтов и рекомендуется для разработки с использованием ИИ в Studio IDE &mdash; он поддерживает все возможности быстрых действий dbt Copilot, а также многошаговые изменения со встроенной проверкой._
 
-## Action limits by plan
+## Лимиты действий по тарифным планам
 
-dbt Copilot usage is metered in actions &mdash; one completed AI request counts as one action. Each plan includes a monthly action allotment per license:
+Использование dbt Copilot измеряется в действиях &mdash; один выполненный запрос к ИИ считается одним действием. Каждый тарифный план включает ежемесячный лимит действий на одну лицензию:
 
 <SimpleTable>
-|Plan                       |Actions per month |
+|Тарифный план              |Действий в месяц  |
 |---------------------------|------------------|
 |Developer                  | ❌               |
 |Starter                    |100               |
@@ -37,19 +37,19 @@ dbt Copilot usage is metered in actions &mdash; one completed AI request counts 
 |Enterprise+                |10,000            |
 </SimpleTable>
 
-Enterprise and Enterprise+ limits don't apply if you [bring your own key (BYOK)](/docs/platform/wizard-byok-platform), since your AI provider bills that usage directly. Legacy Enterprise-tier plans enrolled before May 1, 2025 have a 1,000 action limit.
+Лимиты Enterprise и Enterprise+ не действуют, если вы [используете собственный ключ (BYOK)](/docs/platform/wizard-byok-platform), поскольку оплату за такое использование взимает напрямую ваш поставщик ИИ. Для прежних тарифных планов уровня Enterprise, подключённых до 1 мая 2025 года, действует лимит в 1 000 действий.
 
-Refer to [dbt AI usage](/docs/platform/billing/dbt-ai-usage) for what counts as an action, what happens when you hit the limit, and how to check your usage. 
+В разделе [Использование ИИ в dbt](/docs/platform/billing/dbt-ai-usage) описано, что считается действием, что происходит при достижении лимита и как проверить объём использования. 
 
-## Configure AI provider for dbt Copilot
+## Настройка поставщика ИИ для dbt Copilot {#configure-ai-provider-for-dbt-copilot}
 
-You need <Constant name="dbt" /> admin permissions to change account settings and configure providers. dbt Copilot is configured separately from <Constant name="wizard" /> &mdash; for <Constant name="wizard" /> providers, refer to [Manage AI features](/docs/platform/manage-dbt-ai#configure-ai-provider).
+Для изменения настроек аккаунта и настройки поставщиков необходимы права администратора <Constant name="dbt" />. dbt Copilot настраивается отдельно от <Constant name="wizard" /> &mdash; сведения о поставщиках для <Constant name="wizard" /> см. в разделе [Управление функциями ИИ](/docs/platform/manage-dbt-ai#configure-ai-provider).
 
 <CopilotConfigureAiProvider />
 
-## Considerations
+## Важные замечания
 
-- dbt Copilot is a separate experience from <Constant name="wizard" />. For agentic, full-lifecycle AI development, use [<Constant name="wizard" />](/docs/platform/wizard-overview).
-- AI features are enabled by default. Admins can [turn them off or back on anytime](/docs/platform/manage-dbt-ai).
-- Certain features are only available on Enterprise and Enterprise+ plans. Refer to [Billing](/docs/platform/billing) for details.
-- dbt Copilot doesn't yet support generating semantic models with the latest YAML spec.
+- dbt Copilot — отдельный инструмент, отличающийся от <Constant name="wizard" />. Для разработки с ИИ-агентом на всех этапах жизненного цикла используйте [<Constant name="wizard" />](/docs/platform/wizard-overview).
+- Функции ИИ включены по умолчанию. Администраторы могут [в любой момент отключить или снова включить их](/docs/platform/manage-dbt-ai).
+- Некоторые функции доступны только в тарифных планах Enterprise и Enterprise+. Подробности см. в разделе [Оплата](/docs/platform/billing).
+- dbt Copilot пока не поддерживает генерацию семантических моделей с использованием последней версии спецификации YAML.

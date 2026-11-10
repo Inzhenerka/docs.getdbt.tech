@@ -23,7 +23,7 @@ functions:
 
 ## Определение {#definition}
 
-The `arguments` property is used to define the parameters that a resource can accept. Each argument can have a `name`, a `data_type` field, and optional properties such as `description` and `default_value`.
+Свойство `arguments` определяет параметры функции. У аргумента могут быть `name`, `data_type` и необязательные свойства, например `description` и `default_value`.
 
 Для **functions** вы можете добавить свойство `arguments` к [свойствам функции](/reference/function-properties). Оно определяет параметры пользовательских функций (UDF) в вашем хранилище данных. Поле `data_type` для аргументов функции зависит от конкретного хранилища (например, `STRING`, `VARCHAR`, `INTEGER`) и должно соответствовать типам данных, поддерживаемым вашей платформой данных.
 

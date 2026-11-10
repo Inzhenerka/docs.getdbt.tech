@@ -267,7 +267,7 @@ query-comment: "{{ query_comment(node) }}"
 
 При генерации комментария запроса доступны следующие переменные контекста:
 
-| Context Variable | Описание |
+| Переменная контекста | Описание |
 | ---------------- | -------- |
 | dbt_version      | Версия используемого dbt. Подробнее о версионировании релизов см. [Versioning](/reference/commands/version#versioning). |
 | env_var          | См. [env_var](/reference/dbt-jinja-functions/env_var) |

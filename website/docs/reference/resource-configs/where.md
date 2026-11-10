@@ -1,5 +1,5 @@
 ---
-description: "Filter the rows of a model, source, seed, or snapshot that a data test evaluates."
+description: "Отфильтруйте строки модели, источника, seed-файла или снимка, которые проверяет тест данных."
 resource_types: [tests]
 datatype: string
 ---

@@ -1,7 +1,7 @@
 ---
-title: "Setting up dbt State"
-sidebar_label: "Set up dbt State"
-description: "Learn how to install and configure dbt State across dbt v1, dbt platform, and dbt v2."
+title: "Настройка dbt State"
+sidebar_label: "Настройка dbt State"
+description: "Узнайте, как установить и настроить dbt State в dbt v1, dbt platform и dbt v2."
 id: "dbt-state-setup"
 tags: ['dbt State']
 availability: everywhere_usage
@@ -9,57 +9,57 @@ availability: everywhere_usage
 
 import LagToleranceRecommendationsTip from '/snippets/_lag-tolerance-recommendations-tip.md';
 
-# Setting up dbt State
+# Настройка dbt State
 
-This page walks you through setting up dbt State across <Constant name="core" />, <Constant name="fusion" />, and <Constant name="dbt_platform" />.
+На этой странице описана настройка dbt State в <Constant name="core" />, <Constant name="fusion" /> и <Constant name="dbt_platform" />.
 
-## Prerequisites
+## Предварительные требования
 
-Before you set up dbt State, make sure you have:
+Перед настройкой dbt State убедитесь, что у вас есть:
 
-- **A supported dbt version**: dbt State is natively available in <Constant name="dbt_platform" />, <Constant name="fusion_engine" />, and dbt v1.13. It's also available as a plugin for dbt v1.7–1.12.
-- **A supported data platform**: Snowflake, Databricks, BigQuery, or Redshift. More warehouses are on the roadmap.
-- **A dbt account**: dbt State uses your dbt account for authentication, even if you're running dbt locally or in a non-interactive environment like CI/CD pipelines or an external orchestrator. Refer to [About dbt State](/docs/deploy/dbt-state-about#signing-up-for-dbt-state) for sign-up details, and [dbt State usage and pricing](/docs/platform/billing/dbt-state-usage) for pricing details.
+- **Поддерживаемая версия dbt**: dbt State встроен в <Constant name="dbt_platform" />, <Constant name="fusion_engine" /> и dbt v1.13. Он также доступен в виде плагина для dbt v1.7–1.12.
+- **Поддерживаемая платформа данных**: Snowflake, Databricks, BigQuery или Redshift. Поддержка других хранилищ запланирована.
+- **Учётная запись dbt**: dbt State использует вашу учётную запись dbt для аутентификации, даже если вы запускаете dbt локально или в неинтерактивной среде, например в конвейерах CI/CD или внешнем оркестраторе. Информацию о регистрации см. в разделе [О dbt State](/docs/deploy/dbt-state-about#signing-up-for-dbt-state), а сведения о ценах — в разделе [Использование и стоимость dbt State](/docs/platform/billing/dbt-state-usage).
 
-## Setting up dbt State
+## Настройка dbt State {#setting-up-dbt-state}
 
 <Tabs queryString="user-type">
-<TabItem value="self-hosted" label="Self-hosted dbt">
+<TabItem value="self-hosted" label="Самостоятельно развёрнутый dbt">
 
-dbt State requires a dbt account, even when running dbt locally, to authenticate to the dbt State service. No need to migrate your existing workflows or purchase any dbt seats.
+Для аутентификации в сервисе dbt State требуется учётная запись dbt, даже при локальном запуске dbt. Переносить существующие рабочие процессы или приобретать пользовательские лицензии dbt не нужно.
 
-1. Log in to your dbt account and start your dbt State trial.
+1. Войдите в свою учётную запись dbt и начните пробный период dbt State.
 
    <VersionBlock firstVersion="1.13">
 
-   1. Navigate to your project:
+   1. Перейдите в каталог проекта:
 
       ```bash
       cd to/your/project
       ```
 
-   2. Log in to your dbt account:
+   2. Войдите в свою учётную запись dbt:
 
       ```bash
       dbt login
       ```
 
-      This opens a browser window where you can log in to or create a free dbt account. If you're creating a new account:
+      Откроется окно браузера, в котором можно войти в учётную запись dbt или бесплатно создать новую. Если вы создаёте новую учётную запись:
 
-      1. Enter your name and password.
-      2. Select **Enable a trial of dbt State**.
-      3. Agree to the Terms of Service and click **Continue**.
-      4. Sign in to <Constant name="dbt_platform" />.
-      5. Set up an authentication method.
-      6. Verify your email address.
+      1. Введите своё имя и пароль.
+      2. Выберите **Enable a trial of dbt State**.
+      3. Примите условия использования и нажмите **Continue**.
+      4. Войдите в <Constant name="dbt_platform" />.
+      5. Настройте способ аутентификации.
+      6. Подтвердите свой адрес электронной почты.
 
-   3. Agree to the dbt State Terms of Service and click **Start 30-day trial**.
+   3. Примите условия использования dbt State и нажмите **Start 30-day trial**.
 
-      Once started, you cannot pause the trial. After the trial ends, your account receives a free monthly DATT allowance, which varies by plan. For details, refer to [dbt State trial and billing](/docs/deploy/dbt-state-trial).
+      После начала пробного периода приостановить его нельзя. По его окончании вашей учётной записи предоставляется бесплатный ежемесячный лимит DATT, размер которого зависит от тарифного плана. Подробнее см. в разделе [Пробный период и оплата dbt State](/docs/deploy/dbt-state-trial).
 
-   You can also enable or disable dbt State per run using [CLI flags](/reference/global-configs/about-global-configs): `--manage-state` or `--no-manage-state`, or set the `DBT_ENGINE_MANAGE_STATE` environment variable.
+   Вы также можете включать или отключать dbt State для отдельных запусков с помощью [флагов CLI](/reference/global-configs/about-global-configs) `--manage-state` или `--no-manage-state` либо задавать переменную окружения `DBT_ENGINE_MANAGE_STATE`.
 
-   To enable dbt State for everyone on your project, add [`manage_state: true`](/reference/global-configs/about-global-configs) to the `flags:` block in `dbt_project.yml`:
+   Чтобы включить dbt State для всех участников проекта, добавьте [`manage_state: true`](/reference/global-configs/about-global-configs) в блок `flags:` файла `dbt_project.yml`:
 
    ```yaml
    flags:
@@ -70,127 +70,127 @@ dbt State requires a dbt account, even when running dbt locally, to authenticate
 
    <VersionBlock lastVersion="1.12">
 
-   dbt State is available as a plugin for dbt v1.7-1.12. If you are running on dbt v1.9 or older, we encourage you to upgrade to a [more recent version with ongoing support](/docs/dbt-versions#latest-releases).
+   dbt State доступен в виде плагина для dbt v1.7–1.12. Если вы используете dbt v1.9 или более раннюю версию, рекомендуем перейти на [более новую версию, для которой продолжается поддержка](/docs/dbt-versions#latest-releases).
 
-   1. Navigate to your project:
+   1. Перейдите в каталог проекта:
 
       ```bash
       cd to/your/project
       ```
 
-   2. Create and activate a virtual environment:
+   2. Создайте и активируйте виртуальное окружение:
 
       ```bash
       python3 -m venv .venv
       source .venv/bin/activate
       ```
 
-   3. Install the dbt State plugin:
+   3. Установите плагин dbt State:
 
       ```bash
       pip install dbt-state
       ```
 
-   4. Run `dbt run` or `dbt build`.
+   4. Выполните `dbt run` или `dbt build`.
 
-      The first time you execute `dbt run` or `dbt build`, a browser window opens and prompts you to log in to or create a free dbt account. If you're creating a new account:
+      При первом выполнении `dbt run` или `dbt build` откроется окно браузера с предложением войти в учётную запись dbt или бесплатно создать новую. Если вы создаёте новую учётную запись:
 
-      1. Enter your name and password.
-      2. Select **Enable a trial of dbt State**.
-      3. Agree to the Terms of Service and click **Continue**.
-      4. Sign in to <Constant name="dbt_platform" />.
-      5. Set up an authentication method.
-      6. Verify your email address.
+      1. Введите своё имя и пароль.
+      2. Выберите **Enable a trial of dbt State**.
+      3. Примите условия использования и нажмите **Continue**.
+      4. Войдите в <Constant name="dbt_platform" />.
+      5. Настройте способ аутентификации.
+      6. Подтвердите свой адрес электронной почты.
 
-   5. Agree to the dbt State Terms of Service and click **Start 30-day trial**.
+   5. Примите условия использования dbt State и нажмите **Start 30-day trial**.
 
-      Once started, you cannot pause the trial. After the trial ends, your account receives a free monthly DATT allowance, which varies by plan. For details, refer to [dbt State trial and billing](/docs/deploy/dbt-state-trial).
+      После начала пробного периода приостановить его нельзя. По его окончании вашей учётной записи предоставляется бесплатный ежемесячный лимит DATT, размер которого зависит от тарифного плана. Подробнее см. в разделе [Пробный период и оплата dbt State](/docs/deploy/dbt-state-trial).
 
-   The CLI flags `--manage-state` and `--no-manage-state` are not available in older <Constant name="core" /> versions. Use the environment variable (`DBT_ENGINE_ENABLE_STATE`) or project flag (`enable_state`) to enable or disable dbt State.
+   Флаги CLI `--manage-state` и `--no-manage-state` недоступны в старых версиях <Constant name="core" />. Для включения или отключения dbt State используйте переменную окружения (`DBT_ENGINE_ENABLE_STATE`) или флаг проекта (`enable_state`).
 
    </VersionBlock>
 
-2. Run `dbt run` or `dbt build`.
+2. Выполните `dbt run` или `dbt build`.
 
-   - **First run:** With no prior state to compare against, dbt builds every node from scratch. dbt State captures metadata from this run for future comparisons.
-   - **Later runs:** dbt State compares each node's logic and upstream data against previous builds across all environments. It rebuilds a node when its logic has changed, or when its upstream data has changed and its last build is older than the [`lag_tolerance`](#configuring-lag-tolerance) window. Otherwise, it skips or clones an existing node.
+   - **Первый запуск:** поскольку предыдущего состояния для сравнения нет, dbt создаёт каждый узел с нуля. dbt State сохраняет метаданные этого запуска для последующих сравнений.
+   - **Последующие запуски:** dbt State сравнивает логику каждого узла и данные вышестоящих узлов с предыдущими сборками во всех средах. Он пересобирает узел, если его логика изменилась или если данные вышестоящих узлов изменились, а с момента последней сборки узла прошло больше времени, чем задано окном [`lag_tolerance`](#configuring-lag-tolerance). В остальных случаях он пропускает узел или клонирует существующий.
 
-   To see how dbt State optimizes your runs, refer to [dbt State usage examples](/docs/deploy/dbt-state-examples).
+   Чтобы узнать, как dbt State оптимизирует запуски, см. [Примеры использования dbt State](/docs/deploy/dbt-state-examples).
 
-3. Set up your orchestration environment.
+3. Настройте среду оркестрации.
 
-   - **Own orchestrator**: Before you can use dbt State in your own orchestrator, create a service token in <Constant name="dbt_platform" /> and configure your orchestration environment to use it. Refer to [Setting up authentication for non-interactive environments](/docs/deploy/dbt-state-cicd) for steps. Once configured, you can use your orchestrator to run dbt.
-   - **<Constant name="dbt_platform" />**: Go to **Orchestration** to [create your environments](/docs/deploy/deploy-environments) and [jobs](/docs/deploy/jobs), then [enable dbt State on them](/docs/deploy/dbt-state-enable-env-jobs).
+   - **Собственный оркестратор**: прежде чем использовать dbt State в собственном оркестраторе, создайте сервисный токен в <Constant name="dbt_platform" /> и настройте среду оркестрации для его использования. Инструкции см. в разделе [Настройка аутентификации для неинтерактивных сред](/docs/deploy/dbt-state-cicd). После настройки вы сможете запускать dbt с помощью своего оркестратора.
+   - **<Constant name="dbt_platform" />**: перейдите в **Orchestration**, чтобы [создать среды](/docs/deploy/deploy-environments) и [задания](/docs/deploy/jobs), а затем [включить для них dbt State](/docs/deploy/dbt-state-enable-env-jobs).
 
-4. [Verify dbt State is active](#verify).
+4. [Убедитесь, что dbt State активен](#verify).
 
-5. [Invite your team to use dbt State](#invite).
+5. [Пригласите свою команду использовать dbt State](#invite).
 
 </TabItem>
-<TabItem value="existing-account" label="Existing dbt platform account">
+<TabItem value="existing-account" label="Существующая учётная запись dbt platform">
 
-**Prerequisite**: You must be an admin in your <Constant name="dbt_platform" /> account.
+**Предварительное требование**: у вас должны быть права администратора в вашей учётной записи <Constant name="dbt_platform" />.
 
-1. Start your dbt State trial. 
+1. Начните пробный период dbt State. 
 
-   1. In your <Constant name="dbt_platform" /> account, click your account name in the lower-left corner above your username and click **Account settings**.
+   1. В своей учётной записи <Constant name="dbt_platform" /> нажмите название учётной записи в левом нижнем углу над именем пользователя, затем нажмите **Account settings**.
 
-   2. Under **Settings**, go to **Billing & Usage** > **Usage-based features**.
+   2. В разделе **Settings** перейдите в **Billing & Usage** > **Usage-based features**.
 
-   3. Under the **State** tab, click **Start free trial**.
+   3. На вкладке **State** нажмите **Start free trial**.
 
-      Once started, you cannot pause the trial. After the trial ends, your account receives a free monthly DATT allowance, which varies by plan. For details, refer to [dbt State trial and billing](/docs/deploy/dbt-state-trial).
+      После начала пробного периода приостановить его нельзя. По его окончании вашей учётной записи предоставляется бесплатный ежемесячный лимит DATT, размер которого зависит от тарифного плана. Подробнее см. в разделе [Пробный период и оплата dbt State](/docs/deploy/dbt-state-trial).
 
-      :::info Extended trial for state-aware orchestration users
-      If you were using state-aware orchestration prior to June 1, 2026, your dbt State trial will be extended beyond 30 days. If the extension isn't applied to your account, contact your account team.
+      :::info Продлённый пробный период для пользователей оркестрации с учётом состояния
+      Если вы использовали оркестрацию с учётом состояния до 1 июня 2026 года, ваш пробный период dbt State будет продлён сверх 30 дней. Если продление не применилось к вашей учётной записи, свяжитесь с командой, которая её сопровождает.
       :::
 
-   4. Review and agree to the terms of service.
+   4. Ознакомьтесь с условиями использования и примите их.
 
-   5. Click **Start 30-day trial**.
+   5. Нажмите **Start 30-day trial**.
 
-2. Click **Enable dbt State**.
+2. Нажмите **Enable dbt State**.
 
-3. Select where to enable dbt State. You can either enable:
+3. Выберите, где включить dbt State. Доступны следующие варианты:
 
-   - **By environment**: Enables dbt State on the selected deployment or development environment. 
+   - **By environment**: включает dbt State в выбранной среде развёртывания или разработки. 
    
-      - For deployment environments, new jobs automatically default to **Inherited from environment** and have dbt State enabled without additional configuration. Existing jobs are not automatically updated &mdash; you must [configure each job manually](/docs/deploy/dbt-state-enable-env-jobs#enabling-dbt-state-on-individual-jobs). 
-      - For development environments, this [enables dbt State in the <Constant name="studio_ide" />](/docs/deploy/dbt-state-enable-studio).
+      - Для сред развёртывания новые задания автоматически получают значение **Inherited from environment**, и dbt State включается для них без дополнительной настройки. Существующие задания не обновляются автоматически &mdash; необходимо [настроить каждое задание вручную](/docs/deploy/dbt-state-enable-env-jobs#enabling-dbt-state-on-individual-jobs). 
+      - Для сред разработки этот вариант [включает dbt State в <Constant name="studio_ide" />](/docs/deploy/dbt-state-enable-studio).
       
-      <!-- TODO (ORC-4324): When this ships, replace with:
-      - **By environment**: Enables dbt State on the selected environment. New jobs automatically default to **Inherited from environment** and have dbt State enabled without additional configuration. Existing jobs with **dbt State** set to **Off** automatically switch to **Inherited from environment**, enabling dbt State for those jobs.
+      <!-- TODO (ORC-4324): После выпуска этой функции замените на:
+      - **By environment**: включает dbt State в выбранной среде. Новые задания автоматически получают значение **Inherited from environment**, и dbt State включается для них без дополнительной настройки. Существующие задания, у которых для **dbt State** установлено значение **Off**, автоматически переключаются на **Inherited from environment**, что включает dbt State для этих заданий.
       -->
-   - **By specific jobs**: Enables dbt State on individual jobs. To enable it on additional jobs, refer to [Enabling dbt State on individual jobs](/docs/deploy/dbt-state-enable-env-jobs#enabling-dbt-state-on-individual-jobs).
+   - **By specific jobs**: включает dbt State для отдельных заданий. Чтобы включить его для других заданий, см. [Включение dbt State для отдельных заданий](/docs/deploy/dbt-state-enable-env-jobs#enabling-dbt-state-on-individual-jobs).
 
-4. Click **Enable dbt State**.
+4. Нажмите **Enable dbt State**.
 
-5. [Verify dbt State is active](#verify).
+5. [Убедитесь, что dbt State активен](#verify).
 
-6. [Invite your team to use dbt State](#invite).
+6. [Пригласите свою команду использовать dbt State](#invite).
 
 </TabItem>
 </Tabs>
 
-## Verifying dbt State is active {#verify}
+## Проверка активности dbt State {#verify}
 
-After a run completes, confirm that dbt State is active:
+После завершения запуска убедитесь, что dbt State активен:
 
-- **From the CLI:** Check the log output for a message like `dbt State adapter: dbt-state v2.10.1 is enabled`.
-- **From <Constant name="dbt_platform" />:** Check the [logs view of built resources](/docs/deploy/dbt-state-interface#logs-view-of-built-resources) to see if they were built or reused, or open the [**Explain** tab](/docs/deploy/dbt-state-interface#explain-tab) on the job run details page to see the State decision for each resource.
+- **В CLI:** проверьте, есть ли в выводе журнала сообщение вида `dbt State adapter: dbt-state v2.10.1 is enabled`.
+- **В <Constant name="dbt_platform" />:** проверьте [представление журналов созданных ресурсов](/docs/deploy/dbt-state-interface#logs-view-of-built-resources), чтобы узнать, были ли они созданы или использованы повторно, либо откройте [вкладку **Explain**](/docs/deploy/dbt-state-interface#explain-tab) на странице сведений о запуске задания, чтобы увидеть решение State для каждого ресурса.
 
-If dbt State isn't behaving as expected, refer to [Debugging dbt State](#debugging-dbt-state).
+Если dbt State работает не так, как ожидалось, см. раздел [Отладка dbt State](#debugging-dbt-state).
 
-## Inviting team members {#invite}
+## Приглашение участников команды {#invite}
 
-The more team members you have using dbt State, the better it gets; more team members means more opportunities to clone existing nodes rather than rebuilding them. To invite colleagues:
+Чем больше участников команды используют dbt State, тем эффективнее он работает: это даёт больше возможностей клонировать существующие узлы вместо их пересборки. Чтобы пригласить коллег:
 
-- **From the CLI (dbt v1.13+):** Have your colleagues run [`dbt login`](/reference/commands/login) after dbt State is enabled on the account.
-- **From <Constant name="dbt_platform" />:** Go to **Account settings** > **Users** and click **Invite users**. For more information, refer to [Invite new users](/docs/platform/manage-access/invite-users#invite-new-users).
+- **В CLI (dbt v1.13+):** попросите коллег выполнить [`dbt login`](/reference/commands/login) после включения dbt State для учётной записи.
+- **В <Constant name="dbt_platform" />:** перейдите в **Account settings** > **Users** и нажмите **Invite users**. Подробнее см. в разделе [Приглашение новых пользователей](/docs/platform/manage-access/invite-users#invite-new-users).
 
-## Configuring lag tolerance
+## Настройка допустимой задержки {#configuring-lag-tolerance}
 
-Lag tolerance controls how long dbt State waits before rebuilding a node once its upstream data changes. A node rebuilds only when its last build is older than the tolerance window and its upstream data has changed. You can set it at the project, environment, or model level. If not configured, `lag_tolerance` defaults to `45m`. We recommend starting with the following Jinja expression:
+Допустимая задержка определяет, сколько времени dbt State может не пересобирать узел при изменении данных вышестоящих узлов. Узел пересобирается только в том случае, если с момента его последней сборки прошло больше времени, чем задано окном допустимой задержки, и данные вышестоящих узлов изменились. Этот параметр можно задать на уровне проекта, среды или модели. Если он не настроен, `lag_tolerance` по умолчанию равен `45m`. Рекомендуем начать со следующего выражения Jinja:
 
 <File name="dbt_project.yml">
 
@@ -202,27 +202,27 @@ models:
 
 </File>
 
-In this example, models in the `prod` target rebuild once their last build is more than 4 hours old and their upstream data has changed. In all other environments, models rebuild once their last build is more than 7 days old and their upstream data has changed.
+В этом примере модели для целевой конфигурации `prod` пересобираются, если с момента последней сборки прошло более 4 часов и данные вышестоящих узлов изменились. Во всех остальных средах модели пересобираются, если с момента последней сборки прошло более 7 дней и данные вышестоящих узлов изменились.
 
-For more details, refer to the [`lag_tolerance` config reference](/reference/resource-configs/lag-tolerance).
+Подробнее см. в [справочнике по настройке `lag_tolerance`](/reference/resource-configs/lag-tolerance).
 
 <LagToleranceRecommendationsTip />
 
-## Debugging dbt State
+## Отладка dbt State {#debugging-dbt-state}
 
-If dbt State is behaving unexpectedly, you can prepend your run command with the `DBT_ENGINE_MANAGE_STATE` environment variable to isolate the issue:
+Если dbt State работает не так, как ожидалось, можно указать переменную окружения `DBT_ENGINE_MANAGE_STATE` перед командой запуска, чтобы локализовать проблему:
 
 ```bash
 DBT_ENGINE_MANAGE_STATE=0 dbt run --target dev --select "customers"
 ```
 
-To see which decision dbt State made for each node after a run and why, you can run the <VersionBlock firstVersion="2.0">[`dbt state explain`](/reference/commands/state-explain)</VersionBlock><VersionBlock lastVersion="1.99">[`dbt-state explain`](/reference/commands/state-explain)</VersionBlock> command. If you use the <Constant name="dbt_platform" />, the same information is available without running a command &mdash; go to the [**Explain** tab](/docs/deploy/dbt-state-interface#explain-tab) on the job run details page to see the full decision breakdown for each node.
+Чтобы после запуска узнать, какое решение dbt State принял для каждого узла и почему, выполните команду <VersionBlock firstVersion="2.0">[`dbt state explain`](/reference/commands/state-explain)</VersionBlock><VersionBlock lastVersion="1.99">[`dbt-state explain`](/reference/commands/state-explain)</VersionBlock>. Если вы используете <Constant name="dbt_platform" />, та же информация доступна без выполнения команды &mdash; перейдите на [вкладку **Explain**](/docs/deploy/dbt-state-interface#explain-tab) на странице сведений о запуске задания, чтобы увидеть подробное объяснение решения для каждого узла.
 
-## Next steps
+## Дальнейшие шаги
 
-- [Migrate from state-aware orchestration](/docs/deploy/dbt-state-migration)
-- [`dbt login` with dbt State](/reference/commands/login?version=2.0#dbt-login-with-dbt-state)
-- [Configure deferral](/docs/deploy/dbt-state-deferral)
-- [Setting up authentication for non-interactive environments](/docs/deploy/dbt-state-cicd)
-- [dbt State configs](/reference/resource-configs/dbt-state-configs)
-- [Monitor dbt State activity](/docs/deploy/dbt-state-interface)
+- [Переход с оркестрации с учётом состояния](/docs/deploy/dbt-state-migration)
+- [`dbt login` с dbt State](/reference/commands/login?version=2.0#dbt-login-with-dbt-state)
+- [Настройка отложенного разрешения ссылок (deferral)](/docs/deploy/dbt-state-deferral)
+- [Настройка аутентификации для неинтерактивных сред](/docs/deploy/dbt-state-cicd)
+- [Настройки dbt State](/reference/resource-configs/dbt-state-configs)
+- [Мониторинг работы dbt State](/docs/deploy/dbt-state-interface)

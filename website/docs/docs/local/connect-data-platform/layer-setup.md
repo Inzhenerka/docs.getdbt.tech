@@ -26,11 +26,8 @@ import SetUpPages from '/snippets/_setup-pages-intro.md';
 
 Цели Layer Bigquery должны быть настроены с использованием следующих секций в вашем файле `profiles.yml`.
 
-#### Аутентификация в BigQuery
+#### Аутентификация в BigQuery {#bigquery-authentication}
 Вы можете использовать любой [метод аутентификации](/docs/local/connect-data-platform/bigquery-setup), поддерживаемый официальным адаптером dbt для BigQuery, поскольку Layer использует адаптер `dbt-bigquery` для подключения к вашему экземпляру BigQuery.
-
-#### Аутентификация Bigquery {#bigquery-authentication}
-Вы можете использовать любой [метод аутентификации](https://docs.getdbt.tech/reference/warehouse-profiles/bigquery-setup), поддерживаемый в официальном адаптере dbt Bigquery, так как Layer использует адаптер `dbt-bigquery` для подключения к вашей инстанции Bigquery.
 
 Пример профиля:
 

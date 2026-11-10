@@ -86,7 +86,7 @@ on-run-end:
 
 </File>
 
-## Results {#results}
+## Результаты {#results}
 
 Переменная `results` содержит список [объектов Result](/reference/dbt-classes#result-objects) с одним элементом на каждый ресурс, выполненный в задаче dbt. Объект Result предоставляет доступ в контексте Jinja on-run-end к информации, которая будет заполнять [артефакт JSON результатов выполнения](/reference/artifacts/run-results-json).
 

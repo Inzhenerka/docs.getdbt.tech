@@ -1,6 +1,6 @@
 ---
 title: execute_hooks_on_any_reuse
-description: "Configure whether pre- and post-hooks run when dbt State skips a node because it's still fresh."
+description: "Настройте выполнение pre- и post-хуков, когда dbt State пропускает узел, поскольку он всё ещё актуален."
 id: "execute-hooks-on-any-reuse"
 tags: ['dbt State']
 ---
@@ -8,7 +8,7 @@ tags: ['dbt State']
 # execute_hooks_on_any_reuse
 
 <Tabs>
-<TabItem value="project" label="Project YAML file">
+<TabItem value="project" label="YAML-файл проекта">
 
 <File name="dbt_project.yml">
 
@@ -22,7 +22,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="property" label="Properties YAML file">
+<TabItem value="property" label="YAML-файл свойств">
 
 <File name="models/<filename>.yml">
 
@@ -37,7 +37,7 @@ models:
 </File>
 </TabItem>
 
-<TabItem value="sql" label="SQL file config">
+<TabItem value="sql" label="Конфигурация в SQL-файле">
 
 <File name="models/<filename>.sql">
 
@@ -53,24 +53,24 @@ models:
 </TabItem>
 </Tabs>
 
-## Definition
+## Определение
 
-When dbt State skips a node because it's still fresh, that node's pre- and post-hooks are not executed by default. This matches dbt's standard behavior: if the node wasn't executed, its hooks don't run.
+Когда dbt State пропускает узел, поскольку он всё ещё актуален, pre- и post-хуки этого узла по умолчанию не выполняются. Это соответствует стандартному поведению dbt: если узел не выполнялся, его хуки не запускаются.
 
-Set `execute_hooks_on_any_reuse: true` if you have audit hooks or other hooks that must run on every job invocation, regardless of whether the node was rebuilt or reused.
+Установите `execute_hooks_on_any_reuse: true`, если у вас есть хуки аудита или другие хуки, которые должны запускаться при каждом запуске задания независимо от того, был ли узел перестроен или использован повторно.
 
-| Value | Behavior |
+| Значение | Поведение |
 |-------|----------|
-| `false` (default) | Hooks are skipped when a node is reused without rebuilding. |
-| `true` | Hooks run even when a node is reused. |
+| `false` (по умолчанию) | Хуки пропускаются, когда узел используется повторно без перестроения. |
+| `true` | Хуки запускаются, даже когда узел используется повторно. |
 
-Hooks always execute when dbt State _clones_ a node from another environment, because the clone step creates a new object in the warehouse.
+Хуки всегда выполняются, когда dbt State _клонирует_ узел из другого окружения, поскольку на этапе клонирования в хранилище данных создаётся новый объект.
 
-## Example
+## Пример
 
-### Always run audit hooks
+### Всегда запускать хуки аудита
 
-Use `execute_hooks_on_any_reuse: true` for nodes with audit or lineage hooks that must run on every job invocation:
+Используйте `execute_hooks_on_any_reuse: true` для узлов с хуками аудита или отслеживания происхождения данных, которые должны выполняться при каждом запуске задания:
 
 <File name="models/fct_orders.yml">
 
@@ -86,8 +86,8 @@ models:
 
 </File>
 
-## Related docs
+## Связанная документация
 
-- [About dbt State](/docs/deploy/dbt-state-about)
-- [Set up dbt State](/docs/deploy/dbt-state-setup)
-- [Hooks](/docs/build/hooks-operations)
+- [О dbt State](/docs/deploy/dbt-state-about)
+- [Настройка dbt State](/docs/deploy/dbt-state-setup)
+- [Хуки](/docs/build/hooks-operations)

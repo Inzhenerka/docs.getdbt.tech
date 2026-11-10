@@ -1,36 +1,36 @@
 ---
-title: "Contribute to dbt adapters"
+title: "Участие в разработке адаптеров dbt"
 id: "contribute-dbt-adapters"
-description: "Contribute to existing dbt v1 adapters or open a pull request for a new v1 or v2 adapter."
+description: "Участвуйте в разработке существующих адаптеров dbt v1 или откройте pull request для нового адаптера v1 или v2."
 pagination_next: null
 availability: all_users
 ---
 
-The dbt Community helps analytics practitioners share their knowledge, help others, and collectively drive forward the discipline of analytics engineering. There are opportunities here for everyone to contribute, whether you're at the beginning of your analytics engineering journey or you are a seasoned data professional.
+Сообщество dbt помогает специалистам по аналитике делиться знаниями, помогать друг другу и совместно развивать аналитическую инженерию. Здесь каждый может внести свой вклад — независимо от того, только ли вы начинаете свой путь в аналитической инженерии или уже обладаете большим опытом работы с данными.
 
-This section explains how you can contribute to existing adapters or create a new adapter.
+В этом разделе рассказывается, как вы можете участвовать в разработке существующих адаптеров или создать новый адаптер.
 
-### Contribute to a pre-existing adapter
+### Участие в разработке существующего адаптера {#contribute-to-a-pre-existing-adapter}
 
-Community-supported plugins are works in progress, and you can contribute by testing and writing code. If you're interested in contributing:
+Плагины, поддерживаемые сообществом, постоянно развиваются, и вы можете внести свой вклад, тестируя их и создавая код. Если вы хотите принять участие:
 
-- Join both the dedicated channel, [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM), in [dbt Slack](https://community.getdbt.com/) and the channel for your adapter's data store. See the **Slack Channel** link in the [<Constant name="core_v1" /> platform](/docs/local/profiles.yml) pages.
-- Review open issues in the plugin's source repository. Use the relevant **GitHub repo** link in the [<Constant name="core_v1" /> platform](/docs/local/profiles.yml) pages.
+- Присоединитесь к специализированному каналу [#adapter-ecosystem](https://getdbt.slack.com/archives/C030A0UF5LM) в [dbt Slack](https://community.getdbt.com/), а также к каналу хранилища данных, для которого предназначен ваш адаптер. См. ссылку **Slack Channel** на страницах [платформ <Constant name="core_v1" />](/docs/local/profiles.yml).
+- Просмотрите открытые issues в репозитории исходного кода плагина. Воспользуйтесь соответствующей ссылкой **GitHub repo** на страницах [платформ <Constant name="core_v1" />](/docs/local/profiles.yml).
 
 <VersionBlock lastVersion="1.99">
 
-### Create a new <Constant name="core_v1" /> adapter
+### Создание нового адаптера <Constant name="core_v1" /> {#create-a-new-adapter}
 
-If you see something missing from the lists above and you're interested in developing an integration, read more about adapters and how they're developed in [Build, test, document, and promote adapters](/guides/adapter-creation).
+Если в приведённых выше списках чего-то не хватает и вы хотите разработать интеграцию, узнайте больше об адаптерах и их разработке в руководстве [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
 
-If you have a new adapter, add it to this list using a pull request. See [Build, test, document, and promote adapters](/guides/adapter-creation) for more information on documenting your adapter.
+Если у вас есть новый адаптер, добавьте его в этот список с помощью pull request. Подробнее о документировании адаптера см. в руководстве [Создание, тестирование, документирование и продвижение адаптеров](/guides/adapter-creation).
 
 </VersionBlock>
 
-### Create a new v2 adapter
+### Создание нового адаптера v2 {#create-a-new-v2-adapter}
 
-v2 is a Rust-based rewrite of the dbt engine built around a single monorepo. Instead of maintaining a separate Python package per warehouse, all adapters live together, organized by feature area rather than warehouse, inside `dbt-labs/dbt`. A bug fix in authentication or relation logic benefits every adapter at once, and your contribution makes the entire ecosystem stronger.
+v2 — это движок dbt, переписанный на Rust и построенный на основе единого монорепозитория. Вместо поддержки отдельного пакета Python для каждого хранилища данных все адаптеры находятся вместе в `dbt-labs/dbt` и сгруппированы по функциональным областям, а не по хранилищам. Исправление ошибки в аутентификации или логике работы с объектами базы данных приносит пользу сразу всем адаптерам, а ваш вклад укрепляет всю экосистему.
 
-ADBC drivers handle connection management—pre-compiled binaries you register, not write. You build the warehouse-specific logic: credentials, relation naming, SQL macros, and catalog queries across roughly 13 files in total.
+Драйверы ADBC отвечают за управление подключениями — это предварительно скомпилированные бинарные файлы, которые вы регистрируете, а не пишете самостоятельно. Вы разрабатываете логику, специфичную для хранилища данных: учётные данные, правила именования объектов базы данных, SQL-макросы и запросы к каталогу — всего примерно в 13 файлах.
 
-Contributing a v2 adapter means opening a pull request directly against the monorepo. You'll register your warehouse in the `AdapterType` enum, implement credential and relation types in Rust, write Jinja macros for your SQL dialect, and wire up basic integration tests against a real warehouse. The Rust compiler's match exhaustiveness enforcement acts as your to-do list — every unhandled variant is a compile error until your adapter is complete. For a step-by-step walkthrough, see [Contribute a <Constant name="core_v2" /> adapter](/guides/adapter-creation-v2).
+Чтобы внести адаптер v2, нужно открыть pull request непосредственно в монорепозитории. Вы зарегистрируете своё хранилище данных в перечислении `AdapterType`, реализуете типы учётных данных и объектов базы данных на Rust, напишете макросы Jinja для своего диалекта SQL и настроите базовые интеграционные тесты с реальным хранилищем данных. Проверка полноты сопоставлений match компилятором Rust служит списком задач: каждый необработанный вариант вызывает ошибку компиляции, пока ваш адаптер не будет завершён. Пошаговые инструкции см. в руководстве [Участие в разработке адаптера <Constant name="core_v2" />](/guides/adapter-creation-v2).

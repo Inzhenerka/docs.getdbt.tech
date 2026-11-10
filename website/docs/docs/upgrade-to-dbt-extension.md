@@ -1,121 +1,121 @@
 ---
-title: Upgrade to dbt v2
+title: Переход на dbt v2
 id: upgrade-to-dbt-extension
-description: "Upgrade your dbt project to dbt v2 from the VS Code extension."
-sidebar_label: "Upgrade to dbt v2"
+description: "Переведите свой проект dbt на dbt v2 с помощью расширения для VS Code."
+sidebar_label: "Переход на dbt v2"
 availability: local_all
 ---
 
-# Upgrade to <Constant name="fusion" />
+# Переход на <Constant name="fusion" /> {#upgrade-to}
 
-After [installing the dbt VS Code extension](/docs/install-dbt-extension), use the **Get started** panel to upgrade your project to <Constant name="fusion_engine" /> if you haven't already done so.
+После [установки расширения dbt для VS Code](/docs/install-dbt-extension) используйте панель **Get started**, чтобы перевести свой проект на <Constant name="fusion_engine" />, если вы еще этого не сделали.
 
 :::note
 
-If you are already running <Constant name="fusion_engine" />, you must be on version `2.0.0-beta.66` or higher to use the upgrade tool.
+Если вы уже используете <Constant name="fusion_engine" />, для работы с инструментом перехода требуется версия `2.0.0-beta.66` или выше.
 
 :::
 
-The dbt extension provides two ways to upgrade your project to <Constant name="fusion" /> from the **Get started** panel:
+Расширение dbt предлагает два способа перевести проект на <Constant name="fusion" /> через панель **Get started**:
 
-- [**Agentic migration**:](#agentic-migration) Runs the <Constant name="core" />-to-<Constant name="fusion" /> migration with <Constant name="copilot" /> or AI agents. Select this option in the **Check dbt v2 compatibility** step. Requires <Constant name="copilot" /> or AI agents.
-- [**Manual CLI onboarding**:](#manual-cli-onboarding) Walks you through the upgrade in your terminal. Use this if you prefer the CLI or don't use <Constant name="copilot" /> or AI agents.
+- [**Миграция с помощью агентов**:](#agentic-migration) Выполняет миграцию с <Constant name="core" /> на <Constant name="fusion" /> с помощью <Constant name="copilot" /> или ИИ-агентов. Выберите этот вариант на шаге **Check dbt v2 compatibility**. Требуется <Constant name="copilot" /> или ИИ-агенты.
+- [**Ручной переход через CLI**:](#manual-cli-onboarding) Пошагово проводит вас через процесс перехода в терминале. Используйте этот вариант, если предпочитаете CLI или не используете <Constant name="copilot" /> или ИИ-агентов.
 
-## Agentic migration
+## Миграция с помощью агентов {#agentic-migration}
 
-1. Select **Start with an agent** from the **Check dbt v2 compatibility** step.
-2. The extension installs the **Migrate <Constant name="core" /> to <Constant name="fusion" />** agent skill to your editor's skill folder, then opens your AI chat with a migration prompt.
-3. Click **Install & open chat** to continue. The chat opens with the migration prompt already loaded, so you can run it directly from the editor. No CLI commands are required.
+1. Выберите **Start with an agent** на шаге **Check dbt v2 compatibility**.
+2. Расширение устанавливает навык агента **Migrate <Constant name="core" /> to <Constant name="fusion" />** в папку навыков вашего редактора, а затем открывает ИИ-чат с запросом на миграцию.
+3. Нажмите **Install & open chat**, чтобы продолжить. Чат откроется с уже загруженным запросом на миграцию, поэтому вы сможете запустить его прямо из редактора. Выполнять команды CLI не требуется.
 
-## Manual CLI onboarding
+## Ручной переход через CLI {#manual-cli-onboarding}
 
-The **Get started** panel has an upgrade assistant that guides you through the upgrade process in your terminal.
+На панели **Get started** есть помощник, который пошагово проводит вас через процесс перехода в терминале.
 
-    <Lightbox src="/img/docs/extension/vsce-manual-upgrade.png" width="100%" title="The dbt extension Get started panel and upgrade assistant." />
+    <Lightbox src="/img/docs/extension/vsce-manual-upgrade.png" width="100%" title="Панель Get started и помощник перехода в расширении dbt." />
 
-You can start manual onboarding in either of the following ways:
+Вы можете начать ручной переход любым из следующих способов:
 
 <Tabs>
-<TabItem value="panel" label="From the Get started panel">
+<TabItem value="panel" label="Через панель Get started">
 
-- From the **Get started** panel, select **Start manually in CLI** in the **Check dbt v2 compatibility** step.
-- Follow the prompts in the upgrade assistant to complete the upgrade.
-- Run ` dbtf compile` to verify your project is ready for <Constant name="fusion" />.
+- На панели **Get started** выберите **Start manually in CLI** на шаге **Check dbt v2 compatibility**.
+- Следуйте указаниям помощника, чтобы завершить переход.
+- Выполните ` dbtf compile`, чтобы убедиться, что ваш проект готов к работе с <Constant name="fusion" />.
 
-<Lightbox src="/img/docs/extension/v2-onboarding-complete.png" width="70%" title="The message received when you have completed upgrading your project to v2." />
+<Lightbox src="/img/docs/extension/v2-onboarding-complete.png" width="70%" title="Сообщение, которое появляется после завершения перехода проекта на v2." />
 
-Once the upgrade is completed, you're ready to dive into all the features that <Constant name="fusion_engine" /> has to offer!
+После завершения перехода вы можете приступить к изучению всех возможностей <Constant name="fusion_engine" />!
 
-Next, [sign in](/docs/sign-in-dbt-extension) to a <Constant name="dbt_platform" /> account if you want to use the extension's <Constant name="dbt_platform" /> capabilities.
+Затем [войдите](/docs/sign-in-dbt-extension) в учетную запись <Constant name="dbt_platform" />, если хотите использовать возможности <Constant name="dbt_platform" /> в расширении.
 
 </TabItem>
-<TabItem value="terminal" label="From your terminal">
-- From your terminal, run:
+<TabItem value="terminal" label="Через терминал">
+- Выполните в терминале:
 
     ```shell
     dbt init --v2-upgrade
     ```
 
-The upgrade tool guides you through a series of prompts:
+Инструмент перехода проведет вас через последовательность запросов:
 
-<Expandable alt_header="Do you have an existing dbt platform account?">
+<Expandable alt_header="У вас уже есть учетная запись dbt platform?">
 
-If you answer `Y`, the tool provides instructions for downloading your dbt platform profile or authenticating. If you answer `N`, the flow continues to local project setup.
-
-</Expandable>
-
-<Expandable alt_header="Ready to run dbt init?">
-
-If no `profiles.yml` file is present, the tool guides you through creating one and connecting to your data warehouse.
-</Expandable>
-
-<Expandable alt_header="Ready to run dbt debug?">
-
-If a `profiles.yml` file exists, the tool validates that your project is configured correctly and can connect to your data warehouse.
+Если вы ответите `Y`, инструмент предоставит инструкции по скачиванию профиля dbt platform или аутентификации. Если вы ответите `N`, процесс продолжится настройкой локального проекта.
 
 </Expandable>
 
-<Expandable alt_header="Ready to run dbt parse?">
+<Expandable alt_header="Готовы запустить dbt init?">
 
-The tool parses your dbt project to check compatibility with <Constant name="fusion" />.
-  - If parsing fails, the tool can run [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation) to help resolve errors.
-  - If you skip dbt-autofix, you can run it later or manually fix errors. The upgrade tool can't continue until parsing errors are resolved.
+Если файл `profiles.yml` отсутствует, инструмент поможет вам создать его и подключиться к хранилищу данных.
+</Expandable>
+
+<Expandable alt_header="Готовы запустить dbt debug?">
+
+Если файл `profiles.yml` существует, инструмент проверит, что ваш проект настроен правильно и может подключиться к хранилищу данных.
 
 </Expandable>
 
-<Expandable alt_header="Ready to run dbt compile with static analysis off?">
+<Expandable alt_header="Готовы запустить dbt parse?">
 
-After parsing succeeds, the tool compiles your project without static analysis. This mimics <Constant name="core" /> behavior by rendering Jinja into SQL while temporarily disabling <Constant name="fusion" />'s advanced SQL comprehension.
+Инструмент выполняет разбор вашего проекта dbt, чтобы проверить совместимость с <Constant name="fusion" />.
+  - Если разбор завершится с ошибкой, инструмент может запустить [dbt-autofix](https://github.com/dbt-labs/dbt-autofix?tab=readme-ov-file#installation), чтобы помочь устранить ошибки.
+  - Если вы пропустите запуск dbt-autofix, его можно будет запустить позже или исправить ошибки вручную. Инструмент перехода не сможет продолжить работу, пока ошибки разбора не будут устранены.
 
 </Expandable>
 
-    :::tip AI Agents
+<Expandable alt_header="Готовы запустить dbt compile с отключенным статическим анализом?">
 
-    There are cases where dbt-autofix may not resolve all errors and requires manual intervention. For those cases, the dbt-autofix tool provides an [AI Agents.md](https://github.com/dbt-labs/dbt-autofix/blob/main/AGENTS.md) file to help AI agents continue the migration work after dbt-autofix has completed its part.
+После успешного разбора инструмент компилирует ваш проект без статического анализа. Это воспроизводит поведение <Constant name="core" />: Jinja преобразуется в SQL, а расширенные возможности <Constant name="fusion" /> по анализу SQL временно отключаются.
+
+</Expandable>
+
+    :::tip ИИ-агенты
+
+    В некоторых случаях dbt-autofix не может устранить все ошибки и требуется ручное вмешательство. Для таких случаев инструмент dbt-autofix предоставляет файл [AI Agents.md](https://github.com/dbt-labs/dbt-autofix/blob/main/AGENTS.md), который помогает ИИ-агентам продолжить миграцию после того, как dbt-autofix выполнит свою часть работы.
 
     :::
 
-<Expandable alt_header="Ready to run dbt compile?">
+<Expandable alt_header="Готовы запустить dbt compile?" anchor_id="dbt-compile-details-2">
 
-The tool compiles your project with full <Constant name="fusion" /> static analysis. This checks that your SQL code is valid in the context of your warehouse's tables and columns.
+Инструмент компилирует ваш проект с полным статическим анализом <Constant name="fusion" />. Это позволяет проверить корректность вашего SQL-кода с учетом таблиц и столбцов в хранилище данных.
 
-    <Lightbox src="/img/docs/extension/v2-onboarding-complete.png" width="70%" title="The message received when you have completed upgrading your project to v2." />
+    <Lightbox src="/img/docs/extension/v2-onboarding-complete.png" width="70%" title="Сообщение, которое появляется после завершения перехода проекта на v2." />
 
 </Expandable>
 
-Once the upgrade is completed, you're ready to dive into all the features that <Constant name="fusion_engine" /> has to offer!
+После завершения перехода вы можете приступить к изучению всех возможностей <Constant name="fusion_engine" />!
 
-Next, [sign in](/docs/sign-in-dbt-extension) to a <Constant name="dbt_platform" /> account if you want to use the extension's <Constant name="dbt_platform" /> capabilities.
+Затем [войдите](/docs/sign-in-dbt-extension) в учетную запись <Constant name="dbt_platform" />, если хотите использовать возможности <Constant name="dbt_platform" /> в расширении.
 
 </TabItem>
 </Tabs>
 
-## Next steps
+## Дальнейшие шаги {#next-steps}
 
-Once you've upgraded your project to <Constant name="fusion" />, you can:
+После перевода проекта на <Constant name="fusion" /> вы можете:
 
-- [Sign in](/docs/sign-in-dbt-extension) to a <Constant name="dbt_platform" /> account if you want to use the extension's <Constant name="dbt_platform" /> capabilities, such as the **Catalog** tab.
-- [Configure your local environment](/docs/configure-dbt-extension) to mirror your <Constant name="dbt_platform" /> environment and [set environment variables](/docs/configure-dbt-extension#set-environment-variables-locally) required by your project.
-- [Compare changes locally](/docs/dbt/vs-compare-changes) to preview data changes caused by your local edits.
-- [Optimize static analysis for development and deployment](/best-practices/optimize-static-analysis-for-development-and-deployment) for stronger local validation without slowing deployment jobs.
-- Review the [limitations and unsupported features](/docs/dbt/supported-features#limitations).
+- [Войти](/docs/sign-in-dbt-extension) в учетную запись <Constant name="dbt_platform" />, если хотите использовать возможности <Constant name="dbt_platform" /> в расширении, например вкладку **Catalog**.
+- [Настроить локальное окружение](/docs/configure-dbt-extension) в соответствии с вашим окружением <Constant name="dbt_platform" /> и [задать переменные окружения](/docs/configure-dbt-extension#set-environment-variables-locally), необходимые для проекта.
+- [Сравнить изменения локально](/docs/dbt/vs-compare-changes), чтобы предварительно оценить изменения данных, вызванные вашими локальными правками.
+- [Оптимизировать статический анализ для разработки и развертывания](/best-practices/optimize-static-analysis-for-development-and-deployment), чтобы выполнять более тщательную локальную проверку, не замедляя задания развертывания.
+- Ознакомиться с [ограничениями и неподдерживаемыми возможностями](/docs/dbt/supported-features#limitations).

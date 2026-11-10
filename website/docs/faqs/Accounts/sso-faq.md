@@ -1,12 +1,12 @@
 ---
-title: Where can I find SSO FAQs and troubleshooting?
-description: "Common questions and troubleshooting for single sign-on (SSO) in dbt platform"
-sidebar_label: 'SSO FAQs and troubleshooting'
+title: Где найти ответы на частые вопросы о SSO и рекомендации по устранению неполадок?
+description: "Частые вопросы и устранение неполадок единого входа (SSO) на платформе dbt"
+sidebar_label: 'SSO: частые вопросы и устранение неполадок'
 id: sso-faq
 
 ---
 
-Single sign-on (SSO) lets your team log into <Constant name="dbt_platform"/> using your existing identity provider (IdP) &mdash; such as Okta, Microsoft Entra ID, or Google Workspace &mdsah; without needing a separate <Constant name="dbt_platform"/> password. SSO is available on [Enterprise tiered plans](https://www.getdbt.com/pricing).
+Единый вход (SSO) позволяет вашей команде входить в <Constant name="dbt_platform"/> с помощью существующего поставщика удостоверений (IdP) &mdash; например, Okta, Microsoft Entra ID или Google Workspace &mdsah; без отдельного пароля для <Constant name="dbt_platform"/>. SSO доступен на [тарифных планах Enterprise](https://www.getdbt.com/pricing).
 
-For common questions and troubleshooting guidance, refer to the [SSO FAQs and troubleshooting](/docs/platform/manage-access/sso-faq) page.
+Ответы на частые вопросы и рекомендации по устранению неполадок приведены на странице [SSO: частые вопросы и устранение неполадок](/docs/platform/manage-access/sso-faq).
 ddd

@@ -1,6 +1,6 @@
 ---
-title: "APIs Overview"
-description: "Learn how dbt accounts on the Enterprise-tier plans can query the dbt APIs."
+title: "Обзор API"
+description: "Узнайте, как аккаунты dbt на тарифных планах уровня Enterprise могут обращаться к API dbt."
 id: "overview"
 pagination_next: "docs/dbt-apis/rate-limits"
 pagination_prev: null
@@ -12,20 +12,20 @@ availability:
 
 import ApiRateLimitsCallout from '/snippets/_api-rate-limits-callout.md';
 
-# APIs overview
+# Обзор API {#apis-overview}
 
-Accounts on the Starter, Enterprise, and Enterprise+ plans can query the <Constant name="dbt" /> APIs.
+Пользователи тарифных планов Starter, Enterprise и Enterprise+ могут отправлять запросы к API <Constant name="dbt" />.
 
-<Constant name="dbt" /> provides the following APIs:
+<Constant name="dbt" /> предоставляет следующие API:
 
-- The [<Constant name="dbt" /> Administrative API](/docs/dbt-apis/admin-api) can be used to administrate a <Constant name="dbt" /> account. It can be called manually or with [the <Constant name="dbt" /> Terraform provider](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest).
-- The [<Constant name="dbt" /> Discovery API](/docs/dbt-apis/discovery-api) can be used to fetch metadata related to the state and health of your dbt project.
-- The [<Constant name="semantic_layer" /> APIs](/docs/dbt-apis/sl-api-overview) provides multiple API options which allow you to query your metrics defined in the <Constant name="semantic_layer" />.
+- [Административный API <Constant name="dbt" />](/docs/dbt-apis/admin-api) можно использовать для администрирования аккаунта <Constant name="dbt" />. Его можно вызывать вручную или с помощью [Terraform‑провайдера <Constant name="dbt" />](https://registry.terraform.io/providers/dbt-labs/dbtcloud/latest).
+- [Discovery API <Constant name="dbt" />](/docs/dbt-apis/discovery-api) можно использовать для получения метаданных, связанных с состоянием и работоспособностью вашего dbt‑проекта.
+- [API <Constant name="semantic_layer" />](/docs/dbt-apis/sl-api-overview) предоставляют несколько вариантов API, которые позволяют выполнять запросы к вашим метрикам, определённым в <Constant name="semantic_layer" />.
 
-If you want to learn more about webhooks, refer to [Webhooks for your jobs](/docs/deploy/webhooks).
+Если вы хотите узнать больше о вебхуках, обратитесь к разделу [Вебхуки для ваших задач](/docs/deploy/webhooks).
 
 <ApiRateLimitsCallout />
 
-## How to Access the APIs
+## Как получить доступ к API {#how-to-access-the-apis}
 
-<Constant name="dbt" /> supports two types of API Tokens: [personal access tokens](/docs/dbt-apis/user-tokens) and [service account tokens](/docs/dbt-apis/service-tokens). Requests to the <Constant name="dbt" /> APIs can be authorized using these tokens.
+<Constant name="dbt" /> поддерживает два типа токенов API: [персональные токены доступа](/docs/dbt-apis/user-tokens) и [токены сервисных аккаунтов](/docs/dbt-apis/service-tokens). Ими можно авторизовать запросы к API <Constant name="dbt" />.

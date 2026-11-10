@@ -1,8 +1,8 @@
 ---
-title: About dbt platform profiles
+title: О профилях dbt platform
 id: about-profiles
-description: "About dbt platform profile configuration."
-sidebar_label: "About profiles"
+description: "О настройке профилей dbt platform."
+sidebar_label: "О профилях"
 pagination_next: null
 pagination_prev: null
 availability:
@@ -11,135 +11,135 @@ availability:
 ---
 
 <IntroText>
-<Constant name="dbt_platform" /> profiles define the connections, credentials, and attributes you use to connect to a data warehouse. 
+Профили <Constant name="dbt_platform" /> определяют подключения, учётные данные и атрибуты, которые вы используете для подключения к хранилищу данных. 
 </IntroText>
 
-Assign profiles to [deployment environments](/docs/dbt-platform-environments#deployment-environment) and reuse those profiles in other deployment environments within the same project. You can manage profiles programmatically using our [API documentation](/dbt-cloud/api-v3#/operations/List%20Profiles).
+Назначайте профили [средам развёртывания](/docs/dbt-platform-environments#deployment-environment) и повторно используйте эти профили в других средах развёртывания в рамках того же проекта. Вы можете управлять профилями программно, используя нашу [документацию по API](/dbt-cloud/api-v3#/operations/List%20Profiles).
 
-## Environment profiles table
+## Таблица профилей среды {#environment-profiles-table}
 
-On an environment's **Settings** page, the **Connection profiles** section lists the profiles assigned to that environment:
+На странице **Settings** среды в разделе **Connection profiles** перечислены профили, назначенные этой среде:
 
-- **Profile name**: Click a profile name to open the view/edit drawer. In view mode, there’s no separate action column, so use the profile name to open and view a profile.
-- **Connection**: Click the connection to open the [connection details](/docs/platform/connect-data-platform/about-connections#connection-management) page in a new tab.
-- **Edit mode**: Click **Edit** to switch to edit mode. Use the **swap icon** <img src="/img/docs/deploy/swap-icon.png" alt="Swap icon" style={{ verticalAlign: 'middle', height: '1em' }} /> next to a profile row to assign a different profile.
+- **Profile name**: нажмите на имя профиля, чтобы открыть боковую панель просмотра и редактирования. В режиме просмотра отдельного столбца действий нет, поэтому для открытия и просмотра профиля используйте его имя.
+- **Connection**: нажмите на подключение, чтобы открыть страницу [сведений о подключении](/docs/platform/connect-data-platform/about-connections#connection-management) в новой вкладке.
+- **Режим редактирования**: нажмите **Edit**, чтобы перейти в режим редактирования. Используйте **значок замены** <img src="/img/docs/deploy/swap-icon.png" alt="Значок замены" style={{ verticalAlign: 'middle', height: '1em' }} /> рядом со строкой профиля, чтобы назначить другой профиль.
 
-### Considerations
-- Profiles don't apply to development environments because of the unique configurations and individual credentials applied.
-- The <Constant name="semantic_layer" /> configuration isn't supported with profiles yet. 
+### Особенности
+- Профили не применяются к средам разработки, поскольку в них используются уникальные конфигурации и индивидуальные учётные данные.
+- Настройка <Constant name="semantic_layer" /> пока не поддерживается в профилях. 
 
-## Create a profile
+## Создание профиля
 
-:::important new feature rollout
+:::important Внедрение новой функции
 
-dbt automatically creates a new project-level profile for each deployment environment and populates it with your existing connection, credentials, and extended attributes. You don't need to take any action to create profiles for your existing projects.
+dbt автоматически создаёт новый профиль на уровне проекта для каждой среды развёртывания и заполняет его существующими настройками подключения, учётными данными и расширенными атрибутами. Вам не нужно предпринимать никаких действий, чтобы создать профили для существующих проектов.
 
 :::
 
-You can create profiles from either the project or the environment settings. No matter which approach you take, dbt creates the profile at the project level. Profiles you create in one project won't be visible in others. 
+Вы можете создавать профили как в настройках проекта, так и в настройках среды. Независимо от выбранного способа dbt создаёт профиль на уровне проекта. Профили, созданные в одном проекте, не будут видны в других. 
 
-To create a new profile:
+Чтобы создать новый профиль:
 
 <Tabs>
 
-<TabItem value="From project settings" >
+<TabItem value="From project settings" label="Из настроек проекта" >
 
-1. From the main menu, navigate to your project's **Dashboard**.
-2. Click **Settings**.
-3. Scroll down to the **Profiles** section and click **Create new profile**.
+1. В главном меню перейдите на страницу **Dashboard** вашего проекта.
+2. Нажмите **Settings**.
+3. Прокрутите страницу до раздела **Profiles** и нажмите **Create new profile**.
 
-<Lightbox src="/img/docs/dbt-platform/profile-from-project.png" width="60%" title="Creating a profile from project settings." />
+<Lightbox src="/img/docs/dbt-platform/profile-from-project.png" width="60%" title="Создание профиля из настроек проекта." />
 
 </TabItem>
 
-<TabItem value="From environment settings" >
+<TabItem value="From environment settings" label="Из настроек среды" >
 
-1. From the main menu, click **Orchestration** and select **Environments**.
-2. Click an available deployment environment.
-3. Click **Settings**.
-4. Click **Edit** to switch to edit mode, then scroll to the **Connection profiles** section.
-5. Click the **swap icon** <img src="/img/docs/deploy/swap-icon.png" alt="Swap icon" style={{ verticalAlign: 'middle', height: '1em' }} /> next to the profile row you want to change.
-6. Select **Add new profile** from the **Profile** dropdown.
-7. Click **Create profile**.
-8. Click **Save**.
+1. В главном меню нажмите **Orchestration** и выберите **Environments**.
+2. Нажмите на доступную среду развёртывания.
+3. Нажмите **Settings**.
+4. Нажмите **Edit**, чтобы перейти в режим редактирования, затем прокрутите страницу до раздела **Connection profiles**.
+5. Нажмите **значок замены** <img src="/img/docs/deploy/swap-icon.png" alt="Значок замены" style={{ verticalAlign: 'middle', height: '1em' }} /> рядом со строкой профиля, который хотите изменить.
+6. Выберите **Add new profile** в раскрывающемся списке **Profile**.
+7. Нажмите **Create profile**.
+8. Нажмите **Save**.
 
-<Lightbox src="/img/docs/dbt-platform/profile-from-environment.png" width="60%" title="Creating a profile from the environment settings." />
+<Lightbox src="/img/docs/dbt-platform/profile-from-environment.png" width="60%" title="Создание профиля из настроек среды." />
 
 </TabItem>
 
 </Tabs>
 
-The following steps are the same regardless of which approach you take:
+Следующие шаги одинаковы независимо от выбранного способа:
 
-1. Give the profile a name that's unique across all projects in the account, easy to identify, and adheres to the naming policy:
-    - Starts with a letter
-    - Ends with a letter or number
-    - Contains only letters, numbers, dashes, or underscores
-    - Has no consecutive dashes or underscores
-2. From **Connection details**, select a connection from the list of available [global connections](/docs/platform/connect-data-platform/about-connections#connection-management) or add a new connection. 
-3. Configure the **Deployment credentials** for your warehouse connection.
-4. Add any [**Extended attributes**](/docs/dbt-platform-environments#extended-attributes) you need. If you use [`env_var()`](/reference/dbt-jinja-functions/env_var) in Extended Attributes, the referenced environment variables must be _project-scoped_ in order to work with connection tests. Since profiles are environment-agnostic, environment-scoped variables are not available during connection tests.
+1. Задайте профилю имя, которое уникально среди всех проектов аккаунта, легко распознаётся и соответствует правилам именования:
+    - Начинается с буквы
+    - Заканчивается буквой или цифрой
+    - Содержит только буквы, цифры, дефисы или символы подчёркивания
+    - Не содержит идущих подряд дефисов или символов подчёркивания
+2. В разделе **Connection details** выберите подключение из списка доступных [глобальных подключений](/docs/platform/connect-data-platform/about-connections#connection-management) или добавьте новое подключение. 
+3. Настройте **Deployment credentials** для подключения к вашему хранилищу данных.
+4. Добавьте необходимые [**Extended attributes**](/docs/dbt-platform-environments#extended-attributes). Если вы используете [`env_var()`](/reference/dbt-jinja-functions/env_var) в расширенных атрибутах, переменные среды, на которые вы ссылаетесь, должны быть _заданы на уровне проекта_, чтобы работать при проверке подключения. Поскольку профили не привязаны к конкретной среде, переменные уровня среды недоступны при проверке подключения.
 
-   To set a project-scoped variable, go to **Orchestration** > **Environments** > **Environment variables**, and enter a value in the **Project default** column. Learn more in [environment variables](/docs/build/environment-variables?version=2.0#setting-environment-variables).
-5. Click **Save** at the top of the screen. 
+   Чтобы задать переменную на уровне проекта, перейдите в **Orchestration** > **Environments** > **Environment variables** и введите значение в столбце **Project default**. Подробнее см. в разделе [Переменные среды](/docs/build/environment-variables?version=2.0#setting-environment-variables).
+5. Нажмите **Save** в верхней части экрана. 
 
-<Lightbox src="/img/docs/dbt-platform/profile-sample.png" width="60%" title="Sample of a configured profile." />
+<Lightbox src="/img/docs/dbt-platform/profile-sample.png" width="60%" title="Пример настроенного профиля." />
 
-Repeat these steps until you've created all the profiles you need for your project's deployment environments. 
+Повторяйте эти шаги, пока не создадите все профили, необходимые для сред развёртывания вашего проекта. 
 
-## Assign a profile
+## Назначение профиля
 
-You configure profiles when you create a deployment environment. For accounts that already have environments configured when you enable profiles, dbt automatically creates and assigns a default profile to all projects. 
+Вы настраиваете профили при создании среды развёртывания. Если в аккаунте на момент включения профилей уже настроены среды, dbt автоматически создаёт и назначает профиль по умолчанию для всех проектов. 
 
-To assign a different profile, update the deployment environment settings:
+Чтобы назначить другой профиль, обновите настройки среды развёртывания:
 
-1. From the left navigation, click **Orchestration** and select **Environments**.
-2. Click an available deployment environment.
-3. Click **Settings**.
-4. Click **Edit** to switch to edit mode, then scroll to the **Connection profiles** section.
-5. Click the **swap icon** <img src="/img/docs/deploy/swap-icon.png" alt="Swap icon" style={{ verticalAlign: 'middle', height: '1em' }} /> next to the profile row you want to change.
-6. Select the new profile from the **Profile** dropdown.
-7. Click **Assign profile**.
-8. Click **Save**.
+1. В левой панели навигации нажмите **Orchestration** и выберите **Environments**.
+2. Нажмите на доступную среду развёртывания.
+3. Нажмите **Settings**.
+4. Нажмите **Edit**, чтобы перейти в режим редактирования, затем прокрутите страницу до раздела **Connection profiles**.
+5. Нажмите **значок замены** <img src="/img/docs/deploy/swap-icon.png" alt="Значок замены" style={{ verticalAlign: 'middle', height: '1em' }} /> рядом со строкой профиля, который хотите изменить.
+6. Выберите новый профиль в раскрывающемся списке **Profile**.
+7. Нажмите **Assign profile**.
+8. Нажмите **Save**.
 
-## Permissions and access to profiles
+## Разрешения и доступ к профилям
 
-Profiles are created at the project level. Only users with permission to edit the project can create profiles and anyone with permission to create or edit deployment environments in that project can assign that profile and its credentials to those environments.
+Профили создаются на уровне проекта. Создавать профили могут только пользователи с разрешением на редактирование проекта, а назначать профиль и его учётные данные средам развёртывания в этом проекте может любой пользователь с разрешением на создание или редактирование таких сред.
 
-To avoid unintended access, only grant permission sets like **Job Admin** or **Project Admin** to users who should have access to all credentials in a project. Be mindful that profiles created at the project level can be used to configure credentials for any deployment environment in that project.
+Чтобы избежать непреднамеренного предоставления доступа, назначайте наборы разрешений, такие как **Job Admin** или **Project Admin**, только тем пользователям, которым необходим доступ ко всем учётным данным проекта. Учитывайте, что профили, созданные на уровне проекта, можно использовать для настройки учётных данных любой среды развёртывания в этом проекте.
 
-For more information on permission sets, see [Enterprise permissions](/docs/platform/manage-access/enterprise-permissions).
+Подробнее о наборах разрешений см. в разделе [Разрешения Enterprise](/docs/platform/manage-access/enterprise-permissions).
 
-## FAQs
+## Часто задаваемые вопросы
 
-<DetailsToggle alt_header="Do I need to create profiles for all of my existing projects?">
+<DetailsToggle alt_header="Нужно ли создавать профили для всех существующих проектов?">
 
-You don't need to take any action. dbt automatically creates profiles for all existing projects and deployment environments based on the existing connection, credentials, and extended attributes.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="Are there any changes to development environments?">
-
-Not at this time. Profiles only apply to deployment environments.
+Вам не нужно предпринимать никаких действий. dbt автоматически создаёт профили для всех существующих проектов и сред развёртывания на основе существующих настроек подключения, учётных данных и расширенных атрибутов.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="What happens if I change my connection details, credentials, or attributes?">
+<DetailsToggle alt_header="Есть ли изменения для сред разработки?">
 
-Any profiles using those settings automatically update with the new information.
-
-</DetailsToggle>
-
-<DetailsToggle alt_header="What if I use APIs to configure project settings?">
-
-Existing APIs continue to work and automatically map to a profile behind the scenes. You won't need to take any manual action unless you use APIs to create a deployment environment with no credentials configured. This is a rare occurrence unique to APIs, but it's the only scenario where dbt wouldn't create a profile.
-
-Profile-specific APIs are available. Check out our [API documentation](/docs/dbt-apis/overview) for more information.
+На данный момент нет. Профили применяются только к средам развёртывания.
 
 </DetailsToggle>
 
-<DetailsToggle alt_header="Does the Semantic Layer support profiles?">
+<DetailsToggle alt_header="Что произойдёт, если я изменю настройки подключения, учётные данные или атрибуты?">
 
-<Constant name="semantic_layer" /> configuration isn't supported with profiles yet.
+Все профили, использующие эти настройки, автоматически обновятся с учётом новых данных.
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Что делать, если я использую API для настройки проекта?">
+
+Существующие API продолжают работать и автоматически сопоставляются с профилем за кулисами. Вам не потребуется выполнять какие-либо действия вручную, кроме случаев, когда вы используете API для создания среды развёртывания без настроенных учётных данных. Это редкая ситуация, возможная только при использовании API, но это единственный сценарий, в котором dbt не создаёт профиль.
+
+Доступны API для работы с профилями. Подробнее см. в нашей [документации по API](/docs/dbt-apis/overview).
+
+</DetailsToggle>
+
+<DetailsToggle alt_header="Поддерживает ли Semantic Layer профили?">
+
+Настройка <Constant name="semantic_layer" /> пока не поддерживается в профилях.
 
 </DetailsToggle>
