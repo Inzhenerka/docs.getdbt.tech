@@ -9,7 +9,7 @@ export function Step({ children }) {
 }
 
 // <Steps> ... </Steps> — a compact stepper. Shows one step at a time with a
-// numbered dot nav and a "View all steps" toggle that expands the full list.
+// numbered dot nav and a "Показать все шаги" toggle that expands the full list.
 export default function Steps({ children }) {
   const steps = React.Children.toArray(children).filter(
     (child) => React.isValidElement(child) && child.props && 'title' in child.props
@@ -41,7 +41,7 @@ export default function Steps({ children }) {
           className={styles.linkButton}
           onClick={() => setExpanded(false)}
         >
-          View step by step
+          Показывать по одному шагу
         </button>
       </div>
     );
@@ -57,7 +57,7 @@ export default function Steps({ children }) {
               key={i}
               type="button"
               className={i === current ? `${styles.dot} ${styles.dotActive}` : styles.dot}
-              aria-label={`Go to step ${i + 1}`}
+              aria-label={`Перейти к шагу ${i + 1}`}
               aria-current={i === current ? 'step' : undefined}
               onClick={() => setCurrent(i)}
             >
@@ -71,7 +71,7 @@ export default function Steps({ children }) {
             className={styles.linkButton}
             onClick={() => setExpanded(true)}
           >
-            View all steps
+            Показать все шаги
           </button>
           {current > 0 && (
             <button
@@ -79,7 +79,7 @@ export default function Steps({ children }) {
               className={styles.navButton}
               onClick={() => setCurrent((c) => c - 1)}
             >
-              Back
+              Назад
             </button>
           )}
           {current < total - 1 && (
@@ -88,7 +88,7 @@ export default function Steps({ children }) {
               className={styles.navButton}
               onClick={() => setCurrent((c) => c + 1)}
             >
-              Next
+              Далее
             </button>
           )}
         </div>

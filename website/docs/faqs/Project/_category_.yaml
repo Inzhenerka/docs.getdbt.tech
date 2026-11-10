@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Projects'
+label: 'Проекты'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Project FAQs
+  title: 'Проекты: частые вопросы'
+  slug: /category/projects
 customProps:
-  description: Frequently asked questions about projects in dbt
+  description: О проектах dbt.

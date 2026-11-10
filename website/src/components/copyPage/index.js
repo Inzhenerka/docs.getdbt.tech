@@ -35,7 +35,7 @@ function CopyPage({ dropdownRight = false, pageUrl }) {
       <button
         className={`${styles.copyButton} ${copySuccess ? styles.success : ''}`}
         onClick={toggleDropdown}
-        aria-label="Copy page options"
+        aria-label="Действия со страницей"
         aria-expanded={isDropdownOpen}
         aria-haspopup="true"
       >
@@ -47,7 +47,7 @@ function CopyPage({ dropdownRight = false, pageUrl }) {
       <div
         className={`${styles.dropdown} ${dropdownRight ? styles.dropdownRight : ''} ${!isDropdownOpen ? styles.dropdownHidden : ''}`}
         role="menu"
-        aria-label="Copy page menu"
+        aria-label="Меню действий со страницей"
         aria-hidden={!isDropdownOpen}
       >
         <button
@@ -75,9 +75,9 @@ function CopyPage({ dropdownRight = false, pageUrl }) {
         >
           {getSvgIcon("external-link", {})}
           <div className={styles.dropdownItemContent}>
-            <div className={styles.dropdownItemTitle}>View as Markdown</div>
+            <div className={styles.dropdownItemTitle}>Открыть в Markdown</div>
             <div className={styles.dropdownItemSubtitle}>
-              View this page as plain Markdown
+              Просмотреть исходный Markdown страницы
             </div>
           </div>
         </Link>
@@ -112,7 +112,7 @@ function CopyPage({ dropdownRight = false, pageUrl }) {
           role="status"
           aria-live="polite"
         >
-          Copied to clipboard!
+          Скопировано в буфер обмена
         </div>
       )}
 

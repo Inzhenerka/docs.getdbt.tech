@@ -33,7 +33,7 @@ function isFusionReleaseCandidateVersion(version) {
 function ReleaseCandidateLabel({ version }) {
   if (!isFusionReleaseCandidateVersion(version)) return null;
   return (
-    <span className={styles.releaseCandidateBadge}>release candidate</span>
+    <span className={styles.releaseCandidateBadge}>Кандидат в релиз</span>
   );
 }
 
@@ -49,7 +49,7 @@ const CHANNEL_LABELS = {
 function formatTimestamp(ts) {
   if (!ts) return "";
   const date = new Date(ts * 1000);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString("ru-RU", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -97,7 +97,7 @@ function VersionCards({ versions }) {
 
   return (
     <div>
-      <h3 id="current-versions">Current versions</h3>
+      <h3 id="current-versions">Текущие версии</h3>
       <div className={styles.versionsGrid}>
         {channels.map(([channel, info]) => (
           <div key={channel} className={styles.versionCard}>
@@ -107,7 +107,7 @@ function VersionCards({ versions }) {
                 href={changelogUrlForVersion(info.tag)}
                 target="_blank"
                 rel="noopener noreferrer"
-                title="View this version in the dbt v2 changelog"
+                title="Открыть версию в журнале изменений dbt v2"
               >
                 <code>{info.tag}</code>
               </a>
@@ -146,15 +146,15 @@ function ReleaseItem({ version, data }) {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.versionTag}
-          title="View this release in the dbt v2 changelog"
+          title="Открыть релиз в журнале изменений dbt v2"
         >
           {version}
         </a>
         <ReleaseCandidateLabel version={version} />
         {data.known_bad ? (
-          <span className={styles.badgeBad}>Known Bad</span>
+          <span className={styles.badgeBad}>С известными проблемами</span>
         ) : (
-          <span className={styles.badgeGood}>Good</span>
+          <span className={styles.badgeGood}>Без известных проблем</span>
         )}
         {channels.map((ch) => (
           <span key={ch} className={styles.channelBadge}>
@@ -165,7 +165,7 @@ function ReleaseItem({ version, data }) {
       <div className={styles.releaseDetails}>
         {latestRelease?.released_by && (
           <span className={styles.releaseDetail}>
-            Released by: <strong>{latestRelease.released_by}</strong>
+            Автор релиза: <strong>{latestRelease.released_by}</strong>
           </span>
         )}
         {latestRelease?.timestamp && (
@@ -223,7 +223,7 @@ export default function FusionReleases() {
   if (!releases || !versions || Object.keys(releases).length === 0) {
     return (
       <div className={styles.error}>
-        Release data is not available. Please try rebuilding the site.
+        Данные о релизах недоступны. Попробуйте пересобрать сайт.
       </div>
     );
   }
@@ -232,7 +232,7 @@ export default function FusionReleases() {
     <div className={styles.container}>
       <VersionCards versions={versions} />
 
-      <h3 id="all-releases">All releases</h3>
+      <h3 id="all-releases">Все релизы</h3>
 
       {/* Client-side search/filter controls -- interactive chrome with no place
           in a static Markdown export; data-md-hide drops it from the generated
@@ -241,32 +241,32 @@ export default function FusionReleases() {
         <input
           type="text"
           className={styles.searchInput}
-          placeholder="Search versions..."
+          placeholder="Поиск по версиям…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <div className={styles.filterGroup}>
-          <label htmlFor="status-filter">Status:</label>
+          <label htmlFor="status-filter">Статус</label>
           <select
             id="status-filter"
             className={styles.filterSelect}
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="all">All</option>
-            <option value="good">Good</option>
-            <option value="bad">Known Bad</option>
+            <option value="all">Все</option>
+            <option value="good">Без известных проблем</option>
+            <option value="bad">С известными проблемами</option>
           </select>
         </div>
         <div className={styles.filterGroup}>
-          <label htmlFor="channel-filter">Channel:</label>
+          <label htmlFor="channel-filter">Канал</label>
           <select
             id="channel-filter"
             className={styles.filterSelect}
             value={channelFilter}
             onChange={(e) => setChannelFilter(e.target.value)}
           >
-            <option value="all">All</option>
+            <option value="all">Все</option>
             {allChannels.map((ch) => (
               <option key={ch} value={ch}>
                 {CHANNEL_LABELS[ch] || ch}
@@ -277,13 +277,13 @@ export default function FusionReleases() {
       </div>
 
       <div className={styles.resultCount} data-md-hide="true">
-        Showing {filteredReleases.length} of {sortedReleases.length} releases
+        Показано релизов: {filteredReleases.length} из {sortedReleases.length}
       </div>
 
       <div className={styles.releaseList}>
         {filteredReleases.length === 0 ? (
           <div className={styles.noResults}>
-            No releases match your filters.
+            По выбранным фильтрам релизы не найдены.
           </div>
         ) : (
           filteredReleases.map(([version, data]) => (

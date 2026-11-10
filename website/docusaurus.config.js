@@ -97,7 +97,7 @@ var siteSettings = {
     },
     announcementBarActive: true,
     announcementBarLink:
-      "https://inzhenerka.tech/dbt",
+      "https://inzhenerka.tech/data-warehouse-analytics-engineer",
     // Set community spotlight member on homepage
     // This is the ID for a specific file under docs/community/spotlight
     communitySpotlightMember: "original-dbt-athena-maintainers",
@@ -126,7 +126,7 @@ var siteSettings = {
       logo: {
         src: "/img/dbt-logo.png",
         srcDark: "img/dbt-logo-light.png",
-        alt: "site Logo",
+        alt: "Документация dbt",
       },
       items: [
         {
@@ -140,7 +140,7 @@ var siteSettings = {
             },
             {
               label: "Справочник",
-              to: "reference/references-overview",
+              to: "/reference/references-overview",
             },
             {
               label: "Лучшие практики",
@@ -175,12 +175,12 @@ var siteSettings = {
               to: "/docs/faqs",
             },
             {
-              label: "Поддержка",
+              label: "Поддержка и оплата",
               to: "/docs/dbt-support",
             },
             {
-              label: "Дневники Fusion",
-              href: "https://github.com/dbt-labs/dbt-fusion/discussions/categories/announcements",
+              label: "Лицензирование",
+              to: "/docs/dbt-licensing",
             },
             {
               label: "Обучение (рус.)",
@@ -213,8 +213,12 @@ var siteSettings = {
               href: "https://discourse.getdbt.com/",
             },
             {
-              label: "Мероприятия",
+              label: "Вебинары",
               href: "https://www.getdbt.com/resources/webinars",
+            },
+            {
+              label: "Мероприятия",
+              href: "https://www.getdbt.com/events",
             },
             {
               label: "Присоединиться к сообществу",
@@ -234,15 +238,22 @@ var siteSettings = {
             },
             {
               label: "Платформа dbt Cloud",
-              to: "https://cloud.getdbt.com/",
+              to: "https://login.dbt.com/",
               target: "_blank",
             },
           ],
         },
         {
+          label: "Начать работу",
+          position: "right",
+          to: "/docs/dbt/get-started-dbt?version=2",
+          id: "nav-install-dbt",
+          className: "nav-install-dbt",
+        },
+        {
           label: "Записаться на курс",
           position: "right",
-          to: "https://inzhenerka.tech/dbt",
+          to: "https://inzhenerka.tech/data-warehouse-analytics-engineer",
           id: "nav-open-dbt-course",
           className: "nav-install-dbt-extension",
         },
@@ -257,7 +268,7 @@ var siteSettings = {
               <div class="cta-section-text">
                 <span class="eyebrow">Быстрый старт</span>
                 <h2 class="heading-2">Начните работать с dbt.</h2>
-                <p>Бесплатное расширение dbt для VS Code — рекомендуемый способ разрабатывать локально с движком dbt Core или dbt Fusion.</p>
+                <p>Бесплатное расширение dbt для VS Code — рекомендуемый способ разрабатывать локально с dbt v1 или dbt v2.</p>
               </div>
               <div class="cta-section">
                 <a
@@ -281,6 +292,14 @@ var siteSettings = {
 
           <div class="footer-grid">
             <div class="footer-grid-item">
+              <h3 class="heading-5">Ресурсы dbt</h3>
+              <a href="/docs/about-dbt-extension">Расширение для VS Code</a>
+              <a href="https://www.getdbt.com/resources" target="_blank" rel="noopener noreferrer">Подборка ресурсов dbt</a>
+              <a href="https://www.getdbt.com/dbt-learn" target="_blank" rel="noopener noreferrer">dbt Learn</a>
+              <a href="https://www.getdbt.com/dbt-certification" target="_blank" rel="noopener noreferrer">Сертификация dbt</a>
+              <a href="/blog">Блог разработчиков</a>
+            </div>
+            <div class="footer-grid-item">
               <h5 class="heading-5">Продукты</h5>
               <a href="https://inzhenerka.tech/data-warehouse-analytics-engineer" target="_blank">Симулятор DWH Analytics Engineer (dbt)</a>
               <a href="https://inzhenerka.tech/dagster" target="_blank">Практикум по оркестрации данных с Dagster и DLT</a>
@@ -294,10 +313,15 @@ var siteSettings = {
               <a href="https://t.me/+DCGiey5LTzYzYTRi" target="_blank">Чат инженеров</a>
               <a href="https://t.me/InzhenerkaTech_Review" target="_blank">Отзывы о нас</a>
               <a href="https://github.com/Inzhenerka/docs.getdbt.tech">Помочь с документацией</a>
+              <a href="/community/join">Сообщество dbt</a>
+              <a href="https://hub.getdbt.com/" target="_blank" rel="noopener noreferrer">Каталог пакетов dbt</a>
+              <a href="https://discourse.getdbt.com/" target="_blank" rel="noopener noreferrer">Форум dbt</a>
             </div>
             <div class="footer-grid-item">
               <h5 class="heading-5">Поддержка</h5>
               <a href="https://t.me/inzsupportbot">Бот поддержки</a>
+              <a href="/docs/dbt-support">Поддержка dbt</a>
+              <a href="https://status.getdbt.com/" target="_blank" rel="noopener noreferrer">Статус сервисов dbt</a>
             </div>
             <div class="footer-grid-item">
               <h5 class="heading-5">Наши соцсети</h5>
@@ -315,7 +339,7 @@ var siteSettings = {
 
           <div class='footer-sub-items'>
             <div class="footer-copyright">
-              <span>&copy; ${new Date().getFullYear()} ООО "ИНЖЕНЕРКАТЕХ"<br>Основано на материалах компании dbt Labs, Inc. All Rights Reserved.</span>
+              <span>&copy; ${new Date().getFullYear()} Inzhenerka.Tech<br>Основано на материалах компании dbt Labs, Inc. Все права защищены.</span>
             </div>
           </div>
           </div>
@@ -420,6 +444,19 @@ var siteSettings = {
         // Content organization
         structure: {
           sections: [
+            // Localized names for sections inferred from URL prefixes.
+            { id: "best-practices", name: "Лучшие практики" },
+            { id: "category", name: "Категории" },
+            { id: "community", name: "Сообщество" },
+            { id: "docs", name: "Документация" },
+            { id: "faqs", name: "Частые вопросы" },
+            { id: "guides", name: "Руководства" },
+            { id: "navigation-options", name: "Навигация" },
+            { id: "reference", name: "Справочник" },
+            { id: "search", name: "Поиск" },
+            { id: "sql-reference", name: "Справочник по SQL" },
+            { id: "tags", name: "Теги" },
+            { id: "terms", name: "Термины" },
             {
               id: "getting-started",
               name: "Начало работы",
@@ -451,14 +488,14 @@ var siteSettings = {
                   subsections: [
                     {
                       id: "connect-data-platform",
-                      name: "Connect data platform",
+                      name: "Подключение к платформе данных",
                       routes: [
                         { route: "/docs/platform/connect-data-platform/**" },
                       ],
                     },
                     {
                       id: "manage-access",
-                      name: "Manage access",
+                      name: "Управление доступом",
                       routes: [{ route: "/docs/platform/manage-access/**" }],
                     },
                     {
@@ -468,14 +505,14 @@ var siteSettings = {
                     },
                     {
                       id: "secure",
-                      name: "Secure",
+                      name: "Безопасность",
                       routes: [{ route: "/docs/platform/secure/**" }],
                     },
                   ],
                 },
                 {
                   id: "install-dbt",
-                  name: "dbt local installation",
+                  name: "Локальная установка dbt",
                   routes: [
                     { route: "/docs/local/install-dbt" },
                     { route: "/docs/local/dbt-environments" },
@@ -483,7 +520,7 @@ var siteSettings = {
                   subsections: [
                     {
                       id: "about-fusion-install",
-                      name: "Install dbt Fusion engine",
+                      name: "Установка dbt v2",
                       routes: [{ route: "/docs/dbt/about-dbt-install" }],
                     },
                     {
@@ -499,21 +536,21 @@ var siteSettings = {
             },
             {
               id: "fusion",
-              name: "Fusion",
+              name: "Движок dbt",
               routes: [{ route: "/docs/dbt/**" }],
             },
             {
               id: "platform",
-              name: "Platform",
+              name: "Работа на платформе dbt",
               routes: [{ route: "/docs/platform/**" }],
             },
             {
               id: "api-reference",
-              name: "API Reference",
+              name: "Справочник API",
               routes: [{ route: "/docs/dbt-apis/**" }],
             },
           ],
-          siteTitle: "dbt Developer Hub",
+          siteTitle: "Документация dbt на русском языке",
           siteDescription:
             "Документация для конечных пользователей, руководства и технический справочник по dbt",
         },

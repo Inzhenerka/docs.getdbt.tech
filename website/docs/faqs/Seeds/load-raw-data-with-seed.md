@@ -1,7 +1,7 @@
 ---
 title: "Можно ли загружать исходные данные с помощью seeds?"
 description: "Как использовать seeds для загрузки данных, связанных с бизнес-логикой."
-sidebar_label: 'Seed data files requirements'
+sidebar_label: 'Требования к seed-файлам'
 id: load-raw-data-with-seed
 
 ---

@@ -17,23 +17,23 @@
 // doesn't follow the tier ladder (e.g. Starter-only, with no Enterprise equivalent).
 
 export const FIELD_LABELS = {
-  engine: 'Version',
-  surface: 'Where',
-  access: 'Access',
-  usage: 'Pricing',
+  engine: 'Версия',
+  surface: 'Где доступно',
+  access: 'Доступ',
+  usage: 'Оплата',
 };
 
 // v1 = dbt Core 1.x (1.99 and earlier). v2 = dbt Fusion engine 2.0 and later.
 // "all" (or omitted) means the content applies to both lines — no badge segment renders,
 // same hide-if-universal rule used elsewhere in this file.
 export const ENGINE_LABELS = {
-  v1: 'Available in v1',
-  v2: 'Available in v2',
+  v1: 'Доступно в v1',
+  v2: 'Доступно в v2',
 };
 
 export const ENGINE_TOOLTIPS = {
-  v1: 'Available in v1',
-  v2: 'Available in v2',
+  v1: 'Доступно в v1',
+  v2: 'Доступно в v2',
 };
 
 export function getEngineFacet(engine) {
@@ -44,25 +44,25 @@ export function getEngineFacet(engine) {
   return { facet: label, tooltip: ENGINE_TOOLTIPS[engine] };
 }
 
-// local and local_development render the same "Local development" badge — the
+// local and local_development render the same "Локальная разработка" badge — the
 // distinction (CLI-only vs platform-compatible) lives in the tooltip, not the chip.
 export const SURFACE_LABELS = {
-  local: 'Local development',
-  local_development: 'Local development',
-  platform: 'dbt platform',
+  local: 'Локальная разработка',
+  local_development: 'Локальная разработка',
+  platform: 'Платформа dbt',
 };
 
 export const SURFACE_TOOLTIPS = {
-  local: 'Runs locally.',
-  local_development: 'Runs locally. Works with dbt platform or local dbt projects.',
-  platform: 'Available in the dbt platform.',
+  local: 'Работает локально.',
+  local_development: 'Работает локально с проектами на платформе dbt и с локальными проектами dbt.',
+  platform: 'Доступно на платформе dbt.',
 };
 
 // Link text within a SURFACE_TOOLTIPS entry, keyed by surface.
 export const SURFACE_TOOLTIP_LINKS = {
   local_development: {
     href: '/docs/platform/dbt-cli-installation',
-    text: 'dbt platform',
+    text: 'платформе dbt',
   },
 };
 
@@ -76,10 +76,10 @@ export const PLAN_LABELS = {
 // Order matters: minPlan expands to this tier and everything after it ("and up").
 const PLAN_TIER_ORDER = ['developer', 'starter', 'enterprise', 'enterprise_plus'];
 
-const ACCESS_TOOLTIPS = {
-  Free: 'No account needed.',
-  'Login required': 'Sign in with a dbt account. No paid dbt seat required.',
-  'Usage-based': 'Billed based on usage.',
+const LOGIN_REQUIRED_FACET = {
+  facet: 'Требуется вход',
+  tooltip: 'Войдите в аккаунт dbt. Платная лицензия dbt не нужна.',
+  tooltipLink: { href: 'https://www.getdbt.com/pricing', text: 'Платная лицензия dbt' },
 };
 
 function planListLabel(plans) {
@@ -91,7 +91,7 @@ function planListLabel(plans) {
 }
 
 function planTooltip(plans) {
-  return `Requires ${planListLabel(plans)}.`;
+  return `Требуется тариф: ${planListLabel(plans)}.`;
 }
 
 // minPlan is the common case: a tier and everything above it ("starter" -> starter+enterprise+enterprise_plus).
@@ -109,17 +109,17 @@ export function getAccessFacets(access, { minPlan, plans } = {}, surface) {
   switch (access) {
     case 'free':
       // Free is only rendered paired with the platform surface (rule: bare "dbt platform"
-      // badge could read as paid). Local development/everywhere default to free implicitly.
-      return surface === 'platform' ? [{ facet: 'Free', tooltip: ACCESS_TOOLTIPS.Free }] : [];
+      // badge could read as paid). Local and unspecified surfaces default to free implicitly.
+      return surface === 'platform' ? [{ facet: 'Бесплатно', tooltip: 'Аккаунт не нужен.' }] : [];
     case 'login_required':
-      // On the platform surface, "Login required" is redundant — you can't use dbt
+      // On the platform surface, a login requirement is redundant — you can't use dbt
       // platform without an account, so it's collapsed away (same pattern as "free" above).
-      // Local development/everywhere still show it since login isn't implied there.
-      return surface === 'platform' ? [] : [{ facet: 'Login required', tooltip: ACCESS_TOOLTIPS['Login required'], tooltipLink: { href: 'https://www.getdbt.com/pricing', text: 'dbt seat' } }];
+      // Local and unspecified surfaces still show it since login isn't implied there.
+      return surface === 'platform' ? [] : [LOGIN_REQUIRED_FACET];
     case 'usage_based':
       return [
-        ...(surface === 'platform' ? [] : [{ facet: 'Login required', tooltip: 'Sign in with a dbt account. No paid dbt seat required.', tooltipLink: { href: 'https://www.getdbt.com/pricing', text: 'dbt seat' } }]),
-        { facet: 'Usage-based', tooltip: ACCESS_TOOLTIPS['Usage-based'], label: FIELD_LABELS.usage },
+        ...(surface === 'platform' ? [] : [LOGIN_REQUIRED_FACET]),
+        { facet: 'Оплата по использованию', tooltip: 'Оплата зависит от объёма использования.', label: FIELD_LABELS.usage },
       ];
     case 'paid_plan': {
       const planList = resolvePlans(minPlan, plans);

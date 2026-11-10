@@ -13,7 +13,7 @@ export const SelectDropdown = ({ options, value, onChange, isMulti, placeHolder 
       value={value}
       onChange={onChange}
       placeholder={placeHolder}
-      aria-label="Multi Select Dropdown"
+      aria-label="Список с множественным выбором"
       unstyled
     />
   );

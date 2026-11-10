@@ -126,8 +126,8 @@ export default function BlogLayout(props) {
  
        <div className="blog-breadcrumbs">
          <div className="container">
-           <Link to="/" title="dbt Docs">dbt Docs</Link>
-           <Link to="/blog" title="Blog">Developer Blog</Link>
+           <Link to="/" title="Документация dbt">Документация dbt</Link>
+           <Link to="/blog" title="Блог разработчиков">Блог разработчиков</Link>
            {(!isBlogList && breadcrumbTitle) && 
              <Link to="#" title={breadcrumbTitle}>
                {breadcrumbTitle}

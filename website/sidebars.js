@@ -125,7 +125,7 @@ const sidebarSettings = {
                 },
                 {
                   type: "category",
-                  label: "Single sign-on and OAuth",
+                  label: "Единый вход (SSO) и OAuth",
                   link: {
                     type: "doc",
                     id: "docs/platform/manage-access/sso-oauth-intro",
@@ -231,14 +231,14 @@ const sidebarSettings = {
             }, // Supported Git providers
             {
               type: "category",
-              label: "Network security",
+              label: "Безопасность сети",
               link: { type: "doc", id: "docs/platform/secure/about-network-security" },
               items: [
                 "docs/platform/secure/about-network-security",
                 "docs/platform/secure/ip-restrictions",
                 {
                   type: "category",
-                  label: "Private connectivity",
+                  label: "Приватные подключения",
                   link: { type: "doc", id: "docs/platform/secure/private-connectivity/private-connectivity" },
                   items: [
                     "docs/platform/secure/private-connectivity/private-connectivity",
@@ -291,7 +291,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "dbt self-hosted installation",
+          label: "Локальная установка dbt",
           collapsed: true,
           link: { type: "doc", id: "docs/local/about-local" },
           items: [
@@ -304,7 +304,7 @@ const sidebarSettings = {
             "docs/local/dbt-environments",
             {
               type: "category",
-              label: "Connect to your data platform",
+              label: "Подключение к платформе данных",
               link: {
                 type: "doc",
                 id: "docs/local/connect-data-platform/about-dbt-connections",
@@ -377,7 +377,7 @@ const sidebarSettings = {
     },
     {
       type: 'html',
-      value: 'AI and dbt',
+      value: 'ИИ и dbt',
       className: 'sidebar-title',
     },
         "docs/dbt-ai/about-dbt-ai",
@@ -394,7 +394,7 @@ const sidebarSettings = {
             "docs/dbt-ai/wizard-billing-faqs",
             {
               type: "category",
-              label: "Pricing and billing",
+              label: "Тарифы и оплата",
               collapsed: true,
               link: { type: "doc", id: "docs/dbt-ai/pricing-billing/overview" },
               items: [
@@ -434,7 +434,7 @@ const sidebarSettings = {
             },
             {
               type: "category",
-              label: "Wizard in platform",
+              label: "Wizard на платформе dbt",
               collapsed: true,
               link: { type: "doc", id: "docs/platform/wizard-platform" },
               items: [
@@ -462,7 +462,7 @@ const sidebarSettings = {
         },
     {
       type: "category",
-      label: "dbt MCP server",
+      label: "Сервер MCP для dbt",
       collapsed: true,
       link: { type: "doc", id: "docs/dbt-ai/about-mcp", },
       items: [
@@ -481,7 +481,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Setup and configuration",
+          label: "Установка и настройка",
           collapsed: true,
           items: [
             "docs/dbt-ai/setup-local-mcp",
@@ -492,7 +492,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Integrations",
+          label: "Интеграции",
           collapsed: true,
           items: [
             "docs/dbt-ai/integrate-mcp-claude",
@@ -537,7 +537,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "dbt platform CLI",
+          label: "CLI платформы dbt",
           collapsed: true,
           link: { type: "doc", id: "docs/platform/dbt-cli-installation" },
           items: [
@@ -863,13 +863,13 @@ const sidebarSettings = {
     }, // end of "Deploy dbt"
     {
       type: "category",
-      label: "Optimize builds with dbt State",
+      label: "Оптимизация сборок с dbt State",
       link: { type: "doc", id: "docs/deploy/dbt-state-about" },
       items: [
         "docs/deploy/dbt-state-about",
         {
           type: "category",
-          label: "Set up dbt State",
+          label: "Настройка dbt State",
           link: { type: "doc", id: "docs/deploy/dbt-state-setup" },
           items: [
             "docs/deploy/dbt-state-setup",
@@ -893,7 +893,7 @@ const sidebarSettings = {
         "docs/explore/explore-your-data",
         {
           type: "category",
-          label: "Track costs and optimizations with Cost Insights",
+          label: "Отслеживание расходов с Cost Insights",
           link: {
             type: "doc",
             id: "docs/explore/cost-insights",
@@ -999,7 +999,7 @@ const sidebarSettings = {
     },
     {
       type: 'html',
-      value: 'Compute',
+      value: 'Вычисления',
       className: 'sidebar-title',
     },
     "docs/lake-compute/lake-compute",
@@ -1007,7 +1007,7 @@ const sidebarSettings = {
     "docs/lake-compute/compute-faq",
     {
       type: 'html',
-      value: 'Business intelligence',
+      value: 'Бизнес-аналитика',
       className: 'sidebar-title',
     },
     {
@@ -1075,7 +1075,7 @@ const sidebarSettings = {
         "docs/dbt-versions/experimental-features",
         {
           type: "link",
-          label: "dbt v2 changelog",
+          label: "Журнал изменений dbt v2",
           href: "https://github.com/dbt-labs/dbt/blob/main/CHANGELOG-dbt.md",
         },
         {
@@ -1083,8 +1083,8 @@ const sidebarSettings = {
           label: "Гайды по обновлению версии dbt",
           link: {
             type: "generated-index",
-            title: "Version upgrade guides",
-            description: "Learn what's new in the latest version of dbt.",
+            title: "Руководства по обновлению dbt",
+            description: "Узнайте, что нового в последней версии dbt.",
             slug: "/docs/dbt-versions/dbt-upgrade",
           },
           items: [
@@ -1175,7 +1175,7 @@ const sidebarSettings = {
             "docs/dbt-apis/discovery-schema-about",
             {
               type: "category",
-              label: "Окружение (рекомеднуется)",
+              label: "Окружение (рекомендуется)",
               link: {
                 type: "doc",
                 id: "docs/dbt-apis/discovery-schema-environment",
@@ -1265,8 +1265,8 @@ const sidebarSettings = {
       label: "Конфигурация проекта",
       link: {
         type: "generated-index",
-        title: "Project configs",
-        description: "The list of project configs available in dbt.",
+        title: "Конфигурация проекта",
+        description: "Настройки проектов dbt.",
       },
       collapsed: true,
       items: [
@@ -1303,9 +1303,9 @@ const sidebarSettings = {
       label: "Конфигурация различных платформ",
       link: {
         type: "generated-index",
-        title: "Platform-specific configs",
+        title: "Настройки платформ данных",
         description:
-          "Platform-specific configs are used to configure the dbt project for a specific database platform.",
+          "Настройки проекта dbt для конкретной платформы данных.",
         slug: "/reference/resource-configs",
       },
       items: [
@@ -1373,8 +1373,8 @@ const sidebarSettings = {
           label: "Общие свойства",
           link: {
             type: "generated-index",
-            title: "General properties",
-            description: "The list of general properties available in dbt.",
+            title: "Общие свойства",
+            description: "Общие свойства ресурсов dbt.",
           },
           items: [
             "reference/resource-properties/anchors",
@@ -1393,8 +1393,8 @@ const sidebarSettings = {
           label: "Основные конфигурации",
           link: {
             type: "generated-index",
-            title: "General configs",
-            description: "The list of general configs available in dbt.",
+            title: "Основные конфигурации",
+            description: "Основные настройки ресурсов dbt.",
           },
           items: [
             "reference/advanced-config-usage",
@@ -1442,7 +1442,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For dbt State",
+          label: "Для dbt State",
           link: { type: "doc", id: "reference/resource-configs/dbt-state-configs" },
           items: [
             "reference/resource-configs/dbt-state-configs",
@@ -1535,7 +1535,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Для analysis",
+          label: "Для аналитических запросов",
           link: { type: "doc", id: "reference/analysis-properties" },
           items: ["reference/analysis-properties"],
         },
@@ -1556,25 +1556,25 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "For semantic models",
+          label: "Для семантических моделей",
           link: { type: "doc", id: "reference/semantic-model-properties" },
           items: ["reference/semantic-model-properties"],
         },
         {
           type: "category",
-          label: "For metrics",
+          label: "Для метрик",
           link: { type: "doc", id: "reference/metric-properties" },
           items: ["reference/metric-properties"],
         },
         {
           type: "category",
-          label: "For dimensions",
+          label: "Для измерений",
           link: { type: "doc", id: "reference/dimension-properties" },
           items: ["reference/dimension-properties"],
         },
         {
           type: "category",
-          label: "For checks",
+          label: "Для проверок",
           link: { type: "doc", id: "reference/check-properties" },
           items: [
             "reference/check-properties",
@@ -1613,8 +1613,8 @@ const sidebarSettings = {
           label: "Список команд",
           link: {
             type: "generated-index",
-            title: "List of commands",
-            description: "The list of commands available in dbt.",
+            title: "Список команд",
+            description: "Команды, доступные в dbt.",
           },
           items: [
             "reference/commands/build",
@@ -1687,7 +1687,7 @@ const sidebarSettings = {
             "reference/global-configs/about-global-configs",
             {
               type: "category",
-              label: "Behavior changes",
+              label: "Изменения поведения",
               link: {
                 type: "doc",
                 id: "reference/global-configs/behavior-changes",
@@ -1696,11 +1696,12 @@ const sidebarSettings = {
                 "reference/global-configs/behavior-changes",
                 {
                   type: "category",
-                  label: "Behavior change flags",
+                  label: "Флаги изменения поведения",
                   link: {
                     type: "generated-index",
-                    title: "Behavior change flags",
-                    description: "Reference documentation for each dbt behavior change flag.",
+                    title: "Флаги изменения поведения",
+                    slug: "/category/behavior-change-flags",
+                    description: "Справочник по флагам изменения поведения dbt.",
                   },
                   items: [
                     "reference/global-configs/behavior-flags/allow_jinja_file_extensions",
@@ -1728,7 +1729,7 @@ const sidebarSettings = {
                 },
                 {
                   type: "category",
-                  label: "Adapter behavior change flags",
+                  label: "Флаги изменения поведения адаптеров",
                   link: {
                     type: "doc",
                     id: "reference/global-configs/adapter-behavior-changes",
@@ -1748,8 +1749,8 @@ const sidebarSettings = {
               label: "Флаги настроек",
               link: {
                 type: "generated-index",
-                title: "Setting flags",
-                description: "The flags you can set to configure dbt.",
+                title: "Флаги настроек",
+                description: "Флаги для настройки dbt.",
               },
               items: [
                 "reference/global-configs/command-line-options",
@@ -1763,8 +1764,8 @@ const sidebarSettings = {
               label: "Доступные флаги",
               link: {
                 type: "generated-index",
-                title: "Available flags",
-                description: "The list of flags available in dbt.",
+                title: "Доступные флаги",
+                description: "Флаги, доступные в dbt.",
               },
               items: [
                 "reference/global-configs/usage-stats",
@@ -1788,7 +1789,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "Deprecations & warnings",
+          label: "Устаревшие возможности и предупреждения",
           link: {
             type: "doc",
             id: "reference/changes-overview",
@@ -1811,17 +1812,17 @@ const sidebarSettings = {
       label: "Руководство Jinja",
       link: {
         type: "generated-index",
-        title: "Jinja reference",
-        description: "The list of Jinja functions and context variables available in dbt.",
+        title: "Справочник по Jinja",
+        description: "Функции и переменные контекста Jinja в dbt.",
       },
       items: [
         "reference/jinja-file-support",
         {
           type: "category",
-          label: "dbt Jinja context functions",
+          label: "Функции контекста Jinja в dbt",
           link: {
             type: "generated-index",
-            title: "dbt Jinja functions and context variables",
+            title: "Функции и переменные контекста Jinja в dbt",
             description:
               "In addition to the standard Jinja library, we've added additional functions and variables to the Jinja context that are useful when working with a dbt project. For a file-by-file overview, refer to Jinja support by file type. Note that dependencies.yml is not Jinja rendered in dbt v1 and therefore, does not support Jinja.",
             slug: "/reference/dbt-jinja-functions-context-variables",
@@ -1873,9 +1874,9 @@ const sidebarSettings = {
       label: "Лучшие практики",
       link: {
         type: "generated-index",
-        title: "Best practice guides",
+        title: "Лучшие практики",
         description:
-          "Learn how dbt Labs approaches building projects through our current viewpoints on structure, style, and setup.",
+          "Рекомендации dbt Labs по структуре, оформлению и настройке проектов.",
         slug: "best-practices",
       },
       items: [
@@ -1931,7 +1932,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "How to use Wizard in your dbt project",
+          label: "Как использовать Wizard в проекте dbt",
           link: {
             type: "doc",
             id: "best-practices/how-to-use-wizard/wizard-1-intro",
@@ -1963,7 +1964,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "How to handle real-time data",
+          label: "Как работать с данными в реальном времени",
           link: {
             type: "doc",
             id: "best-practices/how-we-handle-real-time-data/1-intro",
@@ -1979,7 +1980,7 @@ const sidebarSettings = {
         },
         {
           type: "category",
-          label: "How to handle change data capture",
+          label: "Как отслеживать изменения данных (CDC)",
           link: {
             type: "doc",
             id: "best-practices/how-we-handle-cdc/1-intro",
@@ -2064,9 +2065,9 @@ const sidebarSettings = {
       label: "Справочник по SQL",
       link: {
         type: "generated-index",
-        title: "SQL Reference",
+        title: "Справочник по SQL",
         description:
-          "The SQL Reference is a collection of SQL functions and keywords that you can use during your daily data work.",
+          "Функции и ключевые слова SQL для повседневной работы с данными.",
         slug: "/sql-reference",
       },
       items: [
@@ -2180,9 +2181,9 @@ const sidebarSettings = {
       label: "Часто задаваемые вопросы (FAQ)",
       link: {
         type: "generated-index",
-        title: "Frequently asked questions",
+        title: "Часто задаваемые вопросы",
         description:
-          "Our Frequently Asked Questions (FAQs) section is a space where you can find an answer to some questions we get asked a lot (but that we’re happy to answer!). If you have a question or are still stuck on something, just reach out to us by emailing support@getdbt.com or clicking on the chat widget, and we’ll do our best to help out.",
+          "Ответы на частые вопросы о dbt. Если вам нужна помощь, напишите на support@getdbt.com или воспользуйтесь чатом поддержки.",
         slug: "/docs/faqs",
       },
       items: [

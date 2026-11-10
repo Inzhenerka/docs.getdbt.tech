@@ -1,8 +1,9 @@
-label: 'Troubleshooting'
+label: 'Устранение неполадок'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 link:
   type: generated-index
-  title: dbt MCP troubleshooting FAQs
+  title: 'Устранение неполадок: частые вопросы'
+  slug: /category/troubleshooting-1
 customProps:
-  description: Troubleshooting answers for the dbt MCP server
+  description: Об устранении неполадок сервера dbt MCP.

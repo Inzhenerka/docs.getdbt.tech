@@ -1,5 +1,5 @@
 ---
-title: "Set up Snowflake OAuth"
+title: "Настройка Snowflake OAuth"
 description: "Как администраторы dbt могут управлять доступом к аккаунту через Snowflake OAuth."
 id: "set-up-snowflake-oauth"
 availability:

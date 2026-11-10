@@ -373,7 +373,7 @@ const FilterableTable = ({ children }) => {
   // Table data is parsed from the DOM after mount, so during SSR (and for
   // no-JS visitors and the markdown derived from the built HTML) there is no
   // parsed data yet. Show the source table itself until parsing completes
-  // rather than a "Loading table..." placeholder, so the static HTML always
+  // rather than a "Загрузка таблицы…" placeholder, so the static HTML always
   // contains the real rows.
   const isParsed = headers.length > 0;
 
@@ -392,27 +392,27 @@ const FilterableTable = ({ children }) => {
             {getSvgIcon("fa-magnifying-glass")}
             <input
               type="text"
-              placeholder="Search table..."
+              placeholder="Поиск по таблице…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={styles.searchInput}
-              aria-label="Search table"
+              aria-label="Поиск по таблице"
             />
           </div>
           {hasActiveFilters && (
             <button
               onClick={clearAllFilters}
               className={styles.clearAllButton}
-              aria-label="Clear all filters"
+              aria-label="Сбросить все фильтры"
             >
-              Clear all filters
+              Сбросить все фильтры
             </button>
           )}
         </div>
 
         {hasActiveFilters && filteredData.length === 0 ? (
           <div className={styles.noResults}>
-            DAG, no rows match your search criteria! Why don't you try changing your search or filters.
+            Совпадений нет. Измените запрос или фильтры.
           </div>
         ) : (
           <table className={styles.filterableTable}>
@@ -449,7 +449,7 @@ const FilterableTable = ({ children }) => {
                                   handleFilterToggle(index, e);
                                 }}
                                 className={`${styles.filterButton} ${hasActiveFilter ? styles.filterActive : ''}`}
-                                aria-label={`Filter by ${extractCleanText(header)}`}
+                                aria-label={`Фильтр по столбцу «${extractCleanText(header)}»`}
                                 aria-expanded={isFilterOpen}
                               >
                                 <span className={styles.filterIcon}>˅</span>
@@ -467,8 +467,8 @@ const FilterableTable = ({ children }) => {
                                       setSortConfig({ key: null, direction: 'asc' });
                                     }}
                                     className={styles.sortResetButton}
-                                    aria-label="Reset sort"
-                                    title="Reset sort to original order"
+                                    aria-label="Сбросить сортировку"
+                                    title="Вернуть исходный порядок"
                                   >
                                     ×
                                   </button>
@@ -486,27 +486,27 @@ const FilterableTable = ({ children }) => {
                           {isFilterOpen && (
                             <div className={styles.filterDropdown}>
                                 <div className={styles.filterDropdownHeader}>
-                                  <strong>Filter by {extractCleanText(header)}</strong>
+                                  <strong>Фильтр по столбцу «{extractCleanText(header)}»</strong>
                                   {hasActiveFilter && (
                                     <button
                                       onClick={() => clearColumnFilter(index)}
                                       className={styles.clearColumnFilter}
-                                      aria-label="Clear filter"
+                                      aria-label="Сбросить фильтр"
                                     >
-                                      Clear
+                                      Сбросить
                                     </button>
                                   )}
                                 </div>
                                 {columnFilterOptions[index].length > 0 && (
                                   <div className={styles.filterCount}>
-                                    Displaying {columnFilterOptions[index].length} {columnFilterOptions[index].length === 1 ? 'value' : 'values'}
+                                    Значений: {columnFilterOptions[index].length}
                                   </div>
                                 )}
                                 {columnFilterOptions[index].length > 10 && (
                                   <div className={styles.filterSearchContainer}>
                                     <input
                                       type="text"
-                                      placeholder="Search options..."
+                                      placeholder="Поиск по значениям…"
                                       value={filterSearchQueries[index] || ''}
                                       onChange={(e) => setFilterSearchQueries(prev => ({
                                         ...prev,
@@ -553,7 +553,7 @@ const FilterableTable = ({ children }) => {
               {filteredData.length === 0 && !hasActiveFilters ? (
                 <tr>
                   <td colSpan={headers.length || 5} style={{ textAlign: 'center', padding: '20px' }}>
-                    Loading table...
+                    Загрузка таблицы…
                   </td>
                 </tr>
               ) : (

@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Warehouse'
+label: 'Хранилища данных'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Warehouse FAQs
+  title: 'Хранилища данных: частые вопросы'
+  slug: /category/warehouse
 customProps:
-  description: Frequently asked questions about warehouses and dbt
+  description: О хранилищах данных в dbt.

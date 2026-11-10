@@ -119,7 +119,7 @@ export function useCopyPage({ pageUrl } = {}) {
       setError(null);
     } catch (err) {
       console.error('Failed to copy: ', err);
-      setError('Failed to copy to clipboard');
+      setError('Не удалось скопировать в буфер обмена');
     }
   };
 
@@ -128,7 +128,7 @@ export function useCopyPage({ pageUrl } = {}) {
    */
   const handleCopyPage = async () => {
     if (!rawMarkdownContent) {
-      setError('Content not available for this page');
+      setError('Содержимое этой страницы недоступно');
       return;
     }
 
@@ -137,7 +137,7 @@ export function useCopyPage({ pageUrl } = {}) {
       setIsDropdownOpen(false);
     } catch (error) {
       console.error('Error copying page content:', error);
-      setError('Error copying page content');
+      setError('Не удалось скопировать страницу');
     }
   };
 
@@ -150,7 +150,7 @@ export function useCopyPage({ pageUrl } = {}) {
 
     if (!service) {
       console.error(`Unknown LLM service: ${serviceKey}`);
-      setError(`Service ${serviceKey} not configured`);
+      setError(`Сервис ${serviceKey} не настроен`);
       return;
     }
 
@@ -163,7 +163,7 @@ export function useCopyPage({ pageUrl } = {}) {
       setError(null);
     } catch (error) {
       console.error(`Error opening in ${serviceKey}:`, error);
-      setError(`Failed to open ${service.name}`);
+      setError(`Не удалось открыть ${service.name}`);
     }
   };
 

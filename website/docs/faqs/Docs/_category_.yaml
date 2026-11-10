@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Documentation'
+label: 'Документация'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Documentation FAQs
+  title: 'Документация: частые вопросы'
+  slug: /category/documentation
 customProps:
-  description: Frequently asked questions about documentation
+  description: О документации в dbt.

@@ -8,11 +8,11 @@ import Heading from '@theme/Heading';
 // a clear "where to look next" map (docs index, sitemap, and the llms.txt
 // feeds) so a broken or guessed URL doesn't turn into a dead end.
 const recoveryLinks = [
-  {to: '/docs/introduction', label: 'Docs home', external: false},
-  {to: '/guides', label: 'Guides', external: false},
-  {to: '/reference/references-overview', label: 'Reference', external: false},
-  {to: '/blog', label: 'Developer blog', external: false},
-  {to: '/sitemap.xml', label: 'Sitemap (sitemap.xml)', external: true},
+  {to: '/docs/introduction', label: 'Документация dbt', external: false},
+  {to: '/guides', label: 'Руководства', external: false},
+  {to: '/reference/references-overview', label: 'Справочник', external: false},
+  {to: '/blog', label: 'Блог разработчиков', external: false},
+  {to: '/sitemap.xml', label: 'Карта сайта (sitemap.xml)', external: true},
   {to: '/llms.txt', label: 'llms.txt', external: true},
   {to: '/llms-full.txt', label: 'llms-full.txt', external: true},
 ];
@@ -26,15 +26,13 @@ export default function NotFoundContent({className}) {
             <Translate
               id="theme.NotFound.title"
               description="The title of the 404 page">
-              DAG! Page not found
+              Страница не найдена
             </Translate>
           </Heading>
           <p>
-            We couldn't find that page. It may have moved, been renamed, or
-            never existed. No worries, nothing is broken on your end -- the URL just doesn't
-            match a page in the dbt Developer Hub.
+            Возможно, страницу перенесли или переименовали. Попробуйте найти её через поиск
+            или откройте один из разделов документации.
           </p>
-          <p>Here's where to look next:</p>
           <ul>
             {recoveryLinks.map(({to, label, external}) => (
               <li key={to}>
@@ -47,16 +45,14 @@ export default function NotFoundContent({className}) {
             ))}
           </ul>
           <p>
-            You can also search the whole site with the search bar in the top
-            navigation (or press <kbd>⌘</kbd> <kbd>K</kbd>). Machine-readable
-            indexes of every page live at <a href="/llms.txt">/llms.txt</a> and{' '}
+            Поиск по сайту доступен в верхнем меню и по сочетанию <kbd>⌘</kbd> <kbd>K</kbd>.
+            Машиночитаемые указатели доступны в <a href="/llms.txt">/llms.txt</a> и{' '}
             <a href="/sitemap.xml">/sitemap.xml</a>.
           </p>
           <p>
-            Building an agent or script? Every docs page also has a plain
-            markdown version — just add <code>.md</code> at the end of any docs URL (for
-            example <a href="/docs/introduction.md">/docs/introduction.md</a>) to
-            fetch the raw markdown instead of the rendered HTML page.
+            Для агента или скрипта можно открыть Markdown-версию документации.
+            Замените завершающий слеш в адресе на <code>.md</code>.
+            Например, <a href="/docs/introduction.md">/docs/introduction.md</a>.
           </p>
         </div>
       </div>

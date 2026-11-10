@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Seeds'
+label: 'Сиды'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Seeds FAQs
+  title: 'Сиды: частые вопросы'
+  slug: /category/seeds
 customProps:
-  description: Frequently asked questions about seeds in dbt
+  description: О seed-файлах в dbt.

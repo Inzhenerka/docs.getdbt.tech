@@ -1,6 +1,6 @@
 ---
 title: "Continuous integration jobs в dbt"
-sidebar_label: "CI jobs"
+sidebar_label: "Задания CI"
 description: "Узнайте, как создавать и настраивать проверки CI для тестирования изменений кода перед развертыванием в производственной среде."
 availability: platform_login
 ---

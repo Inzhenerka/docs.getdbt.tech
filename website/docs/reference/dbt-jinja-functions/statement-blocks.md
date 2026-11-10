@@ -1,6 +1,6 @@
 ---
 title: "О блоках statement"
-sidebar_label: "statement blocks"
+sidebar_label: "Блоки statement"
 id: "statement-blocks"
 description: "SQL‑запросы, которые выполняются в базе данных и возвращают результаты в ваш Jinja‑контекст."
 ---

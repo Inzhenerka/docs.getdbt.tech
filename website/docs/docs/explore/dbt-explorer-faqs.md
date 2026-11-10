@@ -1,6 +1,6 @@
 ---
-title: "dbt Catalog FAQs"
-sidebar_label: "dbt Catalog FAQs"
+title: "Частые вопросы о dbt Catalog"
+sidebar_label: "Частые вопросы о dbt Catalog"
 description: "Узнайте больше из ответов на часто задаваемые вопросы о dbt Catalog: как он работает, как с ним взаимодействовать и многое другое."
 availability: platform_login
 ---

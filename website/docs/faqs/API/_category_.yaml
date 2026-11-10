@@ -5,6 +5,7 @@ collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: API FAQs
+  title: 'API: частые вопросы'
+  slug: /category/api
 customProps:
-  description: Frequently asked questions about dbt APIs
+  description: Об API dbt.

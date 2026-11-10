@@ -726,6 +726,12 @@ html[data-theme="dark"] .version-dropdown__label {
   padding: 6px;
 }
 
+@media (max-width: 995px) {
+  .version-dropdown__menu {
+    inset-inline: auto 0;
+  }
+}
+
 .version-dropdown__menu .version-dropdown__note {
   white-space: normal;
   overflow-wrap: anywhere;
@@ -1942,7 +1948,7 @@ html[data-theme="dark"] .main-wrapper nav a:active {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 2rem;
   text-align: left;
   margin-bottom: 3rem;

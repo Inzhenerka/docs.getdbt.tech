@@ -4,6 +4,7 @@ collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: dbt MCP FAQs
+  title: 'dbt MCP: частые вопросы'
+  slug: /category/dbt-mcp
 customProps:
-  description: Frequently asked questions about the dbt MCP server
+  description: О сервере dbt MCP.

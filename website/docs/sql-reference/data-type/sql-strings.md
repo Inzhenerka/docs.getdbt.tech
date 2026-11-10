@@ -1,6 +1,6 @@
 ---
 id: strings
-title: SQL Strings
+title: "Строки в SQL"
 description: Строки в SQL — это слова или комбинации символов, которые обычно заключены в одинарные кавычки (например, 'Jaffle Shop', '1234 Shire Lane', 'Plan A').
 slug: /sql-reference/strings
 ---

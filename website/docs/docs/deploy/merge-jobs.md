@@ -1,6 +1,6 @@
 ---
 title: "Merge jobs в dbt"
-sidebar_label: "Merge jobs"
+sidebar_label: "Задания при слиянии"
 description: "Узнайте, как запускать задание dbt при слиянии пул-реквеста Git."
 availability:
   surface: platform

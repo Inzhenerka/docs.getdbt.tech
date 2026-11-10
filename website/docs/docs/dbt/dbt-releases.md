@@ -46,7 +46,7 @@ dbt v2 распространяется через три канала рели�
 <details>
     <summary>Обновление самостоятельно размещённой установки</summary>
 
-Следующие команды применяются только к _локальным_ установкам dbt. Они не влияют на то, какую сборку v2 используют ваши среды на <Constant name="dbt_platform" />. Для этого можно задать [канал обновления](https://github.com/docs/dbt-versions/dbt-release-tracks#dbt-v2-release-tracks) для каждой среды на <Constant name="dbt_platform" />.
+Следующие команды применяются только к _локальным_ установкам dbt. Они не влияют на то, какую сборку v2 используют ваши среды на <Constant name="dbt_platform" />. Для этого можно задать [канал обновления](/docs/dbt-versions/dbt-release-tracks#dbt-v2-release-tracks) для каждой среды на <Constant name="dbt_platform" />.
 
 Выполнение команды обновления системы без флага версии устанавливает стабильный релиз `latest`:
 

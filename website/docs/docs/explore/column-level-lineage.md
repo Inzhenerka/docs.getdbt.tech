@@ -1,5 +1,5 @@
 ---
-title: "Column-level lineage"
+title: "Происхождение данных на уровне столбцов"
 description: "Как изучать зависимости на уровне столбцов в dbt Catalog или локально в dbt v2."
 tags: ['CLL']
 availability:

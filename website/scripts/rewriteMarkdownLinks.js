@@ -1,6 +1,5 @@
 /**
- * Post-build step that rewrites absolute docs.getdbt.com links in the generated
- * markdown files to document-relative paths.
+ * Post-build step that repairs links in the Markdown export and LLM indexes.
  *
  * The @signalwire/docusaurus-plugin-llms-txt plugin emits links as absolute
  * site URLs (relativePaths: false), e.g.
@@ -18,6 +17,9 @@
  * writing its .md files. Running after `docusaurus build` returns guarantees the
  * files exist.
  *
+ * The plugin can turn a local route ending in a slash into a URL ending in
+ * /.md. Use the generated Markdown file when available, or the HTML route.
+ *
  * For every link of the form https://docs.getdbt.com/<path>.md whose target
  * file actually exists in this build, we replace it with a document-relative
  * path (e.g. ../../reference/resource-configs/pre-hook-post-hook.md). Links to
@@ -27,6 +29,9 @@
  */
 const fs = require("fs");
 const path = require("path");
+
+// The plugin can append .md after the trailing slash of a site route.
+const MALFORMED_LOCAL_MARKDOWN_RE = /(https?:\/\/docs\.getdbt\.tech)(\/[^\s)\]"'<>?#]*?)\/\.md(?=[?#\s)\]"'<>]|$)/g;
 
 const SITE_HOST_RE = /https?:\/\/docs\.getdbt\.com\/+([^\s)\]"'<>]*)/g;
 
@@ -78,19 +83,37 @@ function rewriteMarkdownLinks(outDir) {
   }
 
   const files = collectMarkdownFiles(outDir);
+  for (const name of ["llms.txt", "llms-full.txt"]) {
+    const file = path.join(outDir, name);
+    if (fs.existsSync(file)) files.push(file);
+  }
   let changedFiles = 0;
   let changedLinks = 0;
 
   for (const file of files) {
     const fileDir = path.dirname(file);
     const original = fs.readFileSync(file, "utf8");
-    const updated = original.replace(SITE_HOST_RE, (match, rest) => {
-      const result = rewriteOne(match, rest, fileDir, outDir);
-      if (result !== match) {
+    let updated = original.replace(MALFORMED_LOCAL_MARKDOWN_RE, (match, origin, route) => {
+      const markdown = `${route}.md`;
+      if (fs.existsSync(path.join(outDir, markdown))) {
         changedLinks += 1;
+        return `${origin}${markdown}`;
       }
-      return result;
+      if (fs.existsSync(path.join(outDir, route, "index.html"))) {
+        changedLinks += 1;
+        return `${origin}${route}/`;
+      }
+      return match;
     });
+    if (file.endsWith(".md")) {
+      updated = updated.replace(SITE_HOST_RE, (match, rest) => {
+        const result = rewriteOne(match, rest, fileDir, outDir);
+        if (result !== match) {
+          changedLinks += 1;
+        }
+        return result;
+      });
+    }
 
     if (updated !== original) {
       fs.writeFileSync(file, updated);

@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Runs'
+label: 'Запуски'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Runs FAQs
+  title: 'Запуски: частые вопросы'
+  slug: /category/runs
 customProps:
-  description: Frequently asked questions about runs in dbt
+  description: О запусках в dbt.

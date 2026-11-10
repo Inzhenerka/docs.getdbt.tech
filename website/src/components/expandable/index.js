@@ -44,7 +44,7 @@ function Expandable({ children, alt_header = null, lifecycle, lifecycle_size, is
   const showCopyPopup = () => {
     const popup = document.createElement('div');
     popup.classList.add('copy-popup');
-    popup.innerText = 'Link copied!';
+    popup.innerText = 'Ссылка скопирована';
 
     // Close button ('x')
     const closeButton = document.createElement('span');

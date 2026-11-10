@@ -65,12 +65,12 @@ const statusDisplayNames = {
   [MANAGED]: MANAGED,
   [SELF_SERVICE]: SELF_SERVICE,
   [DEVELOPER]: DEVELOPER,
-  new: 'New',
-  beta: 'Beta',
-  private_beta: 'Private beta',
-  ga: 'Generally available (GA)',
-  preview: 'Preview',
-  private_preview: 'Private preview',
+  new: 'Новое',
+  beta: 'Бета-версия',
+  private_beta: 'Закрытая бета-версия',
+  ga: 'Общедоступно (GA)',
+  preview: 'Предварительная версия',
+  private_preview: 'Закрытая предварительная версия',
 };
 
 // URL mapping for predefined lifecycle statuses. urls defined in ../lifeCycle/lifecycle-urls.js file so we can update them in one place
@@ -119,7 +119,7 @@ export default function Lifecycle(props) {
               rel="noopener noreferrer"
               className={`${pillClass} ${pillModifier}`}
               style={style}
-              title={`Go to ${url}`} // optional tooltip for better UX
+              title="Подробнее о статусе или тарифе"
             >
               {displayName}
             </a>

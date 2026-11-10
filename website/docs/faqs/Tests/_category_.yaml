@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Tests'
+label: 'Тесты'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Tests FAQs
+  title: 'Тесты: частые вопросы'
+  slug: /category/tests
 customProps:
-  description: Frequently asked questions about tests in dbt
+  description: О тестах в dbt.

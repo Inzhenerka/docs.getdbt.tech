@@ -9,40 +9,40 @@ describe('Availability', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders "dbt platform | Free" for an explicit free platform access without repeating badge values in the tooltip', async () => {
+  it('renders "Платформа dbt | Бесплатно" for explicit free platform access without repeating badge values in the tooltip', async () => {
     const user = userEvent.setup();
     render(<Availability availability={{ surface: 'platform', access: 'free' }} />);
 
-    const badge = screen.getByRole('button', { name: /dbt platform \| free/i });
-    expect(badge).toHaveTextContent('dbt platform | Free');
+    const badge = screen.getByRole('button', { name: /Платформа dbt \| бесплатно/i });
+    expect(badge).toHaveTextContent('Платформа dbt | Бесплатно');
 
     await user.click(badge);
     const tooltip = screen.getByRole('tooltip');
-    expect(tooltip).toHaveTextContent('Where');
-    expect(tooltip).toHaveTextContent('Available in the dbt platform.');
-    expect(tooltip).toHaveTextContent('Access');
-    expect(tooltip).toHaveTextContent('No account needed.');
-    expect(tooltip).not.toHaveTextContent('dbt platform —');
-    expect(tooltip).not.toHaveTextContent('Free —');
+    expect(tooltip).toHaveTextContent('Где доступно');
+    expect(tooltip).toHaveTextContent('Доступно на платформе dbt.');
+    expect(tooltip).toHaveTextContent('Доступ');
+    expect(tooltip).toHaveTextContent('Аккаунт не нужен.');
+    expect(tooltip).not.toHaveTextContent('Платформа dbt —');
+    expect(tooltip).not.toHaveTextContent('Бесплатно —');
   });
 
-  it('renders "dbt platform" alone for platform_login (login is implicit on the platform surface)', async () => {
+  it('renders "Платформа dbt" alone for platform_login (login is implicit on the platform surface)', async () => {
     render(<Availability availability="platform_login" />);
-    const badge = screen.getByRole('button', { name: /^dbt platform\./i });
-    expect(badge).toHaveTextContent('dbt platform');
-    expect(badge).not.toHaveTextContent('Login required');
+    const badge = screen.getByRole('button', { name: /^Платформа dbt\./i });
+    expect(badge).toHaveTextContent('Платформа dbt');
+    expect(badge).not.toHaveTextContent('Требуется вход');
   });
 
   it('renders both surfaces for a multi-surface feature', async () => {
     const user = userEvent.setup();
     render(<Availability availability={{ surface: ['local', 'platform'] }} />);
-    const badge = screen.getByRole('button', { name: /local development \| dbt platform/i });
-    expect(badge).toHaveTextContent('Local development | dbt platform');
+    const badge = screen.getByRole('button', { name: /локальная разработка \| Платформа dbt/i });
+    expect(badge).toHaveTextContent('Локальная разработка | Платформа dbt');
 
     await user.click(badge);
     const tooltip = screen.getByRole('tooltip');
-    expect(tooltip).toHaveTextContent('Runs locally.');
-    expect(tooltip).toHaveTextContent('Available in the dbt platform.');
+    expect(tooltip).toHaveTextContent('Работает локально.');
+    expect(tooltip).toHaveTextContent('Доступно на платформе dbt.');
   });
 
   it('expands minPlan to the tier and everything above it', async () => {
@@ -58,12 +58,12 @@ describe('Availability', () => {
     );
 
     const badge = screen.getByRole('button', {
-      name: /dbt platform \| starter, enterprise, enterprise\+/i,
+      name: /Платформа dbt \| starter, enterprise, enterprise\+/i,
     });
     await user.click(badge);
 
     const tooltip = screen.getByRole('tooltip');
-    expect(tooltip).toHaveTextContent('Requires Starter, Enterprise, Enterprise+.');
+    expect(tooltip).toHaveTextContent('Требуется тариф: Starter, Enterprise, Enterprise+.');
     expect(tooltip).not.toHaveTextContent('Starter, Enterprise, Enterprise+ —');
   });
 
@@ -75,34 +75,34 @@ describe('Availability', () => {
       />
     );
 
-    const badge = screen.getByRole('button', { name: /dbt platform \| starter/i });
+    const badge = screen.getByRole('button', { name: /Платформа dbt \| starter/i });
     await user.click(badge);
 
-    expect(screen.getByRole('tooltip')).toHaveTextContent('Requires Starter.');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Требуется тариф: Starter.');
   });
 
   it('labels the v2 engine facet and renders its tooltip row', async () => {
     const user = userEvent.setup();
     render(<Availability availability={{ engine: 'v2', surface: 'platform', access: 'free' }} />);
 
-    const badge = screen.getByRole('button', { name: /available in v2 \| dbt platform \| free/i });
-    expect(badge).toHaveTextContent('Available in v2 | dbt platform | Free');
+    const badge = screen.getByRole('button', { name: /доступно в v2 \| Платформа dbt \| бесплатно/i });
+    expect(badge).toHaveTextContent('Доступно в v2 | Платформа dbt | Бесплатно');
 
     await user.click(badge);
     const tooltip = screen.getByRole('tooltip');
-    expect(tooltip).toHaveTextContent('Version');
-    expect(tooltip).toHaveTextContent('Available in v2');
-    expect(tooltip).not.toHaveTextContent('Available in v2 —');
+    expect(tooltip).toHaveTextContent('Версия');
+    expect(tooltip).toHaveTextContent('Доступно в v2');
+    expect(tooltip).not.toHaveTextContent('Доступно в v2 —');
   });
 
-  it('renders "Available in v1" alone with its tooltip for engine-only availability', async () => {
+  it('renders "Доступно в v1" alone with its tooltip for engine-only availability', async () => {
     const user = userEvent.setup();
     render(<Availability availability={{ engine: 'v1' }} />);
 
-    const badge = screen.getByRole('button', { name: /^available in v1\./i });
+    const badge = screen.getByRole('button', { name: /^доступно в v1\./i });
     await user.click(badge);
 
-    expect(screen.getByRole('tooltip')).toHaveTextContent('Available in dbt Core 1.x');
+    expect(screen.getByRole('tooltip')).toHaveTextContent('Доступно в v1');
   });
 
   it('renders nothing extra for an unknown or omitted engine value', () => {
@@ -110,11 +110,11 @@ describe('Availability', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders "Local development" alone for local_free (free is implicit for local CLI)', () => {
+  it('renders "Локальная разработка" alone for local_free (free is implicit for local CLI)', () => {
     render(<Availability availability="local_free" />);
-    const badge = screen.getByRole('button', { name: /^local development\./i });
-    expect(badge).toHaveTextContent('Local development');
-    expect(badge).not.toHaveTextContent('Free');
+    const badge = screen.getByRole('button', { name: /^локальная разработка\./i });
+    expect(badge).toHaveTextContent('Локальная разработка');
+    expect(badge).not.toHaveTextContent('Бесплатно');
   });
 
   it('renders linked local development guidance for local_all as a single badge chip', async () => {
@@ -122,59 +122,61 @@ describe('Availability', () => {
     render(<Availability availability="local_all" />);
 
     const badge = screen.getByRole('button', {
-      name: /^local development\./i,
+      name: /^локальная разработка\./i,
     });
-    expect(badge).toHaveTextContent('Local development');
-    expect(badge).not.toHaveTextContent('dbt platform');
+    expect(badge).toHaveTextContent('Локальная разработка');
+    expect(badge).not.toHaveTextContent('Платформа dbt');
 
     await user.click(badge);
 
     const tooltip = screen.getByRole('tooltip');
-    expect(tooltip).toHaveTextContent('Where');
+    expect(tooltip).toHaveTextContent('Где доступно');
     expect(tooltip).toHaveTextContent(
-      'Runs locally. Works with dbt platform or local dbt projects.'
+      'Работает локально с проектами на платформе dbt и с локальными проектами dbt.'
     );
     expect(
-      screen.getByRole('link', { name: 'dbt platform' })
+      screen.getByRole('link', { name: 'платформе dbt' })
     ).toHaveAttribute('href', '/docs/platform/dbt-cli-installation');
   });
 
-  it('renders "Local development | Login required" for a local surface with login required', () => {
+  it('renders "Локальная разработка | Требуется вход" for a local surface with login required', () => {
     render(<Availability availability={{ surface: 'local', access: 'login_required' }} />);
     expect(
-      screen.getByRole('button', { name: /local development \| login required/i })
+      screen.getByRole('button', { name: /локальная разработка \| требуется вход/i })
     ).toBeInTheDocument();
   });
 
   it('renders access alone with no surface badge (login required, no surface)', () => {
     render(<Availability availability={{ access: 'login_required' }} />);
-    const badge = screen.getByRole('button', { name: /^login required\./i });
-    expect(badge).toHaveTextContent('Login required');
-    expect(badge).not.toHaveTextContent('dbt platform');
-    expect(badge).not.toHaveTextContent('Local development');
+    const badge = screen.getByRole('button', { name: /^требуется вход\./i });
+    expect(badge).toHaveTextContent('Требуется вход');
+    expect(badge).not.toHaveTextContent('Платформа dbt');
+    expect(badge).not.toHaveTextContent('Локальная разработка');
   });
 
-  it('drops the redundant "Login required" chip but keeps "Usage-based" when surface is platform', async () => {
+  it('drops the redundant "Требуется вход" chip but keeps "Оплата по использованию" when surface is platform', async () => {
     const user = userEvent.setup();
     render(<Availability availability={{ surface: 'platform', access: 'usage_based' }} />);
 
-    const badge = screen.getByRole('button', { name: /^dbt platform \| usage-based\./i });
-    expect(badge).not.toHaveTextContent('Login required');
+    const badge = screen.getByRole('button', { name: /^Платформа dbt \| оплата по использованию\./i });
+    expect(badge).not.toHaveTextContent('Требуется вход');
 
     await user.click(badge);
-    expect(screen.getByRole('tooltip')).not.toHaveTextContent('Login required');
+    expect(screen.getByRole('tooltip')).not.toHaveTextContent('Требуется вход');
   });
 
-  it('renders "Login required | Usage-based" for everywhere_usage (dbt State case)', async () => {
+  it('renders "Требуется вход | Оплата по использованию" for everywhere_usage (dbt State case)', async () => {
     const user = userEvent.setup();
     render(<Availability availability="everywhere_usage" />);
 
-    const badge = screen.getByRole('button', { name: /login required \| usage-based/i });
+    const badge = screen.getByRole('button', { name: /требуется вход \| оплата по использованию/i });
     await user.click(badge);
 
     const tooltip = screen.getByRole('tooltip');
-    expect(tooltip).toHaveTextContent('Requires a free dbt account.');
-    expect(tooltip).toHaveTextContent('Billed on usage.');
+    expect(tooltip).toHaveTextContent('Войдите в аккаунт dbt. Платная лицензия dbt не нужна.');
+    expect(tooltip).toHaveTextContent('Оплата зависит от объёма использования.');
+    expect(screen.getByRole('link', { name: 'Платная лицензия dbt' }))
+      .toHaveAttribute('href', 'https://www.getdbt.com/pricing');
   });
 
   it('never renders Fusion, Core, or OSS anywhere in badge output', async () => {
@@ -185,7 +187,7 @@ describe('Availability', () => {
       />
     );
 
-    const badge = screen.getByRole('button', { name: /dbt platform/i });
+    const badge = screen.getByRole('button', { name: /Платформа dbt/i });
     await user.click(badge);
 
     const tooltip = screen.getByRole('tooltip');
@@ -196,18 +198,18 @@ describe('Availability', () => {
   it('accepts "platform" as shorthand for availability to all dbt platform users', () => {
     render(<Availability availability="platform" />);
 
-    const badge = screen.getByRole('button', { name: /^dbt platform\./i });
-    expect(badge).toHaveTextContent('dbt platform');
-    expect(badge).not.toHaveTextContent('Free');
-    expect(badge).not.toHaveTextContent('Login required');
+    const badge = screen.getByRole('button', { name: /^Платформа dbt\./i });
+    expect(badge).toHaveTextContent('Платформа dbt');
+    expect(badge).not.toHaveTextContent('Бесплатно');
+    expect(badge).not.toHaveTextContent('Требуется вход');
   });
 
   it('treats a platform surface without access as available to all platform users', () => {
     render(<Availability availability={{ surface: 'platform' }} />);
 
-    const badge = screen.getByRole('button', { name: /^dbt platform\./i });
-    expect(badge).toHaveTextContent('dbt platform');
-    expect(badge).not.toHaveTextContent('Free');
+    const badge = screen.getByRole('button', { name: /^Платформа dbt\./i });
+    expect(badge).toHaveTextContent('Платформа dbt');
+    expect(badge).not.toHaveTextContent('Бесплатно');
   });
 
   it('renders nothing without a resolvable surface or access', () => {
@@ -221,7 +223,7 @@ describe('Availability', () => {
 
     await user.tab();
 
-    expect(screen.getByRole('button', { name: /local development \| login required/i })).toHaveFocus();
+    expect(screen.getByRole('button', { name: /локальная разработка \| требуется вход/i })).toHaveFocus();
     expect(screen.getByRole('tooltip')).toBeInTheDocument();
 
     await user.keyboard('{Escape}');
@@ -238,7 +240,7 @@ describe('Availability', () => {
       </>
     );
 
-    await user.click(screen.getByRole('button', { name: /local development \| login required/i }));
+    await user.click(screen.getByRole('button', { name: /локальная разработка \| требуется вход/i }));
     expect(screen.getByRole('tooltip')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Outside' }));
@@ -254,7 +256,7 @@ describe('Availability', () => {
       />
     );
 
-    const badge = screen.getByRole('button', { name: /dbt platform \| starter/i });
+    const badge = screen.getByRole('button', { name: /Платформа dbt \| starter/i });
     await user.click(badge);
     expect(screen.getByRole('tooltip')).toBeInTheDocument();
 

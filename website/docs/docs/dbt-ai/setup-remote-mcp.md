@@ -1,6 +1,6 @@
 ---
-title: "Set up remote MCP"
-sidebar_label: "Set up remote MCP"
+title: "Настройка удалённого MCP"
+sidebar_label: "Настройка удалённого MCP"
 description: "Как настроить удалённый MCP-сервер dbt."
 id: "setup-remote-mcp"
 availability:

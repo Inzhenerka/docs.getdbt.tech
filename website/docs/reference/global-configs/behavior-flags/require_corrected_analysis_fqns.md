@@ -1,7 +1,7 @@
 ---
 title: "Конфигурация анализов на уровне проекта"
 id: "require_corrected_analysis_fqns"
-sidebar_label: "require corrected analysis fqns"
+sidebar_label: "require_corrected_analysis_fqns"
 ---
 
 import AnalysesProjectLevelConfig from '/snippets/_analyses-project-level-config.md';

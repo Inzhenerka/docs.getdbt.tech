@@ -101,24 +101,24 @@ function findSubProduct(name) {
 function TransitionNote() {
   return (
     <>
-      On dbt platform?
+      Работаете на платформе dbt?
       <br />
       v2 ={" "}
       <a
-        href="https://docs.getdbt.com/docs/dbt-versions/dbt-release-tracks?version=2.0#dbt-v2-release-tracks"
+        href="/docs/dbt-versions/dbt-release-tracks?version=2#dbt-v2-release-tracks"
         target="_blank"
         rel="noopener noreferrer"
       >
-        dbt v2 release tracks
+        Каналы релизов dbt v2
       </a>
       <br />
       v1 ={" "}
       <a
-        href="https://docs.getdbt.com/docs/dbt-versions/dbt-release-tracks?version=2.0#dbt-v1-release-tracks"
+        href="/docs/dbt-versions/dbt-release-tracks?version=2#dbt-v1-release-tracks"
         target="_blank"
         rel="noopener noreferrer"
       >
-        dbt v1 release tracks
+        Каналы релизов dbt v1
       </a>
     </>
   );
@@ -257,7 +257,7 @@ function DropdownNavbarItemDesktop({
           className="version-dropdown__trigger"
           aria-haspopup="listbox"
           aria-expanded={showDropdown}
-          aria-label={`dbt version: ${currentLabel}`}
+          aria-label={`Версия dbt: ${currentLabel}`}
           onClick={() => setShowDropdown((v) => !v)}
         >
           <span className="version-dropdown__branch" aria-hidden="true">
@@ -268,7 +268,7 @@ function DropdownNavbarItemDesktop({
               />
             </svg>
           </span>
-          <span className="version-dropdown__label" aria-hidden="true">dbt version</span>
+          <span className="version-dropdown__label" aria-hidden="true">Версия dbt</span>
           <span className="version-dropdown__current">{currentLabel}</span>
           <span className="version-dropdown__caret" aria-hidden="true">▾</span>
         </button>
@@ -410,7 +410,7 @@ function DropdownNavbarItemMobile({
               />
             </svg>
           </span>
-          <span>dbt version</span>
+          <span>Версия dbt</span>
         </div>
         <ul className="menu__list">
           {products.map((product) => {

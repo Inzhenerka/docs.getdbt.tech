@@ -1,3 +1,4 @@
+import { guideFilterLabel } from './filterLabels';
 import React, { useState, useEffect } from "react";
 import Link from "@docusaurus/Link";
 import styles from "./styles.module.css";
@@ -38,8 +39,8 @@ export default function QuickstartGuideCard({ frontMatter, onFavoriteUpdate }) {
     const popup = document.createElement("div");
     popup.classList.add("copy-popup");
     popup.innerText = !newFavoriteState
-      ? "Guide removed from favorites!"
-      : "Guide added to favorites!";
+      ? "Руководство удалено из избранного"
+      : "Руководство добавлено в избранное";
     document.body.appendChild(popup);
 
     setTimeout(() => {
@@ -70,7 +71,7 @@ export default function QuickstartGuideCard({ frontMatter, onFavoriteUpdate }) {
         <button
           onClick={toggleFavorite}
           className={`${styles.cardFavoriteButton} ${isFavorite ? styles.favorited : ""}`}
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          aria-label={isFavorite ? "Убрать из избранного" : "Добавить в избранное"}
         >
           {getSvgIcon("fa-star")}
         </button>
@@ -125,8 +126,8 @@ export function QuickstartGuideTitle({ frontMatter }) {
     const popup = document.createElement("div");
     popup.classList.add("copy-popup");
     popup.innerText = isFavorite
-      ? "Guide removed from favorites!"
-      : "Guide added to favorites!";
+      ? "Руководство удалено из избранного"
+      : "Руководство добавлено в избранное";
     document.body.appendChild(popup);
 
     // Add close button
@@ -171,7 +172,7 @@ export function QuickstartGuideTitle({ frontMatter }) {
             onClick={toggleFavorite}
             className={`${styles.favoriteButton} ${isFavorite ? styles.favorited : ""}`}
             aria-label={
-              isFavorite ? "Remove from favorites" : "Add to favorites"
+              isFavorite ? "Убрать из избранного" : "Добавить в избранное"
             }
           >
             {getSvgIcon("fa-star")}
@@ -187,10 +188,10 @@ export function QuickstartGuideTitle({ frontMatter }) {
           {tags &&
             tags.map((tag, i) => (
               <div className={`${styles.tag} tag`} key={i}>
-                {tag}
+                {guideFilterLabel(tag)}
               </div>
             ))}
-          {level && <div className={`${styles.tag} tag`}>{level}</div>}
+          {level && <div className={`${styles.tag} tag`}>{guideFilterLabel(level)}</div>}
         </div>
       )}
     </>

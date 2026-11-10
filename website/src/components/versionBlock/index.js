@@ -3,8 +3,8 @@ import VersionContext from '../../stores/VersionContext';
 import { availableInCurrentVersion } from '../../utils/available-in-current-version';
 
 /**
- * Builds a human-readable version note (such as "Applies to dbt v1.12 and
- * later") from the block's version range and optional product. Returns null
+ * Builds a human-readable note from the version range and optional product.
+ * Returns null
  * when the block has no version constraint, so unversioned blocks stay untagged.
  */
 function versionNote(firstVersion, lastVersion, product) {
@@ -12,12 +12,12 @@ function versionNote(firstVersion, lastVersion, product) {
   const last = lastVersion && typeof lastVersion !== "boolean" ? lastVersion : null;
 
   let range;
-  if (first && last) range = `v${first} to v${last}`;
-  else if (first) range = `v${first} and later`;
-  else if (last) range = `v${last} and earlier`;
+  if (first && last) range = `с v${first} по v${last}`;
+  else if (first) range = `v${first} и новее`;
+  else if (last) range = `v${last} и ранее`;
   else return null;
 
-  return `(Applies to ${product ? `${product} ` : "dbt "}${range})`;
+  return `(Версии ${product || "dbt"}: ${range})`;
 }
 
 /**

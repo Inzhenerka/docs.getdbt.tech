@@ -1,3 +1,4 @@
+import { guideFilterLabel } from '../quickstartGuideCard/filterLabels';
 import React from 'react';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import Head from '@docusaurus/Head';
@@ -44,13 +45,13 @@ const FILTER_CONFIGS = {
   tags: {
     urlParam: 'tags',
     frontMatterKey: 'tags',
-    label: 'Choose a topic',
+    label: 'Выберите тему',
     isArray: true, // tags is an array in frontmatter
   },
   level: {
     urlParam: 'level',
     frontMatterKey: 'level',
-    label: 'Choose a level',
+    label: 'Выберите уровень',
     isArray: false, // level is a single string in frontmatter
   },
   
@@ -88,7 +89,7 @@ function QuickstartList({ quickstartData }) {
     
     return Array.from(values)
       .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
-      .map(value => ({ value, label: value }));
+      .map(value => ({ value, label: guideFilterLabel(value) }));
   };
 
   // Memoize filter options to prevent unnecessary recalculations
@@ -166,7 +167,7 @@ function QuickstartList({ quickstartData }) {
       if (paramValue) {
         filtersFromUrl[filterKey] = paramValue.split(',').map(value => ({ 
           value, 
-          label: value 
+          label: guideFilterLabel(value),
         }));
       }
     });
@@ -325,7 +326,7 @@ function QuickstartList({ quickstartData }) {
       <section id='quickstart-card-section' className={styles.quickstartCardSection}>
         <div className={`${styles.quickstartFilterContainer} ${isScrolled ? styles.scrolled : ''} ${isFilterExpanded ? styles.expanded : ''}`}>
           <div className={styles.filterHeader} onClick={() => setIsFilterExpanded(!isFilterExpanded)}>
-            <h3>Filter by</h3>
+            <h3>Фильтры</h3>
             <button className={`${styles.expandButton} ${isFilterExpanded ? styles.expanded : ''}`}>
               <span className={styles.arrow}>▼</span>
             </button>
@@ -352,7 +353,7 @@ function QuickstartList({ quickstartData }) {
                 setFilteredData(quickstartData);
               }}
             >
-              Clear all
+              Сбросить фильтры
             </button>
           </div>
         </div>

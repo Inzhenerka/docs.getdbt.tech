@@ -5,6 +5,7 @@ collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Jinja FAQs
+  title: 'Jinja: частые вопросы'
+  slug: /category/jinja
 customProps:
-  description: Frequently asked questions about Jinja and dbt
+  description: О работе с Jinja в dbt.

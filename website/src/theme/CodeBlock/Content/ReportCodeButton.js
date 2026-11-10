@@ -41,7 +41,7 @@ export default function ReportCodeButton({className, code, language}) {
 
   const label = translate({
     id: 'theme.CodeBlock.reportCode',
-    message: 'Report incorrect code',
+    message: 'Сообщить об ошибке в коде',
     description: 'The label for the report incorrect code button',
   });
 

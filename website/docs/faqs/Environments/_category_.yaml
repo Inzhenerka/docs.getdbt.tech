@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Environments'
+label: 'Окружения'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: 'Environments FAQs'
+  title: 'Окружения: частые вопросы'
+  slug: /category/environments
 customProps:
-  description: Frequently asked questions about Environments in dbt
+  description: Об окружениях в dbt.

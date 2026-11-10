@@ -2,7 +2,7 @@
 title: "Примечания к выпускам платформы dbt за 2022 год"
 description: "Примечания к выпускам платформы dbt за 2022 год"
 id: "2022-release-notes"
-sidebar_label: "2022 release notes"
+sidebar_label: "Что нового в 2022 году"
 pagination_next: null
 pagination_prev: null
 availability:

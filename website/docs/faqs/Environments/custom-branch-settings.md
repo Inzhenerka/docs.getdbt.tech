@@ -1,7 +1,7 @@
 ---
 title: Как использовать настройки «Custom Branch» в окружении dbt?
 description: "Использование пользовательского кода из вашего репозитория"
-sidebar_label: 'Настройки custom branch'
+sidebar_label: 'Настройка пользовательской ветки'
 id: custom-branch-settings
 ---
 

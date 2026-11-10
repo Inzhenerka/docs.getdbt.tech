@@ -5,6 +5,7 @@ collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Git FAQs
+  title: 'Git: частые вопросы'
+  slug: /category/git
 customProps:
-  description: Frequently asked questions about Git and dbt
+  description: О работе с Git в dbt.

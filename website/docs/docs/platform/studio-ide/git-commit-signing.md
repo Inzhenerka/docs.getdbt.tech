@@ -1,7 +1,7 @@
 ---
 title: "Подписание Git-коммитов"
 description: "Узнайте, как подписывать Git-коммиты при использовании IDE для разработки."
-sidebar_label: Git commit signing
+sidebar_label: "Подпись коммитов Git"
 availability:
   surface: platform
   access: paid_plan

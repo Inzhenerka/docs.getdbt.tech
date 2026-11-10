@@ -1,7 +1,7 @@
 ---
 title: "О свойстве data tests"
 description: "Справочное руководство по свойствам ресурсов, доступным для data tests в dbt."
-sidebar_label: "Data tests"
+sidebar_label: "Тесты данных"
 resource_types: all
 datatype: data-test
 keywords: [test, tests, custom tests, custom test name, test name]

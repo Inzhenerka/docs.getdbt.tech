@@ -1,10 +1,11 @@
 # position: 2.5 # float position is supported
-label: 'Cost optimizations'
+label: 'Оптимизация расходов'
 collapsible: true # make the category collapsible
 collapsed: true # keep the category collapsed by default
 className: red
 link:
   type: generated-index
-  title: Cost Insights FAQs
+  title: 'Оптимизация расходов: частые вопросы'
+  slug: /category/cost-optimizations
 customProps:
-  description: Frequently asked questions about your cost data in dbt
+  description: Об оптимизации расходов в dbt.

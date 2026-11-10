@@ -54,17 +54,17 @@ function Card({ title, body, link, icon, pills, tag, lifecycle, showBorderBeam =
       <ul>
         {platformHref && (
           <li>
-            <a href={platformHref}>Set up in the dbt platform</a>
+            <a href={platformHref}>Настроить на платформе dbt</a>
           </li>
         )}
         {showV1 && (
           <li>
-            <a href={v1Href}>Install with dbt v1</a>
+            <a href={v1Href}>Установить для dbt v1</a>
           </li>
         )}
         {showV2 && (
           <li>
-            <a href={v2Href}>Install with dbt v2</a>
+            <a href={v2Href}>Установить для dbt v2</a>
           </li>
         )}
       </ul>

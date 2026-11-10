@@ -33,7 +33,7 @@ function normalizeAvailability(availability) {
 
   // surface can be a single value or a list (for features that live on more than one
   // surface, e.g. local development and the dbt platform). Dedupe by rendered label
-  // since local and local_development share the "Local development" chip.
+  // since local and local_development share the same chip.
   const surfaceList = Array.isArray(surface) ? surface : (surface ? [surface] : []);
   const seenSurfaceLabels = new Set();
   const surfaceEntries = surfaceList.filter((item) => {
@@ -187,7 +187,7 @@ export default function Availability({ availability }) {
       <button
         type="button"
         className={styles.availability}
-        aria-label={`${badgeText}. Show availability details`}
+        aria-label={`${badgeText}. Подробнее о доступности`}
         aria-expanded={isOpen}
         aria-describedby={isOpen ? tooltipId : undefined}
         onClick={() => {
