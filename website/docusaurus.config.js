@@ -50,10 +50,10 @@ console.log("DEBUG: ALGOLIA_INDEX_NAME = ", ALGOLIA_INDEX_NAME);
 console.log("DEBUG: metatags = ", metatags);
 
 var siteSettings = {
-  baseUrl: "/",
+  baseUrl: process.env.PAGES_BASE_PATH ? process.env.PAGES_BASE_PATH + "/" : "/",
   tagline: "Документация, гайды и руководства по dbt на русском языке",
   title: "Документация dbt",
-  url: SITE_URL,
+  url: process.env.PAGES_ORIGIN || SITE_URL,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   trailingSlash: true,
